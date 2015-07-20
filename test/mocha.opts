@@ -1,0 +1,5 @@
+-t 500000
+--compilers coffee:coffee-script/register
+--require chai
+--recursive test/bootstrap.test.coffee
+--reporter spec

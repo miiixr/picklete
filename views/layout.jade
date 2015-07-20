@@ -1,0 +1,24 @@
+doctype html
+html
+  head
+    title 輕鬆買遍全世界 - Bezuru.com
+
+    // Viewport mobile tag for sensible mobile support
+    meta(name="viewport",content="width=device-width, initial-scale=1, maximum-scale=1")
+    // Default home page
+
+    // STYLES
+    link(rel="stylesheet", href="/styles/importer.css")
+    // STYLES END
+    block styles
+
+  body(ng-app="mainApp", ng-controller="mainCtrl")
+    block body
+
+    // The linker searches for this tag and adds js.  If there's no linker, we point to sails.io.js
+    // SCRIPTS
+    script(src="/bower/jquery/jquery.js")
+    script(src="/js/app/app.js")
+    // SCRIPTS END
+    //- script(src="//localhost:9091")
+
