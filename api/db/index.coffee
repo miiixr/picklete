@@ -6,7 +6,7 @@ env = process.env.NODE_ENV or 'development'
 config = {
   'username': 'root',
   'password': 'root',
-  'database': 'ec-platform',
+  'database': 'ec_platform',
   'host': '127.0.0.1',
   'dialect': 'mysql',
   'force': true
