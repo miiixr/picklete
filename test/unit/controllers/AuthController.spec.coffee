@@ -1,4 +1,4 @@
-describe.only "about Auth", (done) ->
+describe "about Auth", (done) ->
 
   describe "login should success", () ->
     before (done) ->

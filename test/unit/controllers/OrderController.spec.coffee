@@ -15,10 +15,10 @@ describe "about Order", (done) ->
     }
 
     request(sails.hooks.http.app)
-    .post("/order/create")
+    .get("/order/create")
     .send(newOrder)
     .end (err, res) ->
-      
+
       return done(body) if res.statusCode is 500
       res.body.success.should.be.true
       res.body.order.id.should.be.number
