@@ -6,7 +6,7 @@ ProductController =
       name: '柚子'
       desctipt: '又大又好吃'
       stockQuantity: 10
-      price: 100
+      price: 101
     }
 
     res.ok {product: product}
