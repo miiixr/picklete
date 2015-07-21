@@ -1,35 +1,52 @@
 describe "about Auth", (done) ->
 
-  it "execute login by id", (done) ->
-    loginUser = {
-      identifier: "admin"
-      password: "admin"
-    }
+  describe "login should success", () ->
+    before (done) ->
+      testUser = {
+        username  : "spooky"
+        email     : "spooky@gmail.com"
+      }
+      db.User.create(testUser).then (createdTestUser)->
+        passport = {
+          protocol: 'local'
+          password: "spooky"
+        }
+        db.Passport.create(passport).then (createdPassport) ->
+          createdTestUser.setPassports(createdPassport).then () ->
+            done(null)
 
-    request(sails.hooks.http.app)
-    .post("/auth/local")
-    .send(loginUser)
 
-    .expect 'Location', "/"
-    .end (err, res) ->
-      return done(body) if res.statusCode is 500
-      res.statusCode.should.equal 302
-      done(err)
 
-  it "execute login by id, but wrong password", (done) ->
-    loginUser = {
-      identifier: "admin"
-      password: "wrong"
-    }
+    it "execute login by id", (done) ->
+      loginUser = {
+        identifier: "spooky"
+        password: "spooky"
+      }
 
-    request(sails.hooks.http.app)
-    .post("/auth/local")
-    .send(loginUser)
-    .expect 'Location', "/login"
-    .end (err, res) ->
-      return done(body) if res.statusCode is 500
-      res.statusCode.should.equal 302
-      done(err)
+      request(sails.hooks.http.app)
+      .post("/auth/local")
+      .send(loginUser)
+
+      .expect 'Location', "/"
+      .end (err, res) ->
+        return done(body) if res.statusCode is 500
+        res.statusCode.should.equal 302
+        done(err)
+
+    it "execute login by id, but wrong password", (done) ->
+      loginUser = {
+        identifier: "spooky"
+        password: "wrong"
+      }
+
+      request(sails.hooks.http.app)
+      .post("/auth/local")
+      .send(loginUser)
+      .expect 'Location', "/login"
+      .end (err, res) ->
+        return done(body) if res.statusCode is 500
+        res.statusCode.should.equal 302
+        done(err)
 
 
 
