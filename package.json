@@ -59,7 +59,7 @@
     "url": "git://github.com/caesarchi/main-site.git"
   },
   "author": "clonn(a.k.a, CaesarChi)",
-  "license": "GPL with Trunk-Sdudio & exma-square",
+  "license": "GPL with Trunk-Studio & Exma-Square",
   "devDependencies": {
     "chai": "^1.10.0",
     "cheerio": "^0.19.0",
