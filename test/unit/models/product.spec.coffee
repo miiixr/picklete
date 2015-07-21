@@ -1,4 +1,4 @@
-describe.only "about prodcut model operation.", () ->
+describe "about prodcut model operation.", () ->
   it 'create product', (done) ->
 
     newProduct = {
