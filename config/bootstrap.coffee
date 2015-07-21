@@ -37,9 +37,20 @@ module.exports.bootstrap = (cb) ->
           createdAdmin.setPassports(createdPassport).then () ->
             done(null)
 
+    productTestDataCreate = (done) ->
+      newProduct = {
+        name: '柚子'
+        desctipt: '又大又好吃'
+      }
+
+      db.Product.create(newProduct).then (createdProduct) ->
+        done(null)
+
+
 
     async.series [
       adminTestDataCreate
+      productTestDataCreate
     ], (err, results) ->
       return cb()
 
