@@ -44,6 +44,8 @@ module.exports.routes = {
   'get /product/:productId': 'ProductController.findOne'
   'post /order': 'OrderController.create'
 
+  'post /order/status': 'OrderController.status'
+
 
   "/:controller/:action/:id?": {}
 
