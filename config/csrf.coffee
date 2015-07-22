@@ -53,21 +53,4 @@ You may also specify more fine-grained settings for CSRF, including the   *
 domains which are allowed to request the CSRF token via AJAX. These       *
 settings override the general CORS settings in your config/cors.js file.  *
 ###
-module.exports.csrf = {
-    grantTokenViaAjax: false,
-    origin: '',
-    routesDisabled: [
-      '/register'
-      '/auth/local/register'
-      '/auth/local'
-      '/login'
-      '/profile/update'
-      '/wishItem/create'
-      '/wishItem/save'
-      '/wishItem'
-      '/wishItem/search'
-      '/wishItem/edit'
-      '/wishItem/update'
-    ].join(',')
-
-};
+module.exports.csrf = false;

@@ -1,5 +1,8 @@
 ProductController =
-  read: (req, res) ->
+  findOne: (req, res) ->
+    productId = req.param("productId")
+
+    console.log '=== productId ===', productId
 
     product = {
       id: 2222333
