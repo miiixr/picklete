@@ -2,23 +2,28 @@ describe "about Order", (done) ->
 
   it "create Order should be success.", (done) ->
     newOrder = {
-      name: '柚子'
-      desctipt: '又大又好吃'
-      stockQuantity: 10
-      price: 100
+      quantity: 10
+
+      product: {
+        name: '柚子'
+        desctipt: '又大又好吃'
+        price: 100
+        stockQuantity: 10
+        id: 1
+      }
+
       user: {
-        username: 'test'
         email: 'test@gmail.com'
         mobile: '0911-111-111'
-        address: '台灣省台灣市台灣路'
+        address: ''
+        username: 'test'
       }
     }
 
     request(sails.hooks.http.app)
-    .get("/order/create")
+    .post("/order")
     .send(newOrder)
     .end (err, res) ->
-
       return done(body) if res.statusCode is 500
       res.body.success.should.be.true
       res.body.order.id.should.be.number

@@ -40,6 +40,11 @@ module.exports.routes = {
   'get /auth/:provider/callback': 'AuthController.callback'
   'get /auth/:provider/:action': 'AuthController.callback'
 
+
+  'get /product/:productId': 'ProductController.findOne'
+  'post /order': 'OrderController.create'
+
+
   "/:controller/:action/:id?": {}
 
 }
