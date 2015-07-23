@@ -1,9 +1,25 @@
 OrderController =
   create: (req, res) ->
-
     # 1. 透過 Productid 找到 model product
     # 2. 檢查 user 是否存在，若否進行建立
     # 3. 建立訂單 order
+
+    # User.findOne({where:{email: ''}}).then (findUser) ->
+    #   if (!findUser)
+    #   {
+    #     User.
+    #   }
+
+
+  # User
+  # .findOrCreate({where: {email: 'test＠test.test'}})
+  # .spread(function(User, created) {
+  #
+  #   console.log(user.get({
+  #     plain: true
+  #   }))
+  #
+  # })
 
     order = {
       id: '11223344'
@@ -25,7 +41,32 @@ OrderController =
       }
     }
 
+    # order = {
+    #   id: req.param('id')
+    #   quantity: req.param('quantity')
+    #
+    #   user: {
+    #     username: req.param('username')
+    #     email: req.param('email')
+    #     mobile: req.param('mobile')
+    #     address: req.param('address')
+    #   }
+    #
+    #   product: {
+    #     name: req.param('name')
+    #     desctipt: req.param('desctipt')
+    #     stockQuantity: req.param('stockQuantity')
+    #     price: req.param('price')
+    #     id: req.param('id')
+    #   }
+    # }
+
+    productId = req.param('order.id')
+    pname = req.param('name')
     success = true
+
+    console.log 'id===', productId
+    console.log 'name==', pname
 
     res.ok {
       order: order
