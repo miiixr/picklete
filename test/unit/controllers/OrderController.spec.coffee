@@ -29,3 +29,18 @@ describe.only "about Order", (done) ->
       res.body.order.id.should.be.number
 
       done(err)
+
+    describe "get Order status.", (done) ->
+
+      before (done) ->
+        # 要查出訂單資訊之前，可以先操作 order model 把相關測試資料建立起來
+        # 如此，在 run spec 的時候才有資料可以顯示
+
+      request(sails.hooks.http.app)
+      .post("/order/status")
+      .send(formdata)
+      .end (err, res) ->
+        return done(body) if res.statusCode is 500
+        res.body.order.id.should.be.number
+
+        done(err)
