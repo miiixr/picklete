@@ -39,8 +39,10 @@ module.exports.bootstrap = (cb) ->
 
     productTestDataCreate = (done) ->
       newProduct = {
-        name: '柚子'
-        desctipt: '又大又好吃'
+        name: '斗六文旦柚禮盒'
+        descript: '3斤裝'
+        stockQuantity: 0
+        image: 'http://localhost:1337/images/product/1.jpg'
       }
 
       db.Product.create(newProduct).then (createdProduct) ->

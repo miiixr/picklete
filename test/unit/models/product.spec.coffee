@@ -3,7 +3,7 @@ describe "about prodcut model operation.", () ->
 
     newProduct = {
       name: '柚子'
-      desctipt: '又大又好吃'
+      descript: '又大又好吃'
     }
 
     db.Product.create(newProduct).then (createdProduct) ->

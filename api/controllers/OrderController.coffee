@@ -18,7 +18,7 @@ OrderController =
 
       product: {
         name: '柚子'
-        desctipt: '又大又好吃'
+        descript: '又大又好吃'
         stockQuantity: 10
         price: 100
         id: 1
@@ -46,7 +46,7 @@ OrderController =
 
       product: {
         name: '柚子'
-        desctipt: '又大又好吃'
+        descript: '又大又好吃'
         stockQuantity: 10
         price: 100
         id: 1

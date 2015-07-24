@@ -6,7 +6,7 @@ describe "about Order", (done) ->
 
       product: {
         name: '柚子'
-        desctipt: '又大又好吃'
+        descript: '又大又好吃'
         price: 100
         stockQuantity: 10
         id: 1
