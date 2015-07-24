@@ -40,34 +40,30 @@ OrderController =
         email:req.body.email
     )
     .then (userData) ->
-      if userData
-        db.Order.findOne(
-          where:
-            orderId:req.body.orderId
-            UserId:userData.id
-        )
-        .then (orderProduct) ->
-          if orderProduct?
-            order = {
-                id: orderProduct.orderId
-                quantity: orderProduct.quantity
+      return res.ok {msg: '沒有此User' } if userData is null
 
-                user: {
-                  username: userData.username
-                  email: userData.email
-                  mobile: userData.mobile
-                  address: userData.address
-                }
+      db.Order.findOne(
+        where:
+          orderId:req.body.orderId
+          UserId:userData.id
+      )
+      .then (orderProduct) ->
+        if orderProduct?
+          order = {
+              id: orderProduct.orderId
+              quantity: orderProduct.quantity
+
+              user: {
+                username: userData.username
+                email: userData.email
+                mobile: userData.mobile
+                address: userData.address
               }
-            res.ok {
-              order : order
             }
-          else
-            #沒有此訂單編號時在這處理
-            console.log "沒有此訂單"
-      else
-        #使用email找不到user時在這處理
-        console.log "沒有此User"
+          res.ok { order : order }
+        else
+          #沒有此訂單編號時在這處理
+          res.ok { msg: '沒有此訂單' }
 
     # order = {
     #   id: '11223344'
