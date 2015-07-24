@@ -31,38 +31,34 @@ describe "about Order", (done) ->
 
   describe.only "get Order status.", () ->
     before (done) ->
-      # 要查出訂單資訊之前，可以先操作 order model 把相關測試資料建立起來
-      # 如此，在 run spec 的時候才有資料可以顯示
-      console.log '=== before test create testOrderUser==='
+
       newUser = {
         username: "testOrderUser"
         email: "testOrderUser@gmail.com"
         password: "testuser"
       }
-      request(sails.hooks.http.app).post("/auth/local/register")
-      .send(newUser)
-      .end (err, res) ->
-        db.User.findOne({
-          where: {
-            username: "testOrderUser"
-          }
-        })
-        .then (newUser) ->
-          console.log '=== create testOrder ==='
-          orderTest = {
-            quantity:10
-            orderId:'11223344'
-            UserId:newUser.id
-          }
-          db.Order.create(orderTest).then (createdOrder) ->
-            createdOrder.orderId.should.be.String
-            done()
+
+      console.log '=== before test create newUser==='
+      db.User.create(newUser).then (newUser) ->
+        console.log '=== create newOrder ==='
+        
+        newOrder = {
+          quantity:10
+          orderId:'11223344'
+          UserId:newUser.id
+        }
+
+        db.Order.create(newOrder).then (createdOrder) ->
+          createdOrder.orderId.should.be.String
+          done()
 
 
     it "get Order status should be success.", (done) ->
-      formdata =
+
+      formdata = {
         orderId: '11223344'
         email: 'testOrderUser@gmail.com'
+      }
 
       request(sails.hooks.http.app)
       .post("/order/status")
