@@ -3,14 +3,26 @@ fs = require('fs')
 path = require('path')
 Sequelize = require('sequelize')
 env = process.env.NODE_ENV or 'development'
+# config = {
+#   'username': process.env.MYSQL_USER || "root"
+#   'password': process.env.MYSQL_PASSWORD || "root"
+#   'host': process.env.MYSQL_1_PORT_3306_TCP_ADDR || "127.0.0.1"
+#   'port': process.env.MYSQL_1_PORT_3306_TCP_PORT || 3306
+#   'database': 'ec_platform',
+#   'dialect': 'mysql',
+#   'force': true
+# }
+
 config = {
-  'username': 'root',
-  'password': 'root',
-  'database': 'ec_platform',
-  'host': '127.0.0.1',
-  'dialect': 'mysql',
+  'dialect': 'sqlite',
+  'storage': './db.development.sqlite',
+  'username': null,
+  'password': null,
+  'database': null,
   'force': true
 }
+
+
 sequelize = new Sequelize(config.database, config.username, config.password, config)
 db = {}
 fs.readdirSync(__dirname).filter((file) ->
