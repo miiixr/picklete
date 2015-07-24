@@ -35,9 +35,6 @@ OrderController =
     console.log req.body.orderId
     console.log req.body.email
 
-    # db.User.findById(1).then (findOrder) ->
-    #   console.log findOrder.orderId
-
     db.User.findOne(
       where:
         email:req.body.email
@@ -50,13 +47,13 @@ OrderController =
             UserId:userData.id
         )
         .then (orderProduct) ->
-        # if orderProduct?
-          res.ok {
-            order: orderProduct
-          }
-        # else
-        #   #沒有此訂單編號時在這處理
-        #   console.log "沒有此訂單"
+          if orderProduct?
+            res.ok {
+              order: orderProduct
+            }
+          else
+            #沒有此訂單編號時在這處理
+            console.log "沒有此訂單"
       else
         #使用email找不到user時在這處理
         console.log "沒有此User"

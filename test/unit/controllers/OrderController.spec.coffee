@@ -73,7 +73,6 @@ describe "about Order", (done) ->
       .end (err, res) ->
         return done(body) if res.statusCode is 500
         res.body.order.id.should.be.number
-        # console.console.log res.body
 
         done(err)
 
