@@ -48,8 +48,19 @@ OrderController =
         )
         .then (orderProduct) ->
           if orderProduct?
+            order = {
+                id: orderProduct.orderId
+                quantity: orderProduct.quantity
+
+                user: {
+                  username: userData.username
+                  email: userData.email
+                  mobile: userData.mobile
+                  address: userData.address
+                }
+              }
             res.ok {
-              order: orderProduct
+              order : order
             }
           else
             #沒有此訂單編號時在這處理
