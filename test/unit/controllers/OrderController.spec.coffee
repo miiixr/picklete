@@ -1,31 +1,4 @@
 describe "about Order", (done) ->
-  before (done) ->
-    newUser = {
-      username: "testOrderUser"
-      email: "testOrderUser@gmail.com"
-      password: "testuser"
-    }
-
-    request(sails.hooks.http.app).post("/auth/local/register")
-    .send(newUser)
-    .end (err, res) ->
-      db.User.findOne({
-        where: {
-          username: "testOrderUser"
-        }
-      })
-      .then (newUser) ->
-        console.log "create Test Order" +newUser.id
-        orderTest = {
-          quantity:10
-          orderId:'11223344'
-          UserId:newUser.id
-        }
-        db.Order.create(orderTest).then (createdOrder) ->
-          createdOrder.orderId.should.be.String
-          done()
-
-
   it "create Order should be success.", (done) ->
     newOrder = {
       quantity: 10
@@ -56,13 +29,37 @@ describe "about Order", (done) ->
 
       done(err)
 
-    describe "get Order status.", (done) ->
-      before (done) ->
-        # 這個before不會被call到 不知道為啥?!
-        # 
-        # 要查出訂單資訊之前，可以先操作 order model 把相關測試資料建立起來
-        # 如此，在 run spec 的時候才有資料可以顯示
+  describe.only "get Order status.", () ->
+    before (done) ->
+      console.log '=== before test ==='
+      newUser = {
+        username: "testOrderUser"
+        email: "testOrderUser@gmail.com"
+        password: "testuser"
+      }
 
+      request(sails.hooks.http.app).post("/auth/local/register")
+      .send(newUser)
+      .end (err, res) ->
+        db.User.findOne({
+          where: {
+            username: "testOrderUser"
+          }
+        })
+        .then (newUser) ->
+          console.log "create Test Order" +newUser.id
+          orderTest = {
+            quantity:10
+            orderId:'11223344'
+            UserId:newUser.id
+          }
+          db.Order.create(orderTest).then (createdOrder) ->
+            createdOrder.orderId.should.be.String
+            done()
+      # 要查出訂單資訊之前，可以先操作 order model 把相關測試資料建立起來
+      # 如此，在 run spec 的時候才有資料可以顯示
+
+    it "get Order status should be success.", (done) ->
       formdata =
         orderId: '11223344'
         email: 'testOrderUser@gmail.com'
@@ -75,5 +72,3 @@ describe "about Order", (done) ->
         res.body.order.id.should.be.number
 
         done(err)
-
-
