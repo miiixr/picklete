@@ -32,29 +32,57 @@ OrderController =
       success: success
     }
   status:  (req, res) ->
+    console.log req.body.orderId
+    console.log req.body.email
 
-    order = {
-      id: '11223344'
-      quantity: 10
+    # db.User.findById(1).then (findOrder) ->
+    #   console.log findOrder.orderId
 
-      user: {
-        username: 'test'
-        email: 'test@gmail.com'
-        mobile: '0911-111-111'
-        address: '台灣省台灣市台灣路'
-      }
+    db.User.findOne(
+      where:
+        email:req.body.email
+    )
+    .then (userData) ->
+      if userData
+        db.Order.findOne(
+          where:
+            orderId:req.body.orderId
+            UserId:userData.id
+        )
+        .then (orderProduct) ->
+        # if orderProduct?
+          res.ok {
+            order: orderProduct
+          }
+        # else
+        #   #沒有此訂單編號時在這處理
+        #   console.log "沒有此訂單"
+      else
+        #使用email找不到user時在這處理
+        console.log "沒有此User"
 
-      product: {
-        name: '柚子'
-        desctipt: '又大又好吃'
-        stockQuantity: 10
-        price: 100
-        id: 1
-      }
-    }
+    # order = {
+    #   id: '11223344'
+    #   quantity: 10
 
-    res.ok {
-      order: order
-    }
+    #   user: {
+    #     username: 'test'
+    #     email: 'test@gmail.com'
+    #     mobile: '0911-111-111'
+    #     address: '台灣省台灣市台灣路'
+    #   }
+
+    #   product: {
+    #     name: '柚子'
+    #     desctipt: '又大又好吃'
+    #     stockQuantity: 10
+    #     price: 100
+    #     id: 1
+    #   }
+    # }
+
+    # res.ok {
+    #   order: order
+    # }
 
 module.exports = OrderController
