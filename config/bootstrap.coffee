@@ -40,7 +40,9 @@ module.exports.bootstrap = (cb) ->
     productTestDataCreate = (done) ->
       newProduct = {
         name: '柚子'
-        desctipt: '又大又好吃'
+        descript: '又大又好吃'
+        stockQuantity: 10
+        price: 101
       }
 
       db.Product.create(newProduct).then (createdProduct) ->
