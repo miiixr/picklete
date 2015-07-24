@@ -41,7 +41,14 @@ module.exports.routes = {
   'get /auth/:provider/:action': 'AuthController.callback'
 
 
-  'get /product/:productId': 'ProductController.findOne'
+  'get /product/:productId': {
+    controller: "ProductController",
+    action: "findOne",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
   'post /order': 'OrderController.create'
 
   'post /order/status': 'OrderController.status'
