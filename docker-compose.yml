@@ -10,8 +10,8 @@ web:
    - mysql
 
   environment:
-    MYSQL_PASSWORD: "root"
-    MYSQL_USER: "admin"
+    MYSQL_PASSWORD: "ec_platform"
+    MYSQL_USER: "ec_platform"
     PORT: "1337"
     NODE_ENV: "development"
 
@@ -31,6 +31,10 @@ mysql:
   ports:
     - "3306:3306"
   volumes:
-    - "/Users/shared/database:/var/lib/mysql/"
+    - "../database:/var/lib/mysql/"
   environment:
     MYSQL_ADMIN_PASS: "root"
+    MYSQL_USER_NAME: "ec_platform"
+    MYSQL_USER_DB: "ec_platform"
+    MYSQL_USER_PASS: "ec_platform"
+    CREATE_MYSQL_BASIC_USER_AND_DB: "true"
