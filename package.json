@@ -1,6 +1,17 @@
 {
   "name": "ec-platform",
   "version": "0.1.0",
+  "author": "Trunk Studio <community@trunk-studio.com>",
+  "contributors": [{
+    "name": "smlsun",
+    "email": "smlsun@trunk-studio.com"
+  }, {
+    "name": "clonn",
+    "email": "clonncd@gmail.com"
+  }, {
+    "name": "kyle",
+    "email": "kyle@trunk-studio.com"
+  }],
   "keywords": [
     "sails.js",
     "coffeescript",
@@ -60,8 +71,7 @@
     "type": "git",
     "url": "git://github.com/caesarchi/main-site.git"
   },
-  "author": "clonn(a.k.a, CaesarChi)",
-  "license": "GPL with Trunk-Studio & Exma-Square",
+  "license": "GPL",
   "devDependencies": {
     "chai": "^1.10.0",
     "cheerio": "^0.19.0",
