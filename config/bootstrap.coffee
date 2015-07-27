@@ -48,11 +48,26 @@ module.exports.bootstrap = (cb) ->
       db.Product.create(newProduct).then (createdProduct) ->
         done(null)
 
+    orderTestDataCreate = (done) ->
+      newBuyer = {
+        username: "buyer"
+        email: "buyer@gmail.com"
+        password: "buyer"
+      }
+      db.User.create(newBuyer).then (newBuyer) ->
+        newOrder = {
+          quantity: 10
+          orderId: '1111'
+          UserId: newBuyer.id
+        }
+        db.Order.create(newOrder).then (createdOrder) ->
+          done()
 
 
     async.series [
       adminTestDataCreate
       productTestDataCreate
+      orderTestDataCreate
     ], (err, results) ->
       return cb()
 

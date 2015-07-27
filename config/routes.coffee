@@ -51,9 +51,15 @@ module.exports.routes = {
   }
   'post /order': 'OrderController.create'
 
-  'post /order/status': 'OrderController.status'
-
-
+  'post /order/status': {
+    controller: "OrderController",
+    action: "status",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+  
   "/:controller/:action/:id?": {}
 
 }
