@@ -53,7 +53,9 @@
     "watch:coffee": "coffee -cwo ./.tmp/public/js ./assets/js/",
     "copy": "cp --parents ./assets/js/dependencies/*.js ./.tmp/public/js/dependencies/*.js",
     "debug": "node debug app.js",
-    "release": "git push heroku release:master"
+    "release": "git push heroku release:master",
+    "mobileUpdate": "cd ../jquery-mobile-cart-demo && git pull",
+    "restart": "npm run mobileUpdate && git pull && fig stop && fig up -d"
   },
   "main": "app.js",
   "repository": {
