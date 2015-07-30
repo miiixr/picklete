@@ -66,10 +66,10 @@ OrderController =
           # create a new user
           db.User.create(jUser).then (createdUser) ->
             if createdUser
+              #doCreateOrder(createdUser.id)
               console.log '======================>\n
               new user created. ===>\n',createdUser.get()
-              doCreateOrder(createdUser.id)
-              done(null)
+              done(null,createdUser.id)
         # user exists.
         else
           console.log 'find a exist user. id===>',thisUser.id
@@ -94,16 +94,18 @@ OrderController =
           console.log '======================>\n
           new order includes ==>\n',createdOrder.get()
           result.order = createdOrder
-          result.sucess = true
+          result.success = true
+          done(null)
         else
           result.order = null
-          result.sucess = false
+          result.success = false
+          done(msg: '建立訂單失敗')
 
     # do works async just in case.
     async.series [
       doFindProduct
       doFindOrCreateUser
-      #doCreateOrder
+      doCreateOrder
     ], (err, results) ->
       return res.ok {
             order: result.order
