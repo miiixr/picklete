@@ -91,15 +91,17 @@ OrderController =
         if createdOrder
           console.log '======================>\n
           new order includes ==>\n',createdOrder.get()
-          res.ok {
-              order: createdOrder
-              success: true
-            }
-        else
-          res.ok {
-            order: null
-            success: !true
-          }
+          result.order = createdOrder
+          result.sucess = true
+        #   res.ok {
+        #       order: createdOrder
+        #       success: true
+        #     }
+        # else
+        #   res.ok {
+        #     order: null
+        #     success: !true
+        #   }
 
     # do works async just in case.
     async.series [
@@ -108,6 +110,10 @@ OrderController =
       #doCreateOrder
     ], (err, results) ->
       return
+      res.ok {
+          order: createdOrder
+          success: true
+        }
 
   # order status section
   status:  (req, res) ->
