@@ -30,6 +30,12 @@ OrderController =
     jProduct = newOrder.product
     jUser = newOrder.user
 
+    # outputs
+    result = {
+      order:null
+      success:null
+    }
+
     # console outputs
     console.log '=====================>'
     console.log ' user:', jUser
@@ -81,10 +87,6 @@ OrderController =
         orderId: theDate.getTime()
         #########################
       }
-      result = {
-        order:null
-        success:null
-      }
 
       # insert the order
       db.Order.create(newOrder).then (createdOrder) ->
@@ -93,15 +95,9 @@ OrderController =
           new order includes ==>\n',createdOrder.get()
           result.order = createdOrder
           result.sucess = true
-        #   res.ok {
-        #       order: createdOrder
-        #       success: true
-        #     }
-        # else
-        #   res.ok {
-        #     order: null
-        #     success: !true
-        #   }
+        else
+          result.order = null
+          result.sucess = false
 
     # do works async just in case.
     async.series [
@@ -109,11 +105,10 @@ OrderController =
       doFindOrCreateUser
       #doCreateOrder
     ], (err, results) ->
-      return
-      res.ok {
-          order: createdOrder
-          success: true
-        }
+      return res.ok {
+            order: result.order
+            success: result.success
+          }
 
   # order status section
   status:  (req, res) ->
