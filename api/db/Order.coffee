@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) ->
   }, classMethods: associate: (models) ->
     Order.belongsTo models.User
     Order.hasOne models.Product
+    Order.hasOne models.Shipment
     return
   )
   return Order
