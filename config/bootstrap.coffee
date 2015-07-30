@@ -41,7 +41,7 @@ module.exports.bootstrap = (cb) ->
       newProduct = {
         name: '斗六文旦柚禮盒'
         descript: '3斤裝'
-        stockQuantity: 0
+        stockQuantity: 10
         image: 'http://localhost:1337/images/product/1.jpg'
       }
 
