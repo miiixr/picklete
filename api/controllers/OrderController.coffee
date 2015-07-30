@@ -1,6 +1,6 @@
 OrderController =
   # order building section
- create : (req, res)  ->
+  create : (req, res)  ->
     # 1. 透過 Productid 找到 model product --- ok
     # 2. 檢查 user 是否存在，若否進行建立  ---
     # 3. 建立訂單 order                    ---
@@ -24,49 +24,31 @@ OrderController =
     #   }
     # }
     ##############################################
-    # debug switch
-    debug = true
-
     # get params
-    quantity = req.param("quantity")
-    jProduct = req.param('product')
-    jUser = req.param('user')
+    newOrder = req.body
+    quantity = req.body.quantity
+    jProduct = newOrder.product
+    jUser = newOrder.user
 
     # console outputs
-    if debug
-      console.log ' ===================>'
-      console.log ' json.p.id==>', jProduct.id
-      console.log ' json.p.name==>', jProduct.name
-      console.log ' json.p.descript==>', jProduct.descript
-      console.log ' json.p.quantity==>', quantity
-      console.log ' json.u.name==>', jUser.username
-      console.log ' json.u.email==>', jUser.email
-      console.log ' json.u.mobile==>', jUser.mobile
-      console.log ' json.u.address==>', jUser.address
-      console.log ' ===================>'
+    console.log '=====================>'
+    console.log ' user:', jUser
+    console.log ' product:', jProduct
+    console.log '=====================>'
 
     # step 1 : get product by given id.
     doFindProduct = (done) ->
       db.Product.findById(1).then (findProduct) ->
         #
-        if debug
-          console.log ' ===================>'
-          console.log ' db.p.id======>',findProduct.id
-          console.log ' db.p.name====>',findProduct.name
-          console.log ' db.p.price===>',findProduct.price
-          console.log ' db.p.descript=>',findProduct.descript
-          console.log ' db.p.stockQuantity=>',findProduct.stockQuantity
-          console.log ' ===================>'
+        console.log '=====================>'
+        console.log ' product in db:',findProduct
+        console.log '=====================>'
 
         #
-        if !findProduct
-          console.log '找不到商品！ 請確認商品ID！'
-        else
-          #
-          if findProduct.stockQuantity < 1
-            console.log '商品缺貨！'
-          else
-            done(null)
+        return done(msg: '找不到商品！ 請確認商品ID！') if !findProduct
+        return done(msg: '商品售鑿！') if findProduct.stockQuantity is 0
+        return done(msg: '商品數量不足！') if findProduct.stockQuantity < quantity
+        done(null)
 
     # step 2 : check user whether exists.
     doFindOrCreateUser = (done) ->
@@ -78,9 +60,9 @@ OrderController =
           # create a new user
           db.User.create(jUser).then (createdUser) ->
             if createdUser
-              doCreateOrder(createdUser.id)
               console.log '======================>\n
               new user created. ===>\n',createdUser.get()
+              doCreateOrder(createdUser.id)
               done(null)
         # user exists.
         else
@@ -88,23 +70,31 @@ OrderController =
           done(null)
 
     # step 3 : insert a new order
-    doCreateOrder = (userid,done) ->
+    doCreateOrder = (done,userid) ->
       # build a order
       theDate = new Date
       newOrder = {
         quantity: quantity
         UserId : userid
-        orderId: jProduct.id + jProduct.name + theDate.getTime()
+        # odrer id
+        #########################
+        orderId: theDate.getTime()
+        #########################
       }
+      result = {
+        order:null
+        success:null
+      }
+
       # insert the order
       db.Order.create(newOrder).then (createdOrder) ->
         if createdOrder
           console.log '======================>\n
           new order includes ==>\n',createdOrder.get()
           res.ok {
-            order: createdOrder
-            success: true
-          }
+              order: createdOrder
+              success: true
+            }
         else
           res.ok {
             order: null
