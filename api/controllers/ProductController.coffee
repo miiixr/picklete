@@ -17,6 +17,8 @@ ProductController =
         id: productId
       }
     }).then (product) ->
+      productJson = product.toJSON()
+      productJson.image = base64data;
       return res.ok {product: product}
 
 module.exports = ProductController
