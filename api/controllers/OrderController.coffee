@@ -119,7 +119,7 @@ OrderController =
         result.order.setShipment(createShipment).then (associatedShipment) ->
 
           resultOrder = result.order.toJSON()
-          
+
           resultOrder.shipment = createShipment
 
 
@@ -144,20 +144,16 @@ OrderController =
         where:
           orderId:req.body.orderId
           UserId:userData.id
+        include: [
+          { model: db.User }
+          { model: db.Shipment }
+          { model: db.Product }
+        ]
       )
       .then (orderProduct) ->
+        console.log 'orderProduct', orderProduct.toJSON();
         if orderProduct?
-          order = {
-              id: orderProduct.orderId
-              quantity: orderProduct.quantity
-              user: {
-                username: userData.username
-                email: userData.email
-                mobile: userData.mobile
-                address: userData.address
-              }
-            }
-          res.ok { order : order }
+          res.ok { order : orderProduct }
         else
           #沒有此訂單編號時在這處理
           res.ok { msg: '沒有此訂單' }
