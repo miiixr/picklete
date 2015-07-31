@@ -25,8 +25,10 @@ OrderController =
     # }
     ##############################################
     # get params
-    newOrder = req.body
-    quantity = req.body.quantity
+
+    console.log 'req.body', req.body
+    newOrder = req.body.order
+    quantity = newOrder.quantity
     jProduct = newOrder.product
     jUser = newOrder.user
     shipment = newOrder.shipment
@@ -48,7 +50,7 @@ OrderController =
       db.Product.findById(1).then (findProduct) ->
         #
         console.log '=====================>'
-        console.log ' product in db:',findProduct
+        console.log ' product in db:',findProduct.toJSON();
         console.log '=====================>'
 
         #
@@ -81,8 +83,9 @@ OrderController =
       # build a order
       theDate = new Date
       newOrder = {
-        quantity: quantity
-        UserId : userid
+        quantity: quantity,
+        UserId : userid,
+        orderId: '2222'
         # odrer id
         #########################
         # orderId: theDate.getTime()

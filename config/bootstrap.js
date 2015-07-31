@@ -45,6 +45,7 @@ module.exports.bootstrap = async (cb) => {
       name: '斗六文旦柚禮盒',
       descript: '3斤裝',
       stockQuantity: 10,
+      price: 100,
       image: 'http://localhost:1337/images/product/1.jpg'
     };
     var createdProduct = await db.Product.create(newProduct);
