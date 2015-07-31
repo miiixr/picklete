@@ -18,16 +18,26 @@ describe "about Order", (done) ->
         address: 'addres'
         username: 'test'
       }
+
+      shipment: {
+        username: '收件者'
+        mobile: '0922-222-222'
+        taxId: '123456789'
+        email: 'receiver@gmail.com'
+        address: '收件者的家'
+      }
     }
 
     request(sails.hooks.http.app)
     .post("/order")
     .send(newOrder)
     .end (err, res) ->
-      console.log 'res.body', res.body
       return done(body) if res.statusCode is 500
       res.body.success.should.be.true
       res.body.order.id.should.be.number
+      res.body.order.shipment.id.should.be.number
+      res.body.order.user.id.should.be.number
+      res.body.order.product.id.should.be.number
 
       done(err)
 

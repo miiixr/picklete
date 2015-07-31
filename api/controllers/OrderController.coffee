@@ -29,6 +29,7 @@ OrderController =
     quantity = req.body.quantity
     jProduct = newOrder.product
     jUser = newOrder.user
+    shipment = newOrder.shipment
 
     # outputs
     result = {
@@ -89,17 +90,21 @@ OrderController =
       }
 
       # insert the order
-      db.Order.create(newOrder).then (createdOrder) ->
-        if createdOrder
-          console.log '======================>\n
-          new order includes ==>\n',createdOrder.get()
-          result.order = createdOrder
-          result.success = true
-          done(null)
-        else
-          result.order = null
-          result.success = false
-          done(msg: '建立訂單失敗')
+
+      ShipmentService.create shipment, (error, createShipment) ->
+        newOrder.shipment = newOrder.id
+
+        db.Order.create(newOrder).then (createdOrder) ->
+          if createdOrder
+            console.log '======================>\n
+            new order includes ==>\n',createdOrder.get()
+            result.order = createdOrder
+            result.success = true
+            done(null)
+          else
+            result.order = null
+            result.success = false
+            done(msg: '建立訂單失敗')
 
     # do works async just in case.
     async.series [
@@ -107,11 +112,21 @@ OrderController =
       doFindOrCreateUser
       doCreateOrder
     ], (err, results) ->
-      console.log 'error', err
-      return res.ok {
-        order: result.order
-        success: result.success
-      }
+
+      ShipmentService.create shipment, (error, createShipment) ->
+        console.log '=== createShipment ===', createShipment
+
+        result.order.setShipment(createShipment).then (associatedShipment) ->
+
+          resultOrder = result.order.toJSON()
+          
+          resultOrder.shipment = createShipment
+
+
+          return res.ok {
+            order: resultOrder
+            success: result.success
+          }
 
   # order status section
   status:  (req, res) ->
