@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) ->
     quantity: DataTypes.INTEGER
   }, classMethods: associate: (models) ->
     Order.belongsTo models.User
-    Order.hasOne models.Product
+    Order.belongsTo models.Product
     Order.hasOne models.Shipment
     return
   )

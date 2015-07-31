@@ -34,6 +34,13 @@ module.exports.bootstrap = async (cb) => {
     };
     let createdPassport = await db.Passport.create(passport);
 
+    var newBuyer = {
+      username: "buyer",
+      email: "buyer@gmail.com",
+      password: "buyer"
+    };
+    var createNewBuyer = await db.User.create(newBuyer);
+
     var newProduct = {
       name: '斗六文旦柚禮盒',
       descript: '3斤裝',
@@ -42,19 +49,27 @@ module.exports.bootstrap = async (cb) => {
     };
     var createdProduct = await db.Product.create(newProduct);
 
-    var newBuyer = {
-      username: "buyer",
-      email: "buyer@gmail.com",
-      password: "buyer"
-    };
-    var createNewBuyer = await db.User.create(newBuyer);
-
     var newOrder = {
       quantity: 10,
       orderId: '1111',
-      UserId: createNewBuyer.id
+      UserId: createNewBuyer.id,
+      ProductId: createdProduct.id
     };
     var createdOrder = await db.Order.create(newOrder);
+
+    var shipment = {
+      username: '收件者',
+      mobile: '0922-222-222',
+      taxId: '123456789',
+      email: 'receiver@gmail.com',
+      address: '收件者的家',
+      OrderId: createdOrder.id
+    }
+
+    var createShipment = await db.Shipment.create(shipment);
+
+
+
 
     cb();
 
