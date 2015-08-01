@@ -37,6 +37,8 @@ OrderController =
     result = {
       order:null
       success:null
+      user:null
+      product:null
     }
 
     # console outputs
@@ -52,7 +54,7 @@ OrderController =
         console.log '=====================>'
         console.log ' product in db:',findProduct.toJSON();
         console.log '=====================>'
-
+        result.product = findProduct
         #
         return done(msg: '找不到商品！ 請確認商品ID！') if !findProduct
         return done(msg: '商品售鑿！') if findProduct.stockQuantity is 0
@@ -72,11 +74,13 @@ OrderController =
               #doCreateOrder(createdUser.id)
               console.log '======================>\n
               new user created. ===>\n',createdUser.get()
+              result.user = createdUser
               done(null,createdUser.id)
         # user exists.
         else
           console.log 'find a exist user. id===>',thisUser.id
-          done(null)
+          result.user = createdUser
+          done(null,createdUser.id)
 
     # step 3 : insert a new order
     doCreateOrder = (done, userid) ->
@@ -117,6 +121,8 @@ OrderController =
     ], (err, results) ->
 
       ShipmentService.create shipment, (error, createShipment) ->
+        console.log '====user====',result.user
+        console.log '==product===',result.product
         console.log '=== createShipment ===', createShipment
 
         result.order.setShipment(createShipment).then (associatedShipment) ->
@@ -124,6 +130,9 @@ OrderController =
           resultOrder = result.order.toJSON()
 
           resultOrder.shipment = createShipment
+          resultOrder.user = result.user
+          resultOrder.product = result.product
+
 
 
           return res.ok {
