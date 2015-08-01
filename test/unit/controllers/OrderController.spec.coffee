@@ -1,4 +1,4 @@
-describe "about Order", (done) ->
+describe.only "about Order", (done) ->
 
   it "create Order should be success.", (done) ->
     newOrder = {
