@@ -30,7 +30,7 @@ describe "about Order", (done) ->
 
     request(sails.hooks.http.app)
     .post("/order")
-    .send({order: newOrder})
+    .send({body: newOrder})
     .end (err, res) ->
       return done(body) if res.statusCode is 500
       res.body.success.should.be.true
@@ -41,7 +41,7 @@ describe "about Order", (done) ->
 
       done(err)
 
-  describe "get Order status.", () ->
+  describe.only "get Order status.", () ->
     before (done) ->
 
       newUser = {
@@ -77,6 +77,7 @@ describe "about Order", (done) ->
       .send(formdata)
       .end (err, res) ->
         return done(body) if res.statusCode is 500
+        console.log res.body
         res.body.order.id.should.be.number
 
         done(err)
