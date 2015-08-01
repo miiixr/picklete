@@ -121,24 +121,21 @@ OrderController =
     ], (err, results) ->
 
       ShipmentService.create shipment, (error, createShipment) ->
-        console.log '====user====',result.user
-        console.log '==product===',result.product
         console.log '=== createShipment ===', createShipment
 
         result.order.setShipment(createShipment).then (associatedShipment) ->
+          result.order.setProduct(result.product).then (associatedProduct) ->
+            result.order.setUser(result.user).then (associatedUser) ->
 
-          resultOrder = result.order.toJSON()
+              resultOrder = result.order.toJSON()
+              resultOrder.shipment = createShipment
+              resultOrder.user = result.user
+              resultOrder.product = result.product
 
-          resultOrder.shipment = createShipment
-          resultOrder.user = result.user
-          resultOrder.product = result.product
-
-
-
-          return res.ok {
-            order: resultOrder
-            success: result.success
-          }
+              return res.ok {
+                order: resultOrder
+                success: result.success
+              }
 
   # order status section
   status:  (req, res) ->
