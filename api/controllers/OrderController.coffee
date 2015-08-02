@@ -162,7 +162,11 @@ OrderController =
       .then (orderProduct) ->
         console.log 'orderProduct', orderProduct.toJSON();
         if orderProduct?
-          res.ok { order : orderProduct }
+          bank = require('../../config/bank.coffee');
+          res.ok { 
+            order : orderProduct
+            bank : bank
+          }
         else
           #沒有此訂單編號時在這處理
           res.ok { msg: '沒有此訂單' }

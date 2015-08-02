@@ -77,6 +77,7 @@ describe.only "about Order", (done) ->
       .send(formdata)
       .end (err, res) ->
         return done(body) if res.statusCode is 500
+        console.log res.body
         res.body.order.id.should.be.number
 
         done(err)
