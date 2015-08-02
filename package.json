@@ -68,8 +68,9 @@
     "release": "git push heroku release:master",
     "mobileUpdate": "cd ../jquery-mobile-cart-demo && git pull && npm i",
     "platformUpdate": "git pull && npm i",
+    "landUpdate": "cd ../nativeDroid2 && git pull && npm i",
     "dockerRestart": "fig stop && fig up -d",
-    "restart": "npm run mobileUpdate && npm run platformUpdate && npm run dockerRestart"
+    "restart": "npm run mobileUpdate && npm run platformUpdate && npm run landUpdate && npm run dockerRestart"
   },
   "main": "app.js",
   "repository": {
