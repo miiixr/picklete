@@ -26,6 +26,19 @@ mobile:
   volumes:
    - ../jquery-mobile-cart-demo:/app
 
+land:
+  image: iojs
+  command: "node server.js"
+  working_dir: /app
+  ports:
+  - "2000:2000"
+  links:
+    - mobile
+  volumes:
+   - ../nativeDroid2:/app
+  environment:
+    DOMAIN_NAME: "trunk-studio.com"
+
 mysql:
   image: dgraziotin/mysql
   ports:
