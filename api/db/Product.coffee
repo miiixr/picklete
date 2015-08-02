@@ -5,5 +5,8 @@ module.exports = (sequelize, DataTypes) ->
     descript: DataTypes.STRING
     stockQuantity: DataTypes.INTEGER
     price: DataTypes.INTEGER
-  }
+  }, classMethods: associate: (models) ->
+    Product.hasOne models.Order
+    return
+
   return Product

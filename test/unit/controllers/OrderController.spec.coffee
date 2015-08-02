@@ -1,4 +1,5 @@
-describe "about Order", (done) ->
+describe.only "about Order", (done) ->
+
   it "create Order should be success.", (done) ->
     newOrder = {
       quantity: 10
@@ -14,22 +15,33 @@ describe "about Order", (done) ->
       user: {
         email: 'test@gmail.com'
         mobile: '0911-111-111'
-        address: ''
+        address: 'addres'
         username: 'test'
+      }
+
+      shipment: {
+        username: '收件者'
+        mobile: '0922-222-222'
+        taxId: '123456789'
+        email: 'receiver@gmail.com'
+        address: '收件者的家'
       }
     }
 
     request(sails.hooks.http.app)
     .post("/order")
-    .send(newOrder)
+    .send({order: newOrder})
     .end (err, res) ->
       return done(body) if res.statusCode is 500
       res.body.success.should.be.true
       res.body.order.id.should.be.number
+      res.body.order.shipment.id.should.be.number
+      res.body.order.user.id.should.be.number
+      res.body.order.product.id.should.be.number
 
       done(err)
 
-  describe.only "get Order status.", () ->
+  describe "get Order status.", () ->
     before (done) ->
 
       newUser = {
@@ -41,7 +53,7 @@ describe "about Order", (done) ->
       console.log '=== before test create newUser==='
       db.User.create(newUser).then (newUser) ->
         console.log '=== create newOrder ==='
-        
+
         newOrder = {
           quantity:10
           orderId:'11223344'

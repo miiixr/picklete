@@ -4,6 +4,15 @@ sails = undefined
 global.request = require("supertest")
 global.should = require("chai").should()
 
+options = {
+  loose     : "all",
+  stage     : 1,
+  ignore    : null,
+  only      : null,
+  extensions: null
+};
+require("sails-hook-babel/node_modules/babel/register")(options);
+
 before (done) ->
   Sails.lift { port: 1338 }, (err, server) ->
     sails = server

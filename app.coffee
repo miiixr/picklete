@@ -22,6 +22,16 @@ The same command-line arguments are supported, e.g.:
 # no matter where we actually lift from.
 process.chdir __dirname
 
+options = {
+  loose     : "all",
+  stage     : 1,
+  ignore    : null,
+  only      : null,
+  extensions: null
+};
+require("sails-hook-babel/node_modules/babel/register")(options);
+
+
 # Ensure a "sails" can be located:
 (->
   sails = undefined
@@ -35,7 +45,7 @@ process.chdir __dirname
     console.error "When you run `sails lift`, your app will still use a local `./node_modules/sails` dependency if it exists,"
     console.error "but if it doesn't, the app will run with the global sails instead!"
     return
-  
+
   # Try to get `rc` dependency
   rc = undefined
   try
@@ -50,7 +60,7 @@ process.chdir __dirname
       console.error "npm install rc --save"
       rc = ->
         {}
-  
+
   # Start server
   sails.lift rc("sails")
   return

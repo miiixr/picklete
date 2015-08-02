@@ -50,6 +50,7 @@
     "rc": "~0.5.0",
     "sails": "~0.11.0-rc4",
     "sails-disk": "~0.10.0",
+    "sails-hook-babel": "^5.0.1",
     "sequelize": "^3.4.1",
     "skipper": "^0.5.5",
     "sqlite3": "^3.0.9",
@@ -64,7 +65,9 @@
     "watch:coffee": "coffee -cwo ./.tmp/public/js ./assets/js/",
     "copy": "cp --parents ./assets/js/dependencies/*.js ./.tmp/public/js/dependencies/*.js",
     "debug": "node debug app.js",
-    "release": "git push heroku release:master"
+    "release": "git push heroku release:master",
+    "mobileUpdate": "cd ../jquery-mobile-cart-demo && git pull",
+    "restart": "npm run mobileUpdate && git pull && fig stop && fig up -d"
   },
   "main": "app.js",
   "repository": {
