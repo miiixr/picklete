@@ -27,8 +27,8 @@ module.exports = {
         productJson.image = base64data;
       }
     } catch (error) {
-      console.log('product get image error');
-      console.log(error.stack);
+      console.log(`can\'t find product ${product.id} image`);
+      productJson.image = 'about:blank';
     }
 
     return productJson;
