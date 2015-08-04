@@ -14,7 +14,11 @@ options = {
 require("sails-hook-babel/node_modules/babel/register")(options);
 
 before (done) ->
-  Sails.lift { port: 1338 }, (err, server) ->
+  Sails.lift {
+    port: 1338
+    hooks:
+      grunt:false
+  }, (err, server) ->
     sails = server
     if err
       return done(err)

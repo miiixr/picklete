@@ -1,4 +1,4 @@
-describe "about Product", (done) ->
+describe.only "about Product", (done) ->
 
   it "get product info.", (done) ->
 
@@ -9,5 +9,6 @@ describe "about Product", (done) ->
       res.statusCode.should.equal 200
       res.body.product.should.be.Object
       res.body.product.id.should.be.number
+      res.body.product.image.should.be.String
 
       done(err)

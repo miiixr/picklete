@@ -1,9 +1,11 @@
-import fs from 'fs';
-import mime from "mime";
-import util from "util";
-
 let ProductController = {
   findOne: async (req, res) => {
+    let productId = req.param("productId");
+    let product = await ProductService.findWithImages(productId);
+    return res.ok({product});
+  },
+
+  find: async (req, res) => {
 
     let productId = req.param("productId");
 
@@ -20,7 +22,6 @@ let ProductController = {
     return res.ok({
       product: product
     });
-
   }
 };
 
