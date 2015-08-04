@@ -1,0 +1,19 @@
+#profile-section.row
+  #profile-img
+    if user.image != undefined
+      img(src="#{user.image}" alt="profile image")
+    else
+      img(src="http://www.gravatar.com/avatar/45e23f8cb7c378a6514b7f2e192e0315?s=120&d=retro" alt="profile image")
+  h2= user.username ? user.username : 'RaffyTan'
+    #profile-info= user.location ? user.location : '溫哥華，加拿大'
+  #profile-description= user.introduction ? user.location : 'Molestiae dolorem possimus rerum sed accusamus voluptas corrupti quia. Vero quae reiciendis provident nam nostrum porro error. Delectus sunt repellendus dolorem facilis repudiandae. Nostrum non quo consequuntur asperiores fugiat. Est mollitia rerum unde accusamus ex harum deserunt.'
+  a#profile-link(href="/profile/edit") 編輯自我介紹
+  #profile-nav
+    ul
+      li
+        a(href="#") 願望清單
+      li
+        a.active(href="#") 計劃旅程
+      li
+        a(href="#") 評論
+
