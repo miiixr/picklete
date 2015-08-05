@@ -1,7 +1,7 @@
 
 module.exports = (sequelize, DataTypes) ->
   Order = sequelize.define('Order', {
-    orderId: DataTypes.STRING
+    SerialNumber: DataTypes.STRING
     quantity: DataTypes.INTEGER
   }, classMethods: associate: (models) ->
     Order.belongsTo models.User
