@@ -1,78 +1,115 @@
+// # 1. 透過 Productid 找到 model product
+// # 2. 檢查 user 是否存在，若否進行建立
+// # 3. 建立訂單 order
+
 var OrderController;
-//var models = require('../api/db');
 
 OrderController = {
-  create: function(req, res) {
+  create: async (req, res) => {
     // print body
     console.log('req.body is=>\n', req.body);
 
-    // get params from body
     var newOrder = req.body.order;
-    // separate params
+
     var quantity = newOrder.quantity;
     var product = newOrder.product;
     var user = newOrder.user;
     var shipment = newOrder.shipment;
 
-    // set a result object
     var result = {
-      order: null,
-      success: null,
-      user: null,
-      product: null
+      product:null
     };
 
-    // method - find product
-    var findProduct = async( function (done) {
-      console.log('product.id=>',product.id);
-      // db action
-      try {
-        // find product from db by given Id.
-        var targetProduct =
-           await (db.Product.findById(1));
-        // find no pid.
-        if (!findProduct) {
-          return done({
-            msg: '找不到商品！ 請確認商品ID！'
-          });
-        }else{
-          result.product = targetProduct
-         // print target product.
-         console.log ('==========targetProduct=============');
-         console.log (targetProduct);
-          // end
-          return done(null);
-        }
-        // no stockQuantity.
-        if (findProduct.stockQuantity === 0) {
-          return done({
-            msg: '商品售鑿！'
-          });
-        }
-        // over-ordering.
-        if (findProduct.stockQuantity < quantity) {
-          return done({
-            msg: '商品數量不足！'
-          });
-        }
-      } catch (e) {
-        console.log ('err=>',e);
-        return done({
-          msg: e
-        });
-      }
-    });
+    try {
+      // find product.
+      let findProduct = await (db.Product.findById(product.id).then(function(targetProduct){
+          if (!targetProduct) {
+            console.log('err=>find product failed.');
+            return res.serverError({
+              msg: '找不到商品！ 請確認商品ID！'
+            });
+          }
+          if (targetProduct.stockQuantity === 0) {
+            console.log('err=>product no stock.');
+            return res.serverError({
+              msg: '商品售鑿！'
+            });
+          }
+          if (targetProduct.stockQuantity < quantity) {
+            console.log('err=>over-ordering.');
+            return res.serverError({
+              msg: '商品數量不足！'
+            });
+          }
+          result.product = targetProduct.toJSON();
+        })
+      );
 
+      // find or create user.
+      let insertUser = await (db.User.findOrCreate({
+        where:
+          {
+            email:user.email
+          },
+          defaults:user
+        }).then(function(user, created){
+          if (!created){
+            console.log('create user.');
+          }
+          result.user = user;
+        })
+      );
 
-    return res.ok({
-      order:  result.product,
-      bank: sails.config.bank,
-      success: true
-    });
+      // build order and shipment.
+      let thisOrder = {
+        quantity: quantity,
+        UserId: result.user.id,
+        orderId: 'not-set-yet'
+      };
+      let insertOrder = await (db.Order.create(thisOrder).then(function(createdOrder){
+          if (!createdOrder){
+            console.log('err=>create order failed.');
+            return res.serverError({
+              msg: '建立訂單失敗'
+            });
+          }
+          result.order = createdOrder.toJSON();
+          result.id = result.order.id;
+          result.success = true;
+        })
+      );
+
+      // build shipment.
+      ShipmentService.create(shipment, async(error, createShipment) => {
+        if (!createShipment){
+          console.log('err=>create Shipment failed.');
+          return res.serverError({
+            msg: '建立Shipment失敗'
+            });
+        }
+        result.shipment = createShipment;
+        // var associatedShipment = await (result.order.setShipment(result.shipment));
+        // let associatedProduct = await (result.order.setProduct(result.product));
+        // let associatedUser = await (result.order.setUser(orderUser));
+      });
+
+      // output
+      console.log('\nRESULT===============>\n',result);
+      return res.ok({
+        order: result,
+        bank: sails.config.bank,
+        success: result.success
+      });
+    } catch (e) {
+      console.log ('err=>',e);
+      return res.serverError(e);
+    }
   },
-  //
+  // 查詢
   status: function(req, res) {
-
+    return res.ok({
+      msg: '沒有此訂單'
+    });
   }
 };
 

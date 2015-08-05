@@ -41,43 +41,43 @@ describe.only "about Order", (done) ->
 
       done(err)
 
-  describe "get Order status.", () ->
-    before (done) ->
-
-      newUser = {
-        username: "testOrderUser"
-        email: "testOrderUser@gmail.com"
-        password: "testuser"
-      }
-
-      console.log '=== before test create newUser==='
-      db.User.create(newUser).then (newUser) ->
-        console.log '=== create newOrder ==='
-
-        newOrder = {
-          quantity:10
-          orderId:'11223344'
-          UserId:newUser.id
-        }
-
-        db.Order.create(newOrder).then (createdOrder) ->
-          createdOrder.orderId.should.be.String
-          done()
-
-
-    it "get Order status should be success.", (done) ->
-
-      formdata = {
-        orderId: '11223344'
-        email: 'testOrderUser@gmail.com'
-      }
-
-      request(sails.hooks.http.app)
-      .post("/order/status")
-      .send(formdata)
-      .end (err, res) ->
-        return done(body) if res.statusCode is 500
-        console.log res.body
-        res.body.order.id.should.be.number
-
-        done(err)
+  # describe "get Order status.", () ->
+  #   before (done) ->
+  #
+  #     newUser = {
+  #       username: "testOrderUser"
+  #       email: "testOrderUser@gmail.com"
+  #       password: "testuser"
+  #     }
+  #
+  #     console.log '=== before test create newUser==='
+  #     db.User.create(newUser).then (newUser) ->
+  #       console.log '=== create newOrder ==='
+  #
+  #       newOrder = {
+  #         quantity:10
+  #         orderId:'11223344'
+  #         UserId:newUser.id
+  #       }
+  #
+  #       db.Order.create(newOrder).then (createdOrder) ->
+  #         createdOrder.orderId.should.be.String
+  #         done()
+  #
+  #
+  #   it "get Order status should be success.", (done) ->
+  #
+  #     formdata = {
+  #       orderId: '11223344'
+  #       email: 'testOrderUser@gmail.com'
+  #     }
+  #
+  #     request(sails.hooks.http.app)
+  #     .post("/order/status")
+  #     .send(formdata)
+  #     .end (err, res) ->
+  #       return done(body) if res.statusCode is 500
+  #       console.log res.body
+  #       res.body.order.id.should.be.number
+  #
+  #       done(err)
