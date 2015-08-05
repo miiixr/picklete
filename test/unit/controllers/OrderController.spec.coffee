@@ -79,6 +79,6 @@ describe "about Order", (done) ->
         return done(body) if res.statusCode is 500
         console.log res.body
         res.body.order.id.should.be.number
-        res.body.order. SerialNumber.should.be.String
+        res.body.order.SerialNumber.should.be.String
 
         done(err)
