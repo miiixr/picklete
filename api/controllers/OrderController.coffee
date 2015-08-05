@@ -32,16 +32,15 @@ OrderController =
     jProduct = newOrder.product
     jUser = newOrder.user
     shipment = newOrder.shipment
-    date = (Date::yyyymmdd = ->
-      yyyy = @getFullYear().toString()
-      mm = (@getMonth() + 1).toString()
-      dd = @getDate().toString()
-      yyyy + (if mm[1] then mm else '0' + mm[0]) + (if dd[1] then dd else '0' + dd[0])
-      )
-    randomNumber = (maxNum = 9999
+    dateFormat = (nowDate) ->
+      yyyy = nowDate.getFullYear().toString()
+      mm = (nowDate.getMonth() + 1).toString()
+      dd = nowDate.getDate().toString()
+      return yyyy + (if mm[1] then mm else '0' + mm[0]) + (if dd[1] then dd else '0' + dd[0])
+    randomNumber = ->
+      maxNum = 9999
       minNum = 0
-      n = Math.floor(Math.random() * (maxNum - minNum + 1)) + minNum
-      )
+      return Math.floor(Math.random() * (maxNum - minNum + 1)) + minNum
 
 
     # outputs
@@ -100,7 +99,7 @@ OrderController =
       newOrder = {
         quantity: quantity,
         UserId : userid,
-        SerialNumber: '2222'
+        SerialNumber: dateFormat(new Date()) + randomNumber()
         # odrer id
         #########################
         #  SerialNumber: theDate.getTime()
@@ -178,7 +177,6 @@ OrderController =
           res.ok {
             order : orderProduct
             bank : bank
-            SerialNumber :document.date.concat(randomNumber)
           }
         else
           #沒有此訂單編號時在這處理
