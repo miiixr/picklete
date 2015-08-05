@@ -11,87 +11,78 @@ OrderController = {
 
     var newOrder = req.body.order;
 
-    var quantity = newOrder.quantity;
-    var product = newOrder.product;
-    var user = newOrder.user;
-    var shipment = newOrder.shipment;
-
     var result = {
       product:null
     };
 
     try {
       // find product.
-      let findProduct = await (db.Product.findById(product.id).then(function(targetProduct){
-          if (!targetProduct) {
-            console.log('err=>find product failed.');
-            return res.serverError({
-              msg: '找不到商品！ 請確認商品ID！'
-            });
-          }
-          if (targetProduct.stockQuantity === 0) {
-            console.log('err=>product no stock.');
-            return res.serverError({
-              msg: '商品售鑿！'
-            });
-          }
-          if (targetProduct.stockQuantity < quantity) {
-            console.log('err=>over-ordering.');
-            return res.serverError({
-              msg: '商品數量不足！'
-            });
-          }
-          result.product = targetProduct.toJSON();
-        })
-      );
+      let findProduct = await (db.Product.findById(newOrder.product.id));
+      if (!findProduct) {
+        console.log('err=>find product failed.');
+        return res.serverError({
+          msg: '找不到商品！ 請確認商品ID！'
+        });
+      }
+      if (findProduct.stockQuantity === 0) {
+        console.log('err=>product no stock.');
+        return res.serverError({
+          msg: '商品售鑿！'
+        });
+      }
+      if (findProduct.stockQuantity < newOrder.quantity) {
+        console.log('err=>over-ordering.');
+        return res.serverError({
+          msg: '商品數量不足！'
+        });
+      }
+      result.product = findProduct.toJSON();
 
       // find or create user.
       let insertUser = await (db.User.findOrCreate({
         where:
           {
-            email:user.email
+            email:newOrder.user.email
           },
-          defaults:user
-        }).then(function(user, created){
-          if (!created){
-            console.log('create user.');
-          }
-          result.user = user;
+          defaults:newOrder.user
         })
       );
+      result.user = insertUser[0].toJSON();
 
       // build order and shipment.
       let thisOrder = {
-        quantity: quantity,
+        quantity: newOrder.quantity,
         UserId: result.user.id,
         orderId: 'not-set-yet'
       };
-      let insertOrder = await (db.Order.create(thisOrder).then(function(createdOrder){
-          if (!createdOrder){
-            console.log('err=>create order failed.');
+      let insertOrder = await (db.Order.create(thisOrder));
+      if (!insertOrder){
+        console.log('err=>create order failed.');
+        return res.serverError({
+          msg: '建立訂單失敗'
+        });
+      }
+      result.order = insertOrder.toJSON();
+      result.id = result.order.id;
+
+      // build shipment.
+      let insertShipment = await (
+        ShipmentService.create(newOrder.shipment, function (error, createdShipment) {
+          if (!createdShipment){
+            console.log('err=>create Shipment failed.');
             return res.serverError({
-              msg: '建立訂單失敗'
-            });
+              msg: '建立Shipment失敗'
+              });
           }
-          result.order = createdOrder.toJSON();
-          result.id = result.order.id;
+          result.shipment = createdShipment;
           result.success = true;
         })
       );
 
-      // build shipment.
-      ShipmentService.create(shipment, async(error, createShipment) => {
-        if (!createShipment){
-          console.log('err=>create Shipment failed.');
-          return res.serverError({
-            msg: '建立Shipment失敗'
-            });
-        }
-        result.shipment = createShipment;
-        // var associatedShipment = await (result.order.setShipment(result.shipment));
-        // let associatedProduct = await (result.order.setProduct(result.product));
-        // let associatedUser = await (result.order.setUser(orderUser));
-      });
+      // associations
+      let associatedShipment = await (result.order.setShipment(result.shipment));
+      let associatedProduct = await (result.order.setProduct(result.product));
+      let associatedUser = await (result.order.setUser(result.user));
 
       // output
       console.log('\nRESULT===============>\n',result);
