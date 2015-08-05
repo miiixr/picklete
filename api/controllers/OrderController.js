@@ -6,11 +6,10 @@ var OrderController;
 
 OrderController = {
   create: async (req, res) => {
-    // print body
+
     console.log('req.body is=>\n', req.body);
 
     var newOrder = req.body.order;
-
     var result = {
       product:null
     };
@@ -36,7 +35,7 @@ OrderController = {
           msg: '商品數量不足！'
         });
       }
-      result.product = findProduct.toJSON();
+      result.product = findProduct;
 
       // find or create user.
       let insertUser = await (db.User.findOrCreate({
@@ -47,7 +46,7 @@ OrderController = {
           defaults:newOrder.user
         })
       );
-      result.user = insertUser[0].toJSON();
+      result.user = insertUser[0];
 
       // build order and shipment.
       let thisOrder = {
@@ -62,7 +61,7 @@ OrderController = {
           msg: '建立訂單失敗'
         });
       }
-      result.order = insertOrder.toJSON();
+      result.order = insertOrder;
       result.id = result.order.id;
 
       // build shipment.
