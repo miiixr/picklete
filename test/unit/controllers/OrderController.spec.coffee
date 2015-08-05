@@ -1,4 +1,4 @@
-describe.only "about Order", (done) ->
+describe "about Order", (done) ->
 
   it "create Order should be success.", (done) ->
     newOrder = {
@@ -56,19 +56,19 @@ describe.only "about Order", (done) ->
 
         newOrder = {
           quantity:10
-          orderId:'11223344'
+          SerialNumber:'11223344'
           UserId:newUser.id
         }
 
         db.Order.create(newOrder).then (createdOrder) ->
-          createdOrder.orderId.should.be.String
+          createdOrder.SerialNumber.should.be.String
           done()
 
 
     it "get Order status should be success.", (done) ->
 
       formdata = {
-        orderId: '11223344'
+        SerialNumber: '11223344'
         email: 'testOrderUser@gmail.com'
       }
 

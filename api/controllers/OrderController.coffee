@@ -32,6 +32,17 @@ OrderController =
     jProduct = newOrder.product
     jUser = newOrder.user
     shipment = newOrder.shipment
+    date = (Date::yyyymmdd = ->
+      yyyy = @getFullYear().toString()
+      mm = (@getMonth() + 1).toString()
+      dd = @getDate().toString()
+      yyyy + (if mm[1] then mm else '0' + mm[0]) + (if dd[1] then dd else '0' + dd[0])
+      )
+    randomNumber = (maxNum = 9999
+      minNum = 0
+      n = Math.floor(Math.random() * (maxNum - minNum + 1)) + minNum
+      )
+
 
     # outputs
     result = {
@@ -89,10 +100,10 @@ OrderController =
       newOrder = {
         quantity: quantity,
         UserId : userid,
-        orderId: '2222'
+        SerialNumber: '2222'
         # odrer id
         #########################
-        # orderId: theDate.getTime()
+        #  SerialNumber: theDate.getTime()
         #########################
       }
 
@@ -140,7 +151,7 @@ OrderController =
 
   # order status section
   status:  (req, res) ->
-    console.log req.body.orderId
+    console.log req.body. SerialNumber
     console.log req.body.email
 
     db.User.findOne(
@@ -152,7 +163,7 @@ OrderController =
 
       db.Order.findOne(
         where:
-          orderId:req.body.orderId
+          SerialNumber:req.body. SerialNumber
           UserId:userData.id
         include: [
           { model: db.User }
@@ -167,6 +178,7 @@ OrderController =
           res.ok {
             order : orderProduct
             bank : bank
+            SerialNumber :document.date.concat(randomNumber)
           }
         else
           #沒有此訂單編號時在這處理
