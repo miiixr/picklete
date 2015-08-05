@@ -7,7 +7,6 @@ module.exports = (sequelize, DataTypes) ->
     Order.belongsTo models.User
     Order.belongsTo models.Product
     Order.hasOne models.Shipment
-    Order.
     return
   )
   return Order
