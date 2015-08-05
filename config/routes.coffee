@@ -40,7 +40,14 @@ module.exports.routes = {
   'get /auth/:provider/callback': 'AuthController.callback'
   'get /auth/:provider/:action': 'AuthController.callback'
 
-
+  'get /product': {
+    controller: "ProductController",
+    action: "find",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
   'get /product/:productId': {
     controller: "ProductController",
     action: "findOne",
@@ -57,7 +64,6 @@ module.exports.routes = {
      credentials: false
     }
   }
-
   'post /order/status': {
     controller: "OrderController",
     action: "status",

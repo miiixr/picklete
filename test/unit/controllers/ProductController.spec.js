@@ -33,7 +33,24 @@ describe.only("about Product", () => {
         done(err);
 
       });
+    });
+    it('all', (done) => {
+      request(sails.hooks.http.app)
+      .get(`/product`)
+      .end((err, res) => {
+        if (res.statusCode === 500) {
+          return done(body)
+        }
+        res.statusCode.should.equal(200);
+        res.body.products.should.be.Array;
 
-    })
+        res.body.products.forEach(product => {
+          product.image.should.be.String;
+        });
+
+        done(err);
+
+      });
+    });
   });
 });

@@ -10,9 +10,9 @@ module.exports = {
   },
 
   findAllWithImages: async () => {
-    let products = await db.product.findAll();
-    let productsWithImage = products.map(this.withImage);
-    return productsWithImages;
+    let products = await db.Product.findAll();
+    let productsWithImage = products.map(ProductService.withImage);
+    return productsWithImage;
   },
 
   withImage: (product) => {
