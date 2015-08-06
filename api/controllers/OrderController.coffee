@@ -173,7 +173,7 @@ OrderController =
       .then (orderProduct) ->
         console.log 'orderProduct', orderProduct.toJSON();
         if orderProduct?
-          bank = require('../../config/bank.coffee');
+          bank = sails.config.bank 
           res.ok {
             order : orderProduct
             bank : bank

@@ -113,11 +113,104 @@ OrderController = {
       return res.serverError(e);
     }
   },
+
+
   // 查詢
-  status: function(req, res) {
-    return res.ok({
-      msg: '沒有此訂單'
-    });
+  status: async function(req, res) {
+    console.log(req.body.SerialNumber);
+    console.log(req.body.email);
+
+    try{
+      let userData = await (
+          db.User.findOne({
+            where: {
+              email: req.body.email
+            }
+          })
+        );
+
+      if (userData === null) {
+        return res.serverError({
+          msg: '沒有此User！'
+        });
+      }
+
+      let orderProduct = await(
+          db.Order.findOne({
+            where: {
+              SerialNumber: req.body.SerialNumber,
+              UserId: userData.id
+            },
+            include: [
+              {
+                model: db.User
+              }, {
+                model: db.Shipment
+              }, {
+                model: db.Product
+              }
+            ]
+          })
+        );
+
+      if (orderProduct === null) {
+        return res.serverError({
+          msg: '沒有此訂單'
+        });
+      }
+      
+      console.log('orderProduct', orderProduct.toJSON());
+      var bank = sails.config.bank;
+      return res.ok({
+        order: orderProduct,
+        bank: bank
+      });
+
+    } catch (e) {
+      console.log ('err=>',e);
+      return res.serverError(e);
+    }
+
+    // return db.User.findOne({
+    //   where: {
+    //     email: req.body.email
+    //   }
+    // }).then(function(userData) {
+    //   if (userData === null) {
+    //     return res.ok({
+    //       msg: '沒有此User'
+    //     });
+    //   }
+    //   return db.Order.findOne({
+    //     where: {
+    //       SerialNumber: req.body.SerialNumber,
+    //       UserId: userData.id
+    //     },
+    //     include: [
+    //       {
+    //         model: db.User
+    //       }, {
+    //         model: db.Shipment
+    //       }, {
+    //         model: db.Product
+    //       }
+    //     ]
+    //   }).then(function(orderProduct) {
+    //     var bank;
+    //     console.log('orderProduct', orderProduct.toJSON());
+    //     if (orderProduct != null) {
+    //       bank = sails.config.bank;
+    //       return res.ok({
+    //         order: orderProduct,
+    //         bank: bank
+    //       });
+    //     } else {
+    //       return res.ok({
+    //         msg: '沒有此訂單'
+    //       });
+    //     }
+    //   });
+    // });
   }
 };
 
