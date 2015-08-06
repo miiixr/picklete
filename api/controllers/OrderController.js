@@ -9,6 +9,24 @@ OrderController = {
 
     console.log('req.body is=>\n', req.body);
 
+    var dateFormat, randomNumber;
+
+    dateFormat = function(nowDate) {
+      var dd, mm, yyyy;
+      yyyy = nowDate.getFullYear().toString();
+      mm = (nowDate.getMonth() + 1).toString();
+      dd = nowDate.getDate().toString();
+      return yyyy + (mm[1] ? mm : '0' + mm[0]) + (dd[1] ? dd : '0' + dd[0]);
+    };
+
+    randomNumber = function() {
+      var maxNum, minNum;
+      maxNum = 9999;
+      minNum = 0;
+      return Math.floor(Math.random() * (maxNum - minNum + 1)) + minNum;
+    };
+
+
     var newOrder = req.body.order;
     var result = {
       product:null
@@ -52,7 +70,7 @@ OrderController = {
       let thisOrder = {
         quantity: newOrder.quantity,
         UserId: result.user.id,
-        orderId: 'not-set-yet'
+        SerialNumber: dateFormat(new Date()) + randomNumber()
       };
       let insertOrder = await (db.Order.create(thisOrder));
       if (!insertOrder){
