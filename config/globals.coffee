@@ -12,6 +12,7 @@ module.exports.globals = {
   models: false
 }
 
+
 ###*
 Expose the lodash installed in Sails core as a global variable. If this   *
 is disabled, like any other node module you can always run npm install    *
