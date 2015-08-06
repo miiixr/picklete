@@ -34,7 +34,7 @@ OrderController = {
 
     try {
       // find product.
-      let findProduct = await (db.Product.findById(newOrder.product.id));
+      let findProduct = await db.Product.findById(newOrder.product.id);
       if (!findProduct) {
         console.log('err=>find product failed.');
         return res.serverError({
@@ -56,14 +56,13 @@ OrderController = {
       result.product = findProduct;
 
       // find or create user.
-      let insertUser = await (db.User.findOrCreate({
+      let insertUser = await db.User.findOrCreate({
         where:
           {
             email:newOrder.user.email
           },
           defaults:newOrder.user
-        })
-      );
+        });
       result.user = insertUser[0];
 
       // build order and shipment.
@@ -72,7 +71,7 @@ OrderController = {
         UserId: result.user.id,
         SerialNumber: dateFormat(new Date()) + randomNumber()
       };
-      let insertOrder = await (db.Order.create(thisOrder));
+      let insertOrder = await db.Order.create(thisOrder);
       if (!insertOrder){
         console.log('err=>create order failed.');
         return res.serverError({
@@ -121,13 +120,11 @@ OrderController = {
     console.log(req.body.email);
 
     try{
-      let userData = await (
-          db.User.findOne({
+      let userData = await db.User.findOne({
             where: {
               email: req.body.email
             }
-          })
-        );
+          });
 
       if (userData === null) {
         return res.serverError({
@@ -135,8 +132,7 @@ OrderController = {
         });
       }
 
-      let orderProduct = await(
-          db.Order.findOne({
+      let orderProduct = await db.Order.findOne({
             where: {
               SerialNumber: req.body.SerialNumber,
               UserId: userData.id
@@ -150,8 +146,7 @@ OrderController = {
                 model: db.Product
               }
             ]
-          })
-        );
+        });
 
       if (orderProduct === null) {
         return res.serverError({

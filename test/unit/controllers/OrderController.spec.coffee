@@ -41,7 +41,7 @@ describe "about Order", (done) ->
 
       done(err)
 
-  describe.only "get Order status.", () ->
+  describe "get Order status.", () ->
     before (done) ->
 
       newUser = {
