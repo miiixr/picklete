@@ -13,6 +13,7 @@ Picklete - E-Commerce Platform
 * npm install
 * create local mysql db with username=? .......
 * ...
+* `export PATH=node_modules/.bin:$PATH`
 
 ## getting started
 

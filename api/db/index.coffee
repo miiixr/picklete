@@ -13,15 +13,16 @@ config = {
   'force': true
 }
 
-# config = {
-#   'dialect': 'sqlite',
-#   'storage': './db.development.sqlite',
-#   'username': null,
-#   'password': null,
-#   'database': null,
-#   'force': true
-# }
-
+if (env == 'development' && process.env.PICKLETE_DB_DIALECT == 'sqlite') {
+    config = {
+        'dialect': 'sqlite',
+        'storage': './db.development.sqlite',
+        'username': null,
+        'password': null,
+        'database': null,
+        'force': true
+    }
+}
 
 sequelize = new Sequelize(config.database, config.username, config.password, config)
 db = {}
