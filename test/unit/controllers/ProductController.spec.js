@@ -1,4 +1,4 @@
-describe.only("about Product", () => {
+describe ("about Product", () => {
 
   describe("find", () => {
     let testProduct = null;

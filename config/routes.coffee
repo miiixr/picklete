@@ -65,10 +65,7 @@ module.exports.routes = {
      credentials: false
     }
   }
-<<<<<<< HEAD
-=======
 
->>>>>>> 0affe833d830b63ed62174d40289a23c9884b6fc
   'post /order/status': {
     controller: "OrderController",
     action: "status",

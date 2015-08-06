@@ -34,7 +34,7 @@ OrderController = {
 
     try {
       // find product.
-      let findProduct = await (db.Product.findById(newOrder.product.id));
+      let findProduct = await db.Product.findById(newOrder.product.id);
       if (!findProduct) {
         console.log('err=>find product failed.');
         return res.serverError({
@@ -56,14 +56,13 @@ OrderController = {
       result.product = findProduct;
 
       // find or create user.
-      let insertUser = await (db.User.findOrCreate({
+      let insertUser = await db.User.findOrCreate({
         where:
           {
             email:newOrder.user.email
           },
           defaults:newOrder.user
-        })
-      );
+        });
       result.user = insertUser[0];
 
       // build order and shipment.
@@ -72,7 +71,7 @@ OrderController = {
         UserId: result.user.id,
         SerialNumber: dateFormat(new Date()) + randomNumber()
       };
-      let insertOrder = await (db.Order.create(thisOrder));
+      let insertOrder = await db.Order.create(thisOrder);
       if (!insertOrder){
         console.log('err=>create order failed.');
         return res.serverError({
@@ -113,11 +112,59 @@ OrderController = {
       return res.serverError(e);
     }
   },
+
+
   // 查詢
-  status: function(req, res) {
-    return res.ok({
-      msg: '沒有此訂單'
-    });
+  status: async function(req, res) {
+    console.log(req.body.SerialNumber);
+    console.log(req.body.email);
+
+    try{
+      let userData = await db.User.findOne({
+            where: {
+              email: req.body.email
+            }
+          });
+
+      if (userData === null) {
+        return res.serverError({
+          msg: '沒有此User！'
+        });
+      }
+
+      let orderProduct = await db.Order.findOne({
+            where: {
+              SerialNumber: req.body.SerialNumber,
+              UserId: userData.id
+            },
+            include: [
+              {
+                model: db.User
+              }, {
+                model: db.Shipment
+              }, {
+                model: db.Product
+              }
+            ]
+        });
+
+      if (orderProduct === null) {
+        return res.serverError({
+          msg: '沒有此訂單'
+        });
+      }
+      
+      console.log('orderProduct', orderProduct.toJSON());
+      var bank = sails.config.bank;
+      return res.ok({
+        order: orderProduct,
+        bank: bank
+      });
+
+    } catch (e) {
+      console.log ('err=>',e);
+      return res.serverError(e);
+    }
   }
 };
 
