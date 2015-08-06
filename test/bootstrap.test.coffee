@@ -19,6 +19,7 @@ before (done) ->
     hooks:
       grunt:false
   }, (err, server) ->
+
     sails = server
     if err
       return done(err)
