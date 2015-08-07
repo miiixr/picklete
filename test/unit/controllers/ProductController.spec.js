@@ -1,4 +1,4 @@
-describe.only ("about Product", () => {
+describe ("about Product", () => {
 
   describe("find", () => {
     let testProduct = null;
@@ -71,7 +71,8 @@ describe.only ("about Product", () => {
           return done(err);
         }
         res.statusCode.should.equal(200);
-        console.log(res.body)
+        res.body.should.be.Object;
+        res.body.id.should.be.number;
 
         done(err);
 
