@@ -13,7 +13,7 @@ Picklete - E-Commerce Platform
 * npm install
 * start mysql
 * create local mysql db
-    建立一個資料庫建立一個資料庫名稱為picklete，編碼為utf-8
+    建立一個資料庫名稱為picklete，編碼為utf-8
 * `export PATH=node_modules/.bin:$PATH`
 
 ## getting started
