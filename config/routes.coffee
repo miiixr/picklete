@@ -57,6 +57,16 @@ module.exports.routes = {
      credentials: false
     }
   }
+
+  'post /product/update/:productId': {
+    controller: "ProductController",
+    action: "updateProduct",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+
   'post /order': {
     controller: "OrderController",
     action: "create",

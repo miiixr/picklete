@@ -52,5 +52,31 @@ describe ("about Product", () => {
 
       });
     });
+
+    it('update', (done) => {
+
+      var updateProduct = {
+        name: '斗六文旦柚禮盒',
+        descript: '10斤裝',
+        stockQuantity: 10,
+        price: 999,
+        image: 'http://localhost:1337/images/product/1.jpg'
+      };
+
+      request(sails.hooks.http.app)
+      .post(`/product/update/${testProduct.id}`)
+      .send({order: updateProduct})
+      .end((err,res) => {
+        if(res.statusCode === 500){
+          return done(err);
+        }
+        res.statusCode.should.equal(200);
+        res.body.should.be.Object;
+        res.body.id.should.be.number;
+
+        done(err);
+
+      });
+    });
   });
 });
