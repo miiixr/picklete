@@ -78,5 +78,16 @@ describe ("about Product", () => {
 
       });
     });
+
+    it('delete', (done) => {
+      request(sails.hooks.http.app)
+      .del(`/product/update/${testProduct.id}`)
+        res.statusCode.should.equal(200);
+        res.body.should.be.Object;
+        res.body.id.should.be.number;
+
+        done(err);
+
+    });
   });
 });

@@ -85,6 +85,15 @@ module.exports.routes = {
     }
   }
 
+  'delete /product/productId': {
+    controller: "ProductController",
+    action: "deleteProduct",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+
   "/:controller/:action/:id?": {}
 
 }
