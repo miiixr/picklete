@@ -20,6 +20,11 @@ let ProductController = {
 
   },
 
+  deleteProduct: async (req, res) => {
+   let productId = req.param("productId");
+   console.log('deleteProduct productId', productId);
+ },
+
   updateProduct: async (req, res) => {
 
     try {
@@ -34,7 +39,7 @@ let ProductController = {
           msg: '找不到商品！ 請確認商品ID！'
         });
       },
-      
+
       findProduct.name = req.body.order.name
       findProduct.descript = req.body.order.descript
       findProduct.stockQuantity = req.body.order.stockQuantity
