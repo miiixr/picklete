@@ -20,14 +20,19 @@ let ProductController = {
 
   },
 
+  deleteProduct: async (req, res) => {
+   let productId = req.param("productId");
+   console.log('deleteProduct productId', productId);
+ },
+
   updateProduct: async (req, res) => {
-    
+
     try {
       let productId = req.param("productId");
 
       // Missing where attribute in the options parameter passed to update.
       // let findProduct = await db.Product.update({ id : productId },{ name : '斗六文旦柚禮盒123123' });
-      
+
       let findProduct = await db.Product.findById(productId);
       if (!findProduct) {
         return res.serverError({
