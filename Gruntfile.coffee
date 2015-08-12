@@ -62,4 +62,4 @@ module.exports = (grunt) ->
   # Run task functions to configure Grunt.
   invokeConfigFn taskConfigurations
   invokeConfigFn registerDefinitions
-  grunt.loadNpmTasks "sails-migrations"
+  # grunt.loadNpmTasks "sails-migrations"
