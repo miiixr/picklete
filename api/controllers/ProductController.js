@@ -38,7 +38,7 @@ let ProductController = {
         return res.serverError({
           msg: '找不到商品！ 請確認商品ID！'
         });
-      },
+      }
 
       findProduct.name = req.body.order.name
       findProduct.descript = req.body.order.descript
