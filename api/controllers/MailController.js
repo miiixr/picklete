@@ -1,5 +1,3 @@
-module.exports = require('sails-service-mailer');
-
 var ses = MailerService.create('ses', {
   from: 'no-reply@ghaiklor.com',
   transporter: {
