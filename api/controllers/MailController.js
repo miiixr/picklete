@@ -1,6 +1,7 @@
 var aws = require('aws-sdk');
 
-var ses = MailerService.create('ses', {
+/*
+var mailer = MailerService.create('ses', {
   from: 'no-reply@ghaiklor.com',
   transporter: {
     ses: new aws.SES(), // instantiated AWS SES object with new AWS.SES()
@@ -12,10 +13,19 @@ var ses = MailerService.create('ses', {
     rateLimit: 5 // Specify the amount of messages can be sent in 1 second
   }
 });
+*/
+
+var mailer = MailerService.create('direct', {
+  from: 'no-reply@ghaiklor.com',
+  transporter: {
+    name: 'example.mx-server.com', // hostname to be used when introducing the client to the MX server
+    debug: true // if true, the connection emits all traffic between client and server as `log` events
+  }
+});
 
 module.exports = {
   send: function(req, res) {
-    ses
+    mailer
       .send({
         to: req.param('to')
       })
