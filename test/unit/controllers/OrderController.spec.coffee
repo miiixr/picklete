@@ -6,7 +6,7 @@ describe "about Order", (done) ->
 
       product: {
         name: '柚子'
-        descript: '又大又好吃'
+        description: '又大又好吃'
         price: 100
         stockQuantity: 10
         id: 1
@@ -29,7 +29,7 @@ describe "about Order", (done) ->
     }
 
     request(sails.hooks.http.app)
-    .post("/order")
+    .post("/api/order")
     .send({order: newOrder})
     .end (err, res) ->
       return done(body) if res.statusCode is 500
@@ -73,7 +73,7 @@ describe "about Order", (done) ->
       }
 
       request(sails.hooks.http.app)
-      .post("/order/status")
+      .post("/api/order/status")
       .send(formdata)
       .end (err, res) ->
         return done(body) if res.statusCode is 500

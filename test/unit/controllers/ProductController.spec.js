@@ -6,7 +6,7 @@ describe ("about Product", () => {
 
       let newProduct = {
         name: '斗六文旦柚禮盒',
-        descript: '3斤裝',
+        description: '3斤裝',
         stockQuantity: 10,
         price: 100,
         image: 'http://localhost:1337/images/product/1.jpg'
@@ -20,7 +20,7 @@ describe ("about Product", () => {
 
     it('one', (done) => {
       request(sails.hooks.http.app)
-      .get(`/product/${testProduct.id}`)
+      .get(`/api/product/${testProduct.id}`)
       .end((err, res) => {
         if (res.statusCode === 500) {
           return done(body)
@@ -36,7 +36,7 @@ describe ("about Product", () => {
     });
     it('all', (done) => {
       request(sails.hooks.http.app)
-      .get(`/product`)
+      .get(`/api/product`)
       .end((err, res) => {
         if (res.statusCode === 500) {
           return done(body)
@@ -57,14 +57,14 @@ describe ("about Product", () => {
 
       var updateProduct = {
         name: '斗六文旦柚禮盒',
-        descript: '10斤裝',
+        description: '10斤裝',
         stockQuantity: 10,
         price: 999,
         image: 'http://localhost:1337/images/product/1.jpg'
       };
 
       request(sails.hooks.http.app)
-      .post(`/product/update/${testProduct.id}`)
+      .post(`/api/product/update/${testProduct.id}`)
       .send({order: updateProduct})
       .end((err,res) => {
         if(res.statusCode === 500){
