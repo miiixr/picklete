@@ -109,10 +109,9 @@ OrderController = {
       let associatedUser = await (result.order.setUser(result.user));
 
       // send email
-      CustomMailerService.orderConfirm();
+      let mailResult = await CustomMailerService.orderConfirm('smlsun@gmail.com');
+      console.log('mailResult', mailResult);
 
-      // output
-      console.log('\nRESULT===============>\n',result);
       return res.ok({
         order: result,
         bank: sails.config.bank,
@@ -165,16 +164,16 @@ OrderController = {
         });
       }
 
-      console.log('orderProduct', orderProduct.toJSON());
+
       var bank = sails.config.bank;
       return res.ok({
         order: orderProduct,
         bank: bank
       });
 
-    } catch (e) {
-      console.log ('err=>',e);
-      return res.serverError(e);
+    } catch (error) {
+      console.log ('error',error.stack);
+      return res.serverError(error);
     }
   }
 };

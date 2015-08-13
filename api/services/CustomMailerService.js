@@ -9,15 +9,14 @@ var mailer = MailerService.create('direct', {
 });
 
 module.exports = {
-  orderConfirm: async () => {
-    
-    mailer
-      .send({
-        to: req.param('to')
-      })
-      .then(res.ok)
-      .catch(res.serverError);
+  orderConfirm: async (to) => {
 
-    return "";
+    try {
+      let result = await mailer.send({to})
+      return {result};
+    } catch (error) {
+      throw error;
+    }
+
   }
 };

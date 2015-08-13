@@ -1,6 +1,6 @@
 describe "about Order", (done) ->
 
-  it "create Order should be success.", (done) ->
+  it.only "create Order should be success.", (done) ->
     newOrder = {
       quantity: 10
 
