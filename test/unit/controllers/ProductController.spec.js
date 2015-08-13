@@ -1,4 +1,4 @@
-describe ("about Product", () => {
+describe.only ("about Product", () => {
 
   describe("find", () => {
     let testProduct = null;
@@ -66,6 +66,21 @@ describe ("about Product", () => {
       request(sails.hooks.http.app)
       .post(`/product/update/${testProduct.id}`)
       .send({order: updateProduct})
+      .end((err,res) => {
+        if(res.statusCode === 500){
+          return done(err);
+        }
+        res.statusCode.should.equal(200);
+        res.body.should.be.Object;
+        res.body.id.should.be.number;
+
+        done(err);
+
+      });
+    });
+
+      delete(sails.hooks.http.app)
+      .del(`/product/delete/${testProduct.id}`)
       .end((err,res) => {
         if(res.statusCode === 500){
           return done(err);
