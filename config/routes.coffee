@@ -40,7 +40,7 @@ module.exports.routes = {
   'get /auth/:provider/callback': 'AuthController.callback'
   'get /auth/:provider/:action': 'AuthController.callback'
 
-  'get /product': {
+  'get /api/product': {
     controller: "ProductController",
     action: "find",
     cors: {
@@ -49,7 +49,7 @@ module.exports.routes = {
     }
   }
 
-  'get /product/:productId': {
+  'get /api/product/:productId': {
     controller: "ProductController",
     action: "findOne",
     cors: {
@@ -58,7 +58,7 @@ module.exports.routes = {
     }
   }
 
-  'post /product/update/:productId': {
+  'post /api/product/update/:productId': {
     controller: "ProductController",
     action: "updateProduct",
     cors: {
@@ -67,7 +67,7 @@ module.exports.routes = {
     }
   }
 
-  'post /order': {
+  'post /api/order': {
     controller: "OrderController",
     action: "create",
     cors: {
@@ -76,7 +76,7 @@ module.exports.routes = {
     }
   }
 
-  'post /order/status': {
+  'post /api/order/status': {
     controller: "OrderController",
     action: "status",
     cors: {

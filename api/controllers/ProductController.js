@@ -20,14 +20,25 @@ let ProductController = {
 
   },
 
+  index: async (req, res) => {
+
+    try {
+      let products = await ProductService.findAllWithImages();
+      return res.view({products});
+    } catch (error) {
+      return res.serverError(error);
+    }
+
+  },
+
   updateProduct: async (req, res) => {
-    
+
     try {
       let productId = req.param("productId");
 
       // Missing where attribute in the options parameter passed to update.
       // let findProduct = await db.Product.update({ id : productId },{ name : '斗六文旦柚禮盒123123' });
-      
+
       let findProduct = await db.Product.findById(productId);
       if (!findProduct) {
         return res.serverError({
@@ -36,7 +47,7 @@ let ProductController = {
       }
 
       findProduct.name = req.body.order.name
-      findProduct.descript = req.body.order.descript
+      findProduct.description = req.body.order.description
       findProduct.stockQuantity = req.body.order.stockQuantity
       findProduct.price = req.body.order.price
 

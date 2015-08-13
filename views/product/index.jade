@@ -1,0 +1,21 @@
+extends ./../layout
+
+block body
+  h1 product list
+  table.table
+    thead
+      tr
+        th #
+        th name
+        th description
+        th stockQuantity
+        th price
+    tbody
+      each product in products
+        tr
+          th(scope='row')
+            a(href="/product/show/#{product.id}")= product.id
+          td= product.name
+          td= product.description
+          td= product.stockQuantity
+          td= product.price

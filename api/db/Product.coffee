@@ -2,7 +2,7 @@
 module.exports = (sequelize, DataTypes) ->
   Product = sequelize.define 'Product', {
     name: DataTypes.STRING
-    descript: DataTypes.STRING
+    description: DataTypes.STRING
     stockQuantity: DataTypes.INTEGER
     price: DataTypes.INTEGER
   }, classMethods: associate: (models) ->
