@@ -1,7 +1,9 @@
+var aws = require('aws-sdk');
+
 var ses = MailerService.create('ses', {
   from: 'no-reply@ghaiklor.com',
   transporter: {
-    ses: {}, // instantiated AWS SES object with new AWS.SES()
+    ses: new aws.SES(), // instantiated AWS SES object with new AWS.SES()
     accessKeyId: 'MY_KEY', // AWS access key
     secretAccessKey: 'MY_SECRET', // AWS secret key
     sessionToken: '', // Session token
