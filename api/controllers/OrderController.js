@@ -5,6 +5,14 @@
 var OrderController;
 
 OrderController = {
+  index: async (req, res) => {
+    try {
+      let orders = await db.Order.findAll();
+      return res.view({orders});
+    } catch (error) {
+      return res.serverError(error);
+    }
+  },
   create: async (req, res) => {
 
     console.log('req.body is=>\n', req.body);
@@ -100,6 +108,9 @@ OrderController = {
       let associatedProduct = await (result.order.setProduct(result.product));
       let associatedUser = await (result.order.setUser(result.user));
 
+      // send email
+      CustomMailerService.orderConfirm();
+
       // output
       console.log('\nRESULT===============>\n',result);
       return res.ok({
@@ -153,7 +164,7 @@ OrderController = {
           msg: '沒有此訂單'
         });
       }
-      
+
       console.log('orderProduct', orderProduct.toJSON());
       var bank = sails.config.bank;
       return res.ok({
