@@ -44,8 +44,6 @@ let ProductController = {
   add: async (req, res) => {
 
     try {
-      // let productId = req.param("id");
-      // let product = await ProductService.findWithImages(productId);
       return res.view();
     } catch (error) {
       return res.serverError(error);
