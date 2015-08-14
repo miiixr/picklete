@@ -110,7 +110,6 @@ OrderController = {
 
       // send email
       let mailResult = await CustomMailerService.orderConfirm('smlsun@gmail.com');
-      console.log('mailResult', mailResult);
 
       return res.ok({
         order: result,

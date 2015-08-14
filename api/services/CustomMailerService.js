@@ -15,7 +15,8 @@ module.exports = {
       let result = await mailer.send({to})
       return {result};
     } catch (error) {
-      throw error;
+      console.error(error.stack);
+      return {error};
     }
 
   }
