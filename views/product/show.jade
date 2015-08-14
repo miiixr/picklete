@@ -2,12 +2,14 @@ extends ./../layout
 
 block body
   h1 product
+  div(data-role='header', data-position='fixed')
+    a(href='/product/index', data-icon='back', data-iconpos='notext') 返回
   .nd2-card
     .card-media
         img#product_image(src=product.image, alt='product')
       card-supporting-text.has-action
         h3#product_name=product.name
-        p#product_descript=product.descript
+        p#product_descript=product.description
         p 庫存箱數:
           span#product_stockQuantity=product.stockQuantity
         p 單價:
