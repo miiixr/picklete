@@ -41,6 +41,15 @@ let ProductController = {
     }
   },
 
+  create: async (req, res) => {
+
+    try {
+      return res.view();
+    } catch (error) {
+      return res.serverError(error);
+    }
+  },
+
   addProduct: async (req, res) => {
     try{
       // create
@@ -53,7 +62,12 @@ let ProductController = {
           msg: '找不到商品！ 請確認商品ID！'
         });
       }
-      return res.ok(addProduct.toJSON());
+      var query = req.query.responseType;
+      if(!query || query.toLowerCase() == 'json'){
+        return res.ok(addProduct.toJSON());
+      }else{
+        return res.redirect('product/index');
+      }
     }catch(error){
       return res.serverError(error);
     }
