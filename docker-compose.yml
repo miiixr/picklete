@@ -17,14 +17,14 @@ web:
 
 mobile:
   image: iojs
-  command: "node server.js"
+  command: "npm start"
   working_dir: /app
   ports:
   - "3000:3000"
   links:
     - web
   volumes:
-   - ../jquery-mobile-cart-demo:/app
+   - ../agricloud-mobile-cart:/app
 
 mysql:
   image: dgraziotin/mysql
