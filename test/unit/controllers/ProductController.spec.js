@@ -1,4 +1,4 @@
-describe.only("about Product", () => {
+describe ("about Product", () => {
   let testProduct = null;
   before(async (done) => {
     let newProduct = {
