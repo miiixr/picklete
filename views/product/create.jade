@@ -1,0 +1,26 @@
+extends ./../layout
+
+block body
+  h1 新增產品
+  #addNewProduct(data-role='page')
+    form#newProductForm(method='post', action='/api/product?responseType=view')
+      div(data-role='header', data-position='fixed')
+        a(href='/product/index', data-icon='back', data-iconpos='notext') 返回
+      div(data-role='fieldcontain')
+        label(for='[name]') 名稱:
+        input(type='text', name='[name]', id='[name]', value='斗六文旦柚禮盒')
+      div(data-role='fieldcontain')
+        label(for='[description]') 描述:
+        input(type='text', name='[description]', id='[description]', value='貳拾斤裝')
+      div(data-role='fieldcontain')
+        label(for='[stockQuantity]') 數量:
+        input(type='text', name='[stockQuantity]', id='[stockQuantity]', value='10')
+      div(data-role='fieldcontain')
+        label(for='produte[price]') 價錢:
+        input(type='text', name='[price]', id='[price]', value='999')
+      div(data-role='fieldcontain')
+        label(for='[image]')
+        input(type='text', name='[image]', id='[image]', value='http://localhost:1337/images/product/1.jpg')
+      fieldset.ui-grid-a
+        .ui-block-b
+          button 新增

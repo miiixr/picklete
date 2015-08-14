@@ -1,4 +1,5 @@
 describe("about Product", () => {
+
   let testProduct = null;
   before(async (done) => {
     let newProduct = {
@@ -77,7 +78,7 @@ describe("about Product", () => {
   it('add', (done) => {
     var newProduct = {
       name: 'new斗六文旦柚禮盒',
-      descript: '10斤裝',
+      description: '10斤裝',
       stockQuantity: 10,
       price: 999,
       image: 'http://localhost:1337/images/product/1.jpg'
