@@ -58,10 +58,28 @@ module.exports.routes = {
     }
   }
 
-  
+
   'post /api/product': {
     controller: "ProductController",
     action: "addProduct",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+
+  'put /api/product/publish/:productId': {
+    controller: "ProductController",
+    action: "publishProduct",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+
+  'put /api/product/unpublish/:productId': {
+    controller: "ProductController",
+    action: "unPublishProduct",
     cors: {
      origin: "http://localhost:1337, http://localhost:8080",
      credentials: false

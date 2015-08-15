@@ -1,4 +1,4 @@
-describe("about Product", () => {
+describe.only("about Product", () => {
 
   let testProduct = null;
   before(async (done) => {
@@ -7,7 +7,8 @@ describe("about Product", () => {
       description: '3斤裝',
       stockQuantity: 10,
       price: 100,
-      image: 'http://localhost:1337/images/product/1.jpg'
+      image: 'http://localhost:1337/images/product/1.jpg',
+      isPublish: true
     };
     testProduct = await db.Product.create(newProduct);
     done();
@@ -30,6 +31,7 @@ describe("about Product", () => {
 
     });
   });
+
   it('all', (done) => {
     request(sails.hooks.http.app)
     .get(`/api/product`)
@@ -43,14 +45,11 @@ describe("about Product", () => {
       res.body.products.forEach(product => {
         product.image.should.be.String;
       });
-
       done(err);
-
     });
   });
 
   it('update', (done) => {
-
     var updateProduct = {
       name: '斗六文旦柚禮盒',
       description: '10斤裝',
@@ -58,7 +57,6 @@ describe("about Product", () => {
       price: 999,
       image: 'http://localhost:1337/images/product/1.jpg'
     };
-
     request(sails.hooks.http.app)
     .post(`/api/product/update/${testProduct.id}`)
     .send({order: updateProduct})
@@ -69,11 +67,8 @@ describe("about Product", () => {
       else {
         done();
       }
-
-
     });
   });
-
 
   it('add', (done) => {
     var newProduct = {
@@ -96,4 +91,33 @@ describe("about Product", () => {
       done(err);
     });
   });
+
+  it('publish', (done) => {
+    request(sails.hooks.http.app)
+    .put(`/api/product/publish/${testProduct.id}`)
+    .end((err,res) => {
+      if(res.statusCode === 500){
+        return done(err);
+      }
+      res.statusCode.should.equal(200);
+      res.body.should.be.Object;
+      res.body.id.should.be.number;
+      done(err);
+    });
+  });
+
+  it('unPublish', (done) => {
+    request(sails.hooks.http.app)
+    .put(`/api/product/unpublish/${testProduct.id}`)
+    .end((err,res) => {
+      if(res.statusCode === 500){
+        return done(err);
+      }
+      res.statusCode.should.equal(200);
+      res.body.should.be.Object;
+      res.body.id.should.be.number;
+      done(err);
+    });
+  });
+
 });
