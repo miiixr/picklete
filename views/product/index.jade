@@ -11,6 +11,7 @@ block body
         th description
         th stockQuantity
         th price
+        th isPublish
     tbody
       each product in products
         tr
@@ -20,3 +21,4 @@ block body
           td= product.description
           td= product.stockQuantity
           td= product.price
+          td= product.isPublish

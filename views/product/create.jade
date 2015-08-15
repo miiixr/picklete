@@ -21,6 +21,11 @@ block body
       div(data-role='fieldcontain')
         label(for='[image]')
         input(type='text', name='[image]', id='[image]', value='http://localhost:1337/images/product/1.jpg')
+      div(data-role='fieldcontain')
+        label(for='produte[price]') 是否上架:
+        select(id='[isPublish]' name='[isPublish]')
+          option(value="true") 是
+          option(value="false") 否
       fieldset.ui-grid-a
         .ui-block-b
           button 新增

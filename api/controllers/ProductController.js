@@ -42,7 +42,6 @@ let ProductController = {
   },
 
   create: async (req, res) => {
-
     try {
       return res.view();
     } catch (error) {
@@ -52,7 +51,6 @@ let ProductController = {
 
   addProduct: async (req, res) => {
     try{
-      // create
       let newProduct = req.body;
       let addProduct = await db.Product.create(newProduct);
       if(!addProduct){
@@ -71,32 +69,54 @@ let ProductController = {
     }
   },
 
-  publishProduct: async (req, res) => {
+  delete: async (req, res) => {
     try{
-      let productId = req.param("productId");
-      //console.log('\n\n\n productId is=>\n\n\n', productId);
+      let productId = req.param("id");
       let findProduct = await db.Product.findById(productId);
       if (!findProduct) {
         return res.serverError({
           msg: '找不到商品！ 請確認商品ID！'
         });
       }
-      //console.log('\n\n\n findProduct is=>\n\n\n', findProduct);
-      findProduct.isPublish = true;
-      let publishProduct = await findProduct.save();
-      if(!publishProduct) {
-        return res.serverError({msg: '上架失敗'});
-      } else {
-        return res.ok(findProduct.toJSON());
+      findProduct.destroy();
+      let checkProduct = await db.Product.findById(productId);
+      if(checkProduct) {
+        return res.serverError({msg: 'delete失敗'});
       }
+      return res.redirect('product/index/');
     }catch(error){
       return res.serverError(error);
     }
   },
 
-  unPublishProduct: async (req, res) => {
+  publish: async (req, res) => {
     try{
-      let productId = req.param("productId");
+      let productId = req.param("id");
+      let findProduct = await db.Product.findById(productId);
+      if (!findProduct) {
+        return res.serverError({
+          msg: '找不到商品！ 請確認商品ID！'
+        });
+      }
+      findProduct.isPublish = true;
+      let updateProduct = await findProduct.save();
+      if(!updateProduct) {
+        return res.serverError({msg: '上架失敗'});
+      }
+      var query = req.query.responseType;
+      if(query || query == 'json'){
+        return res.ok(updateProduct.toJSON());
+      }
+      let url = "product/show/" + productId;
+      return res.redirect(url);
+    }catch(error){
+      return res.serverError(error);
+    }
+  },
+
+  unpublish: async (req, res) => {
+    try{
+      let productId = req.param("id");
       let findProduct = await db.Product.findById(productId);
       if (!findProduct) {
         return res.serverError({
@@ -104,12 +124,16 @@ let ProductController = {
         });
       }
       findProduct.isPublish = false;
-      let publishProduct = await findProduct.save();
-      if(!publishProduct) {
+      let updateProduct = await findProduct.save();
+      if(!updateProduct) {
         return res.serverError({msg: '下架失敗'});
-      } else {
-        return res.ok(findProduct.toJSON());
       }
+      var query = req.query.responseType;
+      if(query || query == 'json'){
+        return res.ok(updateProduct.toJSON());
+      }
+      let url = "product/show/" + productId;
+      return res.redirect(url);
     }catch(error){
       return res.serverError(error);
     }

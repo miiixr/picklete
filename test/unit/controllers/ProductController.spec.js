@@ -80,7 +80,7 @@ describe.only("about Product", () => {
     };
     request(sails.hooks.http.app)
     .post(`/api/product/`)
-    .send({newProduct: newProduct})
+    .send({newProduct})
     .end((err,res) => {
       if(res.statusCode === 500){
         return done(err);
@@ -88,6 +88,18 @@ describe.only("about Product", () => {
       res.statusCode.should.equal(200);
       res.body.should.be.Object;
       res.body.id.should.be.number;
+      done(err);
+    });
+  });
+
+  it('delete', (done) => {
+    request(sails.hooks.http.app)
+    .put(`/api/product/delete/1`)
+    .end((err,res) => {
+      if(res.statusCode === 500){
+        return done(err);
+      }
+      res.statusCode.should.equal(302);
       done(err);
     });
   });
@@ -99,23 +111,25 @@ describe.only("about Product", () => {
       if(res.statusCode === 500){
         return done(err);
       }
-      res.statusCode.should.equal(200);
-      res.body.should.be.Object;
-      res.body.id.should.be.number;
+      res.statusCode.should.equal(302);
+      // res.statusCode.should.equal(200);
+      // res.body.should.be.Object;
+      // res.body.isPublish.should.equal(false);
       done(err);
     });
   });
 
-  it('unPublish', (done) => {
+  it('unpublish', (done) => {
     request(sails.hooks.http.app)
     .put(`/api/product/unpublish/${testProduct.id}`)
     .end((err,res) => {
       if(res.statusCode === 500){
         return done(err);
       }
-      res.statusCode.should.equal(200);
-      res.body.should.be.Object;
-      res.body.id.should.be.number;
+      res.statusCode.should.equal(302);
+      // res.statusCode.should.equal(200);
+      // res.body.should.be.Object;
+      // res.body.isPublish.should.equal(false);
       done(err);
     });
   });
