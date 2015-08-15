@@ -2,6 +2,7 @@ extends ./../layout
 
 block body
   h1 product
+  a(href='/product/index', data-icon='back', data-iconpos='notext') 返回
   .nd2-card
     .card-media
         img#product_image(src=product.image, alt='product')
@@ -14,9 +15,10 @@ block body
           span#product_price=product.price
         p 商品是否上架:
           span#product_price=product.isPublish
+        p 商品備註:
+          span#product_price=product.comment
      .card-action
         fieldset(data-role='controlgroup', data-type='horizontal')
-          a#productUpdateButton.ui-btn.ui-corner-all(href='/product/index')[index]
           a#productUpdateButton.ui-btn.ui-corner-all(href='/product/edit/#{product.id}')[編輯]
           a#productDeleteButton.ui-btn.ui-corner-all(href='/product/delete/#{product.id}')[刪除]
           a#productDeleteButton.ui-btn.ui-corner-all(href='/product/publish/#{product.id}')[上架]

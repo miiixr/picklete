@@ -22,10 +22,13 @@ block body
         label(for='[image]')
         input(type='text', name='[image]', id='[image]', value='http://localhost:1337/images/product/1.jpg')
       div(data-role='fieldcontain')
-        label(for='produte[price]') 是否上架:
+        label(for='produte[isPublish]') 是否上架:
         select(id='[isPublish]' name='[isPublish]')
           option(value="true") 是
           option(value="false") 否
+      div(data-role='fieldcontain')
+        label(for='produte[comment]') 商品備註:
+        input(type='text', name='[comment]', id='[comment]', value='商品備註')
       fieldset.ui-grid-a
         .ui-block-b
           button 新增

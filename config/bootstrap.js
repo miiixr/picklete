@@ -47,7 +47,8 @@ module.exports.bootstrap = async (cb) => {
       stockQuantity: 10,
       price: 100,
       image: 'http://localhost:1337/images/product/1.jpg',
-      isPublish: true
+      isPublish: true,
+      comment: 'this is a comment.'
     };
     var createdProduct = await db.Product.create(newProduct);
 

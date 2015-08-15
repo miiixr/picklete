@@ -8,7 +8,8 @@ describe.only("about Product", () => {
       stockQuantity: 10,
       price: 100,
       image: 'http://localhost:1337/images/product/1.jpg',
-      isPublish: true
+      isPublish: true,
+      comment: 'this is a comment.'
     };
     testProduct = await db.Product.create(newProduct);
     done();
@@ -56,6 +57,8 @@ describe.only("about Product", () => {
       stockQuantity: 10,
       price: 999,
       image: 'http://localhost:1337/images/product/1.jpg'
+      isPublish: true,
+      comment: 'this is a comment.'
     };
     request(sails.hooks.http.app)
     .post(`/api/product/update/${testProduct.id}`)
@@ -77,6 +80,8 @@ describe.only("about Product", () => {
       stockQuantity: 10,
       price: 999,
       image: 'http://localhost:1337/images/product/1.jpg'
+      isPublish: true,
+      comment: 'this is a comment.'
     };
     request(sails.hooks.http.app)
     .post(`/api/product/`)
