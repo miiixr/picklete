@@ -84,10 +84,10 @@ let ProductController = {
       if(ensureDelete) {
         return res.serverError({msg: 'delete失敗'});
       }
-      var query = req.query.responseType;
-      if(query == undefined || query.toLowerCase() == 'json'){
-        return res.ok(findProduct.toJSON());
-      }
+      // var query = req.query.responseType;
+      // if(query == undefined || query.toLowerCase() == 'json'){
+      //   return res.ok(findProduct.toJSON());
+      // }
       return res.redirect('product/index/');
     }catch(error){
       return res.serverError(error);

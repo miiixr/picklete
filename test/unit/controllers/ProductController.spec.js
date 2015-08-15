@@ -1,4 +1,4 @@
-describe.only("about Product", () => {
+describe("about Product", () => {
 
   let testProduct = null;
   before(async (done) => {
@@ -116,10 +116,10 @@ describe.only("about Product", () => {
       if(res.statusCode === 500){
         return done(err);
       }
-      res.statusCode.should.equal(302);
-      // res.statusCode.should.equal(200);
-      // res.body.should.be.Object;
-      // res.body.isPublish.should.equal(false);
+      // res.statusCode.should.equal(302);
+      res.statusCode.should.equal(200);
+      res.body.should.be.Object;
+      res.body.isPublish.should.equal(true);
       done(err);
     });
   });
@@ -131,10 +131,10 @@ describe.only("about Product", () => {
       if(res.statusCode === 500){
         return done(err);
       }
-      res.statusCode.should.equal(302);
-      // res.statusCode.should.equal(200);
-      // res.body.should.be.Object;
-      // res.body.isPublish.should.equal(false);
+      // res.statusCode.should.equal(302);
+      res.statusCode.should.equal(200);
+      res.body.should.be.Object;
+      res.body.isPublish.should.equal(false);
       done(err);
     });
   });
