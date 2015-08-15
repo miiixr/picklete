@@ -56,7 +56,7 @@ describe.only("about Product", () => {
       description: '10斤裝',
       stockQuantity: 10,
       price: 999,
-      image: 'http://localhost:1337/images/product/1.jpg'
+      image: 'http://localhost:1337/images/product/1.jpg',
       isPublish: true,
       comment: 'this is a comment.'
     };
@@ -79,7 +79,7 @@ describe.only("about Product", () => {
       description: '10斤裝',
       stockQuantity: 10,
       price: 999,
-      image: 'http://localhost:1337/images/product/1.jpg'
+      image: 'http://localhost:1337/images/product/1.jpg',
       isPublish: true,
       comment: 'this is a comment.'
     };

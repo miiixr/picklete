@@ -79,9 +79,14 @@ let ProductController = {
         });
       }
       findProduct.destroy();
-      let checkProduct = await db.Product.findById(productId);
-      if(checkProduct) {
+      let ensureDelete = await db.Product.findById(productId);
+      console.log("ensureDelete -->",ensureDelete);
+      if(ensureDelete) {
         return res.serverError({msg: 'delete失敗'});
+      }
+      var query = req.query.responseType;
+      if(query == undefined || query.toLowerCase() == 'json'){
+        return res.ok(findProduct.toJSON());
       }
       return res.redirect('product/index/');
     }catch(error){
@@ -104,7 +109,7 @@ let ProductController = {
         return res.serverError({msg: '上架失敗'});
       }
       var query = req.query.responseType;
-      if(query || query == 'json'){
+      if(query == undefined || query.toLowerCase() == 'json'){
         return res.ok(updateProduct.toJSON());
       }
       let url = "product/show/" + productId;
@@ -129,7 +134,7 @@ let ProductController = {
         return res.serverError({msg: '下架失敗'});
       }
       var query = req.query.responseType;
-      if(query || query == 'json'){
+      if(query == undefined || query.toLowerCase() == 'json'){
         return res.ok(updateProduct.toJSON());
       }
       let url = "product/show/" + productId;
