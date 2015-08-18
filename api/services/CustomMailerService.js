@@ -1,18 +1,22 @@
-var MailerService = require('sails-service-mailer');
-
-var mailer = MailerService.create('direct', {
-  from: 'no-reply@ghaiklor.com',
-  transporter: {
-    name: 'example.mx-server.com', // hostname to be used when introducing the client to the MX server
-    debug: true // if true, the connection emits all traffic between client and server as `log` events
-  }
-});
+let sprintf = require("sprintf-js").sprintf
 
 module.exports = {
-  orderConfirm: async (to) => {
+  orderConfirm: async (result) => {
+    var orderConfirmTemplete = sails.config.mail.templete.orderConfirm;
+    var mailSendConfig = {...orderConfirmTemplete, to: result.user.email};
+
+    mailSendConfig.subject = sprintf(mailSendConfig.subject, {orderSerialNumber: result.order.SerialNumber});
+    mailSendConfig.text = sprintf(mailSendConfig.text, {
+      username: result.user.username,
+      orderSerialNumber: result.order.SerialNumber,
+      productName: result.product.name,
+      shipmentUsername: result.shipment.username,
+      shipmentAddress: result.shipment.address
+    });
 
     try {
-      let result = await mailer.send({to})
+      let result = await sails.config.mail.mailer.send(mailSendConfig);
+
       return {result};
     } catch (error) {
       console.error(error.stack);

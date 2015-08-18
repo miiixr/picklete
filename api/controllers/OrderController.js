@@ -15,8 +15,6 @@ OrderController = {
   },
   create: async (req, res) => {
 
-    console.log('req.body is=>\n', req.body);
-
     var dateFormat, randomNumber;
 
     dateFormat = function(nowDate) {
@@ -109,7 +107,7 @@ OrderController = {
       let associatedUser = await (result.order.setUser(result.user));
 
       // send email
-      let mailResult = await CustomMailerService.orderConfirm('smlsun@gmail.com');
+      let mailResult = await CustomMailerService.orderConfirm(result);
 
       return res.ok({
         order: result,
