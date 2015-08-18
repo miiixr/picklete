@@ -8,11 +8,18 @@ This gives you an opportunity to set up your data model, run jobs, or perform so
 For more information on bootstrapping your app, check out:
 http://sailsjs.org/#/documentation/reference/sails.config/sails.config.bootstrap.html
  */
-var models;
 
-models = require('../api/db');
+
+let models = require('../api/db');
+
+let sailsMailer = require('sails-service-mailer');
+
+
 
 module.exports.bootstrap = async (cb) => {
+
+  sails.config.mail.mailer = sailsMailer.create(sails.config.mail.type, sails.config.mail.config);
+
   sails.services.passport.loadStrategies();
   global.db = models;
 

@@ -2,16 +2,20 @@
   "name": "ec-platform",
   "version": "0.1.0",
   "author": "Trunk Studio <community@trunk-studio.com>",
-  "contributors": [{
-    "name": "smlsun",
-    "email": "smlsun@trunk-studio.com"
-  }, {
-    "name": "clonn",
-    "email": "clonncd@gmail.com"
-  }, {
-    "name": "kyle",
-    "email": "kyle@trunk-studio.com"
-  }],
+  "contributors": [
+    {
+      "name": "smlsun",
+      "email": "smlsun@trunk-studio.com"
+    },
+    {
+      "name": "clonn",
+      "email": "clonncd@gmail.com"
+    },
+    {
+      "name": "kyle",
+      "email": "kyle@trunk-studio.com"
+    }
+  ],
   "keywords": [
     "sails.js",
     "coffeescript",
@@ -20,6 +24,7 @@
     "sass"
   ],
   "dependencies": {
+    "aws-sdk": "2.1.45",
     "bcryptjs": "^2.1.0",
     "grunt": "0.4.2",
     "grunt-contrib-clean": "~0.5.0",
@@ -54,9 +59,9 @@
     "sails-service-mailer": "2.0.1",
     "sequelize": "^3.4.1",
     "skipper": "^0.5.5",
+    "sprintf-js": "^1.0.3",
     "sqlite3": "^3.0.9",
-    "validator": "^3.37.0",
-    "aws-sdk": "2.1.45"
+    "validator": "^3.37.0"
   },
   "scripts": {
     "start": "node_modules/.bin/coffee app.coffee",

@@ -13,7 +13,7 @@ describe "about Order", (done) ->
       }
 
       user: {
-        email: 'test@gmail.com'
+        email: 'smlsun@gmail.com'
         mobile: '0911-111-111'
         address: 'addres'
         username: 'test'
@@ -23,7 +23,7 @@ describe "about Order", (done) ->
         username: '收件者'
         mobile: '0922-222-222'
         taxId: '123456789'
-        email: 'receiver@gmail.com'
+        email: 'smlsun@gmail.com'
         address: '收件者的家'
       }
     }
