@@ -99,7 +99,7 @@ describe("about Product", () => {
 
   it('delete', (done) => {
     request(sails.hooks.http.app)
-    .put(`/api/product/delete/1`)
+    .delete(`/api/product/delete/1`)
     .end((err,res) => {
       if(res.statusCode === 500){
         return done(err);

@@ -86,7 +86,7 @@ module.exports.routes = {
     }
   }
 
-  'put /api/product/delete/:id': {
+  'delete /api/product/delete/:id': {
     controller: "ProductController",
     action: "delete",
     cors: {

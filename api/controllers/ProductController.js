@@ -78,7 +78,7 @@ let ProductController = {
           msg: '找不到商品！ 請確認商品ID！'
         });
       }
-      findProduct.destroy();
+      await findProduct.destroy();
       let ensureDelete = await db.Product.findById(productId);
       console.log("ensureDelete -->",ensureDelete);
       if(ensureDelete) {
