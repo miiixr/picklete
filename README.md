@@ -16,6 +16,8 @@ Picklete - E-Commerce Platform
     建立一個資料庫名稱為picklete，編碼為utf-8
 * `export PATH=node_modules/.bin:$PATH`
 
+if you are docker user, you can user docker-node
+
 ## getting started
 
 * npm start
