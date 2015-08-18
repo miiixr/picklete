@@ -43,13 +43,7 @@ let ProductController = {
 
   create: async (req, res) => {
     try {
-      var product = {
-        name: '斗六文旦柚禮盒',
-        description: '10斤裝',
-        stockQuantity: 10,
-        price: 999,
-        image: 'http://localhost:1337/images/product/1.jpg'
-      };
+      var product = {};
       return res.view({product});
     } catch (error) {
       return res.serverError(error);
