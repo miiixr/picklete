@@ -42,8 +42,15 @@ let ProductController = {
   },
 
   create: async (req, res) => {
+    return res.view('product/create');
+  },
+
+  edit: async (req, res) => {
+
     try {
-      return res.view();
+      let productId = req.param("id");
+      let product = await ProductService.findWithImages(productId);
+      return res.view({product});
     } catch (error) {
       return res.serverError(error);
     }
@@ -148,7 +155,6 @@ let ProductController = {
 
     try {
       let productId = req.param("productId");
-
       let findProduct = await db.Product.findById(productId);
       if (!findProduct) {
         return res.serverError({
@@ -156,17 +162,22 @@ let ProductController = {
         });
       }
 
-      findProduct.name = req.body.order.name
-      findProduct.description = req.body.order.description
-      findProduct.stockQuantity = req.body.order.stockQuantity
-      findProduct.price = req.body.order.price
+      findProduct.name = req.body.name
+      findProduct.description = req.body.description
+      findProduct.stockQuantity = req.body.stockQuantity
+      findProduct.price = req.body.price
 
       let updateInfo = await findProduct.save();
 
       if(!updateInfo) {
         return res.serverError({msg: '更新失敗'});
       } else {
-        return res.ok(findProduct.toJSON());
+        var query = req.query.responseType;
+        if(!query || query.toLowerCase() == 'json'){
+          return res.ok(findProduct.toJSON());
+        }else{
+          return res.redirect('product/show/'+productId);
+        }
       }
 
     } catch (error) {
