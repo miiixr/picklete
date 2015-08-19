@@ -51,7 +51,7 @@ let ProductController = {
 
   addProduct: async (req, res) => {
     try{
-      let newProduct = req.body;
+      let newProduct = req.body.product;
       let addProduct = await db.Product.create(newProduct);
       if(!addProduct){
         return res.serverError({

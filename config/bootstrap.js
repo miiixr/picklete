@@ -29,6 +29,8 @@ module.exports.bootstrap = async (cb) => {
     let admin = admin = {
       username: "admin",
       email: "admin@gmail.com",
+      group: 0,
+      comment: "this is site admin"
     };
 
     let createdAdmin = await db.User.create(admin);
@@ -44,13 +46,24 @@ module.exports.bootstrap = async (cb) => {
     var newBuyer = {
       username: "buyer",
       email: "buyer@gmail.com",
-      password: "buyer"
+      password: "buyer",
+      group: 1,
+      comment: "this is a newBuyer"
     };
     var createNewBuyer = await db.User.create(newBuyer);
 
+    var newBuyer2 = {
+      username: "buyer2",
+      email: "buyer2@gmail.com",
+      password: "buyer2",
+      group: 2,
+      comment: "this is newBuyer2"
+    };
+    var createNewBuyer2 = await db.User.create(newBuyer2);
+
     var newProduct = {
       name: '斗六文旦柚禮盒',
-      descript: '3斤裝',
+      description: '3斤裝',
       stockQuantity: 10,
       price: 100,
       image: 'http://localhost:1337/images/product/1.jpg',

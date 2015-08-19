@@ -73,8 +73,8 @@ describe("about Product", () => {
     });
   });
 
-  it('add', (done) => {
-    var newProduct = {
+  it.only('add', (done) => {
+    var product = {
       name: 'new斗六文旦柚禮盒',
       description: '10斤裝',
       stockQuantity: 10,
@@ -85,7 +85,7 @@ describe("about Product", () => {
     };
     request(sails.hooks.http.app)
     .post(`/api/product/`)
-    .send({newProduct})
+    .send({product})
     .end((err,res) => {
       if(res.statusCode === 500){
         return done(err);
@@ -97,7 +97,7 @@ describe("about Product", () => {
     });
   });
 
-  it.only('delete', (done) => {
+  it('delete', (done) => {
     request(sails.hooks.http.app)
     .delete(`/api/product/1`)
     .end((err,res) => {

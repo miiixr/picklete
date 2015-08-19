@@ -40,6 +40,9 @@ module.exports.routes = {
   'get /auth/:provider/callback': 'AuthController.callback'
   'get /auth/:provider/:action': 'AuthController.callback'
 
+  ###*
+    ProductController
+  ###
   'get /api/product': {
     controller: "ProductController",
     action: "find",
@@ -57,7 +60,6 @@ module.exports.routes = {
      credentials: false
     }
   }
-
 
   'post /api/product': {
     controller: "ProductController",
@@ -104,6 +106,9 @@ module.exports.routes = {
     }
   }
 
+  ###*
+    OrderController
+  ###
   'post /api/order': {
     controller: "OrderController",
     action: "create",
@@ -116,6 +121,63 @@ module.exports.routes = {
   'post /api/order/status': {
     controller: "OrderController",
     action: "status",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+
+  ###*
+    UserController
+  ###
+  'get /api/user': {
+    controller: "UserController",
+    action: "findAll",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+
+  'get /api/user/:id': {
+    controller: "UserController",
+    action: "findOne",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+
+  'post /api/user': {
+    controller: "UserController",
+    action: "add",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+
+  'put /api/user/:id': {
+    controller: "UserController",
+    action: "updateUser",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+
+  'put /api/user/setgroup/:group/:id': {
+    controller: "UserController",
+    action: "setGroup",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+
+  'delete /api/user/:id': {
+    controller: "UserController",
+    action: "delete",
     cors: {
      origin: "http://localhost:1337, http://localhost:8080",
      credentials: false
