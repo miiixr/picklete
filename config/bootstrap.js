@@ -26,20 +26,38 @@ module.exports.bootstrap = async (cb) => {
   try {
     await models.sequelize.sync({force: true});
 
+    var group1 = {
+      name: 'admin',
+      comment: 'site admin'
+    };
+    var createGroup1 = await db.UserGroup.create(group1);
+
+    var group2 = {
+      name: 'vip',
+      comment: 'super buyer'
+    };
+    var createGroup2 = await db.UserGroup.create(group2);
+
+    var group3 = {
+      name: "banned",
+      comment: "banned buyer"
+    };
+    var createGroup3 = await db.UserGroup.create(group3);
+
     let admin = admin = {
       username: "admin",
       email: "admin@gmail.com",
-      group: 0,
-      comment: "this is site admin"
+      mobile: "0123456789",
+      address: "address",
+      comment: "this is site admin",
+      UserGroupId: createGroup1.id
     };
-
     let createdAdmin = await db.User.create(admin);
 
     let passport = {
       protocol: 'local',
       password: "admin",
       UserId: createdAdmin.id
-
     };
     let createdPassport = await db.Passport.create(passport);
 
@@ -47,7 +65,7 @@ module.exports.bootstrap = async (cb) => {
       username: "buyer",
       email: "buyer@gmail.com",
       password: "buyer",
-      group: 1,
+      UserGroupId: createGroup2.id,
       comment: "this is a newBuyer"
     };
     var createNewBuyer = await db.User.create(newBuyer);
@@ -56,7 +74,7 @@ module.exports.bootstrap = async (cb) => {
       username: "buyer2",
       email: "buyer2@gmail.com",
       password: "buyer2",
-      group: 2,
+      UserGroupId: createGroup3.id,
       comment: "this is newBuyer2"
     };
     var createNewBuyer2 = await db.User.create(newBuyer2);
@@ -88,11 +106,21 @@ module.exports.bootstrap = async (cb) => {
       address: '收件者的家',
       OrderId: createdOrder.id
     }
-
     var createShipment = await db.Shipment.create(shipment);
 
-
-
+    // var groups = {
+    //   g1 :{
+    //     name: 'g1',
+    //     comment: 'g1'
+    //   },
+    //   g2 :{
+    //     name: 'g2',
+    //     comment: 'g2'
+    //   },
+    // };
+    // for (var g in groups){
+    //   var createGroups = await db.UserGroup.create(g);
+    // };
 
     cb();
 

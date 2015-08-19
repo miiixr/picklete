@@ -52,7 +52,7 @@ describe("about Product", () => {
 
   it('update', (done) => {
     var updateProduct = {
-      name: '斗六文旦柚禮盒',
+      name: 'specUpdated',
       description: '10斤裝',
       stockQuantity: 10,
       price: 999,
@@ -73,9 +73,9 @@ describe("about Product", () => {
     });
   });
 
-  it.only('add', (done) => {
+  it('add', (done) => {
     var product = {
-      name: 'new斗六文旦柚禮盒',
+      name: 'specAdd',
       description: '10斤裝',
       stockQuantity: 10,
       price: 999,
@@ -92,6 +92,7 @@ describe("about Product", () => {
       }
       res.statusCode.should.equal(200);
       res.body.should.be.Object;
+      res.body.name.should.equal("specAdd");
       res.body.id.should.be.number;
       done(err);
     });

@@ -49,7 +49,7 @@ let ProductController = {
     }
   },
 
-  addProduct: async (req, res) => {
+  add: async (req, res) => {
     try{
       let newProduct = req.body.product;
       let addProduct = await db.Product.create(newProduct);

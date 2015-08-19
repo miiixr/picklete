@@ -4,13 +4,29 @@ import util from "util";
 
 module.exports = {
 
+  getLoginState: function(req) {
+    if (req.session.authenticated) {
+      return true;
+    } else {
+      return false;
+    }
+  },
+
+  getLoginUser: function(req) {
+    if (req.session.passport.user) {
+      return req.session.passport.user;
+    } else {
+      return false;
+    }
+  },
+
   findAll: async () => {
     let users = await db.User.findAll();
     return users;
   },
 
-  findOne: async (userId) => {
-    let user = await db.User.findById(userId);
+  findOne: async (id) => {
+    let user = await db.User.findById(id);
     return user;
   }//,
 

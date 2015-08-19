@@ -2,12 +2,21 @@ describe("about User", () => {
   // start
 
   let testUser = null;
+  let userGroupAdmin = null;
+  let userGroupVip = null;
+  let userGroupBanned = null;
   before(async (done) => {
+    userGroupAdmin = await UserGroupService.findOne(1);
+    userGroupVip =  await UserGroupService.findOne(2);
+    userGroupBanned =  await UserGroupService.findOne(3);
+    console.log("\n ### spec userGroupAdmin id =>\n",userGroupAdmin.id);
+    console.log("\n ### spec userGroupVip id=>\n",userGroupVip.id);
+    console.log("\n ### userGroupBanned id=>\n",userGroupBanned.id);
     var newUser = {
       username: "spec",
       email: "spec@gmail.com",
       password: "spec",
-      group: 1,
+      UserGroupId: userGroupVip.id,
       comment: "spec"
     };
     console.log("\n ### spec pre-create user =>\n",newUser);
@@ -27,7 +36,7 @@ describe("about User", () => {
       res.body.user.id.should.be.number;
       res.body.user.username.should.be.String;
       res.body.user.email.should.be.String;
-      res.body.user.group.should.be.number;
+      res.body.user.UserGroupId.should.be.number;
       res.body.user.comment.should.be.String;
       done(err);
     });
@@ -35,7 +44,7 @@ describe("about User", () => {
 
   it('findAll', (done) => {
     request(sails.hooks.http.app)
-    .get(`/api/User`)
+    .get(`/api/user`)
     .end((err, res) => {
       if (res.statusCode === 500) {
         return done(body)
@@ -50,11 +59,11 @@ describe("about User", () => {
   });
 
   it('add', (done) => {
-    var newUser = {
+    var user = {
       username: "specAdd",
       email: "specAdd@gmail.com",
       password: "specAdd",
-      group: 1,
+      UserGroupId: userGroupVip.id,
       comment: "specAdd"
     };
     request(sails.hooks.http.app)
@@ -67,8 +76,8 @@ describe("about User", () => {
       res.statusCode.should.equal(200);
       res.body.should.be.Object;
       res.body.id.should.be.number;
-      res.body.id.should.equal(5);
-    //  res.body.group.should.be.number;
+      res.body.username.should.equal("specAdd");
+      res.body.UserGroupId.should.be.number;
       done(err);
     });
   });
@@ -86,29 +95,31 @@ describe("about User", () => {
   });
 
   it('update', (done) => {
-    var updateUser = {
-      username: "updated",
+    var user = {
+      username: "specUpdated",
       email: "spec@gmail.com",
       password: "spec",
-      group: 1,
+      UserGroupId: userGroupBanned.id,
       comment: "this user has been updated."
     };
     request(sails.hooks.http.app)
     .put(`/api/user/${testUser.id}`)
-    .send({updateUser})
+    .send({user})
     .end((err,res) => {
       if(res.statusCode === 500){
         return done(err);
       }
-      else {
-        done();
-      }
+      res.statusCode.should.equal(200);
+      res.body.should.be.Object;
+      res.body.username.should.equal("specUpdated");
+      res.body.UserGroupId.should.equal(3);
+      done();
     });
   });
 
   it('setgroup', (done) => {
     request(sails.hooks.http.app)
-    .put(`/api/user/setgroup/0/${testUser.id}`)
+    .put(`/api/user/setgroup/${userGroupAdmin.id}/${testUser.id}`)
     .end((err,res) => {
       if(res.statusCode === 500){
         return done(err);
@@ -116,7 +127,7 @@ describe("about User", () => {
       // res.statusCode.should.equal(302);
       res.statusCode.should.equal(200);
       res.body.should.be.Object;
-      res.body.group.should.equal("0");
+      res.body.UserGroupId.should.equal(1); // 1 = UserGroupAdmin
       done(err);
     });
   });

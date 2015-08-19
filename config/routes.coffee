@@ -63,7 +63,7 @@ module.exports.routes = {
 
   'post /api/product': {
     controller: "ProductController",
-    action: "addProduct",
+    action: "add",
     cors: {
      origin: "http://localhost:1337, http://localhost:8080",
      credentials: false
@@ -166,7 +166,7 @@ module.exports.routes = {
     }
   }
 
-  'put /api/user/setgroup/:group/:id': {
+  'put /api/user/setgroup/:groupid/:id': {
     controller: "UserController",
     action: "setGroup",
     cors: {
