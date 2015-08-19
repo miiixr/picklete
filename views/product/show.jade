@@ -22,8 +22,10 @@ block body
      .card-action
         fieldset(data-role='controlgroup', data-type='horizontal')
           a#productUpdateButton.ui-btn.ui-corner-all(href='/product/edit/#{product.id}')[編輯]
-          a#productDeleteButton.ui-btn.ui-corner-all(method='post',
-                                                    action='/api/product?responseType=view',
+          a#productDeleteButton.ui-btn.ui-corner-all(method='delete',
+                                                    action='/api/product#{product.id}',
                                                     href='/product/delete/#{product.id}?responseType=view')[刪除]
-          a#productDeleteButton.ui-btn.ui-corner-all(href='/product/publish/#{product.id}?responseType=view')[上架]
-          a#productDeleteButton.ui-btn.ui-corner-all(href='/product/unpublish/#{product.id}?responseType=view')[下架]
+          a#productPublishButton.ui-btn.ui-corner-all(href='/product/publish/#{product.id}?responseType=view')[上架]
+          a#productUnpublishButton.ui-btn.ui-corner-all(href='/product/unpublish/#{product.id}?responseType=view')[下架]
+          form#productDelete(method='delete',action='/api/product/#{product.id}')
+            button#productDeleteButton.ui-btn.ui-corner-all [delete]

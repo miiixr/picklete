@@ -62,7 +62,7 @@ describe("about Product", () => {
     };
     request(sails.hooks.http.app)
     .post(`/api/product/update/${testProduct.id}`)
-    .send({order: updateProduct})
+    .send({updateProduct})
     .end((err,res) => {
       if(res.statusCode === 500){
         return done(err);
