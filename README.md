@@ -19,3 +19,8 @@ Picklete - E-Commerce Platform
 ## getting started
 
 * npm start
+
+## references
+
+* Nodemailer, https://github.com/andris9/Nodemailer
+* sails-service-mailer, https://www.npmjs.com/package/sails-service-mailer

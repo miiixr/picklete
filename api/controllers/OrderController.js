@@ -5,9 +5,15 @@
 var OrderController;
 
 OrderController = {
+  index: async (req, res) => {
+    try {
+      let orders = await db.Order.findAll();
+      return res.view({orders});
+    } catch (error) {
+      return res.serverError(error);
+    }
+  },
   create: async (req, res) => {
-
-    console.log('req.body is=>\n', req.body);
 
     var dateFormat, randomNumber;
 
@@ -100,8 +106,9 @@ OrderController = {
       let associatedProduct = await (result.order.setProduct(result.product));
       let associatedUser = await (result.order.setUser(result.user));
 
-      // output
-      console.log('\nRESULT===============>\n',result);
+      // send email
+      let mailResult = await CustomMailerService.orderConfirm(result);
+
       return res.ok({
         order: result,
         bank: sails.config.bank,
@@ -153,17 +160,17 @@ OrderController = {
           msg: '沒有此訂單'
         });
       }
-      
-      console.log('orderProduct', orderProduct.toJSON());
+
+
       var bank = sails.config.bank;
       return res.ok({
         order: orderProduct,
         bank: bank
       });
 
-    } catch (e) {
-      console.log ('err=>',e);
-      return res.serverError(e);
+    } catch (error) {
+      console.log ('error',error.stack);
+      return res.serverError(error);
     }
   }
 };

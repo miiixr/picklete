@@ -1,0 +1,21 @@
+extends ./../layout
+
+block body
+  h1 order list
+  table.table
+    thead
+      tr
+        th #
+        th name
+        th description
+        th stockQuantity
+        th price
+    tbody
+      each order in orders
+        tr
+          th(scope='row')
+            a(href="/order/show/#{order.id}")= order.id
+          td= order.name
+          td= order.description
+          td= order.stockQuantity
+          td= order.price

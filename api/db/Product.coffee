@@ -5,6 +5,8 @@ module.exports = (sequelize, DataTypes) ->
     description: DataTypes.STRING
     stockQuantity: DataTypes.INTEGER
     price: DataTypes.INTEGER
+    isPublish: DataTypes.BOOLEAN
+    comment: DataTypes.STRING
   }, classMethods: associate: (models) ->
     Product.hasOne models.Order
     return
