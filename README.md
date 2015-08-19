@@ -16,7 +16,7 @@ Picklete - E-Commerce Platform
 * create local mysql db
     建立一個資料庫名稱為picklete，編碼為utf-8
 * `export PATH=node_modules/.bin:$PATH`
-* ` gem install bootstrap-sass compass` `
+* `gem install bootstrap-sass compass`
 
 ## getting started
 
