@@ -42,7 +42,6 @@ let ProductController = {
   },
 
   create: async (req, res) => {
-
     try {
       return res.view();
     } catch (error) {
@@ -52,11 +51,8 @@ let ProductController = {
 
   addProduct: async (req, res) => {
     try{
-      // create
       let newProduct = req.body;
-        console.log('\n\n\nnewProduct is=>\n\n\n', newProduct);
       let addProduct = await db.Product.create(newProduct);
-        console.log('\n\n\naddProduct is=>\n\n\n', addProduct);
       if(!addProduct){
         return res.serverError({
           msg: '找不到商品！ 請確認商品ID！'
@@ -68,6 +64,81 @@ let ProductController = {
       }else{
         return res.redirect('product/index');
       }
+    }catch(error){
+      return res.serverError(error);
+    }
+  },
+
+  delete: async (req, res) => {
+    try{
+      let productId = req.param("id");
+      let findProduct = await db.Product.findById(productId);
+      if (!findProduct) {
+        return res.serverError({
+          msg: '找不到商品！ 請確認商品ID！'
+        });
+      }
+      await findProduct.destroy();
+      let ensureDelete = await db.Product.findById(productId);
+      console.log("ensureDelete -->",ensureDelete);
+      if(ensureDelete) {
+        return res.serverError({msg: 'delete失敗'});
+      }
+      // var query = req.query.responseType;
+      // if(query == undefined || query.toLowerCase() == 'json'){
+      //   return res.ok(findProduct.toJSON());
+      // }
+      return res.redirect('product/index/');
+    }catch(error){
+      return res.serverError(error);
+    }
+  },
+
+  publish: async (req, res) => {
+    try{
+      let productId = req.param("id");
+      let findProduct = await db.Product.findById(productId);
+      if (!findProduct) {
+        return res.serverError({
+          msg: '找不到商品！ 請確認商品ID！'
+        });
+      }
+      findProduct.isPublish = true;
+      let updateProduct = await findProduct.save();
+      if(!updateProduct) {
+        return res.serverError({msg: '上架失敗'});
+      }
+      var query = req.query.responseType;
+      if(query == undefined || query.toLowerCase() == 'json'){
+        return res.ok(updateProduct.toJSON());
+      }
+      let url = "product/show/" + productId;
+      return res.redirect(url);
+    }catch(error){
+      return res.serverError(error);
+    }
+  },
+
+  unpublish: async (req, res) => {
+    try{
+      let productId = req.param("id");
+      let findProduct = await db.Product.findById(productId);
+      if (!findProduct) {
+        return res.serverError({
+          msg: '找不到商品！ 請確認商品ID！'
+        });
+      }
+      findProduct.isPublish = false;
+      let updateProduct = await findProduct.save();
+      if(!updateProduct) {
+        return res.serverError({msg: '下架失敗'});
+      }
+      var query = req.query.responseType;
+      if(query == undefined || query.toLowerCase() == 'json'){
+        return res.ok(updateProduct.toJSON());
+      }
+      let url = "product/show/" + productId;
+      return res.redirect(url);
     }catch(error){
       return res.serverError(error);
     }

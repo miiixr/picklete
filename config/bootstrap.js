@@ -53,7 +53,9 @@ module.exports.bootstrap = async (cb) => {
       descript: '3斤裝',
       stockQuantity: 10,
       price: 100,
-      image: 'http://localhost:1337/images/product/1.jpg'
+      image: 'http://localhost:1337/images/product/1.jpg',
+      isPublish: true,
+      comment: 'this is a comment.'
     };
     var createdProduct = await db.Product.create(newProduct);
 
