@@ -42,12 +42,7 @@ let ProductController = {
   },
 
   create: async (req, res) => {
-    try {
-      var product = {};
-      return res.view({product});
-    } catch (error) {
-      return res.serverError(error);
-    }
+    return res.view('product/create');
   },
 
   edit: async (req, res) => {
