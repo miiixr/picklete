@@ -6,6 +6,8 @@ Picklete - E-Commerce Platform
 * nvm(https://github.com/creationix/nvm)
 * iojs ≧ 1.8.1
 * mysql
+* Ruby(RVM)
+>gem install bootstrap-sass compass`
 
 ## after get a copy
 
