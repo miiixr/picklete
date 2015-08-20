@@ -4,7 +4,7 @@
 
   #   # default subscribed is set false
   #   $scope.subscribed = false
-    
+
   #   $scope.submitSubscribe = () ->
   #     email = $scope.subscribeEmail
   #     if $scope.form.email.$error.email
@@ -35,16 +35,12 @@
     path = location.pathname
     for key of config
       if path.indexOf(key) > -1
-        loader(config[key].js) 
-    
+        loader(config[key].js)
+
   config = {
-    "/": 
+    "/product/show/":
       js: [
-        "/js/controller/wishItem_main.js"
-      ]
-    "/wishItem/show/": 
-      js: [
-        "/js/controller/wishItem_main.js"
+        "/js/product/show.js"
       ]
   }
 
