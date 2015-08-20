@@ -15,24 +15,6 @@ OrderController = {
   },
   create: async (req, res) => {
 
-    var dateFormat, randomNumber;
-
-    dateFormat = function(nowDate) {
-      var dd, mm, yyyy;
-      yyyy = nowDate.getFullYear().toString();
-      mm = (nowDate.getMonth() + 1).toString();
-      dd = nowDate.getDate().toString();
-      return yyyy + (mm[1] ? mm : '0' + mm[0]) + (dd[1] ? dd : '0' + dd[0]);
-    };
-
-    randomNumber = function() {
-      var maxNum, minNum;
-      maxNum = 9999;
-      minNum = 0;
-      return Math.floor(Math.random() * (maxNum - minNum + 1)) + minNum;
-    };
-
-
     var newOrder = req.body.order;
     var result = {
       product:null
