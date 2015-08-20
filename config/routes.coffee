@@ -148,6 +148,15 @@ module.exports.routes = {
     }
   }
 
+  'get /api/user/group/:id': {
+    controller: "UserController",
+    action: "findByGroup",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+
   'post /api/user': {
     controller: "UserController",
     action: "add",
@@ -159,7 +168,7 @@ module.exports.routes = {
 
   'put /api/user/:id': {
     controller: "UserController",
-    action: "updateUser",
+    action: "update",
     cors: {
      origin: "http://localhost:1337, http://localhost:8080",
      credentials: false

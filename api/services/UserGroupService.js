@@ -5,13 +5,13 @@ import util from "util";
 module.exports = {
 
   findAll: async () => {
-    let userGroupIds = await db.UserGroup.findAll();
-    return userGroupIds;
+    let groups = await db.UserGroup.findAll();
+    return groups;
   },
 
   findOne: async (id) => {
-    let userGroup = await db.UserGroup.findById(id);
-    return userGroup;
+    let group = await db.UserGroup.findById(id);
+    return group;
   }
 
 };

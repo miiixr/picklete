@@ -42,6 +42,22 @@ describe("about User", () => {
     });
   });
 
+  it('findByGroup', (done) => {
+    request(sails.hooks.http.app)
+    .get(`/api/user/group/${testUser.id}`)
+    .end((err, res) => {
+      if (res.statusCode === 500) {
+        return done(body)
+      }
+      res.statusCode.should.equal(200);
+      res.body.users.should.be.Array;
+      res.body.users.forEach(User => {
+        User.username.should.be.String;
+      });
+      done(err);
+    });
+  });
+
   it('findAll', (done) => {
     request(sails.hooks.http.app)
     .get(`/api/user`)

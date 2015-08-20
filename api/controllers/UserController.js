@@ -1,5 +1,33 @@
 let userController = {
 
+  index: async (req, res) => {
+    try {
+      let users = await UserService.findAll();
+      let groups = await UserGroupService.findAll();
+      return res.view({users,groups});
+    } catch (error) {
+      return res.serverError(error);
+    } 
+  },
+
+  show: async (req, res) => {
+    try {
+      let userId = req.param("id");
+      let user = await UserService.findOne(userId);
+      return res.view({user});
+    } catch (error) {
+      return res.serverError(error);
+    }
+  },
+
+  create: async (req, res) => {
+    try {
+      return res.view();
+    } catch (error) {
+      return res.serverError(error);
+    }
+  },
+
   findAll: async (req, res) => {
     try {
       let users = await UserService.findAll();
@@ -9,10 +37,11 @@ let userController = {
     }
   },
 
-  index: async (req, res) => {
+  findByGroup: async (req, res) => {
     try {
-      let users = await UserService.findAll();
-      return res.view({users});
+      let groupId = req.param("id");
+      let users = await UserService.findByGroup(groupId);
+      return res.ok({users});
     } catch (error) {
       return res.serverError(error);
     }
@@ -24,16 +53,6 @@ let userController = {
       let user = await UserService.findOne(userId);
       // console.log("\n ### find user =>",user);
       return res.ok({user});
-    } catch (error) {
-      return res.serverError(error);
-    }
-  },
-
-  show: async (req, res) => {
-    try {
-      let userId = req.param("id");
-      let user = await UserService.findOne(userId);
-      return res.view({user});
     } catch (error) {
       return res.serverError(error);
     }
@@ -60,14 +79,6 @@ let userController = {
     }
   },
 
-  create: async (req, res) => {
-    try {
-      return res.view();
-    } catch (error) {
-      return res.serverError(error);
-    }
-  },
-
   delete: async (req, res) => {
     try{
       let userId = req.param("id");
@@ -89,7 +100,7 @@ let userController = {
     }
   },
 
-  updateUser: async (req, res) => {
+  update: async (req, res) => {
     try {
       let userId = req.param("id");
       let findUser = await UserService.findOne(userId);

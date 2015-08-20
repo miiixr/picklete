@@ -2,7 +2,11 @@ extends ./../layout
 
 block body
   h1 user-list
-  a#addUserButton.ui-btn.ui-corner-all(href='/user/create')新增
+  div(data-role='fieldcontain')
+    a#addUserButton.ui-btn.ui-corner-all(href='/user/create')新增
+    select(id='groups' name='groups')
+        each group in groups
+          option(value="group.id")= group.name
   table.table
     thead
       tr
@@ -24,3 +28,16 @@ block body
           td= user.address
           td= user.UserGroupId
           td= user.comment
+  table.table
+    thead
+      tr
+        th [#]
+        th [name]
+        th [comment]
+    tbody
+      each group in groups
+        tr
+          th(scope='row')
+            a(href="/user/show/#{group.id}")= group.id
+          td= group.name
+          td= group.comment

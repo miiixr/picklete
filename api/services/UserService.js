@@ -25,6 +25,11 @@ module.exports = {
     return users;
   },
 
+  findByGroup: async (id) => {
+    let users = await db.User.findAll({ where:{ UserGroupId:[id] } });
+    return users;
+  },
+
   findOne: async (id) => {
     let user = await db.User.findById(id);
     return user;
