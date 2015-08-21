@@ -1,0 +1,34 @@
+extends ./../layout
+
+block body
+  h1 新增User
+  #addNewProduct(data-role='page')
+    form#newProductForm(method='post', action='/api/product?responseType=view')
+      div(data-role='header', data-position='fixed')
+        a(href='/product/index', data-icon='back', data-iconpos='notext') 返回
+      div(data-role='fieldcontain')
+        label(for='product[name]') 名稱:
+        input(type='text', name='[product].[name]', id='[product].[name]', value='斗六文旦柚禮盒')
+      div(data-role='fieldcontain')
+        label(for='product[description]') 描述:
+        input(type='text', name='product[description]', id='product[description]', value='貳拾斤裝')
+      div(data-role='fieldcontain')
+        label(for='product[stockQuantity]') 數量:
+        input(type='text', name='product[stockQuantity]', id='product[stockQuantity]', value='10')
+      div(data-role='fieldcontain')
+        label(for='product[price]') 價錢:
+        input(type='text', name='product[price]', id='product[price]', value='999')
+      div(data-role='fieldcontain')
+        label(for='[image]')
+        input(type='text', name='product[image]', id='product[image]', value='http://localhost:1337/images/product/1.jpg')
+      div(data-role='fieldcontain')
+        label(for='product[isPublish]') 是否上架:
+        select(id='product[isPublish]' name='product[isPublish]')
+          option(value="true") 是
+          option(value="false") 否
+      div(data-role='fieldcontain')
+        label(for='product[comment]') 商品備註:
+        input(type='text', name='product[comment]', id='product[comment]', value='商品備註')
+      fieldset.ui-grid-a
+        .ui-block-b
+          button 新增
