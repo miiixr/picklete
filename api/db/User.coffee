@@ -5,11 +5,10 @@ module.exports = (sequelize, DataTypes) ->
     email: DataTypes.STRING
     mobile: DataTypes.STRING
     address: DataTypes.STRING
-    # GroupId: DataTypes.INTEGER
     comment: DataTypes.STRING
   }, classMethods: associate: (models) ->
     User.hasMany models.Passport
-    User.belongsTo models.UserGroup
+    User.belongsTo models.Role
     return
   )
   return User

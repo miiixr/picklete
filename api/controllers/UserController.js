@@ -3,11 +3,11 @@ let userController = {
   index: async (req, res) => {
     try {
       let users = await UserService.findAll();
-      let groups = await UserGroupService.findAll();
-      return res.view({users,groups});
+      let roles = await RoleService.findAll();
+      return res.view({users,roles});
     } catch (error) {
       return res.serverError(error);
-    } 
+    }
   },
 
   show: async (req, res) => {
@@ -37,20 +37,31 @@ let userController = {
     }
   },
 
-  findByGroup: async (req, res) => {
+  findOne: async (req, res) => {
     try {
-      let groupId = req.param("id");
-      let users = await UserService.findByGroup(groupId);
+      let userId = req.param("id");
+      let user = await UserService.findOne(userId);
+      // console.log("\n ### find user =>",user);
+      return res.ok({user});
+    } catch (error) {
+      return res.serverError(error);
+    }
+  },
+
+  findAllByRole: async (req, res) => {
+    try {
+      let roleId = req.param("id");
+      let users = await UserService.findAllByRole(roleId);
       return res.ok({users});
     } catch (error) {
       return res.serverError(error);
     }
   },
 
-  findOne: async (req, res) => {
+  search: async (req, res) => {
     try {
-      let userId = req.param("id");
-      let user = await UserService.findOne(userId);
+      let userName = req.param("username");
+      let users = await UserService.search(userName);
       // console.log("\n ### find user =>",user);
       return res.ok({user});
     } catch (error) {
@@ -113,7 +124,7 @@ let userController = {
       findUser.email = req.body.user.email
       findUser.mobile = req.body.user.mobile
       findUser.address = req.body.user.address
-      findUser.UserGroupId = req.body.user.UserGroupId
+      findUser.RoleId = req.body.user.RoleId
       findUser.comment = req.body.user.comment
       let updateInfo = await findUser.save();
       if(!updateInfo) {
@@ -126,11 +137,11 @@ let userController = {
     }
   },
 
-  setGroup: async (req, res) => {
+  setRole: async (req, res) => {
     try{
-      let groupId = req.param("groupid");
+      let roleId = req.param("roleid");
       let userId = req.param("id");
-      // console.log("\n ### groupId =>\n",groupId);
+      // console.log("\n ### roleId =>\n",roleId);
       // console.log("\n ### userId =>\n",userId);
       let findUser = await db.User.findById(userId);
       if (!findUser) {
@@ -138,16 +149,16 @@ let userController = {
           msg: '找不到User！ 請確認User ID！'
         });
       }
-      let findUserGroup = await db.UserGroup.findById(groupId);
-      if (!findUserGroup) {
+      let findRole = await db.Role.findById(roleId);
+      if (!findRole) {
         return res.serverError({
-          msg: '找不到UserGroup！ 請確認groupId！'
+          msg: '找不到Role！ 請確認roleId！'
         });
       }
-      findUser.UserGroupId = findUserGroup.id;
+      findUser.RoleId = findRole.id;
       let updateUser = await findUser.save();
       if(!updateUser) {
-        return res.serverError({msg: 'Set User Group 失敗'});
+        return res.serverError({msg: 'Set-Role 失敗'});
       }
       var query = req.query.responseType;
       if(query == undefined || query.toLowerCase() == 'json'){

@@ -4,9 +4,9 @@ block body
   h1 user-list
   div(data-role='fieldcontain')
     a#addUserButton.ui-btn.ui-corner-all(href='/user/create')新增
-    select(id='groups' name='groups')
-        each group in groups
-          option(value="group.id")= group.name
+    select(id='roles' name='roles')
+        each role in roles
+          option(value="role.id")= role.name
   table.table
     thead
       tr
@@ -15,7 +15,7 @@ block body
         th [email]
         th [mobile]
         th [address]
-        th [UserGroupId]
+        th [RoleId]
         th [comment]
     tbody
       each user in users
@@ -26,7 +26,7 @@ block body
           td= user.email
           td= user.mobile
           td= user.address
-          td= user.UserGroupId
+          td= user.RoleId
           td= user.comment
   table.table
     thead
@@ -35,9 +35,9 @@ block body
         th [name]
         th [comment]
     tbody
-      each group in groups
+      each role in roles
         tr
           th(scope='row')
-            a(href="/user/show/#{group.id}")= group.id
-          td= group.name
-          td= group.comment
+            a(href="/user/show/#{role.id}")= role.id
+          td= role.name
+          td= role.comment

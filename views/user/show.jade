@@ -15,8 +15,8 @@ block body
           span#user_mobile=user.mobile
         p address:
           span#user_address=user.address
-        p UserGroupId:
-          span#user_usergroupid=user.UserGroupId
+        p RoleId:
+          span#user_RoleId=user.RoleId
         p 備註:
           span#user_price=user.comment
      .card-action
@@ -25,4 +25,4 @@ block body
           a#productDeleteButton.ui-btn.ui-corner-all(method='post',
                                           action='/api/user?responseType=view',
                                           href='/user/delete/#{user.id}?responseType=view')[刪除]
-          a#userPublishButton.ui-btn.ui-corner-all(href='/user/publish/#{user.id}?responseType=view')[change group]
+          a#userPublishButton.ui-btn.ui-corner-all(href='/user/publish/#{user.id}?responseType=view')[change role]

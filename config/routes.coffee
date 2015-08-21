@@ -148,9 +148,18 @@ module.exports.routes = {
     }
   }
 
-  'get /api/user/group/:id': {
+  'get /api/user/role/:id': {
     controller: "UserController",
-    action: "findByGroup",
+    action: "findAllByRole",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+
+  'get /api/user/search/:username': {
+    controller: "UserController",
+    action: "search",
     cors: {
      origin: "http://localhost:1337, http://localhost:8080",
      credentials: false
@@ -175,9 +184,9 @@ module.exports.routes = {
     }
   }
 
-  'put /api/user/setgroup/:groupid/:id': {
+  'put /api/user/setrole/:roleid/:id': {
     controller: "UserController",
-    action: "setGroup",
+    action: "setRole",
     cors: {
      origin: "http://localhost:1337, http://localhost:8080",
      credentials: false

@@ -25,15 +25,40 @@ module.exports = {
     return users;
   },
 
-  findByGroup: async (id) => {
-    let users = await db.User.findAll({ where:{ UserGroupId:[id] } });
-    return users;
-  },
-
   findOne: async (id) => {
     let user = await db.User.findById(id);
     return user;
-  }//,
+  },
+
+  findAllByRole: async (id) => {
+    let users = await db.User.findAll({
+      where:{
+        RoleId:[id]
+      }
+    });
+    return users;
+  },
+
+  findRole: async (id) => {
+    let role = await db.Role.findById(id);
+    return role;
+  },
+
+  findRoles: async (id) => {
+    let roles = await db.Role.findAll();
+    return roles;
+  },
+
+  search: async (username) => {
+    let users = await db.User.findAll({
+      where:{
+        id:{
+          $like: username
+        }
+      }
+    });
+    return users;
+  }
 
   /*
     marked below codes jsut in case,
