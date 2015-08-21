@@ -18,7 +18,7 @@ web:
 
 mobile:
   image: iojs
-  command: "npm start"
+  command: "node server.js"
   working_dir: /app
   ports:
   - "3000:3000"
@@ -27,7 +27,7 @@ mobile:
   volumes:
    - ../agricloud-mobile-cart:/app
   environment:
-    NODE_ENV: "prodcution"
+    NODE_ENV: "production"
   restart: always
 
 
