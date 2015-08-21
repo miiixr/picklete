@@ -17,3 +17,9 @@
 @import "font-awesome";
 @import "compass/reset";
 @import "bootstrap";
+@import "sass/bootstrap.scss";
+
+.border-block-3 {
+  background-color: red;
+  border: 1px red solid;
+}

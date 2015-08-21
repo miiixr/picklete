@@ -1,0 +1,69 @@
+//cbp-so-scroller
+.cbp-so-scroller {
+
+}
+
+.cbp-so-section {
+  position: relative;
+}
+
+/* Clear floats of children */
+.cbp-so-section:before,
+.cbp-so-section:after {
+  content: " ";
+  display: table;
+}
+
+.cbp-so-section:after {
+  clear: both;
+}
+
+
+/* Sides */
+.cbp-so-side {
+  overflow: hidden;
+  @include transition(transform 0.7s, opacity 0.7s);
+  @include transition-delay(0.5s);
+}
+
+/* Clear floats of children */
+.cbp-so-side:before,
+.cbp-so-side:after {
+  content: " ";
+  display: table;
+}
+
+.cbp-so-side:after {
+  clear: both;
+}
+
+/* Initial state (hidden or anything else) */
+.cbp-so-init .cbp-so-side {
+  opacity: 0;
+}
+
+.cbp-so-init .cbp-so-side-left {
+  @include translate3d(-80px, 0, 0);
+}
+
+.cbp-so-init .cbp-so-side-right {
+  @include translate3d(80px, 0, 0);
+}
+
+.cbp-so-init .cbp-so-side-top {
+  @include translate3d(0, -80px, 0);
+}
+
+.cbp-so-init .cbp-so-side-bottom {
+  @include translate3d(0, 80px, 0);
+}
+
+/* Animated state */
+/* add you final states (transition) or your effects (animations) for each side */
+.cbp-so-section.cbp-so-animate .cbp-so-side-left,
+.cbp-so-section.cbp-so-animate .cbp-so-side-right,
+.cbp-so-section.cbp-so-animate .cbp-so-side-top,
+.cbp-so-section.cbp-so-animate .cbp-so-side-bottom {
+  @include translate3d(0, 0, 0);
+  opacity: 1;
+}

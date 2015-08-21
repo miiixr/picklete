@@ -1,0 +1,24 @@
+//
+// scrolltotop
+// --------------------------------------------------
+#scrolltotop {
+  width: 55px;
+  height: 55px;
+  position: fixed;
+  right: 0px;
+  bottom: 0px;
+  display:none;
+  color:#fff;
+  font-size: $font-size-large;
+  text-align: center;
+  z-index: $zindex-scrolltotop;
+  background: #33363b;
+  @include opacity(0.5);
+  @include transition(1s);
+  &:hover {
+    @include opacity(1);
+  }
+  .glyphicon {
+    line-height: 55px;
+  }
+}
