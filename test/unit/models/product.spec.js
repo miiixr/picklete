@@ -1,4 +1,4 @@
-describe.only("about prodcut model operation.", () => {
+describe("about prodcut model operation.", () => {
 
   it('create product', async (done) => {
     let newProduct = {
@@ -10,7 +10,6 @@ describe.only("about prodcut model operation.", () => {
 
     createdProduct.name.should.be.String;
     done();
-
   });
 
   it('read all product', async (done) => {
@@ -22,7 +21,6 @@ describe.only("about prodcut model operation.", () => {
     } catch (e) {
       done(e);
     }
-
   });
 
   it('find product id = 1', async (done) => {
@@ -51,11 +49,15 @@ describe.only("about prodcut model operation.", () => {
     }
   });
 
-  it('destroy product', async (done) => {
+  it('destroy product', async (done,err) => {
     try {
-      let theProduct = db.Product.findById();
-      let theProduct = db.Product.dustory();
-      let afterDestroyProductFindAgain = null /?
+      let theProduct = await db.Product.findById(1);
+      if (!theProduct){
+        done();
+      }
+      console.log(theProduct);
+      await theProduct.destroy();
+      let afterDestroyProductFindAgain = await db.Product.findById(1);
       (afterDestroyProductFindAgain === null).should.be.true;
       done();
     } catch (e) {
