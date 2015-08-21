@@ -56,9 +56,9 @@ let ProductController = {
     }
   },
 
-  addProduct: async (req, res) => {
+  add: async (req, res) => {
     try{
-      let newProduct = req.body;
+      let newProduct = req.body.product;
       let addProduct = await db.Product.create(newProduct);
       if(!addProduct){
         return res.serverError({
@@ -91,11 +91,7 @@ let ProductController = {
       if(ensureDelete) {
         return res.serverError({msg: 'delete失敗'});
       }
-      // var query = req.query.responseType;
-      // if(query == undefined || query.toLowerCase() == 'json'){
-      //   return res.ok(findProduct.toJSON());
-      // }
-      return res.redirect('product/index/');
+      return res.redirect('product/index');
     }catch(error){
       return res.serverError(error);
     }

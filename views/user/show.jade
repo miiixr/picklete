@@ -1,0 +1,28 @@
+extends ./../layout
+
+block body
+  h1 user
+  a(href='/user/index', data-icon='back', data-iconpos='notext') 返回
+  .nd2-card
+    .card-media
+        img#user_image(src=user.image, alt='user-image')
+      card-supporting-text.has-action
+        h3 username:
+          spen#user_username=user.username
+        p email:
+          span#user_email=user.email
+        p mobile:
+          span#user_mobile=user.mobile
+        p address:
+          span#user_address=user.address
+        p RoleId:
+          span#user_RoleId=user.RoleId
+        p 備註:
+          span#user_price=user.comment
+     .card-action
+        fieldset(data-role='controlgroup', data-type='horizontal')
+          a#userUpdateButton.ui-btn.ui-corner-all(href='/user/edit/#{user.id}')[編輯]
+          a#productDeleteButton.ui-btn.ui-corner-all(method='post',
+                                          action='/api/user?responseType=view',
+                                          href='/user/delete/#{user.id}?responseType=view')[刪除]
+          a#userPublishButton.ui-btn.ui-corner-all(href='/user/publish/#{user.id}?responseType=view')[change role]
