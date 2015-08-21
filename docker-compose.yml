@@ -14,6 +14,7 @@ web:
     MYSQL_USER: "ec_platform"
     PORT: "1337"
     NODE_ENV: "development"
+  restart: always
 
 mobile:
   image: iojs
@@ -25,6 +26,10 @@ mobile:
     - web
   volumes:
    - ../agricloud-mobile-cart:/app
+  environment:
+    NODE_ENV: "prodcution"
+  restart: always
+
 
 mysql:
   image: dgraziotin/mysql
@@ -38,3 +43,4 @@ mysql:
     MYSQL_USER_DB: "ec_platform"
     MYSQL_USER_PASS: "ec_platform"
     CREATE_MYSQL_BASIC_USER_AND_DB: "true"
+  restart: always
