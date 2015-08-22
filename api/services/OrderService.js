@@ -7,9 +7,6 @@ module.exports = {
     let startDate = moment().startOf('day').toDate();
     let endDate = moment().startOf('day').add(1, 'days').add(-1, 'seconds').toDate();
 
-    console.log(startDate);
-    console.log(endDate);
-
     let todayOrderConut = await db.Order.count({
       where: {
         createdAt: {
@@ -17,8 +14,6 @@ module.exports = {
         }
       }
     })
-
-
 
     let todayOrderConutString = sprintf("%03d", todayOrderConut);
 
@@ -30,7 +25,6 @@ module.exports = {
     let years = parseInt(nowDate.format('YY'));
     let month = parseInt(nowDate.format('MM'));
     let day = parseInt(nowDate.format('DD'));
-    console.log('=== dateString ===', `${years} ${month} ${day}`);
 
     let alphabet = [
       '0','1','2','3','4',

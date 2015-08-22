@@ -11,6 +11,7 @@ module.exports = {
     'port': process.env.MYSQL_1_PORT_3306_TCP_PORT || 3306
     'database': 'picklete_prod',
     'dialect': 'mysql',
+    'timezone': '+08:00'
     'force': false
   }
 }
