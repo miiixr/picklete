@@ -52,7 +52,7 @@ describe("about Product", () => {
 
   it('update', (done) => {
     var updateProduct = {
-      name: '斗六文旦柚禮盒',
+      name: 'specUpdated',
       description: '10斤裝',
       stockQuantity: 10,
       price: 999,
@@ -74,8 +74,8 @@ describe("about Product", () => {
   });
 
   it('add', (done) => {
-    var newProduct = {
-      name: 'new斗六文旦柚禮盒',
+    var product = {
+      name: 'specAdd',
       description: '10斤裝',
       stockQuantity: 10,
       price: 999,
@@ -85,13 +85,14 @@ describe("about Product", () => {
     };
     request(sails.hooks.http.app)
     .post(`/api/product/`)
-    .send({newProduct})
+    .send({product})
     .end((err,res) => {
       if(res.statusCode === 500){
         return done(err);
       }
       res.statusCode.should.equal(200);
       res.body.should.be.Object;
+      res.body.name.should.equal("specAdd");
       res.body.id.should.be.number;
       done(err);
     });

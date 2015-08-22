@@ -1,23 +1,24 @@
 web:
   image: artificial/docker-sails
-  working_dir: /ec_platform
+  working_dir: /picklete
   command: "/bin/bash -c 'source ~/.bashrc && npm start'"
   ports:
   - "1337:1337"
   volumes:
-   - ./:/ec_platform
+   - ./:/picklete
   links:
    - mysql
 
   environment:
-    MYSQL_PASSWORD: "ec_platform"
-    MYSQL_USER: "ec_platform"
+    MYSQL_PASSWORD: "picklete"
+    MYSQL_USER: "picklete"
     PORT: "1337"
-    NODE_ENV: "development"
+    NODE_ENV: "production"
+  restart: always
 
 mobile:
   image: iojs
-  command: "npm start"
+  command: "node server.js"
   working_dir: /app
   ports:
   - "3000:3000"
@@ -25,6 +26,10 @@ mobile:
     - web
   volumes:
    - ../agricloud-mobile-cart:/app
+  environment:
+    NODE_ENV: "production"
+  restart: always
+
 
 mysql:
   image: dgraziotin/mysql
@@ -34,7 +39,8 @@ mysql:
     - "../database:/var/lib/mysql/"
   environment:
     MYSQL_ADMIN_PASS: "root"
-    MYSQL_USER_NAME: "ec_platform"
-    MYSQL_USER_DB: "ec_platform"
-    MYSQL_USER_PASS: "ec_platform"
+    MYSQL_USER_NAME: "picklete"
+    MYSQL_USER_DB: "picklete_prod"
+    MYSQL_USER_PASS: "picklete"
     CREATE_MYSQL_BASIC_USER_AND_DB: "true"
+  restart: always
