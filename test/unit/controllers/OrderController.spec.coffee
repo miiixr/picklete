@@ -1,6 +1,6 @@
 describe "about Order", (done) ->
 
-  it "create Order should be success.", (done) ->
+  it.only "create Order should be success.", (done) ->
     newOrder = {
       quantity: 10
 
@@ -32,14 +32,14 @@ describe "about Order", (done) ->
     .post("/api/order")
     .send({order: newOrder})
     .end (err, res) ->
-      return done(body) if res.statusCode is 500
+      return done(err) if res.statusCode is 500
       res.body.success.should.be.true
       res.body.order.id.should.be.number
-      res.body.order.shipment.id.should.be.number
-      res.body.order.user.id.should.be.number
-      res.body.order.product.id.should.be.number
+      res.body.shipment.id.should.be.number
+      res.body.user.id.should.be.number
+      res.body.product.id.should.be.number
 
-      done(err)
+      done();
 
   describe "get Order status.", () ->
     before (done) ->

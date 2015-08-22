@@ -91,5 +91,30 @@ module.exports = {
     }
     var createShipment = await db.Shipment.create(shipment);
 
+
+    var fruitProducts = [{
+      name: '圓滿柚',
+      description: '每箱六台斤 甜度 ★★★',
+      price: 500
+    },{
+      name: '團圓柚',
+      description: '每箱六台斤 甜度 ★★★★',
+      price: 625
+    },{
+      name: '平安柚',
+      description: '每箱六台斤 甜度 ★★★★',
+      price: 750
+    },{
+      name: '【特級】團圓柚',
+      description: '每箱六台斤 甜度 ★★★★★',
+      price: 950
+    },{
+      name: '【特級】平安柚',
+      description: '每箱六台斤 甜度 ★★★★★',
+      price: 1200
+    }];
+    await db.Product.bulkCreate(fruitProducts);
+
+
   }
 }
