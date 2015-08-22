@@ -20,6 +20,7 @@ module.exports = {
     'username': null,
     'password': null,
     'database': null,
+    'timezone': '+08:00'
     'force': true
 }
 

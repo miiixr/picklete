@@ -24,9 +24,12 @@ module.exports.bootstrap = async (cb) => {
   global.db = models;
 
   try {
-    let force = sails.config.db.force;
-    await models.sequelize.sync({force});
-    if (sails.config.environment === 'development') await init.data();
+    if (sails.config.environment === 'development') {
+      await init.database();
+      await init.testData();
+    }
+
+    await init.basicData();
 
     cb();
 
