@@ -6,6 +6,9 @@ module.exports = (sequelize, DataTypes) ->
     mobile: DataTypes.STRING
     address: DataTypes.STRING
     comment: DataTypes.STRING
+    admin:
+      type: DataTypes.BOOLEAN
+      defaultValue: false
   }, classMethods: associate: (models) ->
     User.hasMany models.Passport
     User.belongsTo models.Role
