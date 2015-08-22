@@ -29,74 +29,65 @@ module.exports = {
     try {
       // find product.
       let findProduct = await db.Product.findById(newOrder.product.id);
-      if (!findProduct) {
-        console.log('err=>find product failed.');
-        return res.serverError({
-          msg: '找不到商品！ 請確認商品ID！'
-        });
-      }
-      if (findProduct.stockQuantity === 0) {
-        console.log('err=>product no stock.');
-        return res.serverError({
-          msg: '商品售鑿！'
-        });
-      }
-      if (findProduct.stockQuantity < newOrder.quantity) {
-        console.log('err=>over-ordering.');
-        return res.serverError({
-          msg: '商品數量不足！'
-        });
-      }
-      result.product = findProduct;
 
-      // find or create user.
-      let insertUser = await db.User.findOrCreate({
-        where:
-          {
-            email:newOrder.user.email
-          },
-          defaults:newOrder.user
-        });
-      result.user = insertUser[0];
+      if (!findProduct)
+        return res.serverError({msg: '找不到商品！ 請確認商品ID！'});
 
-      // build order and shipment.
+      if (findProduct.stockQuantity === 0)
+        return res.serverError({msg: '商品售鑿！'});
+
+      if (findProduct.stockQuantity < newOrder.quantity)
+        return res.serverError({msg: '商品數量不足！'});
+
+
+      let userFindOrCreateResult = await db.User.findOrCreate({
+        where: {
+          email: newOrder.user.email
+        },
+        defaults: newOrder.user
+      });
+
+      let buyer = userFindOrCreateResult[0];
+
       let thisOrder = {
         quantity: newOrder.quantity,
-        UserId: result.user.id,
+        UserId: buyer.id,
         SerialNumber: await OrderService.generateOrderSerialNumber()
       };
-      let insertOrder = await db.Order.create(thisOrder);
-      if (!insertOrder){
-        console.log('err=>create order failed.');
-        return res.serverError({
-          msg: '建立訂單失敗'
-        });
+
+
+
+      let isolationLevel = db.Sequelize.Transaction.ISOLATION_LEVELS.SERIALIZABLE;
+      let transaction = await db.sequelize.transaction({isolationLevel});
+
+      try {
+        findProduct.stockQuantity = findProduct.stockQuantity - newOrder.quantity
+        await findProduct.save({transaction});
+        let insertOrder = await db.Order.create(thisOrder, {transaction});
+        let insertShipment = await db.Shipment.create(newOrder.shipment, {transaction});
+        let associatedShipment = await insertOrder.setShipment(result.shipment, {transaction});
+        let associatedProduct = await insertOrder.setProduct(result.product, {transaction});
+        let associatedUser = await insertOrder.setUser(result.user, {transaction});
+
+        transaction.commit();
+
+        result.product = findProduct;
+        result.user = buyer;
+        result.order = insertOrder;
+        result.shipment = insertShipment;
+        result.success = true;
+        result.bank = sails.config.bank;
+      } catch (e) {
+        console.error(e.stack);
+        result.success = false;
+        transaction.rollback();
+        throw e;
       }
-      result.order = insertOrder;
-      result.id = result.order.id;
-
-      // build shipment.
-      let insertShipment = await (
-        ShipmentService.create(newOrder.shipment, function (error, createdShipment) {
-          if (!createdShipment){
-            console.log('err=>create Shipment failed.');
-            return res.serverError({
-              msg: '建立Shipment失敗'
-              });
-          }
-          result.shipment = createdShipment;
-          result.success = true;
-        })
-      );
-
-      // associations
-      let associatedShipment = await (result.order.setShipment(result.shipment));
-      let associatedProduct = await (result.order.setProduct(result.product));
-      let associatedUser = await (result.order.setUser(result.user));
 
       return result
 
     } catch (e) {
+      console.error(e.stack);
 
       throw e;
     }

@@ -21,11 +21,7 @@ OrderController = {
       let result = await OrderService.create(newOrder);
       let mailResult = await CustomMailerService.orderConfirm(result);
 
-      return res.ok({
-        order: result,
-        bank: sails.config.bank,
-        success: result.success
-      });
+      return res.ok(result);
     } catch (e) {
       console.log ('err=>',e);
       return res.serverError(e);
@@ -35,8 +31,6 @@ OrderController = {
 
   // 查詢
   status: async function(req, res) {
-    console.log(req.body.SerialNumber);
-    console.log(req.body.email);
 
     try{
       let userData = await db.User.findOne({
