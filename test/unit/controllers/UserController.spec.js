@@ -1,4 +1,4 @@
-describe.only("about User", () => {
+describe("about User", () => {
   // start
 
   let testUser = null;

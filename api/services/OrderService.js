@@ -2,8 +2,8 @@ import moment from 'moment';
 let sprintf = require("sprintf-js").sprintf;
 
 module.exports = {
-  generateOrderSerialNumber: async (orderDate) => {
-    let dateString = OrderService._dateFormat(orderDate);
+  generateOrderSerialNumber: async () => {
+    let dateString = OrderService._dateFormat(moment());
     let startDate = moment().startOf('day').toDate();
     let endDate = moment().startOf('day').add(1, 'days').add(-1, 'seconds').toDate();
 

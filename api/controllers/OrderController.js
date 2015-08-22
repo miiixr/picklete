@@ -57,7 +57,7 @@ OrderController = {
       let thisOrder = {
         quantity: newOrder.quantity,
         UserId: result.user.id,
-        SerialNumber: dateFormat(new Date()) + randomNumber()
+        SerialNumber: await OrderService.generateOrderSerialNumber()
       };
       let insertOrder = await db.Order.create(thisOrder);
       if (!insertOrder){

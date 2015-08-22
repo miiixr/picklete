@@ -1,12 +1,12 @@
 describe("about prodcut model operation.", () => {
-
+  let createdProduct = null;
   it('create product', async (done) => {
     let newProduct = {
       name: '柚子',
       descript: '又大又好吃'
     };
 
-    let createdProduct = await db.Product.create(newProduct);
+    createdProduct = await db.Product.create(newProduct);
 
     createdProduct.name.should.be.String;
     done();
@@ -23,12 +23,11 @@ describe("about prodcut model operation.", () => {
     }
   });
 
-  it('find product id = 1', async (done) => {
+  it('find product id = createdProduct.id', async (done) => {
     try {
-      let theProduct = await db.Product.findById(1);
-      console.log(theProduct);
+      let theProduct = await db.Product.findById(createdProduct.id);
       theProduct.should.be.Object;
-      theProduct.id.should.be.equal(1);
+      theProduct.id.should.be.equal(createdProduct.id);
       done();
     } catch (e) {
       done(e);
@@ -38,7 +37,7 @@ describe("about prodcut model operation.", () => {
 
   it('update product', async (done) => {
     try {
-      let theProduct = await db.Product.findById(1);
+      let theProduct = await db.Product.findById(createdProduct.id);
       theProduct.name='product name change'
       theProduct = await theProduct.save();
       theProduct.should.be.Object;
@@ -51,13 +50,13 @@ describe("about prodcut model operation.", () => {
 
   it('destroy product', async (done,err) => {
     try {
-      let theProduct = await db.Product.findById(1);
+      let theProduct = await db.Product.findById(createdProduct.id);
       if (!theProduct){
         done();
       }
       console.log(theProduct);
       await theProduct.destroy();
-      let afterDestroyProductFindAgain = await db.Product.findById(1);
+      let afterDestroyProductFindAgain = await db.Product.findById(createdProduct.id);
       (afterDestroyProductFindAgain === null).should.be.true;
       done();
     } catch (e) {
