@@ -1,24 +1,29 @@
-describe("about User model operation.", function() {
-  it('create User with admin', function(done) {
-    let newUser = {
-      username: 'TestUser01',
-      email: 'TestUser01@test.com',
-      admin: true
-    };
-    db.User.create(newUser).then(function(createdUser) {
+describe('about User model operation.', function() {
+  it('create User with admin', async (done) => {
+    try {
+      let newUser = {
+        username: 'TestUser01',
+        email: 'TestUser01@test.com',
+        admin: true
+      };
+      let createdUser = await db.User.create(newUser);
+
       createdUser.dataValues.admin.should.equal(true);
-      return done();
-    });
+      done();
+    } catch (e) {
+      console.log(e.stack);
+      done(e);
+    }
   });
-  it('create User with user', function(done) {
+
+  it('create User with user', async (done) => {
     let newUser = {
       username: 'TestUser02',
       email: 'TestUser02@test.com',
       admin: false
     };
-    db.User.create(newUser).then(function(createdUser) {
-      createdUser.dataValues.admin.should.equal(false);
-      return done();
-    });
+    let createdUser = await db.User.create(newUser);
+    createdUser.dataValues.admin.should.equal(false);
+    done();
   });
 });
