@@ -97,7 +97,7 @@ describe("about Product", () => {
     });
   });
 
-  it.only('delete', (done) => {
+  it('delete', (done) => {
     request(sails.hooks.http.app)
     .delete(`/api/product/1`)
     .end((err,res) => {
