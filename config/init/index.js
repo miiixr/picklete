@@ -1,10 +1,39 @@
 module.exports = {
-  data: async () => {
+
+  database: async () => {
+    let force = sails.config.db.force;
+    await db.sequelize.sync({force});
+  },
+  basicData: async () => {
     var roleAdmin = {
       authority: 'admin',
       comment: 'site admin'
     };
     var createRoleAdmin = await db.Role.create(roleAdmin);
+
+    let admin = {
+      username: "admin",
+      email: "admin@gmail.com",
+      mobile: "",
+      address: "",
+      comment: "",
+      RoleId: createRoleAdmin.id
+    };
+    let userOptions = {where: {username: "admin"}, defaults: admin}
+    let createdAdmin = (await db.User.findOrCreate(userOptions))[0];
+
+    let passport = {
+      protocol: 'local',
+      password: "admin",
+      UserId: createdAdmin.id
+    };
+
+    let passportOptions = {where: {UserId: createdAdmin.id}, defaults: passport}
+
+    await db.Passport.findOrCreate(passportOptions);
+
+  }  ,
+  testData: async () => {
 
     var roleUser = {
       authority: 'user',
@@ -12,22 +41,8 @@ module.exports = {
     };
     var createRoleUser = await db.Role.create(roleUser);
 
-    let admin = admin = {
-      username: "admin",
-      email: "admin@gmail.com",
-      mobile: "0123456789",
-      address: "address",
-      comment: "this is site admin",
-      RoleId: createRoleAdmin.id
-    };
-    let createdAdmin = await db.User.create(admin);
 
-    let passport = {
-      protocol: 'local',
-      password: "admin",
-      UserId: createdAdmin.id
-    };
-    let createdPassport = await db.Passport.create(passport);
+
 
     var newBuyer = {
       username: "buyer",
