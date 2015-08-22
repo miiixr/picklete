@@ -22,19 +22,36 @@ html
     //- .loader
     a#scrolltotop
       span.glyphicon.glyphicon-menu-up
-    include partial/_auth_header
+    include ../partial/_auth_header
     .container.font-size-slarge
-      .row.m-top-8.m-bottom-8
-        .col-sm-3.col-md-2
-          include partial/_auth_sidebar
-        // /col-sm-3
-        .col-sm-9.col-md-10
-          block body
-        // /col-sm-9
+      .row.m-top-10.m-bottom-10
+        .col-sm-6.col-sm-offset-3
+          .border-block-3.p-40
+            h2.text-center.m-bottom-4 管理員登入
+            hr
+            form.form-horizontal
+              .form-group
+                label.col-md-2.control-label 帳號
+                .col-md-10
+                  p.form-control-static email@example.com
+              // /form-group
+              .form-group
+                label.col-md-2.control-label 密碼
+                .col-md-10
+                  input.form-control(type='password', placeholder='Password')
+              // /form-group
+              .row.m-top-6
+                .col-sm-6.col-sm-offset-3
+                  a.btn.btn-black.btn-block.border-radius-circle(href='control-index-slider') 登入
+                // /col-sm-6
+              // /row
+          // /border-block-3
+        // /col-sm-6
+      // /row
+    // /container
 
-    include partial/_auth_footer
+    include ../partial/_auth_footer
 
     // SCRIPTS
-    include partial/_auth_scripts
     block scripts
     // SCRIPTS END

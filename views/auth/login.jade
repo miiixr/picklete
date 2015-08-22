@@ -1,59 +1,26 @@
-//- extends ./../layout
-extends ../_layout_auth
-
+extends ./../layout
 
 block body
-  //- if (errors)
-  //-   each error in errors
-  //-     include ./../common/warning
+  if (errors)
+   each error in errors
+     include ./../common/warning
 
-  //- main.login(role="main")
-  //-   .col-md-12.site-login
-  //-     h1.login-title 帳號登入
-  //-     form(role='form', action='/auth/local', method='post')
-  //-       .form-horizontal
-  //-         .form-group
-  //-           .col-md-12
-  //-             input#identifier.form-control(type='text', name='identifier', placeholder='輸入 E-mail 或帳號', required)
-  //-         .form-group
-  //-           .col-md-12
-  //-             input#password.form-control(type='password', name='password', placeholder='密碼', required)
-  //-         .form-group
-  //-           button.btn.btn-default(type='submit') 登入
-  //-           a.link(href="") 忘記帳號密碼
+  main.login(role="main")
+   .col-md-12.site-login
+     h1.login-title 帳號登入
+     form(role='form', action='/auth/local', method='post')
+       .form-horizontal
+         .form-group
+           .col-md-12
+             input#identifier.form-control(type='text', name='identifier', placeholder='輸入 E-mail 或帳號', required)
+         .form-group
+           .col-md-12
+             input#password.form-control(type='password', name='password', placeholder='密碼', required)
+         .form-group
+           button.btn.btn-default(type='submit') 登入
+           a.link(href="") 忘記帳號密碼
 
-  //-   hr.divider
-  //-   .row
-  //-     span 還不是會員嗎？
-  //-     a.link(href="/register") 立即註冊
-
-  .container.font-size-slarge
-      .row.m-top-10.m-bottom-10
-        .col-sm-6.col-sm-offset-3
-          .border-block-3.p-40
-            h2.text-center.m-bottom-4 &#x7BA1;&#x7406;&#x54E1;&#x767B;&#x5165;
-            | &#x9;&#x9;&#x9;&#x9;
-            hr
-            | &#x9;&#x9;&#x9;&#x9;
-            form.form-horizontal
-              .form-group
-                label.col-md-2.control-label &#x5E33;&#x865F;
-                | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
-                .col-md-10
-                  p.form-control-static email@example.com
-              // /form-group
-              .form-group
-                label.col-md-2.control-label &#x5BC6;&#x78BC;
-                | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
-                .col-md-10
-                  input.form-control(type='password', placeholder='Password')
-              // /form-group
-              .row.m-top-6
-                .col-sm-6.col-sm-offset-3
-                  a.btn.btn-black.btn-block.border-radius-circle(href='control-index-slider.html') &#x767B;&#x5165;
-                // /col-sm-6
-              // /row
-          // /border-block-3
-        // /col-sm-6
-      // /row
-    // /container
+   hr.divider
+   .row
+     span 還不是會員嗎？
+     a.link(href="/register") 立即註冊

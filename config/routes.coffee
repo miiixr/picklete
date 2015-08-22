@@ -33,6 +33,12 @@ module.exports.routes = {
   'get /logout': 'AuthController.logout'
   'get /register': 'AuthController.register'
 
+  'get /control-login' : 'UserController.controlLogin'
+  'get /control-index-slider' : 'UserController.indexSlider'
+  'get /control-password' : 'UserController.password'
+  'get /control-index-exclusive' : 'UserController.indexExclusive'
+  'get /control-index-theme' : 'UserController.indexTheme'
+
   'post /auth/local': 'AuthController.callback'
   'post /auth/local/:action': 'AuthController.callback'
 
@@ -58,7 +64,7 @@ module.exports.routes = {
     }
   }
 
-  
+
   'post /api/product': {
     controller: "ProductController",
     action: "addProduct",
