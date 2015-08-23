@@ -1,5 +1,5 @@
 module.exports.bank =
-	id: ''
-	accountId: ''
+  id: ''
+  accountId: ''
   name: ''
   accountName: ''
