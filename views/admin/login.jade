@@ -1,0 +1,33 @@
+extends ./../_layout_admin
+block body
+
+    .container.font-size-slarge
+      .row.m-top-10.m-bottom-10
+        .col-sm-6.col-sm-offset-3
+          .border-block-3.p-40
+            h2.text-center.m-bottom-4 &#x7BA1;&#x7406;&#x54E1;&#x767B;&#x5165;
+            | &#x9;&#x9;&#x9;&#x9;
+            hr
+            | &#x9;&#x9;&#x9;&#x9;
+            form(action="/auth", method="POST").form-horizontal
+              .form-group
+                label.col-md-2.control-label &#x5E33;&#x865F;
+                | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
+                .col-md-10
+                  input.form-control(type='text', placeholder='User name')
+              // /form-group
+              .form-group
+                label.col-md-2.control-label &#x5BC6;&#x78BC;
+                | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
+                .col-md-10
+                  input.form-control(type='password', placeholder='Password')
+              // /form-group
+              .row.m-top-6
+                .col-sm-6.col-sm-offset-3
+                  input.btn.btn-black.btn-block.border-radius-circle(type="submit", value="登入")
+                // /col-sm-6
+              // /row
+          // /border-block-3
+        // /col-sm-6
+      // /row
+    // /container

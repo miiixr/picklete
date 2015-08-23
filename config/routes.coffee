@@ -40,6 +40,9 @@ module.exports.routes = {
   'get /auth/:provider/callback': 'AuthController.callback'
   'get /auth/:provider/:action': 'AuthController.callback'
 
+
+  "get /admin/login": view: "admin/login"
+
   ###*
     ProductController
   ###
