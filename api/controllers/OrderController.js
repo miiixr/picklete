@@ -16,8 +16,6 @@ OrderController = {
   create: async (req, res) => {
 
     var newOrder = req.body.order;
-
-    console.log('=== newOrder ===', newOrder);
     try {
 
       let result = await OrderService.create(newOrder);
@@ -25,8 +23,10 @@ OrderController = {
 
       return res.ok(result);
     } catch (e) {
-      console.log ('err=>',e);
-      return res.serverError(e);
+      console.error(e.stack);
+      let {message} = e;
+      let success = false;
+      return res.serverError({message, success});
     }
   },
 

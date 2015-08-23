@@ -46,7 +46,7 @@ describe("about Order", () => {
 
       let newOrder = {
         quantity: 10,
-        orderItem: [
+        orderItems: [
           orderItemOne,
           orderItemTwo
         ],
@@ -75,7 +75,8 @@ describe("about Order", () => {
         res.body.order.id.should.be.number;
         res.body.shipment.id.should.be.number;
         res.body.user.id.should.be.number;
-        res.body.product.id.should.be.number;
+        res.body.products.forEach((product) => product.id.should.be.number);
+        res.body.orderItems.forEach((orderItem) => orderItem.id.should.be.number);
         return done();
       });
     });
