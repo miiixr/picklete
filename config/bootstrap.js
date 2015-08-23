@@ -17,13 +17,14 @@ let init = require('./init');
 
 
 module.exports.bootstrap = async (cb) => {
-  sails.config.mail.mailer = sailsMailer.create(sails.config.mail.type, sails.config.mail.config);
-  sails.services.passport.loadStrategies();
-
-  let models = require('../api/db');
-  global.db = models;
-
   try {
+    sails.config.mail.mailer = sailsMailer.create(sails.config.mail.type, sails.config.mail.config);
+    sails.services.passport.loadStrategies();
+
+    let models = require('../api/db');
+    global.db = models;
+
+
     if (sails.config.environment === 'development') {
       await init.database();
       await init.testData();
