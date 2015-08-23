@@ -23,8 +23,10 @@ OrderController = {
 
       return res.ok(result);
     } catch (e) {
-      console.log ('err=>',e);
-      return res.serverError(e);
+      console.error(e.stack);
+      let {message} = e;
+      let success = false;
+      return res.serverError({message, success});
     }
   },
 

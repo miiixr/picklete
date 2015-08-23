@@ -1,14 +1,16 @@
 
 module.exports = (sequelize, DataTypes) ->
-  Product = sequelize.define 'Product', {
+  OrderItem = sequelize.define 'OrderItem', {
     name: DataTypes.STRING
     description: DataTypes.STRING
-    stockQuantity: DataTypes.INTEGER
+    quantity: DataTypes.INTEGER
     price: DataTypes.INTEGER
-    isPublish: DataTypes.BOOLEAN
     comment: DataTypes.STRING
     spec: DataTypes.STRING
+    price: DataTypes.INTEGER
   }, classMethods: associate: (models) ->
+    OrderItem.belongsTo models.Order
+    OrderItem.belongsTo models.Product
     return
 
-  return Product
+  return OrderItem
