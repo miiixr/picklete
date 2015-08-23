@@ -4,9 +4,6 @@ block body
   h1 user-list
   div(data-role='fieldcontain')
     a#addUserButton.ui-btn.ui-corner-all(href='/user/create')新增
-    select(id='roles' name='roles')
-        each role in roles
-          option(value='role.id')= role.authority
   table.table(class='table table-striped')
     thead
       tr
