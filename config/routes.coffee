@@ -150,7 +150,7 @@ module.exports.routes = {
 
   'get /api/user/role/:id': {
     controller: "UserController",
-    action: "findAllByRole",
+    action: "filterByRole",
     cors: {
      origin: "http://localhost:1337, http://localhost:8080",
      credentials: false
@@ -184,7 +184,7 @@ module.exports.routes = {
     }
   }
 
-  'put /api/user/setrole/:roleid/:id': {
+  'put /api/user/:id/:roleid': {
     controller: "UserController",
     action: "setRole",
     cors: {
