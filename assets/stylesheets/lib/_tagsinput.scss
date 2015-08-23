@@ -1,0 +1,57 @@
+//
+// tagsinput
+// --------------------------------------------------
+
+
+// Base styles
+// -------------------------
+
+.tagsinput {
+  cursor: text;
+  height: auto;
+  min-height: 70px;
+
+  input {
+    border: none;
+    box-shadow: none;
+    outline: none;
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+    width: auto !important;
+    max-width: inherit;
+
+    &:focus {
+      border: none;
+      box-shadow: none;
+    }
+  }
+
+  .tag {
+
+    [data-role="remove"] {
+      margin-left:8px;
+      cursor:pointer;
+      &:after{
+        padding:0px 2px;
+      }
+      &:hover {
+        &:active {
+
+        }
+      }
+    }
+  }
+}
+
+.tag.label.label-default {
+  margin-right: 5px;
+  margin-bottom: 5px;
+  font-size: $font-size-base;
+  display: inline-block;
+  border: 1px solid $gray-light;
+  color: $gray-light;
+  background: #fff;
+  border-radius: $border-radius-btn;
+  padding: 6px 12px;
+}

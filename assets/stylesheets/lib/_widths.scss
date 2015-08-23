@@ -1,0 +1,60 @@
+//widths
+.width-0 { width: $distance-0 !important;}
+.width-1 { width: $distance-1 !important;}
+.width-2 { width: $distance-2 !important;}
+.width-3 { width: $distance-3 !important;}
+.width-4 { width: $distance-4 !important;}
+.width-5 { width: $distance-5 !important;}
+.width-6 { width: $distance-6 !important;}
+.width-7 { width: $distance-7 !important;}
+.width-8 { width: $distance-8 !important;}
+.width-9 { width: $distance-9 !important;}
+.width-10 { width: $distance-10 !important;}
+.width-11 { width: $distance-11 !important;}
+.width-12 { width: $distance-12 !important;}
+.width-200 { width: 200px !important;}
+.width-210 { width: 210px !important;}
+.width-330 { width: 330px !important;}
+.width-full { width: 100% !important;}
+.width-auto { width: auto !important;}
+.max-width-100 { max-width: 100px; }
+.max-width-150 { max-width: 150px; }
+.max-width-260 { max-width: 260px; }
+.desktop-max-width-470 {
+  @media (min-width: $grid-float-breakpoint) {
+    max-width: 470px;
+  }
+}
+
+// height
+.min-height-80 { min-height: 80px; }
+.min-height-100 { min-height: 100px; }
+.min-height-150 { min-height: 150px; }
+.min-height-500 { min-height: 500px; }
+.min-height-600 { min-height: 600px; }
+.min-height-1000 { min-height: 1000px; }
+.min-height-38 { min-height: 38px; }
+.max-height-100 { max-height: 100px; }
+.max-height-150 { max-height: 150px; }
+
+.height-0 { height: $distance-0 !important;}
+.height-1 { height: $distance-1 !important;}
+.height-2 { height: $distance-2 !important;}
+.height-3 { height: $distance-3 !important;}
+.height-4 { height: $distance-4 !important;}
+.height-5 { height: $distance-5 !important;}
+.height-6 { height: $distance-6 !important;}
+.height-7 { height: $distance-7 !important;}
+.height-8 { height: $distance-8 !important;}
+.height-9 { height: $distance-9 !important;}
+.height-10 { height: $distance-10 !important;}
+.height-11 { height: $distance-11 !important;}
+.height-12 { height: $distance-12 !important;}
+
+
+.mobile-min-height-100 {
+  min-height: 100px;
+  @media (min-width: $grid-float-breakpoint) {
+    min-height: auto;
+  }
+}
