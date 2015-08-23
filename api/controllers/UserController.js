@@ -3,7 +3,7 @@ let userController = {
   index: async (req, res) => {
     try {
       let users = await UserService.findAll();
-      let roles = await RoleService.findAll();
+      let roles = await UserService.findRoles();
       return res.view({users,roles});
     } catch (error) {
       return res.serverError(error);

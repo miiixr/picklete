@@ -44,7 +44,7 @@ module.exports = {
     return role;
   },
 
-  findRoles: async (id) => {
+  findRoles: async () => {
     let roles = await db.Role.findAll();
     return roles;
   },
