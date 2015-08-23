@@ -55,7 +55,7 @@ describe("about User", () => {
     });
   });
 
-  it('findAllByRole', (done) => {
+  it('filterByRole', (done) => {
     request(sails.hooks.http.app)
     .get(`/api/user/role/1`) // role admin => 1
     .end((err, res) => {
@@ -66,6 +66,22 @@ describe("about User", () => {
       res.body.users.should.be.Array;
       res.body.users.forEach(User => {
         User.username.should.be.String;
+      });
+      done(err);
+    });
+  });
+
+  it('search', (done) => {
+    request(sails.hooks.http.app)
+    .get(`/api/user/search/spec`) // testUser's username=>spec
+    .end((err, res) => {
+      if (res.statusCode === 500) {
+        return done(body)
+      }
+      res.statusCode.should.equal(200);
+      res.body.users.should.be.Array;
+      res.body.users.forEach(User => {
+        User.username.should.be.equal("spec");
       });
       done(err);
     });
@@ -130,17 +146,16 @@ describe("about User", () => {
     });
   });
 
-  it('setrole', (done) => {
+  it('setRole', (done) => {
     request(sails.hooks.http.app)
-    .put(`/api/user/setrole/${roleAdmin.id}/${testUser.id}`)
+    .put(`/api/user/${testUser.id}/${roleAdmin.id}`)
     .end((err,res) => {
       if(res.statusCode === 500){
         return done(err);
       }
-      // res.statusCode.should.equal(302);
       res.statusCode.should.equal(200);
       res.body.should.be.Object;
-      res.body.RoleId.should.equal(1); // 1 = roleAdmin
+      res.body.RoleId.should.equal(1); // 1 = roleAdmin.id
       done(err);
     });
   });

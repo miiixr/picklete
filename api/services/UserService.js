@@ -52,7 +52,7 @@ module.exports = {
   search: async (username) => {
     let users = await db.User.findAll({
       where:{
-        id:{
+        username:{
           $like: username
         }
       }
