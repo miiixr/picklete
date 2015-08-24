@@ -1,0 +1,98 @@
+extends ../_layout_auth
+
+block body
+  h2.m-bottom-6 優惠代碼設定
+  .well.control-well.p-30.m-bottom-8
+    form.form-horizontal
+      .form-group
+        label.col-sm-3.col-md-2.control-label 優惠名稱
+        .col-sm-9.col-md-10
+          input.form-control(type='text')
+        // /col-sm-10
+      // /form-group
+      .form-group
+        label.col-sm-3.col-md-2.control-label 優惠代碼
+        .col-sm-9.col-md-7
+          input.form-control(type='text')
+        // /col-sm-10
+        .col-sm-9.col-sm-offset-3.col-md-3.col-md-offset-0
+          .checkbox
+            label
+              input(type='checkbox')
+              |  自動產生亂數
+        .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2
+          p.help-block.font-size-base 您可以自由設定 20 個字元以內的英文字母和數字，不分大小寫
+      // /form-group
+      .form-group
+        label.col-sm-3.col-md-2.control-label 優惠時間
+        .col-sm-4.col-md-3
+          input.form-control(type='datetime-local')
+        .col-sm-1.col-md-1.p-left-0.p-right-0.text-center
+          p.form-control-static 至
+        .col-sm-4.col-md-3
+          input.form-control(type='datetime-local')
+        .col-sm-9.col-sm-offset-3.col-md-3.col-md-offset-0
+          .checkbox
+            label
+              input(type='checkbox')
+              |  不限時
+      // /form-group
+      .form-group
+        label.col-sm-3.col-md-2.control-label 優惠設定
+        .col-sm-9.col-md-10
+          .radio
+            label
+              input#optionsRadios1(type='radio', name='optionsRadios', value='option1', checked='')
+              .form-inline
+                .form-group.m-right-2
+                  label.p-left-2.p-right-2 折抵金額
+                  input.form-control.width-12(type='text')
+                // /form-group
+                .form-group
+                  label.p-left-2.p-right-2 元，限滿
+                  input.form-control.width-12(type='text')
+                  label.p-left-2 元
+                // /form-group
+          .radio
+            label
+              input#optionsRadios2(type='radio', name='optionsRadios', value='option2')
+              .form-inline
+                .form-group.m-right-2
+                  .input-group.width-12.m-left-2
+                    input.form-control(type='text')
+                    span.input-group-addon 折
+                  // /input-group
+                // /form-group
+                .form-group
+                  label.p-left-2.p-right-2 ，限滿
+                  input.form-control.width-12(type='text')
+                  label.p-left-2 元
+                // /form-group
+      // /form-group
+      .form-group
+        label.col-sm-3.col-md-2.control-label 自動發送
+        .col-sm-9.col-md-10
+          .radio
+            label
+              input#optionsRadios1(type='radio', name='optionsRadios', value='option1', checked='')
+              | 									自動發送全館會員
+          .radio
+            label
+              input#optionsRadios2(type='radio', name='optionsRadios', value='option2')
+              | 									自動發送指定會員
+              a.btn.btn-default.btn-sm(href='#', data-toggle='modal', data-target='#modal-add-member') 點我選擇會員
+          .radio.disabled
+            label
+              input#optionsRadios3(type='radio', name='optionsRadios', value='option3', disabled='')
+              | 									首次註冊，自動發送會員
+          textarea.form-control.m-top-3(rows='5', placeholder='請輸入問候...')
+        // /col-sm-9
+        .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2
+          p.help-block.font-size-base
+            | 給會員的問候（300字，不需填入優惠券相關資訊），系統會將您的問候及該優惠券寄給客人，您可以在不同優惠券下設定自動通知。
+      // /form-group
+      .m-top-6.text-right
+        a.btn.btn-link.delete-link.btn-lg(href='#', data-toggle='modal', data-target='#modal-delete') 刪除
+        a.btn.btn-green.btn-lg(href='#') 確定
+      // /text-right
+  // /well

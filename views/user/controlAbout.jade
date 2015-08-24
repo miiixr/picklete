@@ -1,0 +1,228 @@
+extends ../_layout_auth
+
+block body
+  h2.m-bottom-6 關於我們
+  .well.control-well.p-30.m-left-2.m-bottom-8
+    h3
+      span.label.label-default.p-10-15 品牌願景
+    textarea.form-control(rows='6', placeholder='請輸入品牌願景')
+  // /well
+  .well.control-well.p-30.m-left-2.m-bottom-8
+    h3
+      span.label.label-default.p-10-15 圖片上傳
+    .row.row-m
+      .col-md-4
+        .edit-block.m-bottom-4
+          a.btn-remove(href='#', data-toggle='modal', data-target='#modal-delete')
+            span.glyphicon.glyphicon-remove
+          //
+            fileinput-img
+            ==================================================
+          .fileinput.fileinput-new(data-provides='fileinput')
+            .fileinput-new.dashed-block-2.min-height-150
+            // /fileinput-new
+            .fileinput-preview.fileinput-exists.border-block-1
+            // /fileinput-preview
+            .fileinput-btn
+              span.btn.btn-default.btn-sm.btn-file
+                span.fileinput-new Select image
+                span.fileinput-exists Change
+                input(type='file', name='...')
+              a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
+            // /fileinput-btn
+          // /fileinput
+        // /edit-block
+      // /col-md-4
+      .col-md-4
+        .edit-block.m-bottom-4
+          a.btn-remove(href='#', data-toggle='modal', data-target='#modal-delete')
+            span.glyphicon.glyphicon-remove
+          //
+            fileinput-img
+            ==================================================
+          .fileinput.fileinput-new(data-provides='fileinput')
+            .fileinput-new.dashed-block-2.min-height-150
+            // /fileinput-new
+            .fileinput-preview.fileinput-exists.border-block-1
+            // /fileinput-preview
+            .fileinput-btn
+              span.btn.btn-default.btn-sm.btn-file
+                span.fileinput-new Select image
+                span.fileinput-exists Change
+                input(type='file', name='...')
+              a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
+            // /fileinput-btn
+          // /fileinput
+        // /edit-block
+      // /col-md-4
+      .col-md-4
+        .edit-block.m-bottom-4
+          a.btn-remove(href='#', data-toggle='modal', data-target='#modal-delete')
+            span.glyphicon.glyphicon-remove
+          a.btn-add(href='#')
+            span.glyphicon.glyphicon-plus
+          //
+            fileinput-img
+            ==================================================
+          .fileinput.fileinput-new(data-provides='fileinput')
+            .fileinput-new.dashed-block-2.min-height-150
+            // /fileinput-new
+            .fileinput-preview.fileinput-exists.border-block-1
+            // /fileinput-preview
+            .fileinput-btn
+              span.btn.btn-default.btn-sm.btn-file
+                span.fileinput-new Select image
+                span.fileinput-exists Change
+                input(type='file', name='...')
+              a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
+            // /fileinput-btn
+          // /fileinput
+        // /edit-block
+      // /col-md-4
+    // /row
+    a(href='#', data-toggle='tooltip', title='', data-original-title='商品圖長寬 1000x800 像素，限 JPG/GIF 格式，檔案大小 500KB 以下')
+      span.glyphicon.glyphicon-info
+  // /well
+  .well.control-well.p-30.m-left-2.m-bottom-8
+    h3
+      span.label.label-default.p-10-15 公司簡介
+    textarea.form-control(rows='6', placeholder='請輸入公司簡介')
+  // /well
+  .well.control-well.p-30.m-left-2.m-bottom-8
+    h3
+      span.label.label-default.p-10-15 經銷商
+    .row.row-m
+      .col-md-3
+        .edit-block.m-bottom-4
+          a.btn-remove(href='#', data-toggle='modal', data-target='#modal-delete')
+            span.glyphicon.glyphicon-remove
+          //
+            fileinput-img-square
+            ==================================================
+          .fileinput.fileinput-new(data-provides='fileinput')
+            .fileinput-new.dashed-block-2.fileinput-square
+            // /fileinput-new
+            .fileinput-preview.fileinput-exists.border-block-1
+            // /fileinput-preview
+            .fileinput-btn
+              span.btn.btn-default.btn-sm.btn-file
+                span.fileinput-new Select image
+                span.fileinput-exists Change
+                input(type='file', name='...')
+              a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
+            // /fileinput-btn
+          // /fileinput
+          .form-group.m-top-2.m-bottom-0
+            input.form-control(type='text')
+          // /form-group
+        // /edit-block
+      // /col-md-3
+      .col-md-3
+        .edit-block.m-bottom-4
+          a.btn-remove(href='#', data-toggle='modal', data-target='#modal-delete')
+            span.glyphicon.glyphicon-remove
+          //
+            fileinput-img-square
+            ==================================================
+          .fileinput.fileinput-new(data-provides='fileinput')
+            .fileinput-new.dashed-block-2.fileinput-square
+            // /fileinput-new
+            .fileinput-preview.fileinput-exists.border-block-1
+            // /fileinput-preview
+            .fileinput-btn
+              span.btn.btn-default.btn-sm.btn-file
+                span.fileinput-new Select image
+                span.fileinput-exists Change
+                input(type='file', name='...')
+              a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
+            // /fileinput-btn
+          // /fileinput
+          .form-group.m-top-2.m-bottom-0
+            input.form-control(type='text')
+          // /form-group
+        // /edit-block
+      // /col-md-3
+      .col-md-3
+        .edit-block.m-bottom-4
+          a.btn-remove(href='#', data-toggle='modal', data-target='#modal-delete')
+            span.glyphicon.glyphicon-remove
+          //
+            fileinput-img-square
+            ==================================================
+          .fileinput.fileinput-new(data-provides='fileinput')
+            .fileinput-new.dashed-block-2.fileinput-square
+            // /fileinput-new
+            .fileinput-preview.fileinput-exists.border-block-1
+            // /fileinput-preview
+            .fileinput-btn
+              span.btn.btn-default.btn-sm.btn-file
+                span.fileinput-new Select image
+                span.fileinput-exists Change
+                input(type='file', name='...')
+              a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
+            // /fileinput-btn
+          // /fileinput
+          .form-group.m-top-2.m-bottom-0
+            input.form-control(type='text')
+          // /form-group
+        // /edit-block
+      // /col-md-3
+      .col-md-3
+        .edit-block.m-bottom-4
+          a.btn-remove(href='#', data-toggle='modal', data-target='#modal-delete')
+            span.glyphicon.glyphicon-remove
+          //
+            fileinput-img-square
+            ==================================================
+          .fileinput.fileinput-new(data-provides='fileinput')
+            .fileinput-new.dashed-block-2.fileinput-square
+            // /fileinput-new
+            .fileinput-preview.fileinput-exists.border-block-1
+            // /fileinput-preview
+            .fileinput-btn
+              span.btn.btn-default.btn-sm.btn-file
+                span.fileinput-new Select image
+                span.fileinput-exists Change
+                input(type='file', name='...')
+              a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
+            // /fileinput-btn
+          // /fileinput
+          .form-group.m-top-2.m-bottom-0
+            input.form-control(type='text')
+          // /form-group
+        // /edit-block
+      // /col-md-3
+      .col-md-3
+        .edit-block.m-bottom-4
+          a.btn-remove(href='#', data-toggle='modal', data-target='#modal-delete')
+            span.glyphicon.glyphicon-remove
+          a.btn-add(href='#')
+            span.glyphicon.glyphicon-plus
+          //
+            fileinput-img-square
+            ==================================================
+          .fileinput.fileinput-new(data-provides='fileinput')
+            .fileinput-new.dashed-block-2.fileinput-square
+            // /fileinput-new
+            .fileinput-preview.fileinput-exists.border-block-1
+            // /fileinput-preview
+            .fileinput-btn
+              span.btn.btn-default.btn-sm.btn-file
+                span.fileinput-new Select image
+                span.fileinput-exists Change
+                input(type='file', name='...')
+              a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
+            // /fileinput-btn
+          // /fileinput
+          .form-group.m-top-2.m-bottom-0
+            input.form-control(type='text')
+          // /form-group
+        // /edit-block
+      // /col-md-3
+    // /row
+    a(href='#', data-toggle='tooltip', title='', data-original-title='商品圖長寬 800x800 像素，限 JPG/GIF 格式，檔案大小 500KB 以下')
+      span.glyphicon.glyphicon-info
+  // /well
+  .text-center.m-bottom-6
+    a.btn.btn-green.btn-lg(href='#') 確認送出
+  // /text-center
