@@ -39,9 +39,9 @@ module.exports = {
       var addr = 'localhost';
       var port = sails.config.port;
 
-      var syncLinkHost = host || `http://${addr}:${port}`
-      var syncLinkApi = `/api/order/status?token=${token}&email=${email}`
-      var syncLink = `${syncLinkHost}${syncLinkApi}`
+      var syncLinkHost = host || `/api/order/status`
+      var syncLinkParams = `token=${token}`
+      var syncLink = `${syncLinkHost}?${syncLinkParams}`
 
       mailSendConfig.subject = sprintf(mailSendConfig.subject, {email});
       mailSendConfig.text = sprintf(mailSendConfig.text, {
@@ -52,7 +52,7 @@ module.exports = {
 
       let result = await sails.config.mail.mailer.send(mailSendConfig);
 
-      return {syncLink, syncLinkHost, syncLinkApi};
+      return {syncLink, syncLinkHost, syncLinkParams};
     } catch (error) {
       console.log(error.stack);
       throw error;

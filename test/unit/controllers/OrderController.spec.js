@@ -81,7 +81,7 @@ describe("about Order", () => {
       });
     });
   });
-  describe("get Order status.", () => {
+  describe.only("get Order status.", () => {
     before( async (done) => {
       let newUser = {
         username: "testOrderUser",
@@ -102,18 +102,19 @@ describe("about Order", () => {
 
     });
 
-    let syncLinkApi = '';
+    let syncLink = '';
 
     it("request order sync.", (done) => {
       request(sails.hooks.http.app)
-      .get("/api/order/sync?email=smlsun@gmail.com&host=http://geegle.com")
+      .get("/api/order/sync?email=smlsun@gmail.com&host=/api/order/status")
       .end((err, res) => {
         let result = res.body;
 
         result.syncLink.should.be.String;
-        result.syncLinkHost.should.be.equal('http://geegle.com');
-        result.syncLinkApi.should.be.String;
-        syncLinkApi = result.syncLinkApi;
+        result.syncLinkHost.should.be.equal('/api/order/status');
+        result.syncLinkParams.should.be.String;
+        result.success.should.be.true;
+        syncLink = result.syncLink;
 
         done();
 
@@ -121,10 +122,10 @@ describe("about Order", () => {
     });
 
     it("get Order status should be success.", (done) => {
-      console.log('=== syncLinkApi ===\n', syncLinkApi);
+      console.log('=== syncLink ===\n', syncLink);
       // ex: /api/order/status?token=...&email=smlsun@gmail.com
       request(sails.hooks.http.app)
-      .get(syncLinkApi)
+      .get(syncLink)
       .end((err, res) => {
         let {purchaseHistory} = res.body;
         purchaseHistory.should.be.Array;

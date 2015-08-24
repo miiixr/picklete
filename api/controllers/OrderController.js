@@ -41,10 +41,10 @@ OrderController = {
   status: async function(req, res) {
 
     try{
-      var {email} = req.query;
+
       var orderSyncToken = req.query.token;
       let userData = await db.User.findOne({
-        where: {email, orderSyncToken}
+        where: {orderSyncToken}
       });
 
       let purchaseHistory = await db.Order.findAll({
@@ -77,14 +77,14 @@ OrderController = {
       var user = await db.User.find({where: {email}});
 
       let result = await CustomMailerService.orderSync(user, host);
-
+      result.success = true;
       res.ok(result);
 
     } catch (e) {
       console.error(e.stack);
       let {message} = e;
 
-      res.serverError({message});
+      res.serverError({message, success: false});
     }
   }
 };
