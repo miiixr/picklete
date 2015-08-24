@@ -17,8 +17,32 @@ block body
       div.form-group
         label 轉帳帳號後五碼
         input.form-control
-      button.btn.btn-primary 送出
-
+      button.btn.btn-primary.submit-action(type='button') 送出
+    hr
+    div.text-center
+      p ＯＯＯＯ版權所有
 block scripts
   script(type='text/javascript').
-    $('input.datepicker').datepicker({format: 'yyyy/mm/dd', autoclose: true});
+    $(function() {
+
+      $('input.datepicker').datepicker({format: 'yyyy/mm/dd', autoclose: true});
+      $('button.submit-action').click(function(e) {
+        e.preventDefault();
+
+        $.ajax({
+          url: '/order/paymentConfirm',
+          method: "POST",
+          data: { id : 1 }
+        }).done(function() {
+          bootbox.alert("Hello world!");
+
+          $('button.submit-action')
+            .text('已送出')
+            .attr('disabled', 'true')
+            .prepend('<i class="zmdi zmdi-check"></i> ');
+        });
+
+        return false;
+      });
+
+    });
