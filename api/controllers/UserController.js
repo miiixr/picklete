@@ -169,7 +169,18 @@ let userController = {
     }catch(error){
       return res.serverError(error);
     }
-  }
+  },
+
+  searchUser: async(req, res) => {
+    let user = await db.User.findAll({
+      where:{
+        username:{
+          $like: userName
+        }
+      }
+    })
+    return user;
+  },
 
 };
 
