@@ -160,5 +160,16 @@ describe("about User", () => {
     });
   });
 
+  it('searchUser', (done) => {
+    request(sails.hooks.http.app)
+    .get(`/api/searchUser/userName`)
+    .end((err,res) => {
+      if(res.statusCode === 500){
+        return done(err);
+      }
+      res.statusCode.should.equal(404);
+      done(err);
+    });
+  })
   // end
 });
