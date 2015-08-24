@@ -1,0 +1,238 @@
+//item-block
+.item-block {
+  display: block;
+  position: relative;
+  .badge {
+    position: absolute;
+    right: -8px;
+    top: -8px;
+  }
+  a.item-like {
+    position: absolute;
+    z-index: $zindex-item-label;
+    right: 12px;
+    top: 10px;
+    display: block;
+    font-size: $font-size-large;
+    color: #5C5F62;
+    @include opacity(0.8);
+    display: none;
+    &:hover,
+    &:focus,
+    &.active {
+      color: $brand-danger;
+    }
+  }
+  .label {
+    position: absolute;
+    left: -15px;
+    top: -15px;
+    width: 60px;
+    height: 60px;
+    border-radius: 45%;
+    z-index: $zindex-item-label;
+    font-family: $font-family-navbar;
+    letter-spacing: 1.5px;
+    font-size: 12px;
+    font-weight: 400;
+    @include scale(0.85);
+    &.label-default {
+      padding: 19px 0px 18px 2px;
+    }
+    &.label-danger,
+    &.label-success {
+      padding: 25px 0px 24px 2px;
+    }
+    &.label-like {
+      left: auto;
+      right: 10px;
+      top: 10px;
+      display: none;
+      .glyphicon {
+
+      }
+      .label-like-text {
+        margin-left: 0;
+      }
+      &:hover,
+      &:focus,
+      &.active {
+        color: $brand-danger;
+      }
+      &.active {
+        .label-like-text {
+          display: block;
+        }
+      }
+    }
+  }
+  .info-block {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 15px;
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+    h4, h5 {
+      color: #fff;
+      overflow: hidden;
+      margin-bottom: 0;
+      margin-top: 0;
+    }
+    h4 {
+      line-height: 1.7;
+      height: 75px;
+      overflow: hidden;
+    }
+    a {
+      color: #fff;
+      &:hover,
+      &:focus {
+        color: $brand-green;
+      }
+    }
+  }
+  img {
+    &.item-show {
+      display: block;
+    }
+    &.item-hide {
+      display: none;
+    }
+  }
+  &.active {
+    :before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 15px 15px 0 0;
+      border-color: $brand-danger transparent transparent transparent;
+      content: '';
+    }
+  }
+  &.item-soldout {
+    cursor: not-allowed;
+    .item-soldout-text {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background: rgba(255,255,255,0.75);
+      color: $brand-black;
+      text-align: center;
+      z-index: $zindex-item-soldout;
+      h6 {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        margin-top: -15px;
+      }
+    }
+  }
+  &:hover,
+  &:focus {
+    .label.label-like {
+      display: inline;
+    }
+    a.item-like {
+      display: block;
+    }
+    img {
+      &.item-show {
+        display: none;
+      }
+      &.item-hide {
+        display: block;
+      }
+    }
+  }
+}
+.item-text-block {
+  height: 90px;
+}
+
+//fav-item-block
+.fav-item-block {
+  display: block;
+  position: relative;
+  border: 1px solid #ebebeb;
+  padding: 5px;
+  .fav-item-move {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    color: rgba(234,234,234,1);
+    font-size: $font-size-xlarge;
+    line-height: 1;
+    display: none;
+    z-index: $zindex-item-label;
+    &:hover,
+    &:focus {
+      color: $brand-danger;
+    }
+  }
+  .fav-item-cart {
+    position: absolute;
+    right: 10px;
+    bottom: 6px;
+    font-size: $font-size-xlarge;
+    line-height: 1;
+    display: none;
+    z-index: $zindex-item-label;
+  }
+  &:hover,
+  &:focus {
+    .fav-item-move,
+    .fav-item-cart {
+      display: block;
+    }
+  }
+}
+//edit-block
+.edit-block {
+  position: relative;
+  border: 1px solid $hr-border;
+  padding: 10px;
+  background: #fff;
+  .badge {
+    position: absolute;
+    left: -5px;
+    top: -5px;
+    background: $gray-light;
+    z-index: $zindex-item-label;
+  }
+  .btn-add,
+  .btn-remove {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: $zindex-item-label;
+  }
+  .btn-add {
+    top: 30px;
+  }
+}
+a.btn-add {
+  display: inline-block;
+  background: $brand-green;
+  color: #fff;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+}
+a.btn-remove {
+  display: inline-block;
+  background: $gray-light;
+  color: #fff;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+}
