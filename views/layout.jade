@@ -5,6 +5,10 @@ html
 
     // Viewport mobile tag for sensible mobile support
     meta(name="viewport",content="width=device-width, initial-scale=1, maximum-scale=1")
+
+    link(href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.0/flatly/bootstrap.min.css", rel="stylesheet")
+    link(href="//eternicode.github.io/bootstrap-datepicker/bootstrap-datepicker/css/datepicker3.css", rel="stylesheet")
+
     // Default home page
 
     // STYLES
@@ -16,8 +20,14 @@ html
     block body
 
     // The linker searches for this tag and adds js.  If there's no linker, we point to sails.io.js
+
     // SCRIPTS
     script(src="/bower/jquery/jquery.js")
     script(src="/js/app/app.js")
+    script( src='//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js' )
+    script( src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js' )
+    script( src="//eternicode.github.io/bootstrap-datepicker/bootstrap-datepicker/js/bootstrap-datepicker.js" )
+    script( src="//eternicode.github.io/bootstrap-datepicker/bootstrap-datepicker/js/locales/bootstrap-datepicker.zh-TW.js" )
+
     // SCRIPTS END
     //- script(src="//localhost:9091")

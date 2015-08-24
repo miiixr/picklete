@@ -13,6 +13,14 @@ OrderController = {
       return res.serverError(error);
     }
   },
+  paymentConfirm: async (req, res) => {
+    try {
+      let orders = await db.Order.findAll();
+      return res.view({orders});
+    } catch (error) {
+      return res.serverError(error);
+    }
+  },
   create: async (req, res) => {
 
     var newOrder = req.body.order;
@@ -29,8 +37,6 @@ OrderController = {
       return res.serverError({message, success});
     }
   },
-
-
   // 查詢
   status: async function(req, res) {
 
