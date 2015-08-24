@@ -81,7 +81,7 @@ describe("about Order", () => {
       });
     });
   });
-  describe.only("get Order status.", () => {
+  describe("get Order status.", () => {
     before( async (done) => {
       let newUser = {
         username: "testOrderUser",
@@ -106,12 +106,12 @@ describe("about Order", () => {
 
     it("request order sync.", (done) => {
       request(sails.hooks.http.app)
-      .get("/api/order/sync?email=smlsun@gmail.com")
+      .get("/api/order/sync?email=smlsun@gmail.com&host=http://geegle.com")
       .end((err, res) => {
         let result = res.body;
 
         result.syncLink.should.be.String;
-        result.syncLinkHost.should.be.String;
+        result.syncLinkHost.should.be.equal('http://geegle.com');
         result.syncLinkApi.should.be.String;
         syncLinkApi = result.syncLinkApi;
 

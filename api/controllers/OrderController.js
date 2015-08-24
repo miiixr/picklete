@@ -73,9 +73,10 @@ OrderController = {
   sync: async (req, res) => {
     try {
       var email = req.query.email;
+      var host = req.query.host || null;
       var user = await db.User.find({where: {email}});
 
-      let result = await CustomMailerService.orderSync(user);
+      let result = await CustomMailerService.orderSync(user, host);
 
       res.ok(result);
 

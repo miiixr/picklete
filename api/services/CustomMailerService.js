@@ -25,7 +25,7 @@ module.exports = {
     }
 
   },
-  orderSync: async (user) => {
+  orderSync: async (user, host) => {
 
     try {
       var orderSyncTemplete = sails.config.mail.templete.orderSync;
@@ -36,10 +36,10 @@ module.exports = {
       user.orderSyncToken = token;
       await user.save();
 
-      var addr = process.env.MOBILE_PORT_1337_TCP_ADDR || 'localhost';
-      var port = process.env.MOBILE_PORT_1337_TCP_PORT || sails.config.port;
+      var addr = 'localhost';
+      var port = sails.config.port;
 
-      var syncLinkHost = `http://${addr}:${port}`
+      var syncLinkHost = host || `http://${addr}:${port}`
       var syncLinkApi = `/api/order/status?token=${token}&email=${email}`
       var syncLink = `${syncLinkHost}${syncLinkApi}`
 
