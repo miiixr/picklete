@@ -10,7 +10,7 @@ block body
         label 訂單編號
       div.form-group
         label 付款日期
-        input.form-control
+        input.form-control.datepicker
       div.form-group
         label 匯款人姓名
         input.form-control
@@ -19,6 +19,6 @@ block body
         input.form-control
       button.btn.btn-primary 送出
 
-  // SCRIPTS END
+block scripts
   script(type='text/javascript').
-    $('input').datepicker({});
+    $('input.datepicker').datepicker({format: 'yyyy/mm/dd', autoclose: true});
