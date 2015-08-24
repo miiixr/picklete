@@ -1,5 +1,5 @@
 describe("about Order", () => {
-  describe.only("create Order", () => {
+  describe("create Order", () => {
 
     let testProducts = [];
 
@@ -29,7 +29,6 @@ describe("about Order", () => {
       let orderItemOne = {
         name: testProducts[0].name,
         description: testProducts[0].description,
-        price: 1,
         quantity: 1,
         spec: testProducts[0].spec,
         ProductId: testProducts[0].id
@@ -38,7 +37,6 @@ describe("about Order", () => {
       let orderItemTwo = {
         name: testProducts[1].name,
         description: testProducts[1].description,
-        price: 1,
         quantity: 1,
         spec: testProducts[1].spec,
         ProductId: testProducts[1].id
@@ -81,11 +79,11 @@ describe("about Order", () => {
       });
     });
   });
-  describe("get Order status.", () => {
+  describe.only("get Order status.", () => {
     before( async (done) => {
       let newUser = {
         username: "testOrderUser",
-        email: "testOrderUser@gmail.com",
+        email: "smlsun@gmail.com",
         password: "testuser"
       };
 
@@ -101,21 +99,45 @@ describe("about Order", () => {
       done();
 
     });
-    it("get Order status should be success.", function(done) {
 
-      let formdata = {
-        SerialNumber: '11223344',
-        email: 'testOrderUser@gmail.com'
-      };
+    let syncLink = '';
 
-      request(sails.hooks.http.app).post("/api/order/status").send(formdata).end(function(err, res) {
-        if (res.statusCode === 500) {
-          return done(body);
-        }
-        res.body.order.id.should.be.number;
-        res.body.order.SerialNumber.should.be.String;
+    it("request order sync.", (done) => {
+      request(sails.hooks.http.app)
+      .get("/api/order/sync?email=smlsun@gmail.com&host=/api/order/status")
+      .end((err, res) => {
+        let result = res.body;
+
+        result.syncLink.should.be.String;
+        result.syncLinkHost.should.be.equal('/api/order/status');
+        result.syncLinkParams.should.be.String;
+        result.success.should.be.true;
+        syncLink = result.syncLink;
+        console.log('syncLink', syncLink);
+
+        done();
+
+      });
+    });
+
+    it("get Order status should be success.", (done) => {
+      console.log('=== syncLink ===\n', syncLink);
+      // ex: /api/order/status?token=...&email=smlsun@gmail.com
+      request(sails.hooks.http.app)
+      .get(syncLink)
+      .end((err, res) => {
+        let {purchaseHistory} = res.body;
+
+        console.log('purchaseHistory', purchaseHistory);
+
+        purchaseHistory.should.be.Array;
+        purchaseHistory[0].should.be.Object;
+        purchaseHistory[0].OrderItems.should.be.Object;
+        // purchaseHistory[0].Shipemnt.should.be.Object;
+        purchaseHistory[0].User.should.be.Object;
+
+
         return done(err);
-
       });
     });
   });

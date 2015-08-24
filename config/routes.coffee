@@ -121,9 +121,17 @@ module.exports.routes = {
     }
   }
 
-  'post /api/order/status': {
+  'get /api/order/status': {
     controller: "OrderController",
     action: "status",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+  'get /api/order/sync': {
+    controller: "OrderController",
+    action: "sync",
     cors: {
      origin: "http://localhost:1337, http://localhost:8080",
      credentials: false

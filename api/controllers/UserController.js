@@ -169,6 +169,10 @@ let userController = {
     }catch(error){
       return res.serverError(error);
     }
+  },
+
+  orderSync: async (req, res) => {
+    
   }
 
 };

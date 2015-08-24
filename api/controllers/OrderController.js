@@ -41,50 +41,50 @@ OrderController = {
   status: async function(req, res) {
 
     try{
+
+      var orderSyncToken = req.query.token;
       let userData = await db.User.findOne({
-            where: {
-              email: req.body.email
-            }
-          });
-
-      if (userData === null) {
-        return res.serverError({
-          msg: '沒有此User！'
-        });
-      }
-
-      let orderProduct = await db.Order.findOne({
-            where: {
-              SerialNumber: req.body.SerialNumber,
-              UserId: userData.id
-            },
-            include: [
-              {
-                model: db.User
-              }, {
-                model: db.Shipment
-              }, {
-                model: db.Product
-              }
-            ]
-        });
-
-      if (orderProduct === null) {
-        return res.serverError({
-          msg: '沒有此訂單'
-        });
-      }
-
-
-      var bank = sails.config.bank;
-      return res.ok({
-        order: orderProduct,
-        bank: bank
+        where: {orderSyncToken}
       });
+
+      let purchaseHistory = await db.Order.findAll({
+        where: {
+          UserId: userData.id
+        },
+        include: [
+          {
+            model: db.User
+          }, {
+            model: db.Shipment
+          }, {
+            model: db.OrderItem
+          }
+        ]
+      });
+
+      return res.ok({purchaseHistory});
 
     } catch (error) {
       console.log ('error',error.stack);
       return res.serverError(error);
+    }
+  },
+
+  sync: async (req, res) => {
+    try {
+      var email = req.query.email;
+      var host = req.query.host || null;
+      var user = await db.User.find({where: {email}});
+
+      let result = await CustomMailerService.orderSync(user, host);
+      result.success = true;
+      res.ok(result);
+
+    } catch (e) {
+      console.error(e.stack);
+      let {message} = e;
+
+      res.serverError({message, success: false});
     }
   }
 };

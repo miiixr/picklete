@@ -25,23 +25,35 @@ module.exports.mail = {
       """
     },
     paymentConfirm: {
-        subject: '訂單 %(orderSerialNumber)s 已確認付款完成',
-        text: """
-        Hi %(username)s:
+      subject: '訂單 %(orderSerialNumber)s 已確認付款完成',
+      text: """
+      Hi %(username)s:
 
-        您的付款已經確認，
-        我們會盡快為您安排出貨事宜。
-        
-        From STORE_NAME
-        """
+      您的付款已經確認，
+      我們會盡快為您安排出貨事宜。
+
+      From STORE_NAME
+      """
     },
     deliveryConfirm: {
-        subject: '訂單 %(orderSerialNumber)s 已完成出貨',
-        text: """
-        Hi %(username)s:
+      subject: '訂單 %(orderSerialNumber)s 已完成出貨',
+      text: """
+      Hi %(username)s:
 
-        From STORE_NAME
-        """
+      From STORE_NAME
+      """
+    },
+    orderSync: {
+      subject: '使用者 email %(email)s 訂單查詢要求連結',
+      text: """
+      Hi %(username)s:
+
+      請點選下列連結取得訂單資訊
+
+      %(syncLink)s
+
+      From STORE_NAME
+      """
     }
   }
 }
