@@ -4,10 +4,7 @@ block body
   h1 user-list
   div(data-role='fieldcontain')
     a#addUserButton.ui-btn.ui-corner-all(href='/user/create')新增
-    select(id='roles' name='roles')
-        each role in roles
-          option(value="role.id")= role.name
-  table.table
+  table.table(class='table table-striped')
     thead
       tr
         th [#]
@@ -28,16 +25,3 @@ block body
           td= user.address
           td= user.RoleId
           td= user.comment
-  table.table
-    thead
-      tr
-        th [#]
-        th [name]
-        th [comment]
-    tbody
-      each role in roles
-        tr
-          th(scope='row')
-            a(href="/user/show/#{role.id}")= role.id
-          td= role.name
-          td= role.comment

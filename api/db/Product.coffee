@@ -9,7 +9,6 @@ module.exports = (sequelize, DataTypes) ->
     comment: DataTypes.STRING
     spec: DataTypes.STRING
   }, classMethods: associate: (models) ->
-    Product.hasOne models.Order
     return
 
   return Product
