@@ -7,7 +7,6 @@ module.exports = (sequelize, DataTypes) ->
     price: DataTypes.INTEGER
     comment: DataTypes.STRING
     spec: DataTypes.STRING
-    price: DataTypes.INTEGER
   }, classMethods: associate: (models) ->
     OrderItem.belongsTo models.Order
     OrderItem.belongsTo models.Product

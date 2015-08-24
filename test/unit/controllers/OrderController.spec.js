@@ -29,7 +29,6 @@ describe("about Order", () => {
       let orderItemOne = {
         name: testProducts[0].name,
         description: testProducts[0].description,
-        price: 1,
         quantity: 1,
         spec: testProducts[0].spec,
         ProductId: testProducts[0].id
@@ -38,7 +37,6 @@ describe("about Order", () => {
       let orderItemTwo = {
         name: testProducts[1].name,
         description: testProducts[1].description,
-        price: 1,
         quantity: 1,
         spec: testProducts[1].spec,
         ProductId: testProducts[1].id
@@ -115,6 +113,7 @@ describe("about Order", () => {
         result.syncLinkParams.should.be.String;
         result.success.should.be.true;
         syncLink = result.syncLink;
+        console.log('syncLink', syncLink);
 
         done();
 
@@ -128,6 +127,9 @@ describe("about Order", () => {
       .get(syncLink)
       .end((err, res) => {
         let {purchaseHistory} = res.body;
+
+        console.log('purchaseHistory', purchaseHistory);
+
         purchaseHistory.should.be.Array;
         purchaseHistory[0].should.be.Object;
         purchaseHistory[0].OrderItems.should.be.Object;
