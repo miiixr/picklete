@@ -1,5 +1,5 @@
 describe("about Order", () => {
-  describe.only("create Order", () => {
+  describe("create Order", () => {
 
     let testProducts = [];
 
@@ -81,11 +81,11 @@ describe("about Order", () => {
       });
     });
   });
-  describe("get Order status.", () => {
+  describe.only("get Order status.", () => {
     before( async (done) => {
       let newUser = {
         username: "testOrderUser",
-        email: "testOrderUser@gmail.com",
+        email: "smlsun@gmail.com",
         password: "testuser"
       };
 
@@ -101,21 +101,40 @@ describe("about Order", () => {
       done();
 
     });
-    it("get Order status should be success.", function(done) {
 
-      let formdata = {
-        SerialNumber: '11223344',
-        email: 'testOrderUser@gmail.com'
-      };
+    let syncLinkApi = '';
 
-      request(sails.hooks.http.app).post("/api/order/status").send(formdata).end(function(err, res) {
-        if (res.statusCode === 500) {
-          return done(body);
-        }
-        res.body.order.id.should.be.number;
-        res.body.order.SerialNumber.should.be.String;
+    it("request order sync.", (done) => {
+      request(sails.hooks.http.app)
+      .get("/api/order/sync?email=smlsun@gmail.com")
+      .end((err, res) => {
+        let result = res.body;
+
+        result.syncLink.should.be.String;
+        result.syncLinkHost.should.be.String;
+        result.syncLinkApi.should.be.String;
+        syncLinkApi = result.syncLinkApi;
+
+        done();
+
+      });
+    });
+
+    it("get Order status should be success.", (done) => {
+      console.log('=== syncLinkApi ===\n', syncLinkApi);
+      // ex: /api/order/status?token=...&email=smlsun@gmail.com
+      request(sails.hooks.http.app)
+      .get(syncLinkApi)
+      .end((err, res) => {
+        let {purchaseHistory} = res.body;
+        purchaseHistory.should.be.Array;
+        purchaseHistory[0].should.be.Object;
+        purchaseHistory[0].OrderItems.should.be.Object;
+        // purchaseHistory[0].Shipemnt.should.be.Object;
+        purchaseHistory[0].User.should.be.Object;
+
+
         return done(err);
-
       });
     });
   });

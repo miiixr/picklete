@@ -1,4 +1,5 @@
-let sprintf = require("sprintf-js").sprintf
+import crypto from 'crypto';
+import {sprintf} from 'sprintf-js';
 
 module.exports = {
   orderConfirm: async (result) => {
@@ -23,5 +24,40 @@ module.exports = {
       throw error;
     }
 
+  },
+  orderSync: async (user) => {
+
+    try {
+      var orderSyncTemplete = sails.config.mail.templete.orderSync;
+      var email = user.email;
+      var mailSendConfig = {...orderSyncTemplete, to: email};
+      var token = await new Promise((resolve) => crypto.randomBytes(20, (error, buf) => resolve(buf.toString("hex"))));
+
+      user.orderSyncToken = token;
+      await user.save();
+
+      var addr = process.env.MOBILE_PORT_1337_TCP_ADDR || 'localhost';
+      var port = process.env.MOBILE_PORT_1337_TCP_PORT || sails.config.port;
+
+      var syncLinkHost = `http://${addr}:${port}`
+      var syncLinkApi = `/api/order/status?token=${token}&email=${email}`
+      var syncLink = `${syncLinkHost}${syncLinkApi}`
+
+      mailSendConfig.subject = sprintf(mailSendConfig.subject, {email});
+      mailSendConfig.text = sprintf(mailSendConfig.text, {
+        syncLink,
+        email,
+        username: user.username
+      });
+
+      let result = await sails.config.mail.mailer.send(mailSendConfig);
+
+      return {syncLink, syncLinkHost, syncLinkApi};
+    } catch (error) {
+      console.log(error.stack);
+      throw error;
+    }
+
   }
+
 };

@@ -115,8 +115,5 @@ module.exports = {
     let result = `${years}${alphabet[month]}${alphabet[day]}`;
 
     return result;
-
-
-
   }
 }
