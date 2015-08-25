@@ -63,7 +63,7 @@ module.exports = {
       let thisOrder = {
         quantity: newOrder.quantity,
         UserId: buyer.id,
-        SerialNumber: await OrderService.generateOrderSerialNumber()
+        serialNumber: await OrderService.generateOrderSerialNumber()
       };
 
       let isolationLevel = db.Sequelize.Transaction.ISOLATION_LEVELS.SERIALIZABLE;

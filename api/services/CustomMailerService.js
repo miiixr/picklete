@@ -7,10 +7,10 @@ module.exports = {
     var mailSendConfig = {...orderConfirmTemplete, to: result.order.User.email};
     var productsName = result.products.map((product) => product.name);
 
-    mailSendConfig.subject = sprintf(mailSendConfig.subject, {orderSerialNumber: result.order.SerialNumber});
+    mailSendConfig.subject = sprintf(mailSendConfig.subject, {orderSerialNumber: result.order.serialNumber});
     mailSendConfig.text = sprintf(mailSendConfig.text, {
       username: result.order.User.username,
-      orderSerialNumber: result.order.SerialNumber,
+      orderSerialNumber: result.order.serialNumber,
       productName: productsName.join('、'),
       shipmentUsername: result.order.Shipment.username,
       shipmentAddress: result.order.Shipment.address
@@ -57,6 +57,45 @@ module.exports = {
       console.log(error.stack);
       throw error;
     }
+
+  },
+  paymentConfirm: async (order) => {
+    var paymentConfirmTemplete = sails.config.mail.templete.paymentConfirm;
+    var mailSendConfig = {...paymentConfirmTemplete, to: order.User.email};
+
+    mailSendConfig.subject = sprintf(mailSendConfig.subject, {orderSerialNumber: order.serialNumber});
+    mailSendConfig.text = sprintf(mailSendConfig.text, {
+      username: order.User.username
+    });
+
+    try {
+      let result = await sails.config.mail.mailer.send(mailSendConfig);
+
+      return {result};
+    } catch (error) {
+      throw error;
+    }
+
+
+  },
+  deliveryConfirm: async (order) => {
+    var deliveryConfirmTemplete = sails.config.mail.templete.deliveryConfirm;
+    var mailSendConfig = {...deliveryConfirmTemplete, to: order.User.email};
+
+    mailSendConfig.subject = sprintf(mailSendConfig.subject, {orderSerialNumber: order.serialNumber});
+    mailSendConfig.text = sprintf(mailSendConfig.text, {
+      username: order.User.username
+    });
+
+    try {
+      let result = await sails.config.mail.mailer.send(mailSendConfig);
+
+      return {result};
+    } catch (error) {
+      throw error;
+    }
+
+
 
   }
 

@@ -50,6 +50,10 @@ module.exports.mail = {
       text: """
       Hi %(username)s:
 
+      商品已出貨完成
+
+      感謝你的訂購
+
       From STORE_NAME
       """
     },

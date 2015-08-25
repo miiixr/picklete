@@ -8,6 +8,9 @@ module.exports = (sequelize, DataTypes) ->
     paymentConfirmDate: DataTypes.DATE
     paymentConfirmName: DataTypes.STRING
     paymentConfirmPostfix: DataTypes.STRING
+    status:
+      type: DataTypes.ENUM('new', 'paymentConfirm', 'deliveryConfirm')
+      defaultValue: 'new'
   }, classMethods: associate: (models) ->
     Order.belongsTo models.User
     Order.hasMany models.OrderItem

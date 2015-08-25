@@ -123,7 +123,38 @@ OrderController = {
 
       res.serverError({message, success: false});
     }
+  },
+
+  statusUpdate: async (req, res) => {
+
+    let id = req.param("id");
+    let status = req.query.status;
+    console.log('=== id ===', id);
+    console.log('=== status ===', status);
+    try {
+      let order = await db.Order.find({
+        where: {id},
+        include: [{model: db.User}]
+      });;
+
+      order.status = status;
+
+      await order.save();
+
+      let result = await CustomMailerService[status](order);
+
+      result.success = true;
+
+      res.ok(result);
+
+    } catch (e) {
+      console.error(e.stack);
+      let {message} = e;
+
+      res.serverError({message, success: false});
+    }
   }
+
 };
 
 module.exports = OrderController;
