@@ -8,8 +8,8 @@ html
     // Fav and touch icons
 
     // STYLES
-    link(rel="stylesheet", href="/styles/css/bootstrap.css")
     link(rel="stylesheet", href="/styles/importer.css")
+    link(rel="stylesheet", href="/styles/css/bootstrap.css")
     // STYLES END
 
     //if lt IE 9
@@ -17,7 +17,7 @@ html
       script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
     //- script(src='javascripts/modernizr.custom.js')
   body.control-panel-page
-    //- .loader
+    .loader
     a#scrolltotop
       span.glyphicon.glyphicon-menu-up
     include partial/_auth_header
@@ -33,5 +33,5 @@ html
     include partial/_auth_footer
 
     // SCRIPTS
-    include partial/_auth_scripts.jade
+    include partial/_auth_scripts
     // SCRIPTS END
