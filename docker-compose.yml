@@ -14,6 +14,7 @@ web:
     MYSQL_USER: "picklete"
     PORT: "1337"
     NODE_ENV: "production"
+    DOMAIN_HOST: "shop.agricloud.cc"
   restart: always
 
 mobile:

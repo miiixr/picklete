@@ -11,28 +11,30 @@ module.exports.mail = {
   templete: {
     orderConfirm: {
       subject: '訂單 %(orderSerialNumber)s 建立完成',
-      text: """
-      Hi %(username)s:
+      html: """<html><body>
+      <br />Hi %(username)s:
 
-      感謝你的訂購，你所購買的產品 %(productName)s 已訂購完成
-      訂單編號為： %(orderSerialNumber)s
-      收件者為： %(shipmentUsername)s
-      收件地址為： %(shipmentAddress)s
+      <br />感謝你的訂購，你所購買的產品 %(productName)s 已訂購完成
+      <br />訂單編號為： %(orderSerialNumber)s
+      <br />收件者為： %(shipmentUsername)s
+      <br />收件地址為： %(shipmentAddress)s
 
-      如果上述資料正確，請將款項 $... 匯款至以下帳號：
+      <br />如果上述資料正確，請將款項 $... 匯款至以下帳號：
 
-      銀行名稱：ＯＯＯＯ銀行 / ＯＯ分行
-      銀行代碼：
-      帳號：
-      戶名：
-      匯款金額： $...
+      <br />銀行名稱：ＯＯＯＯ銀行 / ＯＯ分行
+      <br />銀行代碼：
+      <br />帳號：
+      <br />戶名：
+      <br />匯款金額： $...
 
-      匯款後請按至以下連結確認。
+      <br />匯款後請按至以下連結確認:
 
-      煩請你確認。
+      <br /><a href='%(orderConfirmLink)s'>匯款確認</a>
 
-      From STORE_NAME
-      """
+      <br />煩請你確認。
+
+      <br />From STORE_NAME
+      </body></html>"""
     },
     paymentConfirm: {
       subject: '訂單 %(orderSerialNumber)s 已確認付款完成',
@@ -59,14 +61,15 @@ module.exports.mail = {
     },
     orderSync: {
       subject: '使用者 email %(email)s 訂單查詢要求連結',
-      text: """
-      Hi %(username)s:
+      html: """
+      <br />Hi %(username)s:
 
-      請點選下列連結取得訂單資訊
+      <br />請點選下列連結取得訂單資訊
 
-      %(syncLink)s
+      <br /><a href='%(syncLink)s'>取得訂單資訊</a>
 
-      From STORE_NAME
+
+      <br />From STORE_NAME
       """
     }
   }

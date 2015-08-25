@@ -6,14 +6,17 @@ module.exports = {
     var orderConfirmTemplete = sails.config.mail.templete.orderConfirm;
     var mailSendConfig = {...orderConfirmTemplete, to: result.order.User.email};
     var productsName = result.products.map((product) => product.name);
+    var DOMAIN_HOST = process.env.DOMAIN_HOST || 'localhost:1337';
+    var orderConfirmLink = `http://${DOMAIN_HOST}/order/paymentConfirm?serial=${result.order.serialNumber}`
 
     mailSendConfig.subject = sprintf(mailSendConfig.subject, {orderSerialNumber: result.order.serialNumber});
-    mailSendConfig.text = sprintf(mailSendConfig.text, {
+    mailSendConfig.html = sprintf(mailSendConfig.html, {
       username: result.order.User.username,
       orderSerialNumber: result.order.serialNumber,
       productName: productsName.join('、'),
       shipmentUsername: result.order.Shipment.username,
-      shipmentAddress: result.order.Shipment.address
+      shipmentAddress: result.order.Shipment.address,
+      orderConfirmLink
     });
 
     try {
@@ -44,7 +47,7 @@ module.exports = {
       var syncLink = `${syncLinkHost}?${syncLinkParams}`
 
       mailSendConfig.subject = sprintf(mailSendConfig.subject, {email});
-      mailSendConfig.text = sprintf(mailSendConfig.text, {
+      mailSendConfig.html = sprintf(mailSendConfig.html, {
         syncLink,
         email,
         username: user.username
