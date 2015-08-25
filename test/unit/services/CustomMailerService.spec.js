@@ -1,5 +1,5 @@
 
-describe.only("about Mailer service", () => {
+describe("about Mailer service", () => {
   let order = {
     serialNumber: 'test',
     User: {
