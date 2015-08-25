@@ -5,7 +5,9 @@ block body
     div.page-header
       h1 付款確認表單
 
-    if !order.paymentConfirmDate
+    p 訂單編號: #{order.serialNumber}
+
+    if !order.paymentIsConfirmed
       p 請輸入「匯款人姓名」及「轉帳帳號後五碼」
       form
         div.form-group
@@ -33,16 +35,25 @@ block scripts
       $('button.submit-action').click(function(e) {
         e.preventDefault();
 
+        var paymentConfirmDate = $('input[name=paymentConfirmDate]').val();
+        var paymentConfirmName = $('input[name=paymentConfirmName]').val();
+        var paymentConfirmPostfix = $('input[name=paymentConfirmPostfix]').val();
+
+        if (!paymentConfirmDate || !paymentConfirmName || !paymentConfirmPostfix) {
+          bootbox.alert('必須填寫完整資訊。');
+          return false;
+        }
+
         $.ajax({
           url: '/order/paymentConfirmSave?serial=#{order.serialNumber}',
           method: "POST",
           data: {
-            paymentConfirmDate : $('input[name=paymentConfirmDate]').val(),
+            paymentConfirmDate : paymentConfirmDate,
             paymentConfirmName : $('input[name=paymentConfirmName]').val(),
             paymentConfirmPostfix : $('input[name=paymentConfirmPostfix]').val()
           }
         }).done(function() {
-          bootbox.alert("Hello world!");
+          bootbox.alert('資料已儲存，我們會盡快確認此筆款項。');
 
           $('button.submit-action')
             .text('已送出')

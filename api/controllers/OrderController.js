@@ -46,6 +46,7 @@ OrderController = {
       if (!order) {
         throw ('order not found')
       }
+      order.paymentIsConfirmed = true;
       order.paymentConfirmDate = req.body.paymentConfirmDate;
       order.paymentConfirmName = req.body.paymentConfirmName;
       order.paymentConfirmPostfix = req.body.paymentConfirmPostfix;

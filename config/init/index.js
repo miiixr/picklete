@@ -124,6 +124,7 @@ module.exports = {
 
     var newOrder2 = {
       serialNumber: '0000001',
+      paymentIsConfirmed: true,
       paymentTotalAmount: 1000,
       paymentConfirmDate: Date.now(),
       paymentConfirmName: '王小明',

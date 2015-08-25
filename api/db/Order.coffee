@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) ->
     serialNumber: DataTypes.STRING
     quantity: DataTypes.INTEGER
     paymentTotalAmount: DataTypes.FLOAT
+    paymentIsConfirmed: DataTypes.BOOLEAN
     paymentConfirmDate: DataTypes.DATE
     paymentConfirmName: DataTypes.STRING
     paymentConfirmPostfix: DataTypes.STRING
