@@ -69,17 +69,18 @@ describe("about Order", () => {
         if (res.statusCode === 500) {
           return done(err);
         }
+        console.log('res.body', res.body);
         res.body.success.should.be["true"];
         res.body.order.id.should.be.number;
-        res.body.shipment.id.should.be.number;
-        res.body.user.id.should.be.number;
+        res.body.order.Shipment.id.should.be.number;
+        res.body.order.User.id.should.be.number;
         res.body.products.forEach((product) => product.id.should.be.number);
-        res.body.orderItems.forEach((orderItem) => orderItem.id.should.be.number);
+        res.body.order.OrderItems.forEach((orderItem) => orderItem.id.should.be.number);
         return done();
       });
     });
   });
-  describe.only("get Order status.", () => {
+  describe("get Order status.", () => {
     before( async (done) => {
       let newUser = {
         username: "testOrderUser",

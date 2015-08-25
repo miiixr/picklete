@@ -4,16 +4,16 @@ import {sprintf} from 'sprintf-js';
 module.exports = {
   orderConfirm: async (result) => {
     var orderConfirmTemplete = sails.config.mail.templete.orderConfirm;
-    var mailSendConfig = {...orderConfirmTemplete, to: result.user.email};
+    var mailSendConfig = {...orderConfirmTemplete, to: result.order.User.email};
     var productsName = result.products.map((product) => product.name);
 
     mailSendConfig.subject = sprintf(mailSendConfig.subject, {orderSerialNumber: result.order.SerialNumber});
     mailSendConfig.text = sprintf(mailSendConfig.text, {
-      username: result.user.username,
+      username: result.order.User.username,
       orderSerialNumber: result.order.SerialNumber,
       productName: productsName.join('、'),
-      shipmentUsername: result.shipment.username,
-      shipmentAddress: result.shipment.address
+      shipmentUsername: result.order.Shipment.username,
+      shipmentAddress: result.order.Shipment.address
     });
 
     try {

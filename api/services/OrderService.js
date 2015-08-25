@@ -26,8 +26,16 @@ module.exports = {
 
     try {
 
-      let orderItems = newOrder.orderItems;
+      let orderItems = newOrder.orderItems.reduce((result, orderItem) => {
+        if(parseInt(orderItem.quantity) === 0) return result;
+
+        result.push(orderItem);
+
+        return result;
+      }, [])
+
       let products = await* orderItems.map(async (orderItem) => {
+
         let product = await db.Product.findById(orderItem.ProductId);
 
         if (!product)
@@ -39,6 +47,7 @@ module.exports = {
         if (product.stockQuantity < orderItem.quantity)
           throw new Error('商品數量不足！');
         product.stockQuantity = product.stockQuantity - orderItem.quantity;
+
         return product;
       });
 
@@ -76,12 +85,13 @@ module.exports = {
         transaction.commit();
 
         result.products = products;
-        result.orderItems = createdOrderItems;
-        result.user = buyer;
-        result.order = createdOrder;
-        result.shipment = createdShipment;
         result.success = true;
         result.bank = sails.config.bank;
+
+        result.order = createdOrder.toJSON();
+        result.order.OrderItems = createdOrderItems;
+        result.order.User = buyer;
+        result.order.Shipment = createdShipment;
       } catch (e) {
         console.error(e.stack);
         transaction.rollback();
