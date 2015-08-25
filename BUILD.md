@@ -10,6 +10,7 @@
 npm install -g bower
 npm install -g sails
 npm install -g grunt-cli
+npm install -g coffee-script
 
 gem install compass
 gem install bootstrap-sass
