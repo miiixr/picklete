@@ -102,6 +102,8 @@ module.exports = {
     var createdProduct = await db.Product.create(newProduct);
 
     var newOrder = {
+      SerialNumber: '0000000',
+      paymentTotalAmount: 1234.567,
       quantity: 10,
       orderId: '1111',
       UserId: createNewBuyer.id,

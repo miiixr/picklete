@@ -6,15 +6,19 @@ block body
     thead
       tr
         th #
-        th name
-        th description
-        th stockQuantity
-        th price
+        th Serial Number
+        th 訂單總金額
+        th Name
+        th Description
+        th StockQuantity
+        th Price
     tbody
       each order in orders
         tr
           th(scope='row')
             a(href="/order/show/#{order.id}")= order.id
+          td= order.SerialNumber
+          td= order.paymentTotalAmount
           td= order.name
           td= order.description
           td= order.stockQuantity

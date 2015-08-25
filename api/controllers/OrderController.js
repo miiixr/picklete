@@ -15,8 +15,23 @@ OrderController = {
   },
   paymentConfirm: async (req, res) => {
     try {
-      let orders = await db.Order.findAll();
-      return res.view({orders});
+      let order = await db.Order.findOne({
+        where: {
+          SerialNumber: req.query.serial
+        }
+      });
+      if (!order) {
+        throw ('order not found')
+      }
+
+      // 預設匯款日期今天
+      if (!order.paymentConfirmDate) {
+        order.paymentConfirmDate = Date.now();
+      }
+
+      //console.log(order.paymentConfirmDate);
+
+      return res.view({order});
     } catch (error) {
       return res.serverError(error);
     }

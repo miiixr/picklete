@@ -4,13 +4,16 @@ block body
   div.container
     div.page-header
       h1 付款確認表單
+
+    #{moment(Date.now()).format('MM/DD/YYYY')}
+
     p 請輸入「匯款人姓名」及「轉帳帳號後五碼」
     form
       div.form-group
         label 訂單編號
       div.form-group
-        label 付款日期
-        input.form-control.datepicker
+        label 付款日期（年/月/日）
+        input.form-control.datepicker(name='paymentConfirmDate',value=order.paypaymentConfirmDate)
       div.form-group
         label 匯款人姓名
         input.form-control
