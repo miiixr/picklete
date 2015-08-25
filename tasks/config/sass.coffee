@@ -6,9 +6,12 @@ module.exports = (grunt) ->
 
       files: [
         expand: true
-        cwd: "assets/styles/"
-        src: ["importer.scss"]
-        dest: ".tmp/public/styles/"
+        cwd: "assets/stylesheets/"
+        src: [
+          "importer.scss"
+          "bootstrap.scss"
+        ]
+        dest: ".tmp/public/stylesheets/"
         ext: ".css"
       ]
 

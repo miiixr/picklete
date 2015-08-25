@@ -2,18 +2,26 @@ extends ./../layout
 
 block body
   h1 product
+  a(href='/product/index', data-icon='back', data-iconpos='notext') 返回
   .nd2-card
     .card-media
-        img#product_image(src=product.image, alt='product')
+        img#product_image(src=product.image, alt='product-image')
       card-supporting-text.has-action
-        h3#product_name=product.name
-        p#product_descript=product.descript
+        h3 商品名稱:
+          span#product_name=product.name
+        p 商品描述:
+          span#product_descript=product.description
         p 庫存箱數:
           span#product_stockQuantity=product.stockQuantity
         p 單價:
           span#product_price=product.price
+        p 商品是否上架:
+          span#product_price=product.isPublish
+        p 商品備註:
+          span#product_price=product.comment
      .card-action
-        fieldset(data-role='controlgroup', data-type='horizontal')    
-          a#productUpdateButton.ui-btn.ui-corner-all(href='/product/edit/#{product.id}')編輯
-          a#productDeleteButton.ui-btn.ui-corner-all(href='/product/delet/#{product.id}')刪除
-
+        fieldset(data-role='controlgroup', data-type='horizontal')
+          a#productUpdateButton.ui-btn.ui-corner-all(href='/product/edit/#{product.id}')[編輯]
+          button#productDeleteButton.ui-btn.ui-corner-all(href='/api/product/#{product.id}')[刪除]
+          a#productPublishButton.ui-btn.ui-corner-all(href='/product/publish/#{product.id}?responseType=view')[上架]
+          a#productUnpublishButton.ui-btn.ui-corner-all(href='/product/unpublish/#{product.id}?responseType=view')[下架]

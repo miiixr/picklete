@@ -1,0 +1,27 @@
+extends ./../layout
+
+block body
+  h1 user-list
+  div(data-role='fieldcontain')
+    a#addUserButton.ui-btn.ui-corner-all(href='/user/create')新增
+  table.table(class='table table-striped')
+    thead
+      tr
+        th [#]
+        th [username]
+        th [email]
+        th [mobile]
+        th [address]
+        th [RoleId]
+        th [comment]
+    tbody
+      each user in users
+        tr
+          th(scope='row')
+            a(href="/user/show/#{user.id}")= user.id
+          td= user.username
+          td= user.email
+          td= user.mobile
+          td= user.address
+          td= user.RoleId
+          td= user.comment

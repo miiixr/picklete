@@ -71,6 +71,12 @@ module.exports.routes = {
   'get /auth/:provider/callback': 'AuthController.callback'
   'get /auth/:provider/:action': 'AuthController.callback'
 
+
+  "get /admin/login": view: "admin/login"
+
+  ###*
+    ProductController
+  ###
   'get /api/product': {
     controller: "ProductController",
     action: "find",
@@ -87,12 +93,38 @@ module.exports.routes = {
      origin: "http://localhost:1337, http://localhost:8080",
      credentials: false
     }
-  }
-
+  },
 
   'post /api/product': {
     controller: "ProductController",
-    action: "addProduct",
+    action: "add",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+
+  'put /api/product/publish/:id': {
+    controller: "ProductController",
+    action: "publish",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+
+  'put /api/product/unpublish/:id': {
+    controller: "ProductController",
+    action: "unpublish",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+
+  'delete /api/product/:id': {
+    controller: "ProductController",
+    action: "delete",
     cors: {
      origin: "http://localhost:1337, http://localhost:8080",
      credentials: false
@@ -108,6 +140,9 @@ module.exports.routes = {
     }
   }
 
+  ###*
+    OrderController
+  ###
   'post /api/order': {
     controller: "OrderController",
     action: "create",
@@ -117,9 +152,92 @@ module.exports.routes = {
     }
   }
 
-  'post /api/order/status': {
+  'get /api/order/status': {
     controller: "OrderController",
     action: "status",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+  'get /api/order/sync': {
+    controller: "OrderController",
+    action: "sync",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+
+  ###*
+    UserController
+  ###
+  'get /api/user': {
+    controller: "UserController",
+    action: "findAll",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+
+  'get /api/user/:id': {
+    controller: "UserController",
+    action: "findOne",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+
+  'get /api/user/role/:id': {
+    controller: "UserController",
+    action: "filterByRole",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+
+  'get /api/user/search/:username': {
+    controller: "UserController",
+    action: "search",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+
+  'post /api/user': {
+    controller: "UserController",
+    action: "add",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+
+  'put /api/user/:id': {
+    controller: "UserController",
+    action: "update",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+
+  'put /api/user/:id/:roleid': {
+    controller: "UserController",
+    action: "setRole",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+
+  'delete /api/user/:id': {
+    controller: "UserController",
+    action: "delete",
     cors: {
      origin: "http://localhost:1337, http://localhost:8080",
      credentials: false

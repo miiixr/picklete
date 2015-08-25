@@ -20,16 +20,16 @@ module.exports = (grunt) ->
       files: [
         {
           expand: true
-          cwd: "assets/js/"
+          cwd: "assets/javascripts/"
           src: ["**/*.coffee"]
-          dest: ".tmp/public/js/"
+          dest: ".tmp/public/javascripts/"
           ext: ".js"
         }
         {
           expand: true
-          cwd: "assets/js/"
+          cwd: "assets/javascripts/"
           src: ["**/*.coffee"]
-          dest: ".tmp/public/js/"
+          dest: ".tmp/public/javascripts/"
           ext: ".js"
         }
       ]
