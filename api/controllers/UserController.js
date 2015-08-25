@@ -171,17 +171,17 @@ let userController = {
     }
   },
 
-  searchUser: async(req, res) => {
+  searchMember: async(req, res) => {
     let user = await db.User.findAll({
       where:{
-        username:{
-          $like: userName
+        searchMember:{
+          $like: 'userName'
         }
       }
-    })
-    return user;
-  },
+    })catch (error){
+    return res.serverError(error);
+  }
+},
 
 };
-
 module.exports = userController;

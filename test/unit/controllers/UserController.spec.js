@@ -1,4 +1,4 @@
-describe.only("about User", () => {
+describe("about User", () => {
   // start
 
   let testUser = null;
@@ -145,16 +145,20 @@ describe.only("about User", () => {
     });
   });
 
-  it('searchUser', (done) => {
+  it('searchMember', (done) => {
     request(sails.hooks.http.app)
     .get(`/api/searchUser/userName`)
     .end((err,res) => {
       if(res.statusCode === 500){
         return done(err);
       }
-      res.statusCode.should.equal(404);
+      res.statusCode.should.equal(200);
+      res.body.users.should.be.Array;
+      res.body.users.forEach(User => {
+        User.username.should.be.String;
+      });
       done(err);
     });
-  })
+  });
   // end
 });
