@@ -1,17 +1,16 @@
 
 describe.only("about Mailer service", () => {
+  let order = {
+    serialNumber: 'test',
+    User: {
+      username: 'testUser',
+      email: 'smlsun@gmail.com'
+    }
+  }
+
   it('send paymentConfirm', async (done) => {
 
     try {
-      let order = {
-        serialNumber: 'test',
-        User: {
-          username: 'testUser',
-          email: 'smlsun@gmail.com'
-        }
-
-      }
-
       await CustomMailerService.paymentConfirm(order);
       done();
     } catch (e) {
@@ -19,4 +18,16 @@ describe.only("about Mailer service", () => {
     }
 
   });
+
+  it('send deliveryConfirm', async (done) => {
+
+    try {
+      await CustomMailerService.deliveryConfirm(order);
+      done();
+    } catch (e) {
+      done(e);
+    }
+
+  });
+
 });

@@ -79,6 +79,22 @@ module.exports = {
 
   },
   deliveryConfirm: async (order) => {
+    var deliveryConfirmTemplete = sails.config.mail.templete.deliveryConfirm;
+    var mailSendConfig = {...deliveryConfirmTemplete, to: order.User.email};
+
+    mailSendConfig.subject = sprintf(mailSendConfig.subject, {orderSerialNumber: order.serialNumber});
+    mailSendConfig.text = sprintf(mailSendConfig.text, {
+      username: order.User.username
+    });
+
+    try {
+      let result = await sails.config.mail.mailer.send(mailSendConfig);
+
+      return {result};
+    } catch (error) {
+      throw error;
+    }
+
 
 
   }
