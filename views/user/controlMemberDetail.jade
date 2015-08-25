@@ -1,0 +1,180 @@
+extends ../_layout_auth
+
+block body
+  h2.m-bottom-6 會員資料
+  .well.control-well.p-30.m-bottom-8
+    form.form-horizontal
+      .row.row-m
+        .col-md-6
+          .form-group.m-bottom-0
+            label.col-md-2.control-label.text-muted 姓名
+            .col-md-10
+              p.form-control-static {user_name}
+          // /form-group
+        // /col-md-6
+        .col-md-6
+          .form-group.m-bottom-0
+            label.col-md-2.control-label.text-muted 生日
+            .col-md-10
+              p.form-control-static 1995.8.5
+          // /form-group
+        // /col-md-6
+      // /row
+      .row.row-m
+        .col-md-6
+          .form-group.m-bottom-0
+            label.col-md-2.control-label.text-muted 電話
+            .col-md-10
+              p.form-control-static 0912-345-678
+          // /form-group
+        // /col-md-6
+        .col-md-6
+          .form-group.m-bottom-0
+            label.col-md-2.control-label.text-muted 信箱
+            .col-md-10
+              p.form-control-static xxxx@gmail.com
+          // /form-group
+        // /col-md-6
+      // /row
+      .row.row-m
+        .col-md-12
+          .form-group.m-bottom-0
+            label.col-md-1.control-label.text-muted 住址
+            .col-md-11
+              p.form-control-static 403 {address}
+          // /form-group
+        // /col-md-6
+      // /row
+      .row.row-m
+        .col-md-12
+          .form-group
+            label.col-md-1.control-label.text-muted 興趣
+            .col-md-11
+              p.form-control-static 文具、咖啡、運動、午茶、香氛、品酒
+          // /form-group
+        // /col-md-6
+      // /row
+      .row.row-m
+        .col-md-12
+          .form-group
+            label.col-md-1.control-label.text-muted 備註
+            .col-md-11
+              textarea.form-control(rows='3')
+          // /form-group
+        // /col-md-6
+      // /row
+      .text-right
+        button.btn.btn-green(type='button') 更新
+      // /text-right
+    // /form-horizontal
+  // /well
+  hr.dashed-line
+  table#collapse-purchase.table.table-purchase
+    thead
+      tr
+        th
+          | 訂購日期
+          span.caret
+        th
+          | 訂單編號
+          span.caret
+        th 付款方式
+        th 處理進度
+        th
+          | 出貨日期
+          span.caret
+        th 應付金額
+        th 發票
+        th
+          span.glyphicon.glyphicon-plus
+    tbody
+      tr.disabled
+        td 2015-5-21
+        td w201505210009
+        td 信用卡
+        td
+          span.text-danger 訂單已取消
+        td 2015-5-22
+        td 5,790
+        td 已捐贈
+        td
+          a(data-toggle='collapse', data-parent='#collapse-purchase', href='#')
+            span.glyphicon.glyphicon-plus
+      tr
+        td 2015-5-21
+        td w201505210009
+        td 信用卡
+        td 訂單完成
+        td 2015-5-22
+        td 5,790
+        td 已捐贈
+        td
+          a(data-toggle='collapse', data-parent='#collapse-purchase', href='#collapse-purchase-One')
+            span.glyphicon.glyphicon-plus
+      tr.tr-hide
+        td(colspan='8')
+          #collapse-purchase-One.panel-collapse.collapse
+            //
+              purchase-detail
+              ==================================================
+            .p-10
+              .m-top-2.m-bottom-2
+                ul.p-left-3
+                  li 收件人姓名：{consumer_name} 小姐
+                  li 收件人電話：09123456**
+                  li 收件人地址：407 台中市南區****街三段379號
+                  li 運送方式：{delivery_company} / 編號：{tax_id}
+              // /m-top-2 m-bottom-2
+              table.table
+                thead
+                  tr
+                    th 商品名稱
+                    th.text-center 數量
+                    th 單價
+                    th.text-right 小計
+                tbody
+                  tr
+                    td
+                      a(href='shop-product') {product_name}
+                    td.text-center 3
+                    td 1,440
+                    td.text-right 3,450
+                  tr
+                    td
+                      a(href='shop-product') {product_name}
+                    td.text-center 3
+                    td
+                      | 1,440
+                      small.text-line-through.m-left-1 1,700
+                    td.text-right 3,450
+                  tr
+                    td
+                      p 付款方式：7-11 ibon 代碼繳費，繳費代碼：251563222267
+                      p.text-danger 賣家備註：
+                      ol.text-danger
+                        li 管理員代收
+                        li 禮品的包裝盒請去除價格標籤
+                    td
+                    td(colspan='2')
+                      .row.m-bottom-1
+                        .col-xs-6 小計
+                        .col-xs-6.text-right 3,240
+                      // /row
+                      .row.m-bottom-1
+                        .col-xs-6 運費
+                        .col-xs-6.text-right 免運
+                      // /row
+                      .row.m-bottom-1
+                        .col-xs-6 包裝
+                        .col-xs-6.text-right 120
+                      // /row
+                      .row.m-bottom-1
+                        .col-xs-6 折扣碼
+                        .col-xs-6.text-right -30
+                      // /row
+                      hr
+                      h2
+                        small 總計
+                        span.text-danger.pull-right NT$2,390
+            // /p-10
+          // /panel-collapse

@@ -33,6 +33,37 @@ module.exports.routes = {
   'get /logout': 'AuthController.logout'
   'get /register': 'AuthController.register'
 
+  'get /control-login' : 'UserController.controlLogin'
+  'get /control-index-slider' : 'UserController.indexSlider'
+  'get /control-password' : 'UserController.password'
+  'get /control-index-exclusive' : 'UserController.indexExclusive'
+  'get /control-index-theme' : 'UserController.indexTheme'
+  'get /control-brands' : 'UserController.controlBrands'
+  'get /control-brands-detail' : 'UserController.controlBrandsDetail'
+  'get /control-shop-type' : 'UserController.controlShopType'
+  'get /control-shop-item-add' : 'UserController.controlShopItemAdd'
+  'get /control-shop-item-list' : 'UserController.controlShopItemList'
+  'get /control-shop-discount' : 'UserController.controlShopDiscount'
+  'get /control-shop-buy-more' : 'UserController.controlShopBuyMore'
+  'get /control-shop-buy-more-detail' : 'UserController.controlShopBuyMoreDetail'
+  'get /control-shop-buy-more-add-item' : 'UserController.controlShopBuyMoreAddItem'
+  'get /control-shop-code' : 'UserController.controlShopCode'
+  'get /control-shop-code-detail' : 'UserController.controlShopCodeDetail'
+  'get /control-shop-discount-detail' : 'UserController.controlShopDiscountDetail'
+  'get /control-shop-discount-detail2' : 'UserController.controlShopDiscountDetail2'
+  'get /control-shop-discount-add-item' : 'UserController.controlShopDiscountAddItem'
+  'get /control-shop-report-form' : 'UserController.controlShopReportForm'
+  'get /control-order' : 'UserController.controlOrder'
+  'get /control-about' : 'UserController.controlAbout'
+  'get /control-qa' : 'UserController.controlQa'
+  'get /control-qa-detail' : 'UserController.controlQaDetail'
+  'get /control-qa-type' : 'UserController.controlQaType'
+  'get /control-qa-add' : 'UserController.controlQaAdd'
+  'get /control-members' : 'UserController.controlMembers'
+  'get /control-member-detail' : 'UserController.controlMemberDetail'
+
+
+
   'post /auth/local': 'AuthController.callback'
   'post /auth/local/:action': 'AuthController.callback'
 
@@ -62,7 +93,7 @@ module.exports.routes = {
      origin: "http://localhost:1337, http://localhost:8080",
      credentials: false
     }
-  }
+  },
 
   'post /api/product': {
     controller: "ProductController",
