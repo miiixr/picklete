@@ -92,7 +92,7 @@ describe("about Order", () => {
 
       let newOrder = {
         quantity: 10,
-        SerialNumber: '11223344',
+        serialNumber: '11223344',
         UserId: createdUser.id
       };
 
