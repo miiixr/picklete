@@ -19,6 +19,16 @@ module.exports.mail = {
       收件者為： %(shipmentUsername)s
       收件地址為： %(shipmentAddress)s
 
+      如果上述資料正確，請將款項 $... 匯款至以下帳號：
+
+      銀行名稱：ＯＯＯＯ銀行 / ＯＯ分行
+      銀行代碼：
+      帳號：
+      戶名：
+      匯款金額： $...
+
+      匯款後請按至以下連結確認。
+
       煩請你確認。
 
       From STORE_NAME

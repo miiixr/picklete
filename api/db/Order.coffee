@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) ->
     paymentTotalAmount: DataTypes.FLOAT
     paymentConfirmDate: DataTypes.DATE
     paymentConfirmName: DataTypes.STRING
-    paymentConfirmPostfix: DataTypes.INTEGER
+    paymentConfirmPostfix: DataTypes.STRING
   }, classMethods: associate: (models) ->
     Order.belongsTo models.User
     Order.hasMany models.OrderItem

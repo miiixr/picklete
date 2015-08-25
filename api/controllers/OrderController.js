@@ -17,7 +17,7 @@ OrderController = {
     try {
       let order = await db.Order.findOne({
         where: {
-          SerialNumber: req.query.serial
+          serialNumber: req.query.serial
         }
       });
       if (!order) {
@@ -32,6 +32,27 @@ OrderController = {
       //console.log(order.paymentConfirmDate);
 
       return res.view({order});
+    } catch (error) {
+      return res.serverError(error);
+    }
+  },
+  paymentConfirmSave: async (req, res) => {
+    try {
+      let order = await db.Order.findOne({
+        where: {
+          serialNumber: req.query.serial
+        }
+      });
+      if (!order) {
+        throw ('order not found')
+      }
+      order.paymentConfirmDate = req.body.paymentConfirmDate;
+      order.paymentConfirmName = req.body.paymentConfirmName;
+      order.paymentConfirmPostfix = req.body.paymentConfirmPostfix;
+      order.save();
+      return res.json({
+        result: true
+      });
     } catch (error) {
       return res.serverError(error);
     }

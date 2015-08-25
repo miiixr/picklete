@@ -5,22 +5,23 @@ block body
     div.page-header
       h1 付款確認表單
 
-    #{moment(Date.now()).format('MM/DD/YYYY')}
-
-    p 請輸入「匯款人姓名」及「轉帳帳號後五碼」
-    form
-      div.form-group
-        label 訂單編號
-      div.form-group
-        label 付款日期（年/月/日）
-        input.form-control.datepicker(name='paymentConfirmDate',value=order.paypaymentConfirmDate)
-      div.form-group
-        label 匯款人姓名
-        input.form-control
-      div.form-group
-        label 轉帳帳號後五碼
-        input.form-control
-      button.btn.btn-primary.submit-action(type='button') 送出
+    if !order.paymentConfirmDate
+      p 請輸入「匯款人姓名」及「轉帳帳號後五碼」
+      form
+        div.form-group
+          label 訂單編號
+        div.form-group
+          label 付款日期（年/月/日）
+          input.form-control.datepicker(name='paymentConfirmDate', value=sails.moment(order.paymentConfirmDate).format('YYYY/MM/DD'))
+        div.form-group
+          label 匯款人姓名
+          input.form-control(name='paymentConfirmName', value='')
+        div.form-group
+          label 轉帳帳號後五碼
+          input.form-control(name='paymentConfirmPostfix', value='')
+        button.btn.btn-primary.submit-action(type='button') 送出
+    else
+      p 此筆訂單已經於 #{sails.moment(order.paymentConfirmDate).format('YYYY/MM/DD')} 完成付款確認
     hr
     div.text-center
       p ＯＯＯＯ版權所有
@@ -33,9 +34,13 @@ block scripts
         e.preventDefault();
 
         $.ajax({
-          url: '/order/paymentConfirm',
+          url: '/order/paymentConfirmSave?serial=#{order.serialNumber}',
           method: "POST",
-          data: { id : 1 }
+          data: {
+            paymentConfirmDate : $('input[name=paymentConfirmDate]').val(),
+            paymentConfirmName : $('input[name=paymentConfirmName]').val(),
+            paymentConfirmPostfix : $('input[name=paymentConfirmPostfix]').val()
+          }
         }).done(function() {
           bootbox.alert("Hello world!");
 
