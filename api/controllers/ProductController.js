@@ -42,21 +42,24 @@ let ProductController = {
   },
 
   create: async (req, res) => {
+    return res.view('product/create');
+  },
+
+  edit: async (req, res) => {
 
     try {
-      return res.view();
+      let productId = req.param("id");
+      let product = await ProductService.findWithImages(productId);
+      return res.view({product});
     } catch (error) {
       return res.serverError(error);
     }
   },
 
-  addProduct: async (req, res) => {
+  add: async (req, res) => {
     try{
-      // create
-      let newProduct = req.body;
-        console.log('\n\n\nnewProduct is=>\n\n\n', newProduct);
+      let newProduct = req.body.product;
       let addProduct = await db.Product.create(newProduct);
-        console.log('\n\n\naddProduct is=>\n\n\n', addProduct);
       if(!addProduct){
         return res.serverError({
           msg: '找不到商品！ 請確認商品ID！'
@@ -73,11 +76,81 @@ let ProductController = {
     }
   },
 
+  delete: async (req, res) => {
+    try{
+      let productId = req.param("id");
+      let findProduct = await db.Product.findById(productId);
+      if (!findProduct) {
+        return res.serverError({
+          msg: '找不到商品！ 請確認商品ID！'
+        });
+      }
+      await findProduct.destroy();
+      let ensureDelete = await db.Product.findById(productId);
+      console.log("ensureDelete -->",ensureDelete);
+      if(ensureDelete) {
+        return res.serverError({msg: 'delete失敗'});
+      }
+      return res.redirect('product/index');
+    }catch(error){
+      return res.serverError(error);
+    }
+  },
+
+  publish: async (req, res) => {
+    try{
+      let productId = req.param("id");
+      let findProduct = await db.Product.findById(productId);
+      if (!findProduct) {
+        return res.serverError({
+          msg: '找不到商品！ 請確認商品ID！'
+        });
+      }
+      findProduct.isPublish = true;
+      let updateProduct = await findProduct.save();
+      if(!updateProduct) {
+        return res.serverError({msg: '上架失敗'});
+      }
+      var query = req.query.responseType;
+      if(query == undefined || query.toLowerCase() == 'json'){
+        return res.ok(updateProduct.toJSON());
+      }
+      let url = "product/show/" + productId;
+      return res.redirect(url);
+    }catch(error){
+      return res.serverError(error);
+    }
+  },
+
+  unpublish: async (req, res) => {
+    try{
+      let productId = req.param("id");
+      let findProduct = await db.Product.findById(productId);
+      if (!findProduct) {
+        return res.serverError({
+          msg: '找不到商品！ 請確認商品ID！'
+        });
+      }
+      findProduct.isPublish = false;
+      let updateProduct = await findProduct.save();
+      if(!updateProduct) {
+        return res.serverError({msg: '下架失敗'});
+      }
+      var query = req.query.responseType;
+      if(query == undefined || query.toLowerCase() == 'json'){
+        return res.ok(updateProduct.toJSON());
+      }
+      let url = "product/show/" + productId;
+      return res.redirect(url);
+    }catch(error){
+      return res.serverError(error);
+    }
+  },
+
   updateProduct: async (req, res) => {
 
     try {
       let productId = req.param("productId");
-
       let findProduct = await db.Product.findById(productId);
       if (!findProduct) {
         return res.serverError({
@@ -85,17 +158,22 @@ let ProductController = {
         });
       }
 
-      findProduct.name = req.body.order.name
-      findProduct.description = req.body.order.description
-      findProduct.stockQuantity = req.body.order.stockQuantity
-      findProduct.price = req.body.order.price
+      findProduct.name = req.body.name
+      findProduct.description = req.body.description
+      findProduct.stockQuantity = req.body.stockQuantity
+      findProduct.price = req.body.price
 
       let updateInfo = await findProduct.save();
 
       if(!updateInfo) {
         return res.serverError({msg: '更新失敗'});
       } else {
-        return res.ok(findProduct.toJSON());
+        var query = req.query.responseType;
+        if(!query || query.toLowerCase() == 'json'){
+          return res.ok(findProduct.toJSON());
+        }else{
+          return res.redirect('product/show/'+productId);
+        }
       }
 
     } catch (error) {

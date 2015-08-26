@@ -1,0 +1,12 @@
+extends ./../layout
+
+block body
+  h1 編輯
+  #addNewProduct(data-role='page')
+    form#newProductForm(method='post', action='/api/product/update/#{product.id}?responseType=view')
+      div(data-role='header', data-position='fixed')
+        a(href='/product/show/#{product.id}', data-icon='back', data-iconpos='notext') 返回
+      include productForm.jade
+      fieldset.ui-grid-a
+        .ui-block-b
+          button 編輯

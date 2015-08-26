@@ -1,0 +1,43 @@
+//notify
+.notify {
+  position:fixed;
+  padding:20px;
+  color:$brand-green;
+  background: #fff;
+  border-bottom: 2px solid $brand-green;
+  height: $navbar-height;
+  z-index: $zindex-notify;
+  text-align: center;
+  h2 {
+    color: $brand-green;
+    line-height: 1;
+    .glyphicon {
+      font-size: $font-size-xxlarge;
+      top: 5px;
+    }
+  }
+  .notify-close{
+    cursor:pointer;
+    position:absolute;
+    right:0;
+    top:0;
+    padding:10px 15px;
+    font-size:20px;
+    text-decoration:none;
+    color: $gray;
+    @include opacity(0.7);
+    &:hover,
+    &:focus {
+      @include opacity(1);
+    }
+  }
+}
+.notify[data-position="bottom"]{right:0;left:0;bottom:0}
+.notify[data-position="top"]{right:0;left:0;top:0}
+.notify[data-position="right"]{right:0;bottom:0;top:0;max-width:300px}
+.notify[data-position="left"]{left:0;top:0;bottom:0;max-width:300px}
+.notify[data-notify='success']{background:#15cc1f}
+.notify[data-notify='info']{background:#2d9cee}
+.notify[data-notify='error']{background:#f32750}
+.notify[data-notify='default']{background:#cf80ad}
+.notify[data-notify='cart']{background:#fff}

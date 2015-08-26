@@ -13,6 +13,14 @@ module.exports = {
   environment: process.env.NODE_ENV or 'development'
   mailchimp:
     apiKey: "25592e91a2b20be38b4ee3169eeb9f68-us10"
+
+  db:
+    'dialect': 'sqlite',
+    'storage': './db.development.sqlite',
+    'username': null,
+    'password': null,
+    'database': null,
+    'force': true
 }
 
 ###*

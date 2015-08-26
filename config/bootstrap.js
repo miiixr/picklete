@@ -10,74 +10,31 @@ http://sailsjs.org/#/documentation/reference/sails.config/sails.config.bootstrap
  */
 
 
-let models = require('../api/db');
+
 
 let sailsMailer = require('sails-service-mailer');
-
+let init = require('./init');
 
 
 module.exports.bootstrap = async (cb) => {
-
-  sails.config.mail.mailer = sailsMailer.create(sails.config.mail.type, sails.config.mail.config);
-
-  sails.services.passport.loadStrategies();
-  global.db = models;
-
   try {
-    await models.sequelize.sync({force: true});
 
-    let admin = admin = {
-      username: "admin",
-      email: "admin@gmail.com",
-    };
+    // inject moment for jade views
+    sails.moment = require('moment');
 
-    let createdAdmin = await db.User.create(admin);
+    sails.config.mail.mailer = sailsMailer.create(sails.config.mail.type, sails.config.mail.config);
+    sails.services.passport.loadStrategies();
 
-    let passport = {
-      protocol: 'local',
-      password: "admin",
-      UserId: createdAdmin.id
+    let models = require('../api/db');
+    global.db = models;
 
-    };
-    let createdPassport = await db.Passport.create(passport);
 
-    var newBuyer = {
-      username: "buyer",
-      email: "buyer@gmail.com",
-      password: "buyer"
-    };
-    var createNewBuyer = await db.User.create(newBuyer);
-
-    var newProduct = {
-      name: '斗六文旦柚禮盒',
-      descript: '3斤裝',
-      stockQuantity: 10,
-      price: 100,
-      image: 'http://localhost:1337/images/product/1.jpg'
-    };
-    var createdProduct = await db.Product.create(newProduct);
-
-    var newOrder = {
-      quantity: 10,
-      orderId: '1111',
-      UserId: createNewBuyer.id,
-      ProductId: createdProduct.id
-    };
-    var createdOrder = await db.Order.create(newOrder);
-
-    var shipment = {
-      username: '收件者',
-      mobile: '0922-222-222',
-      taxId: '123456789',
-      email: 'receiver@gmail.com',
-      address: '收件者的家',
-      OrderId: createdOrder.id
+    if (sails.config.environment === 'development') {
+      await init.database();
+      await init.testData();
     }
 
-    var createShipment = await db.Shipment.create(shipment);
-
-
-
+    await init.basicData();
 
     cb();
 

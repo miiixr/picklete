@@ -1,0 +1,93 @@
+//search
+.sb-search {
+	position: relative;
+	margin-top: 30px;
+	width: 0%;
+	min-width: 36px;
+	height: 36px;
+	float: right;
+	overflow: hidden;
+	-webkit-transition: width 0.3s;
+	-moz-transition: width 0.3s;
+	transition: width 0.3s;
+	-webkit-backface-visibility: hidden;
+}
+
+.sb-search-input {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 100%;
+	height: 36px;
+	margin: 0;
+	z-index: $zindex-sb-search-input;
+	border-radius: $border-radius-btn;
+	font-size: $font-size-small;
+	padding: 6px 15px;
+	border-color: transparent;
+	@include box-shadow(none);
+	@include opacity(0);
+	&:focus {
+		border-color: $input-border;
+		@include box-shadow(none);
+	}
+}
+.sb-search-open {
+	.sb-search-input {
+		@include opacity(1);
+		border-color: $input-border;
+	}
+}
+.sb-search {
+	.glyphicon-search,
+	.sb-search-submit  {
+		width: 36px;
+		height: 36px;
+		display: block;
+		position: absolute;
+		right: 0;
+		top: 0;
+		padding: 0;
+		margin: 0;
+		line-height: 36px;
+		text-align: center;
+		cursor: pointer;
+	}
+}
+
+
+.sb-search-submit {
+	background: #fff; /* IE needs this */
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)"; /* IE 8 */
+    filter: alpha(opacity=0); /* IE 5-7 */
+    opacity: 0;
+	color: transparent;
+	border: none;
+	outline: none;
+	z-index: $z-index-sb-search-submit;
+}
+.sb-search {
+	.glyphicon-search {
+		color: $navbar-default-link-color;
+		z-index: $z-index-glyphicon-search;
+	}
+}
+
+
+
+/* Open state */
+.sb-search.sb-search-open,
+.no-js .sb-search {
+	width: 200px;
+}
+
+.sb-search.sb-search-open .glyphicon-search,
+.no-js .sb-search .glyphicon-search {
+	z-index: $z-index-open-glyphicon-search;
+	background: none;
+}
+
+.sb-search.sb-search-open .sb-search-submit,
+.no-js .sb-search .sb-search-submit {
+	z-index: $z-index-glyphicon-search;
+}
