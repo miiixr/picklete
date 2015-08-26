@@ -20,6 +20,7 @@ module.exports = {
     });
 
     try {
+      console.log('=== mailSendConfig ===', mailSendConfig);
       let result = await sails.config.mail.mailer.send(mailSendConfig);
 
       return {result};

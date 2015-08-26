@@ -46,10 +46,12 @@ module.exports = {
 
     var newBuyer = {
       username: "buyer",
-      email: "buyer@gmail.com",
+      email: "smlsun@gmail.com",
       password: "buyer",
       RoleId: createRoleUser.id,
-      comment: "this is a newBuyer"
+      comment: "this is a newBuyer",
+      orderSyncToken:'11111'
+
     };
     var createNewBuyer = await db.User.create(newBuyer);
 
