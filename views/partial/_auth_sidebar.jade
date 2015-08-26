@@ -1,13 +1,13 @@
 //control-menu==================================================
-#control-menu.line-height-large.m-bottom-8
+#control-menu.line-height-large.m-bottom-8(data-currentpage='#{pageName}')
   .panel
     a.control-menu-top(data-toggle='collapse', data-parent='#control-menu', href='#collapseOne')
       span.glyphicon.glyphicon-window.m-right-2
       | 首頁管理
-    #collapseOne.panel-collapse.collapse.in
+    #collapseOne.panel-collapse.collapse
       ul.list-unstyled
         li
-          a.active(href='index-slider') 燈箱活動
+          a(href='index-slider') 燈箱活動
         li
           a(href='index-exclusive') 精選活動
         li
@@ -101,3 +101,5 @@
     // /panel-collapse
   // /panel
 // /panel-group
+
+// sidebar navigation active
