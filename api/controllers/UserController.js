@@ -6,7 +6,7 @@
  * should look. It currently includes the minimum amount of functionality for
  * the basics of Passport.js to work.
  */
-var moment = require("moment");
+let moment = require("moment");
 
 let UserController = {
   controlLogin: function(req, res) {
