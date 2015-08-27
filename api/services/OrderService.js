@@ -70,6 +70,7 @@ module.exports = {
         serialNumber: await OrderService.generateOrderSerialNumber()
       };
 
+
       let isolationLevel = db.Sequelize.Transaction.ISOLATION_LEVELS.SERIALIZABLE;
       let transaction = await db.sequelize.transaction({isolationLevel});
 
@@ -90,7 +91,6 @@ module.exports = {
         let associatedProduct = await createdOrder.setOrderItems(createdOrderItems, {transaction});
         let associatedUser = await createdOrder.setUser(buyer, {transaction});
 
-        transaction.commit();
 
         result.products = products;
         result.success = true;
@@ -100,6 +100,14 @@ module.exports = {
         result.order.OrderItems = createdOrderItems;
         result.order.User = buyer;
         result.order.Shipment = createdShipment;
+
+        let messageConfig = CustomMailerService.orderConfirm(result);
+        let message = await db.Message.create(messageConfig, {transaction});
+        transaction.commit();
+
+        await CustomMailerService.sendMail(message);
+
+
       } catch (e) {
         console.error(e.stack);
         transaction.rollback();
