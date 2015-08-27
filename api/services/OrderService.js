@@ -26,6 +26,22 @@ module.exports = {
 
     try {
 
+      let userFindOrCreateResult = await db.User.findOrCreate({
+        where: {
+          email: newOrder.user.email
+        },
+        defaults: newOrder.user
+      });
+
+      let buyer = userFindOrCreateResult[0];
+
+      let thisOrder = {
+        quantity: 0,
+        UserId: buyer.id,
+        paymentTotalAmount:0,
+        serialNumber: await OrderService.generateOrderSerialNumber()
+      };
+
       let orderItems = newOrder.orderItems.reduce((result, orderItem) => {
         if(parseInt(orderItem.quantity) === 0) return result;
 
@@ -48,23 +64,16 @@ module.exports = {
           throw new Error('商品數量不足！');
         product.stockQuantity = product.stockQuantity - orderItem.quantity;
 
+        thisOrder.paymentTotalAmount += (product.price * orderItem.quantity);
+        thisOrder.quantity += orderItem.quantity;
+
         return product;
       });
 
-      let userFindOrCreateResult = await db.User.findOrCreate({
-        where: {
-          email: newOrder.user.email
-        },
-        defaults: newOrder.user
-      });
-
-      let buyer = userFindOrCreateResult[0];
-
-      let thisOrder = {
-        quantity: newOrder.quantity,
-        UserId: buyer.id,
-        serialNumber: await OrderService.generateOrderSerialNumber()
-      };
+      if(thisOrder.quantity == 1)
+        thisOrder.paymentTotalAmount += 90;
+      else
+        thisOrder.paymentTotalAmount += (thisOrder.quantity * 60);
 
 
       let isolationLevel = db.Sequelize.Transaction.ISOLATION_LEVELS.SERIALIZABLE;
