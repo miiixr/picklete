@@ -82,7 +82,7 @@ module.exports = {
         let createdOrderItemIds = createdOrderItems.map((orderItem) => orderItem.id);
 
         let {shipment} = newOrder;
-        shipment.address = `${user.zipcode} ${user.city}${user.district}${user.address}`;
+        shipment.address = `${shipment.zipcode} ${shipment.city}${shipment.district}${shipment.address}`;
 
         let createdOrder = await db.Order.create(thisOrder, {transaction});
         let createdShipment = await db.Shipment.create(shipment, {transaction});
