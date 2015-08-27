@@ -9,8 +9,10 @@ module.exports = (sequelize, DataTypes) ->
     )
     to: DataTypes.STRING
     subject: DataTypes.STRING
-    content: DataTypes.TEXT
+    text: DataTypes.TEXT
+    html: DataTypes.TEXT
     success: DataTypes.BOOLEAN
+    error: DataTypes.STRING
   }, classMethods: associate: (models) ->
     return
   )

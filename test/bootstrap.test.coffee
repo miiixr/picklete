@@ -15,6 +15,7 @@ require("sails-hook-babel/node_modules/babel/register")(options);
 
 before (done) ->
   Sails.lift {
+    environment: 'test'
     port: 1338
     hooks:
       grunt:false
