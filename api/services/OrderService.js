@@ -75,9 +75,6 @@ module.exports = {
       else
         thisOrder.paymentTotalAmount += (thisOrder.quantity * 60);
 
-      console.log(products);
-
-
       let isolationLevel = db.Sequelize.Transaction.ISOLATION_LEVELS.SERIALIZABLE;
       let transaction = await db.sequelize.transaction({isolationLevel});
 
