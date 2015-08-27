@@ -1,6 +1,7 @@
 // # 1. 透過 Productid 找到 model product
 // # 2. 檢查 user 是否存在，若否進行建立
 // # 3. 建立訂單 order
+import crypto from 'crypto';
 
 var OrderController;
 
@@ -64,7 +65,6 @@ OrderController = {
     try {
 
       let result = await OrderService.create(newOrder);
-      let mailResult = await CustomMailerService.orderConfirm(result);
 
       return res.ok(result);
     } catch (e) {
@@ -113,9 +113,21 @@ OrderController = {
       var host = req.query.host || null;
       var user = await db.User.find({where: {email}});
 
-      let result = await CustomMailerService.orderSync(user, host);
-      result.success = true;
-      res.ok(result);
+      var token = await new Promise((resolve) => crypto.randomBytes(20, (error, buf) => resolve(buf.toString("hex"))));
+
+      user.orderSyncToken = token;
+      await user.save();
+
+      let messageConfig = CustomMailerService.orderSync(user, host);
+
+      let message = await db.Message.create(messageConfig);
+      await CustomMailerService.sendMail(message);
+
+      let {syncLink, syncLinkHost, syncLinkParams} = messageConfig;
+
+
+      let success = true;
+      res.ok({success, syncLink, syncLinkHost, syncLinkParams});
 
     } catch (e) {
       console.error(e.stack);
@@ -129,8 +141,7 @@ OrderController = {
 
     let id = req.param("id");
     let status = req.query.status;
-    console.log('=== id ===', id);
-    console.log('=== status ===', status);
+
     try {
       let order = await db.Order.find({
         where: {id},
@@ -141,11 +152,15 @@ OrderController = {
 
       await order.save();
 
-      let result = await CustomMailerService[status](order);
+      let messageConfig = await CustomMailerService[status](order);
 
-      result.success = true;
+      let message = await db.Message.create(messageConfig);
+      await CustomMailerService.sendMail(message);
 
-      res.ok(result);
+
+      let success = true;
+
+      res.ok({success});
 
     } catch (e) {
       console.error(e.stack);
