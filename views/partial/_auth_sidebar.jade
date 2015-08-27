@@ -1,10 +1,10 @@
 //control-menu==================================================
 #control-menu.line-height-large.m-bottom-8(data-currentpage='#{pageName}')
   .panel
-    a.control-menu-top(data-toggle='collapse', data-parent='#control-menu', href='#collapseOne')
+    a.control-menu-top.collapsed(data-toggle='collapse', data-parent='#control-menu', href='#collapseOne')
       span.glyphicon.glyphicon-window.m-right-2
       | 首頁管理
-    #collapseOne.panel-collapse.collapse.in
+    #collapseOne.panel-collapse.collapse
       ul.list-unstyled
         li
           a(href='index-slider') 燈箱活動

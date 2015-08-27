@@ -64,7 +64,10 @@ let UserController = {
       for (let product of products) {
           product.createdAt = moment(products.createdAt).format("YYYY-MM-DD");
       }
-      return res.view({products});
+      return res.view({
+        products,
+        pageName: "shop-item-list"
+      });
     } catch (error) {
       return res.serverError(error);
     }
