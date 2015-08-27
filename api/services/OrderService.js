@@ -65,10 +65,22 @@ module.exports = {
       let buyer = userFindOrCreateResult[0];
 
       let thisOrder = {
-        quantity: newOrder.quantity,
+        quantity: 0,
         UserId: buyer.id,
+        paymentTotalAmount:0,
         serialNumber: await OrderService.generateOrderSerialNumber()
       };
+
+      products.forEach((product, index) => {
+        let quantity = parseInt(orderItems[index].quantity);
+        thisOrder.paymentTotalAmount += (product.price * quantity);
+        thisOrder.quantity += quantity;
+      });
+
+      if(thisOrder.quantity == 1)
+        thisOrder.paymentTotalAmount += 90;
+      else
+        thisOrder.paymentTotalAmount += (thisOrder.quantity * 60);
 
 
       let isolationLevel = db.Sequelize.Transaction.ISOLATION_LEVELS.SERIALIZABLE;
