@@ -51,11 +51,15 @@ module.exports = {
         return product;
       });
 
+      let {user} = newOrder;
+
+      user.address = `${user.zipcode} ${user.city}${user.district}${user.address}`;
+
       let userFindOrCreateResult = await db.User.findOrCreate({
         where: {
-          email: newOrder.user.email
+          email: user.email
         },
-        defaults: newOrder.user
+        defaults: user
       });
 
       let buyer = userFindOrCreateResult[0];
@@ -76,11 +80,15 @@ module.exports = {
 
         let createdOrderItemIds = createdOrderItems.map((orderItem) => orderItem.id);
 
+        let {shipment} = newOrder;
+        shipment.address = `${user.zipcode} ${user.city}${user.district}${user.address}`;
+
         let createdOrder = await db.Order.create(thisOrder, {transaction});
-        let createdShipment = await db.Shipment.create(newOrder.shipment, {transaction});
-        let associatedShipment = await createdOrder.setShipment(result.shipment, {transaction});
+        let createdShipment = await db.Shipment.create(shipment, {transaction});
+
+        let associatedShipment = await createdOrder.setShipment(createdShipment, {transaction});
         let associatedProduct = await createdOrder.setOrderItems(createdOrderItems, {transaction});
-        let associatedUser = await createdOrder.setUser(result.user, {transaction});
+        let associatedUser = await createdOrder.setUser(buyer, {transaction});
 
         transaction.commit();
 
