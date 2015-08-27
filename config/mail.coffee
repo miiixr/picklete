@@ -19,13 +19,13 @@ module.exports.mail = {
       <br />收件者為： %(shipmentUsername)s
       <br />收件地址為： %(shipmentAddress)s
 
-      <br />如果上述資料正確，請將款項 $... 匯款至以下帳號：
+      <br />如果上述資料正確，請將款項 $ %(paymentTotalAmount)s 匯款至以下帳號：
 
-      <br />銀行名稱：ＯＯＯＯ銀行 / ＯＯ分行
-      <br />銀行代碼：
-      <br />帳號：
-      <br />戶名：
-      <br />匯款金額： $...
+      <br />銀行名稱： %(bankName)s
+      <br />銀行代碼： %(bankId)s
+      <br />帳號： %(accountId)s
+      <br />戶名： %(accountName)s
+      <br />匯款金額： $ %(paymentTotalAmount)s
 
       <br />匯款後請按至以下連結確認:
 
@@ -33,7 +33,7 @@ module.exports.mail = {
 
       <br />煩請你確認。
 
-      <br />From STORE_NAME
+      <br />From %(storeName)s
       </body></html>"""
     },
     paymentConfirm: {
@@ -44,7 +44,7 @@ module.exports.mail = {
       您的付款已經確認，
       我們會盡快為您安排出貨事宜。
 
-      From STORE_NAME
+      From %(storeName)s
       """
     },
     deliveryConfirm: {
@@ -56,7 +56,7 @@ module.exports.mail = {
 
       感謝你的訂購
 
-      From STORE_NAME
+      From %(storeName)s
       """
     },
     orderSync: {
@@ -69,7 +69,7 @@ module.exports.mail = {
       <br /><a href='%(syncLink)s'>取得訂單資訊</a>
 
 
-      <br />From STORE_NAME
+      <br />From %(storeName)s
       """
     }
   }

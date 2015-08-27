@@ -10,14 +10,21 @@ module.exports = {
       var productsName = result.products.map((product) => product.name);
       var DOMAIN_HOST = process.env.DOMAIN_HOST || 'localhost:1337';
       var orderConfirmLink = `http://${DOMAIN_HOST}/order/paymentConfirm?serial=${result.order.serialNumber}`
+      var {bank} = sails.config;
 
       mailSendConfig.subject = sprintf(mailSendConfig.subject, {orderSerialNumber: result.order.serialNumber});
       mailSendConfig.html = sprintf(mailSendConfig.html, {
         username: result.order.User.username,
         orderSerialNumber: result.order.serialNumber,
         productName: productsName.join('、'),
+        bankId: bank.bankId,
+        bankName: bank.bankName,
+        accountId: bank.accountId,
+        accountName: bank.accountName,
+        paymentTotalAmount: result.order.paymentTotalAmount,
         shipmentUsername: result.order.Shipment.username,
         shipmentAddress: result.order.Shipment.address,
+        storeName: sails.config.store.name,
         orderConfirmLink
       });
 
@@ -48,6 +55,7 @@ module.exports = {
       mailSendConfig.html = sprintf(mailSendConfig.html, {
         syncLink,
         email,
+        storeName: sails.config.store.name,
         username: user.username
       });
 
@@ -68,6 +76,7 @@ module.exports = {
 
       mailSendConfig.subject = sprintf(mailSendConfig.subject, {orderSerialNumber: order.serialNumber});
       mailSendConfig.text = sprintf(mailSendConfig.text, {
+        storeName: sails.config.store.name,
         username: order.User.username
       });
 
@@ -89,6 +98,7 @@ module.exports = {
 
       mailSendConfig.subject = sprintf(mailSendConfig.subject, {orderSerialNumber: order.serialNumber});
       mailSendConfig.text = sprintf(mailSendConfig.text, {
+        storeName: sails.config.store.name,
         username: order.User.username
       });
 
