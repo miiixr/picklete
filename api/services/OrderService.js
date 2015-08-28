@@ -26,22 +26,6 @@ module.exports = {
 
     try {
 
-      let userFindOrCreateResult = await db.User.findOrCreate({
-        where: {
-          email: newOrder.user.email
-        },
-        defaults: newOrder.user
-      });
-
-      let buyer = userFindOrCreateResult[0];
-
-      let thisOrder = {
-        quantity: 0,
-        UserId: buyer.id,
-        paymentTotalAmount:0,
-        serialNumber: await OrderService.generateOrderSerialNumber()
-      };
-
       let orderItems = newOrder.orderItems.reduce((result, orderItem) => {
         if(parseInt(orderItem.quantity) === 0) return result;
 
@@ -64,16 +48,40 @@ module.exports = {
           throw new Error('商品數量不足！');
         product.stockQuantity = product.stockQuantity - orderItem.quantity;
 
-        thisOrder.paymentTotalAmount += (product.price * orderItem.quantity);
-        thisOrder.quantity += orderItem.quantity;
-
         return product;
+      });
+
+      let {user} = newOrder;
+
+      user.address = `${user.zipcode} ${user.city}${user.district}${user.address}`;
+
+      let userFindOrCreateResult = await db.User.findOrCreate({
+        where: {
+          email: user.email
+        },
+        defaults: user
+      });
+
+      let buyer = userFindOrCreateResult[0];
+
+      let thisOrder = {
+        quantity: 0,
+        UserId: buyer.id,
+        paymentTotalAmount:0,
+        serialNumber: await OrderService.generateOrderSerialNumber()
+      };
+
+      products.forEach((product, index) => {
+        let quantity = parseInt(orderItems[index].quantity);
+        thisOrder.paymentTotalAmount += (product.price * quantity);
+        thisOrder.quantity += quantity;
       });
 
       if(thisOrder.quantity == 1)
         thisOrder.paymentTotalAmount += 90;
       else
         thisOrder.paymentTotalAmount += (thisOrder.quantity * 60);
+
 
       let isolationLevel = db.Sequelize.Transaction.ISOLATION_LEVELS.SERIALIZABLE;
       let transaction = await db.sequelize.transaction({isolationLevel});
@@ -85,13 +93,16 @@ module.exports = {
 
         let createdOrderItemIds = createdOrderItems.map((orderItem) => orderItem.id);
 
-        let createdOrder = await db.Order.create(thisOrder, {transaction});
-        let createdShipment = await db.Shipment.create(newOrder.shipment, {transaction});
-        let associatedShipment = await createdOrder.setShipment(result.shipment, {transaction});
-        let associatedProduct = await createdOrder.setOrderItems(createdOrderItems, {transaction});
-        let associatedUser = await createdOrder.setUser(result.user, {transaction});
+        let {shipment} = newOrder;
+        shipment.address = `${shipment.zipcode} ${shipment.city}${shipment.district}${shipment.address}`;
 
-        transaction.commit();
+        let createdOrder = await db.Order.create(thisOrder, {transaction});
+        let createdShipment = await db.Shipment.create(shipment, {transaction});
+
+        let associatedShipment = await createdOrder.setShipment(createdShipment, {transaction});
+        let associatedProduct = await createdOrder.setOrderItems(createdOrderItems, {transaction});
+        let associatedUser = await createdOrder.setUser(buyer, {transaction});
+
 
         result.products = products;
         result.success = true;
@@ -101,6 +112,14 @@ module.exports = {
         result.order.OrderItems = createdOrderItems;
         result.order.User = buyer;
         result.order.Shipment = createdShipment;
+
+        let messageConfig = CustomMailerService.orderConfirm(result);
+        let message = await db.Message.create(messageConfig, {transaction});
+        transaction.commit();
+
+        await CustomMailerService.sendMail(message);
+
+
       } catch (e) {
         console.error(e.stack);
         transaction.rollback();
