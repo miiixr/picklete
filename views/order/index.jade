@@ -1,6 +1,9 @@
 extends ./../layout
 
 block body
+  - var flash = req.flash('message')
+  if flash.length != 0
+    p= flash
   h1 order list
   table.table
     thead
@@ -13,6 +16,9 @@ block body
         th Description
         th StockQuantity
         th Price
+        th status
+        th
+        th
     tbody
       each order in orders
         tr
@@ -31,3 +37,8 @@ block body
           td= order.description
           td= order.stockQuantity
           td= order.price
+          td= order.status
+          td
+            a.btn.btn-green(href='/order/statusUpdate/#{order.id}?status=paymentConfirm') 通知匯款成功
+          td
+            a.btn.btn-green(href='/order/statusUpdate/#{order.id}?status=deliveryConfirm') 通知已出貨
