@@ -154,6 +154,17 @@ OrderController = {
         include: [{model: db.User}]
       });;
 
+      if (order.status === status){
+        req.flash('message', `訂單 ${order.serialNumber} 狀態已為 ${status}`);
+        res.redirect('order/index');
+        return
+      }
+      else if(order.status == 'deliveryConfirm' && status == 'paymentConfirm'){
+        req.flash('message', `訂單 ${order.serialNumber} 狀態已為 ${order.status} 無法變更為 ${status}`);
+        res.redirect('order/index');
+        return
+      }
+
       order.status = status;
 
       await order.save();
@@ -164,9 +175,10 @@ OrderController = {
       await CustomMailerService.sendMail(message);
 
 
-      let success = true;
+      req.flash('message', `訂單 ${order.serialNumber} 狀態更新為 ${status} 成功`);
+      res.redirect('order/index');
+      return
 
-      res.ok({success});
 
     } catch (e) {
       console.error(e.stack);
