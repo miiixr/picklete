@@ -84,6 +84,12 @@ OrderController = {
         where: {orderSyncToken}
       });
 
+      if (!userData) {
+        return res.serverError({
+          msg: '再確認一下喔，驗證碼錯誤哟 :)！'
+        });
+      }
+
       let purchaseHistory = await db.Order.findAll({
         where: {
           UserId: userData.id
