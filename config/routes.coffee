@@ -63,6 +63,8 @@ module.exports.routes = {
   'get /admin/members' : 'UserController.controlMembers'
   'get /admin/member-detail' : 'UserController.controlMemberDetail'
 
+  'post /admin/brand' : 'BrandController.create'
+
 
 
   'post /auth/local': 'AuthController.callback'
