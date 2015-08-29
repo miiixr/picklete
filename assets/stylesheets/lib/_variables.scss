@@ -64,7 +64,8 @@ $font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace !def
 $font-family-base:        $font-family-sans-serif !default;
 $font-family-black:       Helvetica, Arial, sans-serif !default;
 $font-family-navbar:      'Montserrat', "Helvetica Neue", Helvetica, Arial, sans-serif !default;
-$font-family-PT:      'PT Serif', serif !default;
+$font-family-PT:          'PT Serif', serif !default;
+$font-family-Roboto:      'Roboto', "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 
 $font-size-base:          13px !default;
 $font-size-xxxxlarge:     60px !default;
@@ -495,13 +496,13 @@ $pagination-color:                     $link-color !default;
 $pagination-bg:                        #fff !default;
 $pagination-border:                    #ddd !default;
 
-$pagination-hover-color:               $link-hover-color !default;
-$pagination-hover-bg:                  $gray-lighter !default;
+$pagination-hover-color:               #222 !default;
+$pagination-hover-bg:                  #ddd !default;
 $pagination-hover-border:              #ddd !default;
 
 $pagination-active-color:              #fff !default;
-$pagination-active-bg:                 $brand-primary !default;
-$pagination-active-border:             $brand-primary !default;
+$pagination-active-bg:                 rgba(0,0,0,0.7) !default;
+$pagination-active-border:             rgba(0,0,0,0.7) !default;
 
 $pagination-disabled-color:            $gray-light !default;
 $pagination-disabled-bg:               #fff !default;

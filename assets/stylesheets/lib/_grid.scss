@@ -105,3 +105,13 @@
 @media (min-width: $screen-lg-min) {
   @include make-grid(lg);
 }
+
+.col-sm-1-sm {
+  width: 4.166666%;
+}
+.col-sm-1-lg {
+  width: 12.5%;
+}
+.col-sm-9-lg {
+  width: 79.166666%;
+}

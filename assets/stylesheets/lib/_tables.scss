@@ -41,7 +41,7 @@ th {
       }
       &:last-child {
         > td {
-          border: none;
+          border-bottom: none;
         }
       }
     }
@@ -51,7 +51,7 @@ th {
       &:last-child {
         > th,
         > td {
-          border: none;
+          border-bottom: none;
         }
       }
     }
@@ -76,10 +76,17 @@ th {
   > tbody + tbody {
     border-top: 2px solid $table-border-color;
   }
-
-  // Nesting
-  .table {
-
+  &.no-border {
+    > thead,
+    > tbody,
+    > tfoot {
+      > tr {
+        > th,
+        > td {
+          border: none;
+        }
+      }
+    }
   }
 }
 
@@ -112,6 +119,7 @@ th {
     > tr {
       > th,
       > td {
+        padding: 12px 20px;
         border: 1px solid $table-border-color;
       }
     }
