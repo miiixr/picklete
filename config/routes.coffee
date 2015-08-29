@@ -39,8 +39,11 @@ module.exports.routes = {
   'get /admin/password' : 'UserController.password'
   'get /admin/index-exclusive' : 'UserController.indexExclusive'
   'get /admin/index-theme' : 'UserController.indexTheme'
-  'get /admin/brands' : 'UserController.controlBrands'
-  'get /admin/brands-detail' : 'UserController.controlBrandsDetail'
+  
+  'get /admin/brands' : 'BrandController.list'
+  'get /admin/brands/create' : 'BrandController.create'
+  'post /admin/brands/create' : 'BrandController.create'
+  
   'get /admin/shop-type' : 'UserController.controlShopType'
   'get /admin/shop-item-add' : 'UserController.controlShopItemAdd'
   'get /admin/shop-item-list' : 'UserController.controlShopItemList'
