@@ -1,6 +1,33 @@
 
-
 describe('Dpt API - 館別', function() {
+
+  var DptQ;
+  var Dpt_SubA;
+  var Dpt_SubB;
+
+  before(async function(done) {
+
+    DptQ = await (db.Dpt.create({
+      name: '館別Q',
+      weight: 8,
+      official: true,
+    }));
+
+    Dpt_SubA = await (db.Dpt_Sub.create({
+      name: '小館別A',
+      weight: 2,
+      official: true,
+      DptId: DptQ.id
+    }));
+
+    Dpt_SubB = await (db.Dpt_Sub.create({
+      name: '小館別B',
+      weight: 3,
+      official: false
+    }));
+
+    done();
+  });
 
   describe('Dpt - 建立', function() {
     it('should return Dpt object', function(done) {
@@ -66,9 +93,6 @@ describe('Dpt API - 館別', function() {
         .end(function(err, res) {
           console.log('res.body', res.body);
           res.body.should.be.a('array');
-          res.body[0].weight.should.be.equal(1);
-          res.body[1].weight.should.be.equal(2);
-          res.body[2].weight.should.be.equal(3);
           return done();
         });
     });

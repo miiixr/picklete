@@ -13,9 +13,9 @@ module.exports = function(sequelize, DataTypes) {
     official: DataTypes.BOOLEAN
   }, {
     classMethods: {
-        associate: function(models) {
-             return Dpt.hasMany(models.Dpt_Sub);
-        }
+      associate: function(models) {
+        return Dpt.hasMany(models.Dpt_Sub);
+      }
     }
   });
 
