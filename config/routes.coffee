@@ -67,6 +67,12 @@ module.exports.routes = {
   'post /admin/brand' : 'BrandController.create'
   'put /admin/brand/:brand' : 'BrandController.update'
 
+  'get /admin/dpt' : 'DptController.list'
+  'post /admin/dpt' : 'DptController.create'
+
+  'get /admin/dpt_sub' : 'DptSubController.list'
+  'post /admin/dpt_sub' : 'DptSubController.create'
+
   'post /auth/local': 'AuthController.callback'
   'post /auth/local/:action': 'AuthController.callback'
 
