@@ -45,6 +45,8 @@ module.exports.routes = {
   'post /admin/brands/create' : 'BrandController.create'
   
   'get /admin/department' : 'DptController.list'
+  'post /admin/department/create': 'DptController.create'
+  'post /admin/department/sub/create' : 'DptSubController.create'
   'get /admin/shop-item-add' : 'UserController.controlShopItemAdd'
   'get /admin/shop-item-list' : 'UserController.controlShopItemList'
   'get /admin/shop-discount' : 'UserController.controlShopDiscount'
@@ -70,11 +72,11 @@ module.exports.routes = {
   'post /admin/brand' : 'BrandController.create'
   'put /admin/brand/:brand' : 'BrandController.update'
 
-  'get /admin/dpt' : 'DptController.list'
-  'post /admin/dpt' : 'DptController.create'
+  # 'get /admin/dpt' : 'DptController.list'
+  # 'post /admin/dpt' : 'DptController.create'
 
-  'get /admin/dpt_sub' : 'DptSubController.list'
-  'post /admin/dpt_sub' : 'DptSubController.create'
+  # 'get /admin/dpt_sub' : 'DptSubController.list'
+  # 'post /admin/dpt_sub' : 'DptSubController.create'
 
   'post /auth/local': 'AuthController.callback'
   'post /auth/local/:action': 'AuthController.callback'
