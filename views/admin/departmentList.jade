@@ -5,57 +5,16 @@ block body
     .col-md-3.border-right-1.m-bottom-6
       h4.m-bottom-4.text-gray 大館別
       .list-group.list-group-edit.list-group-lg
+        each dpt, index in dpts
+          .list-group-item.edit-link
+            span.glyphicon.glyphicon-menu.m-right-2
+            a(href='#', data-toggle='modal', data-target='#modal-control-shop-type-lg')
+              | #{dpt.name}
+              span.glyphicon.glyphicon-pencil2.m-left-1
+          // /list-group-item
         .list-group-item.edit-link
           span.glyphicon.glyphicon-menu.m-right-2
-          a(href='#', data-toggle='modal', data-target='#modal-control-shop-type-lg')
-            | 新品上市
-            span.glyphicon.glyphicon-pencil2.m-left-1
-        // /list-group-item
-        .list-group-item.edit-link
-          span.glyphicon.glyphicon-menu.m-right-2
-          a(href='#', data-toggle='modal', data-target='#modal-control-shop-type-lg')
-            | 居家生活
-            span.glyphicon.glyphicon-pencil2.m-left-1
-        // /list-group-item
-        .list-group-item.edit-link
-          span.glyphicon.glyphicon-menu.m-right-2
-          a(href='#', data-toggle='modal', data-target='#modal-control-shop-type-lg')
-            | 餐廚食器
-            span.glyphicon.glyphicon-pencil2.m-left-1
-        // /list-group-item
-        .list-group-item.edit-link
-          span.glyphicon.glyphicon-menu.m-right-2
-          a(href='#', data-toggle='modal', data-target='#modal-control-shop-type-lg')
-            | 事務文具
-            span.glyphicon.glyphicon-pencil2.m-left-1
-        // /list-group-item
-        .list-group-item.edit-link
-          span.glyphicon.glyphicon-menu.m-right-2
-          a(href='#', data-toggle='modal', data-target='#modal-control-shop-type-lg')
-            | 收納用品
-            span.glyphicon.glyphicon-pencil2.m-left-1
-        // /list-group-item
-        .list-group-item.edit-link
-          span.glyphicon.glyphicon-menu.m-right-2
-          a(href='#', data-toggle='modal', data-target='#modal-control-shop-type-lg')
-            | 配件小物
-            span.glyphicon.glyphicon-pencil2.m-left-1
-        // /list-group-item
-        .list-group-item.edit-link
-          span.glyphicon.glyphicon-menu.m-right-2
-          a(href='#', data-toggle='modal', data-target='#modal-control-shop-type-lg')
-            | 數位周邊
-            span.glyphicon.glyphicon-pencil2.m-left-1
-        // /list-group-item
-        .list-group-item.edit-link
-          span.glyphicon.glyphicon-menu.m-right-2
-          a(href='#', data-toggle='modal', data-target='#modal-control-shop-type-lg')
-            | 工藝職人
-            span.glyphicon.glyphicon-pencil2.m-left-1
-        // /list-group-item
-        .list-group-item.edit-link
-          span.glyphicon.glyphicon-menu.m-right-2
-          | 							特別企劃
+          |               特別企劃
         // /list-group-item
       // /list-group-edit
     // /col-md-3

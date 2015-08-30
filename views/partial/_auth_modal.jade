@@ -1,0 +1,64 @@
+// modal-control-shop-type-lg
+#modal-control-shop-type-lg.modal.fade
+  .modal-dialog(role='document')
+    .modal-content
+      .modal-header.p-30
+        button.close(type='button', data-dismiss='modal', aria-label='Close')
+          span(aria-hidden='true') ×
+        h2.modal-title 大館別設定
+      // /modal-header
+      .modal-body.p-30.p-top-0.font-size-slarge
+        form
+          .form-group.m-bottom-6
+            label 大館別名稱
+            input.form-control(type='text')
+          // /form-group
+          a.btn.btn-danger(href='#', data-dismiss='modal') 確定
+      // /modal-body
+    // /modal-content
+  // /modal-dialog
+// /modal
+// modal-control-shop-type-sm
+#modal-control-shop-type-sm.modal.fade
+  .modal-dialog(role='document')
+    .modal-content
+      .modal-header.p-30
+        button.close(type='button', data-dismiss='modal', aria-label='Close')
+          span(aria-hidden='true') ×
+        h2.modal-title 小館別設定
+      // /modal-header
+      .modal-body.p-30.p-top-0.font-size-slarge
+        form
+          .form-group.m-bottom-6
+            label 小館別名稱
+            input.form-control(type='text')
+          // /form-group
+          a.btn.btn-danger(href='#', data-dismiss='modal') 確定
+      // /modal-body
+    // /modal-content
+  // /modal-dialog
+// /modal
+// modal-delete
+
+#modal-delete.modal.fade
+  .modal-dialog(role='document')
+    .modal-content.font-size-slarge
+      .modal-header.p-30
+        button.close(type='button', data-dismiss='modal', aria-label='Close')
+          span(aria-hidden='true') ×
+        h2.modal-title 刪除
+      // /modal-header
+      .modal-body.p-30.p-top-0
+        p 您確定要將此 XXXXXXX 刪除？
+        p 您確定要將此 XXXXXXX 移出此折扣活動？
+      // /modal-body
+      .modal-footer
+        button.btn.btn-default(type='button', data-dismiss='modal') 取消
+        button.btn.btn-green(type='button', data-dismiss='modal') 確定
+      // /modal-footer
+    // /modal-content
+  // /modal-dialog
+// /modal
+//
+  Footer
+  ==================================================
