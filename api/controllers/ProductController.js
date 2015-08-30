@@ -1,4 +1,13 @@
 let ProductController = {
+
+  showCreate: (req, res) => {
+    return res.view('admin/goodCreate');
+  },
+
+  list: async (req,res) => {
+    return res.ok('ok');
+  },
+
   findOne: async (req, res) => {
     try {
       let productId = req.param("productId");

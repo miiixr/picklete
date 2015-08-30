@@ -47,7 +47,13 @@ module.exports.routes = {
   'get /admin/department' : 'DptController.list'
   'post /admin/department/create': 'DptController.create'
   'post /admin/department/sub/create' : 'DptSubController.create'
-  'get /admin/shop-item-add' : 'UserController.controlShopItemAdd'
+
+  'get /admin/goods' : 'ProductController.list'
+  'get /admin/goods/create' : 'ProductController.showCreate'
+  'post /admin/goods/create' : 'ProductController.create'
+  'post /admin/goods/create' : 'ProductController.create'
+
+
   'get /admin/shop-item-list' : 'UserController.controlShopItemList'
   'get /admin/shop-discount' : 'UserController.controlShopDiscount'
   'get /admin/shop-buy-more' : 'UserController.controlShopBuyMore'
