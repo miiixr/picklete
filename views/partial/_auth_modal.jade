@@ -8,15 +8,13 @@
         h2.modal-title 大館別設定
       // /modal-header
       .modal-body.p-30.p-top-0.font-size-slarge
-        form
+        form(action='/admin/department/create', method='POST')
           .form-group.m-bottom-6
             label 大館別名稱
-            input.form-control(type='text')
-          // /form-group
-          a.btn.btn-danger(href='#', data-dismiss='modal') 確定
-      // /modal-body
-    // /modal-content
-  // /modal-dialog
+            input.form-control(type='text', name='name', required='true')
+          // /form-group2
+          input.btn.btn-danger(type='submit', name='submit', value='確定')
+
 // /modal
 // modal-control-shop-type-sm
 #modal-control-shop-type-sm.modal.fade
@@ -28,17 +26,15 @@
         h2.modal-title 小館別設定
       // /modal-header
       .modal-body.p-30.p-top-0.font-size-slarge
-        form
+        form(action='/admin/department/sub/create', method='POST')
           .form-group.m-bottom-6
             label 小館別名稱
-            input.form-control(type='text')
+            input.form-control(type='text', name='subDptName', required='true')
+            // TODO, have to dynamic update dpt id
+            input(type='hidden', name='dptId', value='1', required='true')
           // /form-group
-          a.btn.btn-danger(href='#', data-dismiss='modal') 確定
-      // /modal-body
-    // /modal-content
-  // /modal-dialog
-// /modal
-// modal-delete
+          input.btn.btn-danger(type='submit', name='submit', value='確定')
+
 
 #modal-delete.modal.fade
   .modal-dialog(role='document')

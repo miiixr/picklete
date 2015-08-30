@@ -2,8 +2,10 @@ extends ../_layout_auth
 block body
   h2.m-bottom-6 館別管理
   .row
-    .col-md-3.border-right-1.m-bottom-6
+    #dpt-big.col-md-3.border-right-1.m-bottom-6
       h4.m-bottom-4.text-gray 大館別
+        a.btn.btn-sm-circle.btn-green.m-left-1(href='#', data-toggle='modal', data-target='#modal-control-shop-type-lg')
+          span.glyphicon.glyphicon-plus
       .list-group.list-group-edit.list-group-lg
         each dpt, index in dpts
           .list-group-item.edit-link
@@ -14,11 +16,11 @@ block body
           // /list-group-item
         .list-group-item.edit-link
           span.glyphicon.glyphicon-menu.m-right-2
-          |               特別企劃
+          | 特別企劃
         // /list-group-item
       // /list-group-edit
     // /col-md-3
-    .col-md-3.border-right-1.m-bottom-6
+    #small-dpt.col-md-3.border-right-1.m-bottom-6
       h4.m-bottom-4.text-gray
         | 小館別
         a.btn.btn-sm-circle.btn-green.m-left-1(href='#', data-toggle='modal', data-target='#modal-control-shop-type-sm')
@@ -35,20 +37,22 @@ block body
         .list-group-item.edit-link
           | 本月主題
           span.glyphicon.glyphicon-locked
-        // /list-group-item
-        .list-group-item.edit-link
-          a(href='#', data-toggle='modal', data-target='#modal-control-shop-type-sm')
-            | 小資一族
-            span.glyphicon.glyphicon-pencil2.m-left-1
-          a(href='#', data-toggle='modal', data-target='#modal-delete')
-            span.glyphicon.glyphicon-remove
-        // /list-group-item
-        .list-group-item.edit-link
-          a(href='#', data-toggle='modal', data-target='#modal-control-shop-type-sm')
-            | 午茶特輯
-            span.glyphicon.glyphicon-pencil2.m-left-1
-          a(href='#', data-toggle='modal', data-target='#modal-delete')
-            span.glyphicon.glyphicon-remove
+        Dpt_Subs
+        each subDpt, index in dpts[0].Dpt_Subs
+          // /list-group-item
+          .list-group-item.edit-link
+            a(href='#', data-toggle='modal', data-target='#modal-control-shop-type-sm')
+              | #{subDpt.name}
+              span.glyphicon.glyphicon-pencil2.m-left-1
+            a(href='#', data-toggle='modal', data-target='#modal-delete', data-name='#{subDpt.name}', data-id='#{subDpt.id}')
+              span.glyphicon.glyphicon-remove
+        //- // /list-group-item
+        //- .list-group-item.edit-link
+        //-   a(href='#', data-toggle='modal', data-target='#modal-control-shop-type-sm')
+        //-     | 午茶特輯
+        //-     span.glyphicon.glyphicon-pencil2.m-left-1
+        //-   a(href='#', data-toggle='modal', data-target='#modal-delete')
+        //-     span.glyphicon.glyphicon-remove
         // /list-group-item
       // /list-group-edit
     // /col-md-3
