@@ -179,5 +179,25 @@ module.exports = {
 
     var otherAgent = await db.Brand.create(otherAgent);
 
+    let dpts = ['A', 'B', 'C', 'D', 'E', 'F'];
+
+    for (let i in dpts) {
+      var dpt = await (db.Dpt.create({
+        name: '館別' + dpts[i],
+        weight: i,
+        official: true,
+      }));
+
+      for (var j=1; j<4; j++) {
+        await db.Dpt_Sub.create({
+          name: '小館-' +  dpts[i] + '-' + j,
+          weight: j,
+          official: false,
+          DptId: dpt.id
+        })
+      }
+    }
+    // end create dpt
+
   }
 }
