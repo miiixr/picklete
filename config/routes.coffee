@@ -50,9 +50,11 @@ module.exports.routes = {
   'post /admin/department/sub/create' : 'DptSubController.create'
 
   'get /admin/goods' : 'ProductController.list'
+  'get /admin/goods/update' : 'ProductController.showUpdate'
   'get /admin/goods/create' : 'ProductController.showCreate'
   'post /admin/goods/create' : 'ProductController.create'
   'post /admin/goods/create' : 'ProductController.create'
+
 
 
   # 'get /admin/shop-item-list' : 'UserController.controlShopItemList'
