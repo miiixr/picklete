@@ -10,7 +10,7 @@ let DptSubController = {
       DptId: req.body.dptId
     };
 
-    return db.Dpt_Sub.create(dptSubData)
+    return db.DptSub.create(dptSubData)
       .then(function(newDptSub) {
         return res.redirect('/admin/department');
       })
@@ -21,7 +21,7 @@ let DptSubController = {
   },
 
   list: async(req, res) => {
-    return db.Dpt_Sub.findAll()
+    return db.DptSub.findAll()
       .then(function(dpt_subs) {
         return res.ok(dpt_subs);
       })

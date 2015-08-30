@@ -21,9 +21,9 @@ let DptController = {
   list: async(req, res) => {
     return db.Dpt.findAll({
         include: [{
-          model: db.Dpt_Sub
+          model: db.DptSub
         }],
-        order: ['weight', 'Dpt_Subs.weight']
+        order: ['weight', 'DptSubs.weight']
       })
       .then(function(dpts) {
         res.view('admin/departmentList', { dpts });

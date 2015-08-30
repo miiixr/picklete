@@ -9,9 +9,9 @@ let ProductController = {
     let brands = await db.Brand.findAll();
     let dpts = await db.Dpt.findAll({
         include: [{
-          model: db.Dpt_Sub
+          model: db.DptSub
         }],
-        order: ['weight', 'Dpt_Subs.weight']
+        order: ['weight', 'DptSubs.weight']
       });
     let tags = await db.Tag.findAll({ limit: 15});
 
@@ -44,9 +44,9 @@ let ProductController = {
     let brands = await db.Brand.findAll();
     let dpts = await db.Dpt.findAll({
         include: [{
-          model: db.Dpt_Sub
+          model: db.DptSub
         }],
-        order: ['weight', 'Dpt_Subs.weight']
+        order: ['weight', 'DptSubs.weight']
       });
     let tags = await db.Tag.findAll({ limit: 15});
 
