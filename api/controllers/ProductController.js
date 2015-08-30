@@ -1,5 +1,6 @@
 let ProductController = {
 
+  // show create page and prepare all stuff
   showCreate: async (req, res) => {
     // let products = await ProductService.findAllWithImages();
     let brands = await db.Brand.findAll();
@@ -9,13 +10,16 @@ let ProductController = {
         }],
         order: ['weight', 'Dpt_Subs.weight']
       });
+    let tags = await db.Tag.findAll({ limit: 15});
 
     return res.view('admin/goodCreate', {
       brands,
-      dpts
+      dpts,
+      tags
     });
   },
 
+  // list all goods result, include query items
   list: async (req,res) => {
     return res.ok('ok');
   },
