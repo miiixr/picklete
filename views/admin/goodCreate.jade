@@ -12,9 +12,9 @@ block body
           label.radio-inline
             input#brnadId(type='radio', name='brnadId', value='true', checked='1')
             
-            select.form-control
+            select.form-control#brandSelect
               option 選擇品牌
-              each brand, index in brands 
+              each brand, index in brands
                 option(value='#{brand.id}') #{brand.name}
           label.radio-inline
             input#brnadId(type='radio', name='brnadId', value='false')
@@ -26,7 +26,7 @@ block body
         label.col-md-2.control-label 館別分類
         .col-md-4
           select.form-control(name='dptId')
-            option( 選擇大館別
+            option 選擇大館別
             each dpt, index in dpts 
               option(value='#{dpt.id}') #{dpt.name}
         .col-md-4
@@ -469,61 +469,17 @@ block body
           span(data-role='remove') ×
         input(type='text', placeholder='新增標籤請用逗號隔開或按 Enter 新增', style='width: 21em !important;')
       p.form-control-static 或從下方選擇預設標籤：
-      a(href='#')
-        span.tag.label.label-default 男人
-      a(href='#')
-        span.tag.label.label-default 女人
-      a(href='#')
-        span.tag.label.label-default 兒童
-      a(href='#')
-        span.tag.label.label-default 情人
-      a(href='#')
-        span.tag.label.label-default 學生
-      a(href='#')
-        span.tag.label.label-default 寵物
-      a(href='#')
-        span.tag.label.label-default 旅行
-      a(href='#')
-        span.tag.label.label-default 閱讀
-      a(href='#')
-        span.tag.label.label-default 咖啡
-      a(href='#')
-        span.tag.label.label-default 午茶
-      a(href='#')
-        span.tag.label.label-default 派對
-      a(href='#')
-        span.tag.label.label-default 時尚
-      a(href='#')
-        span.tag.label.label-default 印花
-      a(href='#')
-        span.tag.label.label-default 夏日
-      a(href='#')
-        span.tag.label.label-default 冬季
-      a(href='#')
-        span.tag.label.label-default 聖誕
-      a(href='#')
-        span.tag.label.label-default 森林
-      a(href='#')
-        span.tag.label.label-default 動物
-      a(href='#')
-        span.tag.label.label-default 花園
-      a(href='#')
-        span.tag.label.label-default 浪漫
-      a(href='#')
-        span.tag.label.label-default 可愛
-      a(href='#')
-        span.tag.label.label-default 趣味
-      a(href='#')
-        span.tag.label.label-default 復古
-      a(href='#')
-        span.tag.label.label-default 環保
-      a(href='#')
-        span.tag.label.label-default 工業
-      a(href='#')
-        span.tag.label.label-default 簡約
+      each tag, index in tags
+        a(href='#', data-id='#{tag.id}')
+          span.tag.label.label-default #{tag.name}
     // /form-group
   // /well
   .text-center.m-bottom-6
     a.btn.btn-link.delete-link.btn-lg(href='#', data-toggle='modal', data-target='#modal-delete') 刪除此商品及所有品項
     a.btn.btn-green.btn-lg(href='#') 確認送出
   // /text-center
+
+
+block js
+  script.
+    $("#brandSelect").val(undefined);
