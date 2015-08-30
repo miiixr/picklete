@@ -26,6 +26,7 @@
   "dependencies": {
     "aws-sdk": "2.1.45",
     "bcryptjs": "^2.1.0",
+    "gm": "^1.18.1",
     "grunt": "0.4.2",
     "grunt-contrib-clean": "~0.5.0",
     "grunt-contrib-coffee": "~0.10.1",
