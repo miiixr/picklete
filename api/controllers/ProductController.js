@@ -39,6 +39,33 @@ let ProductController = {
     }
   },
 
+  showUpdate: async (req, res) => {
+    // let products = await ProductService.findAllWithImages();
+    let brands = await db.Brand.findAll();
+    let dpts = await db.Dpt.findAll({
+        include: [{
+          model: db.Dpt_Sub
+        }],
+        order: ['weight', 'Dpt_Subs.weight']
+      });
+    let tags = await db.Tag.findAll({ limit: 15});
+
+    let gid = req.query.id;
+    let good = await ProductService.findAllWithImages(gid);
+    
+    if ( ! good) {
+      return res.redirect('/admin/goods');
+    }
+
+    // have to query this is
+    return res.view('admin/goodCreate', {
+      good,
+      brands,
+      dpts,
+      tags
+    });
+  },
+
   findOne: async (req, res) => {
     try {
       let productId = req.param("productId");
