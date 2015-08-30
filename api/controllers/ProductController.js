@@ -13,6 +13,7 @@ let ProductController = {
         }],
         order: ['weight', 'DptSubs.weight']
       });
+
     let tags = await db.Tag.findAll({ limit: 15});
 
     return res.view('admin/goodCreate', {
@@ -64,6 +65,18 @@ let ProductController = {
       dpts,
       tags
     });
+  },
+
+  createUpdate: async (req, res) => {
+    let newProduct = req.body;
+    console.log(newProduct);
+    try {
+      await ProductService.createProduct(req);
+    } catch (error) {
+      return res.serverError(error);
+    }
+    return res.redirect('/admin/goods/');
+    // return res.json(newProduct);
   },
 
   findOne: async (req, res) => {

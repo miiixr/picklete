@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       get: function() {
 
-        var value = this.getDataValue('photos');
+        var value = this.getDataValue('dptId');
 
         if(value) {
           return JSON.parse(value);
@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         return [];
       },
       set: function(value) {
-        return this.setDataValue('photos', JSON.stringify(value));
+        return this.setDataValue('dptId', JSON.stringify(value));
       }
     },
     // 小館別 id
@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       get: function() {
 
-        var value = this.getDataValue('photos');
+        var value = this.getDataValue('dptSubId');
 
         if(value) {
           return JSON.parse(value);
@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
         return [];
       },
       set: function(value) {
-        return this.setDataValue('photos', JSON.stringify(value));
+        return this.setDataValue('dptSubId', JSON.stringify(value));
       }
     },
     // 商品說明
@@ -48,7 +48,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       get: function() {
 
-        var value = this.getDataValue('photos');
+        var value = this.getDataValue('tag');
 
         if(value) {
           return JSON.parse(value);
@@ -57,7 +57,7 @@ module.exports = (sequelize, DataTypes) => {
         return [];
       },
       set: function(value) {
-        return this.setDataValue('photos', JSON.stringify(value));
+        return this.setDataValue('tag', JSON.stringify(value));
       }
     },
     // Cover photos
@@ -65,7 +65,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       get: function() {
 
-        var value = this.getDataValue('photos');
+        var value = this.getDataValue('coverPhoto');
 
         if(value) {
           return JSON.parse(value);
@@ -74,7 +74,7 @@ module.exports = (sequelize, DataTypes) => {
         return [];
       },
       set: function(value) {
-        return this.setDataValue('photos', JSON.stringify(value));
+        return this.setDataValue('coverPhoto', JSON.stringify(value));
       }
     }
 
