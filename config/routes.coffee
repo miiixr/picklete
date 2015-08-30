@@ -40,6 +40,7 @@ module.exports.routes = {
   'get /admin/index-exclusive' : 'UserController.indexExclusive'
   'get /admin/index-theme' : 'UserController.indexTheme'
   
+  'get /admin/' : 'AuthController.admin'
   'get /admin/brands' : 'BrandController.list'
   'get /admin/brands/create' : 'BrandController.create'
   'post /admin/brands/create' : 'BrandController.create'
@@ -54,7 +55,7 @@ module.exports.routes = {
   'post /admin/goods/create' : 'ProductController.create'
 
 
-  'get /admin/shop-item-list' : 'UserController.controlShopItemList'
+  # 'get /admin/shop-item-list' : 'UserController.controlShopItemList'
   'get /admin/shop-discount' : 'UserController.controlShopDiscount'
   'get /admin/shop-buy-more' : 'UserController.controlShopBuyMore'
   'get /admin/shop-buy-more-detail' : 'UserController.controlShopBuyMoreDetail'
