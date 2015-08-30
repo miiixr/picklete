@@ -44,7 +44,7 @@ module.exports.routes = {
   'get /admin/brands/create' : 'BrandController.create'
   'post /admin/brands/create' : 'BrandController.create'
   
-  'get /admin/shop-type' : 'UserController.controlShopType'
+  'get /admin/department' : 'DepartmentController.list'
   'get /admin/shop-item-add' : 'UserController.controlShopItemAdd'
   'get /admin/shop-item-list' : 'UserController.controlShopItemList'
   'get /admin/shop-discount' : 'UserController.controlShopDiscount'

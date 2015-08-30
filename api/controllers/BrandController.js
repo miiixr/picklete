@@ -11,15 +11,37 @@ let BrandController = {
     }
 
     var brandData = req.body;
+    // console.log(brandData);
 
+    let uploadInput = ["avatar", "photos[]", "banner"];
+    let files = await ImageService.upload(req, uploadInput);
+    
+    if (files[0].length) {
+      brandData.avatar = files[0][0].fd;
+    }
+
+    let photos = files[1];
+    if (photos.length) {
+      for (let i in photos) {
+        photos[i] = photos[i].fd;
+      }
+      brandData.photos = photos;
+    }
+
+    if (files[2].length) {
+      brandData.banner = files[2][0].fd;
+    }
+
+    console.log(brandData);
+
+    // create brand 
     return db.Brand.create(brandData)
     .then(function(newBrand) {
-
-        return res.ok(newBrand);
+      return res.redirect("/admin/brands");
     })
     .catch(function(error) {
 
-        return res.serverError(error);
+      return res.serverError(error);
     });
   },
 
@@ -39,7 +61,7 @@ let BrandController = {
 
     let brandLock = await db.Brand.findOne({  
       where: {
-        type: 'LOCK'
+        type: 'OTHER'
       }
     });
 

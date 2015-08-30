@@ -169,7 +169,7 @@ module.exports = {
     var otherAgent = {
       name: 'Other',
       avatar: '',
-      type: 'LOCK',
+      type: 'OTHER',
       desc: '',
       banner: '',
       photos: []
