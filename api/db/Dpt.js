@@ -14,7 +14,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        return Dpt.hasMany(models.Dpt_Sub);
+        return Dpt.hasMany(models.DptSub);
       }
     }
   });

@@ -1,7 +1,7 @@
 
 module.exports = function(sequelize, DataTypes) {
 
-  var Dpt_Sub = sequelize.define('Dpt_Sub', {
+  var DptSub = sequelize.define('DptSub', {
 
     // 小館別名稱
     name: DataTypes.STRING,
@@ -14,10 +14,10 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        return Dpt_Sub.belongsTo(models.Dpt);
+        return DptSub.belongsTo(models.Dpt);
       }
     }
   });
 
-  return Dpt_Sub;
+  return DptSub;
 };
