@@ -2,8 +2,8 @@
 describe('Dpt API - 館別', function() {
 
   var DptQ;
-  var Dpt_SubA;
-  var Dpt_SubB;
+  var DptSubA;
+  var DptSubB;
 
   before(async function(done) {
 
@@ -13,14 +13,14 @@ describe('Dpt API - 館別', function() {
       official: true,
     }));
 
-    Dpt_SubA = await (db.Dpt_Sub.create({
+    DptSubA = await (db.DptSub.create({
       name: '小館別A',
       weight: 2,
       official: true,
       DptId: DptQ.id
     }));
 
-    Dpt_SubB = await (db.Dpt_Sub.create({
+    DptSubB = await (db.DptSub.create({
       name: '小館別B',
       weight: 3,
       official: false

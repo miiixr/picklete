@@ -189,7 +189,7 @@ module.exports = {
       }));
 
       for (var j=1; j<4; j++) {
-        await db.Dpt_Sub.create({
+        await db.DptSub.create({
           name: '小館-' +  dpts[i] + '-' + j,
           weight: j,
           official: false,
