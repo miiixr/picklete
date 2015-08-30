@@ -57,21 +57,6 @@ let UserController = {
       pageName: "shop-item-add"
     });
   },
-  controlShopItemList: async (req, res) => {
-    try {
-      let products = await ProductService.findAllWithImages();
-      // format datetime
-      for (let product of products) {
-          product.createdAt = moment(products.createdAt).format("YYYY-MM-DD");
-      }
-      return res.view({
-        products,
-        pageName: "shop-item-list"
-      });
-    } catch (error) {
-      return res.serverError(error);
-    }
-  },
   controlShopDiscount: function(req, res) {
     res.view({
       pageName: "shop-discount"

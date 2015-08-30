@@ -8,6 +8,11 @@
 var AuthController;
 
 AuthController = {
+
+  admin: (req, res) => {
+    return res.redirect('/admin/goods');
+  },
+
   login: function(req, res) {
     res.view({
       errors: req.flash('error')

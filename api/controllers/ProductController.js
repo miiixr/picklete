@@ -1,3 +1,6 @@
+import moment from "moment";
+
+
 let ProductController = {
 
   // show create page and prepare all stuff
@@ -21,7 +24,19 @@ let ProductController = {
 
   // list all goods result, include query items
   list: async (req,res) => {
-    return res.ok('ok');
+    try {
+      let products = await ProductService.findAllWithImages();
+      // format datetime
+      for (let product of products) {
+          product.createdAt = moment(products.createdAt).format("YYYY-MM-DD");
+      }
+      return res.view('admin/goodList', {
+        products,
+        pageName: "shop-item-list"
+      });
+    } catch (error) {
+      return res.serverError(error);
+    }
   },
 
   findOne: async (req, res) => {
