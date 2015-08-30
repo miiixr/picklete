@@ -3,11 +3,16 @@ let DptSubController = {
 
   create: async(req, res) => {
 
-    var dptSubData = req.body;
+    var dptSubData = {
+      name: req.body.subDptName,
+      weight: req.body.wieght || 1,
+      official: false,
+      DptId: req.body.dptId
+    };
 
     return db.Dpt_Sub.create(dptSubData)
       .then(function(newDptSub) {
-        return res.ok(newDptSub);
+        return res.redirect('/admin/department');
       })
       .catch(function(error) {
         return res.serverError(error);
