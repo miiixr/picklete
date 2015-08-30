@@ -10,35 +10,28 @@ block body
         label.col-md-2.control-label 品牌名稱
         .col-md-10
           label.radio-inline
-            input#inlineRadio1(type='radio', name='inlineRadioOptions', value='option1', checked='')
+            input#brnadId(type='radio', name='brnadId', value='true', checked='1')
+            
             select.form-control
               option 選擇品牌
-              option 2
-              option 3
-              option 4
-              option 5
+              each brand, index in brands 
+                option(value='#{brand.id}') #{brand.name}
           label.radio-inline
-            input#inlineRadio2(type='radio', name='inlineRadioOptions', value='option2')
-            input.form-control(type='text', placeholder='自訂品牌名稱')
+            input#brnadId(type='radio', name='brnadId', value='false')
+            input.form-control(type='text', name='customBrand', placeholder='自訂品牌名稱')
           a(href='#', data-toggle='tooltip', title='', data-original-title='品牌名稱自訂將會統一列入 Other 品牌區')
             span.glyphicon.glyphicon-info
       // /form-group
       .form-group
         label.col-md-2.control-label 館別分類
         .col-md-4
-          select.form-control
-            option 選擇大館別
-            option 2
-            option 3
-            option 4
-            option 5
+          select.form-control(name='dptId')
+            option( 選擇大館別
+            each dpt, index in dpts 
+              option(value='#{dpt.id}') #{dpt.name}
         .col-md-4
-          select.form-control
+          select.form-control(name='subDptId')
             option 選擇小館別
-            option 2
-            option 3
-            option 4
-            option 5
         .col-md-2
           a.btn-remove(href='#', data-toggle='modal', data-target='#modal-delete')
             span.glyphicon.glyphicon-remove

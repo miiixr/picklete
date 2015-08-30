@@ -1,7 +1,19 @@
 let ProductController = {
 
-  showCreate: (req, res) => {
-    return res.view('admin/goodCreate');
+  showCreate: async (req, res) => {
+    // let products = await ProductService.findAllWithImages();
+    let brands = await db.Brand.findAll();
+    let dpts = await db.Dpt.findAll({
+        include: [{
+          model: db.Dpt_Sub
+        }],
+        order: ['weight', 'Dpt_Subs.weight']
+      });
+
+    return res.view('admin/goodCreate', {
+      brands,
+      dpts
+    });
   },
 
   list: async (req,res) => {
