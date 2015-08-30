@@ -22,7 +22,9 @@ let DptController = {
         order: ['weight', 'Dpt_Subs.weight']
       })
       .then(function(dpts) {
-        return res.ok(dpts);
+        // return res.ok(dpts);
+        console.log(dpts);
+        res.view('admin/departmentList', { dpts });
       })
       .catch(function(error) {
         return res.serverError(error);
