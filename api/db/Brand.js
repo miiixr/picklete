@@ -10,7 +10,7 @@ module.exports = function(sequelize, DataTypes) {
     name: DataTypes.STRING,
 
     // 代理商品 or 精選商品
-    type: DataTypes.ENUM('AGENT', 'PRIME_GOOD', 'LOCK'),
+    type: DataTypes.ENUM('AGENT', 'PRIME_GOOD', 'OTHER'),
 
     // 品牌介紹
     desc: DataTypes.TEXT,
