@@ -65,41 +65,31 @@ module.exports = {
     var createNewBuyer2 = await db.User.create(newBuyer2);
 
     var fruitProducts = [{
-      name: '圓滿柚',
-      description: '每箱六台斤 甜度 ★★★',
+      name: '好物三選1',
+      description: '好東西，買買買',
       stockQuantity: 100,
       price: 500
     },{
-      name: '團圓柚',
-      description: '每箱六台斤 甜度 ★★★★',
+      name: '好物三選2',
+      description: '好東西，買買買',
       stockQuantity: 100,
       price: 625
     },{
-      name: '平安柚',
-      description: '每箱六台斤 甜度 ★★★★',
+      name: '好物三選3',
+      description: '好東西，買買買',
       stockQuantity: 100,
       price: 750
-    },{
-      name: '【特級】團圓柚',
-      description: '每箱六台斤 甜度 ★★★★★',
-      stockQuantity: 100,
-      price: 950
-    },{
-      name: '【特級】平安柚',
-      description: '每箱六台斤 甜度 ★★★★★',
-      stockQuantity: 100,
-      price: 1200
     }];
     await db.Product.bulkCreate(fruitProducts);
 
     var newProduct = {
-      name: '斗六文旦柚禮盒',
-      description: '3斤裝',
+      name: '超值精選組合',
+      description: '精選組合 - 重金包裝',
       stockQuantity: 10,
       price: 100,
       image: 'http://localhost:1337/images/product/1.jpg',
       isPublish: true,
-      comment: 'this is a comment.'
+      comment: '限量只有 10 個'
     };
     var createdProduct = await db.Product.create(newProduct);
 
@@ -178,6 +168,35 @@ module.exports = {
     var brandAgent = await db.Brand.create(brandAgent);
 
     var otherAgent = await db.Brand.create(otherAgent);
+
+    let dpts = ['A', 'B', 'C', 'D', 'E', 'F'];
+
+    for (let i in dpts) {
+      var dpt = await (db.Dpt.create({
+        name: '館別' + dpts[i],
+        weight: i,
+        official: true,
+      }));
+
+      for (var j=1; j<4; j++) {
+        await db.DptSub.create({
+          name: '小館-' +  dpts[i] + '-' + j,
+          weight: j,
+          official: false,
+          DptId: dpt.id
+        })
+      }
+    }
+    // end create dpt
+
+    // create tag
+    let tags = ['男人', '女人', '兒童', '情人', '學生', '寵物', '旅行', '閱讀', '咖啡', '午茶', '派對', '時尚', '印花', '夏日', '冬季', '聖誕', '森林', '動物', '花園', '浪漫', '可愛', '趣味', '復古', '環保', '工業', '簡約'];
+    for (let i in tags) {
+      await db.Tag.create({
+        name: tags[i]
+      });
+    }
+    // end of create tag
 
   }
 }

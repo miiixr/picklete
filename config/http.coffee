@@ -10,7 +10,7 @@ http://sailsjs.org/#/documentation/reference/sails.config/sails.config.http.html
 ###
 module.exports.http = {
 
-  prettyPrint: (app) ->
+  customMiddleware: (app) ->
     if sails.config.environment isnt 'production'
       app.set('view options', {pretty: true})
       app.locals.pretty = true

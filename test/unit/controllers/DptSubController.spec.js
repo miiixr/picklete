@@ -1,5 +1,5 @@
 
-describe('Dpt_Sub - 建立', function() {
+describe('DptSub - 建立', function() {
 
   var DptFoo;
 
@@ -14,8 +14,8 @@ describe('Dpt_Sub - 建立', function() {
     return done();
   });
 
-  describe('Dpt_Sub - 建立', function() {
-    it('should return Dpt_Sub object', function(done) {
+  describe('DptSub - 建立', function() {
+    it('should return DptSub object', function(done) {
       request(sails.hooks.http.app)
         .post('/admin/dpt_sub')
         .send({
@@ -35,8 +35,8 @@ describe('Dpt_Sub - 建立', function() {
     });
   });
 
-  describe('Dpt_Sub - 建立', function() {
-    it('should return Dpt_Sub object', function(done) {
+  describe('DptSub - 建立', function() {
+    it('should return DptSub object', function(done) {
       request(sails.hooks.http.app)
         .post('/admin/dpt_sub')
         .send({
@@ -56,8 +56,8 @@ describe('Dpt_Sub - 建立', function() {
     });
   });
 
-  describe('Dpt_Sub - 列表', function() {
-    it('should return Dpt_Sub list', function(done) {
+  describe('DptSub - 列表', function() {
+    it('should return DptSub list', function(done) {
       request(sails.hooks.http.app)
         .get('/admin/dpt_sub')
         .end(function(err, res) {
