@@ -26,6 +26,7 @@
   "dependencies": {
     "aws-sdk": "2.1.45",
     "bcryptjs": "^2.1.0",
+    "coffee-script": "^1.9.3",
     "bluebird": "^2.9.34",
     "gm": "^1.18.1",
     "grunt": "0.4.2",
