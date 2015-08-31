@@ -73,12 +73,12 @@ module.exports = {
 
       products.forEach((product, index) => {
         let quantity = parseInt(orderItems[index].quantity);
-        thisOrder.paymentTotalAmount += (product.price * quantity);
+        thisOrder.paymentTotalAmount += (orderItems[index].price * quantity);
         thisOrder.quantity += quantity;
 
         orderItems[index].name = product.name;
         orderItems[index].description = product.description;
-        orderItems[index].price = product.price;
+        // orderItems[index].price = product.price;
         orderItems[index].comment = product.comment;
         orderItems[index].spec = product.spec;
       });
