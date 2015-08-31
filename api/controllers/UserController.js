@@ -1,4 +1,152 @@
-let userController = {
+
+/**
+ * Authentication Controller
+#
+ * This is merely meant as an example of how your Authentication controller
+ * should look. It currently includes the minimum amount of functionality for
+ * the basics of Passport.js to work.
+ */
+let moment = require("moment");
+
+let UserController = {
+  controlLogin: function(req, res) {
+    res.view({
+    });
+  },
+  indexSlider: function(req, res) {
+    res.view({
+      pageName: "index-slider"
+    });
+  },
+  indexSliderDetail: function(req, res) {
+    res.view({
+      pageName: "index-slider-detail"
+    });
+  },
+  password: function(req, res) {
+    res.view({
+    });
+  },
+  indexExclusive: function(req, res) {
+    res.view({
+      pageName: "index-exclusive"
+    });
+  },
+  indexTheme: function(req, res) {
+    res.view({
+      pageName: "index-theme"
+    });
+  },
+  controlBrands: function (req, res) {
+    res.view({
+      pageName: "brands"
+    });
+  },
+  controlBrandsDetail: function(req, res) {
+    res.view({
+      pageName: "brands-detail"
+    });
+  },
+  controlShopType: function (req, res) {
+    res.view({
+      pageName: "shop-type"
+    });
+  },
+  controlShopItemAdd: function(req, res) {
+    res.view({
+      pageName: "shop-item-add"
+    });
+  },
+  controlShopDiscount: function(req, res) {
+    res.view({
+      pageName: "shop-discount"
+    });
+  },
+  controlShopDiscountDetail: function(req, res) {
+    res.view({
+      pageName: "shop-discount-detail"
+    });
+  },
+  controlShopDiscountDetail2: function(req, res) {
+    res.view({
+      pageName: "shop-discount-detail2"
+    });
+  },
+  controlShopDiscountAddItem: function(req, res) {
+    res.view({
+      pageName: "shop-discount-add-item"
+    });
+  },
+  controlShopBuyMore: function(req, res) {
+    res.view({
+      pageName: "shop-buy-more"
+    });
+  },
+  controlShopBuyMoreDetail: function(req, res) {
+    res.view({
+      pageName: "shop-buy-more-detail"
+    });
+  },
+  controlShopBuyMoreAddItem: function(req, res) {
+    res.view({
+      pageName: "shop-buy-more-add-item"
+    });
+  },
+  controlShopCode: function(req, res) {
+    res.view({
+      pageName: "shop-code"
+    });
+  },
+  controlShopCodeDetail: function(req, res) {
+    res.view({
+      pageName: "shop-code-detail"
+    });
+  },
+  controlShopReportForm: function(req, res) {
+    res.view({
+      pageName: "shop-report-form"
+    });
+  },
+  controlOrder: function(req, res) {
+    res.view({
+      pageName: "order"
+    });
+  },
+  controlAbout: function(req, res) {
+    res.view({
+      pageName: "about"
+    });
+  },
+  controlQa: function(req, res) {
+    res.view({
+      pageName: "qa"
+    });
+  },
+  controlQaDetail: function(req, res) {
+    res.view({
+      pageName: "qa-detail"
+    });
+  },
+  controlQaType: function(req, res) {
+    res.view({
+      pageName: "qa-type"
+    });
+  },
+  controlQaAdd: function(req, res) {
+    res.view({
+      pageName: "qa-add"
+    });
+  },
+  controlMembers: function(req, res) {
+    res.view({
+      pageName: "members"
+    });
+  },
+  controlMemberDetail: function(req, res) {
+    res.view({
+      pageName: "member-detail"
+    });
+  },
 
   index: async (req, res) => {
     try {
@@ -172,9 +320,9 @@ let userController = {
   },
 
   orderSync: async (req, res) => {
-    
+
   }
 
 };
 
-module.exports = userController;
+module.exports = UserController;

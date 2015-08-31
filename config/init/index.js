@@ -46,10 +46,12 @@ module.exports = {
 
     var newBuyer = {
       username: "buyer",
-      email: "buyer@gmail.com",
+      email: "smlsun@gmail.com",
       password: "buyer",
       RoleId: createRoleUser.id,
-      comment: "this is a newBuyer"
+      comment: "this is a newBuyer",
+      orderSyncToken:'11111'
+
     };
     var createNewBuyer = await db.User.create(newBuyer);
 
@@ -63,45 +65,37 @@ module.exports = {
     var createNewBuyer2 = await db.User.create(newBuyer2);
 
     var fruitProducts = [{
-      name: '圓滿柚',
-      description: '每箱六台斤 甜度 ★★★',
+      name: '好物三選1',
+      description: '好東西，買買買',
       stockQuantity: 100,
       price: 500
     },{
-      name: '團圓柚',
-      description: '每箱六台斤 甜度 ★★★★',
+      name: '好物三選2',
+      description: '好東西，買買買',
       stockQuantity: 100,
       price: 625
     },{
-      name: '平安柚',
-      description: '每箱六台斤 甜度 ★★★★',
+      name: '好物三選3',
+      description: '好東西，買買買',
       stockQuantity: 100,
       price: 750
-    },{
-      name: '【特級】團圓柚',
-      description: '每箱六台斤 甜度 ★★★★★',
-      stockQuantity: 100,
-      price: 950
-    },{
-      name: '【特級】平安柚',
-      description: '每箱六台斤 甜度 ★★★★★',
-      stockQuantity: 100,
-      price: 1200
     }];
     await db.Product.bulkCreate(fruitProducts);
 
     var newProduct = {
-      name: '斗六文旦柚禮盒',
-      description: '3斤裝',
+      name: '超值精選組合',
+      description: '精選組合 - 重金包裝',
       stockQuantity: 10,
       price: 100,
       image: 'http://localhost:1337/images/product/1.jpg',
       isPublish: true,
-      comment: 'this is a comment.'
+      comment: '限量只有 10 個'
     };
     var createdProduct = await db.Product.create(newProduct);
 
     var newOrder = {
+      serialNumber: '0000000',
+      paymentTotalAmount: 1234.567,
       quantity: 10,
       orderId: '1111',
       UserId: createNewBuyer.id,
@@ -120,8 +114,89 @@ module.exports = {
     var createShipment = await db.Shipment.create(shipment);
 
 
+    var newOrder2 = {
+      serialNumber: '0000001',
+      paymentIsConfirmed: true,
+      paymentTotalAmount: 1000,
+      paymentConfirmDate: Date.now(),
+      paymentConfirmName: '王小明',
+      paymentConfirmPostfix: '54321',
+      quantity: 5,
+      orderId: '1111',
+      UserId: createNewBuyer.id,
+      ProductId: createdProduct.id
+    };
+    var createdOrder = await db.Order.create(newOrder2);
 
 
+    var brandExample = {
+      name: '好棒棒品牌',
+      avatar: 'http://goo.gl/ksTMyn',
+      type: 'PRIME_GOOD',
+      desc: 'Steve Aoki 最棒惹',
+      banner: 'http://goo.gl/tl4513',
+      photos: [
+        'http://goo.gl/IRT1EM',
+        'http://goo.gl/p9Y2BF'
+      ]
+    };
+
+    var brand = await db.Brand.create(brandExample);
+
+
+    var brandAgent = {
+      name: '好代理品牌',
+      avatar: 'http://goo.gl/ksTMyn',
+      type: 'AGENT',
+      desc: 'Steve Aoki 最喜歡代理惹',
+      banner: 'http://goo.gl/tl4513',
+      photos: [
+        'http://goo.gl/IRT1EM',
+        'http://goo.gl/p9Y2BF'
+      ]
+    };
+
+    var otherAgent = {
+      name: 'Other',
+      avatar: '',
+      type: 'OTHER',
+      desc: '',
+      banner: '',
+      photos: []
+    };
+
+    var brandAgent = await db.Brand.create(brandAgent);
+
+    var otherAgent = await db.Brand.create(otherAgent);
+
+    let dpts = ['A', 'B', 'C', 'D', 'E', 'F'];
+
+    for (let i in dpts) {
+      var dpt = await (db.Dpt.create({
+        name: '館別' + dpts[i],
+        weight: i,
+        official: true,
+      }));
+
+      for (var j=1; j<4; j++) {
+        await db.DptSub.create({
+          name: '小館-' +  dpts[i] + '-' + j,
+          weight: j,
+          official: false,
+          DptId: dpt.id
+        })
+      }
+    }
+    // end create dpt
+
+    // create tag
+    let tags = ['男人', '女人', '兒童', '情人', '學生', '寵物', '旅行', '閱讀', '咖啡', '午茶', '派對', '時尚', '印花', '夏日', '冬季', '聖誕', '森林', '動物', '花園', '浪漫', '可愛', '趣味', '復古', '環保', '工業', '簡約'];
+    for (let i in tags) {
+      await db.Tag.create({
+        name: tags[i]
+      });
+    }
+    // end of create tag
 
   }
 }

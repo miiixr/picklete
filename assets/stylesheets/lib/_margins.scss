@@ -1,5 +1,6 @@
 //margin
 .m-top-0 { margin-top: $distance-0 !important;}
+.m-top-1-min { margin-top: $distance-1/2 !important;}
 .m-top-1 { margin-top: $distance-1 !important;}
 .m-top-2 { margin-top: $distance-2 !important;}
 .m-top-3 { margin-top: $distance-3 !important;}
@@ -12,6 +13,7 @@
 .m-top-10 { margin-top: $distance-10 !important;}
 
 .m-bottom-0 { margin-bottom: $distance-0 !important;}
+.m-bottom-1-min { margin-bottom: $distance-1/2 !important;}
 .m-bottom-1 { margin-bottom: $distance-1 !important;}
 .m-bottom-2 { margin-bottom: $distance-2 !important;}
 .m-bottom-3 { margin-bottom: $distance-3 !important;}

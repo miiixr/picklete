@@ -8,7 +8,14 @@ Only applies to HTTP requests (not WebSockets)
 For more information on configuration, check out:
 http://sailsjs.org/#/documentation/reference/sails.config/sails.config.http.html
 ###
-module.exports.http = {}
+module.exports.http = {
+
+  customMiddleware: (app) ->
+    if sails.config.environment isnt 'production'
+      app.set('view options', {pretty: true})
+      app.locals.pretty = true
+
+}
 
 ###*
 Express middleware to use for every Sails request. To add custom          *

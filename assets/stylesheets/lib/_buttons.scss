@@ -240,11 +240,22 @@ input[type="button"] {
   font-family: $font-family-navbar;
   font-weight: 400;
   letter-spacing: 0.5px;
+  .text-en { display: block; }
+  .text-active { display: none; }
+  &:hover,
+  &:focus {
+    .text-en { display: none; }
+    .text-active {
+      display: block;
+      font-size: 15px;
+      line-height: 1.25;
+    }
+  }
 }
 .btn-sm-circle {
   border-radius: 50%;
-  width: 20px;
-  height: 20px;
+  width: 20px !important;
+  height: 20px !important;
   padding: 0px;
   line-height: 18px;
 }

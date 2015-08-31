@@ -1,23 +1,29 @@
-extends ./../layout
+extends ./../_layout_single
 
 block body
   div.container
     div.page-header
       h1 付款確認表單
-    p 請輸入「匯款人姓名」及「轉帳帳號後五碼」
-    form
-      div.form-group
-        label 訂單編號
-      div.form-group
-        label 付款日期
-        input.form-control.datepicker
-      div.form-group
-        label 匯款人姓名
-        input.form-control
-      div.form-group
-        label 轉帳帳號後五碼
-        input.form-control
-      button.btn.btn-primary.submit-action(type='button') 送出
+
+    p 訂單編號: #{order.serialNumber}
+
+    if !order.paymentIsConfirmed
+      p 請輸入「匯款人姓名」及「轉帳帳號後五碼」
+      form
+        div.form-group
+          label 訂單編號
+        div.form-group
+          label 付款日期（年/月/日）
+          input.form-control.datepicker(name='paymentConfirmDate', value=sails.moment(order.paymentConfirmDate).format('YYYY/MM/DD'))
+        div.form-group
+          label 匯款人姓名
+          input.form-control(name='paymentConfirmName', value='')
+        div.form-group
+          label 轉帳帳號後五碼
+          input.form-control(name='paymentConfirmPostfix', value='')
+        button.btn.btn-primary.submit-action(type='button') 送出
+    else
+      p 此筆訂單已經於 #{sails.moment(order.paymentConfirmDate).format('YYYY/MM/DD')} 完成付款確認
     hr
     div.text-center
       p ＯＯＯＯ版權所有
@@ -29,12 +35,25 @@ block scripts
       $('button.submit-action').click(function(e) {
         e.preventDefault();
 
+        var paymentConfirmDate = $('input[name=paymentConfirmDate]').val();
+        var paymentConfirmName = $('input[name=paymentConfirmName]').val();
+        var paymentConfirmPostfix = $('input[name=paymentConfirmPostfix]').val();
+
+        if (!paymentConfirmDate || !paymentConfirmName || !paymentConfirmPostfix) {
+          bootbox.alert('必須填寫完整資訊。');
+          return false;
+        }
+
         $.ajax({
-          url: '/order/paymentConfirm',
+          url: '/order/paymentConfirmSave?serial=#{order.serialNumber}',
           method: "POST",
-          data: { id : 1 }
+          data: {
+            paymentConfirmDate : paymentConfirmDate,
+            paymentConfirmName : $('input[name=paymentConfirmName]').val(),
+            paymentConfirmPostfix : $('input[name=paymentConfirmPostfix]').val()
+          }
         }).done(function() {
-          bootbox.alert("Hello world!");
+          bootbox.alert('資料已儲存，我們會盡快確認此筆款項。');
 
           $('button.submit-action')
             .text('已送出')

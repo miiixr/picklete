@@ -3,18 +3,18 @@ web:
   working_dir: /picklete
   command: "/bin/bash -c 'source ~/.bashrc && npm start'"
   ports:
-  - "1337:1337"
+    - "1337:1337"
   volumes:
-   - ./:/picklete
+    - ./:/picklete
   links:
-   - mysql
-   - mobile
+    - mysql
 
   environment:
     MYSQL_PASSWORD: "picklete"
     MYSQL_USER: "picklete"
     PORT: "1337"
     NODE_ENV: "production"
+    DOMAIN_HOST: "shop.agricloud.cc"
   restart: always
 
 mobile:
@@ -22,13 +22,15 @@ mobile:
   command: "node server.js"
   working_dir: /app
   ports:
-  - "3000:3000"
+    - "3000:3000"
   links:
     - web
+
   volumes:
-   - ../agricloud-mobile-cart:/app
+    - ../agricloud-mobile-cart:/app
   environment:
     NODE_ENV: "production"
+    DOMAIN_HOST: "m.agricloud.cc"
   restart: always
 
 

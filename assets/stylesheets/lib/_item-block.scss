@@ -6,6 +6,9 @@
     position: absolute;
     right: -8px;
     top: -8px;
+    width: 22px;
+    height: 22px;
+    padding-top: 6px;
   }
   a.item-like {
     position: absolute;
@@ -155,6 +158,20 @@
 }
 .item-text-block {
   height: 90px;
+  h6 {
+    font-family: $font-family-Roboto;
+    letter-spacing: 1px;
+    margin-bottom: 3px;
+  }
+  h5 {
+    font-family: $font-family-Roboto;
+    letter-spacing: 1px;
+  }
+  h4 {
+    font-family: $font-family-Roboto;
+    letter-spacing: 1px;
+    margin-top: 3px;
+  }
 }
 
 //fav-item-block
@@ -162,7 +179,7 @@
   display: block;
   position: relative;
   border: 1px solid #ebebeb;
-  padding: 5px;
+  padding: 8px;
   .fav-item-move {
     position: absolute;
     right: 10px;
@@ -212,6 +229,7 @@
     position: absolute;
     right: 0;
     top: 0;
+    margin-top: 0px;
     z-index: $zindex-item-label;
   }
   .btn-add {
@@ -226,6 +244,7 @@ a.btn-add {
   height: 30px;
   text-align: center;
   line-height: 30px;
+  margin-top: 3px;
 }
 a.btn-remove {
   display: inline-block;
@@ -235,4 +254,14 @@ a.btn-remove {
   height: 30px;
   text-align: center;
   line-height: 30px;
+  margin-top: 3px;
+}
+.has-tooltip {
+  position: relative;
+  z-index: 2;
+  .tooltip-icon {
+    position: absolute;
+    right: -20px;
+    bottom: 0;
+  }
 }

@@ -1,0 +1,150 @@
+extends ../_layout_auth
+
+block body
+  h2.m-bottom-6 一般活動設定
+  .well.control-well.p-30.m-bottom-8
+    form.form-horizontal
+      .form-group
+        label.col-sm-3.col-md-2.control-label 活動名稱
+        .col-sm-9.col-md-7
+          input.form-control(type='text')
+        // /col-sm-10
+        .col-sm-9.col-sm-offset-3.col-md-3.col-md-offset-0
+          .checkbox
+            label
+              input(type='checkbox')
+              |  建立館別
+      // /form-group
+      .form-group
+        label.col-sm-3.col-md-2.control-label 活動口號
+        .col-sm-9.col-md-10
+          input.form-control(type='text')
+        // /col-sm-10
+      // /form-group
+      .form-group
+        label.col-sm-3.col-md-2.control-label 活動時間
+        .col-sm-4.col-md-3
+          input.form-control(type='datetime-local')
+        .col-sm-1.col-md-1.p-left-0.p-right-0.text-center
+          p.form-control-static 至
+        .col-sm-4.col-md-3
+          input.form-control(type='datetime-local')
+        .col-sm-9.col-sm-offset-3.col-md-3.col-md-offset-0
+          .checkbox
+            label
+              input(type='checkbox')
+              |  不限時
+      // /form-group
+      .form-group
+        label.col-sm-3.col-md-2.control-label 折扣設定
+        .col-sm-4.col-md-3
+          .radio
+            label
+              input#optionsRadios1(type='radio', name='optionsRadios', value='option1', checked='')
+              input.form-control(type='text', placeholder='請輸入折扣金額')
+        .col-sm-1.col-md-1
+        .col-sm-4.col-md-3
+          .radio
+            label
+              input#optionsRadios2(type='radio', name='optionsRadios', value='option2')
+              .input-group.width-12
+                input.form-control(type='text')
+                span.input-group-addon 折
+              // /input-group
+      // /form-group
+      .m-top-6.text-right
+        a.btn.btn-link.delete-link.btn-lg(href='#', data-toggle='modal', data-target='#modal-delete') 刪除
+        a.btn.btn-green.btn-lg(href='#') 確定
+      // /text-right
+  // /well
+  .row
+    .col-md-6
+      form.form-inline
+        .form-group
+          label 顯示
+          select.form-control
+            option 10
+            option 20
+            option 30
+            option 40
+            option 50
+          label 筆資料（共 90 筆）
+        // /form-group
+    // /col-md-6
+    .col-md-6.desktop-text-right
+      a.btn.btn-green(href='shop-discount-add-item') 加入折扣商品
+    // /col-md-6
+  // /row
+  hr.dashed-line
+  table.table.table-striped
+    thead
+      tr
+        th
+          | 類型
+          span.caret
+        th 主圖
+        th
+          | 商品名稱
+          span.caret
+        th
+          | 貨號
+          span.caret
+        th
+          | 售價
+          span.caret
+        th
+          | 特價
+          span.caret
+        th
+    tbody
+      tr
+        td
+          span.label.label-gray 一般
+        td
+          img.width-6(src='images/demo/shop-item-12-1.jpg')
+        td {product_name}
+        td JC1129
+        td 590
+        td
+          span.text-danger 413
+        td.text-right
+          a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
+            span.glyphicon.glyphicon-remove
+      tr
+        td
+          span.label.label-gray 一般
+        td
+          img.width-6(src='images/demo/shop-item-7-1.jpg')
+        td {product_name}
+        td JC1129
+        td 590
+        td
+          span.text-danger 413
+        td.text-right
+          a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
+            span.glyphicon.glyphicon-remove
+      tr
+        td
+          span.label.label-gray 一般
+        td
+          img.width-6(src='images/demo/shop-item-13-1.jpg')
+        td {product_name}
+        td JC1129
+        td 590
+        td
+          span.text-danger 413
+        td.text-right
+          a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
+            span.glyphicon.glyphicon-remove
+  hr.dashed-line
+  .text-center
+    //
+      pagination-block
+      ==================================================
+    ul.list-inline.m-bottom-0.m-top-1
+      li.border-right-1.p-right-2
+        a(href='#') 上一頁
+      li.border-right-1.p-right-2 第 15 之 20
+      li
+        a(href='#') 下一頁
+  // /text-center

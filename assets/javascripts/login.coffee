@@ -1,6 +1,6 @@
 (($) ->
 
-  new UISearch(document.getElementById( 'sb-search' ));
+  # new UISearch(document.getElementById( 'sb-search' ));
   $(window).load () ->
       $(".loader").fadeOut("slow")
 
@@ -40,5 +40,5 @@
     $(window).scroll(sticky_relocate)
     sticky_relocate()
 
-  new cbpScroller( document.getElementById( 'cbp-so-scroller' ) );
+  # new cbpScroller( document.getElementById( 'cbp-so-scroller' ) );
 )(jQuery)

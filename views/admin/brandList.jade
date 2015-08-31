@@ -1,0 +1,31 @@
+extends ../_layout_auth
+
+block body
+  h2.m-bottom-6 品牌管理
+  a.btn.btn-danger.btn-lg.m-bottom-6(href='/admin/brands/create') 建立品牌
+  .clearfix.m-bottom-2.text-left
+    h4.text-gray-darker.m-bottom-4 代理品牌
+    ul.list-group.list-barnd.list-group-edit.p-top-2
+      each agent, index in agents
+        a.list-group-item.edit-link(href='/admin/brands/update?id=#{agent.id}')
+          | #{agent.name}
+          span.glyphicon.glyphicon-pencil2.m-left-1
+    // /list-barnd
+
+
+  // /clearfix
+  .clearfix.m-bottom-2
+    h4.text-gray-darker.m-bottom-4 精選品牌
+    ul.list-group.list-barnd.list-barnd.p-top-2
+      each brand, index in brands
+        a.list-group-item.edit-link(href='/admin/brands/update?id=#{brand.id}')
+          | #{brand.name}
+          span.glyphicon.glyphicon-pencil2.m-left-1
+
+    // /list-barnd
+    ul.list-group.list-barnd.list-group-edit.p-top-2
+      .list-group-item.edit-link
+        | #{brandLock.name}
+        span.glyphicon.glyphicon-lock
+    // /list-barnd
+  // /clearfix

@@ -1,0 +1,215 @@
+extends ../_layout_auth
+
+block body
+  h2.m-bottom-6 加價購
+  a.btn.btn-danger.btn-lg.m-bottom-6(href='shop-buy-more-detail') 建立加價購
+  ul.nav.nav-tabs.m-bottom-4
+    li.active
+      a(href='#tab-1', data-toggle='tab') 不限金額
+    li
+      a(href='#tab-2', data-toggle='tab') 限滿 1,500 元
+  // /nav
+  .tab-content
+    #tab-1.tab-pane.fade.in.active
+      .row
+        .col-sm-6.col-md-8
+          form.form-inline
+            .form-group
+              label 顯示
+              select.form-control
+                option 10
+                option 20
+                option 30
+                option 40
+                option 50
+              label 筆資料（共 90 筆）
+            // /form-group
+        // /col-sm-6
+        .col-sm-6.col-md-4
+          .input-group
+            input.form-control(type='text', placeholder='Search for...')
+            span.input-group-btn
+              button.btn.btn-default.p-left-2.p-right-2(type='button')
+                span.glyphicon.glyphicon-search
+          // /input-group
+        // /col-sm-6
+      // /row
+      hr.dashed-line
+      table.table.table-striped
+        thead
+          tr
+            th 主圖
+            th 商品名稱
+            th 貨號
+            th 售價
+            th 特價
+            th 折扣
+            th 時間
+            th
+        tbody
+          tr
+            td
+              img.width-6(src='images/demo/shop-item-1-1.jpg')
+            td {product_name}
+            td {product_id}
+            td 590
+            td
+              span.text-danger 413
+            td 7 折
+            td
+              | 2015-10-03
+              br
+              | 2015-10-22
+            td.text-right
+              a.btn.btn-link(href='shop-buy-more-detail')
+                span.glyphicon.glyphicon-pencil2
+              a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
+                span.glyphicon.glyphicon-remove
+          tr
+            td
+              img.width-6(src='images/demo/shop-item-2-1.jpg')
+            td {product_name}
+            td {product_id}
+            td 590
+            td
+              span.text-danger 413
+            td 8 折
+            td 不限時
+            td.text-right
+              a.btn.btn-link(href='shop-buy-more-detail')
+                span.glyphicon.glyphicon-pencil2
+              a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
+                span.glyphicon.glyphicon-remove
+          tr
+            td
+              img.width-6(src='images/demo/shop-item-3-1.jpg')
+            td {product_name}
+            td {product_id}
+            td 590
+            td
+              span.text-danger 413
+            td 7 折
+            td
+              | 2015-10-03
+              br
+              | 2015-10-22
+            td.text-right
+              a.btn.btn-link(href='shop-buy-more-detail')
+                span.glyphicon.glyphicon-pencil2
+              a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
+                span.glyphicon.glyphicon-remove
+      hr.dashed-line
+      .text-center
+        //
+          pagination-block
+          ==================================================
+        ul.list-inline.m-bottom-0.m-top-1
+          li.border-right-1.p-right-2
+            a(href='#') 上一頁
+          li.border-right-1.p-right-2 第 15 之 20
+          li
+            a(href='#') 下一頁
+      // /text-center
+    // /tab-pane
+    #tab-2.tab-pane.fade
+      .row
+        .col-sm-6.col-md-8
+          form.form-inline
+            .form-group
+              label 顯示
+              select.form-control
+                option 10
+                option 20
+                option 30
+                option 40
+                option 50
+              label 筆資料（共 90 筆）
+            // /form-group
+        // /col-sm-6
+        .col-sm-6.col-md-4
+          .input-group
+            input.form-control(type='text', placeholder='Search for...')
+            span.input-group-btn
+              button.btn.btn-default.p-left-2.p-right-2(type='button')
+                span.glyphicon.glyphicon-search
+          // /input-group
+        // /col-sm-6
+      // /row
+      hr.dashed-line
+      table.table.table-striped
+        thead
+          tr
+            th 主圖
+            th 商品名稱
+            th 貨號
+            th 售價
+            th 特價
+            th 折扣
+            th 時間
+            th
+        tbody
+          tr
+            td
+              img.width-6(src='images/demo/shop-item-1-1.jpg')
+            td {product_name}
+            td {product_id}
+            td 590
+            td
+              span.text-danger 413
+            td 7 折
+            td
+              | 2015-10-03
+              br
+              | 2015-10-22
+            td.text-right
+              a.btn.btn-link(href='shop-buy-more-detail')
+                span.glyphicon.glyphicon-pencil2
+              a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
+                span.glyphicon.glyphicon-remove
+          tr
+            td
+              img.width-6(src='images/demo/shop-item-2-1.jpg')
+            td {product_name}
+            td {product_id}
+            td 590
+            td
+              span.text-danger 413
+            td 8 折
+            td 不限時
+            td.text-right
+              a.btn.btn-link(href='shop-buy-more-detail')
+                span.glyphicon.glyphicon-pencil2
+              a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
+                span.glyphicon.glyphicon-remove
+          tr
+            td
+              img.width-6(src='images/demo/shop-item-3-1.jpg')
+            td {product_name}
+            td {product_id}
+            td 590
+            td
+              span.text-danger 413
+            td 7 折
+            td
+              | 2015-10-03
+              br
+              | 2015-10-22
+            td.text-right
+              a.btn.btn-link(href='shop-buy-more-detail')
+                span.glyphicon.glyphicon-pencil2
+              a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
+                span.glyphicon.glyphicon-remove
+      hr.dashed-line
+      .text-center
+        //
+          pagination-block
+          ==================================================
+        ul.list-inline.m-bottom-0.m-top-1
+          li.border-right-1.p-right-2
+            a(href='#') 上一頁
+          li.border-right-1.p-right-2 第 15 之 20
+          li
+            a(href='#') 下一頁
+      // /text-center
+    // /tab-pane
+  // /tab-content

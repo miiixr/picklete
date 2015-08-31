@@ -80,7 +80,8 @@ describe("about Order", () => {
       });
     });
   });
-  describe("get Order status.", () => {
+  describe("about Order status.", () => {
+    let testOrder = {};
     before( async (done) => {
       let newUser = {
         username: "testOrderUser",
@@ -92,11 +93,11 @@ describe("about Order", () => {
 
       let newOrder = {
         quantity: 10,
-        SerialNumber: '11223344',
+        serialNumber: '11223344',
         UserId: createdUser.id
       };
 
-      await db.Order.create(newOrder)
+      testOrder = await db.Order.create(newOrder);
       done();
 
     });
@@ -141,5 +142,30 @@ describe("about Order", () => {
         return done(err);
       });
     });
+
+    it("update order status to paymentConfirm. ", async (done) => {
+      request(sails.hooks.http.app)
+      .get(`/order/statusUpdate/${testOrder.id}?status=paymentConfirm`)
+      .end(async (err, res) => {
+        let order = await db.Order.findById(testOrder.id);
+        order.status.should.be.equal('paymentConfirm');
+
+        done(err);
+      });
+
+
+    });
+    it("update order status to deliveryConfirm. ", async (done) => {
+      request(sails.hooks.http.app)
+      .get(`/order/statusUpdate/${testOrder.id}?status=deliveryConfirm`)
+      .end(async (err, res) => {
+        let order = await db.Order.findById(testOrder.id);
+        order.status.should.be.equal('deliveryConfirm');
+
+        done(err);
+      });
+    });
+
+
   });
 });

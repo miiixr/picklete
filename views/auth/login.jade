@@ -1,27 +1,26 @@
 extends ./../layout
 
-
 block body
   if (errors)
-    each error in errors
-      include ./../common/warning
+   each error in errors
+     include ./../common/warning
 
   main.login(role="main")
-    .col-md-12.site-login
-      h1.login-title 帳號登入
-      form(role='form', action='/auth/local', method='post')
-        .form-horizontal
-          .form-group
-            .col-md-12
-              input#identifier.form-control(type='text', name='identifier', placeholder='輸入 E-mail 或帳號', required)
-          .form-group
-            .col-md-12
-              input#password.form-control(type='password', name='password', placeholder='密碼', required)
-          .form-group
-            button.btn.btn-default(type='submit') 登入
-            a.link(href="") 忘記帳號密碼
+   .col-md-12.site-login
+     h1.login-title 帳號登入
+     form(role='form', action='/auth/local', method='post')
+       .form-horizontal
+         .form-group
+           .col-md-12
+             input#identifier.form-control(type='text', name='identifier', placeholder='輸入 E-mail 或帳號', required)
+         .form-group
+           .col-md-12
+             input#password.form-control(type='password', name='password', placeholder='密碼', required)
+         .form-group
+           button.btn.btn-default(type='submit') 登入
+           a.link(href="") 忘記帳號密碼
 
-    hr.divider
-    .row
-      span 還不是會員嗎？
-      a.link(href="/register") 立即註冊
+   hr.divider
+   .row
+     span 還不是會員嗎？
+     a.link(href="/register") 立即註冊

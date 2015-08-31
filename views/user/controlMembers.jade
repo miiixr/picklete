@@ -1,0 +1,139 @@
+extends ../_layout_auth
+
+block body
+  .row
+    .col-xs-10
+      h2.m-bottom-6 會員列表
+    // /col-xs-10
+    .col-xs-2.text-right
+      a(data-toggle='collapse', href='#collapse-member', aria-expanded='false')
+        span.glyphicon.glyphicon-zoomin.font-size-large.m-top-1
+    // /col-xs-2
+  // /row
+  #collapse-member.collapse.in
+    .well.control-well.p-30.m-bottom-8
+      form.form-horizontal
+        .row.row-m
+          .col-md-4
+            .form-group
+              label.col-md-4.control-label 會員姓名
+              .col-md-8
+                input.form-control(type='text')
+            // /form-group
+          // /col-md-4
+          .col-md-4
+            .form-group
+              label.col-md-4.control-label 關鍵字
+              .col-md-8
+                input.form-control(type='text')
+            // /form-group
+          // /col-md-4
+        // /row
+        .row.row-m
+          .col-md-4
+            .form-group
+              label.col-md-4.control-label 聯絡電話
+              .col-md-8
+                input.form-control(type='text')
+            // /form-group
+          // /col-md-4
+          .col-md-8
+            .form-group
+              label.col-md-2.control-label 建檔日期
+              .col-md-4
+                input.form-control(type='date')
+              .col-md-2.text-center
+                p.form-control-static 至
+              .col-md-4
+                input.form-control(type='date')
+            // /form-group
+          // /col-md-8
+          .col-md-12.text-right
+            a.btn.btn-primary(href='#') 查詢
+          // /col-md-12
+        // /row
+      // /form-horizontal
+    // /well
+  // /collapse
+  .row
+    .col-md-6
+      form.form-inline
+        .form-group
+          label 顯示
+          select.form-control
+            option 10
+            option 20
+            option 30
+            option 40
+            option 50
+          label 筆資料（共 90 筆）
+        // /form-group
+    // /col-md-6
+    .col-md-6.desktop-text-right
+      a.btn.btn-green(href='#') 儲存變更
+    // /col-md-6
+  // /row
+  hr.dashed-line
+  table.table.table-striped
+    thead
+      tr
+        th 姓名
+        th
+          | 生日
+          span.caret
+        th
+          | 電話
+          span.caret
+        th
+          | 信箱
+          span.caret
+        th
+          | 購物金
+          span.caret
+        th
+          | 備註
+          span.caret
+        th
+    tbody
+      tr
+        td {user_name}
+        td 1995.08.16
+        td 0912-345-678
+        td xxxx@gmail.com
+        td 100
+        td 換貨+1
+        td.text-right
+          a.btn.btn-link(href='member-detail')
+            span.glyphicon.glyphicon-plus-circle
+      tr
+        td {user_name}
+        td 1995.08.16
+        td 0912-345-678
+        td xxxx@gmail.com
+        td  -
+        td 換貨+1
+        td.text-right
+          a.btn.btn-link(href='member-detail')
+            span.glyphicon.glyphicon-plus-circle
+      tr
+        td {user_name}
+        td 1995.08.16
+        td 0912-345-678
+        td xxxx@gmail.com
+        td 100
+        td  -
+        td.text-right
+          a.btn.btn-link(href='member-detail')
+            span.glyphicon.glyphicon-plus-circle
+  hr.dashed-line
+  .text-center
+    //
+      pagination-block
+      ==================================================
+    ul.list-inline.m-bottom-0.m-top-1
+      li.border-right-1.p-right-2
+        a(href='#') 上一頁
+      li.border-right-1.p-right-2 第 15 之 20
+      li
+        a(href='#') 下一頁
+  // /text-center

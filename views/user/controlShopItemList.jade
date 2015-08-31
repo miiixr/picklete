@@ -1,0 +1,204 @@
+extends ../_layout_auth
+
+block body
+  h2.m-bottom-6 商品列表
+  .well.control-well.p-30.m-bottom-8
+    form.form-horizontal
+      .row.row-m
+        .col-md-4
+          .form-group
+            label.col-md-4.control-label 品牌名稱
+            .col-md-8
+              select.form-control
+                option 1
+                option 2
+                option 3
+                option 4
+                option 5
+          // /form-group
+        // /col-md-4
+        .col-md-4
+          .form-group
+            label.col-md-4.control-label 關鍵字
+            .col-md-8
+              input.form-control(type='text')
+          // /form-group
+        // /col-md-4
+        .col-md-4
+          .form-group
+            label.col-md-4.control-label 大館別
+            .col-md-8
+              select.form-control
+                option 1
+                option 2
+                option 3
+                option 4
+                option 5
+          // /form-group
+        // /col-md-4
+      // /row
+      .row.row-m
+        .col-md-4
+          .form-group
+            label.col-md-4.control-label 商品名稱
+            .col-md-8
+              input.form-control(type='text')
+          // /form-group
+        // /col-md-4
+        .col-md-4
+          .form-group
+            label.col-md-4.control-label 商品貨號
+            .col-md-8
+              input.form-control(type='text')
+          // /form-group
+        // /col-md-4
+        .col-md-4
+          .form-group
+            label.col-md-4.control-label 小館別
+            .col-md-8
+              select.form-control
+                option 1
+                option 2
+                option 3
+                option 4
+                option 5
+          // /form-group
+        // /col-md-4
+      // /row
+      .row.row-m
+        .col-md-4
+          .form-group
+            label.col-md-4.control-label 商品售價
+            .col-md-8
+              input.form-control(type='text')
+          // /form-group
+        // /col-md-4
+        .col-md-4
+          .form-group
+            label.col-md-4.control-label 目前庫存
+            .col-md-3.p-right-0
+              input.form-control(type='text')
+            .col-md-2.p-left-0.p-right-0.text-center
+              p.form-control-static 至
+            .col-md-3.p-left-0
+              input.form-control(type='text')
+          // /form-group
+        // /col-md-4
+      // /row
+      .row.row-m
+        .col-md-4
+          .form-group
+            label.col-md-4.control-label 販售狀態
+            .col-md-8
+              select.form-control
+                option 1
+                option 2
+                option 3
+                option 4
+                option 5
+          // /form-group
+        // /col-md-4
+        .col-md-8
+          .form-group
+            label.col-md-2.control-label 建檔日期
+            .col-md-4
+              input.form-control(type='date')
+            .col-md-2.text-center
+              p.form-control-static 至
+            .col-md-4
+              input.form-control(type='date')
+          // /form-group
+        // /col-md-7
+        .col-md-12.text-right
+          a.btn.btn-primary(href='#') 查詢
+        // /col-md-12
+      // /row
+    // /form-horizontal
+  // /well
+  .row
+    .col-md-6
+      form.form-inline
+        .form-group
+          label 顯示
+          select.form-control
+            option 10
+            option 20
+            option 30
+            option 40
+            option 50
+          label 筆資料（共 90 筆）
+        // /form-group
+    // /col-md-6
+    .col-md-6.desktop-text-right
+      a.btn.btn-green(href='#') 儲存變更
+    // /col-md-6
+  // /row
+  hr.dashed-line
+  table.table.table-striped
+    thead
+      tr
+        th 主圖
+        th
+          | 商品名稱
+          span.caret
+        th
+          | 售價
+          span.caret
+        th
+          | 貨號
+          span.caret
+        th
+          | 建檔日期
+          span.caret
+        th
+          | 狀態
+          span.caret
+        th
+          | 目前庫存
+          span.caret
+        th
+    tbody
+      each product in products
+        tr
+          td
+            img.width-6(src=product.image)
+          td #{product.name}
+          td #{product.price}
+          td #{product.id}
+          td #{product.createdAt}
+          td
+            .btn-group.btn-group-switch(data-toggle='buttons')
+              label.btn.btn-default.btn-sm(class=product.isPublish ? "active" : "")
+                input#option2(type='radio', name='options', autocomplete='off')
+                span.btn-text 上架
+              label.btn.btn-default.btn-hide.btn-sm(class=!product.isPublish ? "active" : "")
+                input#option1(type='radio', name='options', autocomplete='off', checked='')
+                span.btn-text 隱藏
+            // /btn-group-switch
+          td
+            .input-group.input-group-count.input-group-sm.max-width-100
+              span.input-group-btn
+                button.btn.btn-default.btn-number(type='button', disabled='disabled', data-type='minus', data-field='quant[1]')
+                  span.glyphicon.glyphicon-minus
+              // /input-group-btn
+              input.form-control.input-number.text-center(type='text', name='quant[1]', value='#{product.stockQuantity}', min='1', max='999')
+              span.input-group-btn
+                button.btn.btn-default.btn-number(type='button', data-type='plus', data-field='quant[1]')
+                  span.glyphicon.glyphicon-plus
+              // /input-group-btn
+            // /input-group
+          td.text-right
+            a.btn.btn-link(href='shop-item-add')
+              span.glyphicon.glyphicon-pencil2
+  hr.dashed-line
+  .text-center
+    //
+      pagination-block
+      ==================================================
+    ul.list-inline.m-bottom-0.m-top-1
+      li.border-right-1.p-right-2
+        a(href='#') 上一頁
+      li.border-right-1.p-right-2 第 15 之 20
+      li
+        a(href='#') 下一頁
+  // /text-center

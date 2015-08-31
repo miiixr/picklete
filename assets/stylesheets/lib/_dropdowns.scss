@@ -307,7 +307,14 @@
       }
     }
     h5,h6 {
-      margin: 5px 0;
+      font-family: $font-family-Roboto;
+      letter-spacing: 1px;
+    }
+    h6 {
+      margin-bottom: 3px;
+    }
+    h5 {
+      margin-top: 3px;
     }
   }
 }
