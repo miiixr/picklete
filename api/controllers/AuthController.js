@@ -62,8 +62,13 @@ AuthController = {
         if (err) {
           return tryAgain(err);
         }
+        console.log(user);
         req.session.authenticated = true;
-        res.redirect('/');
+
+        if (user.RoleId == 2) {
+          return res.redirect('/admin/goods');
+        } 
+        return res.redirect('/');
       });
     });
   },
