@@ -1,6 +1,6 @@
 describe("about User model operation.", function() {
   it('create User with admin', function(done) {
-    let newUser = {
+    var newUser = {
       username: 'TestUser01',
       email: 'TestUser01@test.com',
       admin: true
@@ -11,7 +11,7 @@ describe("about User model operation.", function() {
     });
   });
   it('create User with user', function(done) {
-    let newUser = {
+    var newUser = {
       username: 'TestUser02',
       email: 'TestUser02@test.com',
       admin: false
