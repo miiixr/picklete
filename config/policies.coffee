@@ -18,7 +18,7 @@ http://sailsjs.org/#/documentation/reference/sails.config/sails.config.policies.
 module.exports.policies = {
   '*': [ 'passport']
   ProductController:
-    index: ['loginRequired']
+    list: ['loginRequired']
   OrderController:
     index: ['loginRequired']
 }
