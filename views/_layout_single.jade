@@ -3,57 +3,24 @@ html
   head
     title ec-platform
 
-    // Viewport mobile tag for sensible mobile support
     meta(name="viewport",content="width=device-width, initial-scale=1, maximum-scale=1")
 
     link(href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.0/flatly/bootstrap.min.css", rel="stylesheet")
     link(href="//eternicode.github.io/bootstrap-datepicker/bootstrap-datepicker/css/datepicker3.css", rel="stylesheet")
-    link(href='https://fonts.googleapis.com/css?family=Roboto:400,700', rel='stylesheet', type='text/css')
+
     link(href="//cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.1.2/css/material-design-iconic-font.min.css", rel="stylesheet")
 
-    // Default home page
-    // STYLES
-    link(rel="stylesheet", href="/stylesheets/bootstrap.css")
-    link(rel="stylesheet", href="/stylesheets/importer.css")
-    // STYLES END
+    link(rel="stylesheet", href="/styles/importer.css")
     block styles
 
   body(ng-app="mainApp", ng-controller="mainCtrl")
     block body
 
-    // The linker searches for this tag and adds js.  If there's no linker, we point to sails.io.js
-    // SCRIPTS
     script(src="/bower/jquery/jquery.js")
-    script(src="/bower/moment/moment.js")
-    script(src="/javascripts/plugin/bootstrap.js")
-    script(src="/javascripts/admin/department.js")
-    script(src="/javascripts/bootstrap/affix.js")
-    script(src="/javascripts/bootstrap/alert.js")
-    script(src="/javascripts/bootstrap/button.js")
-    script(src="/javascripts/bootstrap/carousel.js")
-    script(src="/javascripts/bootstrap/collapse.js")
-    script(src="/javascripts/bootstrap/dropdown.js")
-    script(src="/javascripts/bootstrap/modal.js")
-    script(src="/javascripts/bootstrap/popover.js")
-    script(src="/javascripts/bootstrap/scrollspy.js")
-    script(src="/javascripts/bootstrap/tab.js")
-    script(src="/javascripts/bootstrap/tooltip.js")
-    script(src="/javascripts/bootstrap/transition.js")
-    script(src="/javascripts/login.js")
-    script(src="/javascripts/plugin/bootstrap-sprockets.js")
-    script(src="/javascripts/plugin/bootstrap.min.js")
-    script(src="/javascripts/plugin/cbpAnimatedHeader-product.js")
-    script(src="/javascripts/plugin/cbpAnimatedHeader.js")
-    script(src="/javascripts/plugin/cbpScroller.js")
-    script(src="/javascripts/plugin/classie.js")
-    script(src="/javascripts/plugin/input-number.js")
-    script(src="/javascripts/plugin/jasny-bootstrap.js")
-    script(src="/javascripts/plugin/modernizr.custom.js")
-    script(src="/javascripts/plugin/notifyme.js")
-    script(src="/javascripts/plugin/scrolltotop.js")
-    script(src="/javascripts/plugin/tagsinput.js")
-    script(src="/javascripts/plugin/uisearch.js")
-    script(src="/javascripts/user/sidebar.js")
-    // SCRIPTS END
-    //- script(src="//localhost:9091")
+    script(src="/js/app/app.js")
+    script( src='//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js' )
+    script( src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js' )
+    script( src="//eternicode.github.io/bootstrap-datepicker/bootstrap-datepicker/js/bootstrap-datepicker.js" )
+    script( src="//eternicode.github.io/bootstrap-datepicker/bootstrap-datepicker/js/locales/bootstrap-datepicker.zh-TW.js" )
+    script(src="//github.com/makeusabrew/bootbox/releases/download/v4.4.0/bootbox.js")
     block scripts
