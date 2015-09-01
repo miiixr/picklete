@@ -21,6 +21,44 @@ module.exports = {
 
   },
 
+  findAllComplete: async () => {
+    let orders = await db.Order.findAll({
+      include: [
+        {
+          model: db.User
+        }, {
+          model: db.Shipment
+        }, {
+          model: db.OrderItem
+        }
+      ]
+    });
+
+    return orders;
+
+  },
+  findAllByUserComplete: async (userData) => {
+    let orders = await db.Order.findAll({
+      where: {
+        UserId: userData.id
+      },
+      include: [
+        {
+          model: db.User
+        }, {
+          model: db.Shipment
+        }, {
+          model: db.OrderItem
+        }
+      ]
+    });
+
+    return orders;
+
+  },
+
+
+
   create: async (newOrder) => {
     let result = {};
 

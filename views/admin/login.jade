@@ -1,5 +1,9 @@
 extends ./../_layout_admin
 block body
+    if (errors)
+     each error in errors
+       include ./../common/warning
+
 
     .container.font-size-slarge
       .row.m-top-10.m-bottom-10
