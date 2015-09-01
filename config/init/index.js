@@ -9,10 +9,7 @@ module.exports = {
   },
   basicData: async () => {
 
-    if(sails.config.initData){
-      if(sails.config.initData === 'trunk')
-        trunk.createTestData();
-    }
+
 
 
     var roleAdmin = {
@@ -45,13 +42,16 @@ module.exports = {
   }  ,
   testData: async () => {
 
+    if(sails.config.initData){
+      if(sails.config.initData === 'trunk')
+        await trunk.createTestData();
+    }
+
     var roleUser = {
       authority: 'user',
       comment: 'site user'
     };
     var createRoleUser = await db.Role.create(roleUser);
-
-
 
 
     var newBuyer = {
