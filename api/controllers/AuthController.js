@@ -8,15 +8,20 @@
 var AuthController;
 
 AuthController = {
+
+  admin: (req, res) => {
+    return res.redirect('/admin/goods');
+  },
+
   login: function(req, res) {
-    res.view({
+    res.view('admin/login', {
       errors: req.flash('error')
     });
   },
   logout: function(req, res) {
     req.logout();
     req.session.authenticated = false;
-    res.redirect('/');
+    res.redirect('/admin/login');
   },
   register: function(req, res) {
     res.view({
@@ -57,8 +62,13 @@ AuthController = {
         if (err) {
           return tryAgain(err);
         }
+        console.log(user);
         req.session.authenticated = true;
-        res.redirect('/');
+
+        if (user.RoleId == 2) {
+          return res.redirect('/admin/goods');
+        }
+        return res.redirect('/');
       });
     });
   },

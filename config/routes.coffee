@@ -35,15 +35,29 @@ module.exports.routes = {
 
   'get /admin/login' : 'UserController.controlLogin'
   'get /admin/index-slider' : 'UserController.indexSlider'
-  'get /admin/index-slider-detail' : 'UserController.indexSliderDetail'  
+  'get /admin/index-slider-detail' : 'UserController.indexSliderDetail'
   'get /admin/password' : 'UserController.password'
   'get /admin/index-exclusive' : 'UserController.indexExclusive'
   'get /admin/index-theme' : 'UserController.indexTheme'
-  'get /admin/brands' : 'UserController.controlBrands'
-  'get /admin/brands-detail' : 'UserController.controlBrandsDetail'
-  'get /admin/shop-type' : 'UserController.controlShopType'
-  'get /admin/shop-item-add' : 'UserController.controlShopItemAdd'
-  'get /admin/shop-item-list' : 'UserController.controlShopItemList'
+
+  'get /admin/' : 'AuthController.admin'
+  'get /admin/brands' : 'BrandController.list'
+  'get /admin/brands/create' : 'BrandController.create'
+  'post /admin/brands/create' : 'BrandController.create'
+
+  'get /admin/department' : 'DptController.list'
+  'post /admin/department/create': 'DptController.create'
+  'post /admin/department/sub/create' : 'DptSubController.create'
+
+  'get /admin/goods' : 'ProductController.list'
+  'get /admin/goods/update' : 'ProductController.showUpdate'
+  'get /admin/goods/create' : 'ProductController.showCreate'
+  'post /admin/goods/create' : 'ProductController.createUpdate'
+
+
+
+
+  # 'get /admin/shop-item-list' : 'UserController.controlShopItemList'
   'get /admin/shop-discount' : 'UserController.controlShopDiscount'
   'get /admin/shop-buy-more' : 'UserController.controlShopBuyMore'
   'get /admin/shop-buy-more-detail' : 'UserController.controlShopBuyMoreDetail'
@@ -54,7 +68,7 @@ module.exports.routes = {
   'get /admin/shop-discount-detail2' : 'UserController.controlShopDiscountDetail2'
   'get /admin/shop-discount-add-item' : 'UserController.controlShopDiscountAddItem'
   'get /admin/shop-report-form' : 'UserController.controlShopReportForm'
-  'get /admin/order' : 'UserController.controlOrder'
+  'get /admin/order' : 'OrderController.index'
   'get /admin/about' : 'UserController.controlAbout'
   'get /admin/qa' : 'UserController.controlQa'
   'get /admin/qa-detail' : 'UserController.controlQaDetail'
@@ -63,7 +77,15 @@ module.exports.routes = {
   'get /admin/members' : 'UserController.controlMembers'
   'get /admin/member-detail' : 'UserController.controlMemberDetail'
 
+  'get /admin/brand' : 'BrandController.list'
+  'post /admin/brand' : 'BrandController.create'
+  'put /admin/brand/:brand' : 'BrandController.update'
 
+  # 'get /admin/dpt' : 'DptController.list'
+  # 'post /admin/dpt' : 'DptController.create'
+
+  # 'get /admin/dpt_sub' : 'DptSubController.list'
+  # 'post /admin/dpt_sub' : 'DptSubController.create'
 
   'post /auth/local': 'AuthController.callback'
   'post /auth/local/:action': 'AuthController.callback'

@@ -1,5 +1,9 @@
 extends ./../_layout_admin
 block body
+    if (errors)
+     each error in errors
+       include ./../common/warning
+
 
     .container.font-size-slarge
       .row.m-top-10.m-bottom-10
@@ -9,18 +13,18 @@ block body
             | &#x9;&#x9;&#x9;&#x9;
             hr
             | &#x9;&#x9;&#x9;&#x9;
-            form(action="/auth", method="POST").form-horizontal
+            form(action="/auth/local", method="POST").form-horizontal
               .form-group
                 label.col-md-2.control-label &#x5E33;&#x865F;
                 | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
                 .col-md-10
-                  input.form-control(type='text', placeholder='User name')
+                  input.form-control(type='text', placeholder='User name', name='identifier')
               // /form-group
               .form-group
                 label.col-md-2.control-label &#x5BC6;&#x78BC;
                 | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
                 .col-md-10
-                  input.form-control(type='password', placeholder='Password')
+                  input.form-control(type='password', placeholder='Password', name='password')
               // /form-group
               .row.m-top-6
                 .col-sm-6.col-sm-offset-3

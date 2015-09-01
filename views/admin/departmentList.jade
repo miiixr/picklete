@@ -1,0 +1,78 @@
+extends ../_layout_auth
+block body
+  h2.m-bottom-6 館別管理
+  .row
+    #dpt-big.col-md-3.border-right-1.m-bottom-6
+      h4.m-bottom-4.text-gray 大館別
+        a.btn.btn-sm-circle.btn-green.m-left-1(href='#', data-toggle='modal', data-target='#modal-control-shop-type-lg')
+          span.glyphicon.glyphicon-plus
+      .list-group.list-group-edit.list-group-lg
+        each dpt, index in dpts
+          .list-group-item.edit-link
+            span.glyphicon.glyphicon-menu.m-right-2
+            a(href='#', data-toggle='modal', data-target='#modal-control-shop-type-lg')
+              | #{dpt.name}
+              span.glyphicon.glyphicon-pencil2.m-left-1
+          // /list-group-item
+        .list-group-item.edit-link
+          span.glyphicon.glyphicon-menu.m-right-2
+          | 特別企劃
+        // /list-group-item
+      // /list-group-edit
+    // /col-md-3
+    #small-dpt.col-md-3.border-right-1.m-bottom-6
+      h4.m-bottom-4.text-gray
+        | 小館別
+        a.btn.btn-sm-circle.btn-green.m-left-1(href='#', data-toggle='modal', data-target='#modal-control-shop-type-sm')
+          span.glyphicon.glyphicon-plus
+      .list-group.list-group-edit
+        .list-group-item.edit-link
+          | 閃購專區
+          span.glyphicon.glyphicon-locked
+        // /list-group-item
+        .list-group-item.edit-link
+          | 優惠商品
+          span.glyphicon.glyphicon-locked
+        // /list-group-item
+        .list-group-item.edit-link
+          | 本月主題
+          span.glyphicon.glyphicon-locked
+        DptSubs
+        each subDpt, index in dpts[0].DptSubs
+          // /list-group-item
+          .list-group-item.edit-link
+            a(href='#', data-toggle='modal', data-target='#modal-control-shop-type-sm')
+              | #{subDpt.name}
+              span.glyphicon.glyphicon-pencil2.m-left-1
+            a(href='#', data-toggle='modal', data-target='#modal-delete', data-name='#{subDpt.name}', data-id='#{subDpt.id}')
+              span.glyphicon.glyphicon-remove
+        //- // /list-group-item
+        //- .list-group-item.edit-link
+        //-   a(href='#', data-toggle='modal', data-target='#modal-control-shop-type-sm')
+        //-     | 午茶特輯
+        //-     span.glyphicon.glyphicon-pencil2.m-left-1
+        //-   a(href='#', data-toggle='modal', data-target='#modal-delete')
+        //-     span.glyphicon.glyphicon-remove
+        // /list-group-item
+      // /list-group-edit
+    // /col-md-3
+    .col-md-6
+      //- h4.m-bottom-4.text-gray
+      //-   | 商品列表
+      //- .list-group.list-group-edit.font-size-base
+      //-   .list-group-item.edit-link
+      //-     a(href='shop-item-add')
+      //-       | {product_name}
+      //-       span.glyphicon.glyphicon-pencil2.m-left-1
+      //-   // /list-group-item
+      //-   .list-group-item.edit-link
+      //-     a(href='shop-item-add')
+      //-       | {product_name}
+      //-       span.glyphicon.glyphicon-pencil2.m-left-1
+        // /list-group-item
+      // /list-group-edit
+    // /col-md-6
+  // /row
+
+block js
+  script(src='/javascripts/admin/department.js')

@@ -269,3 +269,24 @@
 .panel-danger {
   @include panel-variant($panel-danger-border, $panel-danger-text, $panel-danger-heading-bg, $panel-danger-border);
 }
+
+.panel-group {
+  .panel-purchase {
+    background: #ebecee;
+    border-radius: 5px;
+    padding: 5px;
+    border: 1px solid #ebecee;
+    .panel-heading {
+      .btn {
+        margin-top: -2px;
+      }
+    }
+    .panel-body {
+      background: #fff;
+    }
+    &.disabled {
+      background: #fff;
+      @include opacity(0.5);
+    }
+  }
+}

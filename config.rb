@@ -1,8 +1,8 @@
-require 'compass/import-once/activate'
-require 'font-awesome-sass'
-require 'bootstrap-sass'
+# require 'compass/import-once/activate'
+# require 'font-awesome-sass'
+# require 'bootstrap-sass'
 
-fonts_dir = "assets/fonts/"
+# fonts_dir = "assets/fonts/"
 images_dir = "assets/images/"
 sass_dir = "assets/stylesheets/"
 css_dir = ".tmp/public/stylesheets/"

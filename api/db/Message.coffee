@@ -1,6 +1,10 @@
 
 module.exports = (sequelize, DataTypes) ->
   Message = sequelize.define('Message', {
+    sendBy: DataTypes.ENUM(
+      'email',
+      'sms'
+    )
     type: DataTypes.ENUM(
       'orderConfirm',
       'paymentConfirm',

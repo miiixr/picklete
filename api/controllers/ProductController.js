@@ -1,4 +1,88 @@
+import moment from "moment";
+
+
 let ProductController = {
+
+  // show create page and prepare all stuff
+  showCreate: async (req, res) => {
+    // let products = await ProductService.findAllWithImages();
+    try {
+      let brands = await db.Brand.findAll();
+      let dpts = await db.Dpt.findAll({
+          include: [{
+            model: db.DptSub
+          }],
+          order: ['weight', 'DptSubs.weight']
+        });
+
+      let tags = await db.Tag.findAll({ limit: 15});
+
+      return res.view('admin/goodCreate', {
+        brands,
+        dpts,
+        tags
+      });
+    } catch (error) {
+      return res.serverError(error);
+    }
+  },
+
+  // list all goods result, include query items
+  list: async (req,res) => {
+    try {
+      let products = await ProductService.findAllWithImages();
+      // format datetime
+      for (let product of products) {
+          product.createdAt = moment(products.createdAt).format("YYYY-MM-DD");
+      }
+      return res.view('admin/goodList', {
+        products,
+        pageName: "shop-item-list"
+      });
+    } catch (error) {
+      return res.serverError(error);
+    }
+  },
+
+  showUpdate: async (req, res) => {
+    // let products = await ProductService.findAllWithImages();
+    let brands = await db.Brand.findAll();
+    let dpts = await db.Dpt.findAll({
+        include: [{
+          model: db.DptSub
+        }],
+        order: ['weight', 'DptSubs.weight']
+      });
+    let tags = await db.Tag.findAll({ limit: 15});
+
+    let gid = req.query.id;
+    let good = await ProductService.findAllWithImages(gid);
+    
+    if ( ! good) {
+      return res.redirect('/admin/goods');
+    }
+
+    // have to query this is
+    return res.view('admin/goodCreate', {
+      good,
+      brands,
+      dpts,
+      tags
+    });
+  },
+
+  createUpdate: async (req, res) => {
+    let newProduct = req.body;
+    console.log(newProduct);
+    try {
+      await ProductService.createProduct(req);
+    } catch (error) {
+      return res.serverError(error);
+    }
+    return res.redirect('/admin/goods/');
+    // return res.json(newProduct);
+  },
+
   findOne: async (req, res) => {
     try {
       let productId = req.param("productId");

@@ -211,4 +211,9 @@
       @include scale(0.85);
     }
   }
+  &.input-group-sm {
+    .form-control {
+      height: 30px;
+    }
+  }
 }

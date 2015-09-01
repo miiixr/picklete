@@ -158,99 +158,38 @@ block body
           span.caret
         th
     tbody
-      tr
-        td
-          img.width-6(src='images/demo/shop-item-1-1.jpg')
-        td {product_name}
-        td 590
-        td JC1129
-        td 2015-06-08
-        td
-          .btn-group.btn-group-switch(data-toggle='buttons')
-            label.btn.btn-default.btn-hide.btn-sm
-              input#option1(type='radio', name='options', autocomplete='off', checked='')
-              span.btn-text 隱藏
-            label.btn.btn-default.btn-sm.active
-              input#option2(type='radio', name='options', autocomplete='off')
-              span.btn-text 上架
-          // /btn-group-switch
-        td
-          .input-group.input-group-count.input-group-sm.max-width-100
-            span.input-group-btn
-              button.btn.btn-default.btn-number(type='button', disabled='disabled', data-type='minus', data-field='quant[1]')
-                span.glyphicon.glyphicon-minus
-            // /input-group-btn
-            input.form-control.input-number.text-center(type='text', name='quant[1]', value='999', min='1', max='999')
-            span.input-group-btn
-              button.btn.btn-default.btn-number(type='button', data-type='plus', data-field='quant[1]')
-                span.glyphicon.glyphicon-plus
-            // /input-group-btn
-          // /input-group
-        td.text-right
-          a.btn.btn-link(href='shop-item-add')
-            span.glyphicon.glyphicon-pencil2
-      tr
-        td
-          img.width-6(src='images/demo/shop-item-2-1.jpg')
-        td {product_name}
-        td 590
-        td JC1129
-        td 2015-06-08
-        td
-          .btn-group.btn-group-switch(data-toggle='buttons')
-            label.btn.btn-default.btn-hide.btn-sm
-              input#option1(type='radio', name='options', autocomplete='off', checked='')
-              span.btn-text 隱藏
-            label.btn.btn-default.btn-sm.active
-              input#option2(type='radio', name='options', autocomplete='off')
-              span.btn-text 上架
-          // /btn-group-switch
-        td
-          .input-group.input-group-count.input-group-sm.max-width-100
-            span.input-group-btn
-              button.btn.btn-default.btn-number(type='button', disabled='disabled', data-type='minus', data-field='quant[1]')
-                span.glyphicon.glyphicon-minus
-            // /input-group-btn
-            input.form-control.input-number.text-center(type='text', name='quant[1]', value='999', min='1', max='999')
-            span.input-group-btn
-              button.btn.btn-default.btn-number(type='button', data-type='plus', data-field='quant[1]')
-                span.glyphicon.glyphicon-plus
-            // /input-group-btn
-          // /input-group
-        td.text-right
-          a.btn.btn-link(href='shop-item-add')
-            span.glyphicon.glyphicon-pencil2
-      tr
-        td
-          img.width-6(src='images/demo/shop-item-3-1.jpg')
-        td {product_name}
-        td 590
-        td JC1129
-        td 2015-06-08
-        td
-          .btn-group.btn-group-switch(data-toggle='buttons')
-            label.btn.btn-default.btn-hide.btn-sm.active
-              input#option1(type='radio', name='options', autocomplete='off', checked='')
-              span.btn-text 隱藏
-            label.btn.btn-default.btn-sm
-              input#option2(type='radio', name='options', autocomplete='off')
-              span.btn-text 上架
-          // /btn-group-switch
-        td
-          .input-group.input-group-count.input-group-sm.max-width-100
-            span.input-group-btn
-              button.btn.btn-default.btn-number(type='button', disabled='disabled', data-type='minus', data-field='quant[1]')
-                span.glyphicon.glyphicon-minus
-            // /input-group-btn
-            input.form-control.input-number.text-center(type='text', name='quant[1]', value='999', min='1', max='999')
-            span.input-group-btn
-              button.btn.btn-default.btn-number(type='button', data-type='plus', data-field='quant[1]')
-                span.glyphicon.glyphicon-plus
-            // /input-group-btn
-          // /input-group
-        td.text-right
-          a.btn.btn-link(href='shop-item-add')
-            span.glyphicon.glyphicon-pencil2
+      each product in products
+        tr
+          td
+            img.width-6(src=product.image)
+          td #{product.name}
+          td #{product.price}
+          td #{product.id}
+          td #{product.createdAt}
+          td
+            .btn-group.btn-group-switch(data-toggle='buttons')
+              label.btn.btn-default.btn-sm(class=product.isPublish ? "active" : "")
+                input#option2(type='radio', name='options', autocomplete='off')
+                span.btn-text 上架
+              label.btn.btn-default.btn-hide.btn-sm(class=!product.isPublish ? "active" : "")
+                input#option1(type='radio', name='options', autocomplete='off', checked='')
+                span.btn-text 隱藏
+            // /btn-group-switch
+          td
+            .input-group.input-group-count.input-group-sm.max-width-100
+              span.input-group-btn
+                button.btn.btn-default.btn-number(type='button', disabled='disabled', data-type='minus', data-field='quant[1]')
+                  span.glyphicon.glyphicon-minus
+              // /input-group-btn
+              input.form-control.input-number.text-center(type='text', name='quant[1]', value='#{product.stockQuantity}', min='1', max='999')
+              span.input-group-btn
+                button.btn.btn-default.btn-number(type='button', data-type='plus', data-field='quant[1]')
+                  span.glyphicon.glyphicon-plus
+              // /input-group-btn
+            // /input-group
+          td.text-right
+            a.btn.btn-link(href='shop-item-add')
+              span.glyphicon.glyphicon-pencil2
   hr.dashed-line
   .text-center
     //

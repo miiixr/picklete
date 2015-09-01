@@ -762,6 +762,9 @@
         background-image: none, url("../images/logo-s.svg");
         background-size: 120px 34px;
         margin: 16px 15px;
+        @media (min-width: $grid-float-breakpoint) {
+          margin-left: 0;
+        }
       }
       .dropdown-menu-full {
         top: 67px;

@@ -92,13 +92,17 @@
       border: 2px solid #fff;
       @include opacity(0.8);
       border-radius: 50%;
-      width: 35px;
-      height: 35px;
+      width: 36px;
+      height: 36px;
       color: #fff;
       display: block;
       text-align: center;
       line-height: 25px;
       font-weight: normal;
+      span {
+        position: relative;
+        top: -1px;
+      }
     }
   }
 }

@@ -88,7 +88,7 @@ mark,
 // Alignment
 .text-left           { text-align: left; }
 .text-right          { text-align: right; }
-.text-center         { text-align: center; }
+.text-center         { text-align: center !important; }
 .text-justify        { text-align: justify; }
 .text-nowrap         { white-space: nowrap; }
 .desktop-text-center {
@@ -99,6 +99,17 @@ mark,
 .desktop-text-right {
   @media (min-width: $grid-float-breakpoint) {
     text-align: right;
+  }
+}
+.desktop-text-left {
+  @media (min-width: $grid-float-breakpoint) {
+    text-align: left;
+  }
+}
+.mobile-text-center {
+  text-align: center;
+  @media (min-width: $grid-float-breakpoint) {
+    text-align: left;
   }
 }
 // Transformation
@@ -174,12 +185,14 @@ mark,
 .page-header {
   padding-bottom: (($line-height-computed / 2) - 1);
   margin: ($line-height-computed * 2) 0 $line-height-computed;
-  text-transform:uppercase;
   h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     line-height: 1.8;
     letter-spacing: 2px;
     color: #32373C;
   }
+}
+.text-uppercase {
+  text-transform:uppercase;
 }
 .page-title {
   font-size: 30px;
@@ -228,6 +241,24 @@ ol {
     display: inline-block;
     padding-left: 5px;
     padding-right: 5px;
+  }
+  &.list-brand {
+    > li {
+      width: 32%;
+      margin-bottom: 15px;
+      .border-block-1 {
+        border: 1px solid #eee;
+      }
+      @media (min-width: $screen-sm-min) {
+        width: 24.5%;
+      }
+      @media (min-width: $screen-md-min) {
+        width: 13.9%;
+      }
+      @media (min-width: $screen-lg-min) {
+        width: 13.9%;
+      }
+    }
   }
   &.list-shop-type {
     margin: 0;
@@ -289,7 +320,23 @@ ol {
     }
   }
 }
-
+.col-md-10 {
+  .list-inline {
+    &.list-brand {
+      > li {
+        @media (min-width: $screen-sm-min) {
+          width: 24%;
+        }
+        @media (min-width: $screen-md-min) {
+          width: 13.5%;
+        }
+        @media (min-width: $screen-lg-min) {
+          width: 13.9%;
+        }
+      }
+    }
+  }
+}
 // Description Lists
 dl {
   margin-top: 0; // Remove browser default
@@ -451,6 +498,9 @@ address {
 }
 .font-size-xxxxlarge {
   font-size: $font-size-xxxxlarge !important;
+  &.glyphicon-plus {
+    font-size: 52px !important;
+  }
 }
 .font-size-xxxlarge {
   font-size: $font-size-xxxlarge !important;
@@ -466,9 +516,6 @@ address {
 }
 .font-size-slarge {
   font-size: $font-size-slarge !important;
-  .form-control {
-    font-size: $font-size-slarge;
-  }
 }
 .font-size-base {
   font-size: $font-size-base !important;
@@ -494,6 +541,9 @@ address {
 .letter-spacing-2 {
   letter-spacing: 2px;
 }
+.letter-spacing-3 {
+  letter-spacing: 3px;
+}
 
 h4 {
   .glyphicon {
@@ -501,4 +551,10 @@ h4 {
       top: 4px;
     }
   }
+}
+.text-roboto {
+  font-family: $font-family-Roboto;
+}
+h1.text-roboto {
+  font-weight: 700;
 }

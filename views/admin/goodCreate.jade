@@ -1,0 +1,490 @@
+extends ../_layout_auth
+
+block body
+  h2.m-bottom-6 商品上架 - kerker
+  form#goodForm(action='/admin/goods/create', method='POST', enctype="multipart/form-data")
+    .well.control-well.p-30.m-left-2.m-bottom-8
+      h3
+        span.label.label-default.p-10-15 館別分類
+      .form-horizontal
+        .form-group
+          label.col-md-2.control-label 品牌名稱
+          .col-md-10
+            label.radio-inline
+              input#brandType(type='radio', name='brandType', value='origin', checked='1')
+              
+              select.form-control#brandSelect(name='brandId')
+                option 選擇品牌
+                each brand, index in brands
+                  option(value='#{brand.id}') #{brand.name}
+            label.radio-inline
+              input#brandType(type='radio', name='brandType', value='custom')
+              input.form-control(type='text', name='customBrand', value='OTHER', placeholder='自訂品牌名稱')
+            a(href='#', data-toggle='tooltip', title='', data-original-title='品牌名稱自訂將會統一列入 Other 品牌區')
+              span.glyphicon.glyphicon-info
+        // /form-group
+        .form-group
+          label.col-md-2.control-label 館別分類
+          .col-md-4
+            select.form-control(name='dptId')
+              option 選擇大館別
+              each dpt, index in dpts 
+                option(value='#{dpt.id}') #{dpt.name}
+          .col-md-4
+            select.form-control(name='dptSubId')
+              option 選擇小館別
+              each dptSub, index in dpts[0].DptSubs
+                option(value='#{dptSub.id}') #{dptSub.name}
+          .col-md-2
+            a.btn-remove(href='#', data-toggle='modal', data-target='#modal-delete')
+              span.glyphicon.glyphicon-remove
+        // /form-group
+        //- .form-group
+        //-   label.col-md-2.control-label
+        //-   .col-md-4
+        //-     select.form-control
+        //-       option 選擇大館別
+        //-       option 2
+        //-       option 3
+        //-       option 4
+        //-       option 5
+        //-   .col-md-4
+        //-     select.form-control
+        //-       option 選擇小館別
+        //-       option 2
+        //-       option 3
+        //-       option 4
+        //-       option 5
+        //-   .col-md-2
+        //-     a.btn-remove(href='#', data-toggle='modal', data-target='#modal-delete')
+        //-       span.glyphicon.glyphicon-remove
+        //-     a.btn-add(href='#')
+        //-       span.glyphicon.glyphicon-plus
+        // /form-group
+    // /well
+    .well.control-well.p-30.m-left-2.m-bottom-8
+      h3
+        span.label.label-default.p-10-15 基本資訊
+      .form-horizontal
+        .form-group
+          label.col-md-2.control-label 商品名稱
+          .col-md-10
+            input.form-control(type='text', name='name', required='true')
+        // /form-group
+        .row
+          .col-md-4
+            .form-group
+              label.col-md-6.control-label 建議售價
+              .col-md-6
+                input.form-control(type='number', name='price', required='true')
+            // /form-group
+          // /col-md-4
+          .col-md-4
+            .form-group
+              label.col-md-6.control-label 品牌國別
+              .col-md-6
+                input.form-control(type='text', name='country', required='true')
+            // /form-group
+          // /col-md-4
+          .col-md-4
+            .form-group
+              label.col-md-6.control-label 製造產地
+              .col-md-6
+                input.form-control(type='text', name='madeby', required='true')
+            // /form-group
+          // /col-md-4
+        // /row
+        .row
+          .col-md-4
+            .form-group
+              label.col-md-6.control-label 產品材質
+              .col-md-6
+                input.form-control(type='text', name='spec', required='true')
+            // /form-group
+          // /col-md-4
+          .col-md-8
+            .form-group
+              label.col-md-3.control-label 產品尺寸
+              .col-md-9
+                input.form-control(type='text', name='size')
+            // /form-group
+          // /col-md-8
+        // /row
+        .form-group
+          label.col-md-2.control-label 服務項目
+          .col-md-10
+            label.checkbox-inline
+              input#inlineCheckbox1(type='checkbox', name='service[]', value='express', checked='')
+              |  快遞宅配
+            label.checkbox-inline
+              input#inlineCheckbox2(type='checkbox', name='service[]', value='store', checked='')
+              |  超商取貨
+            label.checkbox-inline(disabled='')
+              input#inlineCheckbox3(type='checkbox', name='service[]', value='international', disabled='')
+              |  國際運送
+            label.checkbox-inline
+              input#inlineCheckbox4(type='checkbox', name='service[]', value='package', checked='')
+              |  禮品包裝
+        // /form-group
+        .form-group
+          label.col-md-2.control-label 商品備註
+          .col-md-10
+            input.form-control(type='text', name='comment')
+        // /form-group
+    // /well
+    .well.control-well.p-30.m-left-2.m-bottom-8.font-size-base
+      h3
+        span.label.label-default.p-10-15 款式規格
+      .form-horizontal
+        .row.row-s.border-bottom-1.m-bottom-4
+          .col-md-1.text-center
+            span.glyphicon.glyphicon-menu.font-size-xlarge
+          // /col-md-1
+          .col-md-3
+            //
+              fileinput-img
+              ==================================================
+            .fileinput.fileinput-new(data-provides='fileinput')
+              .fileinput-new.dashed-block-2.min-height-150
+              // /fileinput-new
+              .fileinput-preview.fileinput-exists.border-block-1
+              // /fileinput-preview
+              .fileinput-btn
+                span.btn.btn-default.btn-sm.btn-file
+                  span.fileinput-new Select image
+                  span.fileinput-exists Change
+                  input(type='file', name="good[0][photos][]")
+                a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
+              // /fileinput-btn
+            // /fileinput
+            a(href='#', data-toggle='tooltip', title='', data-original-title='商品圖長寬 600x600 像素，限 JPG/GIF 格式，檔案大小 500KB 以下')
+              span.glyphicon.glyphicon-info
+          // /col-md-3
+          .col-md-3
+            //
+              fileinput-img
+              ==================================================
+            .fileinput.fileinput-new(data-provides='fileinput')
+              .fileinput-new.dashed-block-2.min-height-150
+              // /fileinput-new
+              .fileinput-preview.fileinput-exists.border-block-1
+              // /fileinput-preview
+              .fileinput-btn
+                span.btn.btn-default.btn-sm.btn-file
+                  span.fileinput-new Select image
+                  span.fileinput-exists Change
+                  input(type='file', name="good[0][photos][]")
+                a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
+              // /fileinput-btn
+            // /fileinput
+          // /col-md-3
+          .col-md-4
+            .form-group.form-group-sm
+              label.col-sm-3.control-label 顏色
+              .col-sm-9
+                .btn-group
+                  a.color-filter.color-red(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                  ul.dropdown-menu.dropdown-color
+                    li.p-15
+                      a.color-filter.color-red(href='#')
+                      a.color-filter.color-orange(href='#')
+                      a.color-filter.color-yellow(href='#')
+                      a.color-filter.color-green(href='#')
+                      a.color-filter.color-blue(href='#')
+                      a.color-filter.color-purple(href='#')
+                      a.color-filter.color-deeppink(href='#')
+                      a.color-filter.color-pink(href='#')
+                      a.color-filter.color-black(href='#')
+                      a.color-filter.color-gray(href='#')
+                      a.color-filter.color-graylight(href='#')
+                      a.color-filter.color-gold(href='#')
+                      a.color-filter.color-brown(href='#')
+                      a.color-filter.color-mix(href='#')
+                  input(type='hidden', name="good[0][color]", value='1')
+                  // /dropdown-menu
+                // /btn-group
+            // /form-group
+            .form-group.form-group-sm
+              label.col-sm-3.control-label 款式
+              .col-sm-9
+                input.form-control(type='text', name="good[0][description]")
+            // /form-group
+            .form-group.form-group-sm
+              label.col-sm-3.control-label 貨號
+              .col-sm-9
+                input.form-control(type='text', name="good[0][productNumber]")
+            // /form-group
+            .form-group.form-group-sm
+              label.col-sm-3.control-label 數量
+              .col-sm-9
+                .input-group.input-group-count.input-group-sm.max-width-100
+                  span.input-group-btn
+                    button.btn.btn-default.btn-number(type='button', disabled='disabled', data-type='minus', data-field='quant[1]')
+                      span.glyphicon.glyphicon-minus
+                  // /input-group-btn
+                  input.form-control.input-number.text-center(type='text', name="good[0][stockQuantity]", value='999', min='1', max='999')
+                  span.input-group-btn
+                    button.btn.btn-default.btn-number(type='button', data-type='plus', data-field='quant[1]')
+                      span.glyphicon.glyphicon-plus
+                  // /input-group-btn
+                // /input-group
+            // /form-group
+            .form-group.form-group-sm
+              label.col-sm-3.control-label 狀態
+              .col-sm-9
+                .btn-group.btn-group-switch(data-toggle='buttons')
+                  label.btn.btn-default.btn-hide.btn-sm
+                    input#option1(type='radio', name="good[0][isPublish]", value='false', autocomplete='off', checked='')
+                    span.btn-text 隱藏
+                  label.btn.btn-default.btn-sm.active
+                    input#option2(type='radio', name="good[0][isPublish]", value='true', autocomplete='off')
+                    span.btn-text 上架
+                // /btn-group-switch
+            // /form-group
+          // /col-md-4
+          .col-md-1.text-right
+            a.btn-remove(href='#', data-toggle='modal', data-target='#modal-delete')
+              span.glyphicon.glyphicon-remove
+          // /col-md-1
+        // /row
+        //- .row.row-s.border-bottom-1.m-bottom-4
+        //-   .col-md-1.text-center
+        //-     span.glyphicon.glyphicon-menu.font-size-xlarge
+        //-   // /col-md-1
+        //-   .col-md-3
+        //-     //
+        //-       fileinput-img
+        //-       ==================================================
+        //-     .fileinput.fileinput-new(data-provides='fileinput')
+        //-       .fileinput-new.dashed-block-2.min-height-150
+        //-       // /fileinput-new
+        //-       .fileinput-preview.fileinput-exists.border-block-1
+        //-       // /fileinput-preview
+        //-       .fileinput-btn
+        //-         span.btn.btn-default.btn-sm.btn-file
+        //-           span.fileinput-new Select image
+        //-           span.fileinput-exists Change
+        //-           input(type='file', name='good[00][photos][]')
+        //-         a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
+        //-       // /fileinput-btn
+        //-     // /fileinput
+        //-     a(href='#', data-toggle='tooltip', title='', data-original-title='商品圖長寬 600x600 像素，限 JPG/GIF 格式，檔案大小 500KB 以下')
+        //-       span.glyphicon.glyphicon-info
+        //-   // /col-md-3
+        //-   .col-md-3
+        //-     //
+        //-       fileinput-img
+        //-       ==================================================
+        //-     .fileinput.fileinput-new(data-provides='fileinput')
+        //-       .fileinput-new.dashed-block-2.min-height-150
+        //-       // /fileinput-new
+        //-       .fileinput-preview.fileinput-exists.border-block-1
+        //-       // /fileinput-preview
+        //-       .fileinput-btn
+        //-         span.btn.btn-default.btn-sm.btn-file
+        //-           span.fileinput-new Select image
+        //-           span.fileinput-exists Change
+        //-           input(type='file', name='good[00][photos][]')
+        //-         a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
+        //-       // /fileinput-btn
+        //-     // /fileinput
+        //-   // /col-md-3
+        //-   .col-md-4
+        //-     .form-group.form-group-sm
+        //-       label.col-sm-3.control-label 顏色
+        //-       .col-sm-9
+        //-         .btn-group
+        //-           a.color-filter.color-red(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+        //-           ul.dropdown-menu.dropdown-color
+        //-             li.p-15
+        //-               a.color-filter.color-red(href='#')
+        //-               a.color-filter.color-orange(href='#')
+        //-               a.color-filter.color-yellow(href='#')
+        //-               a.color-filter.color-green(href='#')
+        //-               a.color-filter.color-blue(href='#')
+        //-               a.color-filter.color-purple(href='#')
+        //-               a.color-filter.color-deeppink(href='#')
+        //-               a.color-filter.color-pink(href='#')
+        //-               a.color-filter.color-black(href='#')
+        //-               a.color-filter.color-gray(href='#')
+        //-               a.color-filter.color-graylight(href='#')
+        //-               a.color-filter.color-gold(href='#')
+        //-               a.color-filter.color-brown(href='#')
+        //-               a.color-filter.color-mix(href='#')
+        //-           input(type='hidden', name='good[00][color]')
+        //-           // /dropdown-menu
+        //-         // /btn-group
+        //-     // /form-group
+        //-     .form-group.form-group-sm
+        //-       label.col-sm-3.control-label 款式
+        //-       .col-sm-9
+        //-         input.form-control(type='text')
+        //-     // /form-group
+        //-     .form-group.form-group-sm
+        //-       label.col-sm-3.control-label 貨號
+        //-       .col-sm-9
+        //-         input.form-control(type='text')
+        //-     // /form-group
+        //-     .form-group.form-group-sm
+        //-       label.col-sm-3.control-label 數量
+        //-       .col-sm-9
+        //-         .input-group.input-group-count.input-group-sm.max-width-100
+        //-           span.input-group-btn
+        //-             button.btn.btn-default.btn-number(type='button', disabled='disabled', data-type='minus', data-field='quant[1]')
+        //-               span.glyphicon.glyphicon-minus
+        //-           // /input-group-btn
+        //-           input.form-control.input-number.text-center(type='number', name='good[01][stockQuantity]', value='999', min='1', max='999')
+        //-           span.input-group-btn
+        //-             button.btn.btn-default.btn-number(type='button', data-type='plus', data-field='quant[1]')
+        //-               span.glyphicon.glyphicon-plus
+        //-           // /input-group-btn
+        //-         // /input-group
+        //-     // /form-group
+        //-     .form-group.form-group-sm
+        //-       label.col-sm-3.control-label 狀態
+        //-       .col-sm-9
+        //-         .btn-group.btn-group-switch(data-toggle='buttons')
+        //-           label.btn.btn-default.btn-hide.btn-sm
+        //-             input#option1(type='radio', name='good[01][isPublish]', value='true', autocomplete='off', checked='')
+        //-             span.btn-text 隱藏
+        //-           label.btn.btn-default.btn-sm.active
+        //-             input#option2(type='radio', name='good[01][isPublish]', value='false', autocomplete='off')
+        //-             span.btn-text 上架
+        //-         // /btn-group-switch
+        //-     // /form-group
+        //-   // /col-md-4
+        //-   .col-md-1.text-right
+        //-     a.btn-remove(href='#', data-toggle='modal', data-target='#modal-delete')
+        //-       span.glyphicon.glyphicon-remove
+        //-     a.btn-add(href='#')
+        //-       span.glyphicon.glyphicon-plus
+        //-   // /col-md-1
+        // /row
+    // /well
+    .well.control-well.p-30.m-left-2.m-bottom-8
+      h3
+        span.label.label-default.p-10-15 圖片上傳
+      .row.row-m
+        .col-md-4
+          .edit-block.m-bottom-4
+            a.btn-remove(href='#', data-toggle='modal', data-target='#modal-delete')
+              span.glyphicon.glyphicon-remove
+            //
+              fileinput-img
+              ==================================================
+            .fileinput.fileinput-new(data-provides='fileinput')
+              .fileinput-new.dashed-block-2.min-height-150
+              // /fileinput-new
+              .fileinput-preview.fileinput-exists.border-block-1
+              // /fileinput-preview
+              .fileinput-btn
+                span.btn.btn-default.btn-sm.btn-file
+                  span.fileinput-new Select image
+                  span.fileinput-exists Change
+                  input(type='file', name='coverPhoto[]')
+                a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
+              // /fileinput-btn
+            // /fileinput
+          // /edit-block
+        // /col-md-4
+        .col-md-4
+          .edit-block.m-bottom-4
+            a.btn-remove(href='#', data-toggle='modal', data-target='#modal-delete')
+              span.glyphicon.glyphicon-remove
+            //
+              fileinput-img
+              ==================================================
+            .fileinput.fileinput-new(data-provides='fileinput')
+              .fileinput-new.dashed-block-2.min-height-150
+              // /fileinput-new
+              .fileinput-preview.fileinput-exists.border-block-1
+              // /fileinput-preview
+              .fileinput-btn
+                span.btn.btn-default.btn-sm.btn-file
+                  span.fileinput-new Select image
+                  span.fileinput-exists Change
+                  input(type='file', name='coverPhoto[]')
+                a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
+              // /fileinput-btn
+            // /fileinput
+          // /edit-block
+        // /col-md-4
+        .col-md-4
+          .edit-block.m-bottom-4
+            a.btn-remove(href='#', data-toggle='modal', data-target='#modal-delete')
+              span.glyphicon.glyphicon-remove
+            a.btn-add(href='#')
+              span.glyphicon.glyphicon-plus
+            //
+              fileinput-img
+              ==================================================
+            .fileinput.fileinput-new(data-provides='fileinput')
+              .fileinput-new.dashed-block-2.min-height-150
+              // /fileinput-new
+              .fileinput-preview.fileinput-exists.border-block-1
+              // /fileinput-preview
+              .fileinput-btn
+                span.btn.btn-default.btn-sm.btn-file
+                  span.fileinput-new Select image
+                  span.fileinput-exists Change
+                  input(type='file', name='coverPhoto[]')
+                a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
+              // /fileinput-btn
+            // /fileinput
+          // /edit-block
+        // /col-md-4
+      // /row
+      a(href='#', data-toggle='tooltip', title='', data-original-title='商品圖長寬 1000x800 像素，限 JPG/GIF 格式，檔案大小 500KB 以下')
+        //- span.glyphicon.glyphicon-info
+    // /well
+    .well.control-well.p-30.m-left-2.m-bottom-8
+      h3
+        span.label.label-default.p-10-15 商品文案
+      ul.nav.nav-pills.nav-btn.m-bottom-2
+        li.active
+          a(href='#tab-1', data-toggle='tab') 商品說明
+        li
+          a(href='#tab-2', data-toggle='tab') 使用方法
+        li
+          a(href='#tab-3', data-toggle='tab') 注意事項
+      // /nav
+      .tab-content
+        #tab-1.tab-pane.fade.in.active
+          textarea.form-control(rows='6', placeholder='請輸入商品說明', name='explain', form='goodForm')
+        // /tab-pane
+        #tab-2.tab-pane.fade
+          textarea.form-control(rows='6', placeholder='請輸入使用方法', name='usage', form='goodForm')
+        // /tab-pane
+        #tab-3.tab-pane.fade
+          textarea.form-control(rows='6', placeholder='請輸入注意事項', name='notice', form='goodForm')
+        // /tab-pane
+      // /tab-content
+    // /well
+    .well.control-well.p-30.m-left-2.m-bottom-8
+      h3
+        span.label.label-default.p-10-15 商品標籤
+      .form-group
+        input(type='text', value='咖啡,午茶', data-role='tagsinput', placeholder='新增標籤請用逗號隔開或按 Enter 新增', name='tag', form='goodForm')
+        //- .tagsinput.form-control
+        //-   span.tag.label.label-default
+        //-     | 咖啡
+        //-     span(data-role='remove') ×
+        //-   span.tag.label.label-default
+        //-     | 午茶
+        //-     span(data-role='remove') ×
+        //-   input(type='text', placeholder='新增標籤請用逗號隔開或按 Enter 新增', style='width: 21em !important;')
+        p.form-control-static 或從下方選擇預設標籤：
+        each tag, index in tags
+          a(href='#', data-id='#{tag.id}')
+            span.tag.label.label-default #{tag.name}
+      // /form-group
+    // /well
+    .text-center.m-bottom-6
+      a.btn.btn-link.delete-link.btn-lg(href='#', data-toggle='modal', data-target='#modal-delete') 刪除此商品及所有品項
+      input.btn.btn-green.btn-lg(type='submit', value='確認送出') 
+    // /text-center
+
+
+block js
+  script.
+    $("#brandSelect").val(undefined);

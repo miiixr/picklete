@@ -15,7 +15,7 @@ describe('about User model operation.', function() {
       done(e);
     }
   });
-
+  
   it('create User with user', async (done) => {
     let newUser = {
       username: 'TestUser02',
