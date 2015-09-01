@@ -6,11 +6,13 @@ module.exports = (sequelize, DataTypes) ->
       'sms'
     )
     type: DataTypes.ENUM(
+      'greeting',
       'orderConfirm',
       'paymentConfirm',
       'deliveryConfirm',
       'orderSync'
     )
+    from: DataTypes.STRING
     to: DataTypes.STRING
     subject: DataTypes.STRING
     text: DataTypes.TEXT

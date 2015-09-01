@@ -10,6 +10,7 @@ module.exports.mail = {
   }
   templete: {
     orderConfirm: {
+      sendBy: 'email',
       subject: '訂單 %(orderSerialNumber)s 建立完成',
       html: """<html><body>
       <br />Hi %(username)s:
@@ -37,6 +38,7 @@ module.exports.mail = {
       </body></html>"""
     },
     paymentConfirm: {
+      sendBy: 'email',
       subject: '訂單 %(orderSerialNumber)s 已確認付款完成',
       text: """
       Hi %(username)s:
@@ -48,6 +50,7 @@ module.exports.mail = {
       """
     },
     deliveryConfirm: {
+      sendBy: 'email',
       subject: '訂單 %(orderSerialNumber)s 已完成出貨',
       text: """
       Hi %(username)s:
@@ -60,6 +63,7 @@ module.exports.mail = {
       """
     },
     orderSync: {
+      sendBy: 'email',
       subject: '使用者 email %(email)s 訂單查詢要求連結',
       html: """
       <br />Hi %(username)s:
@@ -70,6 +74,13 @@ module.exports.mail = {
 
 
       <br />From %(storeName)s
+      """
+    },
+    greeting: {
+      sendBy: 'email',
+      subject: '歡迎 %(username)s 加入ＯＯＯ會員',
+      html: """
+      <p>歡迎 %(username)s 註冊 %(storeName)s ！</p>
       """
     }
   }
