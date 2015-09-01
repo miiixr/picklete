@@ -8,7 +8,7 @@ var OrderController;
 OrderController = {
   index: async (req, res) => {
     try {
-      let orders = await db.Order.findAll();
+      let orders = await OrderService.findAllComplete();
       return res.view({orders});
     } catch (error) {
       return res.serverError(error);
@@ -90,20 +90,7 @@ OrderController = {
         });
       }
 
-      let purchaseHistory = await db.Order.findAll({
-        where: {
-          UserId: userData.id
-        },
-        include: [
-          {
-            model: db.User
-          }, {
-            model: db.Shipment
-          }, {
-            model: db.OrderItem
-          }
-        ]
-      });
+      let purchaseHistory = await OrderService.findAllByUserComplete(userData);
 
       return res.ok({purchaseHistory});
 
@@ -156,12 +143,12 @@ OrderController = {
 
       if (order.status === status){
         req.flash('message', `訂單 ${order.serialNumber} 狀態已為 ${status}`);
-        res.redirect('order/index');
+        res.redirect('/admin/order');
         return
       }
       else if(order.status == 'deliveryConfirm' && status == 'paymentConfirm'){
         req.flash('message', `訂單 ${order.serialNumber} 狀態已為 ${order.status} 無法變更為 ${status}`);
-        res.redirect('order/index');
+        res.redirect('/admin/order');
         return
       }
 
@@ -176,7 +163,7 @@ OrderController = {
 
 
       req.flash('message', `訂單 ${order.serialNumber} 狀態更新為 ${status} 成功`);
-      res.redirect('order/index');
+      res.redirect('/admin/order');
       return
 
 

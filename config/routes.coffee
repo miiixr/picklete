@@ -35,16 +35,16 @@ module.exports.routes = {
 
   'get /admin/login' : 'UserController.controlLogin'
   'get /admin/index-slider' : 'UserController.indexSlider'
-  'get /admin/index-slider-detail' : 'UserController.indexSliderDetail'  
+  'get /admin/index-slider-detail' : 'UserController.indexSliderDetail'
   'get /admin/password' : 'UserController.password'
   'get /admin/index-exclusive' : 'UserController.indexExclusive'
   'get /admin/index-theme' : 'UserController.indexTheme'
-  
+
   'get /admin/' : 'AuthController.admin'
   'get /admin/brands' : 'BrandController.list'
   'get /admin/brands/create' : 'BrandController.create'
   'post /admin/brands/create' : 'BrandController.create'
-  
+
   'get /admin/department' : 'DptController.list'
   'post /admin/department/create': 'DptController.create'
   'post /admin/department/sub/create' : 'DptSubController.create'
@@ -68,7 +68,7 @@ module.exports.routes = {
   'get /admin/shop-discount-detail2' : 'UserController.controlShopDiscountDetail2'
   'get /admin/shop-discount-add-item' : 'UserController.controlShopDiscountAddItem'
   'get /admin/shop-report-form' : 'UserController.controlShopReportForm'
-  'get /admin/order' : 'UserController.controlOrder'
+  'get /admin/order' : 'OrderController.index'
   'get /admin/about' : 'UserController.controlAbout'
   'get /admin/qa' : 'UserController.controlQa'
   'get /admin/qa-detail' : 'UserController.controlQaDetail'

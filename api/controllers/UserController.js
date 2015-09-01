@@ -10,8 +10,10 @@ let moment = require("moment");
 
 let UserController = {
   controlLogin: function(req, res) {
-    res.view({
-    });
+    if(UserService.getLoginState(req))
+      res.redirect('/admin/goods');
+    else
+      res.view({});
   },
   indexSlider: function(req, res) {
     res.view({
@@ -107,11 +109,7 @@ let UserController = {
       pageName: "shop-report-form"
     });
   },
-  controlOrder: function(req, res) {
-    res.view({
-      pageName: "order"
-    });
-  },
+
   controlAbout: function(req, res) {
     res.view({
       pageName: "about"
