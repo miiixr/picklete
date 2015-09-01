@@ -198,5 +198,9 @@ module.exports = {
     }
     // end of create tag
 
+
+    // Greeting Message to New Buyer
+    db.Message.create(CustomMailerService.greeting(newBuyer));
+
   }
 }
