@@ -6,21 +6,25 @@ let ProductController = {
   // show create page and prepare all stuff
   showCreate: async (req, res) => {
     // let products = await ProductService.findAllWithImages();
-    let brands = await db.Brand.findAll();
-    let dpts = await db.Dpt.findAll({
-        include: [{
-          model: db.DptSub
-        }],
-        order: ['weight', 'DptSubs.weight']
+    try {
+      let brands = await db.Brand.findAll();
+      let dpts = await db.Dpt.findAll({
+          include: [{
+            model: db.DptSub
+          }],
+          order: ['weight', 'DptSubs.weight']
+        });
+
+      let tags = await db.Tag.findAll({ limit: 15});
+
+      return res.view('admin/goodCreate', {
+        brands,
+        dpts,
+        tags
       });
-
-    let tags = await db.Tag.findAll({ limit: 15});
-
-    return res.view('admin/goodCreate', {
-      brands,
-      dpts,
-      tags
-    });
+    } catch (error) {
+      return res.serverError(error);
+    }
   },
 
   // list all goods result, include query items
