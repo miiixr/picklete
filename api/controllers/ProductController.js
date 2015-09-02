@@ -26,12 +26,51 @@ let ProductController = {
   // list all goods result, include query items
   list: async (req,res) => {
     try {
-      let products = await ProductService.findAllWithImages();
-      // format datetime
-      for (let product of products) {
-          product.createdAt = moment(products.createdAt).format("YYYY-MM-DD");
+      let query = req.query;
+      let queryObj = {};
+
+      // search condition
+      if(query.price) {
+        queryObj.price = query.price;
       }
+      if(query.name) {
+        queryObj.name = { 'like': '%'+query.name+'%'};
+      }
+      if(query.productNumber) {
+        queryObj.productNumber = query.productNumber;
+      }
+      if(query.stockQuantityStart) {
+        // queryObj.stockQuantity = { '>=' : parseInt(query.stockQuantityStart) };
+      }
+      if(query.stockQuantityEnd) {
+        // queryObj.stockQuantity = { '<=' : parseInt(query.stockQuantityEnd) };
+      }
+      queryObj = {
+        where: queryObj
+      };
+
+
+
+      // let products = await db.Product.count({where: {price: query.price}});
+      let resultCount = await db.Product.count(queryObj);
+      // productNumber: query.productNumber
+
+      // moment(query.dateEnd, "YYYY-MM-DD").format("MM/DD/YYYY")
+      let products = await db.Product.findAll(queryObj);
+      // createdAt: {
+      //   '>': new Date('2015/8/3')
+      // }
+      console.log('count:'+resultCount);
+      products = products.map(ProductService.withImage);
+      for (let product of products) {
+          product.createdAt = moment(product.createdAt).format("YYYY-MM-DD");
+          console.log(product.createdAt);
+      }
+      // let products = await ProductService.findAllWithImages();
+      // format datetime
+
       return res.view('admin/goodList', {
+        query,
         products,
         pageName: "shop-item-list"
       });
@@ -53,7 +92,7 @@ let ProductController = {
 
     let gid = req.query.id;
     let good = await ProductService.findAllWithImages(gid);
-    
+
     if ( ! good) {
       return res.redirect('/admin/goods');
     }

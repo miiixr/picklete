@@ -3,32 +3,32 @@ extends ../_layout_auth
 block body
   h2.m-bottom-6 商品列表
   .well.control-well.p-30.m-bottom-8
-    form.form-horizontal
+    form.form-horizontal(name="searchProducts", action="goods", method="get")
       .row.row-m
         .col-md-4
           .form-group
             label.col-md-4.control-label 品牌名稱
             .col-md-8
               select.form-control
-                option 1
-                option 2
-                option 3
-                option 4
-                option 5
+                option {brand_name}
+                option {brand_name}
+                option {brand_name}
+                option {brand_name}
+                option {brand_name}
           // /form-group
         // /col-md-4
         .col-md-4
           .form-group
             label.col-md-4.control-label 關鍵字
             .col-md-8
-              input.form-control(type='text')
+              input.form-control(type='text', name='keywords')
           // /form-group
         // /col-md-4
         .col-md-4
           .form-group
             label.col-md-4.control-label 大館別
             .col-md-8
-              select.form-control
+              select.form-control(name='shopGroup1')
                 option 1
                 option 2
                 option 3
@@ -42,21 +42,21 @@ block body
           .form-group
             label.col-md-4.control-label 商品名稱
             .col-md-8
-              input.form-control(type='text')
+              input.form-control(type='text', name='name', value = query.name?query.name: '')
           // /form-group
         // /col-md-4
         .col-md-4
           .form-group
             label.col-md-4.control-label 商品貨號
             .col-md-8
-              input.form-control(type='text')
+              input.form-control(type='text', name='productNumber', value = query.productNumber?query.productNumber: '')
           // /form-group
         // /col-md-4
         .col-md-4
           .form-group
             label.col-md-4.control-label 小館別
             .col-md-8
-              select.form-control
+              select.form-control(name='shopGroup2')
                 option 1
                 option 2
                 option 3
@@ -70,18 +70,18 @@ block body
           .form-group
             label.col-md-4.control-label 商品售價
             .col-md-8
-              input.form-control(type='text')
+              input.form-control(type='text', name='price', value = query.price?query.price: '')
           // /form-group
         // /col-md-4
         .col-md-4
           .form-group
             label.col-md-4.control-label 目前庫存
             .col-md-3.p-right-0
-              input.form-control(type='text')
+              input.form-control(type='number', name='stockQuantityStart', value = query.stockQuantityStart?query.stockQuantityStart: '')
             .col-md-2.p-left-0.p-right-0.text-center
               p.form-control-static 至
             .col-md-3.p-left-0
-              input.form-control(type='text')
+              input.form-control(type='number', name='stockQuantityEnd', value = query.stockQuantityEnd?query.stockQuantityEnd: '')
           // /form-group
         // /col-md-4
       // /row
@@ -91,26 +91,26 @@ block body
             label.col-md-4.control-label 販售狀態
             .col-md-8
               select.form-control
-                option 1
-                option 2
-                option 3
-                option 4
-                option 5
+                option {sell_state}
+                option {sell_state}
+                option {sell_state}
+                option {sell_state}
+                option {sell_state}
           // /form-group
         // /col-md-4
         .col-md-8
           .form-group
             label.col-md-2.control-label 建檔日期
             .col-md-4
-              input.form-control(type='date')
+              input.form-control(type='date', name='dateFrom')
             .col-md-2.text-center
               p.form-control-static 至
             .col-md-4
-              input.form-control(type='date')
+              input.form-control(type='date', name='dateEnd')
           // /form-group
         // /col-md-7
         .col-md-12.text-right
-          a.btn.btn-primary(href='#') 查詢
+          a.btn.btn-primary(onClick='$("form[name=\'searchProducts\']").submit()') 查詢
         // /col-md-12
       // /row
     // /form-horizontal
@@ -158,13 +158,14 @@ block body
           span.caret
         th
     tbody
+      - console.log('frontend:'+products)
       each product in products
         tr
           td
             img.width-6(src=product.image)
           td #{product.name}
           td #{product.price}
-          td #{product.id}
+          td #{product.productNumber}
           td #{product.createdAt}
           td
             .btn-group.btn-group-switch(data-toggle='buttons')
