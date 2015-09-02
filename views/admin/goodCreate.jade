@@ -13,7 +13,7 @@ block body
           label.col-md-2.control-label 品牌名稱
           .col-md-10
             label.radio-inline
-              input#brandType(type='radio', name='brandType', value='origin', checked='1')
+              input#brandType(type='radio', name='brandType', value='origin', checked=true)
               
               select.form-control#brandSelect(name='brandId')
                 option 選擇品牌
@@ -502,3 +502,10 @@ block body
 block js
   script.
     $("#brandSelect").val(undefined);
+    $( "#brandSelect" ).change(function() {
+      if($("#brandSelect :selected").text() != '選擇品牌')
+        $("input[type='radio'][name='brandType'][value='origin']").prop("checked", true);
+    });
+    $("input[type='text'][name='customBrand']" ).focus(function() {
+      $("input[type='radio'][name='brandType'][value='custom']").prop("checked", true);
+    });
