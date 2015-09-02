@@ -38,7 +38,7 @@ block body
               each dptSub, index in dpts[0].DptSubs
                 option(value='#{dptSub.id}') #{dptSub.name}
           .col-md-2
-            a.btn-remove(href='#')
+            a.btn-remove(href='#', disabled=true)
               span.glyphicon.glyphicon-remove
             a.btn-add(href='#')
               span.glyphicon.glyphicon-plus
@@ -381,10 +381,6 @@ block body
         // /col-md-4
         .col-md-4
           .edit-block.m-bottom-4
-            a.btn-remove(href='#')
-              span.glyphicon.glyphicon-remove
-            a.btn-add(href='#')
-              span.glyphicon.glyphicon-plus
             //
               fileinput-img
               ==================================================
@@ -401,6 +397,10 @@ block body
                 a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
               // /fileinput-btn
             // /fileinput
+            a.btn-remove(href='#')
+              span.glyphicon.glyphicon-remove
+            a.btn-add(href='#')
+              span.glyphicon.glyphicon-plus
           // /edit-block
         // /col-md-4
 
@@ -465,3 +465,4 @@ block body
 
 block js
   script(src='/javascripts/admin/goodCreate.js')
+

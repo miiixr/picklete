@@ -29,12 +29,17 @@ $(".color-filter").click(function(){
 
 $('form').on('click','.btn-add',function(e){
   e.preventDefault();
-  s = $($(this).parent().parent()).prop('outerHTML');  
-  console.log($(this).parent().parent());  
-  $(this).parent().parent().before(s);
+  s = $($(this).parent().parent()).prop('outerHTML');
+  $(this).parent().parent().after(s);
+  $(this).remove();
 });
 
 $('.row').on('click','.btn-remove',function(e){
   e.preventDefault();
-  $(this).parent().parent().remove();
+  if($(this).context.nextElementSibling == null){
+    $(this).parent().parent().remove();
+  }
 });
+
+
+
