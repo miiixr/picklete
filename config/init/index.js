@@ -60,8 +60,8 @@ module.exports = {
       password: "buyer",
       RoleId: createRoleUser.id,
       comment: "this is a newBuyer",
-      orderSyncToken:'11111'
-
+      orderSyncToken:'11111',
+      mobile: '0937397377'
     };
     var createNewBuyer = await db.User.create(newBuyer);
 
@@ -208,9 +208,21 @@ module.exports = {
     }
     // end of create tag
 
+    let isolationLevel = db.Sequelize.Transaction.ISOLATION_LEVELS.SERIALIZABLE;
+    let transaction = await db.sequelize.transaction({isolationLevel});
 
     // Greeting Message to New Buyer
-    db.Message.create(CustomMailerService.greeting(newBuyer));
+    var mail = CustomMailerService.greeting(newBuyer);
+    let msg = await db.Message.create(mail, {transaction});
+    transaction.commit();
+    CustomMailerService.sendMail(msg);
+
+    transaction = await db.sequelize.transaction({isolationLevel});
+
+    var sms = SimpleMessageService.greeting(newBuyer);
+    msg = await db.Message.create(sms, {transaction});
+    transaction.commit();
+    SimpleMessageService.send(msg);
 
   }
 }

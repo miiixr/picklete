@@ -10,7 +10,7 @@ module.exports = {
     try {
       var greetingTpl = sails.config.mail.templete.greeting;
       var email = user.email;
-      var mailSendConfig = {...greetingTpl, to: email};
+      var mailSendConfig = {...greetingTpl, from: sails.config.mail.config.from, to: email};
 
       mailSendConfig.subject = sprintf(mailSendConfig.subject, {
         username: user.username
