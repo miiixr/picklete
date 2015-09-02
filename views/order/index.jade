@@ -6,15 +6,27 @@ block body
     thead
       tr
         th #
-        th name
-        th description
-        th stockQuantity
-        th price
+        th Serial Number
+        th 訂單總金額
+        th 付款日期
+        th Name
+        th Description
+        th StockQuantity
+        th Price
     tbody
       each order in orders
         tr
           th(scope='row')
             a(href="/order/show/#{order.id}")= order.id
+          td= order.serialNumber
+          td= order.paymentTotalAmount
+          td
+            p
+              small= sails.moment(order.paymentConfirmDate).format('YYYY/MM/DD')
+              br
+              small 匯款人: #{order.paymentConfirmName}
+              br
+              small 後五碼: #{order.paymentConfirmPostfix}
           td= order.name
           td= order.description
           td= order.stockQuantity

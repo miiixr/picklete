@@ -40,6 +40,9 @@ module.exports.routes = {
   'get /auth/:provider/callback': 'AuthController.callback'
   'get /auth/:provider/:action': 'AuthController.callback'
 
+
+  "get /admin/login": view: "admin/login"
+
   ###*
     ProductController
   ###
@@ -118,9 +121,17 @@ module.exports.routes = {
     }
   }
 
-  'post /api/order/status': {
+  'get /api/order/status': {
     controller: "OrderController",
     action: "status",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+  'get /api/order/sync': {
+    controller: "OrderController",
+    action: "sync",
     cors: {
      origin: "http://localhost:1337, http://localhost:8080",
      credentials: false
@@ -150,7 +161,7 @@ module.exports.routes = {
 
   'get /api/user/role/:id': {
     controller: "UserController",
-    action: "findAllByRole",
+    action: "filterByRole",
     cors: {
      origin: "http://localhost:1337, http://localhost:8080",
      credentials: false
@@ -184,7 +195,7 @@ module.exports.routes = {
     }
   }
 
-  'put /api/user/setrole/:roleid/:id': {
+  'put /api/user/:id/:roleid': {
     controller: "UserController",
     action: "setRole",
     cors: {

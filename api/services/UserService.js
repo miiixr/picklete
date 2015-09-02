@@ -44,7 +44,7 @@ module.exports = {
     return role;
   },
 
-  findRoles: async (id) => {
+  findRoles: async () => {
     let roles = await db.Role.findAll();
     return roles;
   },
@@ -52,7 +52,7 @@ module.exports = {
   search: async (username) => {
     let users = await db.User.findAll({
       where:{
-        id:{
+        username:{
           $like: username
         }
       }

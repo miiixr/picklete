@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) ->
     mobile: DataTypes.STRING
     address: DataTypes.STRING
     comment: DataTypes.STRING
+    orderSyncToken: DataTypes.STRING
     admin:
       type: DataTypes.BOOLEAN
       defaultValue: false

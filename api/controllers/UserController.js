@@ -3,7 +3,7 @@ let userController = {
   index: async (req, res) => {
     try {
       let users = await UserService.findAll();
-      let roles = await RoleService.findAll();
+      let roles = await UserService.findRoles();
       return res.view({users,roles});
     } catch (error) {
       return res.serverError(error);
@@ -48,7 +48,7 @@ let userController = {
     }
   },
 
-  findAllByRole: async (req, res) => {
+  filterByRole: async (req, res) => {
     try {
       let roleId = req.param("id");
       let users = await UserService.findAllByRole(roleId);
@@ -63,7 +63,7 @@ let userController = {
       let userName = req.param("username");
       let users = await UserService.search(userName);
       // console.log("\n ### find user =>",user);
-      return res.ok({user});
+      return res.ok({users});
     } catch (error) {
       return res.serverError(error);
     }
@@ -172,16 +172,21 @@ let userController = {
   },
 
   searchMember: async(req, res) => {
-    let user = await db.User.findAll({
-      where:{
-        searchMember:{
-          $like: 'userName'
-        }
-      }
-    })catch (error){
-    return res.serverError(error);
+    try{
+      let userData = await db.User.searchMember({
+        where: {
+          userName: userData.name
+        },
+        userName: [
+          {
+            $like: db.username
+          },
+        ]
+      });
+      return res.ok({Searchresults});
+    } catch (error) {
+      console.log ('error',error.stack);
+      return res.serverError(error);
   }
-},
-
 };
 module.exports = userController;
