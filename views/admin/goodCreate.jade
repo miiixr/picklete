@@ -38,8 +38,10 @@ block body
               each dptSub, index in dpts[0].DptSubs
                 option(value='#{dptSub.id}') #{dptSub.name}
           .col-md-2
-            a.btn-remove(href='#', data-toggle='modal', data-target='#modal-delete')
+            a.btn-remove(href='#')
               span.glyphicon.glyphicon-remove
+            a.btn-add(href='#',)
+              span.glyphicon.glyphicon-plus
         // /form-group
         //- .form-group
         //-   label.col-md-2.control-label
@@ -249,9 +251,12 @@ block body
             // /form-group
           // /col-md-4
           .col-md-1.text-right
-            a.btn-remove(href='#', data-toggle='modal', data-target='#modal-delete')
+            a.btn-remove(href='#')
               span.glyphicon.glyphicon-remove
+            a.btn-add(href='#')
+              span.glyphicon.glyphicon-plus
           // /col-md-1
+  
         // /row
         //- .row.row-s.border-bottom-1.m-bottom-4
         //-   .col-md-1.text-center
@@ -518,12 +523,13 @@ block js
     });
 
   script.
-    $(".btn-add").click(function(e){
+    $('.row').on('click','.btn-add',function(e){
       e.preventDefault();
-      $(this).parent().parent().before('<div class="col-md-4"><div class="edit-block m-bottom-4"><a href="#" class="btn-remove"><span class="glyphicon glyphicon-remove"></span></a><div data-provides="fileinput" class="fileinput fileinput-new"><div class="fileinput-new dashed-block-2 min-height-150"></div><div class="fileinput-preview fileinput-exists border-block-1"></div><div class="fileinput-btn"><span class="btn btn-default btn-sm btn-file"><span class="fileinput-new">Select image</span><span class="fileinput-exists">Change</span><input type="file" name="coverPhoto[]"></span><a href="#" data-dismiss="fileinput" class="btn btn-default btn-sm fileinput-exists">Remove</a></div></div></div></div>');
+      s = $($(this).parent().parent()[0]).prop('outerHTML');    
+      $(this).parent().parent().before(s);
     });
 
-    $('.row-m').on('click','.btn-remove',function(e){
+    $('.row').on('click','.btn-remove',function(e){
       e.preventDefault();
       $(this).parent().parent().remove();
     });
