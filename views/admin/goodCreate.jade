@@ -40,7 +40,7 @@ block body
           .col-md-2
             a.btn-remove(href='#')
               span.glyphicon.glyphicon-remove
-            a.btn-add(href='#',)
+            a.btn-add(href='#')
               span.glyphicon.glyphicon-plus
         // /form-group
         //- .form-group
@@ -378,49 +378,6 @@ block body
       h3
         span.label.label-default.p-10-15 圖片上傳
       .row.row-m
-        .col-md-4
-          .edit-block.m-bottom-4
-            a.btn-remove(href='#')
-              span.glyphicon.glyphicon-remove
-            //
-              fileinput-img
-              ==================================================
-            .fileinput.fileinput-new(data-provides='fileinput')
-              .fileinput-new.dashed-block-2.min-height-150
-              // /fileinput-new
-              .fileinput-preview.fileinput-exists.border-block-1
-              // /fileinput-preview
-              .fileinput-btn
-                span.btn.btn-default.btn-sm.btn-file
-                  span.fileinput-new Select image
-                  span.fileinput-exists Change
-                  input(type='file', name='coverPhoto[]')
-                a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
-              // /fileinput-btn
-            // /fileinput
-          // /edit-block
-        // /col-md-4
-        .col-md-4
-          .edit-block.m-bottom-4
-            a.btn-remove(href='#')
-              span.glyphicon.glyphicon-remove
-            //
-              fileinput-img
-              ==================================================
-            .fileinput.fileinput-new(data-provides='fileinput')
-              .fileinput-new.dashed-block-2.min-height-150
-              // /fileinput-new
-              .fileinput-preview.fileinput-exists.border-block-1
-              // /fileinput-preview
-              .fileinput-btn
-                span.btn.btn-default.btn-sm.btn-file
-                  span.fileinput-new Select image
-                  span.fileinput-exists Change
-                  input(type='file', name='coverPhoto[]')
-                a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
-              // /fileinput-btn
-            // /fileinput
-          // /edit-block
         // /col-md-4
         .col-md-4
           .edit-block.m-bottom-4
@@ -507,29 +464,6 @@ block body
 
 
 block js
-  script.
-    $("#brandSelect").val(undefined);
-    $( "#brandSelect" ).change(function() {
-      if($("#brandSelect :selected").text() != '選擇品牌')
-        $("input[type='radio'][name='brandType'][value='origin']").prop("checked", true);
-    });
-    $("input[type='text'][name='customBrand']" ).focus(function() {
-      $("input[type='radio'][name='brandType'][value='custom']").prop("checked", true);
-    });
+  script(src='/javascripts/admin/goodCreate.js')
 
-  script.
-    $(".color-filter").click(function(){
-      $("#color-filter").attr('class', $(this).attr('class'));
-    });
 
-  script.
-    $('.row').on('click','.btn-add',function(e){
-      e.preventDefault();
-      s = $($(this).parent().parent()[0]).prop('outerHTML');    
-      $(this).parent().parent().before(s);
-    });
-
-    $('.row').on('click','.btn-remove',function(e){
-      e.preventDefault();
-      $(this).parent().parent().remove();
-    });
