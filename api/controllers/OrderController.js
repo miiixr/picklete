@@ -51,6 +51,7 @@ OrderController = {
       order.paymentConfirmDate = req.body.paymentConfirmDate;
       order.paymentConfirmName = req.body.paymentConfirmName;
       order.paymentConfirmPostfix = req.body.paymentConfirmPostfix;
+      order.paymentConfirmAmount = req.body.paymentConfirmAmount;
       order.save();
       return res.json({
         result: true
