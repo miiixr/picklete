@@ -16,7 +16,7 @@ block body
               input#brandType(type='radio', name='brandType', value='origin', checked=true)
               
               select.form-control#brandSelect(name='brandId')
-                option 選擇品牌
+                option(value='') 選擇品牌
                 each brand, index in brands
                   option(value='#{brand.id}') #{brand.name}
             label.radio-inline
@@ -465,5 +465,3 @@ block body
 
 block js
   script(src='/javascripts/admin/goodCreate.js')
-
-

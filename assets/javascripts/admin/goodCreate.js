@@ -1,10 +1,25 @@
 $("#brandSelect").val(undefined);
 $("#brandSelect").change(function() {
-  if($("#brandSelect :selected").text() != '選擇品牌')
+  if($("#brandSelect :selected").text() != '選擇品牌'){
     $("input[type='radio'][name='brandType'][value='origin']").prop("checked", true);
+    $("input[type='radio'][name='brandType'][value='custom']").prop("checked", false);
+  }
 });
 $("input[type='text'][name='customBrand']" ).focus(function() {
   $("input[type='radio'][name='brandType'][value='custom']").prop("checked", true);
+  $("input[type='radio'][name='brandType'][value='origin']").prop("checked", false);
+
+});
+
+$('input[type=submit]').click(function () {
+  if( $('input[name=brandType]:checked').val() == 'origin' ){
+    if($("#brandSelect :selected").text() == '選擇品牌'){
+      $("#brandSelect").prop('required', true);
+    }
+  else{
+    $("#brandSelect").prop('required', false);
+    }
+  }
 });
 
 
