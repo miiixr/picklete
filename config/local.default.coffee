@@ -1,4 +1,5 @@
 module.exports = {
+  initData: ''
   mail: {
     type: 'ses'
     config: {

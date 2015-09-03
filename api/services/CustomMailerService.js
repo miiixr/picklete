@@ -1,6 +1,35 @@
 import {sprintf} from 'sprintf-js';
 
 module.exports = {
+
+  /*
+   * 向新註冊的使用者問安
+   */
+  greeting: (user) => {
+
+    try {
+      var greetingTpl = sails.config.mail.templete.greeting;
+      var email = user.email;
+      var mailSendConfig = {...greetingTpl, from: sails.config.mail.config.from, to: email};
+
+      mailSendConfig.subject = sprintf(mailSendConfig.subject, {
+        username: user.username
+      });
+
+      mailSendConfig.html = sprintf(mailSendConfig.html, {
+        storeName: sails.config.store.name,
+        username: user.username
+      });
+
+      mailSendConfig.type = 'greeting';
+
+      return mailSendConfig;
+
+    } catch (e) {
+      throw error;
+    }
+
+  },
   orderConfirm: (result) => {
 
     try {

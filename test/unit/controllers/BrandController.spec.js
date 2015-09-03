@@ -20,16 +20,10 @@ describe('Brand API - 品牌', function() {
                     ]
                 })
                 .end(function(err, res) {
-                    console.log('res.body', res.body);
-                    brand = res.body;
-                    res.body.name.should.be.equal('好棒棒品牌');
-                    res.body.avatar.should.be.equal('http://goo.gl/ksTMyn');
-                    res.body.type.should.be.equal('PRIME_GOOD');
-                    res.body.desc.should.be.equal('Steve Aoki 最棒惹');
-                    res.body.banner.should.be.equal('http://goo.gl/tl4513');
-                    res.body.photos.should.be.a('array');
+                  res.statusCode.should.be.equal(302);
+                  res.headers.location.should.be.equal('/admin/brands');
 
-                    return done();
+                  return done();
                 });
         });
 
@@ -41,8 +35,10 @@ describe('Brand API - 品牌', function() {
             request(sails.hooks.http.app)
                 .get('/admin/brand')
                 .end(function(err, res) {
-                    console.log('res.body', res.body);
-                    res.body.should.be.a('array');
+
+                    res.text.should.be.String;
+                    (res.text !== '').should.be.true;
+
                     return done();
                 });
         });
@@ -50,10 +46,15 @@ describe('Brand API - 品牌', function() {
     });
 
     describe('Brand - 更新', function() {
+        before(async (done) => {
+          brand = await db.Brand.find({where: {name: '好棒棒品牌'}});
+          done();
+        });
 
-        it('should return updated brand object', function(done) {
+        it('should return updated brand object', (done) => {
+
             request(sails.hooks.http.app)
-                .put('/admin/brand/' + brand.id)
+                .put(`/admin/brand/${brand.id}`)
                 .send({
                     name: '我更改了這個品牌',
                     avatar: 'http://goo.gl/ksTMyn',

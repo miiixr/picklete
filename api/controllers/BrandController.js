@@ -15,7 +15,7 @@ let BrandController = {
 
     let uploadInput = ["avatar", "photos[]", "banner"];
     let files = await ImageService.upload(req, uploadInput);
-    
+
     if (files[0].length) {
       brandData.avatar = files[0][0].fd;
     }
@@ -34,15 +34,15 @@ let BrandController = {
 
     console.log(brandData);
 
-    // create brand 
-    return db.Brand.create(brandData)
-    .then(function(newBrand) {
-      return res.redirect("/admin/brands");
-    })
-    .catch(function(error) {
+    // create brand
+    try {
 
-      return res.serverError(error);
-    });
+      await db.Brand.create(brandData);
+      return res.redirect("/admin/brands");
+
+    } catch (e) {
+      return res.serverError(e);
+    }
   },
 
   list: async (req, res) => {
@@ -53,13 +53,13 @@ let BrandController = {
       }
     });
 
-    let brandsAgent = await db.Brand.findAll({  
+    let brandsAgent = await db.Brand.findAll({
       where: {
         type: 'AGENT'
       }
     });
 
-    let brandLock = await db.Brand.findOne({  
+    let brandLock = await db.Brand.findOne({
       where: {
         type: 'OTHER'
       }
@@ -78,33 +78,31 @@ let BrandController = {
 
   update: async (req, res) => {
 
-    let brandId = req.params.brand;
-    var updateData = req.body;
+    try {
+      let brandId = req.params.brand;
+      var updateData = req.body;
 
-    return db.Brand.findById(brandId)
-    .then(function(brand) {
+      let brand = await db.Brand.findById(brandId)
 
-        if(!brand){
-            return res.serverError({
-              msg: '找不到這個 brand'
-            });
-        }
+      if(!brand) throw new Error ('找不到這個 brand');
 
-        brand.name = updateData.name;
-        brand.avatar = updateData.avatar;
-        brand.type = updateData.type;
-        brand.desc = updateData.desc;
-        brand.banner = updateData.banner;
-        brand.photos = updateData.photos;
+      brand.name = updateData.name;
+      brand.avatar = updateData.avatar;
+      brand.type = updateData.type;
+      brand.desc = updateData.desc;
+      brand.banner = updateData.banner;
+      brand.photos = updateData.photos;
 
-        return brand.save();
-    })
-    .then(function(updatedBrand) {
-        return res.ok(updatedBrand);
-    })
-    .catch(function(error) {
-        return res.serverError(error);
-    });
+      let updatedBrand = await brand.save();
+
+      return res.ok(updatedBrand);
+
+    } catch (e) {
+      let msg = e.message;
+      return res.serverError({msg});
+
+    }
+
   }
 
 };
