@@ -3,6 +3,8 @@ extends ../_layout_auth
 block body
   h2.m-bottom-6 商品上架 - kerker
   form#goodForm(action='/admin/goods/create', method='POST', enctype="multipart/form-data")
+    
+    // 館別分類
     .well.control-well.p-30.m-left-2.m-bottom-8
       h3
         span.label.label-default.p-10-15 館別分類
@@ -11,10 +13,10 @@ block body
           label.col-md-2.control-label 品牌名稱
           .col-md-10
             label.radio-inline
-              input#brandType(type='radio', name='brandType', value='origin', checked='1')
+              input#brandType(type='radio', name='brandType', value='origin', checked=true)
               
               select.form-control#brandSelect(name='brandId')
-                option 選擇品牌
+                option(value='') 選擇品牌
                 each brand, index in brands
                   option(value='#{brand.id}') #{brand.name}
             label.radio-inline
@@ -36,8 +38,10 @@ block body
               each dptSub, index in dpts[0].DptSubs
                 option(value='#{dptSub.id}') #{dptSub.name}
           .col-md-2
-            a.btn-remove(href='#', data-toggle='modal', data-target='#modal-delete')
+            a.btn-remove(href='#', disabled=true)
               span.glyphicon.glyphicon-remove
+            a.btn-add(href='#')
+              span.glyphicon.glyphicon-plus
         // /form-group
         //- .form-group
         //-   label.col-md-2.control-label
@@ -62,6 +66,8 @@ block body
         //-       span.glyphicon.glyphicon-plus
         // /form-group
     // /well
+
+    // 基本資訊
     .well.control-well.p-30.m-left-2.m-bottom-8
       h3
         span.label.label-default.p-10-15 基本資訊
@@ -132,6 +138,8 @@ block body
             input.form-control(type='text', name='comment')
         // /form-group
     // /well
+
+    // 款式規格
     .well.control-well.p-30.m-left-2.m-bottom-8.font-size-base
       h3
         span.label.label-default.p-10-15 款式規格
@@ -183,7 +191,7 @@ block body
               label.col-sm-3.control-label 顏色
               .col-sm-9
                 .btn-group
-                  a.color-filter.color-red(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                  a.color-filter.color-red#color-filter(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
                   ul.dropdown-menu.dropdown-color
                     li.p-15
                       a.color-filter.color-red(href='#')
@@ -243,9 +251,12 @@ block body
             // /form-group
           // /col-md-4
           .col-md-1.text-right
-            a.btn-remove(href='#', data-toggle='modal', data-target='#modal-delete')
+            a.btn-remove(href='#')
               span.glyphicon.glyphicon-remove
+            a.btn-add(href='#')
+              span.glyphicon.glyphicon-plus
           // /col-md-1
+  
         // /row
         //- .row.row-s.border-bottom-1.m-bottom-4
         //-   .col-md-1.text-center
@@ -361,14 +372,15 @@ block body
         //-   // /col-md-1
         // /row
     // /well
+
+    // 圖片上傳
     .well.control-well.p-30.m-left-2.m-bottom-8
       h3
         span.label.label-default.p-10-15 圖片上傳
       .row.row-m
+        // /col-md-4
         .col-md-4
           .edit-block.m-bottom-4
-            a.btn-remove(href='#', data-toggle='modal', data-target='#modal-delete')
-              span.glyphicon.glyphicon-remove
             //
               fileinput-img
               ==================================================
@@ -385,58 +397,20 @@ block body
                 a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
               // /fileinput-btn
             // /fileinput
-          // /edit-block
-        // /col-md-4
-        .col-md-4
-          .edit-block.m-bottom-4
-            a.btn-remove(href='#', data-toggle='modal', data-target='#modal-delete')
-              span.glyphicon.glyphicon-remove
-            //
-              fileinput-img
-              ==================================================
-            .fileinput.fileinput-new(data-provides='fileinput')
-              .fileinput-new.dashed-block-2.min-height-150
-              // /fileinput-new
-              .fileinput-preview.fileinput-exists.border-block-1
-              // /fileinput-preview
-              .fileinput-btn
-                span.btn.btn-default.btn-sm.btn-file
-                  span.fileinput-new Select image
-                  span.fileinput-exists Change
-                  input(type='file', name='coverPhoto[]')
-                a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
-              // /fileinput-btn
-            // /fileinput
-          // /edit-block
-        // /col-md-4
-        .col-md-4
-          .edit-block.m-bottom-4
-            a.btn-remove(href='#', data-toggle='modal', data-target='#modal-delete')
+            a.btn-remove(href='#')
               span.glyphicon.glyphicon-remove
             a.btn-add(href='#')
               span.glyphicon.glyphicon-plus
-            //
-              fileinput-img
-              ==================================================
-            .fileinput.fileinput-new(data-provides='fileinput')
-              .fileinput-new.dashed-block-2.min-height-150
-              // /fileinput-new
-              .fileinput-preview.fileinput-exists.border-block-1
-              // /fileinput-preview
-              .fileinput-btn
-                span.btn.btn-default.btn-sm.btn-file
-                  span.fileinput-new Select image
-                  span.fileinput-exists Change
-                  input(type='file', name='coverPhoto[]')
-                a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
-              // /fileinput-btn
-            // /fileinput
           // /edit-block
         // /col-md-4
+
+
       // /row
       a(href='#', data-toggle='tooltip', title='', data-original-title='商品圖長寬 1000x800 像素，限 JPG/GIF 格式，檔案大小 500KB 以下')
         //- span.glyphicon.glyphicon-info
     // /well
+
+    // 商品文案
     .well.control-well.p-30.m-left-2.m-bottom-8
       h3
         span.label.label-default.p-10-15 商品文案
@@ -460,6 +434,8 @@ block body
         // /tab-pane
       // /tab-content
     // /well
+
+    // 商品標籤
     .well.control-well.p-30.m-left-2.m-bottom-8
       h3
         span.label.label-default.p-10-15 商品標籤
@@ -479,6 +455,8 @@ block body
             span.tag.label.label-default #{tag.name}
       // /form-group
     // /well
+
+    // 
     .text-center.m-bottom-6
       a.btn.btn-link.delete-link.btn-lg(href='#', data-toggle='modal', data-target='#modal-delete') 刪除此商品及所有品項
       input.btn.btn-green.btn-lg(type='submit', value='確認送出') 
@@ -486,5 +464,5 @@ block body
 
 
 block js
-  script.
-    $("#brandSelect").val(undefined);
+  script(src='/javascripts/admin/goodCreate.js')
+

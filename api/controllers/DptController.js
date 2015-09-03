@@ -23,7 +23,7 @@ let DptController = {
         include: [{
           model: db.DptSub
         }],
-        order: ['weight', 'DptSubs.weight']
+        order: ['Dpt.weight', 'DptSubs.weight']
       })
       .then(function(dpts) {
         res.view('admin/departmentList', { dpts });
