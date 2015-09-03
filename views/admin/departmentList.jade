@@ -4,15 +4,13 @@ block body
   .row
     #dpt-big.col-md-3.border-right-1.m-bottom-6
       h4.m-bottom-4.text-gray 大館別
-        a.btn.btn-sm-circle.btn-green.m-left-1(href='#', data-toggle='modal', data-target='#modal-control-shop-type-lg')
-          span.glyphicon.glyphicon-plus
       .list-group.list-group-edit.list-group-lg
         each dpt, index in dpts
           .list-group-item.edit-link
-            span.glyphicon.glyphicon-menu.m-right-2
-            a(href='#', data-toggle='modal', data-target='#modal-control-shop-type-lg')
+            span.glyphicon.glyphicon-menu.m-right-2(data-id='#{dpt.id}')
+            a(href='#', data-toggle='modal', class='dpt name',data-id='#{dpt.id}',data-name='#{dpt.name}')
               | #{dpt.name}
-              span.glyphicon.glyphicon-pencil2.m-left-1
+              span.glyphicon.glyphicon-pencil2.m-left-1(data-id='#{dpt.id}',data-name='#{dpt.name}')
           // /list-group-item
         .list-group-item.edit-link
           span.glyphicon.glyphicon-menu.m-right-2
@@ -23,9 +21,9 @@ block body
     #small-dpt.col-md-3.border-right-1.m-bottom-6
       h4.m-bottom-4.text-gray
         | 小館別
-        a.btn.btn-sm-circle.btn-green.m-left-1(href='#', data-toggle='modal', data-target='#modal-control-shop-type-sm')
+        a.btn.btn-sm-circle.btn-green.m-left-1(id="plus" style="display:none" href='#', data-toggle='modal', data-target='#modal-control-shop-type-sm')
           span.glyphicon.glyphicon-plus
-      .list-group.list-group-edit
+      .list-group.list-group-edit()
         .list-group-item.edit-link
           | 閃購專區
           span.glyphicon.glyphicon-locked
@@ -38,14 +36,17 @@ block body
           | 本月主題
           span.glyphicon.glyphicon-locked
         DptSubs
-        each subDpt, index in dpts[0].DptSubs
-          // /list-group-item
-          .list-group-item.edit-link
-            a(href='#', data-toggle='modal', data-target='#modal-control-shop-type-sm')
-              | #{subDpt.name}
-              span.glyphicon.glyphicon-pencil2.m-left-1
-            a(href='#', data-toggle='modal', data-target='#modal-delete', data-name='#{subDpt.name}', data-id='#{subDpt.id}')
-              span.glyphicon.glyphicon-remove
+        each val in [0,1,2,3,4,5]
+          .dpt(id="subDpt"+val style="display:none")
+            each subDpt, index in dpts[val].DptSubs
+              // /list-group-item
+              .list-group-item.edit-link
+                a(href='#', data-toggle='modal', class='subDpt name', data-id="#{subDpt.id}",data-name='#{subDpt.name}')
+                  | #{subDpt.name}
+                  span.glyphicon.glyphicon-pencil2.m-left-1
+                a(href='#', data-toggle='modal', data-target='#modal-delete', data-name='#{subDpt.name}', data-id='#{subDpt.id}')
+                  span.glyphicon.glyphicon-remove
+
         //- // /list-group-item
         //- .list-group-item.edit-link
         //-   a(href='#', data-toggle='modal', data-target='#modal-control-shop-type-sm')
@@ -73,3 +74,36 @@ block body
       // /list-group-edit
     // /col-md-6
   // /row
+block js
+  script(type='text/javascript').
+    $(window).load(function(){
+      $('.glyphicon.glyphicon-pencil2.m-left-1').click(function(event){
+        var e = $(event.currentTarget);
+        document.getElementById('lg-id').value=e.data('id');
+        document.getElementById('lg').value=e.data('name');
+        console.log(e.data('name'));
+        $('#modal-control-shop-type-lg').modal('show'); 
+        })
+      $('.dpt.name').click(function(event){
+        var e = $(event.currentTarget);
+        var id = e.data('id')-1;
+        for(i=0;i<=5;i++){
+          document.getElementById('subDpt'+i).style.display="none";
+        }
+        document.getElementById('subDpt'+id).style.display="";
+        document.getElementById('sm-id').value = e.data('id');
+        $('.btn.btn-sm-circle.btn-green.m-left-1').css("display","");
+        console.log(e.data('id'));
+
+        })
+
+      $('.subDpt.name').click(function(event){
+        var e = $(event.currentTarget);
+        document.getElementById('set-sm-id').value=e.data('id');
+        document.getElementById('set-sm').value=e.data('name');
+        console.log(e.data('name'));
+        $('#modal-control-shop-type-sm-update').modal('show'); 
+        })
+      
+
+      })

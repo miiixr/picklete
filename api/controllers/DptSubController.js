@@ -20,6 +20,22 @@ let DptSubController = {
 
   },
 
+  update: async(req, res) => {
+    return db.DptSub.update({
+      name: req.body.name,
+    }, {
+      where: {
+        id: req.body.id
+      }
+    })
+      .then(function(newDpt) {
+        return res.redirect('/admin/department');
+      })
+      .catch(function(error) {
+        return res.serverError(error);
+      });
+  },
+
   list: async(req, res) => {
     return db.DptSub.findAll()
       .then(function(dpt_subs) {
