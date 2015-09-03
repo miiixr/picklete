@@ -81,30 +81,11 @@ let ProductController = {
         productGmIds[index] = product.ProductGmId;
       });
 
-      // // query ProductGm
-      // var queryGmObj = {};
-      //
-      // if(query.brandId>0) {
-      //   queryGmObj.brandId = query.brandId;
-      // }
-      //
-      // queryGmObj = {
-      //   where: queryGmObj,
-      //   include: [db.Product]
-      // };
-      // let productGms = await db.ProductGm.findAll(queryGmObj);
-
-
-
       // format datetime
       products = products.map(ProductService.withImage);
       for (let product of products) {
           product.createdAt = moment(product.createdAt).format("YYYY-MM-DD");
       }
-
-      console.log("=================================")
-      // console.log(JSON.stringify(productGms,null,4));
-      console.log("=================================")
 
       // let products = await ProductService.findAllWithImages();
       return res.view('admin/goodList', {
