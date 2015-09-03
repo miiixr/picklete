@@ -1,6 +1,5 @@
 import moment from "moment";
 
-
 let ProductController = {
 
   // show create page and prepare all stuff
@@ -12,7 +11,7 @@ let ProductController = {
           include: [{
             model: db.DptSub
           }],
-          order: ['weight', 'DptSubs.weight']
+          order: ['DptSubs.weight', 'DptSubs.weight']
         });
 
       let tags = await db.Tag.findAll({ limit: 15});
@@ -64,7 +63,8 @@ let ProductController = {
       }
 
       queryObj = {
-        where: queryObj
+        where: queryObj,
+        include: [db.ProductGm]
       };
 
       let products = await db.Product.findAll(queryObj);
@@ -72,13 +72,12 @@ let ProductController = {
       for (let product of products) {
           product.createdAt = moment(product.createdAt).format("YYYY-MM-DD");
       }
-
       // let products = await ProductService.findAllWithImages();
       // format datetime
       return res.view('admin/goodList', {
         query,
         products,
-        pageName: "shop-item-list"
+        pageName: "/admin/goods"
       });
     } catch (error) {
       return res.serverError(error);
