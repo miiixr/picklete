@@ -9,31 +9,27 @@ block body
           .form-group
             label.col-md-4.control-label 品牌名稱
             .col-md-8
-              select.form-control
-                option {brand_name}
-                option {brand_name}
-                option {brand_name}
-                option {brand_name}
-                option {brand_name}
+              select.form-control(name = "brandId", data-value=query.brandId)
+                option(value=-1) 所有品牌
+                each brand, index in brands
+                  option(value='#{brand.id}') #{brand.name}
           // /form-group
         // /col-md-4
         .col-md-4
           .form-group
             label.col-md-4.control-label 關鍵字
             .col-md-8
-              input.form-control(type='text', name='keywords')
+              input.form-control(type='text', name='keywords', value=query.keywords? query.keywords: '')
           // /form-group
         // /col-md-4
         .col-md-4
           .form-group
             label.col-md-4.control-label 大館別
             .col-md-8
-              select.form-control(name='shopGroup1')
-                option 1
-                option 2
-                option 3
-                option 4
-                option 5
+              select.form-control(name='dptId', data-value=query.dptId, data-dpts=dpts)
+                option(value=-1) 所有館別
+                each dpt, index in dpts
+                  option(value='#{dpt.id}') #{dpt.name}
           // /form-group
         // /col-md-4
       // /row
@@ -56,12 +52,10 @@ block body
           .form-group
             label.col-md-4.control-label 小館別
             .col-md-8
-              select.form-control(name='shopGroup2')
-                option 1
-                option 2
-                option 3
-                option 4
-                option 5
+              select.form-control(name='dptSubId', value=query.dptSubId)
+                option(value=-1) 所有館別
+                each dptSub, index in dpts[0].DptSubs
+                  option(value='#{dptSub.id}') #{dptSub.name}
           // /form-group
         // /col-md-4
       // /row
