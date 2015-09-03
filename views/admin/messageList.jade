@@ -1,0 +1,31 @@
+extends ../_layout_auth
+block body
+  h2.m-bottom-6 訊息記錄
+  .row
+  table#collapse-purchase.table.table-purchase
+    thead
+      tr
+        th
+        th 傳送方式
+        th 訊息類型
+        th 收件者
+        th 寄件者
+        th 主旨
+        th 純文字內容
+        th HTML內容
+        th 傳送成功？
+        th 錯誤
+    tbody
+      each msg in msgs
+        tr
+          td
+            input(type='checkbox')
+          td= msg.sendBy
+          td= msg.type
+          td= msg.to
+          td= msg.from
+          td= msg.subject
+          td= msg.text
+          td= msg.html
+          td= msg.success
+          td= msg.error

@@ -1,14 +1,12 @@
 // # 1. 透過 Productid 找到 model product
 // # 2. 檢查 user 是否存在，若否進行建立
 // # 3. 建立訂單 order
-import crypto from 'crypto';
-
 var OrderController;
 
 OrderController = {
   index: async (req, res) => {
     try {
-      let orders = await db.Order.findAll();
+      let orders = await OrderService.findAllComplete();
       return res.view({orders});
     } catch (error) {
       return res.serverError(error);
@@ -51,6 +49,7 @@ OrderController = {
       order.paymentConfirmDate = req.body.paymentConfirmDate;
       order.paymentConfirmName = req.body.paymentConfirmName;
       order.paymentConfirmPostfix = req.body.paymentConfirmPostfix;
+      order.paymentConfirmAmount = req.body.paymentConfirmAmount;
       order.save();
       return res.json({
         result: true
@@ -90,20 +89,7 @@ OrderController = {
         });
       }
 
-      let purchaseHistory = await db.Order.findAll({
-        where: {
-          UserId: userData.id
-        },
-        include: [
-          {
-            model: db.User
-          }, {
-            model: db.Shipment
-          }, {
-            model: db.OrderItem
-          }
-        ]
-      });
+      let purchaseHistory = await OrderService.findAllByUserComplete(userData);
 
       return res.ok({purchaseHistory});
 
@@ -119,7 +105,7 @@ OrderController = {
       var host = req.query.host || null;
       var user = await db.User.find({where: {email}});
 
-      var token = await new Promise((resolve) => crypto.randomBytes(20, (error, buf) => resolve(buf.toString("hex"))));
+      var token = await UtilService.generateHashCode();
 
       user.orderSyncToken = token;
       await user.save();
@@ -156,12 +142,12 @@ OrderController = {
 
       if (order.status === status){
         req.flash('message', `訂單 ${order.serialNumber} 狀態已為 ${status}`);
-        res.redirect('order/index');
+        res.redirect('/admin/order');
         return
       }
       else if(order.status == 'deliveryConfirm' && status == 'paymentConfirm'){
         req.flash('message', `訂單 ${order.serialNumber} 狀態已為 ${order.status} 無法變更為 ${status}`);
-        res.redirect('order/index');
+        res.redirect('/admin/order');
         return
       }
 
@@ -176,7 +162,7 @@ OrderController = {
 
 
       req.flash('message', `訂單 ${order.serialNumber} 狀態更新為 ${status} 成功`);
-      res.redirect('order/index');
+      res.redirect('/admin/order');
       return
 
 

@@ -1,4 +1,4 @@
-describe.only("about gm prodcut model operation.", () => {
+describe("about gm prodcut model operation.", () => {
   let createdProductGm = null;
 
   it('create product gm', async (done) => {
@@ -20,7 +20,7 @@ describe.only("about gm prodcut model operation.", () => {
         'kerker',
         '宅宅 der'
       ],
-      
+
       coverPhoto: [
         'http://localhost:1337/smile.jpg',
         'http://localhost:1337/happy.jpg'
@@ -28,8 +28,6 @@ describe.only("about gm prodcut model operation.", () => {
     };
 
     createdProductGm = await db.ProductGm.create(newProductGm);
-
-    console.log(createdProductGm);
 
     createdProductGm.explain.should.be.String;
     done();

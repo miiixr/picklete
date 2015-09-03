@@ -29,7 +29,7 @@ module.exports.bootstrap = async (cb) => {
     global.db = models;
 
 
-    if (sails.config.environment === 'development') {
+    if (sails.config.environment === 'development' || sails.config.environment === 'test') {
       await init.database();
       await init.testData();
     }

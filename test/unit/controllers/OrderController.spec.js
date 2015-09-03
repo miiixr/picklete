@@ -147,26 +147,22 @@ describe("about Order", () => {
       request(sails.hooks.http.app)
       .get(`/order/statusUpdate/${testOrder.id}?status=paymentConfirm`)
       .end(async (err, res) => {
-        let {success} = res.body;
-        success.should.be.true;
-
         let order = await db.Order.findById(testOrder.id);
         order.status.should.be.equal('paymentConfirm');
 
-        done();
+        done(err);
       });
+
+
     });
     it("update order status to deliveryConfirm. ", async (done) => {
       request(sails.hooks.http.app)
       .get(`/order/statusUpdate/${testOrder.id}?status=deliveryConfirm`)
       .end(async (err, res) => {
-        let {success} = res.body;
-        success.should.be.true;
-
         let order = await db.Order.findById(testOrder.id);
         order.status.should.be.equal('deliveryConfirm');
 
-        done();
+        done(err);
       });
     });
 

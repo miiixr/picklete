@@ -21,6 +21,44 @@ module.exports = {
 
   },
 
+  findAllComplete: async () => {
+    let orders = await db.Order.findAll({
+      include: [
+        {
+          model: db.User
+        }, {
+          model: db.Shipment
+        }, {
+          model: db.OrderItem
+        }
+      ]
+    });
+
+    return orders;
+
+  },
+  findAllByUserComplete: async (userData) => {
+    let orders = await db.Order.findAll({
+      where: {
+        UserId: userData.id
+      },
+      include: [
+        {
+          model: db.User
+        }, {
+          model: db.Shipment
+        }, {
+          model: db.OrderItem
+        }
+      ]
+    });
+
+    return orders;
+
+  },
+
+
+
   create: async (newOrder) => {
     let result = {};
 
@@ -73,12 +111,12 @@ module.exports = {
 
       products.forEach((product, index) => {
         let quantity = parseInt(orderItems[index].quantity);
-        thisOrder.paymentTotalAmount += (product.price * quantity);
+        thisOrder.paymentTotalAmount += (orderItems[index].price * quantity);
         thisOrder.quantity += quantity;
 
         orderItems[index].name = product.name;
         orderItems[index].description = product.description;
-        orderItems[index].price = product.price;
+        // orderItems[index].price = product.price;
         orderItems[index].comment = product.comment;
         orderItems[index].spec = product.spec;
       });
