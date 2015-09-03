@@ -12,7 +12,7 @@ let ProductController = {
           include: [{
             model: db.DptSub
           }],
-          order: ['weight', 'DptSubs.weight']
+          order: ['Dpt.weight', 'DptSubs.weight']
         });
 
       let tags = await db.Tag.findAll({ limit: 15});
