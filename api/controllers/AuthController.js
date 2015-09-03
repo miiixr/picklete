@@ -5,6 +5,7 @@
  * should look. It currently includes the minimum amount of functionality for
  * the basics of Passport.js to work.
  */
+var url = require('url');
 var AuthController;
 
 AuthController = {
@@ -19,9 +20,16 @@ AuthController = {
     });
   },
   logout: function(req, res) {
-    req.logout();
+    let reference = url.parse(req.headers.referer);
+    let referencePath = reference.path.split('/');
+
     req.session.authenticated = false;
-    res.redirect('/');
+    req.logout();
+
+    if (referencePath[1] === 'admin') {
+      res.redirect('/admin/login');
+    }
+    res.redirect('/login');
   },
   register: function(req, res) {
     res.view({
@@ -51,23 +59,30 @@ AuthController = {
           res.redirect('back');
           break;
         default:
-          res.redirect('/login');
+          let reference = url.parse(req.headers.referer);
+          if (reference.path === '/admin/login') {
+            res.redirect('/admin/login');
+          }else {
+            res.redirect('/login');
+          }
+
       }
     };
     passport.callback(req, res, function(err, user, challenges, statuses) {
       if (err || !user) {
         return tryAgain(challenges);
       }
+
       req.login(user, function(err) {
         if (err) {
           return tryAgain(err);
         }
-        console.log(user);
         req.session.authenticated = true;
 
         if (user.RoleId == 2) {
           return res.redirect('/admin/goods');
-        } 
+        }
+
         return res.redirect('/');
       });
     });

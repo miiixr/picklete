@@ -6,10 +6,14 @@ loginRequired
 @docs        :: http://sailsjs.org/#!documentation/policies
 ###
 module.exports = (req, res, next) ->
-  
-  # User is allowed, proceed to the next policy, 
+
+  # User is allowed, proceed to the next policy,
   # or if this is the last policy, the controller
+  referer = req.path.split('/')
   return next() if UserService.getLoginState(req)
   
   # User is not allowed
-  res.redirect('/login')
+  if referer['1'] is 'admin'
+    res.redirect('/admin/login')
+  else
+    res.redirect('/login')
