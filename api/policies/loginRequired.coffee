@@ -11,9 +11,10 @@ module.exports = (req, res, next) ->
   # or if this is the last policy, the controller
   referer = req.path.split('/')
   return next() if UserService.getLoginState(req)
-  
+
   # User is not allowed
+
   if referer['1'] is 'admin'
-    res.redirect('/admin/login')
+    return res.redirect('/admin/login')
   else
-    res.redirect('/login')
+    return res.redirect('/login')

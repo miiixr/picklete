@@ -16,10 +16,17 @@ For more information on configuring policies, check out:
 http://sailsjs.org/#/documentation/reference/sails.config/sails.config.policies.html
 ###
 module.exports.policies = {
+
   '*': [ 'passport', 'loginRequired']
 
   'auth':
     '*': ['passport']
+
+  ProductController:
+    list: ['loginRequired']
+  OrderController:
+    index: ['loginRequired']
+
 }
 
 

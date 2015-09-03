@@ -15,7 +15,7 @@ AuthController = {
   },
 
   login: function(req, res) {
-    res.view({
+    res.view('admin/login', {
       errors: req.flash('error')
     });
   },
@@ -24,12 +24,14 @@ AuthController = {
     let referencePath = reference.path.split('/');
 
     req.session.authenticated = false;
+
     req.logout();
 
     if (referencePath[1] === 'admin') {
       res.redirect('/admin/login');
     }
     res.redirect('/login');
+
   },
   register: function(req, res) {
     res.view({
