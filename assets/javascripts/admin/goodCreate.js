@@ -54,6 +54,16 @@
     $('.tagsinput input').before('<span class="tag label label-default">'+ s +'<span data-role="remove">×</span></span>');
   });
 
+  $("select[name='dptId']").change(function(){
+    var DptSubs = $("select[name=dptSubId]").data("dpts")[this.value-1].DptSubs;
+    var $selectDptSubId = $("select[name='dptSubId']")
+    $selectDptSubId.html("");
+    $selectDptSubId.append("<option value=''>選擇小館別</option>");
+    for (var i in DptSubs) {
+      $selectDptSubId.append("<option value="+ DptSubs[i].id +">"+ DptSubs[i].name +"</option>");
+    }
+  });
+
 }(jQuery));
 
 
