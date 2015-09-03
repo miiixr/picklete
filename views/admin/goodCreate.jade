@@ -33,7 +33,7 @@ block body
               each dpt, index in dpts 
                 option(value='#{dpt.id}') #{dpt.name}
           .col-md-4
-            select.form-control(name='dptSubId')
+            select.form-control(name='dptSubId', data-dpts=dpts)
               option 選擇小館別
               each dptSub, index in dpts[0].DptSubs
                 option(value='#{dptSub.id}') #{dptSub.name}
@@ -465,4 +465,6 @@ block body
 
 block js
   script(src='/javascripts/admin/goodCreate.js')
+
+
 

@@ -31,24 +31,33 @@ module.exports = {
     // create product gm
     let createdProductGm = await db.ProductGm.create(newProductGm);
 
-    let newProduct = {
-      name: req.body.name,
-      description: req.body['good[0][description]'],
-      stockQuantity: req.body['good[0][stockQuantity]'],
-      isPublish: req.body['good[0][isPublish]'],
-      price: req.body.price,
-      size: req.body.size,
-      comment: req.body.comment,
-      service: req.body.service,
-      country: req.body.country,
-      madeby: req.body.madeby,
-      color: req.body['good[0][color]'],
-      productNumber: req.body['good[0][productNumber]'],
-      photos: [],
-      ProductGmId: createdProductGm.id,
-    };
+    for (var i = 0 ; i < req.body['good[0][description]'].length ; i++) { 
+      var description = req.body['good[0][description]'][i] || '';
+      var stockQuantity = req.body['good[0][stockQuantity]'][i] || '';
+      var isPublish = req.body['good[0][isPublish]'] || '';
+      var color = req.body['good[0][color]'][i] || '';
+      var productNumber = req.body['good[0][productNumber]'][i] || '';
 
-    await db.Product.create(newProduct);
+      let newProduct = {
+        name: req.body.name,
+        description: description,
+        stockQuantity: stockQuantity,
+        isPublish: isPublish,
+        price: req.body.price,
+        size: req.body.size,
+        comment: req.body.comment,
+        service: req.body.service,
+        country: req.body.country,
+        madeby: req.body.madeby,
+        color: color,
+        productNumber: productNumber,
+        photos: [],
+        ProductGmId: createdProductGm.id,
+      };
+
+      await db.Product.create(newProduct);
+      
+    }
 
   },
 
