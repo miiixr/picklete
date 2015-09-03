@@ -34,6 +34,7 @@ let DptSubController = {
     .catch(function(error) {
       return res.serverError(error);
     });
+
   },
 
   list: async(req, res) => {
