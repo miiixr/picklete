@@ -9,7 +9,6 @@ let DptController = {
         id: req.body.id
       }
     })
-
     .then(function(newDpt) {
       return res.redirect('/admin/department');
     })
@@ -17,6 +16,7 @@ let DptController = {
       return res.serverError(error);
     });
   },
+
 
   list: async(req, res) => {
     return db.Dpt.findAll({

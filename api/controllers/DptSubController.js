@@ -37,6 +37,7 @@ let DptSubController = {
 
   },
 
+
   list: async(req, res) => {
     return db.DptSub.findAll()
     .then(function(dpt_subs) {
