@@ -16,9 +16,7 @@
     document.getElementById('special').style.display = "none";
     document.getElementById('subDpt'+id).style.display = "";
     document.getElementById('sm-id').value = e.data('id');
-    $('.btn.btn-sm-circle.btn-green.m-left-1').css("display","");
   });
-
 
   $('.special.project').click(function(event){
     for(i=0; i<=5; i++){
@@ -44,7 +42,7 @@
     deleteNode.find(".subDptName").html(targetName);
     deleteNode.modal('show'); 
   });
-  // document.getElementById('subDpt' + i).style.display = "none";
 
+  // show default 0 subDpt
   document.getElementById('subDpt0').style.display = "block";
 }(jQuery));
