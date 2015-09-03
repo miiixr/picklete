@@ -38,16 +38,17 @@ block body
             | 本月主題
             span.glyphicon.glyphicon-locked
         DptSubs
-        each val in [0,1,2,3,4,5]
+        each dpt, val in dpts
           .dpt(id="subDpt"+val style="display:none")
-            each subDpt, index in dpts[val].DptSubs
-              // /list-group-item
-              .list-group-item.edit-link
-                a(href='#', data-toggle='modal', class='subDpt name', data-id="#{subDpt.id}",data-name='#{subDpt.name}')
-                  | #{subDpt.name}
-                  span.glyphicon.glyphicon-pencil2.m-left-1
-                a(href='#', data-toggle='modal', class='delete.subDpt')
-                  span.glyphicon.glyphicon-remove(data-id="#{subDpt.id}")
+            - if (dpt.DptSubs.length)
+              each subDpt, index in dpt.DptSubs
+                // /list-group-item
+                .list-group-item.edit-link
+                  a(href='#', data-toggle='modal', class='subDpt name', data-id="#{subDpt.id}",data-name='#{subDpt.name}')
+                    | #{subDpt.name}
+                    span.glyphicon.glyphicon-pencil2.m-left-1
+                  a.delete.subDpt(href='#', data-toggle='modal')
+                    span.glyphicon.glyphicon-remove(data-id="#{subDpt.id}")
 
         //- // /list-group-item
         //- .list-group-item.edit-link

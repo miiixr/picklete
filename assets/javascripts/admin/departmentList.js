@@ -37,9 +37,15 @@
         $('#modal-control-shop-type-sm-update').modal('show'); 
     });
 
-    $('.glyphicon.glyphicon-remove').click(function(event){
+    $('.delete.subDpt').click(function(event){
         var e = $(event.currentTarget);
+        var targetName = e.prev().data('name');
+        var deleteNode = $('#modal-delete');
         document.getElementById('del-sm-id').value = e.data('id');
-        $('#modal-delete').modal('show'); 
+        deleteNode.find(".subDptName").html(targetName);
+        deleteNode.modal('show'); 
     });
+    // document.getElementById('subDpt' + i).style.display = "none";
+
+    document.getElementById('subDpt0').style.display = "block";
 }(jQuery));
