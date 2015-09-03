@@ -68,7 +68,9 @@
       // /modal-body
       .modal-footer
         button.btn.btn-default(type='button', data-dismiss='modal') 取消
-        button.btn.btn-green(type='button', data-dismiss='modal') 確定
+        form(action='/admin/department/sub/delete', method='POST')
+          input(id='del-sm-id',type='hidden', name='id', required='true',value="")
+          button.btn.btn-green(type='submit') 確定
       // /modal-footer
     // /modal-content
   // /modal-dialog
