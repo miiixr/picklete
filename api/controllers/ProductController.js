@@ -1,6 +1,5 @@
 import moment from "moment";
 
-
 let ProductController = {
 
   // show create page and prepare all stuff
@@ -20,7 +19,8 @@ let ProductController = {
       return res.view('admin/goodCreate', {
         brands,
         dpts,
-        tags
+        tags,
+        pageName: '/admin/goods/create'
       });
     } catch (error) {
       return res.serverError(error);
@@ -30,14 +30,70 @@ let ProductController = {
   // list all goods result, include query items
   list: async (req,res) => {
     try {
-      let products = await ProductService.findAllWithImages();
-      // format datetime
-      for (let product of products) {
-          product.createdAt = moment(products.createdAt).format("YYYY-MM-DD");
+      let brands = await db.Brand.findAll();
+      let dpts = await db.Dpt.findAll({
+          include: [{
+            model: db.DptSub
+          }],
+          order: ['DptSubs.weight', 'DptSubs.weight']
+        });
+      let query = req.query;
+      let queryObj = {};
+
+      // search condition
+      if(query.price) {
+        queryObj.price = query.price;
       }
+      if(query.name) {
+        queryObj.name = { 'like': '%'+query.name+'%'};
+      }
+      if(query.productNumber) {
+        queryObj.productNumber = query.productNumber;
+      }
+      // 存貨數量搜尋條件
+      if(query.stockQuantityStart && query.stockQuantityEnd) {
+        queryObj.stockQuantity = { between : [query.stockQuantityStart, query.stockQuantityEnd] };
+      }
+      else if (query.stockQuantityStart || query.stockQuantityEnd) {
+        queryObj.stockQuantity = query.stockQuantityStart? { gte : query.stockQuantityStart }: { lte : query.stockQuantityEnd };
+      }
+      // 日期搜尋條件
+      if(query.dateFrom && query.dateEnd) {
+        queryObj.createdAt = { between : [new Date(query.dateFrom), new Date(query.dateEnd)]};
+      }
+      else if(query.dateFrom || query.dateEnd) {
+        queryObj.createdAt = query.dateFrom? { gte : new Date(query.dateFrom)}: { lte : new Date(query.dateEnd)};
+      }
+
+      // 販售狀態 1:隱藏, 2:上架
+      if(query.isPublish>0) {
+        queryObj.isPublish = (query.isPublish == 1)? null : true;
+      }
+
+      queryObj = {
+        where: queryObj,
+        include: [db.ProductGm]
+      };
+
+      let products = await db.Product.findAll(queryObj);
+      var productGmIds = [];
+      products.map(function(index, product){
+        productGmIds[index] = product.ProductGmId;
+      });
+
+      // format datetime
+      products = products.map(ProductService.withImage);
+      for (let product of products) {
+          product.createdAt = moment(product.createdAt).format("YYYY-MM-DD");
+      }
+
+      // let products = await ProductService.findAllWithImages();
       return res.view('admin/goodList', {
+        brands,
+        dpts,
+        query,
         products,
-        pageName: "shop-item-list"
+        pageName: "/admin/goods"
       });
     } catch (error) {
       return res.serverError(error);
@@ -57,7 +113,7 @@ let ProductController = {
 
     let gid = req.query.id;
     let good = await ProductService.findAllWithImages(gid);
-    
+
     if ( ! good) {
       return res.redirect('/admin/goods');
     }
