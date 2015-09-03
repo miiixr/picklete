@@ -149,15 +149,20 @@ block body
           td= order.User.username
           td= order.User.mobile
           td= order.quantity
-          td            
           td
-            p
-              small= sails.moment(order.paymentConfirmDate).format('YYYY/MM/DD')
-              br
-              small 匯款人: #{order.paymentConfirmName}
-              br
-              small 後五碼: #{order.paymentConfirmPostfix}
-              
+          td
+            if order.paymentIsConfirmed
+              p
+                small= sails.moment(order.paymentConfirmDate).format('YYYY/MM/DD')
+                br
+                small 匯款人: #{order.paymentConfirmName}
+                br
+                small 後五碼: #{order.paymentConfirmPostfix}
+                br
+                small 匯款金額: #{order.paymentConfirmAmount}
+            else
+              p 尚未填寫匯款回報
+
           td= order.createdAt
           td
             a.btn.btn-green(href='/order/statusUpdate/#{order.id}?status=paymentConfirm') 通知匯款成功
@@ -167,7 +172,7 @@ block body
           td
             a(data-toggle='collapse', data-parent='#collapse-purchase', href='#collapse-purchase-One')
               span.glyphicon.glyphicon-plus
-                
+
         tr.tr-hide
           td(colspan='10')
             #collapse-purchase-One.panel-collapse.collapse

@@ -120,3 +120,4 @@ nbproject
 .sass-cache
 assets/bower/
 db.development.sqlite
+test/unit/resources/resize.jpg

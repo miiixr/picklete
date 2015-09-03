@@ -14,10 +14,12 @@ module.exports = (sequelize, DataTypes) ->
     )
     from: DataTypes.STRING
     to: DataTypes.STRING
+    toName: DataTypes.STRING
     subject: DataTypes.STRING
     text: DataTypes.TEXT
     html: DataTypes.TEXT
     success: DataTypes.BOOLEAN
+    response: DataTypes.STRING
     error: DataTypes.STRING
   }, classMethods: associate: (models) ->
     return
