@@ -1,22 +1,22 @@
 
 let DptController = {
 
-  create: async(req, res) => {
-
-    var dptData = {
-      name: req.body.name || '',
-      weight: req.body.weight || 1,
-      official: false,
-    };
-
-    return db.Dpt.create(dptData)
-      .then(function(newDpt) {
-        return res.redirect('/admin/department');
-      })
-      .catch(function(error) {
-        return res.serverError(error);
-      });
+  update: async(req, res) => {
+    return db.Dpt.update({
+      name: req.body.name,
+    }, {
+      where: {
+        id: req.body.id
+      }
+    })
+    .then(function(newDpt) {
+      return res.redirect('/admin/department');
+    })
+    .catch(function(error) {
+      return res.serverError(error);
+    });
   },
+
 
   list: async(req, res) => {
     return db.Dpt.findAll({
@@ -32,7 +32,6 @@ let DptController = {
         return res.serverError(error);
       });
   }
-
 };
 
 module.exports = DptController;
