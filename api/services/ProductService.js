@@ -31,10 +31,6 @@ module.exports = {
     // create product gm
     let createdProductGm = await db.ProductGm.create(newProductGm);
 
-
-
-
-    console.log('------');
     for (var i = 0 ; i < req.body['good[0][description]'].length ; i++) { 
       var description = req.body['good[0][description]'][i] || '';
       var stockQuantity = req.body['good[0][stockQuantity]'][i] || '';
@@ -60,10 +56,8 @@ module.exports = {
       };
 
       await db.Product.create(newProduct);
-
       
     }
-    console.log('------');
 
   },
 
