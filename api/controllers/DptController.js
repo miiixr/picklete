@@ -9,15 +9,14 @@ let DptController = {
         id: req.body.id
       }
     })
-      .then(function(newDpt) {
-        return res.redirect('/admin/department');
-      })
-      .catch(function(error) {
-        return res.serverError(error);
-      });
+    .then(function(newDpt) {
+      return res.redirect('/admin/department');
+    })
+    .catch(function(error) {
+      return res.serverError(error);
+    });
   },
-
-
+  
   list: async(req, res) => {
     return db.Dpt.findAll({
         include: [{
@@ -32,7 +31,6 @@ let DptController = {
         return res.serverError(error);
       });
   }
-
 };
 
 module.exports = DptController;
