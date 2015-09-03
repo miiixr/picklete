@@ -18,9 +18,9 @@
       if($("#brandSelect :selected").text() == '選擇品牌'){
         $("#brandSelect").prop('required', true);
       }
+    }
     else{
-      $("#brandSelect").prop('required', false);
-      }
+      $("#brandSelect").removeAttr('required');
     }
   });
 
