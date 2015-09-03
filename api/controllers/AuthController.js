@@ -28,9 +28,9 @@ AuthController = {
     req.logout();
 
     if (referencePath[1] === 'admin') {
-      res.redirect('/admin/login');
+      return res.redirect('/admin/login');
     }
-    res.redirect('/login');
+    return res.redirect('/login');
 
   },
   register: function(req, res) {
