@@ -63,8 +63,10 @@
         h2.modal-title 刪除
       // /modal-header
       .modal-body.p-30.p-top-0
-        p 您確定要將此 XXXXXXX 刪除？
-        p 您確定要將此 XXXXXXX 移出此折扣活動？
+        p 您確定要將此 
+          span.subDptName 
+          | 刪除？
+        //- p 您確定要將此 XXXXXXX 移出此折扣活動？
       // /modal-body
       .modal-footer
         button.btn.btn-default(type='button', data-dismiss='modal') 取消
