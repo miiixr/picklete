@@ -18,19 +18,6 @@ module.exports = {
       tag = tag.split(',');
     }
 
-    let newProductGm = {
-      brandId: brand,
-      dptId: parseInt(req.body.dptId, 10),
-      dptSubId: parseInt(req.body.dptSubId, 10),
-      explain: req.body.explain,
-      usage: req.body.usage,
-      notice: req.body.notice,
-      tag: tag,
-      coverPhoto: []
-    };
-    // create product gm
-    let createdProductGm = await db.ProductGm.create(newProductGm);
-
     let newProduct = {
       name: req.body.name,
       description: req.body['good[0][description]'],
