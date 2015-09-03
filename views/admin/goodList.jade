@@ -90,23 +90,21 @@ block body
           .form-group
             label.col-md-4.control-label 販售狀態
             .col-md-8
-              select.form-control
-                option {sell_state}
-                option {sell_state}
-                option {sell_state}
-                option {sell_state}
-                option {sell_state}
+              select.form-control(name="isPublish", data-value=query.isPublish?query.isPublish: 0)
+                option(value=0) 所有狀態
+                option(value=1) 隱藏
+                option(value=2) 上架
           // /form-group
         // /col-md-4
         .col-md-8
           .form-group
             label.col-md-2.control-label 建檔日期
             .col-md-4
-              input.form-control(type='date', name='dateFrom')
+              input.form-control(type='date', name='dateFrom', value=query.dateFrom?query.dateFrom:null)
             .col-md-2.text-center
               p.form-control-static 至
             .col-md-4
-              input.form-control(type='date', name='dateEnd')
+              input.form-control(type='date', name='dateEnd', value=query.dateEnd?query.dateEnd:null)
           // /form-group
         // /col-md-7
         .col-md-12.text-right
@@ -158,7 +156,6 @@ block body
           span.caret
         th
     tbody
-      - console.log('frontend:'+products)
       each product in products
         tr
           td
@@ -205,4 +202,4 @@ block body
   // /text-center
 
 block js
-  script.
+  script(src="/javascripts/user/goodList.js")

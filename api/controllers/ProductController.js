@@ -39,36 +39,38 @@ let ProductController = {
       if(query.productNumber) {
         queryObj.productNumber = query.productNumber;
       }
-      if(query.stockQuantityStart) {
-        // queryObj.stockQuantity = { '>=' : parseInt(query.stockQuantityStart) };
+      // 存貨數量搜尋條件
+      if(query.stockQuantityStart && query.stockQuantityEnd) {
+        queryObj.stockQuantity = { between : [query.stockQuantityStart, query.stockQuantityEnd] };
       }
-      if(query.stockQuantityEnd) {
-        // queryObj.stockQuantity = { '<=' : parseInt(query.stockQuantityEnd) };
+      else if (query.stockQuantityStart || query.stockQuantityEnd) {
+        queryObj.stockQuantity = query.stockQuantityStart? { gte : query.stockQuantityStart }: { lte : query.stockQuantityEnd };
       }
+      // 日期搜尋條件
+      if(query.dateFrom && query.dateEnd) {
+        queryObj.createdAt = { between : [new Date(query.dateFrom), new Date(query.dateEnd)]};
+      }
+      else if(query.dateFrom || query.dateEnd) {
+        queryObj.createdAt = query.dateFrom? { gte : new Date(query.dateFrom)}: { lte : new Date(query.dateEnd)};
+      }
+
+      // 販售狀態 1:隱藏, 2:上架
+      if(query.isPublish>0) {
+        queryObj.isPublish = (query.isPublish == 1)? null : true;
+      }
+
       queryObj = {
         where: queryObj
       };
 
-
-
-      // let products = await db.Product.count({where: {price: query.price}});
-      let resultCount = await db.Product.count(queryObj);
-      // productNumber: query.productNumber
-
-      // moment(query.dateEnd, "YYYY-MM-DD").format("MM/DD/YYYY")
       let products = await db.Product.findAll(queryObj);
-      // createdAt: {
-      //   '>': new Date('2015/8/3')
-      // }
-      console.log('count:'+resultCount);
       products = products.map(ProductService.withImage);
       for (let product of products) {
           product.createdAt = moment(product.createdAt).format("YYYY-MM-DD");
-          console.log(product.createdAt);
       }
+
       // let products = await ProductService.findAllWithImages();
       // format datetime
-
       return res.view('admin/goodList', {
         query,
         products,
