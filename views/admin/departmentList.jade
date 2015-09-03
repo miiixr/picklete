@@ -47,8 +47,8 @@ block body
                   a(href='#', data-toggle='modal', class='subDpt name', data-id="#{subDpt.id}",data-name='#{subDpt.name}')
                     | #{subDpt.name}
                     span.glyphicon.glyphicon-pencil2.m-left-1
-                  a.delete.subDpt(href='#', data-toggle='modal')
-                    span.glyphicon.glyphicon-remove(data-id="#{subDpt.id}")
+                  a.delete.subDpt(href='#', data-toggle='modal', data-id="#{subDpt.id}")
+                    span.glyphicon.glyphicon-remove
 
         //- // /list-group-item
         //- .list-group-item.edit-link
