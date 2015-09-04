@@ -35,7 +35,7 @@ let ProductController = {
           include: [{
             model: db.DptSub
           }],
-          order: ['DptSubs.weight', 'DptSubs.weight']
+          order: ['Dpt.weight', 'DptSubs.weight']
         });
       let query = req.query;
       let queryObj = {};
@@ -76,10 +76,35 @@ let ProductController = {
       };
 
       let products = await db.Product.findAll(queryObj);
-      var productGmIds = [];
-      products.map(function(index, product){
-        productGmIds[index] = product.ProductGmId;
+
+      let productGms = [];
+      products.map(function(product, index) {
+        if(product.ProductGmId) {
+          let pass=true;
+          // 品牌篩選
+          if(query.brandId>0) {
+            console.log('++++++++++++'+JSON.stringify(product,null,4));
+            if(product.ProductGm.brandId != query.brandId)
+              pass= false;
+          }
+          // 大館別篩選
+          if(query.dptId>0 && pass) {
+            if(product.ProductGm.dptId != query.dptId)
+              pass= false;
+          }
+          // 小館別篩選
+          if(query.dptSubId>0 && pass) {
+            if(product.ProductGm.dptSubId != query.dptSubId)
+              pass= false;
+          }
+          if(pass)
+            productGms.push(product);
+        }
       });
+
+      // if(productGms.length>0)
+      //   products = productGms;
+
 
       // format datetime
       products = products.map(ProductService.withImage);
