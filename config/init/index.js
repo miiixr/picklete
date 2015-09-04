@@ -83,7 +83,8 @@ module.exports = {
       usage: '',
       notice: '',
       tag: [
-            "情人"
+        "aa",
+        "情人"
       ],
       coverPhoto: []
     },{
@@ -120,7 +121,8 @@ module.exports = {
       name: '好物三選3',
       description: '好東西，買買買',
       stockQuantity: 100,
-      price: 750
+      price: 750,
+      ProductGmId: 2
     }];
     await db.Product.bulkCreate(fruitProducts);
 
@@ -131,7 +133,8 @@ module.exports = {
       price: 100,
       image: 'http://localhost:1337/images/product/1.jpg',
       isPublish: true,
-      comment: '限量只有 10 個'
+      comment: '限量只有 10 個',
+      ProductGmId: 2
     };
     var createdProduct = await db.Product.create(newProduct);
 

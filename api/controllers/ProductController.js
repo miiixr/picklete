@@ -45,24 +45,24 @@ let ProductController = {
         queryObj.price = query.price;
       }
       if(query.name) {
-        queryObj.name = { like: '%'+query.name+'%'};
+        queryObj.name = { $like: '%'+query.name+'%'};
       }
       if(query.productNumber) {
         queryObj.productNumber = query.productNumber;
       }
       // 存貨數量搜尋條件
       if(query.stockQuantityStart && query.stockQuantityEnd) {
-        queryObj.stockQuantity = { between : [query.stockQuantityStart, query.stockQuantityEnd] };
+        queryObj.stockQuantity = { $between : [query.stockQuantityStart, query.stockQuantityEnd] };
       }
       else if (query.stockQuantityStart || query.stockQuantityEnd) {
-        queryObj.stockQuantity = query.stockQuantityStart? { gte : query.stockQuantityStart }: { lte : query.stockQuantityEnd };
+        queryObj.stockQuantity = query.stockQuantityStart? { $gte : query.stockQuantityStart }: { $lte : query.stockQuantityEnd };
       }
       // 日期搜尋條件
       if(query.dateFrom && query.dateEnd) {
-        queryObj.createdAt = { between : [new Date(query.dateFrom), new Date(query.dateEnd)]};
+        queryObj.createdAt = { $between : [new Date(query.dateFrom), new Date(query.dateEnd)]};
       }
       else if(query.dateFrom || query.dateEnd) {
-        queryObj.createdAt = query.dateFrom? { gte : new Date(query.dateFrom)}: { lte : new Date(query.dateEnd)};
+        queryObj.createdAt = query.dateFrom? { $gte : new Date(query.dateFrom)}: { $lte : new Date(query.dateEnd)};
       }
 
       // 販售狀態 1:隱藏, 2:上架
@@ -87,8 +87,8 @@ let ProductController = {
         queryGmObj.dptId = query.dptId;
       if(query.dptSubId>0)
         queryGmObj.dptSubId = query.dptSubId;
-      if(1) {
-        queryGmObj.tag = { $like : '%人' };
+      if(query.keyword) {
+        queryGmObj.tag = { $like : '%'+query.keyword+'%' };
       }
 
       queryGmObj = {
@@ -98,21 +98,18 @@ let ProductController = {
 
       let productGms = await db.ProductGm.findAll(queryGmObj);
 
-      // let array = [];
-      // for(let product of products) {
-      //   for(let productGm of productGms){
-      //       if(product.ProductGmId == productGms.Products.ProductGmId){
-      //         array.push(product);
-      //         break;
-      //       }
-      //   }
-      // }
-
-      console.log('++++++++++++'+JSON.stringify(productGms,null,4));
-
-      // if(productproductGms.length>0)
-      // products = productGms;
-
+      let resultArray = [];
+      for(let product of products) {
+        for(let productGm of productGms){
+          for(let gmProduct of productGm.Products) {
+            if(product.ProductGmId == gmProduct.ProductGmId) {
+              resultArray.push(product);
+              break;
+            }
+          }
+        }
+      }
+      products = resultArray;
 
       // format datetime
       products = products.map(ProductService.withImage);
