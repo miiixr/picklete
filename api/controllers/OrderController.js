@@ -90,12 +90,29 @@ OrderController = {
       }
 
       let purchaseHistory = await OrderService.findAllByUserComplete(userData);
-
+      console.log('=== purchaseHistory ==>',purchaseHistory);
       return res.ok({purchaseHistory});
 
     } catch (error) {
       console.log ('error',error.stack);
       return res.serverError(error);
+    }
+  },
+
+  // get order status
+  find: async function(req,res){
+    try{
+      let sn  = req.param('serialNumber');
+      let orders = await OrderService.find(sn);
+      console.log('=== order ==>,'order);
+      if (!orders) {
+        throw ('order not found')
+      }
+      return res.ok({orders});
+    }catch(e){
+      console.error(e.stack);
+      let {message} = e;
+      res.serverError({message, success: false});
     }
   },
 

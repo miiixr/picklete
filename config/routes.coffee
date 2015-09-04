@@ -185,6 +185,7 @@ module.exports.routes = {
      credentials: false
     }
   }
+
   'get /api/order/sync': {
     controller: "OrderController",
     action: "sync",
@@ -192,6 +193,16 @@ module.exports.routes = {
      origin: "http://localhost:1337, http://localhost:8080",
      credentials: false
     }
+
+    'get /api/order/find/:serialNumber': {
+      controller: "OrderController",
+      action: "find",
+      cors: {
+       origin: "http://localhost:1337, http://localhost:8080",
+       credentials: false
+      }
+    }
+
   }
 
   ###*

@@ -57,7 +57,14 @@ module.exports = {
 
   },
 
-
+  find: async (sn) => {
+    let orders = await db.Order.findAll({
+      where: {
+        serialNumber: sn
+      }
+    });
+    return orders;
+  },
 
   create: async (newOrder) => {
     let result = {};
