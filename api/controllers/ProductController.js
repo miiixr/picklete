@@ -45,7 +45,7 @@ let ProductController = {
         queryObj.price = query.price;
       }
       if(query.name) {
-        queryObj.name = { 'like': '%'+query.name+'%'};
+        queryObj.name = { like: '%'+query.name+'%'};
       }
       if(query.productNumber) {
         queryObj.productNumber = query.productNumber;
@@ -77,33 +77,41 @@ let ProductController = {
 
       let products = await db.Product.findAll(queryObj);
 
-      let productGms = [];
-      products.map(function(product, index) {
-        if(product.ProductGmId) {
-          let pass=true;
-          // 品牌篩選
-          if(query.brandId>0) {
-            console.log('++++++++++++'+JSON.stringify(product,null,4));
-            if(product.ProductGm.brandId != query.brandId)
-              pass= false;
-          }
-          // 大館別篩選
-          if(query.dptId>0 && pass) {
-            if(product.ProductGm.dptId != query.dptId)
-              pass= false;
-          }
-          // 小館別篩選
-          if(query.dptSubId>0 && pass) {
-            if(product.ProductGm.dptSubId != query.dptSubId)
-              pass= false;
-          }
-          if(pass)
-            productGms.push(product);
-        }
-      });
 
-      // if(productGms.length>0)
-      products = productGms;
+      //===============
+      let queryGmObj = {};
+
+      if(query.brandId>0)
+        queryGmObj.brandId = query.brandId;
+      if(query.dptId>0)
+        queryGmObj.dptId = query.dptId;
+      if(query.dptSubId>0)
+        queryGmObj.dptSubId = query.dptSubId;
+      if(1) {
+        queryGmObj.tag = { $like : '%人' };
+      }
+
+      queryGmObj = {
+        where: queryGmObj,
+        include: [db.Product]
+      };
+
+      let productGms = await db.ProductGm.findAll(queryGmObj);
+
+      // let array = [];
+      // for(let product of products) {
+      //   for(let productGm of productGms){
+      //       if(product.ProductGmId == productGms.Products.ProductGmId){
+      //         array.push(product);
+      //         break;
+      //       }
+      //   }
+      // }
+
+      console.log('++++++++++++'+JSON.stringify(productGms,null,4));
+
+      // if(productproductGms.length>0)
+      // products = productGms;
 
 
       // format datetime

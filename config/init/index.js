@@ -82,7 +82,9 @@ module.exports = {
       explain: '',
       usage: '',
       notice: '',
-      tag: [],
+      tag: [
+            "情人"
+      ],
       coverPhoto: []
     },{
       brandId: 2,
@@ -91,7 +93,11 @@ module.exports = {
       explain: '',
       usage: '',
       notice: '',
-      tag: [],
+      tag: [
+            "咖啡",
+            "午茶",
+            "旅行"
+      ],
       coverPhoto: []
     }];
     // create product gm
