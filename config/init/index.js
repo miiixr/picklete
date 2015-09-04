@@ -74,16 +74,42 @@ module.exports = {
     };
     var createNewBuyer2 = await db.User.create(newBuyer2);
 
+
+    let newProductGm = [{
+      brandId: 1,
+      dptId: 1,
+      dptSubId: 1,
+      explain: '',
+      usage: '',
+      notice: '',
+      tag: [],
+      coverPhoto: []
+    },{
+      brandId: 2,
+      dptId: 2,
+      dptSubId: 2,
+      explain: '',
+      usage: '',
+      notice: '',
+      tag: [],
+      coverPhoto: []
+    }];
+    // create product gm
+    let createdProductGm = await db.ProductGm.bulkCreate(newProductGm);
+
+
     var fruitProducts = [{
       name: '好物三選1',
       description: '好東西，買買買',
       stockQuantity: 100,
-      price: 500
+      price: 500,
+      ProductGmId: 1
     },{
       name: '好物三選2',
       description: '好東西，買買買',
       stockQuantity: 100,
-      price: 625
+      price: 625,
+      ProductGmId: 2
     },{
       name: '好物三選3',
       description: '好東西，買買買',
@@ -102,6 +128,7 @@ module.exports = {
       comment: '限量只有 10 個'
     };
     var createdProduct = await db.Product.create(newProduct);
+
 
     var newOrder = {
       serialNumber: '0000000',

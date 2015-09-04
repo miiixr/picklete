@@ -103,7 +103,7 @@ let ProductController = {
       });
 
       // if(productGms.length>0)
-      //   products = productGms;
+      products = productGms;
 
 
       // format datetime
