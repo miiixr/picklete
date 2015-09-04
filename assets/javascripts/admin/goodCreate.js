@@ -25,8 +25,10 @@
   });
 
 
-  $(".color-filter").click(function(){
-    $("#color-filter").attr('class', $(this).attr('class'));
+  $('form').on('click','.color-filter',function(e){
+    e.preventDefault();
+    var that = $(this);
+    that.parent().parent().parent().find('.color-filter.dropdown').attr('class', that.attr('class')+' dropdown');
   });
 
   $('form').on('click','.btn-add',function(e){
