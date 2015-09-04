@@ -79,14 +79,14 @@ OrderController = {
 
     try{
 
-      var orderSyncToken = req.query.token;
+      var email = req.query.email;
       let userData = await db.User.findOne({
-        where: {orderSyncToken}
+        where: {email}
       });
 
       if (!userData) {
         return res.serverError({
-          msg: '再確認一下喔，驗證碼錯誤哟 :)！'
+          msg: '查無相關 email 訂單資訊，麻煩確認 :)！'
         });
       }
 
