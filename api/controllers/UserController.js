@@ -317,8 +317,18 @@ let UserController = {
     }
   },
 
-  orderSync: async (req, res) => {
-
+  searchMember: async(req, res) => {
+    try{
+      let userData = await db.User.findAll({
+        where: {
+          userName: userName
+        }
+      });
+      return res.ok({Searchresults});
+    } catch (error) {
+      console.log ('error',error.stack);
+      return res.serverError(error);
+    }
   }
 
 };

@@ -269,6 +269,15 @@ module.exports.routes = {
 
   "/:controller/:action/:id?": {}
 
+  'searchMember /api/user/:userName':{
+    controller: "UserController",
+    action: "searchMember",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+
 }
 
 ###*
