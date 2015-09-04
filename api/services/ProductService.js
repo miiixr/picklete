@@ -32,15 +32,14 @@ module.exports = {
     let createdProductGm = await db.ProductGm.create(newProductGm);
 
     for (var i = 0 ; i < req.body['good[0][description]'].length ; i++) { 
-      var description = req.body['good[0][description]'][i] || '';
+      var name = req.body['good[0][description]'][i] || '';
       var stockQuantity = req.body['good[0][stockQuantity]'][i] || '';
       var isPublish = req.body['good[0][isPublish]'] || '';
       var color = req.body['good[0][color]'][i] || '';
       var productNumber = req.body['good[0][productNumber]'][i] || '';
 
       let newProduct = {
-        name: req.body.name,
-        description: description,
+        name: name,
         stockQuantity: stockQuantity,
         isPublish: isPublish,
         price: req.body.price,

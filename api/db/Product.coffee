@@ -1,9 +1,8 @@
 
 module.exports = (sequelize, DataTypes) ->
   Product = sequelize.define 'Product', {
-    name: DataTypes.STRING
     # 商品款式
-    description: DataTypes.STRING
+    name: DataTypes.STRING
     stockQuantity: DataTypes.INTEGER
     price: DataTypes.INTEGER
     isPublish: DataTypes.BOOLEAN
