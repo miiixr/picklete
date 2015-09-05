@@ -19,21 +19,21 @@ cssFilesToInject = ["stylesheets/**/*.css"]
 jsFilesToInject = [
   
   # Load sails.io before everything else
-  "bower/typeahead.js/dist/bloodhound.min.js"
-  "bower/typeahead.js/dist/typeahead.jquery.min.js"
-  "bower/**/*.js"
+  "bower/jQuery/*.js"
+  "bower/moment/*.js"
+  "!bower/ckeditor/*.js"
   "javascripts/plugin/bootstrap.js"
   "javascripts/**/*.js"
   "javascripts/login.js"
   "js/dependencies/sails.io.js"
   
   # Dependencies like jQuery, or Angular are brought in here
-  "js/dependencies/**/*.js"
+  # "js/dependencies/**/*.js"
 
   
   # All of the rest of your client-side js files
   # will be injected here in no particular order.
-  "js/app/app.js"
+  # "js/app/app.js"
 ]
 
 # Client-side HTML templates are injected using the sources below
