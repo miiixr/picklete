@@ -8,14 +8,10 @@ block body
         each dpt, index in dpts
           .list-group-item.edit-link
             span.glyphicon.glyphicon-menu.m-right-2(data-id='#{dpt.id}')
-            a(href='#', data-toggle='modal', class='dpt name',data-id='#{dpt.id}',data-name='#{dpt.name}')
+            a(href='#', data-toggle='modal', class='dpt name',data-id='#{dpt.id}',data-name='#{dpt.name}', class=(dpt.weight == 999)? 'special project': '')
               | #{dpt.name}
-              span.glyphicon.glyphicon-pencil2.m-left-1(data-id='#{dpt.id}',data-name='#{dpt.name}')
-          // /list-group-item
-        .list-group-item.edit-link
-          span.glyphicon.glyphicon-menu.m-right-2
-          a.special.project(href='#')
-            | 特別企劃
+              -if (dpt.weight != 999)
+                span.glyphicon.glyphicon-pencil2.m-left-1(data-id='#{dpt.id}',data-name='#{dpt.name}')
         // /list-group-item
       // /list-group-edit
     // /col-md-3
