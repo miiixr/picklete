@@ -7,7 +7,7 @@ let BrandController = {
         pageName: "brands"
       });
     }
-    var domain = "http://test/upload/";
+    var domain = "http://test/upload";
     var brandData = req.body;
     // console.log(brandData);
 
@@ -18,24 +18,24 @@ let BrandController = {
 
     if (files[0].length) {
       var newArray = new Array();
-      var newArray = files[0][0].fd.split("/");
-      brandData.avatar = domain + newArray[8];
+      var newArray = files[0][0].fd.split(process.cwd());
+      brandData.avatar = domain + newArray[1];
     }
 
     let photos = files[1];
     if (photos.length) {
       for (let i in photos) {
         var newArray = new Array();
-        var newArray = photos[i].fd.split("/");
-        photos[i] = domain + newArray[8];
+        var newArray = photos[i].fd.split(process.cwd());
+        photos[i] = domain + newArray[1];
       }
       brandData.photos = photos;
     }
 
     if (files[2].length) {
       var newArray = new Array();
-      var newArray = files[2][0].fd.split("/");
-      brandData.banner = domain + newArray[8];
+      var newArray = files[2][0].fd.split(process.cwd());
+      brandData.banner = domain + newArray[1];
     }
     if (brandData.type == null){
       brandData.type = "OTHER";
