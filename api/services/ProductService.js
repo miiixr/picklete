@@ -1,3 +1,4 @@
+import moment from "moment";
 import fs from 'fs';
 import mime from "mime";
 import util from "util";
@@ -119,6 +120,107 @@ module.exports = {
     }
 
     return productJson;
+  },
+
+  productQuery: async (req) => {
+    let query = req.query,
+        queryObj = {},
+        queryGmObj = {};
+
+    if(Object.keys(query).length > 0){
+      // search condition
+      if (query.price) {
+        queryObj.price = query.price;
+      }
+      if (query.name) {
+        queryObj.name = {
+          $like: '%'+query.name+'%'
+        };
+      }
+      if (query.productNumber) {
+        queryObj.productNumber = query.productNumber;
+      }
+      // 存貨數量搜尋條件
+      if (query.stockQuantityStart && query.stockQuantityEnd) {
+        queryObj.stockQuantity = {
+          $between: [query.stockQuantityStart, query.stockQuantityEnd]
+        };
+      } else if (query.stockQuantityStart || query.stockQuantityEnd) {
+        queryObj.stockQuantity = query.stockQuantityStart ? {
+          $gte: query.stockQuantityStart
+        } : {
+          $lte: query.stockQuantityEnd
+        };
+      }
+      // 日期搜尋條件
+      if (query.dateFrom && query.dateEnd) {
+        queryObj.createdAt = {
+          $between: [new Date(query.dateFrom), new Date(query.dateEnd)]
+        };
+      } else if (query.dateFrom || query.dateEnd) {
+        queryObj.createdAt = query.dateFrom ? {
+          $gte: new Date(query.dateFrom)
+        } : {
+          $lte: new Date(query.dateEnd)
+        };
+      }
+
+      // 販售狀態 1:隱藏, 2:上架
+      if (query.isPublish > 0) {
+        queryObj.isPublish = (query.isPublish == 1) ? null : true;
+      }
+
+
+
+      // productGm 搜尋
+
+      if (query.brandId > 0)
+        queryGmObj.brandId = query.brandId;
+      if (query.dptId > 0)
+        queryGmObj.dptId = query.dptId;
+      if (query.dptSubId > 0)
+        queryGmObj.dptSubId = query.dptSubId;
+      // tag keyword search
+      if (query.keyword) {
+        queryGmObj.tag = {
+          $like: '%' + query.keyword + '%'
+        };
+      }
+    }
+    // execute query
+    queryObj = {
+      where: queryObj,
+      include: [db.ProductGm]
+    };
+    let products = await db.Product.findAll(queryObj);
+
+    queryGmObj = {
+      where: queryGmObj,
+      include: [db.Product]
+    };
+    let productGms = await db.ProductGm.findAll(queryGmObj);
+
+    // 將productGm 搜尋結果的id取出
+    let gmResultId = [];
+    for (let productGm of productGms) {
+      for (let gmProduct of productGm.Products) {
+        gmResultId.push(gmProduct.id);
+      }
+    }
+    // productGm 搜尋結果 與 product 搜尋結果 mapping
+    let resultArray = [];
+    for (let product of products) {
+      if (gmResultId.indexOf(product.id) != -1) {
+        resultArray.push(product);
+      }
+    }
+    products = resultArray;
+
+    // format datetime
+    products = products.map(ProductService.withImage);
+    for (let product of products) {
+      product.createdAt = moment(product.createdAt).format("YYYY-MM-DD");
+    }
+    return products;
   }
-  
 };
