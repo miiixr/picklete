@@ -36,9 +36,11 @@ module.exports.routes = {
   'get /admin/login' : 'UserController.controlLogin'
   'get /admin/index-slider' : 'UserController.indexSlider'
   'get /admin/index-slider-detail' : 'UserController.indexSliderDetail'
-  'get /admin/password' : 'UserController.password'
   'get /admin/index-exclusive' : 'UserController.indexExclusive'
   'get /admin/index-theme' : 'UserController.indexTheme'
+
+  'get /admin/password' : 'UserController.password'
+  'post /admin/password' : 'UserController.password'
 
   'get /admin/' : 'AuthController.admin'
   'get /admin/brands' : 'BrandController.list'

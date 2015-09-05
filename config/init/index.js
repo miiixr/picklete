@@ -74,21 +74,55 @@ module.exports = {
     };
     var createNewBuyer2 = await db.User.create(newBuyer2);
 
+
+    let newProductGm = [{
+      brandId: 1,
+      dptId: 1,
+      dptSubId: 1,
+      explain: '',
+      usage: '',
+      notice: '',
+      tag: [
+        "aa",
+        "情人"
+      ],
+      coverPhoto: []
+    },{
+      brandId: 2,
+      dptId: 2,
+      dptSubId: 2,
+      explain: '',
+      usage: '',
+      notice: '',
+      tag: [
+            "咖啡",
+            "午茶",
+            "旅行"
+      ],
+      coverPhoto: []
+    }];
+    // create product gm
+    let createdProductGm = await db.ProductGm.bulkCreate(newProductGm);
+
+
     var fruitProducts = [{
       name: '好物三選1',
       description: '好東西，買買買',
       stockQuantity: 100,
-      price: 500
+      price: 500,
+      ProductGmId: 1
     },{
       name: '好物三選2',
       description: '好東西，買買買',
       stockQuantity: 100,
-      price: 625
+      price: 625,
+      ProductGmId: 2
     },{
       name: '好物三選3',
       description: '好東西，買買買',
       stockQuantity: 100,
-      price: 750
+      price: 750,
+      ProductGmId: 2
     }];
     await db.Product.bulkCreate(fruitProducts);
 
@@ -99,9 +133,11 @@ module.exports = {
       price: 100,
       image: 'http://localhost:1337/images/product/1.jpg',
       isPublish: true,
-      comment: '限量只有 10 個'
+      comment: '限量只有 10 個',
+      ProductGmId: 2
     };
     var createdProduct = await db.Product.create(newProduct);
+
 
     var newOrder = {
       serialNumber: '0000000',
@@ -200,7 +236,9 @@ module.exports = {
     // end create dpt
 
     // create tag
-    let tags = ['男人', '女人', '兒童', '情人', '學生', '寵物', '旅行', '閱讀', '咖啡', '午茶', '派對', '時尚', '印花', '夏日', '冬季', '聖誕', '森林', '動物', '花園', '浪漫', '可愛', '趣味', '復古', '環保', '工業', '簡約'];
+
+
+    let tags = ["男人", "女人", "兒童", "情人", "學生", "寵物", "旅行", "閱讀", "咖啡", "午茶", "派對", "時尚", "印花", "夏日", "冬季", "聖誕", "森林", "動物", "花園", "浪漫", "可愛", "趣味", "復古", "環保", "工業", "簡約"];
     for (let i in tags) {
       await db.Tag.create({
         name: tags[i]
