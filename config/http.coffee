@@ -8,9 +8,17 @@ Only applies to HTTP requests (not WebSockets)
 For more information on configuration, check out:
 http://sailsjs.org/#/documentation/reference/sails.config/sails.config.http.html
 ###
+
+path = require('path')
+
 module.exports.http = {
 
   customMiddleware: (app) ->
+    # set photo route for static files show 
+    express = require('sails/node_modules/express');
+
+    app.use('/uploads', express.static(path.join(process.cwd(), '.tmp/uploads')));
+
     if sails.config.environment isnt 'production'
       app.set('view options', {
         pretty: true
