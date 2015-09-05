@@ -1,7 +1,7 @@
 extends ../_layout_auth
 
 block body
-  h2.m-bottom-6 商品上架 - kerker
+  h2.m-bottom-6 商品上架
   form#goodForm(action='/admin/goods/create', method='POST', enctype="multipart/form-data")
 
     // 館別分類
@@ -153,7 +153,8 @@ block body
               fileinput-img
               ==================================================
             .fileinput.fileinput-new(data-provides='fileinput')
-              .fileinput-new.dashed-block-2.min-height-150
+              .fileinput-new.fileinput-square
+                img.img-full(src='http://fakeimg.pl/1000x1000/dddddd/FFF/?text=1000x1000')
               // /fileinput-new
               .fileinput-preview.fileinput-exists.border-block-1
               // /fileinput-preview
@@ -165,15 +166,14 @@ block body
                 a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
               // /fileinput-btn
             // /fileinput
-            a(href='#', data-toggle='tooltip', title='', data-original-title='商品圖長寬 600x600 像素，限 JPG/GIF 格式，檔案大小 500KB 以下')
-              span.glyphicon.glyphicon-info
           // /col-md-3
           .col-md-3
             //
               fileinput-img
               ==================================================
             .fileinput.fileinput-new(data-provides='fileinput')
-              .fileinput-new.dashed-block-2.min-height-150
+              .fileinput-new.fileinput-square
+                img.img-full(src='http://fakeimg.pl/1000x1000/dddddd/FFF/?text=1000x1000')
               // /fileinput-new
               .fileinput-preview.fileinput-exists.border-block-1
               // /fileinput-preview
@@ -186,7 +186,10 @@ block body
               // /fileinput-btn
             // /fileinput
           // /col-md-3
-          .col-md-4
+          .col-md-1
+            a.tooltip-icon(href='#', data-toggle='tooltip', title='商品圖長寬 1000x1000 像素，限 JPG/GIF 格式，檔案大小 500KB 以下')
+              span.glyphicon.glyphicon-info
+          .col-md-3
             .form-group.form-group-sm
               label.col-sm-3.control-label 顏色
               .col-sm-9
@@ -381,11 +384,10 @@ block body
         // /col-md-4
         .col-md-4
           .edit-block.m-bottom-4
-            //
-              fileinput-img
-              ==================================================
+            // fileinput-img
             .fileinput.fileinput-new(data-provides='fileinput')
-              .fileinput-new.dashed-block-2.min-height-150
+              .fileinput-new.fileinput-square
+                img.img-full(src='http://fakeimg.pl/1000x1000/dddddd/FFF/?text=1000x1000')
               // /fileinput-new
               .fileinput-preview.fileinput-exists.border-block-1
               // /fileinput-preview
@@ -406,8 +408,8 @@ block body
 
 
       // /row
-      a(href='#', data-toggle='tooltip', title='', data-original-title='商品圖長寬 1000x800 像素，限 JPG/GIF 格式，檔案大小 500KB 以下')
-        //- span.glyphicon.glyphicon-info
+      a(href='#', data-toggle='tooltip', title='商品圖長寬 1000x1000 像素，限 JPG/GIF 格式，檔案大小 500KB 以下')
+        span.glyphicon.glyphicon-info
     // /well
 
     // 商品文案
@@ -416,36 +418,16 @@ block body
         span.label.label-default.p-10-15 商品文案
       ul.nav.nav-pills.nav-btn.m-bottom-2
         li.active
-          a(href='#tab-1', data-toggle='tab') 商品說明
+          a(href='#tab-1', data-toggle='tab') 商品介紹
         li
-          a(href='#tab-2', data-toggle='tab') 使用方法
-        li
-          a(href='#tab-3', data-toggle='tab') 注意事項
+          a(href='#tab-2', data-toggle='tab') 注意事項
       // /nav
       .tab-content
         #tab-1.tab-pane.fade.in.active
-          #wysihtml5-toolbar(style='display: none;')
-            a(data-wysihtml5-command='bold') bold
-            a(data-wysihtml5-command='italic') italic
-            // Some wysihtml5 commands require extra parameters
-            a(data-wysihtml5-command='foreColor', data-wysihtml5-command-value='red') red
-            a(data-wysihtml5-command='foreColor', data-wysihtml5-command-value='green') green
-            a(data-wysihtml5-command='foreColor', data-wysihtml5-command-value='blue') blue
-            // Some wysihtml5 commands like 'createLink' require extra paramaters specified by the user (eg. href)
-            a(data-wysihtml5-command='createLink') insert link
-            div(data-wysihtml5-dialog='createLink', style='display: none;')
-              label
-                | Link:
-                input.text(data-wysihtml5-dialog-field='href', value='http://')
-              a(data-wysihtml5-dialog-action='save') OK
-              a(data-wysihtml5-dialog-action='cancel') Cancel
-          textarea#wysihtml5-textarea.form-control(rows='6', placeholder='請輸入商品說明', name='explain', form='goodForm')
+          textarea#editor1.form-control(rows='6', placeholder='請輸入商品介紹', name='explain', form='goodForm')
         // /tab-pane
         #tab-2.tab-pane.fade
-          textarea.form-control(rows='6', placeholder='請輸入使用方法', name='usage', form='goodForm')
-        // /tab-pane
-        #tab-3.tab-pane.fade
-          textarea.form-control(rows='6', placeholder='請輸入注意事項', name='notice', form='goodForm')
+          textarea#editor2.form-control(rows='6', placeholder='請輸入注意事項', name='notice', form='goodForm')
         // /tab-pane
       // /tab-content
     // /well
@@ -479,11 +461,8 @@ block body
 
 
 block js
-  script(src='/javascripts/plugin/advanced.js')
-  script(src='/javascripts/plugin/wysihtml5-0.3.0.min.js')
   script(src='/javascripts/admin/goodCreate.js')
+  script(src='/javascripts/plugin/ckeditor/ckeditor.js')
   script.
-    var editor = new wysihtml5.Editor("wysihtml5-textarea", { // id of textarea element
-    toolbar:      "wysihtml5-toolbar", // id of toolbar element
-    parserRules:  wysihtml5ParserRules // defined in parser rules set
-    });
+    CKEDITOR.replace( 'editor1' );
+    CKEDITOR.replace( 'editor2' );
