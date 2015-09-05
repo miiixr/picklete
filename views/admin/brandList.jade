@@ -9,7 +9,7 @@ block body
       each agent, index in agents
         li
           a(href='/admin/brands/update?id=#{agent.id}')
-            img.border-block-1.img-full(src='/images/demo/brands-logo-1.jpg', title='#{agent.name}')
+            img.border-block-1.img-full(src='#{agent.avatar}', title='#{agent.name}')
     // /list-barnd
 
 
@@ -20,7 +20,7 @@ block body
       each brand, index in brands
         li
           a(href='/admin/brands/update?id=#{brand.id}')
-            img.border-block-1.img-full(src='/images/demo/agent-logo-1.jpg', title='#{brand.name}')
+            img.border-block-1.img-full(src='#{brand.avatar}', title='#{brand.name}')
 
     // /list-barnd
     //- ul.list-group.list-barnd.list-group-edit.p-top-2
