@@ -29,6 +29,7 @@
     "bluebird": "^2.9.34",
     "coffee-script": "^1.9.3",
     "easyimage": "^2.1.0",
+    "gm": "^1.18.1",
     "grunt": "0.4.2",
     "grunt-contrib-clean": "~0.5.0",
     "grunt-contrib-coffee": "~0.10.1",
