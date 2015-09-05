@@ -1,5 +1,7 @@
 (function ($) {
   
+  var DPTS = window.DPTS;
+
   $("#brandSelect").val(undefined);
   $("#brandSelect").change(function() {
     if($("#brandSelect :selected").text() != '選擇品牌'){
@@ -56,10 +58,14 @@
     $('.tagsinput input').before('<span class="tag label label-default">'+ s +'<span data-role="remove">×</span></span>');
   });
 
-  $("select[name='dptId']").change(function(){
-    var DptSubs = $("select[name=dptSubId]").data("dpts")[this.value-1].DptSubs;
-    var $selectDptSubId = $("select[name='dptSubId']")
+  $(".selectDpt").on("change", "select[name='dptId[]']", function(e){
+    var that = $(this);
+    var DptSubs = DPTS[this.value-1].DptSubs;
+    var $selectDptSubId = that.parent().next().find("select[name='dptSubId[]']");
+    // clean sub dpt select content
     $selectDptSubId.html("");
+
+    // append sub dpt content
     $selectDptSubId.append("<option value=''>選擇小館別</option>");
     for (var i in DptSubs) {
       $selectDptSubId.append("<option value="+ DptSubs[i].id +">"+ DptSubs[i].name +"</option>");
