@@ -1,0 +1,21 @@
+body.dragging, body.dragging * {
+  cursor: move !important;
+}
+.dragged {
+  position: absolute;
+  opacity: 0.5;
+  z-index: 2000;
+}
+ol.drag-container {
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+}
+ol.drag-container li.placeholder {
+  position: relative;
+  /** More li styles **/
+}
+ol.drag-container li.placeholder:before {
+  position: absolute;
+  /** Define arrowhead **/
+}
