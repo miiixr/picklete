@@ -3,7 +3,7 @@ extends ../_layout_auth
 block body
   h2.m-bottom-6 商品上架 - kerker
   form#goodForm(action='/admin/goods/create', method='POST', enctype="multipart/form-data")
-    
+
     // 館別分類
     .well.control-well.p-30.m-left-2.m-bottom-8
       h3
@@ -14,7 +14,7 @@ block body
           .col-md-10
             label.radio-inline
               input#brandType(type='radio', name='brandType', value='origin', checked=true)
-              
+
               select.form-control#brandSelect(name='brandId')
                 option(value='') 選擇品牌
                 each brand, index in brands
@@ -30,7 +30,7 @@ block body
           .col-md-4
             select.form-control(name='dptId')
               option 選擇大館別
-              each dpt, index in dpts 
+              each dpt, index in dpts
                 option(value='#{dpt.id}') #{dpt.name}
           .col-md-4
             select.form-control(name='dptSubId', data-dpts=dpts)
@@ -256,7 +256,7 @@ block body
             a.btn-add(href='#')
               span.glyphicon.glyphicon-plus
           // /col-md-1
-  
+
         // /row
         //- .row.row-s.border-bottom-1.m-bottom-4
         //-   .col-md-1.text-center
@@ -424,7 +424,22 @@ block body
       // /nav
       .tab-content
         #tab-1.tab-pane.fade.in.active
-          textarea.form-control(rows='6', placeholder='請輸入商品說明', name='explain', form='goodForm')
+          #wysihtml5-toolbar(style='display: none;')
+            a(data-wysihtml5-command='bold') bold
+            a(data-wysihtml5-command='italic') italic
+            // Some wysihtml5 commands require extra parameters
+            a(data-wysihtml5-command='foreColor', data-wysihtml5-command-value='red') red
+            a(data-wysihtml5-command='foreColor', data-wysihtml5-command-value='green') green
+            a(data-wysihtml5-command='foreColor', data-wysihtml5-command-value='blue') blue
+            // Some wysihtml5 commands like 'createLink' require extra paramaters specified by the user (eg. href)
+            a(data-wysihtml5-command='createLink') insert link
+            div(data-wysihtml5-dialog='createLink', style='display: none;')
+              label
+                | Link:
+                input.text(data-wysihtml5-dialog-field='href', value='http://')
+              a(data-wysihtml5-dialog-action='save') OK
+              a(data-wysihtml5-dialog-action='cancel') Cancel
+          textarea#wysihtml5-textarea.form-control(rows='6', placeholder='請輸入商品說明', name='explain', form='goodForm')
         // /tab-pane
         #tab-2.tab-pane.fade
           textarea.form-control(rows='6', placeholder='請輸入使用方法', name='usage', form='goodForm')
@@ -456,14 +471,19 @@ block body
       // /form-group
     // /well
 
-    // 
+    //
     .text-center.m-bottom-6
       a.btn.btn-link.delete-link.btn-lg(href='#', data-toggle='modal', data-target='#modal-delete') 刪除此商品及所有品項
-      input.btn.btn-green.btn-lg(type='submit', value='確認送出') 
+      input.btn.btn-green.btn-lg(type='submit', value='確認送出')
     // /text-center
 
 
 block js
+  script(src='/javascripts/plugin/advanced.js')
+  script(src='/javascripts/plugin/wysihtml5-0.3.0.min.js')
   script(src='/javascripts/admin/goodCreate.js')
-
-
+  script.
+    var editor = new wysihtml5.Editor("wysihtml5-textarea", { // id of textarea element
+    toolbar:      "wysihtml5-toolbar", // id of toolbar element
+    parserRules:  wysihtml5ParserRules // defined in parser rules set
+    });
