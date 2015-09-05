@@ -16,7 +16,7 @@ module.exports = {
     if (req.session.passport.user) {
       return req.session.passport.user;
     } else {
-      return false;
+      return null;
     }
   },
 
