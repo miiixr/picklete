@@ -3,7 +3,7 @@ import moment from "moment";
 let ProductController = {
 
   // show create page and prepare all stuff
-  showCreate: async(req, res) => {
+  showCreate: async (req, res) => {
     // let products = await ProductService.findAllWithImages();
     try {
       let brands = await db.Brand.findAll();
@@ -30,7 +30,7 @@ let ProductController = {
   },
 
   // list all goods result, include query items
-  list: async(req, res) => {
+  list: async (req, res) => {
     try {
       let brands = await db.Brand.findAll();
       let dpts = await db.Dpt.findAll({
@@ -39,79 +39,82 @@ let ProductController = {
         }],
         order: ['Dpt.weight', 'DptSubs.weight']
       });
+
       let query = req.query;
       let queryObj = {};
+      let queryGmObj = {};
 
-      // search condition
-      if (query.price) {
-        queryObj.price = query.price;
-      }
-      if (query.name) {
-        queryObj.name = {
-          $like: '%' + query.name + '%'
-        };
-      }
-      if (query.productNumber) {
-        queryObj.productNumber = query.productNumber;
-      }
-      // 存貨數量搜尋條件
-      if (query.stockQuantityStart && query.stockQuantityEnd) {
-        queryObj.stockQuantity = {
-          $between: [query.stockQuantityStart, query.stockQuantityEnd]
-        };
-      } else if (query.stockQuantityStart || query.stockQuantityEnd) {
-        queryObj.stockQuantity = query.stockQuantityStart ? {
-          $gte: query.stockQuantityStart
-        } : {
-          $lte: query.stockQuantityEnd
-        };
-      }
-      // 日期搜尋條件
-      if (query.dateFrom && query.dateEnd) {
-        queryObj.createdAt = {
-          $between: [new Date(query.dateFrom), new Date(query.dateEnd)]
-        };
-      } else if (query.dateFrom || query.dateEnd) {
-        queryObj.createdAt = query.dateFrom ? {
-          $gte: new Date(query.dateFrom)
-        } : {
-          $lte: new Date(query.dateEnd)
-        };
-      }
+      if(Object.keys(query).length > 0){
+        // search condition
+        if (query.price) {
+          queryObj.price = query.price;
+        }
+        if (query.name) {
+          queryObj.name = {
+            $like: '%'+query.name+'%'
+          };
+        }
+        if (query.productNumber) {
+          queryObj.productNumber = query.productNumber;
+        }
+        // 存貨數量搜尋條件
+        if (query.stockQuantityStart && query.stockQuantityEnd) {
+          queryObj.stockQuantity = {
+            $between: [query.stockQuantityStart, query.stockQuantityEnd]
+          };
+        } else if (query.stockQuantityStart || query.stockQuantityEnd) {
+          queryObj.stockQuantity = query.stockQuantityStart ? {
+            $gte: query.stockQuantityStart
+          } : {
+            $lte: query.stockQuantityEnd
+          };
+        }
+        // 日期搜尋條件
+        if (query.dateFrom && query.dateEnd) {
+          queryObj.createdAt = {
+            $between: [new Date(query.dateFrom), new Date(query.dateEnd)]
+          };
+        } else if (query.dateFrom || query.dateEnd) {
+          queryObj.createdAt = query.dateFrom ? {
+            $gte: new Date(query.dateFrom)
+          } : {
+            $lte: new Date(query.dateEnd)
+          };
+        }
 
-      // 販售狀態 1:隱藏, 2:上架
-      if (query.isPublish > 0) {
-        queryObj.isPublish = (query.isPublish == 1) ? null : true;
-      }
+        // 販售狀態 1:隱藏, 2:上架
+        if (query.isPublish > 0) {
+          queryObj.isPublish = (query.isPublish == 1) ? null : true;
+        }
 
+
+
+        // productGm 搜尋
+
+        if (query.brandId > 0)
+          queryGmObj.brandId = query.brandId;
+        if (query.dptId > 0)
+          queryGmObj.dptId = query.dptId;
+        if (query.dptSubId > 0)
+          queryGmObj.dptSubId = query.dptSubId;
+        // tag keyword search
+        if (query.keyword) {
+          queryGmObj.tag = {
+            $like: '%' + query.keyword + '%'
+          };
+        }
+      }
+      // execute query
       queryObj = {
         where: queryObj,
         include: [db.ProductGm]
       };
-
       let products = await db.Product.findAll(queryObj);
 
-
-      // productGm 搜尋
-      let queryGmObj = {};
-
-      if (query.brandId > 0)
-        queryGmObj.brandId = query.brandId;
-      if (query.dptId > 0)
-        queryGmObj.dptId = query.dptId;
-      if (query.dptSubId > 0)
-        queryGmObj.dptSubId = query.dptSubId;
-      // tag keyword search
-      if (query.keyword) {
-        queryGmObj.tag = {
-          $like: '%' + query.keyword + '%'
-        };
-      }
       queryGmObj = {
         where: queryGmObj,
         include: [db.Product]
       };
-
       let productGms = await db.ProductGm.findAll(queryGmObj);
 
       // 將productGm 搜尋結果的id取出
@@ -149,7 +152,7 @@ let ProductController = {
     }
   },
 
-  showUpdate: async(req, res) => {
+  showUpdate: async (req, res) => {
     // let products = await ProductService.findAllWithImages();
     let brands = await db.Brand.findAll();
     let dpts = await db.Dpt.findAll({
@@ -178,7 +181,7 @@ let ProductController = {
     });
   },
 
-  createUpdate: async(req, res) => {
+  createUpdate: async (req, res) => {
     let newProduct = req.body;
     console.log(newProduct);
     try {
@@ -190,7 +193,7 @@ let ProductController = {
     // return res.json(newProduct);
   },
 
-  findOne: async(req, res) => {
+  findOne: async (req, res) => {
     try {
       let productId = req.param("productId");
       let product = await ProductService.findWithImages(productId);
@@ -202,7 +205,7 @@ let ProductController = {
     }
   },
 
-  find: async(req, res) => {
+  find: async (req, res) => {
 
     try {
       let products = await ProductService.findAllWithImages();
@@ -215,7 +218,7 @@ let ProductController = {
 
   },
 
-  index: async(req, res) => {
+  index: async (req, res) => {
 
     try {
       let products = await ProductService.findAllWithImages();
@@ -227,7 +230,7 @@ let ProductController = {
     }
   },
 
-  show: async(req, res) => {
+  show: async (req, res) => {
 
     try {
       let productId = req.param("id");
@@ -240,11 +243,11 @@ let ProductController = {
     }
   },
 
-  create: async(req, res) => {
+  create: async (req, res) => {
     return res.view('product/create');
   },
 
-  edit: async(req, res) => {
+  edit: async (req, res) => {
 
     try {
       let productId = req.param("id");
@@ -257,7 +260,7 @@ let ProductController = {
     }
   },
 
-  add: async(req, res) => {
+  add: async (req, res) => {
     try {
       let newProduct = req.body.product;
       let addProduct = await db.Product.create(newProduct);
@@ -277,7 +280,7 @@ let ProductController = {
     }
   },
 
-  delete: async(req, res) => {
+  delete: async (req, res) => {
     try {
       let productId = req.param("id");
       let findProduct = await db.Product.findById(productId);
@@ -288,7 +291,6 @@ let ProductController = {
       }
       await findProduct.destroy();
       let ensureDelete = await db.Product.findById(productId);
-      console.log("ensureDelete -->", ensureDelete);
       if (ensureDelete) {
         return res.serverError({
           msg: 'delete失敗'
@@ -300,7 +302,7 @@ let ProductController = {
     }
   },
 
-  publish: async(req, res) => {
+  publish: async (req, res) => {
     try {
       let productId = req.param("id");
       let findProduct = await db.Product.findById(productId);
@@ -327,7 +329,7 @@ let ProductController = {
     }
   },
 
-  unpublish: async(req, res) => {
+  unpublish: async (req, res) => {
     try {
       let productId = req.param("id");
       let findProduct = await db.Product.findById(productId);
@@ -354,7 +356,7 @@ let ProductController = {
     }
   },
 
-  updateProduct: async(req, res) => {
+  updateProduct: async (req, res) => {
 
     try {
       let productId = req.param("productId");

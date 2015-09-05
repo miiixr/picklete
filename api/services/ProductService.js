@@ -61,7 +61,7 @@ module.exports = {
       return;
     }
 
-    for (var i = 0 ; i < req.body['good[0][description]'].length ; i++) { 
+    for (var i = 0 ; i < req.body['good[0][description]'].length ; i++) {
       var name = req.body['good[0][description]'][i] || '';
       var stockQuantity = req.body['good[0][stockQuantity]'][i] || '';
       var isPublish = req.body['good[0][isPublish]'] || '';
@@ -85,7 +85,7 @@ module.exports = {
       };
 
       await db.Product.create(newProduct);
-      
+
     }
 
   },
@@ -120,4 +120,5 @@ module.exports = {
 
     return productJson;
   }
+  
 };
