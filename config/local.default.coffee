@@ -1,5 +1,6 @@
 module.exports = {
   initData: ''
+  domain: 'http://localhost:1337'
   mail: {
     type: 'ses'
     config: {
