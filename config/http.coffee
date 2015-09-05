@@ -12,7 +12,10 @@ module.exports.http = {
 
   customMiddleware: (app) ->
     if sails.config.environment isnt 'production'
-      app.set('view options', {pretty: true})
+      app.set('view options', {
+        pretty: true
+        cache: true
+      })
       app.locals.pretty = true
 
 }
