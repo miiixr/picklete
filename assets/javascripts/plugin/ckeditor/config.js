@@ -3,7 +3,6 @@
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
-
 CKEDITOR.editorConfig = function( config ) {
 	config.toolbarGroups = [
 		{ name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
