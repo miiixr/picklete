@@ -24,8 +24,9 @@ block body
 
     // /list-barnd
     ul.list-group.list-barnd.list-group-edit.p-top-2
-      .list-group-item.edit-link
-        | #{brandLock.name}
-        span.glyphicon.glyphicon-lock
+      each brandLock, index in brandLocks
+        a.list-group-item.edit-link(href='/admin/brands/update?id=#{brandLock.id}')
+          | #{brandLock.name}
+          span.glyphicon.glyphicon-lock
     // /list-barnd
   // /clearfix
