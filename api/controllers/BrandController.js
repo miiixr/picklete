@@ -1,7 +1,5 @@
-
-
 let BrandController = {
-
+  
   create: async (req, res) => {
 
     if (req.method === "GET") {
@@ -9,29 +7,31 @@ let BrandController = {
         pageName: "brands"
       });
     }
-
+    var domain = "http://test/upload";
     var brandData = req.body;
     // console.log(brandData);
 
     let uploadInput = ["avatar", "photos[]", "banner"];
     let files = await ImageService.upload(req, uploadInput);
-
+    
     if (files[0].length) {
-      brandData.avatar = files[0][0].fd;
+      brandData.avatar = domain + files[0][0].fd.split(process.cwd())[1];
     }
 
     let photos = files[1];
     if (photos.length) {
       for (let i in photos) {
-        photos[i] = photos[i].fd;
+        photos[i] = domain + photos[i].fd.split(process.cwd())[1];
       }
       brandData.photos = photos;
     }
 
     if (files[2].length) {
-      brandData.banner = files[2][0].fd;
+      brandData.banner = domain + files[2][0].fd.split(process.cwd())[1];
     }
-
+    if (brandData.type == null){
+      brandData.type = "OTHER";
+    }
     console.log(brandData);
 
     // create brand
@@ -59,7 +59,7 @@ let BrandController = {
       }
     });
 
-    let brandLock = await db.Brand.findOne({
+    let brandLock = await db.Brand.findAll({
       where: {
         type: 'OTHER'
       }
@@ -72,7 +72,7 @@ let BrandController = {
       pageName: "brands",
       brands: brandsGood,
       agents: brandsAgent,
-      brandLock: brandLock
+      brandLocks: brandLock
     });
   },
 
@@ -106,5 +106,4 @@ let BrandController = {
   }
 
 };
-
 module.exports = BrandController;

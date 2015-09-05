@@ -3,18 +3,18 @@ extends ../_layout_auth
 block body
   h2.m-bottom-6 商品上架
   form#goodForm(action='/admin/goods/create', method='POST', enctype="multipart/form-data")
-    
+
     // 館別分類
     .well.control-well.p-30.m-left-2.m-bottom-8
       h3
         span.label.label-default.p-10-15 館別分類
-      .form-horizontal
+      .form-horizontal.selectDpt
         .form-group
           label.col-md-2.control-label 品牌名稱
           .col-md-10
             label.radio-inline
               input#brandType(type='radio', name='brandType', value='origin', checked=true)
-              
+
               select.form-control#brandSelect(name='brandId')
                 option(value='') 選擇品牌
                 each brand, index in brands
@@ -28,12 +28,12 @@ block body
         .form-group
           label.col-md-2.control-label 館別分類
           .col-md-4
-            select.form-control(name='dptId')
+            select.form-control(name='dptId[]')
               option 選擇大館別
-              each dpt, index in dpts 
+              each dpt, index in dpts
                 option(value='#{dpt.id}') #{dpt.name}
           .col-md-4
-            select.form-control(name='dptSubId', data-dpts=dpts)
+            select.form-control(name='dptSubId[]')
               option 選擇小館別
               each dptSub, index in dpts[0].DptSubs
                 option(value='#{dptSub.id}') #{dptSub.name}
@@ -259,7 +259,7 @@ block body
             a.btn-add(href='#')
               span.glyphicon.glyphicon-plus
           // /col-md-1
-  
+
         // /row
         //- .row.row-s.border-bottom-1.m-bottom-4
         //-   .col-md-1.text-center
@@ -424,10 +424,10 @@ block body
       // /nav
       .tab-content
         #tab-1.tab-pane.fade.in.active
-          textarea.form-control(rows='6', placeholder='請輸入商品介紹', name='explain', form='goodForm')
+          textarea#editor1.form-control(rows='6', placeholder='請輸入商品介紹', name='explain', form='goodForm')
         // /tab-pane
         #tab-2.tab-pane.fade
-          textarea.form-control(rows='6', placeholder='請輸入注意事項', name='notice', form='goodForm')
+          textarea#editor2.form-control(rows='6', placeholder='請輸入注意事項', name='notice', form='goodForm')
         // /tab-pane
       // /tab-content
     // /well
@@ -453,14 +453,18 @@ block body
       // /form-group
     // /well
 
-    // 
+    //
     .text-center.m-bottom-6
       a.btn.btn-link.delete-link.btn-lg(href='#', data-toggle='modal', data-target='#modal-delete') 刪除此商品及所有品項
-      input.btn.btn-green.btn-lg(type='submit', value='確認送出') 
+      input.btn.btn-green.btn-lg(type='submit', value='確認送出')
     // /text-center
 
 
 block js
+  script.
+    window.DPTS= !{JSON.stringify(dpts)};
   script(src='/javascripts/admin/goodCreate.js')
-
-
+  script(src='/javascripts/plugin/ckeditor/ckeditor.js')
+  script.
+    CKEDITOR.replace( 'editor1' );
+    CKEDITOR.replace( 'editor2' );
