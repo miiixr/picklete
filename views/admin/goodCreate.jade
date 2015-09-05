@@ -8,7 +8,7 @@ block body
     .well.control-well.p-30.m-left-2.m-bottom-8
       h3
         span.label.label-default.p-10-15 館別分類
-      .form-horizontal
+      .form-horizontal.selectDpt
         .form-group
           label.col-md-2.control-label 品牌名稱
           .col-md-10
@@ -28,12 +28,12 @@ block body
         .form-group
           label.col-md-2.control-label 館別分類
           .col-md-4
-            select.form-control(name='dptId')
+            select.form-control(name='dptId[]')
               option 選擇大館別
               each dpt, index in dpts
                 option(value='#{dpt.id}') #{dpt.name}
           .col-md-4
-            select.form-control(name='dptSubId', data-dpts=dpts)
+            select.form-control(name='dptSubId[]')
               option 選擇小館別
               each dptSub, index in dpts[0].DptSubs
                 option(value='#{dptSub.id}') #{dptSub.name}
@@ -370,6 +370,8 @@ block body
 
 
 block js
+  script.
+    window.DPTS= !{JSON.stringify(dpts)};
   script(src='/javascripts/admin/goodCreate.js')
   script(src='/javascripts/plugin/ckeditor/ckeditor.js')
   script(src='/javascripts/plugin/jquery-sortable-min.js')
