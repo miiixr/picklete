@@ -13,29 +13,21 @@ let BrandController = {
 
     let uploadInput = ["avatar", "photos[]", "banner"];
     let files = await ImageService.upload(req, uploadInput);
-
     
-
     if (files[0].length) {
-      var newArray = new Array();
-      var newArray = files[0][0].fd.split(process.cwd());
-      brandData.avatar = domain + newArray[1];
+      brandData.avatar = domain + files[0][0].fd.split(process.cwd())[1];
     }
 
     let photos = files[1];
     if (photos.length) {
       for (let i in photos) {
-        var newArray = new Array();
-        var newArray = photos[i].fd.split(process.cwd());
-        photos[i] = domain + newArray[1];
+        photos[i] = domain + photos[i].fd.split(process.cwd())[1];
       }
       brandData.photos = photos;
     }
 
     if (files[2].length) {
-      var newArray = new Array();
-      var newArray = files[2][0].fd.split(process.cwd());
-      brandData.banner = domain + newArray[1];
+      brandData.banner = domain + files[2][0].fd.split(process.cwd())[1];
     }
     if (brandData.type == null){
       brandData.type = "OTHER";
