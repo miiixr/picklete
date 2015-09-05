@@ -134,7 +134,7 @@ module.exports = {
       }
       if (query.name) {
         queryObj.name = {
-          $like: '%'+query.name+'%'
+          $like: `%${query.name}%`
         };
       }
       if (query.productNumber) {
