@@ -35,6 +35,12 @@ let BrandController = {
     let photos = files[1];
     if (photos.length) {
       for (let i in photos) {
+        await ImageService.resize({
+          src: photos[i].fd,
+          dst: photos[i].fd,
+          width: 1100,
+          height: 500
+        });
         photos[i] = domain + _processPath(photos[i].fd);
       }
       brandData.photos = photos;
@@ -42,6 +48,12 @@ let BrandController = {
     }
 
     if (files[2].length) {
+      await ImageService.resize({
+          src: files[2][0].fd,
+          dst: files[2][0].fd,
+          width: 1100,
+          height: 250
+        });
       brandData.banner = domain + _processPath(files[2][0].fd);
     }
     if (brandData.type == null){
