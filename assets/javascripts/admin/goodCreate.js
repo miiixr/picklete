@@ -72,6 +72,7 @@
     }
   });
 
+
   CKEDITOR.replace( 'editor1' );
   CKEDITOR.replace( 'editor2' );
 
@@ -81,4 +82,32 @@
       handle: '.col-md-1.text-center'
     });
   });
+  
+  // $(".fileinput").on('change.bs.fileinput', function (e) {
+  //   console.log(e)
+  //   console.log("click from select");
+  //   $("form#uploadForm").ajaxSubmit(options).submit();
+  // });
+
+  // $('#test-upload').on('blur', function (e) {
+  //   console.log("trigger file blur ----");
+  //   var val = $("#test-upload").val();
+  //   $('#fine-uploader').val(val);
+  // });
+
+
+  // var options = { 
+  //   beforeSubmit:  function (formData, jqForm, options) {
+  //     console.log(formData);
+  //     // var queryString = $.param(formData);
+  //   },
+  //   success: function (responseText, statusText, xhr, $form)  { 
+  //     console.log(responseText);
+  //   }
+  // };
+
+  // $('form#uploadForm').submit(function() {
+  //   return false; 
+  // }); 
+
 }(jQuery));
