@@ -3,6 +3,7 @@ module.exports = (sequelize, DataTypes) ->
   Promotion = sequelize.define('Promotion', {
     title: DataTypes.STRING
     description: DataTypes.STRING
+    type: DataTypes.STRING
     startDate: DataTypes.DATE
     endDate: DataTypes.DATE
     discount: DataTypes.FLOAT
