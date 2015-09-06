@@ -8,7 +8,7 @@ block body
         each dpt, index in dpts
           .list-group-item.edit-link
             span.glyphicon.glyphicon-menu.m-right-2(data-id='#{dpt.id}')
-            a(href='#', data-toggle='modal', class='dpt name',data-id='#{dpt.id}',data-name='#{dpt.name}', class=(dpt.weight == 999)? 'special project': '')
+            a(href='#', data-toggle='modal', data-id='#{dpt.id}',data-name='#{dpt.name}', class=(dpt.weight == 999)? 'special project': 'dpt name')
               | #{dpt.name}
               -if (dpt.weight != 999)
                 span.glyphicon.glyphicon-pencil2.m-left-1(data-id='#{dpt.id}',data-name='#{dpt.name}')
@@ -21,30 +21,40 @@ block body
         a.btn.btn-sm-circle.btn-green.m-left-1(id="plus", href='#', data-toggle='modal', data-target='#modal-control-shop-type-sm')
           span.glyphicon.glyphicon-plus
       .list-group.list-group-edit()
-        .special(id="special" style="display:none") 
-          .list-group-item.edit-link
-            | 閃購專區
-            span.glyphicon.glyphicon-locked
-          // /list-group-item
-          .list-group-item.edit-link
-            | 優惠商品
-            span.glyphicon.glyphicon-locked
-          // /list-group-item
-          .list-group-item.edit-link
-            | 本月主題
-            span.glyphicon.glyphicon-locked
+        //- .special(id="special" style="display:none") 
+          //- .list-group-item.edit-link
+          //-   | 閃購專區
+          //-   span.glyphicon.glyphicon-locked
+          //- // /list-group-item
+          //- .list-group-item.edit-link
+          //-   | 優惠商品
+          //-   span.glyphicon.glyphicon-locked
+          //- // /list-group-item
+          //- .list-group-item.edit-link
+          //-   | 本月主題
+          //-   span.glyphicon.glyphicon-locked
         DptSubs
         each dpt, val in dpts
-          .dpt(id="subDpt"+val style="display:none")
+          - var subDptId = (dpt.weight === 999) ? "special" : "subDpt" + val;
+          - var subDptClass = (dpt.weight === 999) ? "special" : "dpt";
+          div(id=subDptId, style="display:none", class=subDptClass) 
+
             - if (dpt.DptSubs.length)
               each subDpt, index in dpt.DptSubs
                 // /list-group-item
                 .list-group-item.edit-link
-                  a(href='#', data-toggle='modal', class='subDpt name', data-id="#{subDpt.id}",data-name='#{subDpt.name}')
-                    | #{subDpt.name}
-                    span.glyphicon.glyphicon-pencil2.m-left-1
-                  a.delete.subDpt(href='#', data-toggle='modal', data-id="#{subDpt.id}")
-                    span.glyphicon.glyphicon-remove
+
+                  - if (subDpt.official)
+                      =subDpt.name
+                      span.glyphicon.glyphicon-locked
+
+                  - else
+
+                    a(href='#', data-toggle='modal', class='subDpt name', data-id="#{subDpt.id}",data-name='#{subDpt.name}')
+                      | #{subDpt.name}
+                      span.glyphicon.glyphicon-pencil2.m-left-1
+                    a.delete.subDpt(href='#', data-toggle='modal', data-id="#{subDpt.id}")
+                      span.glyphicon.glyphicon-remove
 
         //- // /list-group-item
         //- .list-group-item.edit-link
