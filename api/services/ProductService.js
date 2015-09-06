@@ -35,8 +35,16 @@ module.exports = {
     if ( ! createdProductGm)
       return;
 
-    if (typeof req.body['good[0][description]'] == 'string') {
-      var name = req.body['good[0][description]'] || '';
+    try {
+      var goods = JSON.parse(req.body['good[0][description]'])
+    } catch (e) {
+      var goods = req.body['good[0][description]']
+    }
+
+    console.log("----- goods,", goods);
+
+    if (typeof goods == 'string') {
+      var name = goods || '';
       var stockQuantity = req.body['good[0][stockQuantity]'] || '';
       var isPublish = req.body['good[0][isPublish]'] || '';
       var color = req.body['good[0][color]'] || '';
@@ -62,25 +70,34 @@ module.exports = {
       return;
     }
 
-    for (var i = 0 ; i < req.body['good[0][description]'].length ; i++) {
-      var name = req.body['good[0][description]'][i] || '';
-      var stockQuantity = req.body['good[0][stockQuantity]'][i] || '';
-      var isPublish = req.body['good[0][isPublish]'] || '';
-      var color = req.body['good[0][color]'][i] || '';
-      var productNumber = req.body['good[0][productNumber]'][i] || '';
+    try {
+      var isPublish = JSON.parse(req.body['good[0][isPublish]']);
+      var color = JSON.parse(req.body['good[0][color]']);
+      var productNumber = JSON.parse(req.body['good[0][productNumber]']);
+      var stockQuantity = JSON.parse(req.body['good[0][stockQuantity]']);
+    } catch (e) {
+      var isPublish = req.body['good[0][isPublish]'];
+      var color = req.body['good[0][color]'];
+      var productNumber = req.body['good[0][productNumber]'];
+      var stockQuantity = req.body['good[0][stockQuantity]'];
+    }
+    
 
+    for (var i = 0 ; i < goods.length ; i++) {
+      var name = goods[i] || '';
+      
       let newProduct = {
         name: name,
-        stockQuantity: stockQuantity,
-        isPublish: isPublish,
+        stockQuantity: stockQuantity[i] || stockQuantity,
+        isPublish: isPublish[i] || isPublish,
         price: req.body.price,
         size: req.body.size,
         comment: req.body.comment,
         service: req.body.service,
         country: req.body.country,
         madeby: req.body.madeby,
-        color: color,
-        productNumber: productNumber,
+        color: color[i] || color,
+        productNumber: productNumber[i] || productNumber,
         photos: [],
         ProductGmId: createdProductGm.id,
       };
@@ -155,9 +172,16 @@ module.exports = {
   findWithImages: async (productId) => {
     let product = await db.Product.find({
       where: {id: productId},
-      include: [db.ProductGm]
+      include: [{
+        model: db.ProductGm,
+        include: [
+          db.Dpt, db.DptSub
+        ]
+      }]
     });
     let productWithImage = ProductService.withImage(product);
+
+    console.log('productWithImage', productWithImage);
     return productWithImage;
   },
 

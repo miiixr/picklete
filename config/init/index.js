@@ -272,7 +272,62 @@ module.exports = {
         DptId: specialDpt.id
       }));
     }
-    // end create dpt
+
+    let createdProductGmComplete;
+    let productGmA, productGmB, dptA, dptB, dptSubA, dptSubB;
+
+
+    dptA = await db.Dpt.create({
+      name: 'test 大館 A',
+      weight: 999,
+      official: true,
+    });
+
+    dptB = await db.Dpt.create({
+      name: 'test 大館 B',
+      weight: 999,
+      official: true,
+    });
+
+    dptSubA = await db.DptSub.create({
+      name: 'test 小館 A',
+      weight: 100,
+      official: false
+    })
+
+    dptSubB = await db.DptSub.create({
+      name: 'test 小館 B',
+      weight: 100,
+      official: false
+    })
+
+    await dptA.setDptSubs(dptSubA);
+    await dptB.setDptSubs(dptSubB);
+
+    createdProductGmComplete = await db.ProductGm.create({
+      brandId: 1,
+      explain: 'req.body.explain',
+      usage: 'req.body.usage',
+      notice: 'req.body.notice',
+      depId: dptA.id,
+      depSubId: dptSubA.id
+    });
+
+    await createdProductGmComplete.setDpts([dptA]);
+    await createdProductGmComplete.setDptSubs([dptSubA]);
+
+
+    createdProduct = await db.Product.create({
+      color: '1',
+      description: '11',
+      name: '111',
+      stockQuantity: '100',
+      isPublish: 'false',
+      ProductGmId: createdProductGmComplete.id
+    });
+
+
+
 
     // create tag
 
