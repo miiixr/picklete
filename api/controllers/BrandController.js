@@ -42,9 +42,10 @@ let BrandController = {
           height: 500
         });
         photos[i] = domain + _processPath(photos[i].fd);
+        brandData.photos[i] = photos[i].replace('.tmp/', '');
       }
-      brandData.photos = photos;
-      brandData.avatar = brandData.avatar.replace('.tmp/', '');
+      // brandData.photos = photos;
+      // brandData.avatar = brandData.avatar.replace('.tmp/', '');
     }
 
     if (files[2].length) {
