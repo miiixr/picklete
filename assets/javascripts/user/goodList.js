@@ -16,13 +16,10 @@ $(window).load(function() {
     });
   });
 
-
-
-  var submitLock = false;
   $(".btn-group.btn-group-switch").click(function() {
     var className = $(this).find( "label:first" ).attr('class');
     var id = $(this).attr('id');
-
+    // check class name
     if ( className == "btn btn-default btn-sm" ){
       var path = "/product/publish/" + id;
       $.ajax({
@@ -36,35 +33,6 @@ $(window).load(function() {
         url: path
       });
     }
-    var flash = req.flash('message')
-    $(".alert.alert-danger").find( "p" ).text(flash);
-    console.log(id);
-    console.log(className);
-    console.log(flash);
-
-
-
   });
-
-
-  //
-  // $("#btnSave").click(function() {
-  //   //alert('clicked!');
-  //   var table_data = [];
-  //   $('tr').each(function(){
-  //       var row_data = [];
-  //
-  //       $('td', this).each(function(){
-  //         //  row_data.push($(this).text());
-  //           row_data.push($("input[name='options']").val());
-  //
-  //         //  row_data.push($(this).closest('td').find('input[type="text"]:visible'));
-  //       });
-  //
-  //       table_data.push(row_data);
-  //
-  //   });
-  //   console.log(table_data);
-  // });
 
 });
