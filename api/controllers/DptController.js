@@ -26,7 +26,10 @@ let DptController = {
         order: ['Dpt.weight', 'DptSubs.weight']
       })
       .then(function(dpts) {
-        res.view('admin/departmentList', { dpts });
+        res.view('admin/departmentList', {
+           dpts,
+           pageName: '/admin/department'
+        });
       })
       .catch(function(error) {
         return res.serverError(error);

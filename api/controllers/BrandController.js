@@ -1,10 +1,10 @@
 let BrandController = {
-  
+
   create: async (req, res) => {
 
     if (req.method === "GET") {
       return res.view("admin/brandCreate", {
-        pageName: "brands"
+      pageName: "/admin/brands"
       });
     }
     console.log(sails.config.domain)
@@ -19,7 +19,7 @@ let BrandController = {
 
     let uploadInput = ["avatar", "photos[]", "banner"];
     let files = await ImageService.upload(req, uploadInput);
-    
+
     if (files[0].length) {
       brandData.avatar = domain + _processPath(files[0][0].fd);
       brandData.avatar = brandData.avatar.replace('.tmp/', '');
@@ -77,7 +77,7 @@ let BrandController = {
 
     // return res.ok(brands);
     res.view("admin/brandList", {
-      pageName: "brands",
+      pageName: "/admin/brands",
       brands: brandsGood,
       agents: brandsAgent,
       brandLocks: brandLock
