@@ -5,7 +5,12 @@ let ProductController = {
   showCreate: async (req, res) => {
     // let products = await ProductService.findAllWithImages();
     try {
-      let brands = await db.Brand.findAll();
+      let brands = await db.Brand.findAll({
+        where: {
+          type: {$ne: 'OTHER'}
+        }
+      });
+
       let dpts = await db.Dpt.findAll({
         include: [{
           model: db.DptSub

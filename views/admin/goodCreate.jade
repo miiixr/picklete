@@ -21,7 +21,7 @@ block body
                   option(value='#{brand.id}') #{brand.name}
             label.radio-inline
               input#brandType(type='radio', name='brandType', value='custom')
-              input.form-control(type='text', name='customBrand', value='OTHER', placeholder='自訂品牌名稱')
+              input.form-control(type='text', name='customBrand', value='', placeholder='自訂品牌名稱')
             a(href='#', data-toggle='tooltip', title='', data-original-title='品牌名稱自訂將會統一列入 Other 品牌區')
               span.glyphicon.glyphicon-info
         // /form-group
