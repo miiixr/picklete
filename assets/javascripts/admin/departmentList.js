@@ -1,5 +1,4 @@
 (function ($) {
-  
   var _closeAddBtn, _showAddBtn, _addBtn;
 
   _addBtn = $('.btn.btn-sm-circle.btn-green.m-left-1');
@@ -33,10 +32,13 @@
   });
 
   $('.special.project').click(function(event){
+    var e = $(event.currentTarget);
+    var id = e.data('id') - 1;
     for(i=0; i<=5; i++){
       document.getElementById('subDpt'+i).style.display = "none";
     }
     document.getElementById('special').style.display = "";
+    document.getElementById('sm-id').value = e.data('id');
     // _closeAddBtn();
   });
 
