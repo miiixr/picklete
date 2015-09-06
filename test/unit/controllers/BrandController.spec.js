@@ -18,7 +18,7 @@ describe('Brand API - 品牌', function() {
 
     describe('Brand - 建立', function() {
 
-      it.only('should return new brand object', function(done) {
+      it('should return new brand object', function(done) {
         var avatar = path.join(process.cwd(), './test/unit/resources/avatar.jpg');
         var brand = path.join(process.cwd(), './test/unit/resources/brand.jpg');
         var banner = path.join(process.cwd(), './test/unit/resources/brand.jpg');
