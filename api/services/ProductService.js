@@ -172,9 +172,16 @@ module.exports = {
   findWithImages: async (productId) => {
     let product = await db.Product.find({
       where: {id: productId},
-      include: [db.ProductGm]
+      include: [{
+        model: db.ProductGm,
+        include: [
+          db.Dpt, db.DptSub
+        ]
+      }]
     });
     let productWithImage = ProductService.withImage(product);
+
+    console.log('productWithImage', productWithImage);
     return productWithImage;
   },
 
