@@ -14,8 +14,8 @@ ol.drag-container {
 ol.drag-container li.placeholder {
   position: relative;
   /** More li styles **/
-}
-ol.drag-container li.placeholder:before {
-  position: absolute;
-  /** Define arrowhead **/
+  &:before {
+    position: absolute;
+    /** Define arrowhead **/
+  }
 }
