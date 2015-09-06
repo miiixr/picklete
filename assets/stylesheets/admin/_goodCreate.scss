@@ -1,0 +1,23 @@
+body.dragging, body.dragging * {
+  cursor: move !important;
+}
+.dragged {
+  position: absolute;
+  opacity: 0.5;
+  z-index: 2000;
+}
+#goodForm {
+  ol.drag-container {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+    li.placeholder {
+      position: relative;
+      /** More li styles **/
+      &:before {
+        position: absolute;
+        /** Define arrowhead **/
+      }
+    }
+  }  
+}

@@ -1,11 +1,12 @@
 // # 1. 透過 Productid 找到 model product
 // # 2. 檢查 user 是否存在，若否進行建立
 // # 3. 建立訂單 order
-import crypto from 'crypto';
-
 var OrderController;
 
 OrderController = {
+  debug: async (req, res) => {
+    res.ok({});
+  },
   index: async (req, res) => {
     try {
       let orders = await OrderService.findAllComplete();
@@ -107,7 +108,7 @@ OrderController = {
       var host = req.query.host || null;
       var user = await db.User.find({where: {email}});
 
-      var token = await new Promise((resolve) => crypto.randomBytes(20, (error, buf) => resolve(buf.toString("hex"))));
+      var token = await UtilService.generateHashCode();
 
       user.orderSyncToken = token;
       await user.save();

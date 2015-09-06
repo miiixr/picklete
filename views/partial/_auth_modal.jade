@@ -8,10 +8,11 @@
         h2.modal-title 大館別設定
       // /modal-header
       .modal-body.p-30.p-top-0.font-size-slarge
-        form(action='/admin/department/create', method='POST')
+        form(action='/admin/department/update', method='POST')
           .form-group.m-bottom-6
             label 大館別名稱
-            input.form-control(type='text', name='name', required='true')
+            input.form-control(id='lg' type='text', name='name', required='true' )
+            input.form-control(id='lg-id' type='hidden', name='id', required='true' )
           // /form-group2
           input.btn.btn-danger(type='submit', name='submit', value='確定')
 
@@ -23,18 +24,35 @@
       .modal-header.p-30
         button.close(type='button', data-dismiss='modal', aria-label='Close')
           span(aria-hidden='true') ×
-        h2.modal-title 小館別設定
+        h2.modal-title 小館別新增
       // /modal-header
       .modal-body.p-30.p-top-0.font-size-slarge
         form(action='/admin/department/sub/create', method='POST')
           .form-group.m-bottom-6
             label 小館別名稱
-            input.form-control(type='text', name='subDptName', required='true')
+            input.form-control(id='sm', type='text', name='subDptName', required='true')
             // TODO, have to dynamic update dpt id
-            input(type='hidden', name='dptId', value='1', required='true')
+            input(id='sm-id',type='hidden', name='dptId', value='1', required='true')
           // /form-group
           input.btn.btn-danger(type='submit', name='submit', value='確定')
 
+#modal-control-shop-type-sm-update.modal.fade
+  .modal-dialog(role='document')
+    .modal-content
+      .modal-header.p-30
+        button.close(type='button', data-dismiss='modal', aria-label='Close')
+          span(aria-hidden='true') ×
+        h2.modal-title 小館別設定
+      // /modal-header
+      .modal-body.p-30.p-top-0.font-size-slarge
+        form(action='/admin/department/sub/update', method='POST')
+          .form-group.m-bottom-6
+            label 小館別名稱
+            input.form-control(id='set-sm', type='text', name='name', required='true')
+            // TODO, have to dynamic update dpt id
+            input(id='set-sm-id',type='hidden', name='id', required='true')
+          // /form-group
+          input.btn.btn-danger(type='submit', name='submit', value='確定')
 
 #modal-delete.modal.fade
   .modal-dialog(role='document')
@@ -45,12 +63,16 @@
         h2.modal-title 刪除
       // /modal-header
       .modal-body.p-30.p-top-0
-        p 您確定要將此 XXXXXXX 刪除？
-        p 您確定要將此 XXXXXXX 移出此折扣活動？
+        p 您確定要將此 
+          span.subDptName 
+          | 刪除？
+        //- p 您確定要將此 XXXXXXX 移出此折扣活動？
       // /modal-body
       .modal-footer
         button.btn.btn-default(type='button', data-dismiss='modal') 取消
-        button.btn.btn-green(type='button', data-dismiss='modal') 確定
+        form(action='/admin/department/sub/delete', method='POST')
+          input(id='del-sm-id',type='hidden', name='id', required='true',value="")
+          button.btn.btn-green(type='submit') 確定
       // /modal-footer
     // /modal-content
   // /modal-dialog
