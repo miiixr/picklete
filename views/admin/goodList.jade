@@ -152,31 +152,31 @@ block body
     tbody
       each product in products
         tr
-          td
+          td 
             img.width-6(src=product.image)
           td #{product.name}
           td #{product.price}
           td #{product.productNumber}
           td #{product.createdAt}
           td
-            .btn-group.btn-group-switch(data-toggle='buttons')
+            .btn-group.btn-group-switch(data-toggle='buttons', id='#{product.id}')
               label.btn.btn-default.btn-sm(class=product.isPublish ? "active" : "")
-                input#option2(type='radio', name='options', autocomplete='off', value='1')
+                input#option-publish(type='radio', name='options', autocomplete='off', value='1')
                 span.btn-text 上架
               label.btn.btn-default.btn-hide.btn-sm(class=!product.isPublish ? "active" : "")
-                input#option1(type='radio', name='options', autocomplete='off', checked='', value='0')
+                input#option-unpublish(type='radio', name='options', autocomplete='off', checked='', value='0')
                 span.btn-text 隱藏
             // /btn-group-switch
-          td
-            .input-group.input-group-count.input-group-sm.max-width-100
-              span.input-group-btn
-                button.btn.btn-default.btn-number(type='button', disabled='disabled', data-type='minus', data-field='quant[1]')
-                  span.glyphicon.glyphicon-minus
+          td #{product.stockQuantity}
+            //- .input-group.input-group-count.input-group-sm.max-width-100
+            //-   span.input-group-btn
+            //-     button.btn.btn-default.btn-number(type='button', disabled='disabled', data-type='minus', data-field='quant[1]')
+            //-       span.glyphicon.glyphicon-minus
               // /input-group-btn
-              input.form-control.input-number.text-center(type='text', name='quant[#{product.id}]', value='#{product.stockQuantity}', min='1', max='999')
-              span.input-group-btn
-                button.btn.btn-default.btn-number(type='button', data-type='plus', data-field='quant[#{product.id}]')
-                  span.glyphicon.glyphicon-plus
+              //- input.form-control.input-number.text-center(type='text', name='quant[#{product.id}]', value='#{product.stockQuantity}', min='1', max='999')
+              //- span.input-group-btn
+              //-   button.btn.btn-default.btn-number(type='button', data-type='plus', data-field='quant[#{product.id}]')
+              //-     span.glyphicon.glyphicon-plus
               // /input-group-btn
             // /input-group
           td.text-right
