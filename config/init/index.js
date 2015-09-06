@@ -1,5 +1,9 @@
-import trunk from './trunk'
-
+import trunk from './trunk';
+let production;
+try {
+  production = require('./production');
+} catch (e) {
+}
 
 module.exports = {
 
@@ -8,9 +12,6 @@ module.exports = {
     await db.sequelize.sync({force});
   },
   basicData: async () => {
-
-
-
 
     var roleAdmin = {
       authority: 'admin',
@@ -39,7 +40,10 @@ module.exports = {
 
     await db.Passport.findOrCreate(passportOptions);
 
-  }  ,
+    if(sails.config.initData === 'production')
+      await production.createBasicData();
+
+  },
   testData: async () => {
 
     if(sails.config.initData){
@@ -52,7 +56,6 @@ module.exports = {
       comment: 'site user'
     };
     var createRoleUser = await db.Role.create(roleUser);
-
 
     var newBuyer = {
       username: "buyer",
