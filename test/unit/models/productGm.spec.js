@@ -33,7 +33,7 @@ describe("about gm prodcut model operation.", () => {
     done();
   });
 
-  describe.only('many Dpt, many DptSub to productGM ', () => {
+  describe('many Dpt, many DptSub to productGM ', () => {
     let productGmA, productGmB, dptA, dptB, dptSubA, dptSubB;
     before(async (done) => {
 

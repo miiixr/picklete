@@ -168,7 +168,7 @@ describe("about Order", () => {
       });
     });
 
-    it.only("get an order. ", async (done) => {
+    it("get an order. ", async (done) => {
       request(sails.hooks.http.app)
       .get(`/order/find/${testOrder.id}`)
       .end(async (err, res) => {
