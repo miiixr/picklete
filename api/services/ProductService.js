@@ -91,8 +91,72 @@ module.exports = {
 
   },
 
+  update: async (updateProduct) => {
+
+    try {
+      var {brandType} = updateProduct;
+      var brand;
+      if (brandType.toLowerCase() === 'other') {
+        brand = await db.Brand.findOne({ where: {type: 'OTHER'} });
+      } else {
+        brand = {id: updateProduct.brandId};
+      }
+
+      var tag = updateProduct.tag || '';
+      if (tag) {
+        tag = tag.split(',');
+      }
+
+      console.log('updateProduct.productGm.id', updateProduct.productGm.id);
+      let productGm = await db.ProductGm.find({
+        where: {
+          id: updateProduct.productGm.id
+        }
+      });
+
+      let product = await db.Product.find({
+        where: {
+          id: updateProduct.good[0].id
+        }
+      });
+
+      product.name = updateProduct.name;
+      product.price = updateProduct.price;
+      product.size = updateProduct.size;
+      product.comment = updateProduct.comment;
+      product.service = updateProduct.service;
+      product.country = updateProduct.country;
+      product.madeby = updateProduct.madeby;
+      product.color = updateProduct.good[0].color;
+      product.productNumber = updateProduct.good[0].productNumber;
+      product.stockQuantity = updateProduct.good[0].stockQuantity;
+      product.description = updateProduct.good[0].description;
+      product.isPublish = updateProduct.good[0].isPublish;
+
+      await product.save();
+
+
+      productGm.brandId = brand.id;
+      productGm.dptId = updateProduct.dptId;
+      productGm.dptSubId = updateProduct.dptSubId;
+
+      await productGm.save();
+
+      await productGm.setDpts(updateProduct.dptId);
+      await productGm.setDptSubs(updateProduct.dptSubId);
+
+
+    } catch (e) {
+      console.error(e.stack);
+      throw e;
+    }
+  },
+
   findWithImages: async (productId) => {
-    let product = await db.Product.findById(productId);
+    let product = await db.Product.find({
+      where: {id: productId},
+      include: [db.ProductGm]
+    });
     let productWithImage = ProductService.withImage(product);
     return productWithImage;
   },

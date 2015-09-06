@@ -40,7 +40,7 @@ module.exports = {
 
     await db.Passport.findOrCreate(passportOptions);
 
-    if(sails.config.initData === 'production')
+    if(sails.config.initData === 'production' && production !== undefined)
       await production.createBasicData();
 
   },

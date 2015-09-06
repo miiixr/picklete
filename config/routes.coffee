@@ -58,6 +58,7 @@ module.exports.routes = {
 
   'get /admin/goods' : 'ProductController.list'
   'get /admin/goods/update' : 'ProductController.showUpdate'
+  'post /admin/goods/update' : 'ProductController.doUpdate'
   'get /admin/goods/create' : 'ProductController.showCreate'
   'post /admin/goods/create' : 'ProductController.createUpdate'
 
