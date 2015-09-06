@@ -13,7 +13,7 @@ let BrandController = {
 
     let uploadInput = ["avatar", "photos[]", "banner"];
     let files = await ImageService.upload(req, uploadInput);
-    
+
     if (files[0].length) {
       brandData.avatar = domain + files[0][0].fd.split(process.cwd())[1];
     }
@@ -79,23 +79,27 @@ let BrandController = {
   update: async (req, res) => {
 
     try {
-      let brandId = req.params.brand;
-      var updateData = req.body;
-
+      let brandId = req.query.id; 
       let brand = await db.Brand.findById(brandId)
-
       if(!brand) throw new Error ('找不到這個 brand');
-
+      console.log(brand.dataValues);
+      if (req.method === "GET") {
+      return res.view("admin/brandCreate", {
+        brand: brand.dataValues || {}
+      });
+    }
+      var updateData = req.body;
+      console.log(req.body);
       brand.name = updateData.name;
-      brand.avatar = updateData.avatar;
+      // brand.avatar = updateData.avatar;
       brand.type = updateData.type;
       brand.desc = updateData.desc;
-      brand.banner = updateData.banner;
-      brand.photos = updateData.photos;
-
+      // brand.banner = updateData.banner;
+      // brand.photos = updateData.photos;
+      console.log(brand);
       let updatedBrand = await brand.save();
 
-      return res.ok(updatedBrand);
+      return res.redirect("/admin/brands");
 
     } catch (e) {
       let msg = e.message;
