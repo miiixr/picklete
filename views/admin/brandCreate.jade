@@ -2,7 +2,7 @@ extends ../_layout_auth
 
 block body
   h2.m-bottom-6 品牌設定
-  form(action="/admin/brands/create", method="POST", enctype="multipart/form-data")
+  form(action= brand?"/admin/brands/update?id="+brand.id:"/admin/brands/create", method="POST", enctype="multipart/form-data")
     .well.control-well.p-30.m-left-2.m-bottom-8
       h3
         span.label.label-default.p-10-15 基本資訊
@@ -36,19 +36,19 @@ block body
         .form-group
           label.col-sm-3.col-md-2.control-label 品牌名稱
           .col-sm-9.col-md-5
-            input.form-control(type='text', name="name", placeholder='請輸入品牌名稱')
+            input.form-control(type='text', name="name", placeholder='請輸入品牌名稱' value= brand?brand.name:"")
           .col-sm-9.col-sm-offset-3.col-md-5.col-md-offset-0
             label.radio-inline
-              input#inlineRadio1(type='radio', name='type', value='AGENT')
+              input#inlineRadio1(type='radio', name='type', value='AGENT' checked=(brand&&brand.type=="AGENT")?"":undefined)
               |  代理品牌
             label.radio-inline
-              input#inlineRadio2(type='radio', name='type', value='PRIME_GOOD')
+              input#inlineRadio2(type='radio', name='type', value='PRIME_GOOD' checked=(brand&&brand.type=="PRIME_GOOD")?"":undefined)
               |  精選品牌
         // /form-group
         .form-group
           label.col-sm-3.col-md-2.control-label 品牌介紹
           .col-sm-9.col-md-10
-            textarea.form-control(name='desc', rows='6')
+            textarea.form-control(name='desc', rows='6' )= brand?brand.desc:""
         // /form-group
     // /well
     .well.control-well.p-30.m-left-2.m-bottom-8
