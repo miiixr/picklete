@@ -7,7 +7,6 @@ let BrandController = {
         pageName: "brands"
       });
     }
-    console.log(sails.config.domain)
     var domain = sails.config.domain || process.env.domain || 'http://localhost:1337';
     var brandData = req.body;
     var _processPath = function (originPath) {
@@ -15,7 +14,6 @@ let BrandController = {
       path = path.replace('.tmp/', '');
       return path;
     }
-    // console.log(brandData);
 
     let uploadInput = ["avatar", "photos[]", "banner"];
     let files = await ImageService.upload(req, uploadInput);
@@ -40,7 +38,6 @@ let BrandController = {
     if (brandData.type == null){
       brandData.type = "OTHER";
     }
-    console.log(brandData);
 
     // create brand
     try {
@@ -73,8 +70,6 @@ let BrandController = {
       }
     });
 
-    // console.log(brands);
-
     // return res.ok(brands);
     res.view("admin/brandList", {
       pageName: "brands",
@@ -90,21 +85,18 @@ let BrandController = {
       let brandId = req.query.id; 
       let brand = await db.Brand.findById(brandId)
       if(!brand) throw new Error ('找不到這個 brand');
-      console.log(brand.dataValues);
       if (req.method === "GET") {
       return res.view("admin/brandCreate", {
         brand: brand.dataValues || {}
       });
     }
       var updateData = req.body;
-      console.log(req.body);
       brand.name = updateData.name;
       // brand.avatar = updateData.avatar;
       brand.type = updateData.type;
       brand.desc = updateData.desc;
       // brand.banner = updateData.banner;
       // brand.photos = updateData.photos;
-      console.log(brand);
       let updatedBrand = await brand.save();
 
       return res.redirect("/admin/brands");
