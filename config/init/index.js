@@ -189,7 +189,7 @@ module.exports = {
         'http://goo.gl/p9Y2BF'
       ]
     },{
-      name: 'Sydney',
+      name: 'Sydney-精選',
       avatar: 'https://goo.gl/XbP9t3',
       type: 'PRIME_GOOD',
       desc: '',
@@ -214,7 +214,7 @@ module.exports = {
         'http://goo.gl/p9Y2BF'
       ]
     },{
-      name: 'Sydney',
+      name: 'Sydney-代理',
       avatar: 'https://goo.gl/XbP9t3',
       type: 'AGENT',
       desc: '',
