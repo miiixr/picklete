@@ -35,15 +35,22 @@ let BrandController = {
     let photos = files[1];
     if (photos.length) {
       for (let i in photos) {
-        await ImageService.resize({
-          src: photos[i].fd,
-          dst: photos[i].fd,
-          width: 1100,
-          height: 500
-        });
-        photos[i] = domain + _processPath(photos[i].fd);
-        brandData.photos[i] = photos[i].replace('.tmp/', '');
+        try {
+          await ImageService.resize({
+            src: photos[i].fd,
+            dst: photos[i].fd,
+            width: 1100,
+            height: 500
+          });
+          photos[i] = domain + _processPath(photos[i].fd);
+        } catch (e) {
+          console.log("----- ERROR")
+          console.error(e);
+        }
+        
+        
       }
+      brandData.photos = photos;
       // brandData.photos = photos;
       // brandData.avatar = brandData.avatar.replace('.tmp/', '');
     }
