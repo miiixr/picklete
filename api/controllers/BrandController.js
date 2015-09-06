@@ -7,6 +7,7 @@ let BrandController = {
       pageName: "/admin/brands"
       });
     }
+
     var domain = sails.config.domain || process.env.domain || 'http://localhost:1337';
     var brandData = req.body;
     var _processPath = function (originPath) {
@@ -18,7 +19,15 @@ let BrandController = {
     let uploadInput = ["avatar", "photos[]", "banner"];
     let files = await ImageService.upload(req, uploadInput);
 
+
+    // avatar resize
     if (files[0].length) {
+      await ImageService.resize({
+        src: files[0][0].fd,
+        dst: files[0][0].fd,
+        width: 600,
+        height: 600
+      });
       brandData.avatar = domain + _processPath(files[0][0].fd);
       brandData.avatar = brandData.avatar.replace('.tmp/', '');
     }

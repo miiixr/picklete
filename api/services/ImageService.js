@@ -30,11 +30,10 @@ module.exports = {
         height: imageResizeConfig.height || 100
       }
 
-      let result = await gm(resizeConfig.src).resize(resizeConfig.width, resizeConfig.height).writeAsync(resizeConfig.dst);
+      let result = await gm(resizeConfig.src).resize(resizeConfig.width, resizeConfig.height, "!").writeAsync(resizeConfig.dst);
       return resizeConfig;
 
     } catch (e) {
-      console.log("-----XXD")
       console.log(e);
       throw e;
     }
