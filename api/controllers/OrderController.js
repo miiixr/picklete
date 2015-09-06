@@ -107,7 +107,7 @@ OrderController = {
     try{
       let sn  = req.param('serialNumber');
       let orders = await OrderService.find(sn);
-      console.log('=== order ==>,'order);
+      console.log('=== order ==>',order);
       if (!orders) {
         throw ('order not found')
       }

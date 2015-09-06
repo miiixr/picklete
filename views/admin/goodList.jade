@@ -122,7 +122,7 @@ block body
       //-   // /form-group
     // /col-md-6
     .col-md-6.desktop-text-right
-      a.btn.btn-green(href='#') 儲存變更
+      a.btn.btn-green(href='#', id='btnSave') 儲存變更
     // /col-md-6
   // /row
   hr.dashed-line
@@ -162,7 +162,7 @@ block body
             .btn-group.btn-group-switch(data-toggle='buttons')
               label.btn.btn-default.btn-sm(class=product.isPublish ? "active" : "")
                 input#option2(type='radio', name='options', autocomplete='off')
-                span.btn-text 上架
+                span.btn-text 上架z
               label.btn.btn-default.btn-hide.btn-sm(class=!product.isPublish ? "active" : "")
                 input#option1(type='radio', name='options', autocomplete='off', checked='')
                 span.btn-text 隱藏

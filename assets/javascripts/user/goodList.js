@@ -15,4 +15,22 @@ $(window).load(function() {
       $selectDptSubId.append("<option value="+ dptSub.id +">"+ dptSub.name +"</option>");
     });
   });
+  
+  $("#btnSave").click(function() {
+    alert('clicked!');
+    // var id = $(this).closest("tr").find(".nr").text();
+    // $("#resultas").append(id);
+    var table_data = [];
+    $('tr').each(function(){
+        var row_data = [];
+
+        $('td', this).each(function(){
+            row_data.push($(this).text());
+        });
+        table_data.push(row_data);
+
+    });
+    console.log(table_data);
+  });
+
 });
