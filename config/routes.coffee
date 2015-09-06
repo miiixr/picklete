@@ -46,6 +46,9 @@ module.exports.routes = {
   'get /admin/brands' : 'BrandController.list'
   'get /admin/brands/create' : 'BrandController.create'
   'post /admin/brands/create' : 'BrandController.create'
+  'get /admin/brands/update' : 'BrandController.update'
+  'post /admin/brands/update' : 'BrandController.update'
+
 
   'get /admin/department' : 'DptController.list'
   'post /admin/department/update': 'DptController.update'
