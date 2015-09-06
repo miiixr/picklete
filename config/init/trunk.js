@@ -28,10 +28,10 @@ module.exports.createTestData = async () => {
   }];
   await db.Product.bulkCreate(fruitProducts);
 
-  let discountPoint = {
+  let bonusPoint = {
     email: 'smlsun@gmail.com',
     remain: 100
   }
 
-  await db.DiscountPoint.create(discountPoint);
+  await db.BonusPoint.create(bonusPoint);
 }
