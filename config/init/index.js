@@ -175,7 +175,7 @@ module.exports = {
     var createdOrder = await db.Order.create(newOrder2);
 
 
-    var brandExample = {
+    var brandExample = [{
       name: '好棒棒品牌',
       avatar: 'http://goo.gl/ksTMyn',
       type: 'PRIME_GOOD',
@@ -185,12 +185,22 @@ module.exports = {
         'http://goo.gl/IRT1EM',
         'http://goo.gl/p9Y2BF'
       ]
-    };
+    },{
+      name: 'Sydney',
+      avatar: 'https://goo.gl/XbP9t3',
+      type: 'PRIME_GOOD',
+      desc: '',
+      banner: 'http://goo.gl/tl4513',
+      photos: [
+      'http://goo.gl/IRT1EM',
+      'http://goo.gl/p9Y2BF'
+      ]
+    }];
 
-    var brand = await db.Brand.create(brandExample);
+    var brand = await db.Brand.bulkCreate(brandExample);
 
 
-    var brandAgent = {
+    var brandAgent = [{
       name: '好代理品牌',
       avatar: 'http://goo.gl/ksTMyn',
       type: 'AGENT',
@@ -200,7 +210,17 @@ module.exports = {
         'http://goo.gl/IRT1EM',
         'http://goo.gl/p9Y2BF'
       ]
-    };
+    },{
+      name: 'Sydney',
+      avatar: 'https://goo.gl/XbP9t3',
+      type: 'AGENT',
+      desc: '',
+      banner: 'http://goo.gl/tl4513',
+      photos: [
+      'http://goo.gl/IRT1EM',
+      'http://goo.gl/p9Y2BF'
+      ]
+    }];
 
     var otherAgent = {
       name: 'Other',
@@ -211,7 +231,7 @@ module.exports = {
       photos: []
     };
 
-    var brandAgent = await db.Brand.create(brandAgent);
+    var brandAgent = await db.Brand.bulkCreate(brandAgent);
 
     var otherAgent = await db.Brand.create(otherAgent);
 
