@@ -153,7 +153,10 @@ module.exports = {
   },
 
   findWithImages: async (productId) => {
-    let product = await db.Product.findById(productId);
+    let product = await db.Product.find({
+      where: {id: productId},
+      include: [db.ProductGm]
+    });
     let productWithImage = ProductService.withImage(product);
     return productWithImage;
   },
