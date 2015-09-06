@@ -4,6 +4,9 @@
 var OrderController;
 
 OrderController = {
+  debug: async (req, res) => {
+    res.ok({});
+  },
   index: async (req, res) => {
     try {
       let orders = await OrderService.findAllComplete();

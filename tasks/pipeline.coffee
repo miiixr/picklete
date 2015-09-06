@@ -17,7 +17,7 @@ cssFilesToInject = ["stylesheets/**/*.css"]
 # Client-side javascript files to inject in order
 # (uses Grunt-style wildcard/glob/splat expressions)
 jsFilesToInject = [
-  
+
   # Load sails.io before everything else
   "bower/jQuery/*.js"
   "bower/moment/*.js"
@@ -26,11 +26,11 @@ jsFilesToInject = [
   "javascripts/**/*.js"
   "javascripts/login.js"
   "js/dependencies/sails.io.js"
-  
+
   # Dependencies like jQuery, or Angular are brought in here
   # "js/dependencies/**/*.js"
 
-  
+
   # All of the rest of your client-side js files
   # will be injected here in no particular order.
   # "js/app/app.js"
