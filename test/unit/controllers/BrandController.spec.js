@@ -1,31 +1,47 @@
 
+import path from 'path';
+
 describe('Brand API - 品牌', function() {
 
-    var brand;
+    var brand, cookie;
+
+    before(function (done) {
+      request(sails.hooks.http.app)
+      .post('/auth/local')
+      .send({ identifier: 'admin', password: 'admin' })
+      .expect(302)
+      .end(function (err, res) {
+        cookie = res.headers['set-cookie'];
+        return done();
+      });
+    });
 
     describe('Brand - 建立', function() {
 
-        it('should return new brand object', function(done) {
-            request(sails.hooks.http.app)
-                .post('/admin/brand')
-                .send({
-                    name: '好棒棒品牌',
-                    avatar: 'http://goo.gl/ksTMyn',
-                    type: 'PRIME_GOOD',
-                    desc: 'Steve Aoki 最棒惹',
-                    banner: 'http://goo.gl/tl4513',
-                    photos: [
-                        'http://goo.gl/IRT1EM',
-                        'http://goo.gl/p9Y2BF'
-                    ]
-                })
-                .end(function(err, res) {
-                  res.statusCode.should.be.equal(302);
-                  res.headers.location.should.be.equal('/admin/brands');
+      it.only('should return new brand object', function(done) {
+        var avatar = path.join(process.cwd(), './test/unit/resources/avatar.jpg');
+        var brand = path.join(process.cwd(), './test/unit/resources/brand.jpg');
+        var banner = path.join(process.cwd(), './test/unit/resources/brand.jpg');
+        var photos1 = path.join(process.cwd(), './test/unit/resources/photos1.jpg');
+        var photos2 = path.join(process.cwd(), './test/unit/resources/photos2.jpg');
 
-                  return done();
-                });
+        request(sails.hooks.http.app)
+        .post('/admin/brand')
+        .set('cookie', cookie)
+        .field('name', '好棒棒品牌')
+        .field('type', 'PRIME_GOOD')
+        .field('desc', 'Steve Aoki 最棒惹')
+        .attach('avatar', avatar)
+        .attach('brand', brand)
+        .attach('photos[]', photos1)
+        .attach('photos[]', photos2)
+        .end(function(err, res) {
+          res.statusCode.should.be.equal(302);
+          res.headers.location.should.be.equal('/admin/brands');
+
+          return done();
         });
+      });
 
     });
 

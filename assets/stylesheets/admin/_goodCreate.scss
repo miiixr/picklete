@@ -6,16 +6,18 @@ body.dragging, body.dragging * {
   opacity: 0.5;
   z-index: 2000;
 }
-ol.drag-container {
-  list-style-type: none;
-  padding: 0px;
-  margin: 0px;
-}
-ol.drag-container li.placeholder {
-  position: relative;
-  /** More li styles **/
-  &:before {
-    position: absolute;
-    /** Define arrowhead **/
+#goodForm {
+  ol.drag-container {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+    li.placeholder {
+      position: relative;
+      /** More li styles **/
+      &:before {
+        position: absolute;
+        /** Define arrowhead **/
+      }
+    }
   }
 }

@@ -22,6 +22,15 @@ module.exports.bootstrap = async (cb) => {
     // inject moment for jade views
     sails.moment = require('moment');
 
+    // Development environment
+    /*
+    if (sails.config.environment === 'development') {
+        var app = sails.express.app;
+        app.set('view options', { pretty: true });
+        app.locals.pretty = true;
+    }
+    */
+
     sails.config.mail.mailer = sailsMailer.create(sails.config.mail.type, sails.config.mail.config);
     sails.services.passport.loadStrategies();
 

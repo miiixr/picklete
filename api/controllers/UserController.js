@@ -25,8 +25,39 @@ let UserController = {
       pageName: "index-slider-detail"
     });
   },
-  password: function(req, res) {
+  password: async function(req, res) {
+
+    let message = '無';
+
+    try {
+
+      if (req.method=='POST') {
+
+        let user = await UserService.getLoginUser(req);
+
+        if (user) {
+          let passport = await db.Passport.findOne({
+            where: {
+              protocol: 'local',
+              UserId: user
+            }
+          });
+
+          if (passport) {
+            passport.password = req.body.newPassword;
+            passport.save();
+
+            message = '密碼已經更新';
+          }
+        }
+      }
+    }
+    catch (error){
+      return res.serverError(error);
+    }
+
     res.view({
+      message
     });
   },
   indexExclusive: function(req, res) {
