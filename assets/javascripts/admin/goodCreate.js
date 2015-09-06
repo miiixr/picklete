@@ -1,5 +1,5 @@
 (function ($) {
-  
+
   var DPTS = window.DPTS;
 
   $("#brandSelect").val(undefined);
@@ -47,7 +47,7 @@
     if(that.context.nextElementSibling == null){
       that.parent().parent().remove();
     }
-  });  
+  });
 
 
   $('.tag').click(function(e){
@@ -72,8 +72,13 @@
     }
   });
 
+  CKEDITOR.replace( 'editor1' );
+  CKEDITOR.replace( 'editor2' );
+
+  $(function  () {
+    $("ol.drag-container").sortable({
+      group: 'no-drop',
+      handle: '.col-md-1.text-center'
+    });
+  });
 }(jQuery));
-
-
-
-

@@ -233,6 +233,12 @@ module.exports = {
         })
       }
     }
+
+    await db.Dpt.create({
+      name: '特別企劃',
+      weight: 999,
+      official: true,
+    });
     // end create dpt
 
     // create tag
