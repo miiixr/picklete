@@ -1,6 +1,6 @@
 module.exports = {
-  environment: 'production'
-  initData: 'production'
+  environment: ''
+  initData: ''
   domain: 'http://localhost:1337'
   mail: {
     type: 'ses'

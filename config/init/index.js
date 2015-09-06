@@ -237,11 +237,21 @@ module.exports = {
       }
     }
 
-    await db.Dpt.create({
+    let specialDpt = await db.Dpt.create({
       name: '特別企劃',
       weight: 999,
       official: true,
     });
+
+    var specialSubDpt = ["閃購專區", "優惠商品", "本月主題"];
+    for (let i in specialSubDpt) {
+      await (db.DptSub.create({
+        name: specialSubDpt[i],
+        weight: 999,
+        official: true,
+        DptId: specialDpt.id
+      }));
+    }
     // end create dpt
 
     // create tag
