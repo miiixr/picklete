@@ -14,7 +14,10 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        return DptSub.belongsTo(models.Dpt);
+        DptSub.belongsTo(models.Dpt);
+        DptSub.belongsToMany(models.ProductGm, {through: 'DptSubProductGm'});
+
+        return
       }
     }
   });
