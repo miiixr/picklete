@@ -1,6 +1,10 @@
+  import path from 'path';
+
 describe("about Product", () => {
 
   let testProduct = null;
+  var cookie;
+
   before(async (done) => {
     let newProduct = {
       name: '斗六文旦柚禮盒',
@@ -11,8 +15,17 @@ describe("about Product", () => {
       isPublish: true,
       comment: 'this is a comment.'
     };
+
     testProduct = await db.Product.create(newProduct);
-    done();
+
+    request(sails.hooks.http.app)
+    .post('/auth/local')
+    .send({ identifier: 'admin', password: 'admin' })
+    .end(function (err, res) {
+      cookie = res.headers['set-cookie'];
+      return done();
+    });
+    // done();
 
   });
 
@@ -138,6 +151,86 @@ describe("about Product", () => {
       res.body.isPublish.should.equal(false);
       done(err);
     });
+  });
+
+  it(' create a product,TEXT only, test about - ProductController.createUpdate', (done) => {
+
+    request(sails.hooks.http.app)
+    .post('/admin/goods/create')
+    .set('cookie', cookie)
+    .field('brandType', '好棒棒品牌')
+    .field('brandId', 1)
+    .field('dptId[]', JSON.stringify([ '1', '2', '3' ]))
+    .field('dptSubId[]', JSON.stringify([ '1', '4', '8' ]))
+    .field('name', 'product GM name')
+    .field('price', '2222')
+    .field('country', 'TW')
+    .field('madeby', 'TW')
+    .field('spec', 'red')
+    .field('size', '100*20')
+    .field('service[]', JSON.stringify([ 'express', 'store', 'package' ]))
+    .field('comment', 'keker')
+    .field('good[0][color]', JSON.stringify([ '1', '1' ]))
+    .field('good[0][description]', JSON.stringify([ 'CUP', 'CUP2' ]))
+    .field('good[0][productNumber]', JSON.stringify([ '0001', '0002' ]))
+    .field('good[0][stockQuantity]', JSON.stringify([ 999, 999]))
+    .field('good[0][isPublish]', 'false')
+    .field('explain', '<p>introduce</p>\r\n')
+    .field('notice', '<p>notice</p>\r\n')
+    .field('tag', '兒童,學生')
+    .end(function(err, res) {
+      res.statusCode.should.be.equal(302);
+      res.headers.location.should.be.equal('/admin/goods/');
+
+      return done();
+    });
+  });
+
+  it(' create a product,Image file, test about - ProductController.createUpdate', (done) => {
+    var avatar = path.join(process.cwd(), './test/unit/resources/avatar.jpg');
+    var brand = path.join(process.cwd(), './test/unit/resources/brand.jpg');
+    var banner = path.join(process.cwd(), './test/unit/resources/brand.jpg');
+    var photos1 = path.join(process.cwd(), './test/unit/resources/photos1.jpg');
+    var photos2 = path.join(process.cwd(), './test/unit/resources/photos2.jpg');
+
+    request(sails.hooks.http.app)
+    .post('/admin/goods/create')
+    .set('cookie', cookie)
+    .field('brandType', '好棒棒品牌')
+    .field('brandId', 1)
+    .field('dptId[]', JSON.stringify([ '1', '2', '3' ]))
+    .field('dptSubId[]', JSON.stringify([ '1', '4', '8' ]))
+    .field('name', 'product GM name')
+    .field('price', '2222')
+    .field('country', 'TW')
+    .field('madeby', 'TW')
+    .field('spec', 'red')
+    .field('size', '100*20')
+    .field('service[]', JSON.stringify([ 'express', 'store', 'package' ]))
+    .field('comment', 'keker')
+    .field('good[0][color]', JSON.stringify([ '1', '1' ]))
+    .field('good[0][description]', JSON.stringify([ 'CUP', 'CUP2' ]))
+    .field('good[0][productNumber]', JSON.stringify([ '0001', '0002' ]))
+    .field('good[0][stockQuantity]', JSON.stringify([ 999, 999]))
+    .field('good[0][isPublish]', 'false')
+    .field('explain', '<p>introduce</p>\r\n')
+    .field('notice', '<p>notice</p>\r\n')
+    .field('tag', '兒童,學生')
+
+
+    // .field('type', 'PRIME_GOOD')
+    // .field('desc', 'Steve Aoki 最棒惹')
+    // .attach('avatar', avatar)
+    // .attach('brand', brand)
+    // .attach('photos[]', photos1)
+    // .attach('photos[]', photos2)
+    .end(function(err, res) {
+      res.statusCode.should.be.equal(302);
+      res.headers.location.should.be.equal('/admin/goods/');
+
+      return done();
+    });
+
   });
 
 });
