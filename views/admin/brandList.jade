@@ -5,7 +5,7 @@ block body
   a.btn.btn-danger.btn-lg.m-bottom-6(href='/admin/brands/create') 建立品牌
   .clearfix.m-bottom-2.text-left
     h4.text-gray-darker.m-bottom-4 代理品牌
-    ul#agent-brand.list-inline.list-brand
+    ul.list-inline.list-brand
       each agent, index in agents
         li
           a(href='/admin/brands/update?id=#{agent.id}')
@@ -16,7 +16,7 @@ block body
   // /clearfix
   .clearfix.m-bottom-2
     h4.text-gray-darker.m-bottom-4 精選品牌
-    ul#agent-brand.list-inline.list-brand
+    ul.list-inline.list-brand
       each brand, index in brands
         li
           a(href='/admin/brands/update?id=#{brand.id}')
@@ -34,5 +34,5 @@ block body
 block js
   script.
     $(function  () {
-      $("ul#agent-brand").sortable();
+      $("ul.list-brand").sortable();
     });
