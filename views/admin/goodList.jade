@@ -150,6 +150,9 @@ block body
           span.caret
         th
     tbody
+      if (Object.keys(products).length == 0)
+        script.
+          alert('找不到符合的商品')
       each product in products
         tr
           td
@@ -196,4 +199,4 @@ block body
   // /text-center
 
 block js
-  script(src="/javascripts/user/goodList.js")
+  script(src="/javascripts/admin/goodList.js")
