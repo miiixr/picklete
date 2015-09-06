@@ -1,4 +1,16 @@
 (function ($) {
+  var _closeAddBtn, _showAddBtn, _addBtn;
+
+  _addBtn = $('.btn.btn-sm-circle.btn-green.m-left-1');
+  
+  _showAddBtn = function () {
+    _addBtn.css("display","inline-block");
+  };
+
+  _closeAddBtn = function () {
+    _addBtn.css("display","none");
+  };
+
 
   $('.glyphicon.glyphicon-pencil2.m-left-1').click(function(event){
     var e = $(event.currentTarget);
@@ -14,16 +26,20 @@
       document.getElementById('subDpt' + i).style.display = "none";
     }
     document.getElementById('special').style.display = "none";
-    document.getElementById('subDpt'+id).style.display = "";
+    document.getElementById('subDpt'+id).style.display = "block";
     document.getElementById('sm-id').value = e.data('id');
+    _showAddBtn();
   });
 
   $('.special.project').click(function(event){
+    var e = $(event.currentTarget);
+    var id = e.data('id') - 1;
     for(i=0; i<=5; i++){
       document.getElementById('subDpt'+i).style.display = "none";
     }
     document.getElementById('special').style.display = "";
-    $('.btn.btn-sm-circle.btn-green.m-left-1').css("display","none");
+    document.getElementById('sm-id').value = e.data('id');
+    // _closeAddBtn();
   });
 
 

@@ -36,9 +36,11 @@ module.exports.routes = {
   'get /admin/login' : 'UserController.controlLogin'
   'get /admin/index-slider' : 'UserController.indexSlider'
   'get /admin/index-slider-detail' : 'UserController.indexSliderDetail'
-  'get /admin/password' : 'UserController.password'
   'get /admin/index-exclusive' : 'UserController.indexExclusive'
   'get /admin/index-theme' : 'UserController.indexTheme'
+
+  'get /admin/password' : 'UserController.password'
+  'post /admin/password' : 'UserController.password'
 
   'get /admin/' : 'AuthController.admin'
   'get /admin/brands' : 'BrandController.list'
@@ -188,6 +190,7 @@ module.exports.routes = {
      credentials: false
     }
   }
+
   'get /api/order/sync': {
     controller: "OrderController",
     action: "sync",
@@ -195,6 +198,16 @@ module.exports.routes = {
      origin: "http://localhost:1337, http://localhost:8080",
      credentials: false
     }
+
+    'get /api/order/find/:serialNumber': {
+      controller: "OrderController",
+      action: "find",
+      cors: {
+       origin: "http://localhost:1337, http://localhost:8080",
+       credentials: false
+      }
+    }
+
   }
 
   ###*

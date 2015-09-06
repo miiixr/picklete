@@ -7,27 +7,35 @@ let BrandController = {
         pageName: "brands"
       });
     }
-    var domain = "http://test/upload";
+    console.log(sails.config.domain)
+    var domain = sails.config.domain || process.env.domain || 'http://localhost:1337';
     var brandData = req.body;
+    var _processPath = function (originPath) {
+      var path = originPath.split(process.cwd())[1];
+      path = path.replace('.tmp/', '');
+      return path;
+    }
     // console.log(brandData);
 
     let uploadInput = ["avatar", "photos[]", "banner"];
     let files = await ImageService.upload(req, uploadInput);
 
     if (files[0].length) {
-      brandData.avatar = domain + files[0][0].fd.split(process.cwd())[1];
+      brandData.avatar = domain + _processPath(files[0][0].fd);
+      brandData.avatar = brandData.avatar.replace('.tmp/', '');
     }
 
     let photos = files[1];
     if (photos.length) {
       for (let i in photos) {
-        photos[i] = domain + photos[i].fd.split(process.cwd())[1];
+        photos[i] = domain + _processPath(photos[i].fd);
       }
       brandData.photos = photos;
+      brandData.avatar = brandData.avatar.replace('.tmp/', '');
     }
 
     if (files[2].length) {
-      brandData.banner = domain + files[2][0].fd.split(process.cwd())[1];
+      brandData.banner = domain + _processPath(files[2][0].fd);
     }
     if (brandData.type == null){
       brandData.type = "OTHER";
