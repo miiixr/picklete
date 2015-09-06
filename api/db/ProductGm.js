@@ -4,39 +4,39 @@ module.exports = (sequelize, DataTypes) => {
     // 品牌 id
     brandId: DataTypes.INTEGER,
     // 大館別 id
-    // dptId: {
-    //   type: DataTypes.STRING,
-    //   get: function() {
-    //
-    //     var value = this.getDataValue('dptId');
-    //
-    //     if(value) {
-    //       return JSON.parse(value);
-    //     }
-    //
-    //     return [];
-    //   },
-    //   set: function(value) {
-    //     return this.setDataValue('dptId', JSON.stringify(value));
-    //   }
-    // },
-    // // 小館別 id
-    // dptSubId: {
-    //   type: DataTypes.STRING,
-    //   get: function() {
-    //
-    //     var value = this.getDataValue('dptSubId');
-    //
-    //     if(value) {
-    //       return JSON.parse(value);
-    //     }
-    //
-    //     return [];
-    //   },
-    //   set: function(value) {
-    //     return this.setDataValue('dptSubId', JSON.stringify(value));
-    //   }
-    // },
+    dptId: {
+      type: DataTypes.STRING,
+      get: function() {
+
+        var value = this.getDataValue('dptId');
+
+        if(value) {
+          return JSON.parse(value);
+        }
+
+        return [];
+      },
+      set: function(value) {
+        return this.setDataValue('dptId', JSON.stringify(value));
+      }
+    },
+    // 小館別 id
+    dptSubId: {
+      type: DataTypes.STRING,
+      get: function() {
+
+        var value = this.getDataValue('dptSubId');
+
+        if(value) {
+          return JSON.parse(value);
+        }
+
+        return [];
+      },
+      set: function(value) {
+        return this.setDataValue('dptSubId', JSON.stringify(value));
+      }
+    },
     // 商品說明
     explain: DataTypes.TEXT,
     // 使用方法
