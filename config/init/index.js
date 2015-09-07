@@ -172,10 +172,20 @@ module.exports = {
       paymentConfirmPostfix: '54321',
       quantity: 5,
       orderId: '1111',
-      UserId: createNewBuyer.id,
+      UserId: createNewBuyer2.id,
       ProductId: createdProduct.id
     };
     var createdOrder = await db.Order.create(newOrder2);
+
+    var shipment2 = {
+      username: '收件者2',
+      mobile: '0922-222-222',
+      taxId: '123456789',
+      email: 'receiver@gmail.com',
+      address: '收件者的家',
+      OrderId: createdOrder.id
+    }
+    var createShipment = await db.Shipment.create(shipment2);
 
 
     var brandExample = [{

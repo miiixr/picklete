@@ -20,8 +20,10 @@ OrderController = {
     try {
       let query = req.query;
       let queryObj = {};
+      let queryShipmentObj = {};
+      let queryUserObj = {};
       if(query.serialNumber) {
-        queryObj.serialNumber = query.serialNumber;
+        queryObj.serialNumber = { 'like': '%'+query.serialNumber+'%'};
       }
       if(query.shippingMethod != '0' && query.shippingMethod) {
         queryObj.shippingMethod = query.shippingMethod;
@@ -30,16 +32,9 @@ OrderController = {
       //   queryObj.keyword = { 'like': '%'+query.keyword+'%'};
       // }
       if(query.userName) {
-        let UserIds = await db.User.findAll({
-          where: {
-            username : { 'like': '%'+query.userName+'%'}
-          }
-        });
-        var id = [];
-        UserIds.forEach((User, index) => {
-          id.push(User.dataValues.id);
-        });
-        queryObj.UserId = id;
+        queryUserObj.username = { 'like': '%'+query.userName+'%'};
+      }else{
+        queryUserObj.username = { 'like': '%'};
       }
       if(query.status != '0' && query.status ) {
         queryObj.status = query.status;
@@ -47,9 +42,11 @@ OrderController = {
       // if(query.shipmentNotify != '0' && query.shipmentNotify) {
       //   queryObj.shipmentNotify = query.shipmentNotify;
       // }
-      // if(query.addressee) {
-      //   queryObj.addressee = { 'like': '%'+query.addressee+'%'};
-      // }
+      if(query.addressee) {
+        queryShipmentObj.username = { 'like': '%'+query.addressee+'%'};
+      }else{
+        queryShipmentObj.username = { 'like': '%'};
+      }
       if(query.createdStart && query.createdEnd) {
          queryObj.createdAt = { between : [new Date(query.createdStart), new Date(query.createdEnd)]};
       }else if(query.createdStart || query.createdEnd) {
@@ -60,9 +57,15 @@ OrderController = {
         where: queryObj,
         include: [
           {
-            model: db.User
+            model: db.User,
+            where:{
+              username: queryUserObj.username
+            }
           }, {
-            model: db.Shipment
+            model: db.Shipment,
+            where: {
+              username: queryShipmentObj.username
+            }
           }, {
             model: db.OrderItem
           }
