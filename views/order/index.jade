@@ -17,32 +17,32 @@ block body
   // /row
   #collapse-order.collapse.in
     .well.control-well.p-30.m-bottom-8
-      form.form-horizontal
+      form.form-horizontal(name="searchOrders", action="order", method="get")
         .row.row-m
           .col-md-4
             .form-group
-              label.col-md-4.control-label 品牌編號
+              label.col-md-4.control-label 訂單編號
               .col-md-8
-                input.form-control(type='text')
+                input.form-control(type='text',name='serialNumber', value = query.serialNumber?query.serialNumber: '')
             // /form-group
           // /col-md-4
           .col-md-4
             .form-group
               label.col-md-4.control-label 運送方式
               .col-md-8
-                select.form-control
-                  option 選擇狀態
-                  option 2
-                  option 3
-                  option 4
-                  option 5
+                select.form-control(name='shippingMethod', value = query.shippingMethod?query.shippingMethod: 0)
+                  option(value=0) 選擇狀態
+                  option(value=1) 1
+                  option(value=2) 2
+                  option(value=3) 3
+                  option(value=4) 4
             // /form-group
           // /col-md-4
           .col-md-4
             .form-group
               label.col-md-4.control-label 關鍵字
               .col-md-8
-                input.form-control(type='text')
+                input.form-control(type='text', name='keyword', value = query.keyword?query.keyword: '')
             // /form-group
           // /col-md-4
         // /row
@@ -51,31 +51,30 @@ block body
             .form-group
               label.col-md-4.control-label 購買人
               .col-md-8
-                input.form-control(type='text')
+                input.form-control(type='text', name='userName', value = query.userName?query.userName: '')
             // /form-group
           // /col-md-4
           .col-md-4
             .form-group
               label.col-md-4.control-label 付款狀態
               .col-md-8
-                select.form-control
-                  option 選擇狀態
-                  option 2
-                  option 3
-                  option 4
-                  option 5
+                select.form-control(name='status', value = query.status?query.status: 0)
+                  option(value=0) 選擇狀態
+                  option(value='new') new
+                  option(value='paymentConfirm') paymentConfirm
+                  option(value='deliveryConfirm') deliveryConfirm
             // /form-group
           // /col-md-4
           .col-md-4
             .form-group
               label.col-md-4.control-label 出貨通知
               .col-md-8
-                select.form-control
-                  option 選擇狀態
-                  option 2
-                  option 3
-                  option 4
-                  option 5
+                select.form-control(name='shipmentNotify', value = query.shipmentNotify?query.shipmentNotify: 0)
+                  option(value=0) 選擇狀態
+                  option(value=1) 1
+                  option(value=2) 2
+                  option(value=3) 3
+                  option(value=4) 4
             // /form-group
           // /col-md-4
         // /row
@@ -84,22 +83,22 @@ block body
             .form-group
               label.col-md-4.control-label 收件人
               .col-md-8
-                input.form-control(type='text')
+                input.form-control(type='text', name='addressee', value = query.addressee?query.addressee: '')
             // /form-group
           // /col-md-4
           .col-md-8
             .form-group
               label.col-md-2.control-label 訂單日期
               .col-md-4
-                input.form-control(type='date')
+                input.form-control(type='date', name='createdStart', value = query.createdStart?query.createdStart: null)
               .col-md-2.text-center
                 p.form-control-static 至
               .col-md-4
-                input.form-control(type='date')
+                input.form-control(type='date', name='createdEnd', value = query.createdEnd?query.createdEnd: null)
             // /form-group
           // /col-md-8
           .col-md-12.text-right
-            a.btn.btn-primary(href='#') 查詢
+            a.btn.btn-primary(onClick='$("form[name=\'searchOrders\']").submit()') 查詢
           // /col-md-12
         // /row
       // /form-horizontal
@@ -262,3 +261,5 @@ block body
       li
         a(href='#') 下一頁
   // /text-center
+
+
