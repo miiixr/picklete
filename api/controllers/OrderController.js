@@ -5,7 +5,16 @@ var OrderController;
 
 OrderController = {
   debug: async (req, res) => {
-    res.ok({});
+    try {
+      let count = await db.Order.count();
+
+      res.ok({
+        count: count
+      });
+    }
+    catch (error) {
+      return res.serverError(error);
+    }
   },
   index: async (req, res) => {
     try {
