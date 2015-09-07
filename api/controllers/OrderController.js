@@ -6,9 +6,60 @@ var OrderController;
 OrderController = {
   index: async (req, res) => {
     try {
-      let orders = await OrderService.findAllComplete();
-      console.log('query',req.query);
-      return res.view({orders});
+      let query = req.query;
+      let queryObj = {};
+      if(query.serialNumber) {
+        queryObj.serialNumber = query.serialNumber;
+      }
+      if(query.shippingMethod != '0' && query.shippingMethod) {
+        queryObj.shippingMethod = query.shippingMethod;
+      }
+      // if(query.keyword) {
+      //   queryObj.keyword = { 'like': '%'+query.keyword+'%'};
+      // }
+      if(query.userName) {
+        // userName = { 'like': '%'+query.userName+'%'};
+        let UserIds = await db.User.findAll({
+          where: {
+            username : { 'like': '%'+query.userName+'%'}
+          }
+        });
+        var id = [];
+        UserIds.forEach((User, index) => {
+          id.push(User.dataValues.id);
+        });
+        queryObj.UserId = id;
+      }
+      if(query.status != '0' && query.status ) {
+        queryObj.status = query.status;
+      }
+      // if(query.shipmentNotify != '0' && query.shipmentNotify) {
+      //   queryObj.shipmentNotify = query.shipmentNotify;
+      // }
+      // if(query.addressee) {
+      //   queryObj.addressee = { 'like': '%'+query.addressee+'%'};
+      // }
+      if(query.createdStart && query.createdEnd) {
+         queryObj.createdAt = { between : [new Date(query.createdStart), new Date(query.createdEnd)]};
+      }else if(query.createdStart || query.createdEnd) {
+        queryObj.createdAt = query.createdStart? { gte : new Date(query.createdStart)}: { lte : new Date(query.createdEnd)};
+      }
+      console.log('queryObj',queryObj);
+      queryObj = {
+        where: queryObj,
+        include: [
+          {
+            model: db.User
+          }, {
+            model: db.Shipment
+          }, {
+            model: db.OrderItem
+          }
+        ]
+      };
+
+      let orders = await db.Order.findAll(queryObj);
+      return res.view({orders,query});
     } catch (error) {
       return res.serverError(error);
     }
