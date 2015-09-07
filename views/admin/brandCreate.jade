@@ -16,7 +16,7 @@ block body
                 ==================================================
               .fileinput.fileinput-new(data-provides='fileinput')
                 .fileinput-new.fileinput-square
-                  - var avatar = (brand && brand.avatar) ? brand.avatar : 'http://fakeimg.pl/600x600/dddddd/FFF/?text=600x600';
+                  - var avatar = (brand && brand.avatar) ? brand.avatar : 'http://fakeimg.pl/600x600/dddddd/FFF/?text=600x600'
                   img.img-full(src=avatar)
                 // /fileinput-new
                 .fileinput-preview.fileinput-exists.border-block-1
@@ -65,7 +65,8 @@ block body
                 ==================================================
               .fileinput.fileinput-new(data-provides='fileinput')
                 .fileinput-new
-                  img.img-full(src='http://fakeimg.pl/1100x500/dddddd/FFF/?text=1100x500')
+                  - var photos = (brand && JSON.parse(brand.photos)[i-1]) ? JSON.parse(brand.photos)[i-1] : 'http://fakeimg.pl/1100x500/dddddd/FFF/?text=1100x500'
+                  img.img-full(src=photos)
                 // /fileinput-new
                 .fileinput-preview.fileinput-exists.border-block-1
                 // /fileinput-preview
@@ -91,7 +92,8 @@ block body
         ==================================================
       .fileinput.fileinput-new(data-provides='fileinput')
         .fileinput-new
-          img.img-full(src='http://fakeimg.pl/1100x250/dddddd/FFF/?text=1100x250')
+          - var banner = (brand && brand.banner) ? brand.avatar : 'http://fakeimg.pl/1100x250/dddddd/FFF/?text=1100x250'
+          img.img-full(src=banner)
         // /fileinput-new
         .fileinput-preview.fileinput-exists.border-block-1
         // /fileinput-preview
