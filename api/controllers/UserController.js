@@ -166,9 +166,10 @@ let UserController = {
       pageName: "qa-add"
     });
   },
-  controlMembers: function(req, res) {
+  controlMembers: async function(req, res) {
     res.view({
-      pageName: "members"
+      pageName: "members",
+      members: await db.User.findAll()
     });
   },
   controlMemberDetail: function(req, res) {
