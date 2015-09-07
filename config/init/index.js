@@ -1,4 +1,5 @@
-import trunk from './trunk';
+import trunk from './trunk'
+import exma from './exma'
 let production;
 try {
   production = require('./production');
@@ -49,6 +50,8 @@ module.exports = {
     if(sails.config.initData){
       if(sails.config.initData === 'trunk')
         await trunk.createTestData();
+      if(sails.config.initData === 'exma')
+        await exma.createTestData();
     }
 
     var roleUser = {
