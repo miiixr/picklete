@@ -356,5 +356,35 @@ module.exports = {
     transaction.commit();
     SimpleMessageService.send(msg);
 
+
+
+    // mock a lot of fake users
+    var commonLastNames = ['陳', '林', '黃', '張', '李', '王', '吳', '劉', '蔡', '楊', '許', '鄭', '謝', '郭', '洪', '邱', '曾', '廖', '賴', '徐', '周', '葉', '蘇', '莊', '江', '呂', '何', '羅', '高', '蕭', '潘', '朱', '簡', '鍾', '彭', '游', '詹', '胡', '施', '沈', '余', '趙', '盧', '梁', '顏', '柯', '孫', '魏', '翁', '戴', '范', '宋', '方', '鄧', '杜', '傅', '侯', '曹', '溫', '薛', '丁', '馬', '蔣', '唐', '卓', '藍', '馮', '姚', '石', '董', '紀', '歐', '程', '連', '古', '汪', '湯', '姜', '田', '康', '鄒', '白', '塗', '尤', '巫', '韓', '龔', '嚴', '袁', '鐘', '黎', '金', '阮', '陸', '倪', '夏', '童', '邵', '柳', '錢'];
+
+    var commonFirstNames = ['冠廷', '冠宇', '宗翰', '家豪', '彥廷', '承翰', '柏翰', '宇軒', '家瑋', '冠霖', '雅婷', '雅筑', '怡君', '佳穎', '怡萱', '宜庭', '郁婷', '怡婷', '詩涵', '鈺婷'];
+
+    var randomInt = function (low, high) {
+        return Math.floor(Math.random() * (high - low) + low);
+    };
+
+    var randomDate = function (start, end) {
+        return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+    };
+
+    for (var i=0; i<100; i++) {
+      var fakeUser = {
+        username: "user" + i,
+        fullName: commonLastNames[randomInt(0, commonLastNames.length)] + commonFirstNames[randomInt(0, commonFirstNames.length)],
+        birthDate: randomDate(new Date(1930, 0, 1), new Date(2005, 0, 1)),
+        email: "user" + i + "@picklete.localhost",
+        password: "0000",
+        RoleId: createRoleUser.id,
+        comment: "i'm a fake user",
+        orderSyncToken: '',
+        mobile: '0900'+randomInt(100000, 999999)
+      };
+      var createFakeUser = await db.User.create(fakeUser);
+    }
+
   }
 }
