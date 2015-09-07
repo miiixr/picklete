@@ -7,6 +7,7 @@ OrderController = {
   index: async (req, res) => {
     try {
       let orders = await OrderService.findAllComplete();
+      console.log('query',req.query);
       return res.view({orders});
     } catch (error) {
       return res.serverError(error);

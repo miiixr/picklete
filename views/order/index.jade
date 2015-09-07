@@ -17,20 +17,20 @@ block body
   // /row
   #collapse-order.collapse.in
     .well.control-well.p-30.m-bottom-8
-      form.form-horizontal
+      form#submitData.form-horizontal
         .row.row-m
           .col-md-4
             .form-group
               label.col-md-4.control-label 品牌編號
               .col-md-8
-                input.form-control(type='text')
+                input.form-control(type='text',name='order[0]')
             // /form-group
           // /col-md-4
           .col-md-4
             .form-group
               label.col-md-4.control-label 運送方式
               .col-md-8
-                select.form-control
+                select.form-control(name='order[1]')
                   option 選擇狀態
                   option 2
                   option 3
@@ -42,7 +42,7 @@ block body
             .form-group
               label.col-md-4.control-label 關鍵字
               .col-md-8
-                input.form-control(type='text')
+                input.form-control(type='text', name='order[keyword]')
             // /form-group
           // /col-md-4
         // /row
@@ -51,12 +51,12 @@ block body
             .form-group
               label.col-md-4.control-label 購買人
               .col-md-8
-                input.form-control(type='text')
+                input.form-control(type='text', name='order[paymentConfirmName]')
             // /form-group
           // /col-md-4
           .col-md-4
             .form-group
-              label.col-md-4.control-label 付款狀態
+              label.col-md-4.control-label(name='order[status]') 付款狀態
               .col-md-8
                 select.form-control
                   option 選擇狀態
@@ -70,7 +70,7 @@ block body
             .form-group
               label.col-md-4.control-label 出貨通知
               .col-md-8
-                select.form-control
+                select.form-control(name='order[2]')
                   option 選擇狀態
                   option 2
                   option 3
@@ -84,22 +84,22 @@ block body
             .form-group
               label.col-md-4.control-label 收件人
               .col-md-8
-                input.form-control(type='text')
+                input.form-control(type='text', name='order[3]')
             // /form-group
           // /col-md-4
           .col-md-8
             .form-group
               label.col-md-2.control-label 訂單日期
               .col-md-4
-                input.form-control(type='date')
+                input.form-control(type='date', name='order[createdStart]')
               .col-md-2.text-center
                 p.form-control-static 至
               .col-md-4
-                input.form-control(type='date')
+                input.form-control(type='date', name='order[createdEnd]')
             // /form-group
           // /col-md-8
           .col-md-12.text-right
-            a.btn.btn-primary(href='#') 查詢
+            a#searchSubmit.btn.btn-primary(href='/admin/order') 查詢
           // /col-md-12
         // /row
       // /form-horizontal
@@ -262,3 +262,6 @@ block body
       li
         a(href='#') 下一頁
   // /text-center
+
+block js
+  script(src="/javascripts/admin/orderSearch.js")

@@ -1,5 +1,5 @@
 import easyimg from "easyimage";
-describe.only("about image service", () => {
+describe("about image service", () => {
   it('resize Image', async (done) => {
 
     try {
