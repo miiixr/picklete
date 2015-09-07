@@ -218,19 +218,19 @@ block body
                       a.color-filter.color-gold(href='#')
                       a.color-filter.color-brown(href='#')
                       a.color-filter.color-mix(href='#')
-                  input(type='hidden', name="good[0][color]", value='1')
+                  input(type='hidden', name="color", value='1')
                   // /dropdown-menu
                 // /btn-group
             // /form-group
             .form-group.form-group-sm
               label.col-sm-3.control-label 款式
               .col-sm-9
-                input.form-control(type='text', name="good[0][description]", value="#{good.description}")
+                input.form-control(type='text', name="description", value="#{good.description}")
             // /form-group
             .form-group.form-group-sm
               label.col-sm-3.control-label 貨號
               .col-sm-9
-                input.form-control(type='text', name="good[0][productNumber]", value="#{good.productNumber}")
+                input.form-control(type='text', name="productNumber", value="#{good.productNumber}")
             // /form-group
             .form-group.form-group-sm
               label.col-sm-3.control-label 數量
@@ -240,7 +240,7 @@ block body
                     button.btn.btn-default.btn-number(type='button', disabled='disabled', data-type='minus', data-field='quant[1]')
                       span.glyphicon.glyphicon-minus
                   // /input-group-btn
-                  input.form-control.input-number.text-center(type='text', name="good[0][stockQuantity]", min='1', max='999', value="#{good.stockQuantity}")
+                  input.form-control.input-number.text-center(type='text', name="stockQuantity", min='1', max='999', value="#{good.stockQuantity}")
                   span.input-group-btn
                     button.btn.btn-default.btn-number(type='button', data-type='plus', data-field='quant[1]')
                       span.glyphicon.glyphicon-plus
@@ -253,25 +253,25 @@ block body
                 .btn-group.btn-group-switch(data-toggle='buttons')
                   if(good.isPublish == 'true')
                     label.btn.btn-default.btn-hide.btn-sm
-                      input#option1(type='radio', name="good[0][isPublish]", value='false', autocomplete='off', checked=good.isPublish == 'false')
+                      input#option1(type='radio', name="isPublish", value='false', autocomplete='off', checked=good.isPublish == 'false')
                       span.btn-text 隱藏
                     label.btn.btn-default.btn-sm.active
-                      input#option2(type='radio', name="good[0][isPublish]", value='true', autocomplete='off', checked=good.isPublish == 'true')
+                      input#option2(type='radio', name="isPublish", value='true', autocomplete='off', checked=good.isPublish == 'true')
                       span.btn-text 上架
                   else 
                     label.btn.btn-default.btn-sm.active
-                      input#option1(type='radio', name="good[0][isPublish]", value='false', autocomplete='off', checked=good.isPublish == 'false')
+                      input#option1(type='radio', name="isPublish", value='false', autocomplete='off', checked=good.isPublish == 'false')
                       span.btn-text 隱藏
                     label.btn.btn-default.btn-sm.btn-hide
-                      input#option2(type='radio', name="good[0][isPublish]", value='true', autocomplete='off', checked=good.isPublish == 'true')
+                      input#option2(type='radio', name="isPublish", value='true', autocomplete='off', checked=good.isPublish == 'true')
                       span.btn-text 上架
                     
                 // /btn-group-switch
             // /form-group
           // /col-md-4
           .col-md-1.text-right
-            a.btn-remove(href='#')
-              span.glyphicon.glyphicon-remove
+            //- a.btn-remove(href='#')
+              //- span.glyphicon.glyphicon-remove
             //- a.btn-add(href='#')
               //- span.glyphicon.glyphicon-plus
           // /col-md-1

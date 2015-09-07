@@ -26,10 +26,10 @@ module.exports = {
     let beArray = true;
     // good[0][photos][], resize and process loop
     let photos = await ImageService.processLoop(files[0], 1000, 1000, beArray);
-    
+
     // coverPhoto, resize and process loop
     let coverPhoto = await ImageService.processLoop(files[1], 1000, 1000, beArray);
-    
+
     let newProductGm = {
       brandId: brand,
       dptId: req.body['dptId[]'],
@@ -90,11 +90,11 @@ module.exports = {
       var productNumber = req.body['good[0][productNumber]'];
       var stockQuantity = req.body['good[0][stockQuantity]'];
     }
-    
+
 
     for (var i = 0 ; i < goods.length ; i++) {
       var name = goods[i] || '';
-      
+
       let newProduct = {
         name: String(name),
         stockQuantity: stockQuantity[i] || stockQuantity,
@@ -112,11 +112,11 @@ module.exports = {
       };
 
       try {
-        await db.Product.create(newProduct);  
+        await db.Product.create(newProduct);
       } catch (e) {
         console.error(e)
       }
-      
+
       // remove one
       if (photos && photos.length > 0)
         photos.shift();
@@ -161,11 +161,11 @@ module.exports = {
       product.service = updateProduct.service;
       product.country = updateProduct.country;
       product.madeby = updateProduct.madeby;
-      product.color = updateProduct.good[0].color;
-      product.productNumber = updateProduct.good[0].productNumber;
-      product.stockQuantity = updateProduct.good[0].stockQuantity;
-      product.description = updateProduct.good[0].description;
-      product.isPublish = updateProduct.good[0].isPublish;
+      product.color = updateProduct.color;
+      product.productNumber = updateProduct.productNumber;
+      product.stockQuantity = updateProduct.stockQuantity;
+      product.description = updateProduct.description;
+      product.isPublish = updateProduct.isPublish;
 
       await product.save();
 
@@ -173,6 +173,9 @@ module.exports = {
       productGm.brandId = brand.id;
       productGm.dptId = updateProduct.dptId;
       productGm.dptSubId = updateProduct.dptSubId;
+      productGm.explain = updateProduct.explain;
+      productGm.usage = updateProduct.usage;
+      productGm.notice = updateProduct.notice;
 
       await productGm.save();
 

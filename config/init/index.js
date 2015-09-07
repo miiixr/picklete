@@ -80,8 +80,8 @@ module.exports = {
 
     let newProductGm = [{
       brandId: 1,
-      dptId: 1,
-      dptSubId: 1,
+      dptId: '1',
+      dptSubId: '1',
       explain: '',
       usage: '',
       notice: '',
@@ -92,8 +92,8 @@ module.exports = {
       coverPhoto: []
     },{
       brandId: 2,
-      dptId: 2,
-      dptSubId: 2,
+      dptId: '2',
+      dptSubId: '2',
       explain: '',
       usage: '',
       notice: '',
@@ -115,12 +115,11 @@ module.exports = {
       price: 500,
       ProductGmId: 1,
       size: 'super-big',
-      service: '["express","store","package"]',
+      service: 'express,store,package',
       country: 'Taiwan',
       madeby: 'Peter Chou',
       color: 5,
-      porductNumber: '1-DDT-2-G',
-      decscription: '超大款',
+      productNumber: '1-DDT-2-G',
       spec: '鋁'
     },{
       name: '好物三選2',
@@ -129,12 +128,11 @@ module.exports = {
       price: 625,
       ProductGmId: 2,
       size: 'super-small',
-      service: '["express","package"]',
+      service: 'package',
       country: 'U.S.A',
       madeby: 'Tony Stack',
       color: 4,
-      porductNumber: '2-DDE-2-G',
-      decscription: 'lalala',
+      productNumber: '2-DDE-2-G',
       spec: '汎合金'
     },{
       name: '好物三選3',
@@ -143,12 +141,11 @@ module.exports = {
       price: 750,
       ProductGmId: 2,
       size: 'super-big',
-      service: '["express","store","package"]',
+      service: 'store',
       country: 'Japan',
       madeby: 'doraemon',
       color: 2,
-      porductNumber: '1-ABC-2-G',
-      decscription: 'doradora',
+      productNumber: '1-ABC-2-G',
       spec: '塑膠'
     }];
     await db.Product.bulkCreate(fruitProducts);
@@ -163,16 +160,14 @@ module.exports = {
       comment: '限量只有 10 個',
       ProductGmId: 2,
       size: 'normal',
-      service: '["express","store","package"]',
+      service: 'express',
       country: 'U.K',
       madeby: 'unknow',
       color: 3,
-      porductNumber: '1-ABC-2-G',
-      decscription: 'whocares',
+      productNumber: '1-GOLD-2-G',
       spec: 'super-metal'
     };
     var createdProduct = await db.Product.create(newProduct);
-
 
     var newOrder = {
       serialNumber: '0000000',
@@ -181,14 +176,14 @@ module.exports = {
       orderId: '1111',
       UserId: createNewBuyer.id,
       ProductId: createdProduct.id,
-      size: 'unknow size',
-      service: '["express"]',
-      country: 'Alien Plant',
-      madeby: 'Alien',
+      size: '正常尺寸',
+      service: 'express',
+      country: '克里普頓星',
+      madeby: '超人套裝批發製作 Corp.',
       color: 2,
-      porductNumber: '1-alien-9-Z',
-      decscription: 'AlienAlienAlien',
-      spec: 'Alien metal'
+      productNumber: '1-alien-9-Z',
+      description: '凱·艾爾的超級披風（紅）',
+      spec: '克利普頓絲'
     };
     var createdOrder = await db.Order.create(newOrder);
 
@@ -358,20 +353,22 @@ module.exports = {
 
 
     createdProduct = await db.Product.create({
-      color: '1',
       description: '11',
       name: '111',
       stockQuantity: '100',
       isPublish: 'false',
-      ProductGmId: createdProductGmComplete.id
+      price: 0,
+      ProductGmId: createdProductGmComplete.id,
+      size: 'normal',
+      service: '"express","store","package"',
+      country: 'U.K',
+      madeby: 'unknow',
+      color: 3,
+      productNumber: '1-USA-2-G',
+      spec: 'super-metal'
     });
 
-
-
-
     // create tag
-
-
     let tags = ["男人", "女人", "兒童", "情人", "學生", "寵物", "旅行", "閱讀", "咖啡", "午茶", "派對", "時尚", "印花", "夏日", "冬季", "聖誕", "森林", "動物", "花園", "浪漫", "可愛", "趣味", "復古", "環保", "工業", "簡約"];
     for (let i in tags) {
       await db.Tag.create({
