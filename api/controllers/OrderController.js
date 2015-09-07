@@ -30,7 +30,6 @@ OrderController = {
       //   queryObj.keyword = { 'like': '%'+query.keyword+'%'};
       // }
       if(query.userName) {
-        // userName = { 'like': '%'+query.userName+'%'};
         let UserIds = await db.User.findAll({
           where: {
             username : { 'like': '%'+query.userName+'%'}
