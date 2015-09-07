@@ -26,10 +26,10 @@ module.exports = {
     let beArray = true;
     // good[0][photos][], resize and process loop
     let photos = await ImageService.processLoop(files[0], 1000, 1000, beArray);
-    
+
     // coverPhoto, resize and process loop
     let coverPhoto = await ImageService.processLoop(files[1], 1000, 1000, beArray);
-    
+
     let newProductGm = {
       brandId: brand,
       dptId: req.body['dptId[]'],
@@ -90,11 +90,11 @@ module.exports = {
       var productNumber = req.body['good[0][productNumber]'];
       var stockQuantity = req.body['good[0][stockQuantity]'];
     }
-    
+
 
     for (var i = 0 ; i < goods.length ; i++) {
       var name = goods[i] || '';
-      
+
       let newProduct = {
         name: String(name),
         stockQuantity: stockQuantity[i] || stockQuantity,
@@ -112,11 +112,11 @@ module.exports = {
       };
 
       try {
-        await db.Product.create(newProduct);  
+        await db.Product.create(newProduct);
       } catch (e) {
         console.error(e)
       }
-      
+
       // remove one
       if (photos && photos.length > 0)
         photos.shift();
@@ -271,8 +271,8 @@ module.exports = {
       }
 
       // 販售狀態 1:隱藏, 2:上架
-      if (query.isPublish > 0) {
-        queryObj.isPublish = (query.isPublish == 1) ? null : true;
+      if (query.isPublish != '') {
+        queryObj.isPublish = (query.isPublish == 'false') ? null : true;
       }
 
 
