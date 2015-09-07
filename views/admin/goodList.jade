@@ -3,7 +3,7 @@ extends ../_layout_auth
 block body
   h2.m-bottom-6 商品列表
   .well.control-well.p-30.m-bottom-8
-    form.form-horizontal(name="searchProducts", action="goods", method="get")
+    form.form-horizontal(name="searchProducts", action="/admin/goods", method="get")
       .row.row-m
         .col-md-4
           .form-group
@@ -19,7 +19,7 @@ block body
           .form-group
             label.col-md-4.control-label 關鍵字
             .col-md-8
-              input.form-control(type='text', name='keywords', value=query.keywords? query.keywords: '')
+              input.form-control(type='text', name='keyword', value=query.keyword? query.keyword: '')
           // /form-group
         // /col-md-4
         .col-md-4
@@ -52,9 +52,9 @@ block body
           .form-group
             label.col-md-4.control-label 小館別
             .col-md-8
-              select.form-control(name='dptSubId', value=query.dptSubId)
+              select.form-control(name='dptSubId', data-value=query.dptSubId)
                 option(value=-1) 所有館別
-                each dptSub, index in dpts[0].DptSubs
+                each dptSub, index in dpts[query.dptId>1?query.dptId-1:1].DptSubs
                   option(value='#{dptSub.id}') #{dptSub.name}
           // /form-group
         // /col-md-4
@@ -122,7 +122,7 @@ block body
       //-   // /form-group
     // /col-md-6
     .col-md-6.desktop-text-right
-      a.btn.btn-green(href='#') 儲存變更
+      a.btn.btn-green(href='#', id='btnSave') 儲存變更
     // /col-md-6
   // /row
   hr.dashed-line
@@ -150,33 +150,36 @@ block body
           span.caret
         th
     tbody
+      if (Object.keys(products).length == 0)
+        script.
+          alert('找不到符合的商品')
       each product in products
         tr
-          td
-            img.width-6(src=product.image)
+          td 
+            img.width-6(src=product.photos[0])
           td #{product.name}
           td #{product.price}
           td #{product.productNumber}
           td #{product.createdAt}
           td
-            .btn-group.btn-group-switch(data-toggle='buttons')
+            .btn-group.btn-group-switch(data-toggle='buttons', id='#{product.id}')
               label.btn.btn-default.btn-sm(class=product.isPublish ? "active" : "")
-                input#option2(type='radio', name='options', autocomplete='off')
+                input#option-publish(type='radio', name='options', autocomplete='off', value='1')
                 span.btn-text 上架
               label.btn.btn-default.btn-hide.btn-sm(class=!product.isPublish ? "active" : "")
-                input#option1(type='radio', name='options', autocomplete='off', checked='')
+                input#option-unpublish(type='radio', name='options', autocomplete='off', checked='', value='0')
                 span.btn-text 隱藏
             // /btn-group-switch
-          td
-            .input-group.input-group-count.input-group-sm.max-width-100
-              span.input-group-btn
-                button.btn.btn-default.btn-number(type='button', disabled='disabled', data-type='minus', data-field='quant[1]')
-                  span.glyphicon.glyphicon-minus
+          td #{product.stockQuantity}
+            //- .input-group.input-group-count.input-group-sm.max-width-100
+            //-   span.input-group-btn
+            //-     button.btn.btn-default.btn-number(type='button', disabled='disabled', data-type='minus', data-field='quant[1]')
+            //-       span.glyphicon.glyphicon-minus
               // /input-group-btn
-              input.form-control.input-number.text-center(type='text', name='quant[1]', value='#{product.stockQuantity}', min='1', max='999')
-              span.input-group-btn
-                button.btn.btn-default.btn-number(type='button', data-type='plus', data-field='quant[1]')
-                  span.glyphicon.glyphicon-plus
+              //- input.form-control.input-number.text-center(type='text', name='quant[#{product.id}]', value='#{product.stockQuantity}', min='1', max='999')
+              //- span.input-group-btn
+              //-   button.btn.btn-default.btn-number(type='button', data-type='plus', data-field='quant[#{product.id}]')
+              //-     span.glyphicon.glyphicon-plus
               // /input-group-btn
             // /input-group
           td.text-right
@@ -196,4 +199,4 @@ block body
   // /text-center
 
 block js
-  script(src="/javascripts/user/goodList.js")
+  script(src="/javascripts/admin/goodList.js")

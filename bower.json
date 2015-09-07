@@ -11,6 +11,8 @@
   ],
   "dependencies": {
     "jquery": "~2.1.4",
-    "moment": "~2.10.6"
+    "moment": "~2.10.6",
+    "ckeditor": "~4.5.3",
+    "fineuploader-dist": "~5.1.3"
   }
 }

@@ -36,14 +36,19 @@ module.exports.routes = {
   'get /admin/login' : 'UserController.controlLogin'
   'get /admin/index-slider' : 'UserController.indexSlider'
   'get /admin/index-slider-detail' : 'UserController.indexSliderDetail'
-  'get /admin/password' : 'UserController.password'
   'get /admin/index-exclusive' : 'UserController.indexExclusive'
   'get /admin/index-theme' : 'UserController.indexTheme'
+
+  'get /admin/password' : 'UserController.password'
+  'post /admin/password' : 'UserController.password'
 
   'get /admin/' : 'AuthController.admin'
   'get /admin/brands' : 'BrandController.list'
   'get /admin/brands/create' : 'BrandController.create'
   'post /admin/brands/create' : 'BrandController.create'
+  'get /admin/brands/update' : 'BrandController.update'
+  'post /admin/brands/update' : 'BrandController.update'
+
 
   'get /admin/department' : 'DptController.list'
   'post /admin/department/update': 'DptController.update'
@@ -53,6 +58,7 @@ module.exports.routes = {
 
   'get /admin/goods' : 'ProductController.list'
   'get /admin/goods/update' : 'ProductController.showUpdate'
+  'post /admin/goods/update' : 'ProductController.doUpdate'
   'get /admin/goods/create' : 'ProductController.showCreate'
   'post /admin/goods/create' : 'ProductController.createUpdate'
 
@@ -185,6 +191,7 @@ module.exports.routes = {
      credentials: false
     }
   }
+
   'get /api/order/sync': {
     controller: "OrderController",
     action: "sync",
@@ -192,6 +199,16 @@ module.exports.routes = {
      origin: "http://localhost:1337, http://localhost:8080",
      credentials: false
     }
+
+    'get /api/order/find/:serialNumber': {
+      controller: "OrderController",
+      action: "find",
+      cors: {
+       origin: "http://localhost:1337, http://localhost:8080",
+       credentials: false
+      }
+    }
+
   }
 
   ###*

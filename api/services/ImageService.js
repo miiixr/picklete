@@ -1,5 +1,12 @@
 import Promise from "bluebird";
 import easyimg from "easyimage";
+import gm from "gm";
+import path from 'path';
+
+
+var domain = sails.config.domain || process.env.domain || 'http://localhost:1337';
+let home = process.cwd();
+Promise.promisifyAll(gm.prototype);
 
 module.exports = {
   upload: async (req, uploadInput) => {
@@ -18,21 +25,58 @@ module.exports = {
 
     try {
       var token = await UtilService.generateHashCode();
+      var dst = path.join(home, `./.tmp/images/resize.jpg`);
       var resizeConfig = {
         src:imageResizeConfig.src,
-        dst: imageResizeConfig.dst || `${__dirname}/../../.tmp/images/${token}.jpg`,
-        width: imageResizeConfig.width,
-        height: imageResizeConfig.height
+        dst: imageResizeConfig.dst || dst,
+        width: imageResizeConfig.width || 100,
+        height: imageResizeConfig.height || 100
       }
 
-      console.log('resizeConfig', resizeConfig);
-      let result = await easyimg.resize(resizeConfig);
-      return {token, ...result};
+      let result = await gm(resizeConfig.src).resize(resizeConfig.width, resizeConfig.height, "!").writeAsync(resizeConfig.dst);
+      return resizeConfig;
 
     } catch (e) {
+      console.error(e);
       throw e;
     }
+  },
+
+  processPath: (originPath) => {
+    var path = originPath.split(process.cwd())[1];
+    path = path.replace('.tmp/', '');
+    return path;
+  },
+
+  processLoop: async (files, width, height, beArray) => {
+    let that = this;
+    let buffers = files;
+
+    if ( ! buffers)
+      return [];
+
+    if (buffers.length) {
+      for (let i in buffers) {
+        try {
+          await ImageService.resize({
+            src: buffers[i].fd,
+            dst: buffers[i].fd,
+            width: width,
+            height: height
+          });  
+        } catch (e) {
+          console.error(e);
+        }
+        buffers[i] = domain + ImageService.processPath(buffers[i].fd);
+        buffers[i] = buffers[i].replace('.tmp/', '');
+      }
+      if (beArray)
+        return buffers;
+
+      if (buffers.length > 1)
+        return buffers;
+      else
+        return buffers[0];
+    }
   }
-
-
 };
