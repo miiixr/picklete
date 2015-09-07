@@ -73,6 +73,7 @@ OrderController = {
       };
 
       let orders = await db.Order.findAll(queryObj);
+      console.log('orders',orders);
       return res.view({orders,query});
     } catch (error) {
       return res.serverError(error);
