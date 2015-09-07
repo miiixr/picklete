@@ -38,12 +38,12 @@ block body
             select.form-control(name='dptId[]')
               option 選擇大館別
               each dpt, index in dpts
-                option(value='#{dpt.id}', selected=dpt.id == good.ProductGm.Dpts[0].id) #{dpt.name}
+                option(value='#{dpt.id}', selected=dpt.id == good.ProductGm.Dpts[0]) #{dpt.name}
           .col-md-4
             select.form-control(name='dptSubId[]')
               option 選擇小館別
               each dptSub, index in dpts[0].DptSubs
-                option(value='#{dptSub.id}', selected=dptSub.id == good.ProductGm.DptSubs[0].id) #{dptSub.name}
+                option(value='#{dptSub.id}', selected=dptSub.id == good.ProductGm.DptSubs[0]) #{dptSub.name}
           .col-md-2
             a.btn-remove(href='#', disabled=true)
               span.glyphicon.glyphicon-remove

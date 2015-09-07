@@ -156,7 +156,7 @@ block body
       each product in products
         tr
           td 
-            img.width-6(src=product.image)
+            img.width-6(src=product.photos[0])
           td #{product.name}
           td #{product.price}
           td #{product.productNumber}

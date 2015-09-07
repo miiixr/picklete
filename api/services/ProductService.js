@@ -19,15 +19,26 @@ module.exports = {
       tag = tag.split(',');
     }
 
+    let uploadInput = ["good[0][photos][]", "coverPhoto[]"];
+    let files = await ImageService.upload(req, uploadInput);
+    console.log(files);
+
+    let beArray = true;
+    // good[0][photos][], resize and process loop
+    let photos = await ImageService.processLoop(files[0], 1000, 1000, beArray);
+    
+    // coverPhoto, resize and process loop
+    let coverPhoto = await ImageService.processLoop(files[1], 1000, 1000, beArray);
+    
     let newProductGm = {
       brandId: brand,
-      dptId: parseInt(req.body.dptId, 10),
-      dptSubId: parseInt(req.body.dptSubId, 10),
-      explain: req.body.explain,
-      usage: req.body.usage,
-      notice: req.body.notice,
-      tag: tag,
-      coverPhoto: []
+      dptId: req.body['dptId[]'],
+      dptSubId: req.body['dptSubId[]'],
+      explain: req.body.explain || "",
+      usage: req.body.usage || "",
+      notice: req.body.notice || "",
+      tag: tag || [],
+      coverPhoto: coverPhoto || []
     };
     // create product gm
     let createdProductGm = await db.ProductGm.create(newProductGm);
@@ -41,9 +52,7 @@ module.exports = {
       var goods = req.body['good[0][description]']
     }
 
-    console.log("----- goods,", goods);
-
-    if (typeof goods == 'string') {
+    if (typeof goods != 'object') {
       var name = goods || '';
       var stockQuantity = req.body['good[0][stockQuantity]'] || '';
       var isPublish = req.body['good[0][isPublish]'] || '';
@@ -51,7 +60,7 @@ module.exports = {
       var productNumber = req.body['good[0][productNumber]'] || '';
 
       let newProduct = {
-        name: name,
+        name: String(name),
         stockQuantity: stockQuantity,
         isPublish: isPublish,
         price: req.body.price,
@@ -62,7 +71,7 @@ module.exports = {
         madeby: req.body.madeby,
         color: color,
         productNumber: productNumber,
-        photos: [],
+        photos: photos || [],
         ProductGmId: createdProductGm.id,
       };
 
@@ -87,7 +96,7 @@ module.exports = {
       var name = goods[i] || '';
       
       let newProduct = {
-        name: name,
+        name: String(name),
         stockQuantity: stockQuantity[i] || stockQuantity,
         isPublish: isPublish[i] || isPublish,
         price: req.body.price,
@@ -98,11 +107,19 @@ module.exports = {
         madeby: req.body.madeby,
         color: color[i] || color,
         productNumber: productNumber[i] || productNumber,
-        photos: [],
+        photos: photos || [],
         ProductGmId: createdProductGm.id,
       };
 
-      await db.Product.create(newProduct);
+      try {
+        await db.Product.create(newProduct);  
+      } catch (e) {
+        console.error(e)
+      }
+      
+      // remove one
+      if (photos && photos.length > 0)
+        photos.shift();
 
     }
 

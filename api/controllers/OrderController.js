@@ -5,12 +5,75 @@ var OrderController;
 
 OrderController = {
   debug: async (req, res) => {
-    res.ok({});
+    try {
+      let count = await db.Order.count();
+
+      res.ok({
+        count: count
+      });
+    }
+    catch (error) {
+      return res.serverError(error);
+    }
   },
   index: async (req, res) => {
     try {
-      let orders = await OrderService.findAllComplete();
-      return res.view({orders});
+      let query = req.query;
+      let queryObj = {};
+      let queryShipmentObj = {};
+      let queryUserObj = {};
+      if(query.serialNumber) {
+        queryObj.serialNumber = { 'like': '%'+query.serialNumber+'%'};
+      }
+      if(query.shippingMethod != '0' && query.shippingMethod) {
+        queryObj.shippingMethod = query.shippingMethod;
+      }
+      // if(query.keyword) {
+      //   queryObj.keyword = { 'like': '%'+query.keyword+'%'};
+      // }
+      if(query.userName) {
+        queryUserObj.username = { 'like': '%'+query.userName+'%'};
+      }else{
+        queryUserObj.username = { 'like': '%'};
+      }
+      if(query.status != '0' && query.status ) {
+        queryObj.status = query.status;
+      }
+      // if(query.shipmentNotify != '0' && query.shipmentNotify) {
+      //   queryObj.shipmentNotify = query.shipmentNotify;
+      // }
+      if(query.addressee) {
+        queryShipmentObj.username = { 'like': '%'+query.addressee+'%'};
+      }else{
+        queryShipmentObj.username = { 'like': '%'};
+      }
+      if(query.createdStart && query.createdEnd) {
+         queryObj.createdAt = { between : [new Date(query.createdStart), new Date(query.createdEnd)]};
+      }else if(query.createdStart || query.createdEnd) {
+        queryObj.createdAt = query.createdStart? { gte : new Date(query.createdStart)}: { lte : new Date(query.createdEnd)};
+      }
+      console.log('queryObj',queryObj);
+      queryObj = {
+        where: queryObj,
+        include: [
+          {
+            model: db.User,
+            where:{
+              username: queryUserObj.username
+            }
+          }, {
+            model: db.Shipment,
+            where: {
+              username: queryShipmentObj.username
+            }
+          }, {
+            model: db.OrderItem
+          }
+        ]
+      };
+
+      let orders = await db.Order.findAll(queryObj);
+      return res.view({orders,query});
     } catch (error) {
       return res.serverError(error);
     }
