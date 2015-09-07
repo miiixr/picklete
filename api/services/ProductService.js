@@ -199,9 +199,10 @@ module.exports = {
         ]
       }]
     });
-    let productWithImage = ProductService.withImage(product);
+    console.log('product', product);
 
-    console.log('productWithImage', productWithImage);
+    let productWithImage = ProductService.withImage(product);
+    //console.log('productWithImage', productWithImage);
     return productWithImage;
   },
 
