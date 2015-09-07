@@ -5,7 +5,11 @@ module.exports = (sequelize, DataTypes) ->
     name: DataTypes.STRING
     stockQuantity: DataTypes.INTEGER
     price: DataTypes.INTEGER
-    isPublish: DataTypes.BOOLEAN
+    isPublish: {
+      type: DataTypes.BOOLEAN,
+      set: (value) ->
+        return this.setDataValue('isPublish', Boolean(value))
+    }
     # 商品尺寸
     size: DataTypes.STRING
     # 備註

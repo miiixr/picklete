@@ -1,4 +1,5 @@
 module.exports = {
+  environment: ''
   initData: ''
   domain: 'http://localhost:1337'
   mail: {

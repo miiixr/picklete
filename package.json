@@ -65,6 +65,7 @@
     "sails-hook-babel": "^5.0.1",
     "sails-service-mailer": "2.0.1",
     "sequelize": "^3.4.1",
+    "sinon": "^1.16.1",
     "skipper": "^0.5.5",
     "smtpapi": "^1.2.0",
     "sprintf-js": "^1.0.3",

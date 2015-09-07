@@ -81,7 +81,10 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     classMethods: {
       associate: (models) => {
-        return ProductGm.hasMany(models.Product)
+        ProductGm.hasMany(models.Product)
+        ProductGm.belongsToMany(models.Dpt, {through: 'DptProductGm'});
+        ProductGm.belongsToMany(models.DptSub, {through: 'DptSubProductGm'});
+        return
       }
     }
   });
