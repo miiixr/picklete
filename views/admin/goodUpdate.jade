@@ -35,15 +35,18 @@ block body
         .form-group
           label.col-md-2.control-label 館別分類
           .col-md-4
-            select.form-control(name='dptId[]')
-              option 選擇大館別
-              each dpt, index in dpts
-                option(value='#{dpt.id}', selected=dpt.id == good.ProductGm.dptId) #{dpt.name}
+            each productGmDpt, index in good.ProductGm.Dpts
+              select.form-control(name='dptId[]')
+                option 選擇大館別
+                each dpt, index in dpts
+                  option(value='#{dpt.id}', selected=dpt.id == productGmDpt.id) #{dpt.name}
           .col-md-4
-            select.form-control(name='dptSubId[]')
-              option 選擇小館別
-              each dptSub, index in dpts[0].DptSubs
-                option(value='#{dptSub.id}', selected=dptSub.id == good.ProductGm.dptSubId) #{dptSub.name}
+              each productGmSubDpt, index in good.ProductGm.DptSubs
+                select.form-control(name='dptSubId[]')
+                  option 選擇小館別
+                  each dpt, index in dpts
+                    each dptSub, index in dpt.DptSubs
+                      option(value='#{dptSub.id}', selected=dptSub.id == productGmSubDpt.id) #{dptSub.name}
           .col-md-2
             a.btn-remove(href='#', disabled=true)
               span.glyphicon.glyphicon-remove
@@ -225,12 +228,12 @@ block body
             .form-group.form-group-sm
               label.col-sm-3.control-label 款式
               .col-sm-9
-                input.form-control(type='text', name="description", value="#{good.description}")
+                input.form-control(type='text', name="good[0][description]", value="#{good.description}")
             // /form-group
             .form-group.form-group-sm
               label.col-sm-3.control-label 貨號
               .col-sm-9
-                input.form-control(type='text', name="productNumber", value="#{good.productNumber}")
+                input.form-control(type='text', name="good[0][productNumber]", value="#{good.productNumber}")
             // /form-group
             .form-group.form-group-sm
               label.col-sm-3.control-label 數量
@@ -240,7 +243,7 @@ block body
                     button.btn.btn-default.btn-number(type='button', disabled='disabled', data-type='minus', data-field='quant[1]')
                       span.glyphicon.glyphicon-minus
                   // /input-group-btn
-                  input.form-control.input-number.text-center(type='text', name="stockQuantity", min='1', max='999', value="#{good.stockQuantity}")
+                  input.form-control.input-number.text-center(type='text', name="good[0][stockQuantity]", min='1', max='999', value="#{good.stockQuantity}")
                   span.input-group-btn
                     button.btn.btn-default.btn-number(type='button', data-type='plus', data-field='quant[1]')
                       span.glyphicon.glyphicon-plus
@@ -253,17 +256,17 @@ block body
                 .btn-group.btn-group-switch(data-toggle='buttons')
                   if(good.isPublish == 'true')
                     label.btn.btn-default.btn-hide.btn-sm
-                      input#option1(type='radio', name="isPublish", value='false', autocomplete='off', checked=good.isPublish == 'false')
+                      input#option1(type='radio', name="good[0][isPublish]", value='false', autocomplete='off', checked=good.isPublish == 'false')
                       span.btn-text 隱藏
                     label.btn.btn-default.btn-sm.active
-                      input#option2(type='radio', name="isPublish", value='true', autocomplete='off', checked=good.isPublish == 'true')
+                      input#option2(type='radio', name="good[0][isPublish]", value='true', autocomplete='off', checked=good.isPublish == 'true')
                       span.btn-text 上架
                   else 
                     label.btn.btn-default.btn-sm.active
-                      input#option1(type='radio', name="isPublish", value='false', autocomplete='off', checked=good.isPublish == 'false')
+                      input#option1(type='radio', name="good[0][isPublish]", value='false', autocomplete='off', checked=good.isPublish == 'false')
                       span.btn-text 隱藏
                     label.btn.btn-default.btn-sm.btn-hide
-                      input#option2(type='radio', name="isPublish", value='true', autocomplete='off', checked=good.isPublish == 'true')
+                      input#option2(type='radio', name="good[0][isPublish]", value='true', autocomplete='off', checked=good.isPublish == 'true')
                       span.btn-text 上架
                     
                 // /btn-group-switch

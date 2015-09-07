@@ -161,11 +161,11 @@ module.exports = {
       product.service = updateProduct.service;
       product.country = updateProduct.country;
       product.madeby = updateProduct.madeby;
-      product.color = updateProduct.color;
-      product.productNumber = updateProduct.productNumber;
-      product.stockQuantity = updateProduct.stockQuantity;
-      product.description = updateProduct.description;
-      product.isPublish = updateProduct.isPublish;
+      product.color = updateProduct.good[0].color;
+      product.productNumber = updateProduct.good[0].productNumber;
+      product.stockQuantity = updateProduct.good[0].stockQuantity;
+      product.description = updateProduct.good[0].description;
+      product.isPublish = updateProduct.good[0].isPublish;
 
       await product.save();
 
