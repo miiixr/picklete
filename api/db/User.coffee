@@ -14,7 +14,6 @@ module.exports = (sequelize, DataTypes) ->
     admin:
       type: DataTypes.BOOLEAN
       defaultValue: false
-    remark: DataTypes.STRING
     dateCreated:
       type: DataTypes.DATE
       defaultValue: DataTypes.NOW

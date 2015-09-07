@@ -167,10 +167,27 @@ let UserController = {
     });
   },
   controlMembers: async function(req, res) {
-    res.view({
-      pageName: "members",
-      members: await db.User.findAll()
-    });
+
+    try {
+
+      let page = parseInt(req.param('page', 0));
+      let limit = parseInt(req.param('limit', 10));
+
+      let members = await db.User.findAndCountAll({
+        offset: page * limit,
+        limit: limit
+      });
+
+      res.view({
+        pageName: "members",
+        members: members,
+        page: page,
+        limit: limit
+      });
+    }
+    catch (error) {
+      return res.serverError(error);
+    }
   },
   controlMemberDetail: function(req, res) {
     res.view({
