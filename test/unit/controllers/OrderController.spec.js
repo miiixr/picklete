@@ -152,20 +152,34 @@ describe("about Order", () => {
 
         done(err);
       });
-
-
     });
+
     it("update order status to deliveryConfirm. ", async (done) => {
       request(sails.hooks.http.app)
       .get(`/order/statusUpdate/${testOrder.id}?status=deliveryConfirm`)
       .end(async (err, res) => {
-        let order = await db.Order.findById(testOrder.id);
-        order.status.should.be.equal('deliveryConfirm');
+        if (res.statusCode === 500) {
+          return done(body)
+        }
+        res.statusCode.should.equal(200);
+        res.body.products.should.be.Array;
 
         done(err);
       });
     });
 
+    it("get an order. ", async (done) => {
+      request(sails.hooks.http.app)
+      .get(`/order/find/${testOrder.id}`)
+      .end(async (err, res) => {
+        if (res.statusCode === 500) {
+          return done(body)
+        }
+        res.statusCode.should.equal(200);
+        res.body.order.status.should.be.String;
+        done(err);
+      });
+    });
 
   });
 });

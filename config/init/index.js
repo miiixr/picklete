@@ -1,6 +1,10 @@
 import trunk from './trunk'
 import exma from './exma'
-
+let production;
+try {
+  production = require('./production');
+} catch (e) {
+}
 
 module.exports = {
 
@@ -9,9 +13,6 @@ module.exports = {
     await db.sequelize.sync({force});
   },
   basicData: async () => {
-
-
-
 
     var roleAdmin = {
       authority: 'admin',
@@ -40,7 +41,10 @@ module.exports = {
 
     await db.Passport.findOrCreate(passportOptions);
 
-  }  ,
+    if(sails.config.initData === 'production' && production !== undefined)
+      await production.createBasicData();
+
+  },
   testData: async () => {
 
     if(sails.config.initData){
@@ -55,7 +59,6 @@ module.exports = {
       comment: 'site user'
     };
     var createRoleUser = await db.Role.create(roleUser);
-
 
     var newBuyer = {
       username: "buyer",
@@ -178,7 +181,7 @@ module.exports = {
     var createdOrder = await db.Order.create(newOrder2);
 
 
-    var brandExample = {
+    var brandExample = [{
       name: '好棒棒品牌',
       avatar: 'http://goo.gl/ksTMyn',
       type: 'PRIME_GOOD',
@@ -188,12 +191,22 @@ module.exports = {
         'http://goo.gl/IRT1EM',
         'http://goo.gl/p9Y2BF'
       ]
-    };
+    },{
+      name: 'Sydney-精選',
+      avatar: 'https://goo.gl/XbP9t3',
+      type: 'PRIME_GOOD',
+      desc: '',
+      banner: 'http://goo.gl/tl4513',
+      photos: [
+      'http://goo.gl/IRT1EM',
+      'http://goo.gl/p9Y2BF'
+      ]
+    }];
 
-    var brand = await db.Brand.create(brandExample);
+    var brand = await db.Brand.bulkCreate(brandExample);
 
 
-    var brandAgent = {
+    var brandAgent = [{
       name: '好代理品牌',
       avatar: 'http://goo.gl/ksTMyn',
       type: 'AGENT',
@@ -203,7 +216,17 @@ module.exports = {
         'http://goo.gl/IRT1EM',
         'http://goo.gl/p9Y2BF'
       ]
-    };
+    },{
+      name: 'Sydney-代理',
+      avatar: 'https://goo.gl/XbP9t3',
+      type: 'AGENT',
+      desc: '',
+      banner: 'http://goo.gl/tl4513',
+      photos: [
+      'http://goo.gl/IRT1EM',
+      'http://goo.gl/p9Y2BF'
+      ]
+    }];
 
     var otherAgent = {
       name: 'Other',
@@ -214,7 +237,7 @@ module.exports = {
       photos: []
     };
 
-    var brandAgent = await db.Brand.create(brandAgent);
+    var brandAgent = await db.Brand.bulkCreate(brandAgent);
 
     var otherAgent = await db.Brand.create(otherAgent);
 
@@ -237,12 +260,77 @@ module.exports = {
       }
     }
 
-    await db.Dpt.create({
+    let specialDpt = await db.Dpt.create({
       name: '特別企劃',
       weight: 999,
       official: true,
     });
-    // end create dpt
+
+    var specialSubDpt = ["閃購專區", "優惠商品", "本月主題"];
+    for (let i in specialSubDpt) {
+      await (db.DptSub.create({
+        name: specialSubDpt[i],
+        weight: 999,
+        official: true,
+        DptId: specialDpt.id
+      }));
+    }
+
+    let createdProductGmComplete;
+    let productGmA, productGmB, dptA, dptB, dptSubA, dptSubB;
+
+
+    dptA = await db.Dpt.create({
+      name: 'test 大館 A',
+      weight: 999,
+      official: true,
+    });
+
+    dptB = await db.Dpt.create({
+      name: 'test 大館 B',
+      weight: 999,
+      official: true,
+    });
+
+    dptSubA = await db.DptSub.create({
+      name: 'test 小館 A',
+      weight: 100,
+      official: false
+    })
+
+    dptSubB = await db.DptSub.create({
+      name: 'test 小館 B',
+      weight: 100,
+      official: false
+    })
+
+    await dptA.setDptSubs(dptSubA);
+    await dptB.setDptSubs(dptSubB);
+
+    createdProductGmComplete = await db.ProductGm.create({
+      brandId: 1,
+      explain: 'req.body.explain',
+      usage: 'req.body.usage',
+      notice: 'req.body.notice',
+      depId: dptA.id,
+      depSubId: dptSubA.id
+    });
+
+    await createdProductGmComplete.setDpts([dptA]);
+    await createdProductGmComplete.setDptSubs([dptSubA]);
+
+
+    createdProduct = await db.Product.create({
+      color: '1',
+      description: '11',
+      name: '111',
+      stockQuantity: '100',
+      isPublish: 'false',
+      ProductGmId: createdProductGmComplete.id
+    });
+
+
+
 
     // create tag
 

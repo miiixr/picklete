@@ -5,7 +5,12 @@ let ProductController = {
   showCreate: async (req, res) => {
     // let products = await ProductService.findAllWithImages();
     try {
-      let brands = await db.Brand.findAll();
+      let brands = await db.Brand.findAll({
+        where: {
+          type: {$ne: 'OTHER'}
+        }
+      });
+
       let dpts = await db.Dpt.findAll({
         include: [{
           model: db.DptSub
@@ -61,31 +66,58 @@ let ProductController = {
 
   showUpdate: async (req, res) => {
     // let products = await ProductService.findAllWithImages();
-    let brands = await db.Brand.findAll();
-    let dpts = await db.Dpt.findAll({
-      include: [{
-        model: db.DptSub
-      }],
-      order: ['weight', 'DptSubs.weight']
-    });
-    let tags = await db.Tag.findAll({
-      limit: 15
-    });
+    try {
+      let brands = await db.Brand.findAll();
+      let dpts = await db.Dpt.findAll({
+        include: [{
+          model: db.DptSub
+        }],
+        order: ['weight', 'DptSubs.weight']
+      });
+      let tags = await db.Tag.findAll({
+        limit: 15
+      });
 
-    let gid = req.query.id;
-    let good = await ProductService.findAllWithImages(gid);
+      let gid = req.query.id;
+      let good = await ProductService.findWithImages(gid);
 
-    if (!good) {
-      return res.redirect('/admin/goods');
+
+      if (!good) {
+        return res.redirect('/admin/goods');
+      }
+
+      // have to query this is
+      return res.view('admin/goodUpdate', {
+        good,
+        brands,
+        dpts,
+        tags
+      });
+
+    } catch (e) {
+      console.error(e.stack);
+      res.serverError(e);
+
+    }
+  },
+
+  doUpdate: async (req, res) => {
+
+    let productUpdate = req.body;
+
+    console.log('=== productUpdate ===', productUpdate);
+
+    try {
+
+      await ProductService.update(productUpdate);
+      return res.redirect('/admin/goods/');
+    } catch (error) {
+      console.error(error.stack);
+      let msg = error.message;
+      return res.serverError({msg});
     }
 
-    // have to query this is
-    return res.view('admin/goodCreate', {
-      good,
-      brands,
-      dpts,
-      tags
-    });
+    // return res.json(newProduct);
   },
 
   createUpdate: async (req, res) => {
@@ -101,6 +133,10 @@ let ProductController = {
     return res.redirect('/admin/goods/');
     // return res.json(newProduct);
   },
+
+
+
+
 
   findOne: async (req, res) => {
     try {
@@ -228,15 +264,21 @@ let ProductController = {
       }
       findProduct.isPublish = true;
       let updateProduct = await findProduct.save();
-      if (!updateProduct) {
+      if (!updateProduct){
+        req.flash('message', `商品ID ${productId} 上架失敗`);
         throw new Error('上架失敗');
       }
+      req.flash('message', `商品ID ${productId} 上架成功`);
       var query = req.query.responseType;
-      if (query == undefined || query.toLowerCase() == 'json') {
+      if (query == undefined){
+        res.redirect('/admin/goods');
+        return
+      }else if (query.toLowerCase() == 'json') {
         return res.ok(updateProduct.toJSON());
+      }else if (query.toLowerCase() == 'view'){
+        let url = "product/show/" + productId;
+        return res.redirect(url);
       }
-      let url = "product/show/" + productId;
-      return res.redirect(url);
     } catch (error) {
       console.error(error.stack);
       let msg = error.message;
@@ -254,14 +296,20 @@ let ProductController = {
       findProduct.isPublish = false;
       let updateProduct = await findProduct.save();
       if (!updateProduct) {
+        req.flash('message', `商品ID ${productId} 下架失敗`);
         throw new Error('下架失敗');
       }
+      req.flash('message', `商品ID ${productId} 下架成功`);
       var query = req.query.responseType;
-      if (query == undefined || query.toLowerCase() == 'json') {
+      if (query == undefined){
+        res.redirect('/admin/goods');
+        return
+      }else if (query.toLowerCase() == 'json') {
         return res.ok(updateProduct.toJSON());
+      }else if (query.toLowerCase() == 'view'){
+        let url = "product/show/" + productId;
+        return res.redirect(url);
       }
-      let url = "product/show/" + productId;
-      return res.redirect(url);
     } catch (error) {
       console.error(error.stack);
       let msg = error.message;

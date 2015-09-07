@@ -2,6 +2,9 @@ import Promise from "bluebird";
 import easyimg from "easyimage";
 import gm from "gm";
 import path from 'path';
+
+
+var domain = sails.config.domain || process.env.domain || 'http://localhost:1337';
 let home = process.cwd();
 Promise.promisifyAll(gm.prototype);
 
@@ -30,15 +33,50 @@ module.exports = {
         height: imageResizeConfig.height || 100
       }
 
-      let result = await gm(resizeConfig.src).resize(resizeConfig.width, resizeConfig.height).writeAsync(resizeConfig.dst);
+      let result = await gm(resizeConfig.src).resize(resizeConfig.width, resizeConfig.height, "!").writeAsync(resizeConfig.dst);
       return resizeConfig;
 
     } catch (e) {
-      console.log("-----XXD")
-      console.log(e);
+      console.error(e);
       throw e;
     }
+  },
+
+  processPath: (originPath) => {
+    var path = originPath.split(process.cwd())[1];
+    path = path.replace('.tmp/', '');
+    return path;
+  },
+
+  processLoop: async (files, width, height, beArray) => {
+    let that = this;
+    let buffers = files;
+
+    if ( ! buffers)
+      return [];
+
+    if (buffers.length) {
+      for (let i in buffers) {
+        try {
+          await ImageService.resize({
+            src: buffers[i].fd,
+            dst: buffers[i].fd,
+            width: width,
+            height: height
+          });  
+        } catch (e) {
+          console.error(e);
+        }
+        buffers[i] = domain + ImageService.processPath(buffers[i].fd);
+        buffers[i] = buffers[i].replace('.tmp/', '');
+      }
+      if (beArray)
+        return buffers;
+
+      if (buffers.length > 1)
+        return buffers;
+      else
+        return buffers[0];
+    }
   }
-
-
 };

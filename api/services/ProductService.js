@@ -19,15 +19,26 @@ module.exports = {
       tag = tag.split(',');
     }
 
+    let uploadInput = ["good[0][photos][]", "coverPhoto[]"];
+    let files = await ImageService.upload(req, uploadInput);
+    console.log(files);
+
+    let beArray = true;
+    // good[0][photos][], resize and process loop
+    let photos = await ImageService.processLoop(files[0], 1000, 1000, beArray);
+    
+    // coverPhoto, resize and process loop
+    let coverPhoto = await ImageService.processLoop(files[1], 1000, 1000, beArray);
+    
     let newProductGm = {
       brandId: brand,
-      dptId: parseInt(req.body.dptId, 10),
-      dptSubId: parseInt(req.body.dptSubId, 10),
-      explain: req.body.explain,
-      usage: req.body.usage,
-      notice: req.body.notice,
-      tag: tag,
-      coverPhoto: []
+      dptId: req.body['dptId[]'],
+      dptSubId: req.body['dptSubId[]'],
+      explain: req.body.explain || "",
+      usage: req.body.usage || "",
+      notice: req.body.notice || "",
+      tag: tag || [],
+      coverPhoto: coverPhoto || []
     };
     // create product gm
     let createdProductGm = await db.ProductGm.create(newProductGm);
@@ -35,15 +46,21 @@ module.exports = {
     if ( ! createdProductGm)
       return;
 
-    if (typeof req.body['good[0][description]'] == 'string') {
-      var name = req.body['good[0][description]'] || '';
+    try {
+      var goods = JSON.parse(req.body['good[0][description]'])
+    } catch (e) {
+      var goods = req.body['good[0][description]']
+    }
+
+    if (typeof goods != 'object') {
+      var name = goods || '';
       var stockQuantity = req.body['good[0][stockQuantity]'] || '';
       var isPublish = req.body['good[0][isPublish]'] || '';
       var color = req.body['good[0][color]'] || '';
       var productNumber = req.body['good[0][productNumber]'] || '';
 
       let newProduct = {
-        name: name,
+        name: String(name),
         stockQuantity: stockQuantity,
         isPublish: isPublish,
         price: req.body.price,
@@ -54,7 +71,7 @@ module.exports = {
         madeby: req.body.madeby,
         color: color,
         productNumber: productNumber,
-        photos: [],
+        photos: photos || [],
         ProductGmId: createdProductGm.id,
       };
 
@@ -62,38 +79,126 @@ module.exports = {
       return;
     }
 
-    for (var i = 0 ; i < req.body['good[0][description]'].length ; i++) {
-      var name = req.body['good[0][description]'][i] || '';
-      var stockQuantity = req.body['good[0][stockQuantity]'][i] || '';
-      var isPublish = req.body['good[0][isPublish]'] || '';
-      var color = req.body['good[0][color]'][i] || '';
-      var productNumber = req.body['good[0][productNumber]'][i] || '';
+    try {
+      var isPublish = JSON.parse(req.body['good[0][isPublish]']);
+      var color = JSON.parse(req.body['good[0][color]']);
+      var productNumber = JSON.parse(req.body['good[0][productNumber]']);
+      var stockQuantity = JSON.parse(req.body['good[0][stockQuantity]']);
+    } catch (e) {
+      var isPublish = req.body['good[0][isPublish]'];
+      var color = req.body['good[0][color]'];
+      var productNumber = req.body['good[0][productNumber]'];
+      var stockQuantity = req.body['good[0][stockQuantity]'];
+    }
+    
 
+    for (var i = 0 ; i < goods.length ; i++) {
+      var name = goods[i] || '';
+      
       let newProduct = {
-        name: name,
-        stockQuantity: stockQuantity,
-        isPublish: isPublish,
+        name: String(name),
+        stockQuantity: stockQuantity[i] || stockQuantity,
+        isPublish: isPublish[i] || isPublish,
         price: req.body.price,
         size: req.body.size,
         comment: req.body.comment,
         service: req.body.service,
         country: req.body.country,
         madeby: req.body.madeby,
-        color: color,
-        productNumber: productNumber,
-        photos: [],
+        color: color[i] || color,
+        productNumber: productNumber[i] || productNumber,
+        photos: photos || [],
         ProductGmId: createdProductGm.id,
       };
 
-      await db.Product.create(newProduct);
+      try {
+        await db.Product.create(newProduct);  
+      } catch (e) {
+        console.error(e)
+      }
+      
+      // remove one
+      if (photos && photos.length > 0)
+        photos.shift();
 
     }
 
   },
 
+  update: async (updateProduct) => {
+
+    try {
+      var {brandType} = updateProduct;
+      var brand;
+      if (brandType.toLowerCase() === 'other') {
+        brand = await db.Brand.findOne({ where: {type: 'OTHER'} });
+      } else {
+        brand = {id: updateProduct.brandId};
+      }
+
+      var tag = updateProduct.tag || '';
+      if (tag) {
+        tag = tag.split(',');
+      }
+
+      console.log('updateProduct.productGm.id', updateProduct.productGm.id);
+      let productGm = await db.ProductGm.find({
+        where: {
+          id: updateProduct.productGm.id
+        }
+      });
+
+      let product = await db.Product.find({
+        where: {
+          id: updateProduct.good[0].id
+        }
+      });
+
+      product.name = updateProduct.name;
+      product.price = updateProduct.price;
+      product.size = updateProduct.size;
+      product.comment = updateProduct.comment;
+      product.service = updateProduct.service;
+      product.country = updateProduct.country;
+      product.madeby = updateProduct.madeby;
+      product.color = updateProduct.good[0].color;
+      product.productNumber = updateProduct.good[0].productNumber;
+      product.stockQuantity = updateProduct.good[0].stockQuantity;
+      product.description = updateProduct.good[0].description;
+      product.isPublish = updateProduct.good[0].isPublish;
+
+      await product.save();
+
+
+      productGm.brandId = brand.id;
+      productGm.dptId = updateProduct.dptId;
+      productGm.dptSubId = updateProduct.dptSubId;
+
+      await productGm.save();
+
+      await productGm.setDpts(updateProduct.dptId);
+      await productGm.setDptSubs(updateProduct.dptSubId);
+
+
+    } catch (e) {
+      console.error(e.stack);
+      throw e;
+    }
+  },
+
   findWithImages: async (productId) => {
-    let product = await db.Product.findById(productId);
+    let product = await db.Product.find({
+      where: {id: productId},
+      include: [{
+        model: db.ProductGm,
+        include: [
+          db.Dpt, db.DptSub
+        ]
+      }]
+    });
     let productWithImage = ProductService.withImage(product);
+
+    console.log('productWithImage', productWithImage);
     return productWithImage;
   },
 
