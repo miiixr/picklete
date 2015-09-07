@@ -209,6 +209,7 @@ let UserController = {
       let userName = req.param("username");
       let users = await UserService.search(userName);
       // console.log("\n ### find user =>",user);
+      let members = await UserService.search(userName);
       return res.ok({users});
     } catch (error) {
       return res.serverError(error);
@@ -316,21 +317,6 @@ let UserController = {
       return res.serverError(error);
     }
   },
-
-  searchMember: async(req, res) => {
-    try{
-      let userData = await db.User.findAll({
-        where: {
-          userName: userName
-        }
-      });
-      return res.ok({Searchresults});
-    } catch (error) {
-      console.log ('error',error.stack);
-      return res.serverError(error);
-    }
-  }
-
 };
 
 module.exports = UserController;
