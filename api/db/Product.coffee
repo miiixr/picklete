@@ -36,6 +36,10 @@ module.exports = (sequelize, DataTypes) ->
     color: DataTypes.INTEGER
     # 貨號
     productNumber: DataTypes.STRING
+    # 款式
+    decscription: DataTypes.STRING
+    # 產品材質
+    spec: DataTypes.STRING
     # 照片
     photos:
       type: DataTypes.STRING

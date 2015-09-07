@@ -113,19 +113,43 @@ module.exports = {
       description: '好東西，買買買',
       stockQuantity: 100,
       price: 500,
-      ProductGmId: 1
+      ProductGmId: 1,
+      size: 'super-big',
+      service: '["express","store","package"]',
+      country: 'Taiwan',
+      madeby: 'Peter Chou',
+      color: 5,
+      porductNumber: '1-DDT-2-G',
+      decscription: '超大款',
+      spec: '鋁'
     },{
       name: '好物三選2',
       description: '好東西，買買買',
       stockQuantity: 100,
       price: 625,
-      ProductGmId: 2
+      ProductGmId: 2,
+      size: 'super-small',
+      service: '["express","package"]',
+      country: 'U.S.A',
+      madeby: 'Tony Stack',
+      color: 4,
+      porductNumber: '2-DDE-2-G',
+      decscription: 'lalala',
+      spec: '汎合金'
     },{
       name: '好物三選3',
       description: '好東西，買買買',
       stockQuantity: 100,
       price: 750,
-      ProductGmId: 2
+      ProductGmId: 2,
+      size: 'super-big',
+      service: '["express","store","package"]',
+      country: 'Japan',
+      madeby: 'doraemon',
+      color: 2,
+      porductNumber: '1-ABC-2-G',
+      decscription: 'doradora',
+      spec: '塑膠'
     }];
     await db.Product.bulkCreate(fruitProducts);
 
@@ -137,7 +161,15 @@ module.exports = {
       image: 'http://localhost:1337/images/product/1.jpg',
       isPublish: true,
       comment: '限量只有 10 個',
-      ProductGmId: 2
+      ProductGmId: 2,
+      size: 'normal',
+      service: '["express","store","package"]',
+      country: 'U.K',
+      madeby: 'unknow',
+      color: 3,
+      porductNumber: '1-ABC-2-G',
+      decscription: 'whocares',
+      spec: 'super-metal'
     };
     var createdProduct = await db.Product.create(newProduct);
 
@@ -148,7 +180,15 @@ module.exports = {
       quantity: 10,
       orderId: '1111',
       UserId: createNewBuyer.id,
-      ProductId: createdProduct.id
+      ProductId: createdProduct.id,
+      size: 'unknow size',
+      service: '["express"]',
+      country: 'Alien Plant',
+      madeby: 'Alien',
+      color: 2,
+      porductNumber: '1-alien-9-Z',
+      decscription: 'AlienAlienAlien',
+      spec: 'Alien metal'
     };
     var createdOrder = await db.Order.create(newOrder);
 
