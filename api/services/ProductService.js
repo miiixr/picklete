@@ -173,6 +173,9 @@ module.exports = {
       productGm.brandId = brand.id;
       productGm.dptId = updateProduct.dptId;
       productGm.dptSubId = updateProduct.dptSubId;
+      productGm.explain = updateProduct.explain;
+      productGm.usage = updateProduct.usage;
+      productGm.notice = updateProduct.notice;
 
       await productGm.save();
 
@@ -196,9 +199,10 @@ module.exports = {
         ]
       }]
     });
-    let productWithImage = ProductService.withImage(product);
+    console.log('product', product);
 
-    console.log('productWithImage', productWithImage);
+    let productWithImage = ProductService.withImage(product);
+    //console.log('productWithImage', productWithImage);
     return productWithImage;
   },
 
