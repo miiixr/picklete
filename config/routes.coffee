@@ -48,6 +48,7 @@ module.exports.routes = {
   'post /admin/brands/create' : 'BrandController.create'
   'get /admin/brands/update' : 'BrandController.update'
   'post /admin/brands/update' : 'BrandController.update'
+  'get /admin/exclusive' : view: 'admin/exclusive'
 
 
   'get /admin/department' : 'DptController.list'
@@ -61,6 +62,7 @@ module.exports.routes = {
   'post /admin/goods/update' : 'ProductController.doUpdate'
   'get /admin/goods/create' : 'ProductController.showCreate'
   'post /admin/goods/create' : 'ProductController.createUpdate'
+  'post /admin/image/upload' : 'ImageController.upload'
 
 
 
