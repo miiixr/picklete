@@ -12,20 +12,20 @@ block body
   // /row
   #collapse-member.collapse.in
     .well.control-well.p-30.m-bottom-8
-      form.form-horizontal
+      form.form-horizontal(name="searchUsers", action="members", method="get")
         .row.row-m
           .col-md-4
             .form-group
               label.col-md-4.control-label 會員姓名
               .col-md-8
-                input.form-control(type='text')
+                input.form-control(type='text', name='fullName', value = query.fullName?query.fullName: '')
             // /form-group
           // /col-md-4
           .col-md-4
             .form-group
               label.col-md-4.control-label 關鍵字
               .col-md-8
-                input.form-control(type='text')
+                input.form-control(type='text', name='keyword', value = query.keyword?query.keyword: '')
             // /form-group
           // /col-md-4
         // /row
@@ -34,22 +34,22 @@ block body
             .form-group
               label.col-md-4.control-label 聯絡電話
               .col-md-8
-                input.form-control(type='text')
+                input.form-control(type='text', name='mobile', value = query.mobile?query.mobile: '')
             // /form-group
           // /col-md-4
           .col-md-8
             .form-group
               label.col-md-2.control-label 建檔日期
               .col-md-4
-                input.form-control(type='date')
+                input.form-control(type='date', name='createdStart', value = query.createdStart?query.createdStart: null)
               .col-md-2.text-center
                 p.form-control-static 至
               .col-md-4
-                input.form-control(type='date')
+                input.form-control(type='date', name='createdEnd', value = query.createdEnd?query.createdEnd: null)
             // /form-group
           // /col-md-8
           .col-md-12.text-right
-            a.btn.btn-primary(href='#') 查詢
+            a.btn.btn-primary(href='#' onClick='$("form[name=\'searchUsers\']").submit()' ) 查詢
           // /col-md-12
         // /row
       // /form-horizontal

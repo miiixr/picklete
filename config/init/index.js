@@ -418,7 +418,7 @@ module.exports = {
         return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
     };
 
-    for (var i=0; i<100; i++) {
+    for (var i=0; i<300; i++) {
       var fakeUser = {
         username: "user" + i,
         fullName: commonLastNames[randomInt(0, commonLastNames.length)] + commonFirstNames[randomInt(0, commonFirstNames.length)],
