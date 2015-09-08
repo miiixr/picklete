@@ -202,7 +202,6 @@ let UserController = {
         offset: page * limit,
         limit: limit
       });
-
       res.view({
         pageName: "members",
         members: members,
