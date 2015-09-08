@@ -187,8 +187,15 @@ let UserController = {
         queryObj.createdAt = query.createdStart? { gte : new Date(query.createdStart)}: { lte : new Date(query.createdEnd)};
       }
 
-      let page = parseInt(req.param('page', 0));
-      let limit = parseInt(req.param('limit', 10));
+      let page = req.session.UserController_controlMembers_page =
+      parseInt(req.param('page',
+        req.session.UserController_controlMembers_page || 0
+      ));
+
+      let limit = req.session.UserController_controlMembers_limit =
+      parseInt(req.param('limit',
+        req.session.UserController_controlMembers_limit || 10
+      ));
 
       let members = await db.User.findAndCountAll({
         where: queryObj,

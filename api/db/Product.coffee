@@ -14,8 +14,6 @@ module.exports = (sequelize, DataTypes) ->
     size: DataTypes.STRING
     # 備註
     comment: DataTypes.STRING
-    # # 產品規格
-    # spec: DataTypes.STRING
     # 服務項目，可以多選，快遞，超商取貨， ...
     service:  {
       type: DataTypes.STRING,
@@ -36,6 +34,10 @@ module.exports = (sequelize, DataTypes) ->
     color: DataTypes.INTEGER
     # 貨號
     productNumber: DataTypes.STRING
+    # 款式
+    description: DataTypes.STRING
+    # 產品材質
+    spec: DataTypes.STRING
     # 照片
     photos:
       type: DataTypes.STRING

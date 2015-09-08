@@ -46,6 +46,7 @@ block body
                 p.form-control-static 至
               .col-md-4
                 input.form-control(type='date', name='createdEnd', value = query.createdEnd?query.createdEnd: null)
+                input(type='hidden', name='page' value = query.page?query.page: 0)
             // /form-group
           // /col-md-8
           .col-md-12.text-right
@@ -115,10 +116,10 @@ block body
       ==================================================
     ul.list-inline.m-bottom-0.m-top-1
       li.border-right-1.p-right-2
-        a(href='/admin/members?page='+(page-1)) 上一頁
+        a(href='#' id='previous') 上一頁
       li.border-right-1.p-right-2 #{page + 1} / #{Math.ceil(members.count / limit)}
       li
-        a(href='/admin/members?page='+(page+1)) 下一頁
+        a(href='#' id='next') 下一頁
   // /text-center
   
   block js
@@ -126,5 +127,20 @@ block body
       $(function() {
         $('#query-limit').change(function() {
           location.href='/admin/members?limit='+$(this).val();
+        });
+
+        $('.form-control').change(function(){
+          $("input[name='page']").val(0);
+        });
+
+        $('#next').click(function(){
+          console.log()
+          $("input[name='page']").val(parseInt($("input[name='page']").val())+1);
+          $("form[name='searchUsers']").submit();
+        });
+
+        $('#previous').click(function(){
+          $("input[name='page']").val($(parseInt("input[name='page']").val())-1);
+          $("form[name='searchUsers']").submit();
         });
       });

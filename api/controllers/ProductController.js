@@ -81,7 +81,6 @@ let ProductController = {
       let gid = req.query.id;
       let good = await ProductService.findWithImages(gid);
 
-
       if (!good) {
         return res.redirect('/admin/goods');
       }
