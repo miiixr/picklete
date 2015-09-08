@@ -32,26 +32,28 @@ block body
             a(href='#', data-toggle='tooltip', title='', data-original-title='品牌名稱自訂將會統一列入 Other 品牌區')
               span.glyphicon.glyphicon-info
         // /form-group
-        .form-group
-          label.col-md-2.control-label 館別分類
-          .col-md-4
-            each productGmDpt, index in good.ProductGm.Dpts
+
+        each productGmDpt, i in good.ProductGm.Dpts
+          .form-group
+            label.col-md-2.control-label 館別分類
+            .col-md-4
               select.form-control(name='dptId[]')
                 option 選擇大館別
-                each dpt, index in dpts
-                  option(value='#{dpt.id}', selected=dpt.id == productGmDpt.id) #{dpt.name}
-          .col-md-4
-              each productGmSubDpt, index in good.ProductGm.DptSubs
-                select.form-control(name='dptSubId[]')
-                  option 選擇小館別
-                  each dpt, index in dpts
-                    each dptSub, index in dpt.DptSubs
-                      option(value='#{dptSub.id}', selected=dptSub.id == productGmSubDpt.id) #{dptSub.name}
-          .col-md-2
-            a.btn-remove(href='#', disabled=true)
-              span.glyphicon.glyphicon-remove
-            a.btn-add(href='#')
-              span.glyphicon.glyphicon-plus
+                each dpt in dpts
+                  option(value='#{dpt.id}', selected=dpt.selected == productGmDpt.id) #{dpt.name}
+            .col-md-4
+              select.form-control(name='dptSubId[]')
+                option 選擇小館別
+                each dpt in dpts
+                  if dpt.selected == productGmDpt.id
+                    each dptSub in dpt.DptSubs
+                      option(value='#{dptSub.id}', selected=dptSub.selected == productGmDpt.id) #{dptSub.name}
+            .col-md-2
+              a.btn-remove(href='#', disabled=true)
+                span.glyphicon.glyphicon-remove
+              a.btn-add(href='#')
+                span.glyphicon.glyphicon-plus
+                  
         // /form-group
         //- .form-group
         //-   label.col-md-2.control-label

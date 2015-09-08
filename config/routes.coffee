@@ -85,7 +85,7 @@ module.exports.routes = {
   'get /admin/qa-type' : 'UserController.controlQaType'
   'get /admin/qa-add' : 'UserController.controlQaAdd'
   'get /admin/members' : 'UserController.controlMembers'
-  'get /admin/member-detail' : 'UserController.controlMemberDetail'
+  'get /admin/member-detail/:id' : 'UserController.controlMemberDetail'
 
   'get /admin/brand' : 'BrandController.list'
   'post /admin/brand' : 'BrandController.create'
