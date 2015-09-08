@@ -52,6 +52,16 @@ module.exports.routes = {
 
   
   'get /main/index' : view: 'main/index'
+  'get /main/member-fav' : view: 'main/member-fav'
+  'get /main/member-purchase' : view: 'main/member-purchase'
+  'get /main/member-setting' : view: 'main/member-setting'
+  'get /main/shop-product' : view: 'main/shop-product'
+  'get /main/signup' : view: 'main/signup'
+  'get /main/shop' : view: 'main/shop'
+  'get /main/brands' : view: 'main/brands'
+  'get /main/cart' : view: 'main/cart'
+  'get /main/cart-step-2' : view: 'main/cart-step-2'
+  'get /main/cart-done' : view: 'main/cart-done'
 
 
   'get /admin/department' : 'DptController.list'
