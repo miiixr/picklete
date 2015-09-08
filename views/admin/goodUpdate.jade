@@ -85,28 +85,28 @@ block body
         .form-group
           label.col-md-2.control-label 商品名稱
           .col-md-10
-            input.form-control(type='text', name='name', required='true', value='#{good.name}')
+            input.form-control(type='text', name='name', required='true', value=good.name?good.name:'')
         // /form-group
         .row
           .col-md-4
             .form-group
               label.col-md-6.control-label 建議售價
               .col-md-6
-                input.form-control(type='number', name='price', required='true', value='#{good.price}')
+                input.form-control(type='number', name='price', required='true', value=good.price?good.price:'')
             // /form-group
           // /col-md-4
           .col-md-4
             .form-group
               label.col-md-6.control-label 品牌國別
               .col-md-6
-                input.form-control(type='text', name='country', required='true', value='#{good.country}')
+                input.form-control(type='text', name='country', required='true', value=good.country?good.country:'')
             // /form-group
           // /col-md-4
           .col-md-4
             .form-group
               label.col-md-6.control-label 製造產地
               .col-md-6
-                input.form-control(type='text', name='madeby', required='true', value='#{good.madeby}')
+                input.form-control(type='text', name='madeby', required='true', value=good.madeby?good.madeby:'')
             // /form-group
           // /col-md-4
         // /row
@@ -115,14 +115,14 @@ block body
             .form-group
               label.col-md-6.control-label 產品材質
               .col-md-6
-                input.form-control(type='text', name='spec', required='true', value='#{good.spec}')
+                input.form-control(type='text', name='spec', required='true', value=good.spec?good.spec:'')
             // /form-group
           // /col-md-4
           .col-md-8
             .form-group
               label.col-md-3.control-label 產品尺寸
               .col-md-9
-                input.form-control(type='text', name='size', value='#{good.size}')
+                input.form-control(type='text', name='size', value=good.size?good.size:'')
             // /form-group
           // /col-md-8
         // /row
@@ -145,7 +145,7 @@ block body
         .form-group
           label.col-md-2.control-label 商品備註
           .col-md-10
-            input.form-control(type='text', name='comment')
+            input.form-control(type='text', name='comment', value=good.comment?good.comment:'')
         // /form-group
     // /well
 
@@ -228,12 +228,12 @@ block body
             .form-group.form-group-sm
               label.col-sm-3.control-label 款式
               .col-sm-9
-                input.form-control(type='text', name="good[0][description]", value="#{good.description}")
+                input.form-control(type='text', name="good[0][description]", value=good.description?good.description:'')
             // /form-group
             .form-group.form-group-sm
               label.col-sm-3.control-label 貨號
               .col-sm-9
-                input.form-control(type='text', name="good[0][productNumber]", value="#{good.productNumber}")
+                input.form-control(type='text', name="good[0][productNumber]", value=good.productNumber?good.productNumber:'')
             // /form-group
             .form-group.form-group-sm
               label.col-sm-3.control-label 數量
@@ -243,7 +243,7 @@ block body
                     button.btn.btn-default.btn-number(type='button', disabled='disabled', data-type='minus', data-field='quant[1]')
                       span.glyphicon.glyphicon-minus
                   // /input-group-btn
-                  input.form-control.input-number.text-center(type='text', name="good[0][stockQuantity]", min='1', max='999', value="#{good.stockQuantity}")
+                  input.form-control.input-number.text-center(type='text', name="good[0][stockQuantity]", min='1', max='999', value=good.stockQuantity?good.stockQuantity:'')
                   span.input-group-btn
                     button.btn.btn-default.btn-number(type='button', data-type='plus', data-field='quant[1]')
                       span.glyphicon.glyphicon-plus
