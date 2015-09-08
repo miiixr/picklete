@@ -1,4 +1,4 @@
-describe("about User", () => {
+describe.only("about User", () => {
   // start
 
   let testUser = null;
@@ -159,6 +159,5 @@ describe("about User", () => {
       done(err);
     });
   });
-
   // end
 });

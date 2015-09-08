@@ -289,7 +289,6 @@ module.exports.routes = {
   }
 
   "/:controller/:action/:id?": {}
-
 }
 
 ###*
