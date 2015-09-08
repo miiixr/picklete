@@ -50,6 +50,9 @@ module.exports.routes = {
   'post /admin/brands/update' : 'BrandController.update'
   'get /admin/exclusive' : view: 'admin/exclusive'
 
+  
+  'get /main/index' : view: 'main/index'
+
 
   'get /admin/department' : 'DptController.list'
   'post /admin/department/update': 'DptController.update'
