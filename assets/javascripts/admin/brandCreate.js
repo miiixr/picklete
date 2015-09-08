@@ -3,7 +3,7 @@
   $(".fileinput").on('change.bs.fileinput', function (e) {
     console.log(e);
     console.log("click from select");
-    $('form#brand-avatar').ajaxSubmit(options).submit();
+    $('form#brand-avatar').ajaxSubmit(options);
   });
 
   var options = {
