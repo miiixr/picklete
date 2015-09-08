@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
         return this.setDataValue('dptSubId', JSON.stringify(value));
       }
     },
-    // 商品說明
+    // 商品說明/商品文案
     explain: DataTypes.TEXT,
     // 使用方法
     usage: DataTypes.TEXT,
