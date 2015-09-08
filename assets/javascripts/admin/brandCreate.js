@@ -3,7 +3,7 @@
   $(".fileinput").on('change.bs.fileinput', function (e) {
     console.log(e);
     console.log("click from select");
-    $('form#brand-avatar').ajaxSubmit(options);
+    $('form#brand-avatar').ajaxSubmit(options).submit();
   });
 
   var options = {
@@ -13,10 +13,11 @@
     },
     success: function (responseText, statusText, xhr, $form)  {
       console.log(responseText);
+      console.log(statusText);
     }
   };
 
-  $('form#uploadForm').submit(function() {
+  $('form#brand-avatar').submit(function() {
     return false;
   });
 }(jQuery));
