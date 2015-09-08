@@ -151,7 +151,7 @@ module.exports = {
       productNumber: '1-ABC-2-G',
       spec: '塑膠'
     }];
-    await db.Product.bulkCreate(fruitProducts);
+    let createdProducts =  await db.Product.bulkCreate(fruitProducts);
 
     var newProduct = {
       name: '超值精選組合',
@@ -200,6 +200,16 @@ module.exports = {
     }
     var createShipment = await db.Shipment.create(shipment);
 
+    var orderItems ={
+      name: '好物三選1',
+      description: '好東西，買買買',
+      quantity: 4,
+      price: 500,
+      OrderId: createdOrder.id,
+      ProductId: createdProduct.id
+    }
+    var createOrderItems = await db.OrderItem.create(orderItems);
+
 
     var newOrder2 = {
       serialNumber: '0000001',
@@ -225,6 +235,30 @@ module.exports = {
     }
     var createShipment = await db.Shipment.create(shipment2);
 
+
+    var orderItems2 =[{
+      name: '好物三選1',
+      description: '好東西，買買買',
+      quantity: 1,
+      price: 500,
+      OrderId: createdOrder.id,
+      ProductId: createdProduct.id
+    },{
+      name: '好物三選2',
+      description: '好東西，買買買',
+      quantity: 2,
+      price: 100,
+      OrderId: createdOrder.id,
+      ProductId: createdProduct.id
+    },{
+      name: '好物三選3',
+      description: '好東西，買買買',
+      quantity: 3,
+      price: 200,
+      OrderId: createdOrder.id,
+      ProductId: createdProduct.id
+    }]
+    var createOrderItems = await db.OrderItem.bulkCreate(orderItems2);
 
     var brandExample = [{
       name: '好棒棒品牌',
