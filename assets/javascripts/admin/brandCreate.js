@@ -1,22 +1,22 @@
 (function ($) {
 
   $(".fileinput").on('change.bs.fileinput', function (e) {
-    console.log(e)
+    console.log(e);
     console.log("click from select");
-    $("form#uploadForm").ajaxSubmit(options).submit();
+    $('form#brand-avatar').ajaxSubmit(options).submit();
   });
 
-  var options = { 
+  var options = {
     beforeSubmit:  function (formData, jqForm, options) {
       console.log(formData);
       // var queryString = $.param(formData);
     },
-    success: function (responseText, statusText, xhr, $form)  { 
+    success: function (responseText, statusText, xhr, $form)  {
       console.log(responseText);
     }
   };
 
   $('form#uploadForm').submit(function() {
-    return false; 
+    return false;
   });
 }(jQuery));
