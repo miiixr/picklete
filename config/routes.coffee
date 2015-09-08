@@ -51,17 +51,17 @@ module.exports.routes = {
   'get /admin/exclusive' : view: 'admin/exclusive'
 
   
-  'get /main/index' : view: 'main/index'
-  'get /main/member-fav' : view: 'main/member-fav'
-  'get /main/member-purchase' : view: 'main/member-purchase'
-  'get /main/member-setting' : view: 'main/member-setting'
-  'get /main/shop-product' : view: 'main/shop-product'
-  'get /main/signup' : view: 'main/signup'
-  'get /main/shop' : view: 'main/shop'
-  'get /main/brands' : view: 'main/brands'
-  'get /main/cart' : view: 'main/cart'
-  'get /main/cart-step-2' : view: 'main/cart-step-2'
-  'get /main/cart-done' : view: 'main/cart-done'
+  'get /index' : view: 'main/index'
+  'get /member/fav' : view: 'main/member-fav'
+  'get /member/purchase' : view: 'main/member-purchase'
+  'get /member/setting' : view: 'main/member-setting'
+  'get /shop/product' : view: 'main/shop-product'
+  'get /user/signup' : view: 'main/signup'
+  'get /shop/products' : view: 'main/shop'
+  'get /brands' : view: 'main/brands'
+  'get /user/cart' : view: 'main/cart'
+  'get /user/cart-step-2' : view: 'main/cart-step-2'
+  'get /user/cart-done' : view: 'main/cart-done'
 
 
   'get /admin/department' : 'DptController.list'
