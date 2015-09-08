@@ -9,14 +9,14 @@ block body
           .form-group.m-bottom-0
             label.col-md-2.control-label.text-muted 姓名
             .col-md-10
-              p.form-control-static {user_name}
+              p.form-control-static #{member.fullName}
           // /form-group
         // /col-md-6
         .col-md-6
           .form-group.m-bottom-0
             label.col-md-2.control-label.text-muted 生日
             .col-md-10
-              p.form-control-static 1995.8.5
+              p.form-control-static #{sails.moment(member.birthDate).format('YYYY/MM/DD')}
           // /form-group
         // /col-md-6
       // /row
@@ -25,14 +25,14 @@ block body
           .form-group.m-bottom-0
             label.col-md-2.control-label.text-muted 電話
             .col-md-10
-              p.form-control-static 0912-345-678
+              p.form-control-static #{member.mobile}
           // /form-group
         // /col-md-6
         .col-md-6
           .form-group.m-bottom-0
             label.col-md-2.control-label.text-muted 信箱
             .col-md-10
-              p.form-control-static xxxx@gmail.com
+              p.form-control-static #{member.email}
           // /form-group
         // /col-md-6
       // /row
@@ -41,7 +41,7 @@ block body
           .form-group.m-bottom-0
             label.col-md-1.control-label.text-muted 住址
             .col-md-11
-              p.form-control-static 403 {address}
+              p.form-control-static TODO: add address filed to user
           // /form-group
         // /col-md-6
       // /row
@@ -50,7 +50,7 @@ block body
           .form-group
             label.col-md-1.control-label.text-muted 興趣
             .col-md-11
-              p.form-control-static 文具、咖啡、運動、午茶、香氛、品酒
+              p.form-control-static TODO: not yet impl.
           // /form-group
         // /col-md-6
       // /row
@@ -59,7 +59,7 @@ block body
           .form-group
             label.col-md-1.control-label.text-muted 備註
             .col-md-11
-              textarea.form-control(rows='3')
+              textarea.form-control(rows='3') #{member.comment}
           // /form-group
         // /col-md-6
       // /row
