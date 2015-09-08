@@ -18,7 +18,7 @@ block body
           span.glyphicon.glyphicon-menu.font-size-xlarge.m-top-1
         // /col-sm-6
         .col-sm-6.text-right
-          a.btn.btn-link.delete-link(href='#')
+          a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
             span.glyphicon.glyphicon-remove
         // /col-sm-6
       // /row
@@ -58,7 +58,7 @@ block body
           span.glyphicon.glyphicon-menu.font-size-xlarge.m-top-1
         // /col-sm-6
         .col-sm-6.text-right
-          a.btn.btn-link.delete-link(href='#')
+          a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
             span.glyphicon.glyphicon-remove
         // /col-sm-6
       // /row
@@ -99,7 +99,7 @@ block body
           span.glyphicon.glyphicon-menu.font-size-xlarge.m-top-1
         // /col-sm-6
         .col-sm-6.text-right
-          a.btn.btn-link.delete-link(href='#')
+          a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
             span.glyphicon.glyphicon-remove
         // /col-sm-6
       // /row
@@ -165,7 +165,7 @@ block body
           span.glyphicon.glyphicon-menu.font-size-xlarge.m-top-1
         // /col-sm-6
         .col-sm-6.text-right
-          a.btn.btn-link.delete-link(href='#')
+          a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
             span.glyphicon.glyphicon-remove
         // /col-sm-6
       // /row
@@ -253,6 +253,23 @@ block body
     //
       modal-control-index-exclusive-type
       ==================================================
+    #modal-delete.modal.fade
+      .modal-dialog(role='document')
+        .modal-content.font-size-slarge
+          .modal-header.p-30
+            button.close(type='button', data-dismiss='modal', aria-label='Close')
+              span(aria-hidden='true') ×
+            h2.modal-title 刪除
+          // /modal-header
+          .modal-body.p-30.p-top-0
+            p 您確定要將此 Section 刪除？
+          // /modal-body
+          .modal-footer
+            button.btn.btn-default(type='button', data-dismiss='modal') 取消
+            button.btn.btn-green(type='button', data-dismiss='modal') 確定
+          // /modal-footer
+        // /modal-content
+      // /modal-dialog
     #modal-control-index-exclusive-type.modal.fade
       .modal-dialog(role='document')
         .modal-content
