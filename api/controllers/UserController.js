@@ -169,6 +169,23 @@ let UserController = {
   controlMembers: async function(req, res) {
 
     try {
+      console.log('query',req.query);
+      let query = req.query;
+      let queryObj = {};
+      if(query.fullName){
+        queryObj.fullName = { 'like': '%'+query.fullName+'%'};
+      }
+      if(query.keyword){
+        queryObj.comment = { 'like': '%'+query.keyword+'%'};
+      }
+      if(query.mobile){
+        queryObj.mobile = { 'like': '%'+query.mobile+'%'};
+      }
+      if(query.createdStart && query.createdEnd) {
+         queryObj.createdAt = { between : [new Date(query.createdStart), new Date(query.createdEnd)]};
+      }else if(query.createdStart || query.createdEnd) {
+        queryObj.createdAt = query.createdStart? { gte : new Date(query.createdStart)}: { lte : new Date(query.createdEnd)};
+      }
 
       let page = req.session.UserController_controlMembers_page =
       parseInt(req.param('page',
@@ -181,15 +198,16 @@ let UserController = {
       ));
 
       let members = await db.User.findAndCountAll({
+        where: queryObj,
         offset: page * limit,
         limit: limit
       });
-
       res.view({
         pageName: "members",
         members: members,
         page: page,
-        limit: limit
+        limit: limit,
+        query
       });
     }
     catch (error) {

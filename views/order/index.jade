@@ -95,6 +95,7 @@ block body
                 p.form-control-static 至
               .col-md-4
                 input.form-control(type='date', name='createdEnd', value = query.createdEnd?query.createdEnd: null)
+                input(type='hidden', name='page' value = query.page?query.page: 0)
             // /form-group
           // /col-md-8
           .col-md-12.text-right
@@ -109,12 +110,12 @@ block body
       form.form-inline
         .form-group
           label 顯示
-          select.form-control
-            option 10
-            option 20
-            option 30
-            option 40
-            option 50
+          select#order-query-limit.form-control
+            option(selected=(limit==10)) 10
+            option(selected=(limit==20)) 20
+            option(selected=(limit==30)) 30
+            option(selected=(limit==40)) 40
+            option(selected=(limit==50)) 50
           label 筆資料（共 90 筆）
         // /form-group
     // /col-md-6
@@ -140,7 +141,7 @@ block body
         th
           span.glyphicon.glyphicon-plus
     tbody
-      each order in orders
+      each order in orders.rows
         tr
           td
             input(type='checkbox')
@@ -252,10 +253,32 @@ block body
       ==================================================
     ul.list-inline.m-bottom-0.m-top-1
       li.border-right-1.p-right-2
-        a(href='#') 上一頁
-      li.border-right-1.p-right-2 第 15 之 20
+        a(href='#' id='previous') 上一頁
+      li.border-right-1.p-right-2 #{page + 1} / #{Math.ceil(orders.count / limit)}
       li
-        a(href='#') 下一頁
+        a(href='#' id='next') 下一頁
   // /text-center
 
+  block js
+    script.
+      $(function() {
+        $('#order-query-limit').change(function() {
+          location.href='/admin/order?limit='+$(this).val();
+        });
+
+        $('.form-control').change(function(){
+          $("input[name='page']").val(0);
+        });
+
+        $('#next').click(function(){
+          console.log()
+          $("input[name='page']").val(parseInt($("input[name='page']").val())+1);
+          $("form[name='searchOrders']").submit();
+        });
+
+        $('#previous').click(function(){
+          $("input[name='page']").val($(parseInt("input[name='page']").val())-1);
+          $("form[name='searchOrders']").submit();
+        });
+      });
 

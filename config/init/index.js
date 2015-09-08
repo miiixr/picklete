@@ -210,56 +210,6 @@ module.exports = {
     }
     var createOrderItems = await db.OrderItem.create(orderItems);
 
-
-    var newOrder2 = {
-      serialNumber: '0000001',
-      paymentIsConfirmed: true,
-      paymentTotalAmount: 1000,
-      paymentConfirmDate: Date.now(),
-      paymentConfirmName: '王小明',
-      paymentConfirmPostfix: '54321',
-      quantity: 5,
-      orderId: '1111',
-      UserId: createNewBuyer2.id,
-      ProductId: createdProduct.id
-    };
-    var createdOrder = await db.Order.create(newOrder2);
-
-    var shipment2 = {
-      username: '收件者2',
-      mobile: '0922-222-222',
-      taxId: '123456789',
-      email: 'receiver@gmail.com',
-      address: '收件者的家',
-      OrderId: createdOrder.id
-    }
-    var createShipment = await db.Shipment.create(shipment2);
-
-
-    var orderItems2 =[{
-      name: '好物三選1',
-      description: '好東西，買買買',
-      quantity: 1,
-      price: 500,
-      OrderId: createdOrder.id,
-      ProductId: createdProduct.id
-    },{
-      name: '好物三選2',
-      description: '好東西，買買買',
-      quantity: 2,
-      price: 100,
-      OrderId: createdOrder.id,
-      ProductId: createdProduct.id
-    },{
-      name: '好物三選3',
-      description: '好東西，買買買',
-      quantity: 3,
-      price: 200,
-      OrderId: createdOrder.id,
-      ProductId: createdProduct.id
-    }]
-    var createOrderItems = await db.OrderItem.bulkCreate(orderItems2);
-
     var brandExample = [{
       name: '好棒棒品牌',
       avatar: 'http://goo.gl/ksTMyn',
@@ -468,6 +418,56 @@ module.exports = {
         mobile: '0900'+randomInt(100000, 999999)
       };
       var createFakeUser = await db.User.create(fakeUser);
+
+      var newOrder2 = {
+        serialNumber: '00000'+i+1,
+        paymentIsConfirmed: true,
+        paymentTotalAmount: 1000,
+        paymentConfirmDate: randomDate(new Date(2015, 9, 8), new Date(2015, 9, 20)),
+        paymentConfirmName:  createFakeUser.fullName,
+        paymentConfirmPostfix: '54321',
+        quantity: randomInt(0,20),
+        orderId: randomInt(1000, 9999),
+        UserId: createFakeUser.id,
+        ProductId: createdProduct.id
+      };
+      var createdOrder = await db.Order.create(newOrder2);
+
+      var shipment2 = {
+        username: createFakeUser.fullName,
+        mobile: createFakeUser.mobile,
+        taxId: '123456789',
+        email: createFakeUser.email,
+        address: '收件者的家',
+        OrderId: createdOrder.id
+      }
+      var createShipment = await db.Shipment.create(shipment2);
+
+
+      var orderItems2 =[{
+        name: '好物三選1',
+        description: '好東西，買買買',
+        quantity: 1,
+        price: 500,
+        OrderId: createdOrder.id,
+        ProductId: createdProduct.id
+      },{
+        name: '好物三選2',
+        description: '好東西，買買買',
+        quantity: 2,
+        price: 100,
+        OrderId: createdOrder.id,
+        ProductId: createdProduct.id
+      },{
+        name: '好物三選3',
+        description: '好東西，買買買',
+        quantity: 3,
+        price: 200,
+        OrderId: createdOrder.id,
+        ProductId: createdProduct.id
+      }]
+      var createOrderItems = await db.OrderItem.bulkCreate(orderItems2);
+ 
     }
 
   }
