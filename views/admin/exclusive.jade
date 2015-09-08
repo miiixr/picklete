@@ -1,7 +1,7 @@
 extends ../_layout_auth
 
 block body
-  .col-sm-9.col-md-10
+  ul.col-sm-9.col-md-10
     h2.m-bottom-6 精選活動
     .row
       .col-xs-6
@@ -12,7 +12,7 @@ block body
       // /col-xs-6
     // /row
     hr.dashed-line
-    .well.control-well.p-10-20.m-bottom-8
+    li.well.control-well.p-10-20.m-bottom-8
       .row
         .col-sm-6
           span.glyphicon.glyphicon-menu.font-size-xlarge.m-top-1
@@ -52,7 +52,7 @@ block body
                 |  另開視窗
         // /form-group
     // /well
-    .well.control-well.p-10-20.m-bottom-8
+    li.well.control-well.p-10-20.m-bottom-8
       .row
         .col-sm-6
           span.glyphicon.glyphicon-menu.font-size-xlarge.m-top-1
@@ -93,7 +93,7 @@ block body
                 |  另開視窗
         // /form-group
     // /well
-    .well.control-well.p-10-20.m-bottom-8
+    li.well.control-well.p-10-20.m-bottom-8
       .row
         .col-sm-6
           span.glyphicon.glyphicon-menu.font-size-xlarge.m-top-1
@@ -159,7 +159,7 @@ block body
           // /col-xs-6
         // /row
     // /well
-    .well.control-well.p-10-20.m-bottom-8
+    li.well.control-well.p-10-20.m-bottom-8
       .row
         .col-sm-6
           span.glyphicon.glyphicon-menu.font-size-xlarge.m-top-1
@@ -339,3 +339,6 @@ block body
 
 block js
   script(src="/javascripts/admin/feature.js")
+
+  script.
+    $("ul").sortable();
