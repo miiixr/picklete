@@ -18,7 +18,7 @@ block body
           span.glyphicon.glyphicon-menu.font-size-xlarge.m-top-1
         // /col-sm-6
         .col-sm-6.text-right
-          a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
+          a.btn.btn-link.delete-link(href='#')
             span.glyphicon.glyphicon-remove
         // /col-sm-6
       // /row
@@ -58,7 +58,7 @@ block body
           span.glyphicon.glyphicon-menu.font-size-xlarge.m-top-1
         // /col-sm-6
         .col-sm-6.text-right
-          a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
+          a.btn.btn-link.delete-link(href='#')
             span.glyphicon.glyphicon-remove
         // /col-sm-6
       // /row
@@ -99,7 +99,7 @@ block body
           span.glyphicon.glyphicon-menu.font-size-xlarge.m-top-1
         // /col-sm-6
         .col-sm-6.text-right
-          a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
+          a.btn.btn-link.delete-link(href='#')
             span.glyphicon.glyphicon-remove
         // /col-sm-6
       // /row
@@ -165,7 +165,7 @@ block body
           span.glyphicon.glyphicon-menu.font-size-xlarge.m-top-1
         // /col-sm-6
         .col-sm-6.text-right
-          a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
+          a.btn.btn-link.delete-link(href='#')
             span.glyphicon.glyphicon-remove
         // /col-sm-6
       // /row
@@ -342,3 +342,11 @@ block js
 
   script.
     $("ul").sortable();
+
+    $('.row').on('click','.delete-link',function(e){
+      e.preventDefault();
+      var that = $(this);
+      if(that.context.nextElementSibling == null){
+        that.parent().parent().parent().remove();
+      }
+    });
