@@ -87,43 +87,38 @@ let ProductController = {
         return res.redirect('/admin/goods');
       }
 
-      let dptDisplay = [];
-      console.log('=== dpts ===', dpts);
+      // let dptDisplay = [];
 
+      let dptsJson = dpts.map((dpt) => dpt.toJSON());
 
       good.ProductGm.Dpts.forEach((productGmDpt) => {
 
-        let dptsJson = dpts.map((dpt) => dpt.toJSON());
-
-
         dptsJson.forEach((dpt) => {
-
-          if(dpt.id === productGmDpt.id) dpt.selected = true;
+          // if(!dpt.selected) dpt.selected={};
+          if(dpt.id === productGmDpt.id) {
+            dpt.selected = productGmDpt.id;
+          }
           else return;
 
 
           let {DptSubs} = dpt;
           good.ProductGm.DptSubs.forEach((productGmDptSubs) => {
             DptSubs.forEach((dptSub) => {
-              if(dptSub.id === productGmDptSubs.id) dptSub.selected = true;
+              // if(!dptSub.selected) dptSub.selected={};
+              if(dptSub.id === productGmDptSubs.id){
+                dptSub.selected = productGmDpt.id;
+              }
             });
           });
         });
 
-        dptDisplay.push(dptsJson);
-
       });
-
-      console.log('=== dptDisplay ===', dptDisplay.length);
-      console.log(dptDisplay[0][7]);
-
 
       // have to query this is
       return res.view('admin/goodUpdate', {
         good,
         brands,
-        dpts,
-        dptDisplay,
+        dpts: dptsJson,
         tags
       });
 

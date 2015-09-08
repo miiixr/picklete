@@ -39,15 +39,15 @@ block body
             .col-md-4
               select.form-control(name='dptId[]')
                 option 選擇大館別
-                each dpt in dptDisplay[i]
-                  option(value='#{dpt.id}', selected=dpt.selected) #{dpt.name}
+                each dpt in dpts
+                  option(value='#{dpt.id}', selected=dpt.selected == productGmDpt.id) #{dpt.name}
             .col-md-4
               select.form-control(name='dptSubId[]')
                 option 選擇小館別
-                each dpt in dptDisplay[i]
-                  if dpt.selected 
+                each dpt in dpts
+                  if dpt.selected == productGmDpt.id
                     each dptSub in dpt.DptSubs
-                      option(value='#{dptSub.id}', selected=dptSub.selected) #{dptSub.name}
+                      option(value='#{dptSub.id}', selected=dptSub.selected == productGmDpt.id) #{dptSub.name}
             .col-md-2
               a.btn-remove(href='#', disabled=true)
                 span.glyphicon.glyphicon-remove
