@@ -1,9 +1,10 @@
 (function ($) {
 
-  $(".fileinput").on('change.bs.fileinput', function (e) {
-    console.log(e);
-    console.log("click from select");
-    $('form#brand-avatar').ajaxSubmit(options).submit();
+  $("input.fileInput").on('change.bs.fileinput', function (e) {
+    // console.log(e);
+    // console.log("click from select");
+    var $form = $(this).parents("form").first();
+    $form.ajaxSubmit(options);
   });
 
   var options = {
@@ -17,7 +18,7 @@
     }
   };
 
-  $('form#brand-avatar').submit(function() {
-    return false;
-  });
+  // $('form#brand-avatar').submit(function() {
+  //   return false;
+  // });
 }(jQuery));

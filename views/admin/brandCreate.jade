@@ -19,14 +19,14 @@ block body
                 img.img-full(src=avatar)
               // /fileinput-new
               //- TODO: need to update brand
-              form#brand-avatar(action="/admin/image/upload", method="POST", enctype="multipart/form-data")
+              form(action="/admin/image/upload", method="POST", enctype="multipart/form-data")
                 .fileinput-preview.fileinput-exists.border-block-1
                 // /fileinput-preview
                 .fileinput-btn
                   span.btn.btn-default.btn-sm.btn-file
                     span.fileinput-new Select image
                     span.fileinput-exists Change
-                    input(type='file', name="uploadfile")
+                    input.fileInput(type='file', name="uploadfile")
                   a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
               // /fileinput-btn
             // /fileinput
@@ -35,51 +35,54 @@ block body
             span.glyphicon.glyphicon-info
         // /col-sm-10
       // /form-group
-      .form-group
-        label.col-sm-3.col-md-2.control-label 品牌名稱
-        .col-sm-9.col-md-5
-          input.form-control(type='text', name="name", placeholder='請輸入品牌名稱' value= brand?brand.name:"")
-        .col-sm-9.col-sm-offset-3.col-md-5.col-md-offset-0
-          label.radio-inline
-            input#inlineRadio1(type='radio', name='type', value='AGENT' checked=(brand&&brand.type=="AGENT")?"":undefined)
-            |  代理品牌
-          label.radio-inline
-            input#inlineRadio2(type='radio', name='type', value='PRIME_GOOD' checked=(brand&&brand.type=="PRIME_GOOD")?"":undefined)
-            |  精選品牌
-      // /form-group
-      .form-group
-        label.col-sm-3.col-md-2.control-label 品牌介紹
-        .col-sm-9.col-md-10
-          textarea.form-control(name='desc', rows='6' )= brand?brand.desc:""
-      // /form-group
+      form#brand-data
+        .form-group
+          label.col-sm-3.col-md-2.control-label 品牌名稱
+          .col-sm-9.col-md-5
+            input.form-control(type='text', name="name", placeholder='請輸入品牌名稱' value= brand?brand.name:"")
+          .col-sm-9.col-sm-offset-3.col-md-5.col-md-offset-0
+            label.radio-inline
+              input#inlineRadio1(type='radio', name='type', value='AGENT' checked=(brand&&brand.type=="AGENT")?"":undefined)
+              |  代理品牌
+            label.radio-inline
+              input#inlineRadio2(type='radio', name='type', value='PRIME_GOOD' checked=(brand&&brand.type=="PRIME_GOOD")?"":undefined)
+              |  精選品牌
+        // /form-group
+        .form-group
+          label.col-sm-3.col-md-2.control-label 品牌介紹
+          .col-sm-9.col-md-10
+            textarea.form-control(name='desc', rows='6' )= brand?brand.desc:""
+        // /form-group
   // /well
   .well.control-well.p-30.m-left-2.m-bottom-8
     h3
       span.label.label-default.p-10-15 形象照片
     .row.row-m
       - for (var i=1; i<=6; i++)
-        .col-md-4
-          .edit-block.m-bottom-4
-            span.badge=i
-            //
-              fileinput-img
-              ==================================================
-            .fileinput.fileinput-new(data-provides='fileinput')
-              .fileinput-new
-                img.img-full(src='http://fakeimg.pl/1100x500/dddddd/FFF/?text=1100x500')
-              // /fileinput-new
-              .fileinput-preview.fileinput-exists.border-block-1
-              // /fileinput-preview
-              .fileinput-btn
-                span.btn.btn-default.btn-sm.btn-file
-                  span.fileinput-new Select image
-                  span.fileinput-exists Change
-                  input(type='file', name='photos[]')
-                a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
-              // /fileinput-btn
-            // /fileinput
-          // /edit-block
-        // /col-md-4
+        form(action="/admin/image/upload", method="POST", enctype="multipart/form-data")
+          .col-md-4
+            .edit-block.m-bottom-4
+              span.badge=i
+              //
+                fileinput-img
+                ==================================================
+              .fileinput.fileinput-new(data-provides='fileinput')
+                .fileinput-new
+                  img.img-full(src='http://fakeimg.pl/1100x500/dddddd/FFF/?text=1100x500')
+                // /fileinput-new
+                .fileinput-preview.fileinput-exists.border-block-1
+                // /fileinput-preview
+                .fileinput-btn
+                  span.btn.btn-default.btn-sm.btn-file
+                    span.fileinput-new Select image
+                    span.fileinput-exists Change
+                    input.fileInput(type='file', name='uploadfile')
+                  a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
+                // /fileinput-btn
+              // /fileinput
+            // /edit-block
+          // /col-md-4
+        // /form
     // /row
     a(href='#', data-toggle='tooltip', title='', data-original-title='商品圖長寬 1100x500 像素，限 JPG/GIF 格式，檔案大小 500KB 以下')
       span.glyphicon.glyphicon-info
@@ -96,14 +99,16 @@ block body
       // /fileinput-new
       .fileinput-preview.fileinput-exists.border-block-1
       // /fileinput-preview
-      .fileinput-btn
-        span.btn.btn-default.btn-sm.btn-file
-          span.fileinput-new Select image
-          span.fileinput-exists Change
-          input(type='file', name='banner')
-        a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
-      // /fileinput-btn
-    // /fileinput
+      form(action="/admin/image/upload", method="POST", enctype="multipart/form-data")
+        .fileinput-btn
+          span.btn.btn-default.btn-sm.btn-file
+            span.fileinput-new Select image
+            span.fileinput-exists Change
+            input.fileInput(type='file', name='uploadfile')
+          a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
+        // /fileinput-btn
+      // /fileinput
+      // /form
     a(href='#', data-toggle='tooltip', title='', data-original-title='商品圖長寬 1100x250 像素，限 JPG/GIF 格式，檔案大小 500KB 以下')
       span.glyphicon.glyphicon-info
   // /well
