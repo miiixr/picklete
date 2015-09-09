@@ -86,57 +86,57 @@ let UserController = {
     });
   },
   controlShopItemAdd: function(req, res) {
-    res.view({
+    res.view('user/controlShopItemAdd',{
       pageName: "shop-item-add"
     });
   },
   controlShopDiscount: function(req, res) {
-    res.view({
+      res.view('user/controlShopDiscount',{
       pageName: "shop-discount"
     });
   },
   controlShopDiscountDetail: function(req, res) {
-    res.view({
+    res.view('user/controlShopDiscountDetail',{
       pageName: "shop-discount-detail"
     });
   },
   controlShopDiscountDetail2: function(req, res) {
-    res.view({
+    res.view('user/controlShopDiscountDetail2',{
       pageName: "shop-discount-detail2"
     });
   },
   controlShopDiscountAddItem: function(req, res) {
-    res.view({
+    res.view('user/controlShopDiscountAddItem',{
       pageName: "shop-discount-add-item"
     });
   },
   controlShopBuyMore: function(req, res) {
-    res.view({
+    res.view('user/controlShopBuyMore',{
       pageName: "shop-buy-more"
     });
   },
   controlShopBuyMoreDetail: function(req, res) {
-    res.view({
+    res.view('user/controlShopBuyMoreDetail',{
       pageName: "shop-buy-more-detail"
     });
   },
   controlShopBuyMoreAddItem: function(req, res) {
-    res.view({
+    res.view('user/controlShopBuyMoreAddItem',{
       pageName: "shop-buy-more-add-item"
     });
   },
   controlShopCode: function(req, res) {
-    res.view({
+    res.view('user/controlShopCode',{
       pageName: "shop-code"
     });
   },
   controlShopCodeDetail: function(req, res) {
-    res.view({
+    res.view('user/controlShopCodeDetail',{
       pageName: "shop-code-detail"
     });
   },
   controlShopReportForm: function(req, res) {
-    res.view({
+    res.view('user/controlShopReportForm',{
       pageName: "shop-report-form"
     });
   },

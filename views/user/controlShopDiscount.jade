@@ -31,24 +31,28 @@ block body
           span.caret
         th
     tbody
-      tr
-        td
-          img.width-10(src='images/demo/shop-item-1-1.jpg')
-        td {discount_name}
-        td {activity_name}
-        td 2015/06/08 - 2015/06/30
-        td.text-right
-          a.btn.btn-link(href='shop-discount-detail')
-            span.glyphicon.glyphicon-pencil2
-      tr
-        td
-          img.width-10(src='images/demo/shop-item-3-1.jpg')
-        td {discount_name}
-        td {activity_name}
-        td 2015/06/08 - 2015/06/30
-        td.text-right
-          a.btn.btn-link(href='shop-discount-detail2')
-            span.glyphicon.glyphicon-pencil2
+      if (Object.keys(promotions).length == 0)
+        script.
+          alert('找不到符合的promotions')
+      each promotion in promotions
+        tr
+          td
+            img.width-10(src='images/demo/shop-item-1-1.jpg')
+          td #{promotion.title}
+          td #{promotion.type}
+          td #{promotion.startDate} - #{promotion.endDate}
+          td.text-right
+            a.btn.btn-link(href='shop-discount-detail')
+              span.glyphicon.glyphicon-pencil2
+      //- tr
+      //-   td
+      //-     img.width-10(src='images/demo/shop-item-3-1.jpg')
+      //-   td {discount_name}
+      //-   td {activity_name}
+      //-   td 2015/06/08 - 2015/06/30
+      //-   td.text-right
+      //-     a.btn.btn-link(href='shop-discount-detail2')
+      //-       span.glyphicon.glyphicon-pencil2
   hr.dashed-line
   .text-center
     //
