@@ -1,5 +1,6 @@
-
-let moment = require("moment");
+/*
+  ProductController.js
+*/
 
 let PromotionController = {
 

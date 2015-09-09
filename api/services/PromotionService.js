@@ -3,6 +3,10 @@ import fs from 'fs';
 import mime from "mime";
 import util from "util";
 
+/*
+  PromotionService.js
+*/
+
 module.exports = {
 
   // findAll
@@ -15,12 +19,14 @@ module.exports = {
   // create
   create: async (promotion) => {
     try {
+      console.log('=== raw promotion ==>',promotion);
       let createdPromotion = await db.Promotion.create(promotion);
-      console.log('== createdPromotion ==>',createdPromotion);
+      console.log('=== createdPromotion ==>',createdPromotion);
+      return createdPromotion;
     } catch (e) {
       console.log('=== create err ==>',e);
+      return false;
     }
-    return createdPromotion;
   },
   // end create
 
@@ -41,10 +47,11 @@ module.exports = {
       updatePromoiton.endDate = promotion.endDate;
       updatePromoiton.discount = promotion.discount;
       await updatePromoiton.save();
+      return updatePromoiton;
     } catch (e) {
       console.log('=== update err ==>',e);
+      return false;
     }
-    return updatePromoiton;
   },
   // end update
 
@@ -57,15 +64,11 @@ module.exports = {
         throw new Error('cant find this promotion! id is ==>',promotion.id);
       }
       await findPromotion.destroy();
-      // let ensureDelete = await db.Product.findById(promotion.id);
-      // if (ensureDelete) {
-      //   throw new Error('delete失敗');
-      // }
+      return true;
     } catch (e) {
       console.log('=== delete err ==>',e);
       return false;
     }
-    return true;
   }
   // end delete
 
