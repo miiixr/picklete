@@ -443,7 +443,6 @@ module.exports = {
       }
       var createShipment = await db.Shipment.create(shipment2);
 
-
       var orderItems2 =[{
         name: '好物三選1',
         description: '好東西，買買買',
@@ -467,8 +466,28 @@ module.exports = {
         ProductId: createdProduct.id
       }]
       var createOrderItems = await db.OrderItem.bulkCreate(orderItems2);
- 
     }
+
+    // promotions
+    var promotion1 = {
+      title : 'test',
+      description : 'this is a test promotion',
+      type : '1',
+      startDate : '2015/01/01',
+      endDate : '2016/01/01',
+      discount : 0.85
+    }
+    var promotion2 = {
+      title : 'all sale',
+      description : 'this is a test promotion',
+      type : '2',
+      startDate : '2015/01/01',
+      endDate : '2016/01/01',
+      discount : 0.5
+    }
+    var createPromotion1 = await db.Promotion.create(promotion1);
+    var createPromotion2 = await db.Promotion.create(promotion2);
+    // end promotions
 
   }
 }
