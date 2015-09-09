@@ -154,10 +154,11 @@ OrderController = {
   status: async function(req, res) {
 
     try{
-
-      var orderSyncToken = req.query.token;
+      console.log('req',req.query);
+      var email = req.query.email;
+      console.log('orderSyncToken!!',email);
       let userData = await db.User.findOne({
-        where: {orderSyncToken}
+        where: {email}
       });
 
       if (!userData) {
