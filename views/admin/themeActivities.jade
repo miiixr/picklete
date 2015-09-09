@@ -210,7 +210,7 @@ block body
               input.form-control#productUrl2(type='url', placeholder='http://')
               .checkbox
                 label
-                  input(type='checkbox')
+                  input#checkbox(type='checkbox')
                   |  另開視窗
             // /form-group
         // /modal-body
@@ -246,8 +246,21 @@ block js
 
     $('.modal-content').on('click','.btn-green',function(e){
       e.preventDefault();
+      $ratio = $('input[name=optionsRadios]:checked').val(); 
+      $checkbox = $('input[type=checkbox]:checked').val() || false; 
       $productUrl1 = $('#productUrl1').val();
       $productUrl2 = $('#productUrl2').val();
+      $fileinput = 'image_url';
+
+      console.log($ratio);
+      console.log($productUrl1);
+      console.log($productUrl2);
+      console.log($fileinput);
+      console.log($checkbox);
+
+
     });
+
+
 
     
