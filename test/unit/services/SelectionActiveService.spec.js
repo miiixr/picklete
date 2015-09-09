@@ -9,16 +9,17 @@ describe("SelectionActiveService", () => {
       let selectionActives = result;
 
       selectionActives.length.length.should.be.equal(4);
-      selectionActives[0].type.should.be.equal("oneLong");
+      selectionActives[0].link.should.be.equal("oneLong");
       selectionActives[0].Images.length.should.be.equal(1);
+      selectionActives[0].Images.should.have.property('link', 'path', 'openWindow');
 
-      selectionActives[1].type.should.be.equal("oneBig");
+      selectionActives[1].link.should.be.equal("oneBig");
       selectionActives[1].Images.length.should.be.equal(1);
 
-      selectionActives[2].type.should.be.equal("two");
+      selectionActives[2].link.should.be.equal("two");
       selectionActives[2].Images.length.should.be.equal(2);
 
-      selectionActives[3].type.should.be.equal("three");
+      selectionActives[3].link.should.be.equal("three");
       selectionActives[3].Images.length.should.be.equal(3);
 
 
@@ -37,41 +38,34 @@ describe("SelectionActiveService", () => {
         {
           type: 'oneLong',
           Images: [{
-            type: '1100X160',
-            link: '',
+            link: '1100X160',
             path: ''
           }]
         },{
           type: 'oneBig',
           Images: [{
-            type: '1100X350',
-            link: '',
+            link: '1100X350',
             path: ''
           }]
         },{
           type: 'two',
           Images: [{
-            type: '545X350',
-            link: '',
+            link: '545X350',
             path: ''
           },{
-            type: '545X350',
-            link: '',
+            link: '545X350',
             path: ''
           }]
         },{
           type: 'three',
           Images: [{
-            type: '360X240',
-            link: '',
+            link: '360X240',
             path: ''
           },{
-            type: '360X240',
-            link: '',
+            link: '360X240',
             path: ''
           },{
-            type: '360X240',
-            link: '',
+            link: '360X240',
             path: ''
           }]
         }

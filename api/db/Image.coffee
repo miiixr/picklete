@@ -1,11 +1,12 @@
 
 module.exports = (sequelize, DataTypes) ->
   Image = sequelize.define('Image', {
-    type: DataTypes.ENUM('1100X160', '1100X350', '545X350', '360X240')
     link: DataTypes.STRING
     path: DataTypes.STRING
-
-
+    openWindow: {
+      type: DataTypes.BOOLEAN
+      defaultValue: false
+    }
   }, classMethods: associate: (models) ->
     return
   )

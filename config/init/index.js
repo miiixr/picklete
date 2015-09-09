@@ -472,19 +472,19 @@ module.exports = {
 
     let images = [
       {
-        type: '1100X160'
+        link: '1100X160'
       },{
-        type: '1100X350'
+        link: '1100X350'
       },{
-        type: '545X350'
+        link: '545X350'
       },{
-        type: '545X350'
+        link: '545X350'
       },{
-        type: '360X240'
+        link: '360X240'
       },{
-        type: '360X240'
+        link: '360X240'
       },{
-        type: '360X240'
+        link: '360X240'
       }
     ]
 
