@@ -33,13 +33,15 @@
     that.parent().parent().parent().find('.color-filter.dropdown').attr('class', that.attr('class')+' dropdown');
   });
 
-  $('form').on('click','.btn-add',function(e){
+  $('.well').on('click','.btn-add',function(e){
     e.preventDefault();
     var that = $(this);
+    console.log(that);
     var s = $(that.parent().parent()).prop('outerHTML');
     that.parent().parent().after(s);
     that.remove();
   });
+
 
   $('.row').on('click','.btn-remove',function(e){
     e.preventDefault();

@@ -467,8 +467,50 @@ module.exports = {
         ProductId: createdProduct.id
       }]
       var createOrderItems = await db.OrderItem.bulkCreate(orderItems2);
- 
+
     }
+
+    let images = [
+      {
+        link: 'http://fakeimg.pl/1100x160'
+      },{
+        link: 'http://fakeimg.pl/1100x350'
+      },{
+        link: 'http://fakeimg.pl/545x350'
+      },{
+        link: 'http://fakeimg.pl/545x350'
+      },{
+        link: 'http://fakeimg.pl/360x240'
+      },{
+        link: 'http://fakeimg.pl/360x240'
+      },{
+        link: 'http://fakeimg.pl/360x240'
+      }
+    ]
+
+    let createdImages = await* images.map((image) => db.Image.create(image));
+
+    let selectionActives = [
+      {
+        type: 'oneLong'
+      },{
+        type: 'oneBig'
+      },{
+        type: 'two'
+      },{
+        type: 'three'
+      }
+    ]
+
+    let createdSelectionActive = await* selectionActives.map((selectionActive) =>
+      db.SelectionActive.create(selectionActive)
+    );
+
+    await createdSelectionActive[0].setImages([createdImages[0]]);
+    await createdSelectionActive[1].setImages([createdImages[1]]);
+    await createdSelectionActive[2].setImages([createdImages[2], createdImages[3]]);
+    await createdSelectionActive[3].setImages([createdImages[4], createdImages[5], createdImages[6]]);
+
 
   }
 }

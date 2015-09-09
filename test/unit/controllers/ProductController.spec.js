@@ -276,7 +276,7 @@ describe("about Product", () => {
   });
 
 
-  it.only(' create a product,Single file, test about - ProductController.createUpdate', (done) => {
+  it(' create a product,Single file, test about - ProductController.createUpdate', (done) => {
     var avatar = path.join(process.cwd(), './test/unit/resources/avatar.jpg');
     var brand = path.join(process.cwd(), './test/unit/resources/brand.jpg');
     var banner = path.join(process.cwd(), './test/unit/resources/brand.jpg');

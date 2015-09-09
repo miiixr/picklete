@@ -141,9 +141,7 @@ OrderController = {
 
     var newOrder = req.body.order;
     try {
-
       let result = await OrderService.create(newOrder);
-
       return res.ok(result);
     } catch (e) {
       console.error(e.stack);
@@ -157,9 +155,10 @@ OrderController = {
 
     try{
 
-      var orderSyncToken = req.query.token;
+      var email = req.query.email;
+      
       let userData = await db.User.findOne({
-        where: {orderSyncToken}
+        where: {email}
       });
 
       if (!userData) {
