@@ -45,6 +45,8 @@ module.exports = {
       await production.createBasicData();
 
   },
+
+  // testDate
   testData: async () => {
 
     if(sails.config.initData){
@@ -468,26 +470,68 @@ module.exports = {
       var createOrderItems = await db.OrderItem.bulkCreate(orderItems2);
     }
 
+    let images = [
+      {
+        link: 'http://fakeimg.pl/1100x160'
+      },{
+        link: 'http://fakeimg.pl/1100x350'
+      },{
+        link: 'http://fakeimg.pl/545x350'
+      },{
+        link: 'http://fakeimg.pl/545x350'
+      },{
+        link: 'http://fakeimg.pl/360x240'
+      },{
+        link: 'http://fakeimg.pl/360x240'
+      },{
+        link: 'http://fakeimg.pl/360x240'
+      }
+    ]
+
+    let createdImages = await* images.map((image) => db.Image.create(image));
+
+    let selectionActives = [
+      {
+        type: 'oneLong'
+      },{
+        type: 'oneBig'
+      },{
+        type: 'two'
+      },{
+        type: 'three'
+      }
+    ]
+
+    let createdSelectionActive = await* selectionActives.map((selectionActive) =>
+      db.SelectionActive.create(selectionActive)
+    );
+
+    await createdSelectionActive[0].setImages([createdImages[0]]);
+    await createdSelectionActive[1].setImages([createdImages[1]]);
+    await createdSelectionActive[2].setImages([createdImages[2], createdImages[3]]);
+    await createdSelectionActive[3].setImages([createdImages[4], createdImages[5], createdImages[6]]);
+
     // promotions
     var promotion1 = {
-      title : 'test',
+      title : 'best price!',
       description : 'this is a test promotion',
-      type : '1',
-      startDate : '2015/01/01',
-      endDate : '2016/01/01',
-      discount : 0.85
+      startDate : randomDate(new Date(2015, 9, 8), new Date(2015, 9, 20)),
+      endDate : randomDate(new Date(2015, 9, 8), new Date(2016, 9, 20)),
+      price : 2999.97
     }
     var promotion2 = {
-      title : 'all sale',
+      title : '50% sale!',
       description : 'this is a test promotion',
-      type : '2',
-      startDate : '2015/01/01',
-      endDate : '2016/01/01',
+      startDate : randomDate(new Date(2015, 9, 8), new Date(2015, 9, 20)),
+      endDate : randomDate(new Date(2015, 9, 8), new Date(2016, 9, 20)),
       discount : 0.5
     }
     var createPromotion1 = await db.Promotion.create(promotion1);
     var createPromotion2 = await db.Promotion.create(promotion2);
     // end promotions
 
+
+
   }
+  // end testData
 }

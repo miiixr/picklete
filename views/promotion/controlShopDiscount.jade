@@ -40,7 +40,10 @@ block body
             img.width-10(src='images/demo/shop-item-1-1.jpg')
           td #{promotion.title}
           td #{promotion.type}
-          td #{promotion.startDate} - #{promotion.endDate}
+          td 
+            span= sails.moment(promotion.startDate).format('YYYY/MM/DD hh:mm')
+            span= " - "
+            span= sails.moment(promotion.endDate).format('YYYY/MM/DD hh:mm')
           td.text-right
             a.btn.btn-link(href='shop-discount-detail')
               span.glyphicon.glyphicon-pencil2
@@ -66,4 +69,4 @@ block body
         a(href='#') 下一頁
   // /text-center
   block js
-    script(src="/javascripts/admin/goodList.js")
+    script(src="/javascripts/admin/discount.js")

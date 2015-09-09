@@ -1,5 +1,5 @@
 import moment from 'moment';
-describe.only("about product service", () => {
+describe("about product service", () => {
   let createdProduct, createdProductGm;
   let productGmA, productGmB, dptA, dptB, dptSubA, dptSubB;
   before(async (done) => {
