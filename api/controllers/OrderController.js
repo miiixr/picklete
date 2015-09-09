@@ -154,9 +154,9 @@ OrderController = {
   status: async function(req, res) {
 
     try{
-      console.log('req',req.query);
+
       var email = req.query.email;
-      console.log('orderSyncToken!!',email);
+      
       let userData = await db.User.findOne({
         where: {email}
       });
