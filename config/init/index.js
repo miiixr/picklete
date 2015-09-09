@@ -472,19 +472,19 @@ module.exports = {
 
     let images = [
       {
-        link: '1100X160'
+        link: 'http://fakeimg.pl/1100x160'
       },{
-        link: '1100X350'
+        link: 'http://fakeimg.pl/1100x350'
       },{
-        link: '545X350'
+        link: 'http://fakeimg.pl/545x350'
       },{
-        link: '545X350'
+        link: 'http://fakeimg.pl/545x350'
       },{
-        link: '360X240'
+        link: 'http://fakeimg.pl/360x240'
       },{
-        link: '360X240'
+        link: 'http://fakeimg.pl/360x240'
       },{
-        link: '360X240'
+        link: 'http://fakeimg.pl/360x240'
       }
     ]
 
