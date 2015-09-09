@@ -12,7 +12,8 @@ block body
     li.well.control-well.p-10-20.m-bottom-4.imageSection
       .row
         .col-sm-6
-          span.glyphicon.glyphicon-menu.font-size-xlarge.m-top-1
+          span.glyphicon.glyphicon-menu.font-size-xlarge.m-top-1 
+          input.weight(type='hidden', name='weight', value=0)
         // /col-sm-6
         .col-sm-6.text-right
           a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
@@ -28,7 +29,7 @@ block body
                   control-index-theme-block
                   ==================================================
                 .dashed-block-2.fileinput-square.bg-white.text-center
-                  a(href='#', data-toggle='modal', data-target='#modal-control-index-theme')
+                  a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="1")
                     span.glyphicon.glyphicon-plus.font-size-xxxxlarge
                 // /fileinput-square
               // m-bottom-4
@@ -39,7 +40,7 @@ block body
                   control-index-theme-block
                   ==================================================
                 .dashed-block-2.fileinput-square.bg-white.text-center
-                  a(href='#', data-toggle='modal', data-target='#modal-control-index-theme')
+                  a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="2")
                     span.glyphicon.glyphicon-plus.font-size-xxxxlarge
                 // /fileinput-square
               // m-bottom-4
@@ -50,7 +51,7 @@ block body
                   control-index-theme-block
                   ==================================================
                 .dashed-block-2.fileinput-square.bg-white.text-center
-                  a(href='#', data-toggle='modal', data-target='#modal-control-index-theme')
+                  a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="3")
                     span.glyphicon.glyphicon-plus.font-size-xxxxlarge
                 // /fileinput-square
               // m-bottom-4
@@ -65,7 +66,7 @@ block body
                   control-index-theme-block
                   ==================================================
                 .dashed-block-2.fileinput-square.bg-white.text-center
-                  a(href='#', data-toggle='modal', data-target='#modal-control-index-theme')
+                  a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="4")
                     span.glyphicon.glyphicon-plus.font-size-xxxxlarge
                 // /fileinput-square
               // m-bottom-4
@@ -76,7 +77,7 @@ block body
                   control-index-theme-block
                   ==================================================
                 .dashed-block-2.fileinput-square.bg-white.text-center
-                  a(href='#', data-toggle='modal', data-target='#modal-control-index-theme')
+                  a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="5")
                     span.glyphicon.glyphicon-plus.font-size-xxxxlarge
                 // /fileinput-square
               // m-bottom-4
@@ -87,7 +88,7 @@ block body
                   control-index-theme-block
                   ==================================================
                 .dashed-block-2.fileinput-square.bg-white.text-center
-                  a(href='#', data-toggle='modal', data-target='#modal-control-index-theme')
+                  a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="6")
                     span.glyphicon.glyphicon-plus.font-size-xxxxlarge
                 // /fileinput-square
               // m-bottom-4
@@ -102,7 +103,7 @@ block body
                   control-index-theme-block
                   ==================================================
                 .dashed-block-2.fileinput-square.bg-white.text-center
-                  a(href='#', data-toggle='modal', data-target='#modal-control-index-theme')
+                  a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="7")
                     span.glyphicon.glyphicon-plus.font-size-xxxxlarge
                 // /fileinput-square
               // m-bottom-4
@@ -113,7 +114,7 @@ block body
                   control-index-theme-block
                   ==================================================
                 .dashed-block-2.fileinput-square.bg-white.text-center
-                  a(href='#', data-toggle='modal', data-target='#modal-control-index-theme')
+                  a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="8")
                     span.glyphicon.glyphicon-plus.font-size-xxxxlarge
                 // /fileinput-square
               // m-bottom-4
@@ -124,7 +125,7 @@ block body
                   control-index-theme-block
                   ==================================================
                 .dashed-block-2.fileinput-square.bg-white.text-center
-                  a(href='#', data-toggle='modal', data-target='#modal-control-index-theme')
+                  a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="9")
                     span.glyphicon.glyphicon-plus.font-size-xxxxlarge
                 // /fileinput-square
               // m-bottom-4
@@ -239,27 +240,36 @@ block js
       });
     });
     
+    var $weightCount = 1;
     var $imageSection = $('li.imageSection')[0].outerHTML;
     $('body').on('click','.btn-add',function(e){
       $('ul.imageSection').append($imageSection);
+      $('li.imageSection').last().find('input').attr('value', $weightCount);
+      $weightCount = $weightCount + 1;
+      
+    });
+    
+    var $weight, $id;
+    $(document).on("click", ".fileinput-square a", function (e) {
+      var that = $(this);
+      $weight = parseInt(that.parent().parent().parent().parent().parent().parent().parent().find('input[name="weight"]').val());
+      $id = that.data('id');
+      console.log($weight, $id);
+
     });
 
-    $('.modal-content').on('click','.btn-green',function(e){
+    $('.modal-content').on('click', '.btn-green', function(e){
       e.preventDefault();
+      var that = $(this);
       $ratio = $('input[name=optionsRadios]:checked').val(); 
       $checkbox = $('input[type=checkbox]:checked').val() || false; 
       $productUrl1 = $('#productUrl1').val();
       $productUrl2 = $('#productUrl2').val();
       $fileinput = 'image_url';
-
-      console.log($ratio);
-      console.log($productUrl1);
-      console.log($productUrl2);
-      console.log($fileinput);
-      console.log($checkbox);
-
-
+      $("input[value='"+$weight+"']").parent().parent().parent().find("a[data-id='"+$id+"']").attr('href', 'http://test/'+$weight+$id);
     });
+
+
 
 
 
