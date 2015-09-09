@@ -17,7 +17,7 @@
       console.log(responseText);
       console.log(statusText);
       if(statusText == 'success') {
-        $('input[name='+inputName+']').val(responseText);
+        $('input[name="'+inputName+'"]').val(responseText);
       }
     }
   };
