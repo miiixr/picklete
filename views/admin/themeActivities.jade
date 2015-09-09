@@ -8,8 +8,8 @@ block body
     input.form-control(type='text', placeholder='請輸入主題活動標題')
   // /form-group
 
-  ul
-    li.well.control-well.p-10-20.m-bottom-4
+  ul.imageSection
+    li.well.control-well.p-10-20.m-bottom-4.imageSection
       .row
         .col-sm-6
           span.glyphicon.glyphicon-menu.font-size-xlarge.m-top-1
@@ -691,13 +691,32 @@ block body
         // /col-sm-4
       // /row
     // /well
-  
-  button.btn.btn-default(type='button') 新增圖片區塊
+
+  button.btn.btn-add.btn-default(type='button') 新增圖片區塊
   hr.dashed-line
   .text-center.m-bottom-6.m-top-6
     a.btn.btn-link.delete-link.btn-lg(href='#', data-toggle='modal', data-target='#modal-delete') 刪除主題活動
     a.btn.btn-green.btn-lg(href='#') 儲存變更
   // /text-center
+
+  #modal-delete.modal.fade
+    .modal-dialog(role='document')
+      .modal-content.font-size-slarge
+        .modal-header.p-30
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') ×
+          h2.modal-title 刪除
+        // /modal-header
+        .modal-body.p-30.p-top-0
+          p 您確定要將此 Section 刪除？
+        // /modal-body
+        .modal-footer
+          button.btn.btn-default(type='button', data-dismiss='modal') 取消
+          button.btn.btn-green(type='button', data-dismiss='modal') 確定
+        // /modal-footer
+      // /modal-content
+    // /modal-dialog
+
 
 block js
   script(src="/javascripts/admin/themeActivities.js")
@@ -705,3 +724,18 @@ block js
   script.
 
     $("ul").sortable();
+
+    $('.row').on('click','.delete-link',function(e){
+      e.preventDefault();
+      var that = $(this);
+      $('#modal-delete').on('click','.btn-green',function(e){
+        if(that.context.nextElementSibling == null){
+          that.parent().parent().parent().remove();
+        }
+      });
+    });
+    
+    var $imageSection = $('li.imageSection')[0].outerHTML;
+    $('body').on('click','.btn-add',function(e){
+      $('ul.imageSection').append($imageSection);
+    });
