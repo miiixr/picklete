@@ -26,6 +26,12 @@ module.exports.policies = {
     list: ['loginRequired']
   OrderController:
     index: ['loginRequired']
+    paymentConfirm: []
+    paymentConfirmSave: []
+    create: []
+    status: []
+    find: []
+    sync: []
 
 }
 
