@@ -64,19 +64,19 @@ module.exports.routes = {
   'post /admin/goods/create' : 'ProductController.createUpdate'
   'post /admin/image/upload' : 'ImageController.upload'
 
-
-
+  # promotions
+  'get /admin/shop-discount' : 'PromotionController.list'
+  'get /admin/shop-discount-detail' : 'UserController.controlShopDiscountDetail'
+  'get /admin/shop-discount-detail2' : 'UserController.controlShopDiscountDetail2'
+  'get /admin/shop-discount-add-item' : 'UserController.controlShopDiscountAddItem'
+  # end promotions
 
   # 'get /admin/shop-item-list' : 'UserController.controlShopItemList'
-  'get /admin/shop-discount' : 'UserController.controlShopDiscount'
   'get /admin/shop-buy-more' : 'UserController.controlShopBuyMore'
   'get /admin/shop-buy-more-detail' : 'UserController.controlShopBuyMoreDetail'
   'get /admin/shop-buy-more-add-item' : 'UserController.controlShopBuyMoreAddItem'
   'get /admin/shop-code' : 'UserController.controlShopCode'
   'get /admin/shop-code-detail' : 'UserController.controlShopCodeDetail'
-  'get /admin/shop-discount-detail' : 'UserController.controlShopDiscountDetail'
-  'get /admin/shop-discount-detail2' : 'UserController.controlShopDiscountDetail2'
-  'get /admin/shop-discount-add-item' : 'UserController.controlShopDiscountAddItem'
   'get /admin/shop-report-form' : 'UserController.controlShopReportForm'
   'get /admin/order' : 'OrderController.index'
   'get /admin/about' : 'UserController.controlAbout'
