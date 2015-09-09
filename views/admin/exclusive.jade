@@ -1,7 +1,7 @@
 extends ../_layout_auth
 
 block body
-  .col-sm-9.col-md-10
+  ul.col-sm-9.col-md-10
     h2.m-bottom-6 精選活動
     .row
       .col-xs-6
@@ -12,7 +12,7 @@ block body
       // /col-xs-6
     // /row
     hr.dashed-line
-    .well.control-well.p-10-20.m-bottom-8
+    li.well.control-well.p-10-20.m-bottom-8.type1
       .row
         .col-sm-6
           span.glyphicon.glyphicon-menu.font-size-xlarge.m-top-1
@@ -52,7 +52,7 @@ block body
                 |  另開視窗
         // /form-group
     // /well
-    .well.control-well.p-10-20.m-bottom-8
+    li.well.control-well.p-10-20.m-bottom-8.type2
       .row
         .col-sm-6
           span.glyphicon.glyphicon-menu.font-size-xlarge.m-top-1
@@ -93,7 +93,7 @@ block body
                 |  另開視窗
         // /form-group
     // /well
-    .well.control-well.p-10-20.m-bottom-8
+    li.well.control-well.p-10-20.m-bottom-8.type3
       .row
         .col-sm-6
           span.glyphicon.glyphicon-menu.font-size-xlarge.m-top-1
@@ -159,7 +159,7 @@ block body
           // /col-xs-6
         // /row
     // /well
-    .well.control-well.p-10-20.m-bottom-8
+    li.well.control-well.p-10-20.m-bottom-8.type4
       .row
         .col-sm-6
           span.glyphicon.glyphicon-menu.font-size-xlarge.m-top-1
@@ -251,7 +251,7 @@ block body
                     |  另開視窗
               
     //
-      modal-delete
+      modal-control-index-exclusive-type
       ==================================================
     #modal-delete.modal.fade
       .modal-dialog(role='document')
@@ -262,8 +262,7 @@ block body
             h2.modal-title 刪除
           // /modal-header
           .modal-body.p-30.p-top-0
-            p 您確定要將此 XXXXXXX 刪除？
-            p 您確定要將此 XXXXXXX 移出此折扣活動？
+            p 您確定要將此 Section 刪除？
           // /modal-body
           .modal-footer
             button.btn.btn-default(type='button', data-dismiss='modal') 取消
@@ -271,10 +270,6 @@ block body
           // /modal-footer
         // /modal-content
       // /modal-dialog
-    // /modal
-    //
-      modal-control-index-exclusive-type
-      ==================================================
     #modal-control-index-exclusive-type.modal.fade
       .modal-dialog(role='document')
         .modal-content
@@ -289,19 +284,19 @@ block body
                 .col-sm-6
                   .checkbox
                     label
-                      input(type='checkbox', value='', checked='')
+                      input(type='checkbox', name='exclusive-type', value='1', checked='')
                       img.img-full(src='http://fakeimg.pl/1100x160/dddddd/FFF/?text=1100x160')
                 // /col-sm-6
                 .col-sm-6
                   .checkbox
                     label
-                      input(type='checkbox', value='')
+                      input(type='checkbox', name='exclusive-type',, value='2')
                       img.img-full(src='http://fakeimg.pl/1100x350/dddddd/FFF/?text=1100x350')
                 // /col-sm-6
                 .col-sm-6
                   .checkbox
                     label
-                      input(type='checkbox', value='')
+                      input(type='checkbox', name='exclusive-type', value='3')
                       .row.row-s
                         .col-xs-6
                           img.img-full(src='http://fakeimg.pl/545x350/dddddd/FFF/?text=545x350')
@@ -314,7 +309,7 @@ block body
                 .col-sm-6
                   .checkbox
                     label
-                      input(type='checkbox', value='')
+                      input(type='checkbox', name='exclusive-type', value='4')
                       .row.row-s
                         .col-xs-4
                           img.img-full(src='http://fakeimg.pl/360x230/dddddd/FFF/?text=360x230')
@@ -338,4 +333,4 @@ block body
     // /modal
 
 block js
-  script(src="/javascripts/admin/feature.js")
+  script(src="/javascripts/admin/exclusive.js")

@@ -214,10 +214,16 @@ let UserController = {
       return res.serverError(error);
     }
   },
-  controlMemberDetail: function(req, res) {
-    res.view({
-      pageName: "member-detail"
-    });
+  controlMemberDetail: async function(req, res) {
+    try {
+      res.view({
+        pageName: "member-detail",
+        member: await db.User.findById(req.param('id'))
+      });
+    }
+    catch (error) {
+      return res.serverError(error);
+    }
   },
 
   index: async (req, res) => {
