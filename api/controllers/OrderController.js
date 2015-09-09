@@ -141,9 +141,7 @@ OrderController = {
 
     var newOrder = req.body.order;
     try {
-
       let result = await OrderService.create(newOrder);
-
       return res.ok(result);
     } catch (e) {
       console.error(e.stack);
