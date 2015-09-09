@@ -32,6 +32,7 @@ module.exports.policies = {
     status: []
     find: []
     sync: []
+    bonus: []
 
 }
 
