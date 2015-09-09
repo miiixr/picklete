@@ -5,57 +5,68 @@ import util from "util";
 
 module.exports = {
 
+  // findAll
   findAll: async () => {
     let promotions = await db.Promotion.findAll();
     return promotions;
   },
+  // end findAll
 
-  findAllWithImages: async () => {
-    let products = await db.Product.findAll();
-    let productsWithImage = products.map(ProductService.withImage);
-    return productsWithImage;
-  },
-
-
-  withImage: (product) => {
-    let productJson = product.toJSON();
-
+  // create
+  create: async (promotion) => {
     try {
-      let src = `${__dirname}/../../assets/images/product/${product.id}.jpg`;
-      let data = fs.readFileSync(src).toString("base64");
-
-      if (data) {
-        let base64data = util.format("data:%s;base64,%s", mime.lookup(src), data);
-        productJson.image = base64data;
-      }
-    } catch (error) {
-      console.log(`can\'t find product ${product.id} image`);
-      productJson.image = 'about:blank';
+      let createdPromotion = await db.Promotion.create(promotion);
+      console.log('== createdPromotion ==>',createdPromotion);
+    } catch (e) {
+      console.log('=== create err ==>',e);
     }
-
-    return productJson;
+    return createdPromotion;
   },
+  // end create
 
-  findWithImages: async (productId) => {
-    let product = await db.Product.find({
-      where: {id: productId},
-      include: [{
-        model: db.ProductGm,
-        include: [
-          db.Dpt, db.DptSub
-        ]
-      }]
-    });
-    console.log('product', product);
-
-    let productWithImage = ProductService.withImage(product);
-    //console.log('productWithImage', productWithImage);
-    return productWithImage;
+  // update
+  update: async (promotion) => {
+    try {
+      console.log('=== raw promotion ==>',promotion);
+      let updatePromoiton = await db.Promotion.find({
+        where: {
+          id: promotion.id
+        }
+      });
+      console.log('=== updatePromoiton ==>',updatePromoiton);
+      updatePromoiton.title = promotion.title;
+      updatePromoitondescription = promotion.description;
+      updatePromoiton.type = promotion.type;
+      updatePromoiton.startDate = promotion.startDate;
+      updatePromoiton.endDate = promotion.endDate;
+      updatePromoiton.discount = promotion.discount;
+      await updatePromoiton.save();
+    } catch (e) {
+      console.log('=== update err ==>',e);
+    }
+    return updatePromoiton;
   },
+  // end update
 
-  createProduct: async (req) => {
-
+  // delete
+  delete: async (promotion) => {
+    try {
+      console.log('=== raw promotion ==>',promotion);
+      let findProduct = await db.Product.findById(promotion.id);
+      if (!findPromotion) {
+        throw new Error('cant find this promotion! id is ==>',promotion.id);
+      }
+      await findPromotion.destroy();
+      // let ensureDelete = await db.Product.findById(promotion.id);
+      // if (ensureDelete) {
+      //   throw new Error('delete失敗');
+      // }
+    } catch (e) {
+      console.log('=== delete err ==>',e);
+      return false;
+    }
+    return true;
   }
-
+  // end delete
 
 };
