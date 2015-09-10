@@ -45,6 +45,8 @@ module.exports = {
       await production.createBasicData();
 
   },
+
+  // testDate
   testData: async () => {
 
     if(sails.config.initData){
@@ -405,7 +407,7 @@ module.exports = {
         return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
     };
 
-    for (var i=0; i<100; i++) {
+    for (var i=0; i<50; i++) {
       var fakeUser = {
         username: "user" + i,
         fullName: commonLastNames[randomInt(0, commonLastNames.length)] + commonFirstNames[randomInt(0, commonFirstNames.length)],
@@ -443,7 +445,6 @@ module.exports = {
       }
       var createShipment = await db.Shipment.create(shipment2);
 
-
       var orderItems2 =[{
         name: '好物三選1',
         description: '好東西，買買買',
@@ -468,6 +469,12 @@ module.exports = {
       }]
       var createOrderItems = await db.OrderItem.bulkCreate(orderItems2);
 
+      var bonuspoint={
+        remain: randomInt(0,100),
+        used: randomInt(0,500),
+        email: createFakeUser.email
+      }
+      var  createBonusPoints = await db.BonusPoint.create(bonuspoint);
     }
 
     let images = [
@@ -511,6 +518,28 @@ module.exports = {
     await createdSelectionActive[2].setImages([createdImages[2], createdImages[3]]);
     await createdSelectionActive[3].setImages([createdImages[4], createdImages[5], createdImages[6]]);
 
+    // promotions
+    var promotion1 = {
+      title : 'best price!',
+      description : 'this is a test promotion',
+      startDate : randomDate(new Date(2015, 9, 8), new Date(2015, 9, 20)),
+      endDate : randomDate(new Date(2015, 9, 8), new Date(2016, 9, 20)),
+      price : 2999.97,
+      type : 'price'
+    }
+    var promotion2 = {
+      title : '50% sale!',
+      description : 'this is a test promotion',
+      startDate : randomDate(new Date(2015, 9, 8), new Date(2015, 9, 20)),
+      endDate : randomDate(new Date(2015, 9, 8), new Date(2016, 9, 20)),
+      discount : 0.5,
+      type : 'discount'
+    }
+    var createPromotion1 = await db.Promotion.create(promotion1);
+    var createPromotion2 = await db.Promotion.create(promotion2);
+    // end promotions
+
 
   }
+  // end testData
 }

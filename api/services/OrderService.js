@@ -113,7 +113,8 @@ module.exports = {
         quantity: 0,
         UserId: buyer.id,
         paymentTotalAmount:0,
-        serialNumber: await OrderService.generateOrderSerialNumber()
+        serialNumber: await OrderService.generateOrderSerialNumber(),
+        useBunusPoint: 0
       };
 
       products.forEach((product, index) => {
@@ -133,6 +134,16 @@ module.exports = {
       else
         thisOrder.paymentTotalAmount += (thisOrder.quantity * 60);
 
+      let bonusPoint = await db.BonusPoint.findOne({
+        where: {email: user.email}
+      });
+
+      if(bonusPoint && newOrder.usedDiscountPoint){
+        thisOrder.paymentTotalAmount -= bonusPoint.remain;
+        thisOrder.useBunusPoint = bonusPoint.remain;
+        bonusPoint.used += bonusPoint.remain;
+        bonusPoint.remain = 0;
+      }
 
       let isolationLevel = db.Sequelize.Transaction.ISOLATION_LEVELS.SERIALIZABLE;
       let transaction = await db.sequelize.transaction({isolationLevel});
@@ -141,6 +152,8 @@ module.exports = {
 
         let createdOrderItems = await* orderItems.map((orderItem) => db.OrderItem.create(orderItem));
         await* products.map((product) => product.save({transaction}));
+        if(bonusPoint && newOrder.usedDiscountPoint)
+          await bonusPoint.save({transaction});
 
         let createdOrderItemIds = createdOrderItems.map((orderItem) => orderItem.id);
 
