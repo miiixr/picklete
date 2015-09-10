@@ -36,6 +36,32 @@ let BonusController = {
       let success = false;
       return res.serverError({message, success});
     }
+  },
+  create: async function(req, res) {
+    try{
+      var newBonus = req.body;
+      console.log('req',newBonus);
+      let createBonusPoints = await db.BonusPoint.create(newBonus);
+      return res.ok(createBonusPoints);
+    }catch(e){
+      console.error(e.stack);
+      let {message} = e;
+      let success = false;
+      return res.serverError({message, success});
+    }
+  },
+  update: async function(req, res) {
+    try{
+      var newBonus = req.body;
+      console.log('req',req);
+      let createBonusPoints = await db.BonusPoint.create(newBonus);
+      return res.ok(createBonusPoints);
+    }catch(e){
+      console.error(e.stack);
+      let {message} = e;
+      let success = false;
+      return res.serverError({message, success});
+    }
   }
 };
 module.exports = BonusController;
