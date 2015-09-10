@@ -31,10 +31,10 @@ describe('Brand API - 品牌', function() {
     .field('desc', 'Steve Aoki 最棒惹')
     .field('avatar', 'http://i.imgur.com/YPP0gFO.jpg')
     .field('banner', 'http://i.imgur.com/YPP0gFO.jpg')
-    .field('photos[]', 'http://i.imgur.com/YPP0gFO.jpg')
-    .field('photos[]', 'http://i.imgur.com/YPP0gFO.jpg')
-    .field('photos[]', 'http://i.imgur.com/YPP0gFO.jpg')
-    .field('photos[]', 'http://i.imgur.com/YPP0gFO.jpg')
+    .field('photos', 'http://i.imgur.com/YPP0gFO.jpg')
+    .field('photos', 'http://i.imgur.com/YPP0gFO.jpg')
+    .field('photos', 'http://i.imgur.com/YPP0gFO.jpg')
+    .field('photos', 'http://i.imgur.com/YPP0gFO.jpg')
     .end(function(err, res) {
       res.statusCode.should.be.equal(302);
       res.headers.location.should.be.equal('/admin/brands');
