@@ -113,7 +113,8 @@ module.exports = {
         quantity: 0,
         UserId: buyer.id,
         paymentTotalAmount:0,
-        serialNumber: await OrderService.generateOrderSerialNumber()
+        serialNumber: await OrderService.generateOrderSerialNumber(),
+        useBunusPoint: 0
       };
 
       products.forEach((product, index) => {
@@ -139,6 +140,7 @@ module.exports = {
 
       if(bonusPoint && newOrder.usedDiscountPoint){
         thisOrder.paymentTotalAmount -= bonusPoint.remain;
+        thisOrder.useBunusPoint = bonusPoint.remain;
         bonusPoint.used += bonusPoint.remain;
         bonusPoint.remain = 0;
       }
