@@ -12,12 +12,13 @@ module.exports = {
 
     // 如果選擇其他品牌的話，找出其他品牌的 id 
     var brandType = req.body.brandType;
-    var brandName = req.body.brandName;
+    var brandName = req.body.customBrand;
     var brandId = req.body.brandId;
-    if (brandType.toLowerCase() === 'other') {
+    if (brandType.toLowerCase() === 'custom') {
       brandId = await db.Brand.findOne({ where: {type: 'OTHER'} });
       brandId = brandId.dataValues.id;
     }
+
 
     var tag = req.body.tag || '';
     if (tag) {

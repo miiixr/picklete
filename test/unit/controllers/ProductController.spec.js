@@ -153,14 +153,49 @@ describe("about Product", () => {
     });
   });
 
-  it.only('create a product for one type, test about - ProductController.createUpdate', (done) => {
+  it('create a product for one type, origin brandType, test about - ProductController.createUpdate', (done) => {
 
     request(sails.hooks.http.app)
     .post('/admin/goods/create')
     .set('cookie', cookie)
-    .field('brandType', 'other') // other, PRIEM, AGENT
-    .field('brandName', 'otherBrand')
-    .field('brandId', 1)
+    .field('brandType', 'origin') // origin, custom, 
+    .field('brandId', '1')
+    .field('dptId[]', JSON.stringify([ '1', '2', '3' ]))
+    .field('dptSubId[]', JSON.stringify([ '1', '4', '8' ]))
+    .field('name', 'product GM name')
+    .field('price', '2222')
+    .field('country', 'TW')
+    .field('madeby', 'TW')
+    .field('spec', 'red')
+    .field('size', '100*20')
+    .field('service[]', JSON.stringify([ 'express', 'store', 'package' ]))
+    .field('comment', 'keker')
+    .field('good[][color]', 1)
+    .field('good[][description]', 'description1')
+    .field('good[][productNumber]', 'productNumber1')
+    .field('good[][stockQuantity]', 999)
+    .field('good[][photos][]', JSON.stringify([ 'url1','url2' ]))  // 1
+    .field('good[][isPublish]', 'false')
+    .field('coverPhoto[]', 'photos1')
+    .field('coverPhoto[]', 'photos2')
+    .field('explain', '<p>introduce</p>\r\n')
+    .field('notice', '<p>notice</p>\r\n')
+    .field('tag', '兒童,學生')
+    .end(function(err, res) {
+      res.statusCode.should.be.equal(302);
+      res.headers.location.should.be.equal('/admin/goods/');
+
+      return done();
+    });
+  });
+
+  it('create a product for one type, custom brandType, test about - ProductController.createUpdate', (done) => {
+
+    request(sails.hooks.http.app)
+    .post('/admin/goods/create')
+    .set('cookie', cookie)
+    .field('brandType', 'custom') // origin, custom, 
+    .field('customBrand', 'otherBrand')
     .field('dptId[]', JSON.stringify([ '1', '2', '3' ]))
     .field('dptSubId[]', JSON.stringify([ '1', '4', '8' ]))
     .field('name', 'product GM name')
