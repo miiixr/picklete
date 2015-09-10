@@ -17,7 +17,9 @@ http://sailsjs.org/#/documentation/reference/sails.config/sails.config.policies.
 ###
 module.exports.policies = {
 
-  '*': [ 'passport', 'loginRequired']
+  # '*': [ 'passport', 'loginRequired']
+  '/shop/*': true
+  
 
   'auth':
     '*': ['passport']
@@ -50,7 +52,7 @@ and its actions                                                          *
 
 # For the action `nurture`, apply the 'isRabbitMother' policy
 # (this overrides `false` above)
-# nurture	: 'isRabbitMother',
+# nurture : 'isRabbitMother',
 
 # Apply the `isNiceToAnimals` AND `hasRabbitFood` policies
 # before letting any users feed our rabbits

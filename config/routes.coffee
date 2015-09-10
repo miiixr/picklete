@@ -57,7 +57,7 @@ module.exports.routes = {
   'get /member/setting' : view: 'main/member-setting'
   'get /shop/product' : view: 'main/shop-product'
   'get /user/signup' : view: 'main/signup'
-  'get /shop/products' : view: 'main/shop'
+  'get /shop/products' : 'ShopController.list'
   'get /brands' : view: 'main/brands'
   'get /user/cart' : view: 'main/cart'
   'get /user/cart-step-2' : view: 'main/cart-step-2'

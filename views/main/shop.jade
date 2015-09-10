@@ -1,188 +1,13 @@
 extends ../_layout_head
 
 block body
-    .navmenu.navmenu-default.navmenu-fixed-right.offcanvas
-      a.navmenu-brand(href='index.html') i+Deal
-      ul.nav.navmenu-nav.navmenu-nav-top
-        li
-          a(href='brands-list.html') BRANDS
-        li
-          a(href='http://blog.iplusdeal.com/') BLOG
-        li.dropdown
-          a.dropdown-toggle(href='#', data-toggle='dropdown')
-            | SHOP
-            span.glyphicon.glyphicon-chevron-down.m-left-1
-          ul.dropdown-menu.navmenu-nav(role='menu')
-            li
-              a(href='shop') 新品上市
-            li
-              a(href='shop') 居家生活
-            li
-              a(href='shop') 餐廚食器
-            li
-              a(href='shop') 事務文具
-            li
-              a(href='shop') 收納整理
-            li
-              a(href='shop') 配件小物
-            li
-              a(href='shop') 數位科技
-            li
-              a(href='shop') 工藝職人
-            li
-              a(href='shop') 特別企劃
-            li
-              a.btn.btn-default(href='brands-list-shop') 品牌列表
-        li
-          a(href='login.html')
-            span.glyphicon.glyphicon-user.m-right-1
-            | LOGIN
-        li
-          a(href='cart.html')
-            span.glyphicon.glyphicon-shopping-cart.m-right-1
-            span.text-green 5
-        li
-          .input-group.m-bottom-2.m-top-2
-            input.form-control(type='text', placeholder='Search for...')
-            span.input-group-btn
-              a.btn.btn-default.p-left-2.p-right-2(href='search-result.html')
-                span.glyphicon.glyphicon-search
-          // /input-group
-    // /navmenu-fixed-right
-    //
-      modal-login
-      ==================================================
-    #modal-login.modal.fade
-      .modal-dialog.modal-sm(role='document')
-        .modal-content
-          .modal-header.p-30
-            button.close(type='button', data-dismiss='modal', aria-label='Close')
-              span(aria-hidden='true') ×
-            h1.modal-title.text-center 登入
-          // /modal-header
-          .modal-body.text-center.p-30
-            form.m-bottom-4
-              .form-group
-                input.form-control(type='email', placeholder='Email')
-              // /form-group
-              .form-group
-                input.form-control(type='password', placeholder='Password')
-              // /form-group
-              button.btn.btn-black.border-radius-circle.btn-block.m-bottom-2(type='button', data-toggle='modal', data-target='#modal-login-feedback', data-dismiss='modal') 登入會員
-              button.btn.btn-fb.border-radius-circle.btn-block(type='button', data-dismiss='modal') FACEBOOK 登入
-            a(href='#', data-toggle='modal', data-target='#modal-password', data-dismiss='modal') 忘記密碼
-            hr.m-top-4.m-bottom-4
-            h5.m-bottom-4 還沒有帳號？
-            a.btn.btn-line.border-radius-circle.btn-block(href='signup.html') 申請會員
-          // /modal-body
-        // /modal-content
-      // /modal-dialog
-    // /modal
-    //
-      modal-login-feedback
-      ==================================================
-    #modal-login-feedback.modal.fade
-      .modal-dialog.modal-sm(role='document')
-        .modal-content
-          .modal-header.p-30
-            button.close(type='button', data-dismiss='modal', aria-label='Close')
-              span(aria-hidden='true') ×
-            h1.modal-title.text-center 登入
-          // /modal-header
-          .modal-body.text-center.p-30
-            form.m-bottom-4
-              .form-group.has-success.has-feedback
-                input.form-control(type='email', placeholder='Email')
-                span.glyphicon.glyphicon-ok.form-control-feedback(aria-hidden='true')
-              // /form-group
-              .form-group.has-error.has-feedback
-                input#exampleInputPassword1.form-control(type='password', placeholder='Password')
-                span.glyphicon.glyphicon-remove.form-control-feedback(aria-hidden='true')
-              // /form-group
-              button.btn.btn-black.border-radius-circle.btn-block.m-bottom-2(type='submit', data-dismiss='modal') 登入會員
-              button.btn.btn-fb.border-radius-circle.btn-block(type='submit', data-dismiss='modal') FACEBOOK 登入
-            a(href='#', data-toggle='modal', data-target='#modal-password', data-dismiss='modal') 忘記密碼
-            hr.m-top-4.m-bottom-4
-            h5.m-bottom-4 還沒有帳號？
-            a.btn.btn-line.border-radius-circle.btn-block(href='signup.html') 申請會員
-          // /modal-body
-        // /modal-content
-      // /modal-dialog
-    // /modal
-    //
-      modal-password
-      ==================================================
-    #modal-password.modal.fade
-      .modal-dialog.modal-sm(role='document')
-        .modal-content
-          .modal-header.p-30
-            button.close(type='button', data-dismiss='modal', aria-label='Close')
-              span(aria-hidden='true') ×
-            h1.modal-title.text-center 忘記密碼
-          // /modal-header
-          .modal-body.text-center.p-30
-            form.m-bottom-4
-              .form-group
-                input.form-control(type='email', placeholder='Email')
-              // /form-group
-              button.btn.btn-black.border-radius-circle.btn-block.m-bottom-2(type='button', data-dismiss='modal') 發送信箱
-            a(href='#', data-toggle='modal', data-target='#modal-login', data-dismiss='modal') 取消
-            hr.m-top-4.m-bottom-4
-            h5.m-bottom-4 還沒有帳號？
-            a.btn.btn-line.border-radius-circle.btn-block(href='signup.html') 申請會員
-          // /modal-body
-        // /modal-content
-      // /modal-dialog
-    // /modal
-    //
-      Navbar
-      ==================================================
-    nav#header-control-panel.navbar.navbar-default.navbar-fixed-top
-      .container
-        // Brand and toggle get grouped for better mobile display
-        .navbar-header
-          button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1', aria-expanded='false')
-            span.sr-only Toggle navigation
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-          a.navbar-brand(href='control-index-slider.html') i+Deal
-          h4.navbar-text.pull-left control panel
-        // /navbar-header
-        // Collect the nav links, forms, and other content for toggling
-        #bs-example-navbar-collapse-1.collapse.navbar-collapse
-          ul.nav.navbar-nav.navbar-right(aria-multiselectable='true')
-            li
-              a.text-center(href='index.html') 登出
-            li
-              a.text-center(href='control-password.html') 修改密碼
-        // /navbar-collapse
-      // /container
-    // /navbar-fixed-top
-    //
-      shop-type-list
-      ==================================================
     .mobile-hide
       .container
         ul.list-inline.list-shop-type
-          li.active
-            a(href='#list-shop-type-1', data-toggle='tab') 新品上市
-          li
-            a(href='#list-shop-type-2', data-toggle='tab') 居家生活
-          li
-            a(href='#list-shop-type-3', data-toggle='tab') 餐廚食器
-          li
-            a(href='#list-shop-type-4', data-toggle='tab') 事務文具
-          li
-            a(href='#list-shop-type-5', data-toggle='tab') 收納整理
-          li
-            a(href='#list-shop-type-6', data-toggle='tab') 配件小物
-          li
-            a(href='#list-shop-type-7', data-toggle='tab') 數位科技
-          li
-            a(href='#list-shop-type-8', data-toggle='tab') 工藝職人
-          li
-            a(href='#list-shop-type-9', data-toggle='tab') 特別企劃
+          each dpt, index in dpts
+            li.active.dpt(data-id='#{dpt.id}')
+              a(href='#')
+                | #{dpt.name}
           li.li-btn
             a.btn.btn-default.border-radius-circle(data-toggle='collapse', href='#dropdown-menu-brands-3', aria-expanded='false') 品牌列表
         // /list-shop-type
@@ -267,122 +92,14 @@ block body
     .gray-lighter.min-height-38
       .container
         .tab-content
-          #list-shop-type-1.tab-pane.fade.in.active
-            ul.list-inline.list-shop-type-sm.font-size-small
-              li.active
-                a(href='#') 全部商品
-              li
-                a(href='#') 閃購專區
-              li
-                a(href='#') 優惠商品
-              li
-                a(href='#') 本月主題
-              li
-                a(href='#') 畢業季88折
-          // /list-shop-type-1
-          #list-shop-type-2.tab-pane.fade
-            ul.list-inline.list-shop-type-sm.font-size-small
-              li.active
-                a(href='#') 全部商品2
-              li
-                a(href='#') 閃購專區
-              li
-                a(href='#') 優惠商品
-              li
-                a(href='#') 本月主題
-              li
-                a(href='#') 畢業季88折
-          // /list-shop-type-2
-          #list-shop-type-3.tab-pane.fade
-            ul.list-inline.list-shop-type-sm.font-size-small
-              li.active
-                a(href='#') 全部商品3
-              li
-                a(href='#') 閃購專區
-              li
-                a(href='#') 優惠商品
-              li
-                a(href='#') 本月主題
-              li
-                a(href='#') 畢業季88折
-          // /list-shop-type-3
-          #list-shop-type-4.tab-pane.fade
-            ul.list-inline.list-shop-type-sm.font-size-small
-              li.active
-                a(href='#') 全部商品4
-              li
-                a(href='#') 閃購專區
-              li
-                a(href='#') 優惠商品
-              li
-                a(href='#') 本月主題
-              li
-                a(href='#') 畢業季88折
-          // /list-shop-type-4
-          #list-shop-type-5.tab-pane.fade
-            ul.list-inline.list-shop-type-sm.font-size-small
-              li.active
-                a(href='#') 全部商品5
-              li
-                a(href='#') 閃購專區
-              li
-                a(href='#') 優惠商品
-              li
-                a(href='#') 本月主題
-              li
-                a(href='#') 畢業季88折
-          // /list-shop-type-5
-          #list-shop-type-6.tab-pane.fade
-            ul.list-inline.list-shop-type-sm.font-size-small
-              li.active
-                a(href='#') 全部商品6
-              li
-                a(href='#') 閃購專區
-              li
-                a(href='#') 優惠商品
-              li
-                a(href='#') 本月主題
-              li
-                a(href='#') 畢業季88折
-          // /list-shop-type-6
-          #list-shop-type-7.tab-pane.fade
-            ul.list-inline.list-shop-type-sm.font-size-small
-              li.active
-                a(href='#') 全部商品7
-              li
-                a(href='#') 閃購專區
-              li
-                a(href='#') 優惠商品
-              li
-                a(href='#') 本月主題
-              li
-                a(href='#') 畢業季88折
-          // /list-shop-type-7
-          #list-shop-type-8.tab-pane.fade
-            ul.list-inline.list-shop-type-sm.font-size-small
-              li.active
-                a(href='#') 全部商品8
-              li
-                a(href='#') 閃購專區
-              li
-                a(href='#') 優惠商品
-              li
-                a(href='#') 本月主題
-              li
-                a(href='#') 畢業季88折
-          // /list-shop-type-8
-          #list-shop-type-9.tab-pane.fade
-            ul.list-inline.list-shop-type-sm.font-size-small
-              li.active
-                a(href='#') 全部商品9
-              li
-                a(href='#') 閃購專區
-              li
-                a(href='#') 優惠商品
-              li
-                a(href='#') 本月主題
-              li
-                a(href='#') 畢業季88折
+          each dpt, val in dpts
+            - if (dpt.DptSubs.length)
+              .tab-pane.fade(id = "subDpt"+dpt.id)
+                  ul.list-inline.list-shop-type-sm.font-size-small
+                    each subDpt, index in dpt.DptSubs
+                      li(class=(index==0)?"active subDpt":"subDpt" data-id='#{subDpt.id}') 
+                        a(href='?dptSubId=#{subDpt.id}&dptId=#{dpt.id}')
+                          | #{subDpt.name}
           // /list-shop-type-9
         // /tab-content
       // /container
@@ -436,155 +153,30 @@ block body
               a.color-filter.color-mix(href='#')
           // /dropdown-menu
         // /btn-group
-      // /m-top-8 m-bottom-8
+        // /m-top-8 m-bottom-8
       .row
-        .col-md-3.col-sm-4.col-xs-6
-          .item-block.m-bottom-4
-            a.item-like.active(href='#')
-              span.glyphicon.glyphicon-heart
-            // /item-like
-            a(href='/shop/product')
-              img.img-full.item-show(src='images/demo/shop-item-d-1.jpg')
-              img.img-full.item-hide(src='images/demo/shop-item-1-2.jpg')
-          // /item-block
-          .item-text-block.m-bottom-8
-            h6.text-muted
-              a(href='brands.html') Jansen+co
-            h4.m-bottom-2.h4-max-two-hide
-              a(href='/shop/product') My Bowl XL 調色碗 XL My Bowl XL 調色碗 XL
-            h5 $2,500
-          // /item-text-block
-        // /col-md-3
-        .col-md-3.col-sm-4.col-xs-6
-          .item-block.m-bottom-4
-            a.item-like(href='#')
-              span.glyphicon.glyphicon-heart
-            // /item-like
-            span.label.label-default
-              | SOLD
-              br
-              | OUT
-            a(href='/shop/product')
-              img.img-full.item-show(src='images/demo/shop-item-d-2.jpg')
-              img.img-full.item-hide(src='images/demo/shop-item-1-2.jpg')
-          // /item-block
-          .item-text-block.m-bottom-8
-            h6.text-muted
-              a(href='brands.html') Jansen+co
-            h4.m-bottom-2.h4-max-two-hide
-              a(href='/shop/product') My Mug Set 調色杯組
-            h5
-              | $2,500
-              small.text-danger.m-left-1 已售完！
-          // /item-text-block
-        // /col-md-3
-        .col-md-3.col-sm-4.col-xs-6
-          .item-block.m-bottom-4
-            a.item-like(href='#')
-              span.glyphicon.glyphicon-heart
-            // /item-like
-            span.label.label-danger SALE
-            a(href='/shop/product')
-              img.img-full.item-show(src='images/demo/shop-item-d-3.jpg')
-              img.img-full.item-hide(src='images/demo/shop-item-1-2.jpg')
-          // /item-block
-          .item-text-block.m-bottom-8
-            h6.text-muted
-              a(href='brands.html') Jansen+co
-            h4.m-bottom-2.h4-max-two-hide
-              a(href='/shop/product') My Sugar Bowl 調色糖罐
-            h5
-              span.text-danger $2,500
-              small.text-line-through.m-left-1 $3,000
-          // /item-text-block
-        // /col-md-3
-        .col-md-3.col-sm-4.col-xs-6
-          .item-block.m-bottom-4
-            a.item-like(href='#')
-              span.glyphicon.glyphicon-heart
-            // /item-like
-            span.label.label-success NEW
-            a(href='/shop/product')
-              img.img-full.item-show(src='images/demo/shop-item-d-4.jpg')
-              img.img-full.item-hide(src='images/demo/shop-item-1-2.jpg')
-          // /item-block
-          .item-text-block.m-bottom-8
-            h6.text-muted
-              a(href='brands.html') Jansen+co
-            h4.m-bottom-2.h4-max-two-hide
-              a(href='/shop/product') My Mug Espresso 義式調色杯
-            h5 $2,500
-          // /item-text-block
-        // /col-md-3
-        .col-md-3.col-sm-4.col-xs-6
-          .item-block.m-bottom-4
-            a.item-like(href='#')
-              span.glyphicon.glyphicon-heart
-            // /item-like
-            a(href='/shop/product')
-              img.img-full.item-show(src='images/demo/shop-item-d-5.jpg')
-              img.img-full.item-hide(src='images/demo/shop-item-1-2.jpg')
-          // /item-block
-          .item-text-block.m-bottom-8
-            h6.text-muted
-              a(href='brands.html') Jansen+co
-            h4.m-bottom-2.h4-max-two-hide
-              a(href='/shop/product') My Tea Pot 調色茶壺
-            h5 $2,500
-          // /item-text-block
-        // /col-md-3
-        .col-md-3.col-sm-4.col-xs-6
-          .item-block.m-bottom-4
-            a.item-like(href='#')
-              span.glyphicon.glyphicon-heart
-            // /item-like
-            a(href='/shop/product')
-              img.img-full.item-show(src='images/demo/shop-item-d-6.jpg')
-              img.img-full.item-hide(src='images/demo/shop-item-1-2.jpg')
-          // /item-block
-          .item-text-block.m-bottom-8
-            h6.text-muted
-              a(href='brands.html') Jansen+co
-            h4.m-bottom-2.h4-max-two-hide
-              a(href='/shop/product') Cake Stand 調色蛋糕盤M
-            h5 $2,500
-          // /item-text-block
-        // /col-md-3
-        .col-md-3.col-sm-4.col-xs-6
-          .item-block.m-bottom-4
-            a.item-like(href='#')
-              span.glyphicon.glyphicon-heart
-            // /item-like
-            a(href='/shop/product')
-              img.img-full.item-show(src='images/demo/shop-item-d-7.jpg')
-              img.img-full.item-hide(src='images/demo/shop-item-1-2.jpg')
-          // /item-block
-          .item-text-block.m-bottom-8
-            h6.text-muted
-              a(href='brands.html') Jansen+co
-            h4.m-bottom-2.h4-max-two-hide
-              a(href='/shop/product') Oil & Vinegar Set 紅酒杯-油醋瓶組
-            h5 $2,500
-          // /item-text-block
-        // /col-md-3
-        .col-md-3.col-sm-4.col-xs-6
-          .item-block.m-bottom-4
-            a.item-like(href='#')
-              span.glyphicon.glyphicon-heart
-            // /item-like
-            a(href='/shop/product')
-              img.img-full.item-show(src='images/demo/shop-item-d-8.jpg')
-              img.img-full.item-hide(src='images/demo/shop-item-1-2.jpg')
-          // /item-block
-          .item-text-block.m-bottom-8
-            h6.text-muted
-              a(href='brands.html') Jansen+co
-            h4.m-bottom-2.h4-max-two-hide
-              a(href='/shop/product') My Mug 節慶杯
-            h5 $2,500
-          // /item-text-block
-        // /col-md-3
-      // /row
+        each product,val in products
+          .col-md-3.col-sm-4.col-xs-6
+            .item-block.m-bottom-4
+              a.item-like.active(href='#')
+                span.glyphicon.glyphicon-heart
+              // /item-like
+              a(href='/shop/product')
+                img.img-full.item-show(src='images/demo/shop-item-d-1.jpg')
+                img.img-full.item-hide(src='images/demo/shop-item-1-2.jpg')
+            // /item-block
+            .item-text-block.m-bottom-8
+              h6.text-muted
+                a(href='brands.html')
+                | #{product.madeby}
+              h4.m-bottom-2.h4-max-two-hide
+                a(href='/shop/product')
+                | #{product.name}
+              h5
+                | #{product.price}
+            // /item-text-block
+          // /col-md-3
+        // /row
       .text-center.m-bottom-8
         //
           pagination-block
@@ -609,3 +201,5 @@ block body
                 span(aria-hidden='true') »
       // /text-center
     // /container
+block js
+  script(src="/javascripts/main/shop.js")

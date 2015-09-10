@@ -472,6 +472,7 @@ html
       // /container
     // /navbar-fixed-top
     block body
+
     include _layout_footer
   script(src='/javascripts/plugin/modernizr.custom.js')
   script(src='http://code.jquery.com/jquery-1.9.1.js')
@@ -509,7 +510,7 @@ html
       });
     });
   // /notifyme
-  script(src='javascripts/plugin/cbpScroller.js')
+  script(src='/javascripts/plugin/cbpScroller.js')
   | &#x9;
   script.
     new cbpScroller( document.getElementById( 'cbp-so-scroller' ) );
@@ -548,3 +549,6 @@ html
       $(window).scroll(sticky_relocate);
       sticky_relocate();
     });
+  block js
+    //- //ＢＵＧ 放shop裡不行
+  //- script(src="/javascripts/main/shop.js")
