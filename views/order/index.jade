@@ -160,9 +160,9 @@ block body
               
           td= order.createdAt
           td
-            a.btn.btn-green(href='/order/statusUpdate/#{order.id}?status=paymentConfirm') 通知匯款成功
+            a.btn.btn-green(href='/order/statusUpdate/#{order.id}?status=paymentConfirm', disabled=!order.paymentIsConfirmed) 通知匯款成功
           td
-            a.btn.btn-green(href='/order/statusUpdate/#{order.id}?status=deliveryConfirm') 通知已出貨
+            a.btn.btn-green(href='/order/statusUpdate/#{order.id}?status=deliveryConfirm', disabled=!order.paymentIsConfirmed) 通知已出貨
 
           td
             a(data-toggle='collapse', data-parent='#collapse-purchase', href='#collapse-purchase-One')
