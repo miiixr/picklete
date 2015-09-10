@@ -40,6 +40,7 @@
     var s = $(that.parent().parent()).prop('outerHTML');
     that.parent().parent().after(s);
     that.remove();
+
   });
 
 
