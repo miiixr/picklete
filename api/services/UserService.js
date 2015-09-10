@@ -63,7 +63,12 @@ module.exports = {
   calcTotalBonusRemain: async (user) => {
     let result = 0;
 
-    let bonus = await db.BonusPoint.findAll({where: {email: user.email}});
+    let bonus = await db.BonusPoint.findAll({
+      where: {
+        email: user.email
+      }
+    });
+
     if (bonus) {
       for (var i = 0; i < bonus.length; i++) {
         result += bonus[i].remain;
