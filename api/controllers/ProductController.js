@@ -150,7 +150,9 @@ let ProductController = {
 
   createUpdate: async (req, res) => {
     let newProduct = req.body;
-    console.log(newProduct);
+    // console.log('----------');
+    // console.log(newProduct);
+    // console.log('----------');
     try {
       await ProductService.createProduct(req);
     } catch (error) {

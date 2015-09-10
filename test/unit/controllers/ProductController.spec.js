@@ -153,12 +153,13 @@ describe("about Product", () => {
     });
   });
 
-  it(' create a product,TEXT only, test about - ProductController.createUpdate', (done) => {
+  it.only(' create a product,TEXT only, test about - ProductController.createUpdate', (done) => {
 
     request(sails.hooks.http.app)
     .post('/admin/goods/create')
     .set('cookie', cookie)
-    .field('brandType', '好棒棒品牌')
+    .field('brandType', 'other') // other, PRIEM, AGENT
+    .field('brandName', 'otherBrand')
     .field('brandId', 1)
     .field('dptId[]', JSON.stringify([ '1', '2', '3' ]))
     .field('dptSubId[]', JSON.stringify([ '1', '4', '8' ]))
@@ -170,11 +171,20 @@ describe("about Product", () => {
     .field('size', '100*20')
     .field('service[]', JSON.stringify([ 'express', 'store', 'package' ]))
     .field('comment', 'keker')
-    .field('good[0][color]', JSON.stringify([ '1', '1' ]))
-    .field('good[0][description]', JSON.stringify([ 'CUP', 'CUP2' ]))
-    .field('good[0][productNumber]', JSON.stringify([ '0001', '0002' ]))
-    .field('good[0][stockQuantity]', JSON.stringify([ 999, 999]))
-    .field('good[0][isPublish]', 'false')
+    .field('good[][color]', 1)
+    .field('good[][color]', 2)
+    .field('good[][description]', 'description1')
+    .field('good[][description]', 'description2')
+    .field('good[][productNumber]', 'productNumber1')
+    .field('good[][productNumber]', 'productNumber2')
+    .field('good[][stockQuantity]', 999)
+    .field('good[][stockQuantity]', 999)
+    .field('good[][photos][]', JSON.stringify([ 'url1','url2' ]))  // 1
+    .field('good[][photos][]', JSON.stringify([ 'url3','url4' ]))  // 2
+    .field('good[][isPublish]', 'false')
+    .field('good[][isPublish]', 'false')
+    .field('coverPhoto[]', 'photos1')
+    .field('coverPhoto[]', 'photos2')
     .field('explain', '<p>introduce</p>\r\n')
     .field('notice', '<p>notice</p>\r\n')
     .field('tag', '兒童,學生')
