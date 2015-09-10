@@ -1,5 +1,6 @@
 describe("SelectionActiveService", () => {
-  it('get SelectionActive', async (done) => {
+
+  it.only('get SelectionActive', async (done) => {
 
     // 測試資料從
     try {
@@ -8,7 +9,12 @@ describe("SelectionActiveService", () => {
 
       let selectionActives = result;
 
-      selectionActives.length.length.should.be.equal(4);
+      console.log('=== result ==>',result);
+      console.log('=== selectionActives.length ==>',selectionActives.length);
+      console.log('=== selectionActives[0].link ==>',selectionActives[0].link);
+      console.log('=== selectionActives[0].Images ==>',selectionActives[0].Images);
+
+      selectionActives.length.should.be.equal(4);
       selectionActives[0].link.should.be.equal("oneLong");
       selectionActives[0].Images.length.should.be.equal(1);
       selectionActives[0].Images.should.have.property('link', 'path', 'openWindow');
@@ -22,12 +28,11 @@ describe("SelectionActiveService", () => {
       selectionActives[3].link.should.be.equal("three");
       selectionActives[3].Images.length.should.be.equal(3);
 
-
-
     } catch (e) {
       done(e);
     }
   });
+
 
   it('save SelectionActive', async (done) => {
 
