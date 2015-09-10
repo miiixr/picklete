@@ -6,9 +6,9 @@ import util from "util";
 module.exports = {
 
   createProduct: async (req) => {
-    console.log('----------');
-    console.log(req.body);
-    console.log('----------');
+    // console.log('----------');
+    // console.log(req.body);
+    // console.log('----------');
 
     // 如果選擇其他品牌的話，找出其他品牌的 id 
     var brandType = req.body.brandType;
