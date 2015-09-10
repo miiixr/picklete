@@ -69,6 +69,7 @@ module.exports.routes = {
 
   # 'get /admin/shop-item-list' : 'UserController.controlShopItemList'
   'get /admin/shop-discount' : 'UserController.controlShopDiscount'
+  'get /admin/bonus-discount' : 'UserController.controlBonusDiscount'
   'get /admin/shop-buy-more' : 'UserController.controlShopBuyMore'
   'get /admin/shop-buy-more-detail' : 'UserController.controlShopBuyMoreDetail'
   'get /admin/shop-buy-more-add-item' : 'UserController.controlShopBuyMoreAddItem'
