@@ -1,32 +1,29 @@
-describe("SelectionActiveService", () => {
+describe.only("SelectionActiveService", () => {
 
-  it.only('get SelectionActive', async (done) => {
+  it('get SelectionActive', async (done) => {
 
     // 測試資料從
     try {
 
-      let result = await SelectionActiveService.getModel();
+      let selectionActives = await SelectionActiveService.getModel();
 
-      let selectionActives = result;
-
-      console.log('=== result ==>',result);
-      console.log('=== selectionActives.length ==>',selectionActives.length);
-      console.log('=== selectionActives[0].link ==>',selectionActives[0].link);
-      console.log('=== selectionActives[0].Images ==>',selectionActives[0].Images);
+      let images = await db.Image.findAll();
 
       selectionActives.length.should.be.equal(4);
-      selectionActives[0].link.should.be.equal("oneLong");
-      selectionActives[0].Images.length.should.be.equal(1);
-      selectionActives[0].Images.should.have.property('link', 'path', 'openWindow');
+      selectionActives[0].type.should.be.equal("oneLong");
+      selectionActives[1].type.should.be.equal("oneBig");
+      selectionActives[2].type.should.be.equal("two");
+      selectionActives[3].type.should.be.equal("three");
 
-      selectionActives[1].link.should.be.equal("oneBig");
-      selectionActives[1].Images.length.should.be.equal(1);
+      images[0].SelectionActiveId.should.be.equal(1);
+      images[1].SelectionActiveId.should.be.equal(2);
+      images[2].SelectionActiveId.should.be.equal(3);
+      images[3].SelectionActiveId.should.be.equal(3);
+      images[4].SelectionActiveId.should.be.equal(4);
+      images[5].SelectionActiveId.should.be.equal(4);
+      images[6].SelectionActiveId.should.be.equal(4);
 
-      selectionActives[2].link.should.be.equal("two");
-      selectionActives[2].Images.length.should.be.equal(2);
-
-      selectionActives[3].link.should.be.equal("three");
-      selectionActives[3].Images.length.should.be.equal(3);
+      done();
 
     } catch (e) {
       done(e);
@@ -41,44 +38,24 @@ describe("SelectionActiveService", () => {
 
       let selectionActives = [
         {
-          type: 'oneLong',
-          Images: [{
-            link: 'http://fakeimg.pl/1100x160',
-            path: ''
-          }]
+          type: 'oneLong'
         },{
-          type: 'oneBig',
-          Images: [{
-            link: 'http://fakeimg.pl/1100x350',
-            path: ''
-          }]
+          type: 'oneBig'
         },{
-          type: 'two',
-          Images: [{
-            link: 'http://fakeimg.pl/545x350',
-            path: ''
-          },{
-            link: 'http://fakeimg.pl/545x350',
-            path: ''
-          }]
+          type: 'two'
         },{
-          type: 'three',
-          Images: [{
-            link: 'http://fakeimg.pl/360x240',
-            path: ''
-          },{
-            link: 'http://fakeimg.pl/360x240',
-            path: ''
-          },{
-            link: 'http://fakeimg.pl/360x240',
-            path: ''
-          }]
+          type: 'three'
         }
-      ];
+      ]
+      let result = await* selectionActives.map((selectionActive) =>
+        db.SelectionActive.create(selectionActive)
+      );
+      let all = await SelectionActiveService.getModel();
 
-      let result = await SelectionActiveService.save(selectionActives);
+      all.length.should.be.equal(8);
+      result.length.should.be.equal(4);
 
-      result.success.should.be.true;
+      done();
 
     } catch (e) {
       done(e);
