@@ -41,39 +41,6 @@
     that.parent().parent().after(s);
     that.remove();
 
-
-    var inputName;
-    var that;
-    $("input.fileInput").on('change.bs.fileinput', function (e) {
-      // console.log(e);
-      // console.log("click from select");
-      inputName = $(this).data('name');
-      that = $(this).parent();
-      // console.log('-----');
-      // console.log(inputName);
-      // console.log('-----');    
-      var $form = $(this).parents("form").first();
-      $form.ajaxSubmit(options);
-    });
-
-    var options = {
-      beforeSubmit:  function (formData, jqForm, options) {
-        // console.log(formData);   
-        // var queryString = $.param(formData);
-      },
-      success: function (responseText, statusText, xhr, $form)  {
-        console.log(responseText);
-        console.log(statusText);
-        if(statusText == 'success') {
-          that.find('input[name="'+inputName+'"]').val(responseText[0].fd);
-          // console.log('-----');
-          // console.log(responseText[0].fd);
-          // console.log('-----');
-        }
-      }
-    };
-
-
   });
 
 

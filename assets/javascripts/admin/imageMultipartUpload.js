@@ -1,15 +1,17 @@
 (function ($) {
   var inputName;
   var that;
-  $("input.fileInput").on('change.bs.fileinput', function (e) {
+  $(document).on('change.bs.fileinput', '.fileinput', function (e) {
+
     // console.log(e);
     // console.log("click from select");
-    inputName = $(this).data('name');
+    inputName = $(this).find('input[name="uploadfile"]').data('name');
     that = $(this).parent();
     // console.log('-----');
     // console.log(inputName);
+    // console.log(that);
     // console.log('-----');    
-    var $form = $(this).parents("form").first();
+    var $form = $(this).find("form");
     $form.ajaxSubmit(options);
   });
 
@@ -19,8 +21,8 @@
       // var queryString = $.param(formData);
     },
     success: function (responseText, statusText, xhr, $form)  {
-      console.log(responseText);
-      console.log(statusText);
+      // console.log(responseText);
+      // console.log(statusText);
       if(statusText == 'success') {
         that.find('input[name="'+inputName+'"]').val(responseText[0].fd);
         // console.log('-----');
