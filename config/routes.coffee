@@ -64,21 +64,21 @@ module.exports.routes = {
   'post /admin/goods/create' : 'ProductController.createUpdate'
   'post /admin/image/upload' : 'ImageController.upload'
 
-
-
+  # promotions
+  'get /admin/shop-discount' : 'PromotionController.list'
+  'get /admin/shop-discount-detail' : 'PromotionController.controlShopDiscountDetail'
+  'get /admin/shop-discount-detail2' : 'PromotionController.controlShopDiscountDetail2'
+  'get /admin/shop-discount-add-item' : 'PromotionController.controlShopDiscountAddItem'
+  'get /admin/shop-buy-more' : 'PromotionController.controlShopBuyMore'
+  'get /admin/shop-buy-more-detail' : 'PromotionController.controlShopBuyMoreDetail'
+  'get /admin/shop-buy-more-add-item' : 'PromotionController.controlShopBuyMoreAddItem'
+  'get /admin/shop-code' : 'PromotionController.controlShopCode'
+  'get /admin/shop-code-detail' : 'PromotionController.controlShopCodeDetail'
+  'get /admin/shop-report-form' : 'PromotionController.controlShopReportForm'
+  'get /admin/bonus-discount' : 'PromotionController.controlBonusDiscount'
+  # end promotions
 
   # 'get /admin/shop-item-list' : 'UserController.controlShopItemList'
-  'get /admin/shop-discount' : 'UserController.controlShopDiscount'
-  'get /admin/bonus-discount' : 'UserController.controlBonusDiscount'
-  'get /admin/shop-buy-more' : 'UserController.controlShopBuyMore'
-  'get /admin/shop-buy-more-detail' : 'UserController.controlShopBuyMoreDetail'
-  'get /admin/shop-buy-more-add-item' : 'UserController.controlShopBuyMoreAddItem'
-  'get /admin/shop-code' : 'UserController.controlShopCode'
-  'get /admin/shop-code-detail' : 'UserController.controlShopCodeDetail'
-  'get /admin/shop-discount-detail' : 'UserController.controlShopDiscountDetail'
-  'get /admin/shop-discount-detail2' : 'UserController.controlShopDiscountDetail2'
-  'get /admin/shop-discount-add-item' : 'UserController.controlShopDiscountAddItem'
-  'get /admin/shop-report-form' : 'UserController.controlShopReportForm'
   'get /admin/order' : 'OrderController.index'
   'get /admin/about' : 'UserController.controlAbout'
   'get /admin/qa' : 'UserController.controlQa'
