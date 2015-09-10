@@ -150,7 +150,8 @@ module.exports = {
 
         let createdOrderItems = await* orderItems.map((orderItem) => db.OrderItem.create(orderItem));
         await* products.map((product) => product.save({transaction}));
-        await bonusPoint.save({transaction});
+        if(bonusPoint && newOrder.usedDiscountPoint)
+          await bonusPoint.save({transaction});
 
         let createdOrderItemIds = createdOrderItems.map((orderItem) => orderItem.id);
 
