@@ -17,7 +17,7 @@ block body
         // /form-group
     // /col-sm-6
     .col-sm-6.col-md-4
-      form.form-horizontal(name="searchBonus", action="bonus-discount", method="get")
+      form.form-horizontal(name="searchBonus", action="bonus", method="get")
         .input-group
           input.form-control(type='text',name="keyword", placeholder='Search for...',value = query?query.keyword:'')
           span.input-group-btn
@@ -62,7 +62,7 @@ block body
     script.
       $(function() {
         $('#bonus-query-limit').change(function() {
-          location.href='/admin/bonus-discount?limit='+$(this).val();
+          location.href='/admin/bonus?limit='+$(this).val();
         });
 
         $('.form-control').change(function(){

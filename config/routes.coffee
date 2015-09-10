@@ -75,8 +75,9 @@ module.exports.routes = {
   'get /admin/shop-code' : 'PromotionController.controlShopCode'
   'get /admin/shop-code-detail' : 'PromotionController.controlShopCodeDetail'
   'get /admin/shop-report-form' : 'PromotionController.controlShopReportForm'
-  'get /admin/bonus-discount' : 'PromotionController.controlBonusDiscount'
   # end promotions
+
+  'get /admin/bonus' : 'BonusController.list'
 
   # 'get /admin/shop-item-list' : 'UserController.controlShopItemList'
   'get /admin/order' : 'OrderController.index'
