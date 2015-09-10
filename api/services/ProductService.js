@@ -51,7 +51,7 @@ module.exports = {
       var isPublish = req.body['good[][isPublish]'] || '';
       var color = req.body['good[][color]'] || '';
       var productNumber = req.body['good[][productNumber]'] || '';
-      var photos = req.body['good[][photos][]'] || [];
+      var photos = JSON.stringify([ req.body['good[][photos-1]'], req.body['good[][photos-2]'] ]) || [];
 
 
       let newProduct = {
@@ -73,7 +73,6 @@ module.exports = {
       await db.Product.create(newProduct);
       return;
     }
-
     for (var i = 0 ; i < goods.length ; i++) {
       var name = goods[i] || '';
 
@@ -89,7 +88,7 @@ module.exports = {
         madeby: req.body.madeby,
         color: req.body['good[][color]'][i] || color,
         productNumber: req.body['good[][productNumber]'][i] || productNumber,
-        photos: req.body['good[][photos][]'][i] || [],
+        photos: JSON.stringify([ req.body['good[][photos-1]'][i], req.body['good[][photos-2]'][i] ]) || [],
         ProductGmId: createdProductGm.id,
       };
 

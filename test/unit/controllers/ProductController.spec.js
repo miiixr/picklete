@@ -174,10 +174,9 @@ describe("about Product", () => {
     .field('good[][description]', 'description1')
     .field('good[][productNumber]', 'productNumber1')
     .field('good[][stockQuantity]', 999)
-    .field('good[][photos][]', JSON.stringify([ 'url1','url2' ]))  // 1
+    .field('good[][photos-1]', 'url1')
     .field('good[][isPublish]', 'false')
     .field('coverPhoto[]', 'photos1')
-    .field('coverPhoto[]', 'photos2')
     .field('explain', '<p>introduce</p>\r\n')
     .field('notice', '<p>notice</p>\r\n')
     .field('tag', '兒童,學生')
@@ -210,7 +209,8 @@ describe("about Product", () => {
     .field('good[][description]', 'description1')
     .field('good[][productNumber]', 'productNumber1')
     .field('good[][stockQuantity]', 999)
-    .field('good[][photos][]', JSON.stringify([ 'url1','url2' ]))  // 1
+    .field('good[][photos-1]', 'url1')  // 1
+    .field('good[][photos-2]', 'url2')  // 1
     .field('good[][isPublish]', 'false')
     .field('coverPhoto[]', 'photos1')
     .field('coverPhoto[]', 'photos2')
@@ -225,7 +225,7 @@ describe("about Product", () => {
     });
   });
 
-  it('create a product for multiple type, test about - ProductController.createUpdate', (done) => {
+  it.only('create a product for multiple type, test about - ProductController.createUpdate', (done) => {
 
     request(sails.hooks.http.app)
     .post('/admin/goods/create')
@@ -251,8 +251,10 @@ describe("about Product", () => {
     .field('good[][productNumber]', 'productNumber2')
     .field('good[][stockQuantity]', 999)
     .field('good[][stockQuantity]', 999)
-    .field('good[][photos][]', JSON.stringify([ 'url1','url2' ]))  // 1
-    .field('good[][photos][]', JSON.stringify([ 'url3','url4' ]))  // 2
+    .field('good[][photos-1]', 'url1')  // 1
+    .field('good[][photos-1]', '')  // 1
+    .field('good[][photos-2]', 'url3')  // 1
+    .field('good[][photos-2]', 'url4')  // 1
     .field('good[][isPublish]', 'false')
     .field('good[][isPublish]', 'false')
     .field('coverPhoto[]', 'photos1')
