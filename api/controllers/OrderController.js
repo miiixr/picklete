@@ -267,6 +267,24 @@ OrderController = {
 
       res.serverError({message, success: false});
     }
+  },
+
+  bonus: async (req, res) => {
+    try{
+      console.log('bonus',req.query);
+      var email = req.query.email;
+      let bonusPoint = await db.BonusPoint.findOne({
+        where: {email}
+      });
+      if (!bonusPoint) {
+        throw new Error ('bonus not found')
+      }
+      res.ok({bonusPoint});
+    }catch(e){
+      console.error(e.stack);
+      let {message} = e;
+      res.serverError({message, success: false});
+    }
   }
 
 };
