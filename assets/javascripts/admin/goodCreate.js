@@ -72,9 +72,23 @@
     }
   });
 
-
+  // CKEDITOR
   CKEDITOR.replace( 'editor1' );
+  // load data from db if exists
+  var explainPreLoad = $("#explainContainer").val();
+  console.log('explainPreLoad==>',explainPreLoad);
+  if( explainPreLoad!=null && explainPreLoad.length>0 ){
+    CKEDITOR.instances.editor1.setData( explainPreLoad );
+  }
+
   CKEDITOR.replace( 'editor2' );
+  // load data from db if exists
+  var noticePreLoad = $("#noticeContainer").val();
+  console.log('noticePreLoad==>',noticePreLoad);
+  if( noticePreLoad!=null && noticePreLoad.length>0 ){
+    CKEDITOR.instances.editor2.setData( noticePreLoad );
+  }
+  // end of CKEDITOR
 
   $(function  () {
     $("ol.drag-container").sortable({
@@ -82,7 +96,7 @@
       handle: '.col-md-1.text-center'
     });
   });
-  
+
   // $(".fileinput").on('change.bs.fileinput', function (e) {
   //   console.log(e)
   //   console.log("click from select");
@@ -96,18 +110,18 @@
   // });
 
 
-  // var options = { 
+  // var options = {
   //   beforeSubmit:  function (formData, jqForm, options) {
   //     console.log(formData);
   //     // var queryString = $.param(formData);
   //   },
-  //   success: function (responseText, statusText, xhr, $form)  { 
+  //   success: function (responseText, statusText, xhr, $form)  {
   //     console.log(responseText);
   //   }
   // };
 
   // $('form#uploadForm').submit(function() {
-  //   return false; 
-  // }); 
+  //   return false;
+  // });
 
 }(jQuery));

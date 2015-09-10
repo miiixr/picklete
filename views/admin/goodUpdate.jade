@@ -35,15 +35,18 @@ block body
         .form-group
           label.col-md-2.control-label 館別分類
           .col-md-4
-            select.form-control(name='dptId[]')
-              option 選擇大館別
-              each dpt, index in dpts
-                option(value='#{dpt.id}', selected=dpt.id == good.ProductGm.Dpts[0]) #{dpt.name}
+            each productGmDpt, index in good.ProductGm.Dpts
+              select.form-control(name='dptId[]')
+                option 選擇大館別
+                each dpt, index in dpts
+                  option(value='#{dpt.id}', selected=dpt.id == productGmDpt.id) #{dpt.name}
           .col-md-4
-            select.form-control(name='dptSubId[]')
-              option 選擇小館別
-              each dptSub, index in dpts[0].DptSubs
-                option(value='#{dptSub.id}', selected=dptSub.id == good.ProductGm.DptSubs[0]) #{dptSub.name}
+              each productGmSubDpt, index in good.ProductGm.DptSubs
+                select.form-control(name='dptSubId[]')
+                  option 選擇小館別
+                  each dpt, index in dpts
+                    each dptSub, index in dpt.DptSubs
+                      option(value='#{dptSub.id}', selected=dptSub.id == productGmSubDpt.id) #{dptSub.name}
           .col-md-2
             a.btn-remove(href='#', disabled=true)
               span.glyphicon.glyphicon-remove
@@ -218,7 +221,7 @@ block body
                       a.color-filter.color-gold(href='#')
                       a.color-filter.color-brown(href='#')
                       a.color-filter.color-mix(href='#')
-                  input(type='hidden', name="good[0][color]", value='1')
+                  input(type='hidden', name="color", value='#{good.color}')
                   // /dropdown-menu
                 // /btn-group
             // /form-group
@@ -270,10 +273,10 @@ block body
             // /form-group
           // /col-md-4
           .col-md-1.text-right
-            a.btn-remove(href='#')
-              span.glyphicon.glyphicon-remove
-            a.btn-add(href='#')
-              span.glyphicon.glyphicon-plus
+            //- a.btn-remove(href='#')
+              //- span.glyphicon.glyphicon-remove
+            //- a.btn-add(href='#')
+              //- span.glyphicon.glyphicon-plus
           // /col-md-1
     // /well
 
@@ -326,9 +329,11 @@ block body
       .tab-content
         #tab-1.tab-pane.fade.in.active
           textarea#editor1.form-control(rows='6', placeholder='請輸入商品介紹', name='explain', form='goodForm')
+          input#explainContainer.form-control(style='display:none;readonly:true',type='text',name='explainContainer', value='#{good.ProductGm.explain}')
         // /tab-pane
         #tab-2.tab-pane.fade
           textarea#editor2.form-control(rows='6', placeholder='請輸入注意事項', name='notice', form='goodForm')
+          input#noticeContainer.form-control(style='display:none;readonly:true',type='text',name='noticeContainer', value='#{good.ProductGm.notice}')
         // /tab-pane
       // /tab-content
     // /well

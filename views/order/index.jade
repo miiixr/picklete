@@ -162,19 +162,19 @@ block body
             else
               p 尚未填寫匯款回報
 
-          td= order.createdAt
+          td= sails.moment(order.createdAt.format).format('YYYY/MM/DD hh:mm')
           td
             a.btn.btn-green(href='/order/statusUpdate/#{order.id}?status=paymentConfirm') 通知匯款成功
           td
             a.btn.btn-green(href='/order/statusUpdate/#{order.id}?status=deliveryConfirm') 通知已出貨
 
           td
-            a(data-toggle='collapse', data-parent='#collapse-purchase', href='#collapse-purchase-One')
+            a(data-toggle='collapse', data-parent='#collapse-purchase', href='##{order.serialNumber}')
               span.glyphicon.glyphicon-plus
 
         tr.tr-hide
           td(colspan='10')
-            #collapse-purchase-One.panel-collapse.collapse
+            .panel-collapse.collapse(id=order.serialNumber)
               //
                 order-detail
                 ==================================================
@@ -184,9 +184,9 @@ block body
                   .row
                     .col-sm-6
                       ul.p-left-3
-                        li 收件人姓名：{consumer_name} 小姐
-                        li 收件人電話：09123456**
-                        li 收件人地址：407 {consumer_address}
+                        li 收件人姓名：#{order.Shipment.dataValues.username} 先生/小姐
+                        li 收件人電話：#{order.Shipment.dataValues.mobile}
+                        li 收件人地址：#{order.Shipment.dataValues.address}
                     // /col-sm-6
                     .col-sm-6
                       form.form-horizontal
@@ -213,33 +213,29 @@ block body
                         th 單價
                         th.text-right 小計
                     tbody
-                      tr
-                        td SNAP6-PLUS_CASE_RD
-                        td
-                          a(href='shop-product') {product_name}
-                        td.text-center 3
-                        td 1,440
-                        td.text-right 3,450
-                      tr
-                        td SNAP6-PLUS_CASE_RD
-                        td
-                          a(href='shop-product') {product_name}
-                        td.text-center 3
-                        td
-                          | 1,440
-                          small.text-line-through.m-left-1 1,700
-                        td.text-right 3,450
+                      - sumPrice = 0
+                      - sum = 0
+                      each item in order.OrderItems
+                        tr
+                          td SNAP6-PLUS_CASE_RD
+                          td
+                            a(href='shop-product') #{item.name}
+                          td.text-center #{item.quantity}
+                          td #{item.price}
+                          td.text-right #{item.price*item.quantity}
+                          - sumPrice += item.price*item.quantity
+                          - sum += item.quantity
                       tr
                         td(colspan='2')
                           ul.list-inline
                             li 運費 0
                             li 包裝 60
                             li 折扣碼 -30
-                        td.text-center.text-danger 4
+                        td.text-center.text-danger #{sum}
                         td.text-right(colspan='2')
                           h3
                             small 總計
-                            span.m-left-2 NT$2,390
+                            span.m-left-2 NT$ #{sumPrice+60-30}
                 // /well
                 p 付款方式：7-11 ibon 代碼繳費，繳費代碼：251563222267
                 ul.list-inline

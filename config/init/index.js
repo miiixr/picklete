@@ -83,11 +83,11 @@ module.exports = {
 
     let newProductGm = [{
       brandId: 1,
-      dptId: 1,
-      dptSubId: 1,
-      explain: '',
-      usage: '',
-      notice: '',
+      dptId: ["1"],
+      dptSubId: ["1"],
+      explain: 'lalalalal',
+      usage: 'noanoa',
+      notice: 'doludolu',
       tag: [
         "aa",
         "情人"
@@ -95,11 +95,11 @@ module.exports = {
       coverPhoto: []
     },{
       brandId: 2,
-      dptId: 2,
-      dptSubId: 2,
-      explain: '',
-      usage: '',
-      notice: '',
+      dptId: ["2"],
+      dptSubId: ["2"],
+      explain: 'explainexplain',
+      usage: 'usageusage',
+      notice: 'noticenotice',
       tag: [
             "咖啡",
             "午茶",
@@ -116,21 +116,42 @@ module.exports = {
       description: '好東西，買買買',
       stockQuantity: 100,
       price: 500,
-      ProductGmId: 1
+      ProductGmId: 1,
+      size: 'super-big',
+      service: ["express","store","package"],
+      country: 'Taiwan',
+      madeby: 'Peter Chou',
+      color: 5,
+      productNumber: '1-DDT-2-G',
+      spec: '鋁'
     },{
       name: '好物三選2',
       description: '好東西，買買買',
       stockQuantity: 100,
       price: 625,
-      ProductGmId: 2
+      ProductGmId: 2,
+      size: 'super-small',
+      service: ["package"],
+      country: 'U.S.A',
+      madeby: 'Tony Stack',
+      color: 4,
+      productNumber: '2-DDE-2-G',
+      spec: '汎合金'
     },{
       name: '好物三選3',
       description: '好東西，買買買',
       stockQuantity: 100,
       price: 750,
-      ProductGmId: 2
+      ProductGmId: 2,
+      size: 'super-big',
+      service: ["store"],
+      country: 'Japan',
+      madeby: 'doraemon',
+      color: 2,
+      productNumber: '1-ABC-2-G',
+      spec: '塑膠'
     }];
-    await db.Product.bulkCreate(fruitProducts);
+    let createdProducts =  await db.Product.bulkCreate(fruitProducts);
 
     var newProduct = {
       name: '超值精選組合',
@@ -140,10 +161,16 @@ module.exports = {
       image: 'http://localhost:1337/images/product/1.jpg',
       isPublish: true,
       comment: '限量只有 10 個',
-      ProductGmId: 2
+      ProductGmId: 2,
+      size: 'normal',
+      service: ["express"],
+      country: 'U.K',
+      madeby: 'unknow',
+      color: 3,
+      productNumber: '1-GOLD-2-G',
+      spec: 'super-metal'
     };
     var createdProduct = await db.Product.create(newProduct);
-
 
     var newOrder = {
       serialNumber: '0000000',
@@ -151,7 +178,15 @@ module.exports = {
       quantity: 10,
       orderId: '1111',
       UserId: createNewBuyer.id,
-      ProductId: createdProduct.id
+      ProductId: createdProduct.id,
+      size: '正常尺寸',
+      service: ["express"],
+      country: '克里普頓星',
+      madeby: '超人套裝批發製作 Corp.',
+      color: 2,
+      productNumber: '1-alien-9-Z',
+      description: '凱·艾爾的超級披風（紅）',
+      spec: '克利普頓絲'
     };
     var createdOrder = await db.Order.create(newOrder);
 
@@ -164,6 +199,16 @@ module.exports = {
       OrderId: createdOrder.id
     }
     var createShipment = await db.Shipment.create(shipment);
+
+    var orderItems ={
+      name: '好物三選1',
+      description: '好東西，買買買',
+      quantity: 4,
+      price: 500,
+      OrderId: createdOrder.id,
+      ProductId: createdProduct.id
+    }
+    var createOrderItems = await db.OrderItem.create(orderItems);
 
 
     var newOrder2 = {
@@ -190,6 +235,30 @@ module.exports = {
     }
     var createShipment = await db.Shipment.create(shipment2);
 
+
+    var orderItems2 =[{
+      name: '好物三選1',
+      description: '好東西，買買買',
+      quantity: 1,
+      price: 500,
+      OrderId: createdOrder.id,
+      ProductId: createdProduct.id
+    },{
+      name: '好物三選2',
+      description: '好東西，買買買',
+      quantity: 2,
+      price: 100,
+      OrderId: createdOrder.id,
+      ProductId: createdProduct.id
+    },{
+      name: '好物三選3',
+      description: '好東西，買買買',
+      quantity: 3,
+      price: 200,
+      OrderId: createdOrder.id,
+      ProductId: createdProduct.id
+    }]
+    var createOrderItems = await db.OrderItem.bulkCreate(orderItems2);
 
     var brandExample = [{
       name: '好棒棒品牌',
@@ -331,20 +400,22 @@ module.exports = {
 
 
     createdProduct = await db.Product.create({
-      color: '1',
       description: '11',
       name: '111',
       stockQuantity: '100',
       isPublish: 'false',
-      ProductGmId: createdProductGmComplete.id
+      price: 0,
+      ProductGmId: createdProductGmComplete.id,
+      size: 'normal',
+      service: ["express"],
+      country: 'U.K',
+      madeby: 'unknow',
+      color: 3,
+      productNumber: '1-USA-2-G',
+      spec: 'super-metal'
     });
 
-
-
-
     // create tag
-
-
     let tags = ["男人", "女人", "兒童", "情人", "學生", "寵物", "旅行", "閱讀", "咖啡", "午茶", "派對", "時尚", "印花", "夏日", "冬季", "聖誕", "森林", "動物", "花園", "浪漫", "可愛", "趣味", "復古", "環保", "工業", "簡約"];
     for (let i in tags) {
       await db.Tag.create({
