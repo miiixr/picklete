@@ -141,6 +141,14 @@ let UserController = {
         offset: page * limit,
         limit: limit
       });
+
+      //查詢購物金
+      for (var i = 0; i < members.rows.length; i++) {
+        let member = members.rows[i];
+
+        member.totalBonusRemain = await UserService.calcTotalBonusRemain(member);
+      }
+
       res.view({
         pageName: "members",
         members: members,
