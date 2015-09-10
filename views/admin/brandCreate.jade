@@ -39,7 +39,7 @@ block body
             span.glyphicon.glyphicon-info
         // /col-sm-10
       // /form-group
-      form#brand-data(action='/admin/brands/create', method="POST")
+      form#brand-data(action=brand ? '/admin/brands/update?id=' + brand.id : '/admin/brands/create', method="POST")
         .form-group
           label.col-sm-3.col-md-2.control-label 品牌名稱
           .col-sm-9.col-md-5
