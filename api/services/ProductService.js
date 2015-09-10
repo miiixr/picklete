@@ -6,9 +6,9 @@ import util from "util";
 module.exports = {
 
   createProduct: async (req) => {
-    // console.log('----------');
-    // console.log(req.body);
-    // console.log('----------');
+    console.log('----------');
+    console.log(req.body);
+    console.log('----------');
 
     // 如果選擇其他品牌的話，找出其他品牌的 id 
     var brandType = req.body.brandType;
@@ -42,6 +42,36 @@ module.exports = {
       return;
 
     var goods = req.body['good[][description]'];
+    console.log(goods);
+
+    if (typeof goods != 'object') {
+      var name = goods || '';
+      var stockQuantity = req.body['good[][stockQuantity]'] || '';
+      var isPublish = req.body['good[][isPublish]'] || '';
+      var color = req.body['good[][color]'] || '';
+      var productNumber = req.body['good[][productNumber]'] || '';
+      var photos = req.body['good[][photos][]'] || [];
+
+
+      let newProduct = {
+        name: String(name),
+        stockQuantity: stockQuantity,
+        isPublish: isPublish,
+        price: req.body.price,
+        size: req.body.size,
+        comment: req.body.comment,
+        service: req.body.service,
+        country: req.body.country,
+        madeby: req.body.madeby,
+        color: color,
+        productNumber: productNumber,
+        photos: photos || [],
+        ProductGmId: createdProductGm.id,
+      };
+
+      await db.Product.create(newProduct);
+      return;
+    }
 
     for (var i = 0 ; i < goods.length ; i++) {
       var name = goods[i] || '';
