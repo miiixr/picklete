@@ -1,6 +1,7 @@
 (function ($) {
   $('.dpt').click(function(e){
     var e = $(event.currentTarget);
+    //正式上線後要依據大館別固定數量更改
     for(i=1; i<=9; i++) {
       document.getElementById('subDpt' + i).className="tab-pane fade";
       $('.productDptId'+i).css("display","none");
@@ -9,5 +10,5 @@
     $('.productDptId'+e.data('id')).css("display","block");
   });
 
-  
+
 }(jQuery));
