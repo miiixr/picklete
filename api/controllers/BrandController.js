@@ -10,8 +10,7 @@ let BrandController = {
 
     var params = req.body;
 
-
-    console.log('admin/create params >>>', params);
+    console.log('craete server ', params);
 
     if (! params) {
       return res.redirect("/admin/brands");
@@ -23,7 +22,7 @@ let BrandController = {
       type: params['type'] || "OTHER",
       desc: params['desc'],
       banner: params['banner'],
-      photos: params['photos[]']
+      photos: params['photos']
     };
 
     // create brand
@@ -71,7 +70,7 @@ let BrandController = {
     try {
       let brandId = req.query.id; 
       let brand = await db.Brand.findById(brandId)
-      if(!brand) throw new Error ('找不到這個 brand');
+      if( ! brand) throw new Error ('找不到這個 brand');
       if (req.method === "GET") {
         return res.view("admin/brandCreate", {
           brand: brand.dataValues || {}
