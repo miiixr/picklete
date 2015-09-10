@@ -80,67 +80,6 @@ let UserController = {
       pageName: "brands-detail"
     });
   },
-  controlShopType: function (req, res) {
-    res.view({
-      pageName: "shop-type"
-    });
-  },
-  controlShopItemAdd: function(req, res) {
-    res.view({
-      pageName: "shop-item-add"
-    });
-  },
-  controlShopDiscount: function(req, res) {
-    res.view({
-      pageName: "shop-discount"
-    });
-  },
-  controlShopDiscountDetail: function(req, res) {
-    res.view({
-      pageName: "shop-discount-detail"
-    });
-  },
-  controlShopDiscountDetail2: function(req, res) {
-    res.view({
-      pageName: "shop-discount-detail2"
-    });
-  },
-  controlShopDiscountAddItem: function(req, res) {
-    res.view({
-      pageName: "shop-discount-add-item"
-    });
-  },
-  controlShopBuyMore: function(req, res) {
-    res.view({
-      pageName: "shop-buy-more"
-    });
-  },
-  controlShopBuyMoreDetail: function(req, res) {
-    res.view({
-      pageName: "shop-buy-more-detail"
-    });
-  },
-  controlShopBuyMoreAddItem: function(req, res) {
-    res.view({
-      pageName: "shop-buy-more-add-item"
-    });
-  },
-  controlShopCode: function(req, res) {
-    res.view({
-      pageName: "shop-code"
-    });
-  },
-  controlShopCodeDetail: function(req, res) {
-    res.view({
-      pageName: "shop-code-detail"
-    });
-  },
-  controlShopReportForm: function(req, res) {
-    res.view({
-      pageName: "shop-report-form"
-    });
-  },
-
   controlAbout: function(req, res) {
     res.view({
       pageName: "about"
