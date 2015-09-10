@@ -90,9 +90,9 @@ module.exports.routes = {
   'get /admin/members' : 'UserController.controlMembers'
   'get /admin/member-detail/:id' : 'UserController.controlMemberDetail'
 
-  'get /admin/brand' : 'BrandController.list'
-  'post /admin/brand' : 'BrandController.create'
-  'put /admin/brand/:brand' : 'BrandController.update'
+  # 'get /admin/brand' : 'BrandController.list'
+  # 'post /admin/brand' : 'BrandController.create'
+  # 'put /admin/brand/:brand' : 'BrandController.update'
 
   # 'get /admin/dpt' : 'DptController.list'
   # 'post /admin/dpt' : 'DptController.create'

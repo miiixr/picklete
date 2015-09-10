@@ -20,7 +20,7 @@ describe('Image controller test', () => {
     request(sails.hooks.http.app)
     .post('/admin/image/upload')
     .set('cookie', cookie)
-    .field('filename', 'avatar')
+    .field('filename', 'photos[]')
     .field('width', '50')
     .field('height', '50')
     .attach('uploadfile', photo)
