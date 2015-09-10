@@ -104,7 +104,7 @@ block body
           td #{sails.moment(member.birthDate).format('YYYY/MM/DD')}
           td #{member.mobile}
           td #{member.email}
-          td N/A
+          td #{member.totalBonusRemain}
           td #{member.comment}
           td.text-right
             a.btn.btn-link(href='member-detail/'+member.id)
