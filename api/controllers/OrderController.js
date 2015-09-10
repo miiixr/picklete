@@ -3,6 +3,15 @@
 // # 3. 建立訂單 order
 var OrderController;
 
+var Allpay = require('../../api/services/AllpayService');
+var _ = require('lodash');
+var allpay = new Allpay({
+  merchantID: '2000132',
+  hashKey: '5294y06JbISpM5x9',
+  hashIV: 'v77hoKGq4kWxNNIS',
+  debug: false,
+});
+
 OrderController = {
   debug: async (req, res) => {
     try {
@@ -141,7 +150,14 @@ OrderController = {
 
     var newOrder = req.body.order;
     try {
+      console.log("result!!",req.body);
       let result = await OrderService.create(newOrder);
+      // allpay.aioCheckOut(data, function(allpayResult) {
+      //   return res.ok({
+      //     result,
+      //     allpayResult
+      //   });
+      // });
       return res.ok(result);
     } catch (e) {
       console.error(e.stack);
