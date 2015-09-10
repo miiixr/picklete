@@ -15,8 +15,8 @@ block body
               ==================================================
             .fileinput.fileinput-new(data-provides='fileinput')
               .fileinput-new.fileinput-square
-                - var avatar = (brand && brand.avatar) ? brand.avatar : 'http://fakeimg.pl/600x600/dddddd/FFF/?text=600x600';
-                img.img-full(src=avatar)
+                - var avatar = (brand && brand.avatar) ? brand.avatar : '';
+                img.img-full(src=avatar.length > 0 ? avatar : 'http://fakeimg.pl/600x600/dddddd/FFF/?text=600x600')
               // /fileinput-new
               //- TODO: need to update brand
               form(action="/admin/image/upload", method="POST", enctype="multipart/form-data")
@@ -30,7 +30,7 @@ block body
                     input(type='hidden', name="filename", value='avatar')
                     input(type='hidden', name="width", value='600')
                     input(type='hidden', name="height", value='600')
-                    input(type='hidden', name='avatar', form='brand-data')
+                    input(type='hidden', name='avatar', form='brand-data', value=avatar)
                   a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
               // /fileinput-btn
             // /fileinput
@@ -68,10 +68,9 @@ block body
     h3
       span.label.label-default.p-10-15 形象照片
     .row.row-m
-      - var photos = (brand && brand.photos) ? brand.photos : undefined;
-      //- h3=brand.photos || 'NO'
-      - for (var i=1; i<=6; i++)
-        - var photo = (photos) ? photos[i] : 'http://fakeimg.pl/1100x500/dddddd/FFF/?text=1100x500';
+      - var photos = (brand && brand.photos) ? JSON.parse(brand.photos) : undefined;
+      - for (var i=0; i<6; i++)
+        - var photo = (photos) ? photos[i] : '';
         .col-md-4
           .edit-block.m-bottom-4
             span.badge=i
@@ -80,7 +79,7 @@ block body
               ==================================================
             .fileinput.fileinput-new(data-provides='fileinput')
               .fileinput-new
-                img.img-full(src=photo)
+                img.img-full(src=(photo.length > 0) ? photo : "http://fakeimg.pl/1100x500/dddddd/FFF/?text=1100x500")
               
               .fileinput-preview.fileinput-exists.border-block-1
                 //- // /fileinput-preview
@@ -112,9 +111,10 @@ block body
     //
       fileinput-img
       ==================================================
+    - var banner = (brand && brand.banner) ? brand.banner : "";
     .fileinput.fileinput-new(data-provides='fileinput')
       .fileinput-new
-        img.img-full(src='http://fakeimg.pl/1100x250/dddddd/FFF/?text=1100x250')
+        img.img-full(src=(banner.length > 0) ? banner : "http://fakeimg.pl/1100x250/dddddd/FFF/?text=1100x250")
       // /fileinput-new
       .fileinput-preview.fileinput-exists.border-block-1
       // /fileinput-preview
@@ -127,7 +127,7 @@ block body
             input(type='hidden', name="filename", value='banner')
             input(type='hidden', name="width", value='1100')
             input(type='hidden', name="height", value='250')
-            input(type='hidden', name='banner', form='brand-data')
+            input(type='hidden', name='banner', form='brand-data', value=banner)
           a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
         // /fileinput-btn
       // /fileinput
