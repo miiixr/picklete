@@ -84,10 +84,10 @@ block body
           .form-group
             label.col-md-4.control-label 販售狀態
             .col-md-8
-              select.form-control(name="isPublish", data-value=query.isPublish?query.isPublish: 0)
-                option(value=0) 所有狀態
-                option(value=1) 隱藏
-                option(value=2) 上架
+              select.form-control(name="isPublish", data-value=(query.isPublish!='')?query.isPublish: '')
+                option(value='') 所有狀態
+                option(value='false') 隱藏
+                option(value='true') 上架
           // /form-group
         // /col-md-4
         .col-md-8
@@ -155,7 +155,7 @@ block body
           alert('找不到符合的商品')
       each product in products
         tr
-          td 
+          td
             img.width-6(src=product.photos[0])
           td #{product.name}
           td #{product.price}
@@ -163,12 +163,13 @@ block body
           td #{product.createdAt}
           td
             .btn-group.btn-group-switch(data-toggle='buttons', id='#{product.id}')
-              label.btn.btn-default.btn-sm(class=product.isPublish ? "active" : "")
-                input#option-publish(type='radio', name='options', autocomplete='off', value='1')
-                span.btn-text 上架
               label.btn.btn-default.btn-hide.btn-sm(class=!product.isPublish ? "active" : "")
-                input#option-unpublish(type='radio', name='options', autocomplete='off', checked='', value='0')
+                input#option-unpublish(type='radio', name='options', autocomplete='off', checked=product.isPublish?'checked':undefined, value='0')
                 span.btn-text 隱藏
+              label.btn.btn-default.btn-sm(class=product.isPublish ? "active" : "")
+                input#option-publish(type='radio', name='options', autocomplete='off', checked=product.isPublish?'checked':undefined, value='1')
+                span.btn-text 上架
+
             // /btn-group-switch
           td #{product.stockQuantity}
             //- .input-group.input-group-count.input-group-sm.max-width-100

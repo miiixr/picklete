@@ -1,4 +1,4 @@
-describe.only("about Order", () => {
+describe("about Order", () => {
   describe("create Order", () => {
 
     let testProducts = [];
@@ -180,6 +180,22 @@ describe.only("about Order", () => {
         done(err);
       });
     });
+
+    it.only("get an Bonus point. ", async (done) => {
+      request(sails.hooks.http.app)
+      .get("/order/bonus?email=user1@picklete.localhost")
+      .end(async (err, res) => {
+        if (res.statusCode === 500) {
+          return done(body)
+        }
+        res.statusCode.should.equal(200);
+        res.body.bonusPoint.used.should.be.number;
+        res.body.bonusPoint.remain.should.be.number;
+        res.body.bonusPoint.email.should.be.String;
+        done(err);
+      });
+    });
+
 
   });
 });

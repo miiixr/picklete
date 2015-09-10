@@ -407,7 +407,7 @@ module.exports = {
         return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
     };
 
-    for (var i=0; i<100; i++) {
+    for (var i=0; i<50; i++) {
       var fakeUser = {
         username: "user" + i,
         fullName: commonLastNames[randomInt(0, commonLastNames.length)] + commonFirstNames[randomInt(0, commonFirstNames.length)],
@@ -468,6 +468,13 @@ module.exports = {
         ProductId: createdProduct.id
       }]
       var createOrderItems = await db.OrderItem.bulkCreate(orderItems2);
+
+      var bonuspoint={
+        remain: randomInt(0,100),
+        used: randomInt(0,500),
+        email: createFakeUser.email
+      }
+      var  createBonusPoints = await db.BonusPoint.create(bonuspoint);
     }
 
     let images = [
@@ -531,7 +538,6 @@ module.exports = {
     var createPromotion1 = await db.Promotion.create(promotion1);
     var createPromotion2 = await db.Promotion.create(promotion2);
     // end promotions
-
 
 
   }

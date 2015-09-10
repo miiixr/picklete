@@ -6,7 +6,8 @@ $(window).load(function() {
   // 小館別對應大館別選擇
   $selects.map(function(index,select) {
     var $select = $(select);
-    $select.val($select.data('value'));
+    if($select.data('value') != undefined)
+      $select.val($select.data('value').toString());
   });
   $selectDptId.change(function() {
     $selectDptSubId.html('');
@@ -34,5 +35,4 @@ $(window).load(function() {
       });
     }
   });
-
 });
