@@ -171,13 +171,19 @@ block body
               .fileinput-preview.fileinput-exists.border-block-1
               // /fileinput-preview
               .fileinput-btn
-                span.btn.btn-default.btn-sm.btn-file
-                  span.fileinput-new Select image
-                  span.fileinput-exists Change
-                  input(type='file', name="good[0][photos][]")
-                a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
-              // /fileinput-btn
-            // /fileinput
+                form(action="/admin/image/upload", method="POST", enctype="multipart/form-data")
+                  span.btn.btn-default.btn-sm.btn-file
+                    span.fileinput-new Select image
+                    span.fileinput-exists Change
+                    input.fileInput(type='file', name="uploadfile", data-name='good[0][photos-1]')
+                    input(type='hidden', name="filename", value='good[0][photos-1]')
+                    input(type='hidden', name="width", value='1000')
+                    input(type='hidden', name="height", value='1000')
+                    input(type='hidden', name='good[0][photos-1]', form='goodForm', value='')
+                  a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
+                    // /fileinput-btn
+                // /form
+              // /fileinput
           // /col-md-3
           .col-md-3
             //
@@ -190,11 +196,17 @@ block body
               .fileinput-preview.fileinput-exists.border-block-1
               // /fileinput-preview
               .fileinput-btn
-                span.btn.btn-default.btn-sm.btn-file
-                  span.fileinput-new Select image
-                  span.fileinput-exists Change
-                  input(type='file', name="good[0][photos][]")
-                a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
+                form(action="/admin/image/upload", method="POST", enctype="multipart/form-data")
+                  span.btn.btn-default.btn-sm.btn-file
+                    span.fileinput-new Select image
+                    span.fileinput-exists Change
+                    input.fileInput(type='file', name="uploadfile", data-name='good[photos-2]')
+                    input(type='hidden', name="filename", value='good[0][photos-2]')
+                    input(type='hidden', name="width", value='1000')
+                    input(type='hidden', name="height", value='1000')
+                    input(type='hidden', name='good[0][photos-2]', form='goodForm', value='')
+                  a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
+                // /form
               // /fileinput-btn
             // /fileinput
           // /col-md-3
@@ -290,11 +302,17 @@ block body
               .fileinput-preview.fileinput-exists.border-block-1
               // /fileinput-preview
               .fileinput-btn
-                span.btn.btn-default.btn-sm.btn-file
-                  span.fileinput-new Select image
-                  span.fileinput-exists Change
-                  input(type='file', name='coverPhoto[]')
-                a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
+                form(action="/admin/image/upload", method="POST", enctype="multipart/form-data")
+                  span.btn.btn-default.btn-sm.btn-file
+                    span.fileinput-new Select image
+                    span.fileinput-exists Change
+                    input.fileInput(type='file', name="uploadfile", data-name='coverPhoto[]')
+                    input(type='hidden', name="filename", value='coverPhoto[]')
+                    input(type='hidden', name="width", value='1000')
+                    input(type='hidden', name="height", value='1000')
+                    input(type='hidden', name='coverPhoto[]', form='goodForm', value='')
+                  a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
+                // /form
               // /fileinput-btn
             // /fileinput
             a.btn-remove(href='#')
@@ -356,7 +374,8 @@ block body
     //
     .text-center.m-bottom-6
       a.btn.btn-link.delete-link.btn-lg(href='#', data-toggle='modal', data-target='#modal-delete') 刪除此商品及所有品項
-      input.btn.btn-green.btn-lg(type='submit', value='確認送出')
+      //- input.btn.btn-green.btn-lg(type='submit', value='確認送出')
+      input.btn.btn-green.btn-lg(type='submit', value='確認送出', form='goodForm')
     // /text-center
 
 block js

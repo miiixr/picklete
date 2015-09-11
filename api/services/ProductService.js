@@ -156,6 +156,12 @@ module.exports = {
       product.description = updateProduct.good[0].description;
       product.isPublish = updateProduct.good[0].isPublish;
 
+      product.photos = [];
+      if (updateProduct.good[0]['photos-1'])
+        product.photos.push(updateProduct.good[0]['photos-1']);
+      if (updateProduct.good[0]['photos-2'])
+        product.photos.push(updateProduct.good[0]['photos-2']);
+
       await product.save();
 
 
@@ -165,6 +171,7 @@ module.exports = {
       productGm.explain = updateProduct.explain;
       productGm.usage = updateProduct.usage;
       productGm.notice = updateProduct.notice;
+      product.coverPhoto = updateProduct.coverPhoto;
 
       await productGm.save();
 
@@ -191,6 +198,7 @@ module.exports = {
     console.log('product', product);
 
     let productWithImage = ProductService.withImage(product);
+    console.log(product);
     //console.log('productWithImage', productWithImage);
     return productWithImage;
   },
