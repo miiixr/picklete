@@ -44,8 +44,8 @@ module.exports = {
       return {saveSelectionActive, success: true};
       // return {saveSelectionActive, success};
     } catch (e) {
-      // console.log('=== save err ==>',e.stack);
-      return {e, success: false};
+      let msg = e.message;
+      return { msg, success: false};
     }
   }
   // end save
