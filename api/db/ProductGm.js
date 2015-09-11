@@ -5,39 +5,39 @@ module.exports = (sequelize, DataTypes) => {
     brandId: DataTypes.INTEGER,
     brandName: DataTypes.STRING,
     // 大館別 id
-    dptId: {
-      type: DataTypes.STRING,
-      get: function() {
+    // dptId: {
+    //   type: DataTypes.STRING,
+    //   get: function() {
 
-        var value = this.getDataValue('dptId');
+    //     var value = this.getDataValue('dptId');
 
-        if(value) {
-          return JSON.parse(value);
-        }
+    //     if(value) {
+    //       return JSON.parse(value);
+    //     }
 
-        return [];
-      },
-      set: function(value) {
-        return this.setDataValue('dptId', JSON.stringify(value));
-      }
-    },
+    //     return [];
+    //   },
+    //   set: function(value) {
+    //     return this.setDataValue('dptId', JSON.stringify(value));
+    //   }
+    // },
     // 小館別 id
-    dptSubId: {
-      type: DataTypes.STRING,
-      get: function() {
+    // dptSubId: {
+    //   type: DataTypes.STRING,
+    //   get: function() {
 
-        var value = this.getDataValue('dptSubId');
+    //     var value = this.getDataValue('dptSubId');
 
-        if(value) {
-          return JSON.parse(value);
-        }
+    //     if(value) {
+    //       return JSON.parse(value);
+    //     }
 
-        return [];
-      },
-      set: function(value) {
-        return this.setDataValue('dptSubId', JSON.stringify(value));
-      }
-    },
+    //     return [];
+    //   },
+    //   set: function(value) {
+    //     return this.setDataValue('dptSubId', JSON.stringify(value));
+    //   }
+    // },
     // 商品說明/商品文案
     explain: DataTypes.TEXT,
     // 使用方法

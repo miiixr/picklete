@@ -12,7 +12,13 @@ module.exports = {
     let force = sails.config.db.force;
     await db.sequelize.sync({force});
   },
+  
   basicData: async () => {
+    var roleUser = {
+      authority: 'user',
+      comment: 'site user'
+    };
+    var createRoleUser = await db.Role.create(roleUser);
 
     var roleAdmin = {
       authority: 'admin',
@@ -340,9 +346,9 @@ module.exports = {
 
     createdProductGmComplete = await db.ProductGm.create({
       brandId: 1,
-      explain: 'req.body.explain',
-      usage: 'req.body.usage',
-      notice: 'req.body.notice',
+      explain: '好東西就是要買，買買買',
+      usage: '請安心服用',
+      notice: '18 歲以下請勿使用',
       depId: dptA.id,
       depSubId: dptSubA.id
     });
@@ -352,11 +358,11 @@ module.exports = {
 
 
     createdProduct = await db.Product.create({
-      description: '11',
-      name: '111',
+      description: '讚讚讚',
+      name: '這東西就是好',
       stockQuantity: '100',
-      isPublish: 'false',
-      price: 0,
+      isPublish: 'true',
+      price: 999,
       ProductGmId: createdProductGmComplete.id,
       size: 'normal',
       service: ["express"],

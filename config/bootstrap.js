@@ -43,7 +43,11 @@ module.exports.bootstrap = async (cb) => {
       await init.testData();
     }
 
-    await init.basicData();
+    if (sails.config.environment === 'setup') {
+      await init.database();
+      await init.basicData();
+    }
+      
 
     cb();
 
