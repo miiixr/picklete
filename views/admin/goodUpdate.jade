@@ -159,11 +159,11 @@ block body
                 span.btn.btn-default.btn-sm.btn-file
                   span.fileinput-new Select image
                   span.fileinput-exists Change
-                  input.fileInput(type='file', name="uploadfile", data-name='good[photos-1]')
-                  input(type='hidden', name="filename", value='good[photos-1]')
+                  input.fileInput(type='file', name="uploadfile", data-name='good[0][photos-1]')
+                  input(type='hidden', name="filename", value='good[0][photos-1]')
                   input(type='hidden', name="width", value='1000')
                   input(type='hidden', name="height", value='1000')
-                  input(type='hidden', name='good[photos-1]', form='goodForm', value='')
+                  input(type='hidden', name='good[0][photos-1]', form='goodForm', value='')
                 a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
                   // /fileinput-btn
               // /form
@@ -184,11 +184,11 @@ block body
                 span.btn.btn-default.btn-sm.btn-file
                   span.fileinput-new Select image
                   span.fileinput-exists Change
-                  input.fileInput(type='file', name="uploadfile", data-name='good[photos-2]')
-                  input(type='hidden', name="filename", value='good[photos-2]')
+                  input.fileInput(type='file', name="uploadfile", data-name='good[0][photos-2]')
+                  input(type='hidden', name="filename", value='good[0][photos-2]')
                   input(type='hidden', name="width", value='1000')
                   input(type='hidden', name="height", value='1000')
-                  input(type='hidden', name='good[photos-2]', form='goodForm', value='')
+                  input(type='hidden', name='good[0][photos-2]', form='goodForm', value='')
                 a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
               // /form
             // /fileinput-btn
@@ -219,19 +219,19 @@ block body
                     a.color-filter.color-gold(href='#')
                     a.color-filter.color-brown(href='#')
                     a.color-filter.color-mix(href='#')
-                input(type='hidden', name="good[color]", value='1', form='goodForm')
+                input(type='hidden', name="good[0][color]", value='#{good.color}', form='goodForm')
                 // /dropdown-menu
               // /btn-group
           // /form-group
           .form-group.form-group-sm
             label.col-sm-3.control-label 款式
             .col-sm-9
-              input.form-control(type='text', name="good[description]", value=good.description?good.description:'', form='goodForm')
+              input.form-control(type='text', name="good[0][description]", value=good.description?good.description:'', form='goodForm')
           // /form-group
           .form-group.form-group-sm
             label.col-sm-3.control-label 貨號
             .col-sm-9
-              input.form-control(type='text', name="good[productNumber]", value=good.productNumber?good.productNumber:'', form='goodForm')
+              input.form-control(type='text', name="good[0][productNumber]", value=good.productNumber?good.productNumber:'', form='goodForm')
           // /form-group
           .form-group.form-group-sm
             label.col-sm-3.control-label 數量
@@ -241,7 +241,7 @@ block body
                   button.btn.btn-default.btn-number(type='button', disabled='disabled', data-type='minus', data-field='quant[1]')
                     span.glyphicon.glyphicon-minus
                 // /input-group-btn
-                input.form-control.input-number.text-center(type='text', name="good[stockQuantity]", min='1', max='999', form='goodForm' , value=good.stockQuantity?good.stockQuantity:'')
+                input.form-control.input-number.text-center(type='text', name="good[0][stockQuantity]", min='1', max='999', form='goodForm' , value=good.stockQuantity?good.stockQuantity:'')
                 span.input-group-btn
                   button.btn.btn-default.btn-number(type='button', data-type='plus', data-field='quant[1]')
                     span.glyphicon.glyphicon-plus
