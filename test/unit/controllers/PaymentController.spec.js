@@ -21,7 +21,6 @@ describe('about Payment', () => {
 
     let data = {
       MerchantTradeNo: 'allpay20150830025',
-      MerchantTradeDate: '2015/9/11 09:10:20',
       TotalAmount: 500,
       TradeDesc: 'Allpay push order test',
       ItemName: ['Item01', 'Item02'],
