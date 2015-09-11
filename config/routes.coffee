@@ -186,6 +186,14 @@ module.exports.routes = {
      credentials: false
     }
   }
+  'post /api/payorder': {
+    controller: "OrderController",
+    action: "allPayCreate",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
 
   'get /api/order/status': {
     controller: "OrderController",
