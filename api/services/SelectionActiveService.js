@@ -17,43 +17,39 @@ module.exports = {
   // save
   save: async (selectionActives) => {
     try {
-      console.log('=== raw selectionActives ==>',selectionActives);
+      // take out images from input raw selectionActives.
+      let newImages = await* selectionActives.map((selectionActive) => {
+        return selectionActive.Images;
+      });
 
-      let newImages = [];
+      // sperate selectionActives.
       let newSelectionActives = [];
-      let insertedImage,insertSelectionActive;
-
-      let createdSelectionActives = await* selectionActives.map((selectionActive) => {
-        // console.log('=== selectionActive ==>\n',selectionActive);
-        newImages.push(selectionActive.Images);
-        insertImage = db.Image.create(selectionActive.Images);
+      await* selectionActives.map((selectionActive) => {
         delete selectionActive.Images;
         newSelectionActives.push(selectionActive);
-        insertSelectionActive = db.SelectionActive.create(selectionActive);
-        insertSelectionActive.setImages(insertImage);
       });
-      console.log('=== newSelectionActives ==>\n',newSelectionActives);
-      console.log('=== newImages ==>\n',newImages);
 
-      // let createdImages = await* newImages.map((newImage) => db.Image.create(newImage));
-      // let createdSelectionActive =
-      //   await* newSelectionActives.map((selectionActive) => db.SelectionActive.create(selectionActive));
+      // save SelectionActives.
+      let saveSelectionActive = await* newSelectionActives.map((selectionActive) =>
+        db.SelectionActive.create(selectionActive)
+      );
 
-      // console.log('=== createdImages.length ==>\n',createdImages.length);
-      // console.log('=== createdSelectionActive.length ==>',createdSelectionActive.length);
+      // save images
+      let saveImages = [];
+      for( var i=0;i<newImages.length;i++ ){
+        saveImages.push(await* newImages[i].map((image) => db.Image.create(image)));
+        saveSelectionActive[i].setImages(saveImages[i]);
+      }
 
-      // for( var selectionActive in createdSelectionActive){
-      //   for ( var images in createdImages){
-      //     await selectionActive.setImages(images);
-      //   }
-      // }
+      // set flag
+      saveSelectionActive['success'] = true;
 
-      return createdSelectionActives;
+      return saveSelectionActive;
     } catch (e) {
-      console.log('=== create err ==>',e);
+      console.log('=== create err ==>',e.stack);
       return false;
     }
-  },
+  }
   // end save
 
 };
