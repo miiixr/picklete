@@ -6,7 +6,13 @@ module.exports = {
 
   // getModel
   getModel: async () => {
-    let selectionActives = await db.SelectionActive.findAll();
+    let selectionActives = await db.SelectionActive.findAll({
+      include: [ { model: db.Image } ],
+      order: [ 'SelectionActive.id' ]
+    });
+
+
+    
     return selectionActives;
   },
   // end getModel
