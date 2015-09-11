@@ -40,7 +40,8 @@ module.exports = {
     let createdProductGm = await db.ProductGm.create(newProductGm);
 
     await createdProductGm.setDpts(req.body['dptId[]']);
-    await createdProductGm.setDptSubs(req.body['dptSubId[]']);
+    if(req.body['dptSubId[]'] != undefined && req.body['dptSubId[]'] != '')
+      await createdProductGm.setDptSubs(req.body['dptSubId[]']);
 
 
     if ( !createdProductGm )
@@ -186,8 +187,11 @@ module.exports = {
 
       await productGm.save();
 
-      await productGm.setDpts(updateProduct.dptId);
-      await productGm.setDptSubs(updateProduct.dptSubId);
+      if(updateProduct.dptId != null)
+        await productGm.setDpts(updateProduct.dptId);
+
+      if(updateProduct.dptSubId != '')
+        await productGm.setDptSubs(updateProduct.dptSubId);
 
 
     } catch (e) {
