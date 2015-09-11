@@ -43,7 +43,12 @@ let BonusController = {
     try{
       var newBonus = req.body;
       console.log('req',newBonus);
-      let createBonusPoints = await db.BonusPoint.create(newBonus);
+      let createBonusPoints = await db.BonusPoint.findOrCreate({
+        where:{
+          email: newBonus.email
+        },
+        defaults: newBonus
+      });
       return res.ok(createBonusPoints);
     }catch(e){
       console.error(e.stack);
@@ -61,8 +66,16 @@ let BonusController = {
           email: query
         }
       });
-      bonus.remain = updateData.remain;
-      bonus.used = updateData.used;
+      if(updateData.remain > 0)
+        bonus.remain = updateData.remain;
+      else
+        throw new Error ('更新紅利點數異常');
+
+      if(updateData.used > bonus.used)
+        bonus.used = updateData.used;
+      else
+        throw new Error ('更新紅利點數異常');
+
       bonus = await bonus.save();
       return res.ok(bonus);
     }catch(e){
