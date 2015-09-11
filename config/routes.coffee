@@ -79,7 +79,7 @@ module.exports.routes = {
 
   'get /admin/bonus' : 'BonusController.list'
   'post /admin/bonus' : 'BonusController.create'
-  'put /admin/bonus/:id' : 'BonusController.update'
+  'put /admin/bonus/:query' : 'BonusController.update'
 
   # 'get /admin/shop-item-list' : 'UserController.controlShopItemList'
   'get /admin/order' : 'OrderController.index'

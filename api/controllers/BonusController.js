@@ -52,10 +52,17 @@ let BonusController = {
   },
   update: async function(req, res) {
     try{
-      var newBonus = req.body;
-      console.log('req',req);
-      let createBonusPoints = await db.BonusPoint.create(newBonus);
-      return res.ok(createBonusPoints);
+      var query = req.param('query');
+      var updateData = req.body;
+      let bonus = await db.BonusPoint.findOne({
+        where: {
+          email: query
+        }
+      });
+      bonus.remain = updateData.remain;
+      bonus.used = updateData.used;
+      bonus = await bonus.save();
+      return res.ok(bonus);
     }catch(e){
       console.error(e.stack);
       let {message} = e;
