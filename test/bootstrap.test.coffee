@@ -30,7 +30,7 @@ before (done) ->
   return
 after (done) ->
   # here you can clear fixtures, etc.
-  sails.lower done
+  sails.lower done()
   return
 
 # ---
