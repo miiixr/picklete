@@ -325,10 +325,10 @@ block body
     // /nav
     .tab-content
       #tab-1.tab-pane.fade.in.active
-        textarea#editor1.form-control(rows='6', placeholder='請輸入商品介紹', value='#{good.ProductGm.explain}', name='explain', form='goodForm')
+        textarea#editor1.form-control(rows='6', placeholder='請輸入商品介紹', value='#{good.ProductGm.explain}', name='explain', form='goodForm') #{good.ProductGm.explain}
       // /tab-pane
       #tab-2.tab-pane.fade
-        textarea#editor2.form-control(rows='6', placeholder='請輸入注意事項', value='#{good.ProductGm.notice}', name='notice', form='goodForm')
+        textarea#editor2.form-control(rows='6', placeholder='請輸入注意事項', value='#{good.ProductGm.notice}', name='notice', form='goodForm') #{good.ProductGm.notice}
       // /tab-pane
     // /tab-content
   // /well
