@@ -38,16 +38,14 @@ module.exports = {
       let saveImages = [];
       for( var i=0;i<newImages.length;i++ ){
         saveImages.push(await* newImages[i].map((image) => db.Image.create(image)));
-        saveSelectionActive[i].setImages(saveImages[i]);
+        await saveSelectionActive[i].setImages(saveImages[i]);
       }
 
-      // set flag
-      saveSelectionActive['success'] = true;
-
-      return saveSelectionActive;
+      return {saveSelectionActive, success: true};
+      // return {saveSelectionActive, success};
     } catch (e) {
-      console.log('=== create err ==>',e.stack);
-      return false;
+      // console.log('=== save err ==>',e.stack);
+      return {e, success: false};
     }
   }
   // end save
