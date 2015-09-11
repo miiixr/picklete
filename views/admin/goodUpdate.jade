@@ -150,7 +150,7 @@ block body
             ==================================================
           .fileinput.fileinput-new(data-provides='fileinput')
             .fileinput-new.fileinput-square
-              img.img-full(src='http://fakeimg.pl/1000x1000/dddddd/FFF/?text=1000x1000')
+              img.img-full(src=good.photos[0] ? good.photos[0] : 'http://fakeimg.pl/1000x1000/dddddd/FFF/?text=1000x1000')
             // /fileinput-new
             .fileinput-preview.fileinput-exists.border-block-1
             // /fileinput-preview
@@ -163,7 +163,7 @@ block body
                   input(type='hidden', name="filename", value='good[0][photos-1]')
                   input(type='hidden', name="width", value='1000')
                   input(type='hidden', name="height", value='1000')
-                  input(type='hidden', name='good[0][photos-1]', form='goodForm', value='')
+                  input(type='hidden', name='good[0][photos-1]', form='goodForm', value=good.photos[0]? good.photos[0] : '')
                 a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
                   // /fileinput-btn
               // /form
@@ -175,7 +175,7 @@ block body
             ==================================================
           .fileinput.fileinput-new(data-provides='fileinput')
             .fileinput-new.fileinput-square
-              img.img-full(src='http://fakeimg.pl/1000x1000/dddddd/FFF/?text=1000x1000')
+              img.img-full(src=good.photos[1] ? good.photos[1] : 'http://fakeimg.pl/1000x1000/dddddd/FFF/?text=1000x1000')
             // /fileinput-new
             .fileinput-preview.fileinput-exists.border-block-1
             // /fileinput-preview
@@ -188,7 +188,7 @@ block body
                   input(type='hidden', name="filename", value='good[0][photos-2]')
                   input(type='hidden', name="width", value='1000')
                   input(type='hidden', name="height", value='1000')
-                  input(type='hidden', name='good[0][photos-2]', form='goodForm', value='')
+                  input(type='hidden', name='good[0][photos-2]', form='goodForm', value=good.photos[1] ? good.photos[1] : '')
                 a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
               // /form
             // /fileinput-btn
@@ -275,12 +275,14 @@ block body
       span.label.label-default.p-10-15 圖片上傳
     .row.row-m
       // /col-md-4
+      - var coverPhotos = good.ProductGm.coverPhoto ? good.ProductGm.coverPhoto : [];
+      - for (var i=0; i < coverPhotos.length; i++)
       .col-md-4
         .edit-block.m-bottom-4
           // fileinput-img
           .fileinput.fileinput-new(data-provides='fileinput')
             .fileinput-new.fileinput-square
-              img.img-full(src='http://fakeimg.pl/1000x1000/dddddd/FFF/?text=1000x1000')
+              img.img-full(src=coverPhotos[i] ? coverPhotos[i] : 'http://fakeimg.pl/1000x1000/dddddd/FFF/?text=1000x1000')
             // /fileinput-new
             .fileinput-preview.fileinput-exists.border-block-1
             // /fileinput-preview
@@ -293,7 +295,7 @@ block body
                   input(type='hidden', name="filename", value='coverPhoto[]')
                   input(type='hidden', name="width", value='1000')
                   input(type='hidden', name="height", value='1000')
-                  input(type='hidden', name='coverPhoto[]', form='goodForm', value='')
+                  input(type='hidden', name='coverPhoto[]', form='goodForm', value=coverPhotos[i] ? coverPhotos[i] : '')
                 a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
               // /form
             // /fileinput-btn
