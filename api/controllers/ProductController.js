@@ -148,9 +148,11 @@ let ProductController = {
     // return res.json(newProduct);
   },
 
-  createUpdate: async (req, res) => {
+  doCreate: async (req, res) => {
     let newProduct = req.body;
-    console.log(newProduct);
+    // console.log('----------');
+    // console.log(newProduct);
+    // console.log('----------');
     try {
       await ProductService.createProduct(req);
     } catch (error) {

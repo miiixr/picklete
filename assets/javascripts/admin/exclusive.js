@@ -1,4 +1,5 @@
 (function ($) {
+
   $("ul").sortable();
 
   $('.row').on('click','.delete-link',function(e){

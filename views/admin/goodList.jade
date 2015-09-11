@@ -154,6 +154,7 @@ block body
         script.
           alert('找不到符合的商品')
       each product in products
+        //- - try { var photo = JSON.parse(product.photos) } catch (e){ var photo = []; };
         tr
           td
             img.width-6(src=product.photos[0])

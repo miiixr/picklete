@@ -1,4 +1,5 @@
 describe("SelectionActiveService", () => {
+
   it('get SelectionActive', async (done) => {
 
     // 測試資料從
@@ -8,26 +9,38 @@ describe("SelectionActiveService", () => {
 
       let selectionActives = result;
 
-      selectionActives.length.length.should.be.equal(4);
-      selectionActives[0].link.should.be.equal("oneLong");
-      selectionActives[0].Images.length.should.be.equal(1);
-      selectionActives[0].Images.should.have.property('link', 'path', 'openWindow');
+      // console.log('=== result ==>',result);
+      // console.log('=== selectionActives.length ==>',selectionActives.length);
+      // console.log('=== selectionActives[0].Images.link ==>',selectionActives[0].Images[0].link);
+      // console.log('=== selectionActives[0].Images[0] ==>',selectionActives[0].Images[0].link);
 
-      selectionActives[1].link.should.be.equal("oneBig");
+      selectionActives.length.should.be.equal(4);
+      selectionActives[0].type.should.be.equal("oneLong");
+      selectionActives[0].Images.length.should.be.equal(1);
+      selectionActives[0].Images[0].toJSON().should.have.keys(
+        'SelectionActiveId',
+        'createdAt',
+        'updatedAt',
+        'id',
+        'link',
+        'path',
+        'openWindow');
+
+      selectionActives[1].type.should.be.equal("oneBig");
       selectionActives[1].Images.length.should.be.equal(1);
 
-      selectionActives[2].link.should.be.equal("two");
+      selectionActives[2].type.should.be.equal("two");
       selectionActives[2].Images.length.should.be.equal(2);
 
-      selectionActives[3].link.should.be.equal("three");
+      selectionActives[3].type.should.be.equal("three");
       selectionActives[3].Images.length.should.be.equal(3);
 
-
-
+      done();
     } catch (e) {
       done(e);
     }
   });
+
 
   it('save SelectionActive', async (done) => {
 
@@ -75,6 +88,7 @@ describe("SelectionActiveService", () => {
 
       result.success.should.be.true;
 
+      done();
     } catch (e) {
       done(e);
     }
