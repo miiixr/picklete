@@ -1,6 +1,6 @@
 describe("SelectionActiveService", () => {
 
-  it.only('get SelectionActive', async (done) => {
+  it('get SelectionActive', async (done) => {
 
     // 測試資料從
     try {
@@ -9,10 +9,10 @@ describe("SelectionActiveService", () => {
 
       let selectionActives = result;
 
-      console.log('=== result ==>',result);
-      console.log('=== selectionActives.length ==>',selectionActives.length);
-      console.log('=== selectionActives[0].Images.link ==>',selectionActives[0].Images[0].link);
-      console.log('=== selectionActives[0].Images[0] ==>',selectionActives[0].Images[0].link);
+      // console.log('=== result ==>',result);
+      // console.log('=== selectionActives.length ==>',selectionActives.length);
+      // console.log('=== selectionActives[0].Images.link ==>',selectionActives[0].Images[0].link);
+      // console.log('=== selectionActives[0].Images[0] ==>',selectionActives[0].Images[0].link);
 
       selectionActives.length.should.be.equal(4);
       selectionActives[0].type.should.be.equal("oneLong");
@@ -36,14 +36,13 @@ describe("SelectionActiveService", () => {
       selectionActives[3].Images.length.should.be.equal(3);
 
       done();
-      
     } catch (e) {
       done(e);
     }
   });
 
 
-  it('save SelectionActive', async (done) => {
+  it.only('save SelectionActive', async (done) => {
 
     // 每次更新皆刪除重建 SelectionActive
     try {
