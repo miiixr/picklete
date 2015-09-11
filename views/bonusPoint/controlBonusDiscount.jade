@@ -48,7 +48,7 @@ block body
           td
             span.text-info= sails.moment(bonus.updatedAt).format('YYYY/MM/DD hh:mm')
           td.text-right
-            a.btn.btn-link(href='#')
+            a.btn.btn-link(href='editBonus/?email=#{bonus.email}')
               span.glyphicon.glyphicon-pencil2
   hr.dashed-line
   .text-center

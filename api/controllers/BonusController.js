@@ -71,6 +71,27 @@ let BonusController = {
       let success = false;
       return res.serverError({message, success});
     }
-  }
+  },
+  edit: async function(req, res) {
+    try{
+      var query = req.query;
+      console.log("query",query);
+      let bonus = await db.BonusPoint.findOne({
+        where:{
+          email:query.email
+        }
+      });
+      console.log('bonus',bonus);
+      res.view('bonusPoint/editBonus',{
+        pageName: "editBonus",
+        bonus
+      });
+    }catch(e){
+      console.error(e.stack);
+      let {message} = e;
+      let success = false;
+      return res.serverError({message, success});
+    }
+  },
 };
 module.exports = BonusController;
