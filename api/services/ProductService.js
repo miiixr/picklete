@@ -10,7 +10,7 @@ module.exports = {
     console.log(req.body);
     console.log('----------');
 
-    // 如果選擇其他品牌的話，找出其他品牌的 id 
+    // 如果選擇其他品牌的話，找出其他品牌的 id
     var brandType = req.body.brandType;
     var brandName = req.body.customBrand;
     var brandId = req.body.brandId;
@@ -27,7 +27,7 @@ module.exports = {
 
     let newProductGm = {
       brandId: brandId,
-      brandName: brandName, 
+      brandName: brandName,
       dptId: req.body['dptId'],
       dptSubId: req.body['dptSubId'],
       explain: req.body.explain || "",
@@ -46,14 +46,14 @@ module.exports = {
     console.log(goods);
 
     if (typeof goods != 'object') {
-      
+
       var name = goods || '';
       var stockQuantity = req.body['good[stockQuantity]'] || '';
       var isPublish = req.body['good[isPublish]'] || '';
       var productNumber = req.body['good[productNumber]'] || '';
       var photos = [ req.body['good[photos-1]'], req.body['good[photos-2]'] ] || [];
       var color = req.body['good[color]'] || '';
-      
+
       let newProduct = {
         name: String(name),
         stockQuantity: stockQuantity,
@@ -116,6 +116,8 @@ module.exports = {
 
   update: async (updateProduct) => {
 
+    console.log('=== updateProduct ===', updateProduct);
+
     try {
       var {brandType} = updateProduct;
       var brand;
@@ -156,11 +158,16 @@ module.exports = {
       product.description = updateProduct.good[0].description;
       product.isPublish = updateProduct.good[0].isPublish;
 
-      product.photos = [];
+      let photos = [];
+
+
       if (updateProduct.good[0]['photos-1'])
-        product.photos.push(updateProduct.good[0]['photos-1']);
+        photos.push(updateProduct.good[0]['photos-1']);
+
       if (updateProduct.good[0]['photos-2'])
-        product.photos.push(updateProduct.good[0]['photos-2']);
+        photos.push(updateProduct.good[0]['photos-2']);
+
+      product.photos = photos;
 
       await product.save();
 
