@@ -30,14 +30,13 @@ describe.only('Bonus', () => {
         email: 'user999@picklete.localhost'
       })
       .end((err, res) => {
-        console.log('res.body', res.body);
         if (res.statusCode === 500) {
           return done(body)
         }
         res.statusCode.should.equal(200);
-        res.body.remain.should.be.equal(100);
-        res.body.used.should.be.equal(30);
-        res.body.email.should.be.equal("user999@picklete.localhost");
+        res.body[0].remain.should.be.equal(100);
+        res.body[0].used.should.be.equal(30);
+        res.body[0].email.should.be.equal("user999@picklete.localhost");
         return done();
       })
   });

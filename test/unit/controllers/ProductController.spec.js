@@ -225,7 +225,7 @@ describe("about Product", () => {
     });
   });
 
-  it.only('create a product for multiple type, test about - ProductController.createUpdate', (done) => {
+  it('create a product for multiple type, test about - ProductController.createUpdate', (done) => {
 
     request(sails.hooks.http.app)
     .post('/admin/goods/create')
