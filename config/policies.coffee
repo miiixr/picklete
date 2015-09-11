@@ -17,22 +17,22 @@ http://sailsjs.org/#/documentation/reference/sails.config/sails.config.policies.
 ###
 module.exports.policies = {
 
-  '*': [ 'passport']
-  #
+  '*': [ 'passport', 'loginRequired']
+
   'auth':
     '*': ['passport']
-  #
-  # ProductController:
-  #   list: ['loginRequired']
-  # OrderController:
-  #   index: ['loginRequired']
-  #   paymentConfirm: []
-  #   paymentConfirmSave: []
-  #   create: []
-  #   status: []
-  #   find: []
-  #   sync: []
-  #   bonus: []
+
+  ProductController:
+    list: ['loginRequired']
+  OrderController:
+    index: ['loginRequired']
+    paymentConfirm: []
+    paymentConfirmSave: []
+    create: []
+    status: []
+    find: []
+    sync: []
+    bonus: []
 
 }
 

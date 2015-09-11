@@ -129,6 +129,9 @@ exports.login = (req, identifier, password, next) ->
   isEmail = validator.isEmail(identifier)
   query = {
     where: {}
+    include: [
+      db.Role
+    ]
   }
   if isEmail
     query.where.email = identifier
