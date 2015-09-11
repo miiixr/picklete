@@ -63,7 +63,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     // Cover photos
     coverPhoto: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       get: function() {
 
         var value = this.getDataValue('coverPhoto');
