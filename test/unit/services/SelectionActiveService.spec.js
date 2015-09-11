@@ -1,4 +1,4 @@
-describe("SelectionActiveService", () => {
+describe.only("SelectionActiveService", () => {
 
   it('get SelectionActive', async (done) => {
 
@@ -42,7 +42,7 @@ describe("SelectionActiveService", () => {
   });
 
 
-  it.only('save SelectionActive', async (done) => {
+  it('save SelectionActive', async (done) => {
 
     // 每次更新皆刪除重建 SelectionActive
     try {
@@ -88,6 +88,7 @@ describe("SelectionActiveService", () => {
 
       result.success.should.be.true;
 
+      done();
     } catch (e) {
       done(e);
     }
