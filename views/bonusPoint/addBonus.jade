@@ -1,0 +1,38 @@
+extends ../_layout_auth
+
+block body
+  h2.m-bottom-6 新增紅利點數
+  .well.control-well.p-30.m-bottom-8
+    form.form-horizontal(id="addBonudData")
+      .form-group
+        label.col-sm-3.col-md-2.control-label 帳號
+        .col-sm-4.col-md-3
+            label
+              input.form-control(type='text',name="email", placeholder= "輸入email")
+      .form-group
+        label.col-sm-3.col-md-2.control-label 紅利點數
+        .col-sm-4.col-md-3
+            label
+              input.form-control(type='text',name="remain" value="0")
+              input.form-control(type='hidden',name="used",value="0")
+              // /input-group
+      // /form-group
+      .m-top-6.text-right
+        a.btn.btn-link.delete-link.btn-lg(href='../../admin/bonus') 取消
+        a.btn.btn-green.btn-lg(id="addBonus") 確定
+block js
+  script.
+    $("#addBonus").click(function()
+    {
+      var postData = $("#addBonudData").serializeArray();
+      $.ajax(
+      {
+          url : '/admin/bonus',
+          type: "post",
+          data : postData,
+          success:function(data, textStatus, jqXHR) 
+          {
+              location.href='../../admin/bonus?keyword='+$("input[name='email']").val();
+          }
+      });
+    });

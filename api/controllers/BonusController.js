@@ -93,5 +93,17 @@ let BonusController = {
       return res.serverError({message, success});
     }
   },
+  add: async function(req, res) {
+    try{
+      res.view('bonusPoint/addBonus',{
+        pageName: "addBonus",
+      });
+    }catch(e){
+      console.error(e.stack);
+      let {message} = e;
+      let success = false;
+      return res.serverError({message, success});
+    }
+  },
 };
 module.exports = BonusController;
