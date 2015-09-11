@@ -28,8 +28,8 @@ module.exports = {
     let newProductGm = {
       brandId: brandId,
       brandName: brandName,
-      dptId: req.body['dptId'],
-      dptSubId: req.body['dptSubId'],
+      dptId: req.body['dptId[]'],
+      dptSubId: req.body['dptSubId[]'],
       explain: req.body.explain || "",
       usage: req.body.usage || "",
       notice: req.body.notice || "",
@@ -38,6 +38,10 @@ module.exports = {
     };
     // create product gm
     let createdProductGm = await db.ProductGm.create(newProductGm);
+
+    await createdProductGm.setDpts(req.body['dptId[]']);
+    await createdProductGm.setDptSubs(req.body['dptSubId[]']);
+
 
     if ( !createdProductGm )
       return;
