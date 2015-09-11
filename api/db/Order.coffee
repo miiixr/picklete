@@ -14,6 +14,8 @@ module.exports = (sequelize, DataTypes) ->
     paymentConfirmPostfix: DataTypes.STRING
     paymentConfirmAmount: DataTypes.FLOAT
     useBunusPoint: DataTypes.INTEGER
+    CheckMacValue: DataTypes.STRING
+    MerchantTradeDate: DataTypes.DATE
     status:
       type: DataTypes.ENUM('new', 'paymentConfirm', 'deliveryConfirm')
       defaultValue: 'new'

@@ -72,10 +72,9 @@ describe("about Order", () => {
         if (res.statusCode === 500) {
           return done(err);
         }
-        console.log('!!!',res.body)
-        res.body.TradeDesc.should.be.String;
-        res.body.TotalAmount.should.be.number;
-        res.body.ChoosePayment.name.should.be.String;
+        res.body.result.MerchantID.should.be.String;
+        res.body.result.PaymentType.should.be.String;
+        res.body.result.CheckMacValue.should.be.String;
         return done();
       });
     });

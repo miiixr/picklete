@@ -3,6 +3,15 @@
 // # 3. 建立訂單 order
 var OrderController;
 
+var Allpay = require('../../api/services/AllpayService');
+var _ = require('lodash');
+var allpay = new Allpay({
+  merchantID: '2000132',
+  hashKey: '5294y06JbISpM5x9',
+  hashIV: 'v77hoKGq4kWxNNIS',
+  debug: false,
+});
+
 OrderController = {
   debug: async (req, res) => {
     try {
@@ -163,10 +172,24 @@ OrderController = {
         ReturnURL: 'http://localhost:3000',
         ClientBackURL: 'http://localhost:3000'
       };
+
       order.OrderItems.forEach((orderItem) => {
         data.ItemName.push(orderItem.name);
       });
-      return res.ok(data);
+
+      allpay.aioCheckOut(data, async function(result) {
+
+        let orderData = await db.Order.findById(order.id);
+        orderData.MerchantTradeDate = result.MerchantTradeDate;
+        orderData.CheckMacValue = result.CheckMacValue;
+        await orderData.save();
+
+        return res.ok({
+          result
+        });
+
+      });
+
     } catch (e) {
       console.error(e.stack);
       let {message} = e;
