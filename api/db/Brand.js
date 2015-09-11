@@ -20,7 +20,7 @@ module.exports = function(sequelize, DataTypes) {
 
     // 形象照片
     photos: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       get: function() {
 
         var value = this.getDataValue('photos');
