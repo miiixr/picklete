@@ -163,6 +163,7 @@ module.exports = {
       product.description = updateProduct.good[0].description;
       product.isPublish = updateProduct.good[0].isPublish;
 
+
       let photos = [];
 
 
@@ -183,7 +184,9 @@ module.exports = {
       productGm.explain = updateProduct.explain;
       productGm.usage = updateProduct.usage;
       productGm.notice = updateProduct.notice;
-      product.coverPhoto = updateProduct.coverPhoto;
+      productGm.tag = updateProduct.tag;
+      productGm.coverPhoto = updateProduct.coverPhoto;
+      
 
       await productGm.save();
 
