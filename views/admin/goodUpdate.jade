@@ -253,10 +253,10 @@ block body
             .col-sm-9
               .btn-group.btn-group-switch(data-toggle='buttons')
                 label.btn.btn-default.btn-hide.btn-sm
-                  input#option1(type='radio', name="good[isPublish]", value='false', autocomplete='off', checked=good.isPublish == 'false', form='goodForm')
+                  input#option1(type='radio', name="good[0][isPublish]", value='false', autocomplete='off', checked=good.isPublish == 'false', form='goodForm')
                   span.btn-text 隱藏
                 label.btn.btn-default.btn-sm.active
-                  input#option2(type='radio', name="good[isPublish]", value='true', autocomplete='off', checked=good.isPublish == 'true' form='goodForm')
+                  input#option2(type='radio', name="good[0][isPublish]", value='true', autocomplete='off', checked=good.isPublish == 'true' form='goodForm')
                   span.btn-text 上架
               // /btn-group-switch
           // /form-group
@@ -275,37 +275,38 @@ block body
       span.label.label-default.p-10-15 圖片上傳
     .row.row-m
       // /col-md-4
-      - var coverPhotos = good.ProductGm.coverPhoto ? good.ProductGm.coverPhoto : [];
+      - var coverPhotos = good.ProductGm.coverPhoto.length > 0 ? good.ProductGm.coverPhoto : [0];
       - for (var i=0; i < coverPhotos.length; i++)
-      .col-md-4
-        .edit-block.m-bottom-4
-          // fileinput-img
-          .fileinput.fileinput-new(data-provides='fileinput')
-            .fileinput-new.fileinput-square
-              img.img-full(src=coverPhotos[i] ? coverPhotos[i] : 'http://fakeimg.pl/1000x1000/dddddd/FFF/?text=1000x1000')
-            // /fileinput-new
-            .fileinput-preview.fileinput-exists.border-block-1
-            // /fileinput-preview
-            .fileinput-btn
-              form(action="/admin/image/upload", method="POST", enctype="multipart/form-data")
-                span.btn.btn-default.btn-sm.btn-file
-                  span.fileinput-new Select image
-                  span.fileinput-exists Change
-                  input.fileInput(type='file', name="uploadfile", data-name='coverPhoto[]')
-                  input(type='hidden', name="filename", value='coverPhoto[]')
-                  input(type='hidden', name="width", value='1000')
-                  input(type='hidden', name="height", value='1000')
-                  input(type='hidden', name='coverPhoto[]', form='goodForm', value=coverPhotos[i] ? coverPhotos[i] : '')
-                a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
-              // /form
-            // /fileinput-btn
-          // /fileinput
-          a.btn-remove(href='#')
-            span.glyphicon.glyphicon-remove
-          a.btn-add(href='#')
-            span.glyphicon.glyphicon-plus
-        // /edit-block
-      // /col-md-4
+
+        .col-md-4
+          .edit-block.m-bottom-4
+            // fileinput-img
+            .fileinput.fileinput-new(data-provides='fileinput')
+              .fileinput-new.fileinput-square
+                img.img-full(src=coverPhotos[i] ? coverPhotos[i] : 'http://fakeimg.pl/1000x1000/dddddd/FFF/?text=1000x1000')
+              // /fileinput-new
+              .fileinput-preview.fileinput-exists.border-block-1
+              // /fileinput-preview
+              .fileinput-btn
+                form(action="/admin/image/upload", method="POST", enctype="multipart/form-data")
+                  span.btn.btn-default.btn-sm.btn-file
+                    span.fileinput-new Select image
+                    span.fileinput-exists Change
+                    input.fileInput(type='file', name="uploadfile", data-name='coverPhoto[]')
+                    input(type='hidden', name="filename", value='coverPhoto[]')
+                    input(type='hidden', name="width", value='1000')
+                    input(type='hidden', name="height", value='1000')
+                    input(type='hidden', name='coverPhoto[]', form='goodForm', value=coverPhotos[i] ? coverPhotos[i] : '')
+                  a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
+                // /form
+              // /fileinput-btn
+            // /fileinput
+            a.btn-remove(href='#')
+              span.glyphicon.glyphicon-remove
+            a.btn-add(href='#')
+              span.glyphicon.glyphicon-plus
+          // /edit-block
+        // /col-md-4
 
 
     // /row
@@ -338,7 +339,7 @@ block body
     h3
       span.label.label-default.p-10-15 商品標籤
     .form-group
-      input(type='text', value='', data-role='tagsinput', placeholder='新增標籤請用逗號隔開或按 Enter 新增', name='tag', form='goodForm')
+      input(type='text', data-role='tagsinput', value=good.ProductGm.tag, placeholder='新增標籤請用逗號隔開或按 Enter 新增', name='tag', form='goodForm')
       //- .tagsinput.form-control
       //-   span.tag.label.label-default
       //-     | 咖啡
