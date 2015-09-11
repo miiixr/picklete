@@ -80,8 +80,9 @@ AuthController = {
           return tryAgain(err);
         }
         req.session.authenticated = true;
+        console.log('=== user.Roles ===', user);
 
-        if (user.RoleId == 2) {
+        if (user.Role.authority == 'admin') {
           return res.redirect('/admin/goods');
         }
 

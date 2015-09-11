@@ -7,7 +7,10 @@ module.exports = function(sequelize, DataTypes) {
     name: DataTypes.STRING,
 
     // 小館別權重
-    weight: DataTypes.INTEGER,
+    weight: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0
+    },
 
     // 預設官方小館別，不能被修改與刪除
     official: DataTypes.BOOLEAN
