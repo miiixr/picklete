@@ -148,7 +148,7 @@ let ProductController = {
     // return res.json(newProduct);
   },
 
-  createUpdate: async (req, res) => {
+  doCreate: async (req, res) => {
     let newProduct = req.body;
     // console.log('----------');
     // console.log(newProduct);
