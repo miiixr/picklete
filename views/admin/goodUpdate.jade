@@ -164,7 +164,7 @@ block body
                     input(type='hidden', name="filename", value='good[#{i}][photos-1]')
                     input(type='hidden', name="width", value='1000')
                     input(type='hidden', name="height", value='1000')
-                    input(type='hidden', name='good[0][photos-1]', form='goodForm', value=product.photos[0]? product.photos[0] : '')
+                    input(type='hidden', name='good[#{i}][photos-1]', form='goodForm', value=product.photos[0]? product.photos[0] : '')
                   a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
                     // /fileinput-btn
                 // /form
@@ -189,7 +189,7 @@ block body
                     input(type='hidden', name="filename", value='good[#{i}][photos-2]')
                     input(type='hidden', name="width", value='1000')
                     input(type='hidden', name="height", value='1000')
-                    input(type='hidden', name='good[0][photos-2]', form='goodForm', value=product.photos[1] ? product.photos[1] : '')
+                    input(type='hidden', name='good[#{i}][photos-2]', form='goodForm', value=product.photos[1] ? product.photos[1] : '')
                   a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
                 // /form
               // /fileinput-btn
@@ -255,10 +255,10 @@ block body
               .col-sm-9
                 .btn-group.btn-group-switch(data-toggle='buttons')
                   label.btn-status.btn.btn-default.btn-hide.btn-sm(class=(!product.isPublish) ? "active": "")
-                    input#option1(type='radio', name="good[#{i}][isPublish]", value='false', autocomplete='off', checked=(product.isPublish == 'false') ? "true": undefined, form='goodForm')
+                    input#option1(type='radio', name="good[#{i}][isPublish]", value='false', autocomplete='off', checked=(product.isPublish == 0) ? "true": undefined, form='goodForm')
                     span.btn-text 隱藏
                   label.btn-status.btn.btn-default.btn-sm(class=(product.isPublish) ? "active": "")
-                    input#option2(type='radio', name="good[#{i}][isPublish]", value='true', autocomplete='off', checked=(product.isPublish == 'true') ? "true": undefined form='goodForm')
+                    input#option2(type='radio', name="good[#{i}][isPublish]", value='true', autocomplete='off', checked=(product.isPublish == 1) ? "true": undefined form='goodForm')
                     span.btn-text 上架
                 // /btn-group-switch
             // /form-group
