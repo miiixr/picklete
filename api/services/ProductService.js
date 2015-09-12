@@ -191,6 +191,7 @@ module.exports = {
 
 
       productGm.brandId = brand.id;
+      productGm.name = updateProduct.name;
       productGm.dptId = updateProduct.dptId;
       productGm.dptSubId = updateProduct.dptSubId;
       productGm.explain = updateProduct.explain;
