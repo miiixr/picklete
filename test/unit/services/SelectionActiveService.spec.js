@@ -1,4 +1,5 @@
-describe("SelectionActiveService", () => {
+describe.only("SelectionActiveService", () => {
+
   it('get SelectionActive', async (done) => {
 
     // 測試資料從
@@ -8,26 +9,38 @@ describe("SelectionActiveService", () => {
 
       let selectionActives = result;
 
-      selectionActives.length.length.should.be.equal(4);
-      selectionActives[0].link.should.be.equal("oneLong");
-      selectionActives[0].Images.length.should.be.equal(1);
-      selectionActives[0].Images.should.have.property('link', 'path', 'openWindow');
+      // console.log('=== result ==>',result);
+      // console.log('=== selectionActives.length ==>',selectionActives.length);
+      // console.log('=== selectionActives[0].Images.url ==>',selectionActives[0].Images[0].url);
+      // console.log('=== selectionActives[0].Images[0] ==>',selectionActives[0].Images[0].url);
 
-      selectionActives[1].link.should.be.equal("oneBig");
+      selectionActives.length.should.be.equal(4);
+      selectionActives[0].type.should.be.equal("oneLong");
+      selectionActives[0].Images.length.should.be.equal(1);
+      selectionActives[0].Images[0].toJSON().should.have.keys(
+        'SelectionActiveId',
+        'createdAt',
+        'updatedAt',
+        'id',
+        'url',
+        'path',
+        'openWindow');
+
+      selectionActives[1].type.should.be.equal("oneBig");
       selectionActives[1].Images.length.should.be.equal(1);
 
-      selectionActives[2].link.should.be.equal("two");
+      selectionActives[2].type.should.be.equal("two");
       selectionActives[2].Images.length.should.be.equal(2);
 
-      selectionActives[3].link.should.be.equal("three");
+      selectionActives[3].type.should.be.equal("three");
       selectionActives[3].Images.length.should.be.equal(3);
 
-
-
+      done();
     } catch (e) {
       done(e);
     }
   });
+
 
   it('save SelectionActive', async (done) => {
 
@@ -38,35 +51,35 @@ describe("SelectionActiveService", () => {
         {
           type: 'oneLong',
           Images: [{
-            link: 'http://fakeimg.pl/1100x160',
-            path: ''
+            url: 'http://github.com',
+            path: 'http://fakeimg.pl/1100x160'
           }]
         },{
           type: 'oneBig',
           Images: [{
-            link: 'http://fakeimg.pl/1100x350',
-            path: ''
+            url: 'http://github.com',
+            path: 'http://fakeimg.pl/1100x350'
           }]
         },{
           type: 'two',
           Images: [{
-            link: 'http://fakeimg.pl/545x350',
-            path: ''
+            url: 'http://github.com',
+            path: 'http://fakeimg.pl/545x350'
           },{
-            link: 'http://fakeimg.pl/545x350',
-            path: ''
+            url: 'http://github.com',
+            path: 'http://fakeimg.pl/545x350'
           }]
         },{
           type: 'three',
           Images: [{
-            link: 'http://fakeimg.pl/360x240',
-            path: ''
+            url: 'http://github.com',
+            path: 'http://fakeimg.pl/360x240'
           },{
-            link: 'http://fakeimg.pl/360x240',
-            path: ''
+            url: 'http://github.com',
+            path: 'http://fakeimg.pl/360x240'
           },{
-            link: 'http://fakeimg.pl/360x240',
-            path: ''
+            url: 'http://github.com',
+            path: 'http://fakeimg.pl/360x240'
           }]
         }
       ];
@@ -75,6 +88,7 @@ describe("SelectionActiveService", () => {
 
       result.success.should.be.true;
 
+      done();
     } catch (e) {
       done(e);
     }

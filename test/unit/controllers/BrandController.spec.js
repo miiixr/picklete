@@ -17,22 +17,52 @@ describe('Brand API - 品牌', function() {
   });
 
   it('should return new brand object', function(done) {
-    var avatar = path.join(process.cwd(), './test/unit/resources/avatar.jpg');
-    var brand = path.join(process.cwd(), './test/unit/resources/brand.jpg');
-    var banner = path.join(process.cwd(), './test/unit/resources/brand.jpg');
-    var photos1 = path.join(process.cwd(), './test/unit/resources/photos1.jpg');
-    var photos2 = path.join(process.cwd(), './test/unit/resources/photos2.jpg');
+    // var avatar = path.join(process.cwd(), './test/unit/resources/avatar.jpg');
+    // var brand = path.join(process.cwd(), './test/unit/resources/brand.jpg');
+    // var banner = path.join(process.cwd(), './test/unit/resources/brand.jpg');
+    // var photos1 = path.join(process.cwd(), './test/unit/resources/photos1.jpg');
+    // var photos2 = path.join(process.cwd(), './test/unit/resources/photos2.jpg');
 
     request(sails.hooks.http.app)
-    .post('/admin/brand')
+    .post('/admin/brands')
     .set('cookie', cookie)
     .field('name', '好棒棒品牌')
     .field('type', 'PRIME_GOOD')
     .field('desc', 'Steve Aoki 最棒惹')
-    .attach('avatar', avatar)
-    .attach('banner', banner)
-    .attach('photos[]', photos1)
-    .attach('photos[]', photos2)
+    .field('avatar', 'http://i.imgur.com/YPP0gFO.jpg')
+    .field('banner', 'http://i.imgur.com/YPP0gFO.jpg')
+    .field('photos', 'http://i.imgur.com/YPP0gFO.jpg')
+    .field('photos', 'http://i.imgur.com/YPP0gFO.jpg')
+    .field('photos', 'http://i.imgur.com/YPP0gFO.jpg')
+    .field('photos', 'http://i.imgur.com/YPP0gFO.jpg')
+    .end(function(err, res) {
+      res.statusCode.should.be.equal(302);
+      res.headers.location.should.be.equal('/admin/brands');
+
+      return done();
+    });
+  });
+
+
+  it('should return update brand object', function(done) {
+    // var avatar = path.join(process.cwd(), './test/unit/resources/avatar.jpg');
+    // var brand = path.join(process.cwd(), './test/unit/resources/brand.jpg');
+    // var banner = path.join(process.cwd(), './test/unit/resources/brand.jpg');
+    // var photos1 = path.join(process.cwd(), './test/unit/resources/photos1.jpg');
+    // var photos2 = path.join(process.cwd(), './test/unit/resources/photos2.jpg');
+
+    request(sails.hooks.http.app)
+    .post('/admin/brands/update?id=3')
+    .set('cookie', cookie)
+    .field('name', '好棒棒品牌 科科')
+    .field('type', 'PRIME_GOOD')
+    .field('desc', 'Kerker update 惹')
+    .field('avatar', 'http://i.imgur.com/YPP0gFO.jpg')
+    .field('banner', 'http://i.imgur.com/YPP0gFO.jpg')
+    .field('photos', 'http://i.imgur.com/YPP0gFO.jpg')
+    .field('photos', 'http://i.imgur.com/YPP0gFO.jpg')
+    .field('photos', 'http://i.imgur.com/YPP0gFO.jpg')
+    .field('photos', 'http://i.imgur.com/YPP0gFO.jpg')
     .end(function(err, res) {
       res.statusCode.should.be.equal(302);
       res.headers.location.should.be.equal('/admin/brands');

@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) ->
     spec: DataTypes.STRING
     # 照片
     photos:
-      type: DataTypes.STRING
+      type: DataTypes.TEXT
       get: () ->
         value = this.getDataValue('photos');
 

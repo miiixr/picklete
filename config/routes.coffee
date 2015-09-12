@@ -49,6 +49,7 @@ module.exports.routes = {
   'get /admin/brands/update' : 'BrandController.update'
   'post /admin/brands/update' : 'BrandController.update'
   'get /admin/exclusive' : view: 'admin/exclusive'
+  'get /admin/index-theme' : view: 'admin/themeActivities'
 
   
   'get /index' : view: 'main/index'
@@ -74,7 +75,7 @@ module.exports.routes = {
   'get /admin/goods/update' : 'ProductController.showUpdate'
   'post /admin/goods/update' : 'ProductController.doUpdate'
   'get /admin/goods/create' : 'ProductController.showCreate'
-  'post /admin/goods/create' : 'ProductController.createUpdate'
+  'post /admin/goods/create' : 'ProductController.doCreate'
   'post /admin/image/upload' : 'ImageController.upload'
 
   # promotions
@@ -102,9 +103,9 @@ module.exports.routes = {
   'get /admin/members' : 'UserController.controlMembers'
   'get /admin/member-detail/:id' : 'UserController.controlMemberDetail'
 
-  'get /admin/brand' : 'BrandController.list'
-  'post /admin/brand' : 'BrandController.create'
-  'put /admin/brand/:brand' : 'BrandController.update'
+  # 'get /admin/brand' : 'BrandController.list'
+  # 'post /admin/brand' : 'BrandController.create'
+  # 'put /admin/brand/:brand' : 'BrandController.update'
 
   # 'get /admin/dpt' : 'DptController.list'
   # 'post /admin/dpt' : 'DptController.create'

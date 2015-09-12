@@ -5,127 +5,103 @@ import util from "util";
 
 module.exports = {
 
-  createProduct: async (req) => {
-    var brandType = req.body.brandType;
-    var brand;
-    if (brandType.toLowerCase() === 'other') {
-      brand = await db.Brand.findOne({ where: {type: 'OTHER'} });
-    } else {
-      brand = req.body.brandId;
+  create: async (updateProduct) => {
+    console.log('----------');
+    console.log(updateProduct);
+    console.log('----------');
+
+    // 如果選擇其他品牌的話，找出其他品牌的 id
+    var brandType = updateProduct.brandType;
+    var brandName = updateProduct.customBrand;
+    var brandId = updateProduct.brandId;
+
+    if (brandType.toLowerCase() === 'custom') {
+      brandId = await db.Brand.findOne({ where: {type: 'OTHER'} });
+      brandId = brandId.dataValues.id;
     }
 
-    var tag = req.body.tag || '';
+    var tag = updateProduct.tag || '';
     if (tag) {
       tag = tag.split(',');
     }
 
-    let uploadInput = ["good[0][photos][]", "coverPhoto[]"];
-    let files = await ImageService.upload(req, uploadInput);
-    console.log(files);
-
-    let beArray = true;
-    // good[0][photos][], resize and process loop
-    let photos = await ImageService.processLoop(files[0], 1000, 1000, beArray);
-
-    // coverPhoto, resize and process loop
-    let coverPhoto = await ImageService.processLoop(files[1], 1000, 1000, beArray);
-
     let newProductGm = {
-      brandId: brand,
-      dptId: req.body['dptId[]'],
-      dptSubId: req.body['dptSubId[]'],
-      explain: req.body.explain || "",
-      usage: req.body.usage || "",
-      notice: req.body.notice || "",
+      brandId: brandId,
+      name: updateProduct.name,
+      brandName: brandName,
+      explain: updateProduct.explain || "",
+      usage: updateProduct.usage || "",
+      notice: updateProduct.notice || "",
       tag: tag || [],
-      coverPhoto: coverPhoto || []
+      coverPhoto: updateProduct['coverPhoto'] || []
     };
+    let createdProductGm;
     // create product gm
-    let createdProductGm = await db.ProductGm.create(newProductGm);
-
-    if ( ! createdProductGm)
-      return;
-
     try {
-      var goods = JSON.parse(req.body['good[0][description]'])
+
+      createdProductGm = await db.ProductGm.create(newProductGm);
+      await createdProductGm.setDpts(updateProduct.dptId);
+      await createdProductGm.setDptSubs(updateProduct.dptSubId);
+
+      // if(updateProduct.dptSubId != undefined && updateProduct.dptSubId != '')
+        
+
     } catch (e) {
-      var goods = req.body['good[0][description]']
-    }
-
-    if (typeof goods != 'object') {
-      var name = goods || '';
-      var stockQuantity = req.body['good[0][stockQuantity]'] || '';
-      var isPublish = req.body['good[0][isPublish]'] || '';
-      var color = req.body['good[0][color]'] || '';
-      var productNumber = req.body['good[0][productNumber]'] || '';
-
-      let newProduct = {
-        name: String(name),
-        stockQuantity: stockQuantity,
-        isPublish: isPublish,
-        price: req.body.price,
-        size: req.body.size,
-        comment: req.body.comment,
-        service: req.body.service,
-        country: req.body.country,
-        madeby: req.body.madeby,
-        color: color,
-        productNumber: productNumber,
-        photos: photos || [],
-        ProductGmId: createdProductGm.id,
-      };
-
-      await db.Product.create(newProduct);
+      console.error(e);
       return;
     }
 
-    try {
-      var isPublish = JSON.parse(req.body['good[0][isPublish]']);
-      var color = JSON.parse(req.body['good[0][color]']);
-      var productNumber = JSON.parse(req.body['good[0][productNumber]']);
-      var stockQuantity = JSON.parse(req.body['good[0][stockQuantity]']);
-    } catch (e) {
-      var isPublish = req.body['good[0][isPublish]'];
-      var color = req.body['good[0][color]'];
-      var productNumber = req.body['good[0][productNumber]'];
-      var stockQuantity = req.body['good[0][stockQuantity]'];
-    }
+    if ( !createdProductGm )
+      return;
 
+    var goods = updateProduct.good;
 
     for (var i = 0 ; i < goods.length ; i++) {
-      var name = goods[i] || '';
+      var good = goods[i];
+      var productNumber = good.productNumber;
+      
+      if ( ! productNumber || productNumber.length < 1) {
+        continue;
+      }
+
+      var photos = [];
+      if (good['photos-1'])
+        photos.push(good['photos-1']);
+
+      if (good['photos-2'])
+        photos.push(good['photos-2']);
+
+      // product.photos = photos;
 
       let newProduct = {
-        name: String(name),
-        stockQuantity: stockQuantity[i] || stockQuantity,
-        isPublish: isPublish[i] || isPublish,
-        price: req.body.price,
-        size: req.body.size,
-        comment: req.body.comment,
-        service: req.body.service,
-        country: req.body.country,
-        madeby: req.body.madeby,
-        color: color[i] || color,
-        productNumber: productNumber[i] || productNumber,
-        photos: photos || [],
+        name: good.name || "",
+        stockQuantity: good.stockQuantity || 0,
+        isPublish: good.isPublish || false,
+        price: updateProduct.price,
+        size: updateProduct.size,
+        comment: updateProduct.comment,
+        service: updateProduct.service,
+        country: updateProduct.country,
+        madeby: updateProduct.madeby,
+        spec: updateProduct.spec,
+        color: good.color || 1,
+        productNumber: productNumber,
+        photos: photos,
         ProductGmId: createdProductGm.id,
       };
 
       try {
         await db.Product.create(newProduct);
       } catch (e) {
-        console.error(e)
+        return console.error(e)
       }
-
-      // remove one
-      if (photos && photos.length > 0)
-        photos.shift();
-
     }
 
   },
 
   update: async (updateProduct) => {
+
+    console.log('=== updateProduct ===', updateProduct);
 
     try {
       var {brandType} = updateProduct;
@@ -148,45 +124,87 @@ module.exports = {
         }
       });
 
-      let product = await db.Product.find({
-        where: {
-          id: updateProduct.good[0].id
-        }
-      });
+      var goods = updateProduct.good;
+      for (var i = 0 ; i < goods.length ; i++) {
 
-      product.name = updateProduct.name;
-      product.price = updateProduct.price;
-      product.size = updateProduct.size;
-      product.comment = updateProduct.comment;
-      product.service = updateProduct.service;
-      product.country = updateProduct.country;
-      product.madeby = updateProduct.madeby;
-      product.color = updateProduct.good[0].color;
-      product.productNumber = updateProduct.good[0].productNumber;
-      product.stockQuantity = updateProduct.good[0].stockQuantity;
-      product.description = updateProduct.good[0].description;
-      product.isPublish = updateProduct.good[0].isPublish;
+        var good = goods[i];
 
-      await product.save();
+        let product = await db.Product.find({
+          where: {
+            id: good.id
+          }
+        });
+
+        product.name = good.description;
+        product.price = updateProduct.price;
+        product.size = updateProduct.size;
+        product.comment = updateProduct.comment;
+        product.service = updateProduct.service;
+        product.country = updateProduct.country;
+        product.madeby = updateProduct.madeby;
+        product.spec = updateProduct.spec;
+        product.color = good.color;
+        product.productNumber = good.productNumber;
+        product.stockQuantity = good.stockQuantity;
+        product.description = good.description;
+        product.isPublish = (good.isPublish == "false") ? false : true;
+
+
+        let photos = [];
+
+
+        if (good['photos-1'])
+          photos.push(good['photos-1']);
+
+        if (good['photos-2'])
+          photos.push(good['photos-2']);
+
+        product.photos = photos;
+
+        await product.save();
+
+      }
+
 
 
       productGm.brandId = brand.id;
+      productGm.name = updateProduct.name;
       productGm.dptId = updateProduct.dptId;
       productGm.dptSubId = updateProduct.dptSubId;
       productGm.explain = updateProduct.explain;
       productGm.usage = updateProduct.usage;
       productGm.notice = updateProduct.notice;
+      productGm.tag = updateProduct.tag;
+      productGm.coverPhoto = updateProduct.coverPhoto;
+      
 
       await productGm.save();
 
-      await productGm.setDpts(updateProduct.dptId);
-      await productGm.setDptSubs(updateProduct.dptSubId);
+      if(updateProduct.dptId != null)
+        await productGm.setDpts(updateProduct.dptId);
+
+      if(updateProduct.dptSubId != '')
+        await productGm.setDptSubs(updateProduct.dptSubId);
 
 
     } catch (e) {
       console.error(e.stack);
       throw e;
     }
+  },
+
+  findGmWithImages: async (productGmId) => {
+    let productGm = await db.ProductGm.find({
+      where: {id: productGmId},
+      include: [
+        {model: db.Product},
+        {model: db.Dpt}, 
+        {model: db.DptSub}
+      ]
+    });
+
+    // console.log(productGm.products);
+    return productGm;
   },
 
   findWithImages: async (productId) => {
@@ -202,6 +220,7 @@ module.exports = {
     console.log('product', product);
 
     let productWithImage = ProductService.withImage(product);
+    console.log(product);
     //console.log('productWithImage', productWithImage);
     return productWithImage;
   },

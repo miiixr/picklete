@@ -2,7 +2,7 @@ extends ../_layout_auth
 
 block body
   h2.m-bottom-6 商品上架
-  form#goodForm(name='goodForm', action='/admin/goods/create', method='POST', enctype="multipart/form-data")
+  form#goodForm(name='goodForm', action='/admin/goods/create', method='POST')
     // 館別分類
     .well.control-well.p-30.m-left-2.m-bottom-8
       h3
@@ -33,7 +33,7 @@ block body
                 option(value='#{dpt.id}') #{dpt.name}
           .col-md-4
             select.form-control(name='dptSubId[]')
-              option 選擇小館別
+              option(value='') 選擇小館別
               each dptSub, index in dpts[0].DptSubs
                 option(value='#{dptSub.id}') #{dptSub.name}
           .col-md-2
@@ -141,8 +141,11 @@ block body
                 span.btn.btn-default.btn-sm.btn-file
                   span.fileinput-new Select image
                   span.fileinput-exists Change
-                  input.fileInput(type='file', name="uploadfile", data-name='good[0][photos][]')
-                  input(type='hidden', name='good[0][photos][]', form='goodForm')
+                  input.fileInput(type='file', name="uploadfile", data-name='good[0][photos-1]')
+                  input(type='hidden', name="filename", value='good[0][photos-1]')
+                  input(type='hidden', name="width", value='1000')
+                  input(type='hidden', name="height", value='1000')
+                  input(type='hidden', name='good[0][photos-1]', form='goodForm', value='')
                 a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
                   // /fileinput-btn
               // /form
@@ -163,8 +166,11 @@ block body
                 span.btn.btn-default.btn-sm.btn-file
                   span.fileinput-new Select image
                   span.fileinput-exists Change
-                  input.fileInput(type='file', name="uploadfile", data-name='good[0][photos][]')
-                  input(type='hidden', name='good[0][photos][]', form='goodForm')
+                  input.fileInput(type='file', name="uploadfile", data-name='good[0][photos-2]')
+                  input(type='hidden', name="filename", value='good[0][photos-2]')
+                  input(type='hidden', name="width", value='1000')
+                  input(type='hidden', name="height", value='1000')
+                  input(type='hidden', name='good[0][photos-2]', form='goodForm', value='')
                 a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
               // /form
             // /fileinput-btn
@@ -181,20 +187,20 @@ block body
                 a.color-filter.dropdown.color-red(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
                 ul.dropdown-menu.dropdown-color
                   li.p-15
-                    a.color-filter.color-red(href='#')
-                    a.color-filter.color-orange(href='#')
-                    a.color-filter.color-yellow(href='#')
-                    a.color-filter.color-green(href='#')
-                    a.color-filter.color-blue(href='#')
-                    a.color-filter.color-purple(href='#')
-                    a.color-filter.color-deeppink(href='#')
-                    a.color-filter.color-pink(href='#')
-                    a.color-filter.color-black(href='#')
-                    a.color-filter.color-gray(href='#')
-                    a.color-filter.color-graylight(href='#')
-                    a.color-filter.color-gold(href='#')
-                    a.color-filter.color-brown(href='#')
-                    a.color-filter.color-mix(href='#')
+                    a.color-filter.color-red(href='#', data-value='1')
+                    a.color-filter.color-orange(href='#', data-value='2')
+                    a.color-filter.color-yellow(href='#', data-value='3')
+                    a.color-filter.color-green(href='#', data-value='4')
+                    a.color-filter.color-blue(href='#', data-value='5')
+                    a.color-filter.color-purple(href='#', data-value='6')
+                    a.color-filter.color-deeppink(href='#', data-value='7')
+                    a.color-filter.color-pink(href='#', data-value='8')
+                    a.color-filter.color-black(href='#', data-value='9')
+                    a.color-filter.color-gray(href='#', data-value='10')
+                    a.color-filter.color-graylight(href='#', data-value='11')
+                    a.color-filter.color-gold(href='#', data-value='12')
+                    a.color-filter.color-brown(href='#', data-value='13')
+                    a.color-filter.color-mix(href='#', data-value='14')
                 input(type='hidden', name="good[0][color]", value='1', form='goodForm')
                 // /dropdown-menu
               // /btn-group
@@ -266,7 +272,10 @@ block body
                   span.fileinput-new Select image
                   span.fileinput-exists Change
                   input.fileInput(type='file', name="uploadfile", data-name='coverPhoto[]')
-                  input.fileInput(type='hidden', name='coverPhoto[]', form='goodForm')
+                  input(type='hidden', name="filename", value='coverPhoto[]')
+                  input(type='hidden', name="width", value='1000')
+                  input(type='hidden', name="height", value='1000')
+                  input(type='hidden', name='coverPhoto[]', form='goodForm', value='')
                 a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
               // /form
             // /fileinput-btn

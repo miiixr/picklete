@@ -154,10 +154,12 @@ block body
         script.
           alert('找不到符合的商品')
       each product in products
+        //- - try { var photo = JSON.parse(product.photos) } catch (e){ var photo = []; };
         tr
           td
             img.width-6(src=product.photos[0])
-          td #{product.name}
+          - var name = (product.name && product.name.length > 0) ? "(" + product.name + ")" : "";
+          td #{product.ProductGm.name} #{name}
           td #{product.price}
           td #{product.productNumber}
           td #{product.createdAt}
@@ -184,7 +186,7 @@ block body
               // /input-group-btn
             // /input-group
           td.text-right
-            a.btn.btn-link(href='/admin/goods/update?id=#{product.id}')
+            a.btn.btn-link(href='/admin/goods/update?id=#{product.ProductGmId}')
               span.glyphicon.glyphicon-pencil2
   hr.dashed-line
   //- .text-center

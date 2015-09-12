@@ -27,19 +27,36 @@
   });
 
 
-  $('form').on('click','.color-filter',function(e){
+  $('.form-horizontal').on('click','.color-filter',function(e){
     e.preventDefault();
     var that = $(this);
+    var val = that.data("value");
     that.parent().parent().parent().find('.color-filter.dropdown').attr('class', that.attr('class')+' dropdown');
+    that.parent().parent().parent().find('input[type=hidden]').val(val);
   });
 
   $('.well').on('click','.btn-add',function(e){
     e.preventDefault();
     var that = $(this);
-    console.log(that);
+    // console.log(that);
     var s = $(that.parent().parent()).prop('outerHTML');
+    // replace index
+    var index;
+    if (index = s.match(/good\[\d/)) {
+      index = index[0].match(/\d/)[0];
+      index = parseInt(index, 10) + 1;
+      s = s.replace(/good\[\d/g, "good[" + index);
+    }
+    
     that.parent().parent().after(s);
     that.remove();
+
+  });
+
+  // isPublish button click
+  $('.well').on('click','.btn-status',function(e){
+    var that = $(this);
+    that.find("input[type=radio]").prop("checked", true);
   });
 
 

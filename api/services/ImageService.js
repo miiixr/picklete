@@ -27,7 +27,7 @@ module.exports = {
       var token = await UtilService.generateHashCode();
       var dst = path.join(home, `./.tmp/images/resize.jpg`);
       var resizeConfig = {
-        src:imageResizeConfig.src,
+        src: imageResizeConfig.src,
         dst: imageResizeConfig.dst || dst,
         width: imageResizeConfig.width || 100,
         height: imageResizeConfig.height || 100

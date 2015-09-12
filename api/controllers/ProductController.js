@@ -18,9 +18,7 @@ let ProductController = {
         order: ['Dpt.weight', 'DptSubs.weight']
       });
 
-      let tags = await db.Tag.findAll({
-        limit: 15
-      });
+      let tags = await db.Tag.findAll();
 
       return res.view('admin/goodCreate', {
         brands,
@@ -76,16 +74,19 @@ let ProductController = {
         order: ['weight', 'DptSubs.weight']
       });
 
-      let tags = await db.Tag.findAll({
-        limit: 15
-      });
+      let tags = await db.Tag.findAll();
 
       let gid = req.query.id;
-      let good = await ProductService.findWithImages(gid);
+      // query from productGm
+      let good = await ProductService.findGmWithImages(gid);
 
       if (!good) {
         return res.redirect('/admin/goods');
       }
+
+      // TODO:
+      // this is hack way for make gm show, need to fixe;
+      good.ProductGm = good;
 
       // let dptDisplay = [];
 
@@ -148,11 +149,13 @@ let ProductController = {
     // return res.json(newProduct);
   },
 
-  createUpdate: async (req, res) => {
-    let newProduct = req.body;
-    console.log(newProduct);
+  doCreate: async (req, res) => {
+    // let newProduct = req.body;
+    // console.log('----------');
+    // console.log(newProduct);
+    // console.log('----------');
     try {
-      await ProductService.createProduct(req);
+      await ProductService.create(req.body);
     } catch (error) {
       console.error(error.stack);
       let msg = error.message;

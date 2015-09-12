@@ -20,15 +20,22 @@ describe('Image controller test', () => {
     request(sails.hooks.http.app)
     .post('/admin/image/upload')
     .set('cookie', cookie)
+    .field('filename', 'photos[]')
+    .field('width', '50')
+    .field('height', '50')
     .attach('uploadfile', photo)
     .end(function(err, res) {
       console.log('res.body', res.body);
-      res.body.should.be.String;
-      // res.body.should.be.String;
 
-      // res.body.weight.should.be.equal(2);
-      // res.body.official.should.be.equal(true);
-      // res.body.DptId.should.be.equal(DptFoo.id);
+      res.body.should.be.String;
+      
+      var result = JSON.parse(res.text);
+      result[0].fd.should.be.String;
+      result.filename.should.be.String;
+      result.height.should.be.Number;
+      result.width.should.be.Number;
+      res.body.should.be.String;
+      
       return done();
     });
   });

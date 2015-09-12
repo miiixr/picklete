@@ -37,13 +37,15 @@ module.exports.bootstrap = async (cb) => {
     let models = require('../api/db');
     global.db = models;
 
+    let createInitData = true;
+    if(sails.config.createInitData !== undefined) createInitData = sails.config.createInitData;
 
     if (sails.config.environment === 'development' || sails.config.environment === 'test') {
       await init.database();
-      await init.testData();
+      if(createInitData) await init.testData();
     }
 
-    await init.basicData();
+    await init.basicData();  
 
     cb();
 

@@ -15,8 +15,8 @@ block body
               ==================================================
             .fileinput.fileinput-new(data-provides='fileinput')
               .fileinput-new.fileinput-square
-                - var avatar = (brand && brand.avatar) ? brand.avatar : 'http://fakeimg.pl/600x600/dddddd/FFF/?text=600x600';
-                img.img-full(src=avatar)
+                - var avatar = (brand && brand.avatar) ? brand.avatar : '';
+                img.img-full(src=avatar.length > 0 ? avatar : 'http://fakeimg.pl/600x600/dddddd/FFF/?text=600x600')
               // /fileinput-new
               //- TODO: need to update brand
               form(action="/admin/image/upload", method="POST", enctype="multipart/form-data")
@@ -27,6 +27,10 @@ block body
                     span.fileinput-new Select image
                     span.fileinput-exists Change
                     input.fileInput(type='file', name="uploadfile", data-name='avatar')
+                    input(type='hidden', name="filename", value='avatar')
+                    input(type='hidden', name="width", value='600')
+                    input(type='hidden', name="height", value='600')
+                    input(type='hidden', name='avatar', form='brand-data', value=avatar)
                   a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
               // /fileinput-btn
             // /fileinput
@@ -35,7 +39,7 @@ block body
             span.glyphicon.glyphicon-info
         // /col-sm-10
       // /form-group
-      form#brand-data(action='/admin/brands/create', method="POST")
+      form#brand-data(action=brand ? '/admin/brands/update?id=' + brand.id : '/admin/brands/create', method="POST")
         .form-group
           label.col-sm-3.col-md-2.control-label 品牌名稱
           .col-sm-9.col-md-5
@@ -52,10 +56,10 @@ block body
           label.col-sm-3.col-md-2.control-label 品牌介紹
           .col-sm-9.col-md-10
             textarea.form-control(name='desc', rows='6' )= brand?brand.desc:""
-          input(name='avatar', type='hidden')
-          - for (var i=1; i<=6; i++)
-            input(name='photo[#{i}]', type='hidden')
-          input(name='banner', type='hidden')
+          //- input(name='avatar', type='hidden')
+          //- - for (var i=1; i<=6; i++)
+          //-   input(name='photo[#{i}]', type='hidden')
+          //- input(name='banner', type='hidden')
 
         // /form-group
       // /form#brand-data
@@ -64,31 +68,39 @@ block body
     h3
       span.label.label-default.p-10-15 形象照片
     .row.row-m
-      - for (var i=1; i<=6; i++)
-        form(action="/admin/image/upload", method="POST", enctype="multipart/form-data")
-          .col-md-4
-            .edit-block.m-bottom-4
-              span.badge=i
-              //
-                fileinput-img
-                ==================================================
-              .fileinput.fileinput-new(data-provides='fileinput')
-                .fileinput-new
-                  img.img-full(src='http://fakeimg.pl/1100x500/dddddd/FFF/?text=1100x500')
-                // /fileinput-new
-                .fileinput-preview.fileinput-exists.border-block-1
-                // /fileinput-preview
+      - var photos = (brand && brand.photos) ? JSON.parse(brand.photos) : undefined;
+      - for (var i=0; i<6; i++)
+        - var photo = (photos) ? photos[i] : '';
+        .col-md-4
+          .edit-block.m-bottom-4
+            span.badge=i
+            //
+              fileinput-img
+              ==================================================
+            .fileinput.fileinput-new(data-provides='fileinput')
+              .fileinput-new
+                img.img-full(src=(photo) ? photo : "http://fakeimg.pl/1100x500/dddddd/FFF/?text=1100x500")
+              
+              .fileinput-preview.fileinput-exists.border-block-1
+                //- // /fileinput-preview
+              form(action="/admin/image/upload", method="POST", enctype="multipart/form-data")
                 .fileinput-btn
                   span.btn.btn-default.btn-sm.btn-file
                     span.fileinput-new Select image
                     span.fileinput-exists Change
-                    input.fileInput(type='file', name='uploadfile', data-name='photos[#{i}]')
+                    input.fileInput(type='file', name='uploadfile', data-name='photos[]')
+                    input(type='hidden', name="filename", value='photos[]')
+                    input(type='hidden', name="width", value='1100')
+                    input(type='hidden', name="height", value='500')
+                    input(type='hidden', name='photos[]', form='brand-data', value=photo)
+
                   a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
                 // /fileinput-btn
-              // /fileinput
-            // /edit-block
-          // /col-md-4
-        // /form
+              //form
+            // /fileinput
+          // /edit-block
+        // /col-md-4
+
     // /row
     a(href='#', data-toggle='tooltip', title='', data-original-title='商品圖長寬 1100x500 像素，限 JPG/GIF 格式，檔案大小 500KB 以下')
       span.glyphicon.glyphicon-info
@@ -99,9 +111,10 @@ block body
     //
       fileinput-img
       ==================================================
+    - var banner = (brand && brand.banner) ? brand.banner : "";
     .fileinput.fileinput-new(data-provides='fileinput')
       .fileinput-new
-        img.img-full(src='http://fakeimg.pl/1100x250/dddddd/FFF/?text=1100x250')
+        img.img-full(src=(banner.length > 0) ? banner : "http://fakeimg.pl/1100x250/dddddd/FFF/?text=1100x250")
       // /fileinput-new
       .fileinput-preview.fileinput-exists.border-block-1
       // /fileinput-preview
@@ -111,6 +124,10 @@ block body
             span.fileinput-new Select image
             span.fileinput-exists Change
             input.fileInput(type='file', name='uploadfile', data-name='banner')
+            input(type='hidden', name="filename", value='banner')
+            input(type='hidden', name="width", value='1100')
+            input(type='hidden', name="height", value='250')
+            input(type='hidden', name='banner', form='brand-data', value=banner)
           a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
         // /fileinput-btn
       // /fileinput
