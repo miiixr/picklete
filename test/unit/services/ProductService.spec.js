@@ -1,6 +1,6 @@
 import moment from 'moment';
 describe("about product service", () => {
-  let createdProduct, createdProductGm;
+  let createdProduct, createdProduct2, createdProductGm;
   let productGmA, productGmB, dptA, dptB, dptSubA, dptSubB;
   before(async (done) => {
 
@@ -55,6 +55,14 @@ describe("about product service", () => {
         ProductGmId: createdProductGm.id
       });
 
+      createdProduct2 = await db.Product.create({
+        color: '2',
+        description: '22',
+        productNumber: '22',
+        stockQuantity: '999',
+        isPublish: 'false',
+        ProductGmId: createdProductGm.id
+      });
 
 
       done();
@@ -66,7 +74,7 @@ describe("about product service", () => {
     }
   });
 
-  it('product update', async (done) => {
+  it.only('product update', async (done) => {
 
     try {
       let updateProduct = {
@@ -85,11 +93,17 @@ describe("about product service", () => {
         comment: '11',
         good:
          [ { color: '1',
-             description: '11',
-             productNumber: '11',
+             description: '1111111',
+             productNumber: '1111111',
              stockQuantity: '999',
              isPublish: 'false',
-             id:createdProduct.id } ],
+             id:createdProduct.id },
+            { color: '2',
+             description: '22222',
+             productNumber: '2222',
+             stockQuantity: '999',
+             isPublish: 'true',
+             id:createdProduct2.id } ],
         productGm: {
           id: createdProductGm.id
         },
@@ -119,5 +133,18 @@ describe("about product service", () => {
       done(e);
     }
 
+  });
+
+
+  it('product call gm', async (done) => {
+    try {
+      let productGm = await ProductService.findGmWithImages(createdProductGm.id);
+      console.log(productGm.Products);
+      productGm.Products.length.should.above(1);
+      done();  
+    } catch (e) {
+      done(e);
+    }
+    
   });
 });

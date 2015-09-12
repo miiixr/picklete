@@ -1,4 +1,5 @@
 module.exports = {
+  createInitData: false
   environment: ''
   initData: ''
   domain: 'http://localhost:1337'

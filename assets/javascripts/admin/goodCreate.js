@@ -27,10 +27,12 @@
   });
 
 
-  $('form').on('click','.color-filter',function(e){
+  $('.form-horizontal').on('click','.color-filter',function(e){
     e.preventDefault();
     var that = $(this);
+    var val = that.data("value");
     that.parent().parent().parent().find('.color-filter.dropdown').attr('class', that.attr('class')+' dropdown');
+    that.parent().parent().parent().find('input[type=hidden]').val(val);
   });
 
   $('.well').on('click','.btn-add',function(e){
@@ -41,6 +43,12 @@
     that.parent().parent().after(s);
     that.remove();
 
+  });
+
+  // isPublish button click
+  $('.well').on('click','.btn-status',function(e){
+    var that = $(this);
+    that.find("input[type=radio]").prop("checked", true);
   });
 
 

@@ -27,9 +27,10 @@ module.exports = {
 
     let newProductGm = {
       brandId: brandId,
+      name: req.body.name,
       brandName: brandName,
-      dptId: req.body['dptId[]'],
-      dptSubId: req.body['dptSubId[]'],
+      // dptId: req.body['dptId[]'],
+      // dptSubId: req.body['dptSubId[]'],
       explain: req.body.explain || "",
       usage: req.body.usage || "",
       notice: req.body.notice || "",
@@ -40,7 +41,8 @@ module.exports = {
     let createdProductGm = await db.ProductGm.create(newProductGm);
 
     await createdProductGm.setDpts(req.body['dptId[]']);
-    await createdProductGm.setDptSubs(req.body['dptSubId[]']);
+    if(req.body['dptSubId[]'] != undefined && req.body['dptSubId[]'] != '')
+      await createdProductGm.setDptSubs(req.body['dptSubId[]']);
 
 
     if ( !createdProductGm )
@@ -68,6 +70,7 @@ module.exports = {
         service: req.body.service,
         country: req.body.country,
         madeby: req.body.madeby,
+        spec: req.body.spec,
         color: color,
         productNumber: productNumber,
         photos: photos || [],
@@ -103,6 +106,7 @@ module.exports = {
         service: req.body.service,
         country: req.body.country,
         madeby: req.body.madeby,
+        spec: req.body.spec,
         color: req.body['good[color]'][i] || color,
         productNumber: req.body['good[productNumber]'][i] || productNumber,
         photos: photos,
@@ -143,57 +147,87 @@ module.exports = {
         }
       });
 
-      let product = await db.Product.find({
-        where: {
-          id: updateProduct.good[0].id
-        }
-      });
+      var goods = updateProduct.good;
+      for (var i = 0 ; i < goods.length ; i++) {
 
-      product.name = updateProduct.name;
-      product.price = updateProduct.price;
-      product.size = updateProduct.size;
-      product.comment = updateProduct.comment;
-      product.service = updateProduct.service;
-      product.country = updateProduct.country;
-      product.madeby = updateProduct.madeby;
-      product.color = updateProduct.good[0].color;
-      product.productNumber = updateProduct.good[0].productNumber;
-      product.stockQuantity = updateProduct.good[0].stockQuantity;
-      product.description = updateProduct.good[0].description;
-      product.isPublish = updateProduct.good[0].isPublish;
+        var good = goods[i];
 
-      let photos = [];
+        let product = await db.Product.find({
+          where: {
+            id: good.id
+          }
+        });
+
+        product.name = good.description;
+        product.price = updateProduct.price;
+        product.size = updateProduct.size;
+        product.comment = updateProduct.comment;
+        product.service = updateProduct.service;
+        product.country = updateProduct.country;
+        product.madeby = updateProduct.madeby;
+        product.spec = updateProduct.spec;
+        product.color = good.color;
+        product.productNumber = good.productNumber;
+        product.stockQuantity = good.stockQuantity;
+        product.description = good.description;
+        product.isPublish = (good.isPublish == "false") ? false : true;
 
 
-      if (updateProduct.good[0]['photos-1'])
-        photos.push(updateProduct.good[0]['photos-1']);
+        let photos = [];
 
-      if (updateProduct.good[0]['photos-2'])
-        photos.push(updateProduct.good[0]['photos-2']);
 
-      product.photos = photos;
+        if (good['photos-1'])
+          photos.push(good['photos-1']);
 
-      await product.save();
+        if (good['photos-2'])
+          photos.push(good['photos-2']);
+
+        product.photos = photos;
+
+        await product.save();
+
+      }
+
 
 
       productGm.brandId = brand.id;
+      productGm.name = updateProduct.name;
       productGm.dptId = updateProduct.dptId;
       productGm.dptSubId = updateProduct.dptSubId;
       productGm.explain = updateProduct.explain;
       productGm.usage = updateProduct.usage;
       productGm.notice = updateProduct.notice;
-      product.coverPhoto = updateProduct.coverPhoto;
+      productGm.tag = updateProduct.tag;
+      productGm.coverPhoto = updateProduct.coverPhoto;
+      
 
       await productGm.save();
 
-      await productGm.setDpts(updateProduct.dptId);
-      await productGm.setDptSubs(updateProduct.dptSubId);
+      if(updateProduct.dptId != null)
+        await productGm.setDpts(updateProduct.dptId);
+
+      if(updateProduct.dptSubId != '')
+        await productGm.setDptSubs(updateProduct.dptSubId);
 
 
     } catch (e) {
       console.error(e.stack);
       throw e;
     }
+  },
+
+  findGmWithImages: async (productGmId) => {
+    let productGm = await db.ProductGm.find({
+      where: {id: productGmId},
+      include: [
+        {model: db.Product},
+        {model: db.Dpt}, 
+        {model: db.DptSub}
+      ]
+    });
+
+    // console.log(productGm.products);
+    return productGm;
   },
 
   findWithImages: async (productId) => {
