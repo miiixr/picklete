@@ -224,6 +224,9 @@ module.exports = {
       depSubId: dptSubA.id
     });
 
+    await createdProductGmComplete.setDpts([dptA]);
+    await createdProductGmComplete.setDptSubs([dptSubA]);
+
     createdProductGmGood = await db.ProductGm.create({
       brandId: 1,
       name: "威力棒棒",
@@ -234,8 +237,8 @@ module.exports = {
       depSubId: dptSubA.id
     });
 
-    await createdProductGmComplete.setDpts([dptA]);
-    await createdProductGmComplete.setDptSubs([dptSubA]);
+    await createdProductGmGood.setDpts([dptA]);
+    await createdProductGmGood.setDptSubs([dptSubA]);
 
 
     let createdProduct = await db.Product.create({
