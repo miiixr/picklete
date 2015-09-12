@@ -95,6 +95,7 @@ block body
                 p.form-control-static 至
               .col-md-4
                 input.form-control(type='date', name='createdEnd', value = query.createdEnd?query.createdEnd: null)
+                input(type='hidden', name='page' value = query.page?query.page: 0)
             // /form-group
           // /col-md-8
           .col-md-12.text-right
@@ -109,13 +110,13 @@ block body
       form.form-inline
         .form-group
           label 顯示
-          select.form-control
-            option 10
-            option 20
-            option 30
-            option 40
-            option 50
-          label 筆資料（共 90 筆）
+          select#order-query-limit.form-control
+            option(selected=(limit==10)) 10
+            option(selected=(limit==20)) 20
+            option(selected=(limit==30)) 30
+            option(selected=(limit==40)) 40
+            option(selected=(limit==50)) 50
+          label 筆資料（共 #{orders.count} 筆）
         // /form-group
     // /col-md-6
     .col-md-6.desktop-text-right
@@ -140,7 +141,7 @@ block body
         th
           span.glyphicon.glyphicon-plus
     tbody
-      each order in orders
+      each order in orders.rows
         tr
           td
             input(type='checkbox')
@@ -162,19 +163,19 @@ block body
             else
               p 尚未填寫匯款回報
 
-          td= order.createdAt
+          td= sails.moment(order.createdAt.format).format('YYYY/MM/DD hh:mm')
           td
             a.btn.btn-green(href='/order/statusUpdate/#{order.id}?status=paymentConfirm') 通知匯款成功
           td
             a.btn.btn-green(href='/order/statusUpdate/#{order.id}?status=deliveryConfirm') 通知已出貨
 
           td
-            a(data-toggle='collapse', data-parent='#collapse-purchase', href='#collapse-purchase-One')
+            a(data-toggle='collapse', data-parent='#collapse-purchase', href='##{order.serialNumber}')
               span.glyphicon.glyphicon-plus
 
         tr.tr-hide
           td(colspan='10')
-            #collapse-purchase-One.panel-collapse.collapse
+            .panel-collapse.collapse(id=order.serialNumber)
               //
                 order-detail
                 ==================================================
@@ -184,9 +185,9 @@ block body
                   .row
                     .col-sm-6
                       ul.p-left-3
-                        li 收件人姓名：{consumer_name} 小姐
-                        li 收件人電話：09123456**
-                        li 收件人地址：407 {consumer_address}
+                        li 收件人姓名：#{order.Shipment.dataValues.username} 先生/小姐
+                        li 收件人電話：#{order.Shipment.dataValues.mobile}
+                        li 收件人地址：#{order.Shipment.dataValues.address}
                     // /col-sm-6
                     .col-sm-6
                       form.form-horizontal
@@ -213,33 +214,29 @@ block body
                         th 單價
                         th.text-right 小計
                     tbody
-                      tr
-                        td SNAP6-PLUS_CASE_RD
-                        td
-                          a(href='shop-product') {product_name}
-                        td.text-center 3
-                        td 1,440
-                        td.text-right 3,450
-                      tr
-                        td SNAP6-PLUS_CASE_RD
-                        td
-                          a(href='shop-product') {product_name}
-                        td.text-center 3
-                        td
-                          | 1,440
-                          small.text-line-through.m-left-1 1,700
-                        td.text-right 3,450
+                      - sumPrice = 0
+                      - sum = 0
+                      each item in order.OrderItems
+                        tr
+                          td SNAP6-PLUS_CASE_RD
+                          td
+                            a(href='shop-product') #{item.name}
+                          td.text-center #{item.quantity}
+                          td #{item.price}
+                          td.text-right #{item.price*item.quantity}
+                          - sumPrice += item.price*item.quantity
+                          - sum += item.quantity
                       tr
                         td(colspan='2')
                           ul.list-inline
                             li 運費 0
                             li 包裝 60
                             li 折扣碼 -30
-                        td.text-center.text-danger 4
+                        td.text-center.text-danger #{sum}
                         td.text-right(colspan='2')
                           h3
                             small 總計
-                            span.m-left-2 NT$2,390
+                            span.m-left-2 NT$ #{sumPrice+60-30}
                 // /well
                 p 付款方式：7-11 ibon 代碼繳費，繳費代碼：251563222267
                 ul.list-inline
@@ -256,10 +253,32 @@ block body
       ==================================================
     ul.list-inline.m-bottom-0.m-top-1
       li.border-right-1.p-right-2
-        a(href='#') 上一頁
-      li.border-right-1.p-right-2 第 15 之 20
+        a(href='#' id='previous') 上一頁
+      li.border-right-1.p-right-2 #{page + 1} / #{Math.ceil(orders.count / limit)}
       li
-        a(href='#') 下一頁
+        a(href='#' id='next') 下一頁
   // /text-center
 
+  block js
+    script.
+      $(function() {
+        $('#order-query-limit').change(function() {
+          location.href='/admin/order?limit='+$(this).val();
+        });
+
+        $('.form-control').change(function(){
+          $("input[name='page']").val(0);
+        });
+
+        $('#next').click(function(){
+          console.log()
+          $("input[name='page']").val(parseInt($("input[name='page']").val())+1);
+          $("form[name='searchOrders']").submit();
+        });
+
+        $('#previous').click(function(){
+          $("input[name='page']").val($(parseInt("input[name='page']").val())-1);
+          $("form[name='searchOrders']").submit();
+        });
+      });
 

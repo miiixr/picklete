@@ -18,6 +18,7 @@ OrderController = {
   },
   index: async (req, res) => {
     try {
+      console.log('query',req.query);
       let query = req.query;
       let queryObj = {};
       let queryShipmentObj = {};
@@ -52,9 +53,21 @@ OrderController = {
       }else if(query.createdStart || query.createdEnd) {
         queryObj.createdAt = query.createdStart? { gte : new Date(query.createdStart)}: { lte : new Date(query.createdEnd)};
       }
-      console.log('queryObj',queryObj);
+
+      let page = req.session.UserController_controlMembers_page =
+      parseInt(req.param('page',
+        req.session.UserController_controlMembers_page || 0
+      ));
+
+      let limit = req.session.UserController_controlMembers_limit =
+      parseInt(req.param('limit',
+        req.session.UserController_controlMembers_limit || 10
+      ));
+
       queryObj = {
         where: queryObj,
+        offset: page * limit,
+        limit: limit,
         include: [
           {
             model: db.User,
@@ -72,8 +85,8 @@ OrderController = {
         ]
       };
 
-      let orders = await db.Order.findAll(queryObj);
-      return res.view({orders,query});
+      let orders = await db.Order.findAndCountAll(queryObj);
+      return res.view({orders,query,page,limit});
     } catch (error) {
       return res.serverError(error);
     }
@@ -128,9 +141,7 @@ OrderController = {
 
     var newOrder = req.body.order;
     try {
-
       let result = await OrderService.create(newOrder);
-
       return res.ok(result);
     } catch (e) {
       console.error(e.stack);
@@ -144,9 +155,10 @@ OrderController = {
 
     try{
 
-      var orderSyncToken = req.query.token;
+      var email = req.query.email;
+      
       let userData = await db.User.findOne({
-        where: {orderSyncToken}
+        where: {email}
       });
 
       if (!userData) {
@@ -253,6 +265,24 @@ OrderController = {
       console.error(e.stack);
       let {message} = e;
 
+      res.serverError({message, success: false});
+    }
+  },
+
+  bonus: async (req, res) => {
+    try{
+      console.log('bonus',req.query);
+      var email = req.query.email;
+      let bonusPoint = await db.BonusPoint.findOne({
+        where: {email}
+      });
+      if (!bonusPoint) {
+        throw new Error ('bonus not found')
+      }
+      res.ok({bonusPoint});
+    }catch(e){
+      console.error(e.stack);
+      let {message} = e;
       res.serverError({message, success: false});
     }
   }

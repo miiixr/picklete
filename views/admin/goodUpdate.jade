@@ -3,11 +3,11 @@ extends ../_layout_auth
 block body
   h2.m-bottom-6 商品上架
   form#goodForm(action='/admin/goods/update', method='POST')
-    
-    
+
+
     input(type='hidden', name='good[0][id]', value='#{good.id}')
     input(type='hidden', name='productGm[id]', value='#{good.ProductGm.id}')
-    
+
     .well.control-well.p-30.m-left-2.m-bottom-8
       h3
         span.label.label-default.p-10-15 館別分類
@@ -20,35 +20,40 @@ block body
 
               select.form-control(name='brandId')
                 option(value='') 選擇品牌
-                
+
                 each brand, index in brands
                   option(value='#{brand.id}', selected=brand.id == good.ProductGm.brandId) #{brand.name}
-                    
-              
-                    
+
+
+
             label.radio-inline
               input#brandType(type='radio', name='brandType', value='custom')
               input.form-control(type='text', name='customBrand', value='OTHER', placeholder='自訂品牌名稱')
             a(href='#', data-toggle='tooltip', title='', data-original-title='品牌名稱自訂將會統一列入 Other 品牌區')
               span.glyphicon.glyphicon-info
         // /form-group
-        .form-group
-          label.col-md-2.control-label 館別分類
-          .col-md-4
-            select.form-control(name='dptId[]')
-              option 選擇大館別
-              each dpt, index in dpts
-                option(value='#{dpt.id}', selected=dpt.id == good.ProductGm.Dpts[0]) #{dpt.name}
-          .col-md-4
-            select.form-control(name='dptSubId[]')
-              option 選擇小館別
-              each dptSub, index in dpts[0].DptSubs
-                option(value='#{dptSub.id}', selected=dptSub.id == good.ProductGm.DptSubs[0]) #{dptSub.name}
-          .col-md-2
-            a.btn-remove(href='#', disabled=true)
-              span.glyphicon.glyphicon-remove
-            a.btn-add(href='#')
-              span.glyphicon.glyphicon-plus
+
+        each productGmDpt, i in good.ProductGm.Dpts
+          .form-group
+            label.col-md-2.control-label 館別分類
+            .col-md-4
+              select.form-control(name='dptId[]')
+                option 選擇大館別
+                each dpt in dpts
+                  option(value='#{dpt.id}', selected=dpt.selected == productGmDpt.id) #{dpt.name}
+            .col-md-4
+              select.form-control(name='dptSubId[]')
+                option 選擇小館別
+                each dpt in dpts
+                  if dpt.selected == productGmDpt.id
+                    each dptSub in dpt.DptSubs
+                      option(value='#{dptSub.id}', selected=dptSub.selected == productGmDpt.id) #{dptSub.name}
+            .col-md-2
+              a.btn-remove(href='#', disabled=true)
+                span.glyphicon.glyphicon-remove
+              a.btn-add(href='#')
+                span.glyphicon.glyphicon-plus
+                  
         // /form-group
         //- .form-group
         //-   label.col-md-2.control-label
@@ -82,28 +87,28 @@ block body
         .form-group
           label.col-md-2.control-label 商品名稱
           .col-md-10
-            input.form-control(type='text', name='name', required='true', value='#{good.name}')
+            input.form-control(type='text', name='name', required='true', value=good.name?good.name:'')
         // /form-group
         .row
           .col-md-4
             .form-group
               label.col-md-6.control-label 建議售價
               .col-md-6
-                input.form-control(type='number', name='price', required='true', value='#{good.price}')
+                input.form-control(type='number', name='price', required='true', value=good.price?good.price:'')
             // /form-group
           // /col-md-4
           .col-md-4
             .form-group
               label.col-md-6.control-label 品牌國別
               .col-md-6
-                input.form-control(type='text', name='country', required='true', value='#{good.country}')
+                input.form-control(type='text', name='country', required='true', value=good.country?good.country:'')
             // /form-group
           // /col-md-4
           .col-md-4
             .form-group
               label.col-md-6.control-label 製造產地
               .col-md-6
-                input.form-control(type='text', name='madeby', required='true', value='#{good.madeby}')
+                input.form-control(type='text', name='madeby', required='true', value=good.madeby?good.madeby:'')
             // /form-group
           // /col-md-4
         // /row
@@ -112,14 +117,14 @@ block body
             .form-group
               label.col-md-6.control-label 產品材質
               .col-md-6
-                input.form-control(type='text', name='spec', required='true', value='#{good.spec}')
+                input.form-control(type='text', name='spec', required='true', value=good.spec?good.spec:'')
             // /form-group
           // /col-md-4
           .col-md-8
             .form-group
               label.col-md-3.control-label 產品尺寸
               .col-md-9
-                input.form-control(type='text', name='size', value='#{good.size}')
+                input.form-control(type='text', name='size', value=good.size?good.size:'')
             // /form-group
           // /col-md-8
         // /row
@@ -142,7 +147,7 @@ block body
         .form-group
           label.col-md-2.control-label 商品備註
           .col-md-10
-            input.form-control(type='text', name='comment')
+            input.form-control(type='text', name='comment', value=good.comment?good.comment:'')
         // /form-group
     // /well
 
@@ -218,19 +223,19 @@ block body
                       a.color-filter.color-gold(href='#')
                       a.color-filter.color-brown(href='#')
                       a.color-filter.color-mix(href='#')
-                  input(type='hidden', name="good[0][color]", value='1')
+                  input(type='hidden', name="color", value='#{good.color}')
                   // /dropdown-menu
                 // /btn-group
             // /form-group
             .form-group.form-group-sm
               label.col-sm-3.control-label 款式
               .col-sm-9
-                input.form-control(type='text', name="good[0][description]", value="#{good.description}")
+                input.form-control(type='text', name="good[0][description]", value=good.description?good.description:'')
             // /form-group
             .form-group.form-group-sm
               label.col-sm-3.control-label 貨號
               .col-sm-9
-                input.form-control(type='text', name="good[0][productNumber]", value="#{good.productNumber}")
+                input.form-control(type='text', name="good[0][productNumber]", value=good.productNumber?good.productNumber:'')
             // /form-group
             .form-group.form-group-sm
               label.col-sm-3.control-label 數量
@@ -240,7 +245,7 @@ block body
                     button.btn.btn-default.btn-number(type='button', disabled='disabled', data-type='minus', data-field='quant[1]')
                       span.glyphicon.glyphicon-minus
                   // /input-group-btn
-                  input.form-control.input-number.text-center(type='text', name="good[0][stockQuantity]", min='1', max='999', value="#{good.stockQuantity}")
+                  input.form-control.input-number.text-center(type='text', name="good[0][stockQuantity]", min='1', max='999', value=good.stockQuantity?good.stockQuantity:'')
                   span.input-group-btn
                     button.btn.btn-default.btn-number(type='button', data-type='plus', data-field='quant[1]')
                       span.glyphicon.glyphicon-plus
@@ -251,29 +256,21 @@ block body
               label.col-sm-3.control-label 狀態
               .col-sm-9
                 .btn-group.btn-group-switch(data-toggle='buttons')
-                  if(good.isPublish == 'true')
-                    label.btn.btn-default.btn-hide.btn-sm
-                      input#option1(type='radio', name="good[0][isPublish]", value='false', autocomplete='off', checked=good.isPublish == 'false')
-                      span.btn-text 隱藏
-                    label.btn.btn-default.btn-sm.active
-                      input#option2(type='radio', name="good[0][isPublish]", value='true', autocomplete='off', checked=good.isPublish == 'true')
-                      span.btn-text 上架
-                  else 
-                    label.btn.btn-default.btn-sm.active
-                      input#option1(type='radio', name="good[0][isPublish]", value='false', autocomplete='off', checked=good.isPublish == 'false')
-                      span.btn-text 隱藏
-                    label.btn.btn-default.btn-sm.btn-hide
-                      input#option2(type='radio', name="good[0][isPublish]", value='true', autocomplete='off', checked=good.isPublish == 'true')
-                      span.btn-text 上架
-                    
+                  label.btn.btn-default.btn-hide.btn-sm(class=!good.isPublish ? "active" : "")
+                    input#option-publish(type='radio', name='good[0][isPublish]', autocomplete='off', checked=good.isPublish == 'false', value='false')
+                    span.btn-text 隱藏
+                  label.btn.btn-default.btn-sm(class=good.isPublish ? "active" : "")
+                    input#option-unpublish(type='radio', name='good[0][isPublish]', autocomplete='off', checked=good.isPublish == 'true', value='true')
+                    span.btn-text 上架
+
                 // /btn-group-switch
             // /form-group
           // /col-md-4
           .col-md-1.text-right
-            a.btn-remove(href='#')
-              span.glyphicon.glyphicon-remove
-            a.btn-add(href='#')
-              span.glyphicon.glyphicon-plus
+            //- a.btn-remove(href='#')
+              //- span.glyphicon.glyphicon-remove
+            //- a.btn-add(href='#')
+              //- span.glyphicon.glyphicon-plus
           // /col-md-1
     // /well
 
@@ -326,9 +323,11 @@ block body
       .tab-content
         #tab-1.tab-pane.fade.in.active
           textarea#editor1.form-control(rows='6', placeholder='請輸入商品介紹', name='explain', form='goodForm')
+          input#explainContainer.form-control(style='display:none;readonly:true',type='text',name='explainContainer', value='#{good.ProductGm.explain}')
         // /tab-pane
         #tab-2.tab-pane.fade
           textarea#editor2.form-control(rows='6', placeholder='請輸入注意事項', name='notice', form='goodForm')
+          input#noticeContainer.form-control(style='display:none;readonly:true',type='text',name='noticeContainer', value='#{good.ProductGm.notice}')
         // /tab-pane
       // /tab-content
     // /well

@@ -68,12 +68,14 @@ let ProductController = {
     // let products = await ProductService.findAllWithImages();
     try {
       let brands = await db.Brand.findAll();
+
       let dpts = await db.Dpt.findAll({
         include: [{
           model: db.DptSub
         }],
         order: ['weight', 'DptSubs.weight']
       });
+
       let tags = await db.Tag.findAll({
         limit: 15
       });
@@ -81,16 +83,42 @@ let ProductController = {
       let gid = req.query.id;
       let good = await ProductService.findWithImages(gid);
 
-
       if (!good) {
         return res.redirect('/admin/goods');
       }
+
+      // let dptDisplay = [];
+
+      let dptsJson = dpts.map((dpt) => dpt.toJSON());
+
+      good.ProductGm.Dpts.forEach((productGmDpt) => {
+
+        dptsJson.forEach((dpt) => {
+          // if(!dpt.selected) dpt.selected={};
+          if(dpt.id === productGmDpt.id) {
+            dpt.selected = productGmDpt.id;
+          }
+          else return;
+
+
+          let {DptSubs} = dpt;
+          good.ProductGm.DptSubs.forEach((productGmDptSubs) => {
+            DptSubs.forEach((dptSub) => {
+              // if(!dptSub.selected) dptSub.selected={};
+              if(dptSub.id === productGmDptSubs.id){
+                dptSub.selected = productGmDpt.id;
+              }
+            });
+          });
+        });
+
+      });
 
       // have to query this is
       return res.view('admin/goodUpdate', {
         good,
         brands,
-        dpts,
+        dpts: dptsJson,
         tags
       });
 

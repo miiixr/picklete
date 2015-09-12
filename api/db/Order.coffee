@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) ->
     paymentConfirmName: DataTypes.STRING
     paymentConfirmPostfix: DataTypes.STRING
     paymentConfirmAmount: DataTypes.FLOAT
+    useBunusPoint: DataTypes.INTEGER
     status:
       type: DataTypes.ENUM('new', 'paymentConfirm', 'deliveryConfirm')
       defaultValue: 'new'

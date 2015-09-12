@@ -80,67 +80,6 @@ let UserController = {
       pageName: "brands-detail"
     });
   },
-  controlShopType: function (req, res) {
-    res.view({
-      pageName: "shop-type"
-    });
-  },
-  controlShopItemAdd: function(req, res) {
-    res.view({
-      pageName: "shop-item-add"
-    });
-  },
-  controlShopDiscount: function(req, res) {
-    res.view({
-      pageName: "shop-discount"
-    });
-  },
-  controlShopDiscountDetail: function(req, res) {
-    res.view({
-      pageName: "shop-discount-detail"
-    });
-  },
-  controlShopDiscountDetail2: function(req, res) {
-    res.view({
-      pageName: "shop-discount-detail2"
-    });
-  },
-  controlShopDiscountAddItem: function(req, res) {
-    res.view({
-      pageName: "shop-discount-add-item"
-    });
-  },
-  controlShopBuyMore: function(req, res) {
-    res.view({
-      pageName: "shop-buy-more"
-    });
-  },
-  controlShopBuyMoreDetail: function(req, res) {
-    res.view({
-      pageName: "shop-buy-more-detail"
-    });
-  },
-  controlShopBuyMoreAddItem: function(req, res) {
-    res.view({
-      pageName: "shop-buy-more-add-item"
-    });
-  },
-  controlShopCode: function(req, res) {
-    res.view({
-      pageName: "shop-code"
-    });
-  },
-  controlShopCodeDetail: function(req, res) {
-    res.view({
-      pageName: "shop-code-detail"
-    });
-  },
-  controlShopReportForm: function(req, res) {
-    res.view({
-      pageName: "shop-report-form"
-    });
-  },
-
   controlAbout: function(req, res) {
     res.view({
       pageName: "about"
@@ -169,30 +108,87 @@ let UserController = {
   controlMembers: async function(req, res) {
 
     try {
+      console.log('query',req.query);
 
-      let page = parseInt(req.param('page', 0));
-      let limit = parseInt(req.param('limit', 10));
+      let query = req.query;
+      let queryObj = {};
+
+      if (query.fullName) {
+        queryObj.fullName = { 'like': '%'+query.fullName+'%'};
+      }
+
+      if (query.keyword) {
+        queryObj.$or = [
+          {comment: { $like: '%'+query.keyword+'%' }},
+          {email: { $like: '%'+query.keyword+'%' }},
+          {mobile: { $like: '%'+query.keyword+'%' }},
+          {fullName: { $like: '%'+query.keyword+'%' }}
+        ];
+      }
+
+      if (query.mobile) {
+        queryObj.mobile = { 'like': '%'+query.mobile+'%'};
+      }
+
+      if (query.createdStart && query.createdEnd) {
+         queryObj.createdAt = {
+           between : [
+             new Date(query.createdStart),
+             new Date(query.createdEnd)
+           ]
+         };
+      }
+      else if (query.createdStart || query.createdEnd) {
+        queryObj.createdAt = query.createdStart? {
+          gte : new Date(query.createdStart)}: {
+          lte : new Date(query.createdEnd)};
+      }
+
+      let page = req.session.UserController_controlMembers_page =
+      parseInt(req.param('page',
+        req.session.UserController_controlMembers_page || 0
+      ));
+
+      let limit = req.session.UserController_controlMembers_limit =
+      parseInt(req.param('limit',
+        req.session.UserController_controlMembers_limit || 10
+      ));
 
       let members = await db.User.findAndCountAll({
+        where: queryObj,
         offset: page * limit,
         limit: limit
       });
+
+      //查詢購物金
+      for (var i = 0; i < members.rows.length; i++) {
+        let member = members.rows[i];
+
+        member.totalBonusRemain = await UserService.calcTotalBonusRemain(member);
+      }
 
       res.view({
         pageName: "members",
         members: members,
         page: page,
-        limit: limit
+        limit: limit,
+        query
       });
     }
     catch (error) {
       return res.serverError(error);
     }
   },
-  controlMemberDetail: function(req, res) {
-    res.view({
-      pageName: "member-detail"
-    });
+  controlMemberDetail: async function(req, res) {
+    try {
+      res.view({
+        pageName: "member-detail",
+        member: await db.User.findById(req.param('id'))
+      });
+    }
+    catch (error) {
+      return res.serverError(error);
+    }
   },
 
   index: async (req, res) => {
