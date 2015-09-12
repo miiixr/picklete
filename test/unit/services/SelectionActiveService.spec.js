@@ -51,35 +51,35 @@ describe.only("SelectionActiveService", () => {
         {
           type: 'oneLong',
           Images: [{
-            url: 'http://fakeimg.pl/1100x160',
-            path: ''
+            url: 'http://github.com',
+            path: 'http://fakeimg.pl/1100x160'
           }]
         },{
           type: 'oneBig',
           Images: [{
-            url: 'http://fakeimg.pl/1100x350',
-            path: ''
+            url: 'http://github.com',
+            path: 'http://fakeimg.pl/1100x350'
           }]
         },{
           type: 'two',
           Images: [{
-            url: 'http://fakeimg.pl/545x350',
-            path: ''
+            url: 'http://github.com',
+            path: 'http://fakeimg.pl/545x350'
           },{
-            url: 'http://fakeimg.pl/545x350',
-            path: ''
+            url: 'http://github.com',
+            path: 'http://fakeimg.pl/545x350'
           }]
         },{
           type: 'three',
           Images: [{
-            url: 'http://fakeimg.pl/360x240',
-            path: ''
+            url: 'http://github.com',
+            path: 'http://fakeimg.pl/360x240'
           },{
-            url: 'http://fakeimg.pl/360x240',
-            path: ''
+            url: 'http://github.com',
+            path: 'http://fakeimg.pl/360x240'
           },{
-            url: 'http://fakeimg.pl/360x240',
-            path: ''
+            url: 'http://github.com',
+            path: 'http://fakeimg.pl/360x240'
           }]
         }
       ];

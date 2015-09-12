@@ -486,19 +486,26 @@ module.exports = {
     // selectionActive
     let images = [
       {
-        url: 'http://fakeimg.pl/1100x160'
+        path: 'http://fakeimg.pl/1100x160',
+        url: 'https://github.com'
       },{
-        url: 'http://fakeimg.pl/1100x350'
+        path: 'http://fakeimg.pl/1100x350',
+        url: 'https://google.com'
       },{
-        url: 'http://fakeimg.pl/545x350'
+        path: 'http://fakeimg.pl/545x350',
+        url: 'https://yahoo.com'
       },{
-        url: 'http://fakeimg.pl/545x350'
+        path: 'http://fakeimg.pl/545x350',
+        url: ''
       },{
-        url: 'http://fakeimg.pl/360x240'
+        path: 'http://fakeimg.pl/360x240',
+        url: ''
       },{
-        url: 'http://fakeimg.pl/360x240'
+        path: 'http://fakeimg.pl/360x240',
+        url: ''
       },{
-        url: 'http://fakeimg.pl/360x240'
+        path: 'http://fakeimg.pl/360x240',
+        url: ''
       }
     ]
     let createdImages = await* images.map((image) => db.Image.create(image));
