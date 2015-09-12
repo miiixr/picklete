@@ -53,13 +53,21 @@ module.exports = (sequelize, DataTypes) => {
         var value = this.getDataValue('tag');
 
         if(value) {
-          return JSON.parse(value);
+          try {
+            return JSON.parse(value);  
+          } catch (e) {
+          }
         }
 
         return [];
       },
       set: function(value) {
-        return this.setDataValue('tag', JSON.stringify(value));
+        try {
+          var tag = JSON.stringify(value);
+        } catch (e) {
+          var tag = "";
+        }
+        return this.setDataValue('tag', tag);
       }
     },
     // Cover photos
