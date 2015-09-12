@@ -79,7 +79,7 @@ block body
               ==================================================
             .fileinput.fileinput-new(data-provides='fileinput')
               .fileinput-new
-                img.img-full(src=(photo.length > 0) ? photo : "http://fakeimg.pl/1100x500/dddddd/FFF/?text=1100x500")
+                img.img-full(src=(photo && photo.length > 0) ? photo : "http://fakeimg.pl/1100x500/dddddd/FFF/?text=1100x500")
               
               .fileinput-preview.fileinput-exists.border-block-1
                 //- // /fileinput-preview
