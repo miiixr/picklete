@@ -33,7 +33,7 @@ describe("about product service", () => {
       await dptA.setDptSubs(dptSubA);
       await dptB.setDptSubs(dptSubB);
 
-      createdProductGm = await db.ProductGm.create({
+      let createdProductGm = await db.ProductGm.create({
         brandId: 1,
         explain: 'req.body.explain',
         usage: 'req.body.usage',
@@ -74,7 +74,60 @@ describe("about product service", () => {
     }
   });
 
-  it.only('product update', async (done) => {
+  it.only("product create", async (done) => {
+    let newProduct = { 
+      brandType: 'origin',
+      brandId: '1',
+      customBrand: '',
+      dptId: [ '2', '1' ],
+      dptSubId: [ '4', '2' ],
+      name: '423423',
+      price: '432',
+      country: '432',
+      madeby: '432',
+      spec: '432',
+      size: '432',
+      service: [ 'express', 'store', 'package' ],
+      comment: '432432',
+      good:
+       [ { 'photos-1': '',
+           'photos-2': '',
+           color: '3',
+           description: '432',
+           productNumber: '423432',
+           stockQuantity: '999',
+           isPublish: 'false' },
+         { 'photos-1': '',
+           'photos-2': '',
+           color: '5',
+           description: '432423',
+           productNumber: '432432',
+           stockQuantity: '999',
+           isPublish: 'false' },
+         { 'photos-1': '',
+           'photos-2': '',
+           color: '12',
+           description: '432',
+           productNumber: '432432',
+           stockQuantity: '999',
+           isPublish: 'false' } ],
+      coverPhoto: [ '' ],
+      explain: '<p>432432432432432</p>\r\n',
+      notice: '<p>423423423432423</p>\r\n',
+      tag: ',學生,寵物,旅行' 
+    };
+
+    try {
+      let product = await ProductService.create(newProduct);  
+      console.log(product);
+      done();
+    } catch (e) {
+      return done(e);
+    }
+    
+  });
+
+  it('product update', async (done) => {
 
     try {
       let updateProduct = {
