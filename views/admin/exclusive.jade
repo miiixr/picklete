@@ -25,7 +25,7 @@ block body
                   span.glyphicon.glyphicon-remove
               // /col-sm-6
             // /row
-            form.form-horizontal
+            .form-horizontal
               .row.row-s.m-bottom-4
                 .col-xs-12
                   .fileinput.fileinput-new(data-provides='fileinput')
@@ -47,7 +47,7 @@ block body
               // /row
               .form-group
                 .col-sm-9.col-md-9
-                  input.form-control(type='text', placeholder='http://連結網址')
+                  input.form-control(type='text', placeholder='http://連結網址', value=activity.Images[0].link?activity.Images[0].link:'')
                 // /col-sm-9
                 .col-sm-3.col-md-3
                   .checkbox
@@ -68,7 +68,7 @@ block body
                   span.glyphicon.glyphicon-remove
               // /col-sm-6
             // /row
-            form.form-horizontal
+            .form-horizontal
               .row.row-s.m-bottom-4
                 .col-xs-12
                   .fileinput.fileinput-new(data-provides='fileinput')
@@ -91,7 +91,7 @@ block body
               // /row
               .form-group
                 .col-sm-9.col-md-9
-                  input.form-control(type='text', placeholder='http://連結網址')
+                  input.form-control(type='text', placeholder='http://連結網址', value=activity.Images[0].link?activity.Images[0].link:'')
                 // /col-sm-9
                 .col-sm-3.col-md-3
                   .checkbox
@@ -112,7 +112,7 @@ block body
                   span.glyphicon.glyphicon-remove
               // /col-sm-6
             // /row
-            form.form-horizontal
+            .form-horizontal
               .row.row-s
                 - for (var i=0; i<2; i++)
                   .col-xs-6
@@ -133,7 +133,7 @@ block body
                     // /fileinput
                     .form-group.m-left-0.m-right-0
                       .col-sm-9.col-md-9
-                        input.form-control(type='text', placeholder='http://連結網址')
+                        input.form-control(type='text', placeholder='http://連結網址', value=activity.Images[i].link?activity.Images[i].link:'')
                       // /col-sm-9
                       .col-sm-3.col-md-3
                         .checkbox
@@ -156,7 +156,7 @@ block body
                   span.glyphicon.glyphicon-remove
               // /col-sm-6
             // /row
-            form.form-horizontal
+            .form-horizontal
               .row.row-s.m-bottom-4
                 - for (var i=0; i<3; i++)
                   .col-xs-4
@@ -177,7 +177,7 @@ block body
                     // /fileinput
                     .form-group.m-left-0.m-right-0
                       .col-sm-12
-                        input.form-control(type='text', placeholder='http://連結網址')
+                        input.form-control(type='text', placeholder='http://連結網址', value=activity.Images[i].link?activity.Images[i].link:'')
                       // /col-sm-12
                       .col-sm-12
                         .checkbox
