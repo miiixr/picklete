@@ -2,7 +2,6 @@
   var inputName;
   var that;
   $(document).on('change.bs.fileinput', '.fileinput', function (e) {
-
     that = $(e.currentTarget || this);
     inputName = that.find('input[name="uploadfile"]').data('name');
 
@@ -12,7 +11,7 @@
 
   var options = {
     beforeSubmit:  function (formData, jqForm, options) {
-      // console.log(formData);   
+      // console.log(formData);
       // var queryString = $.param(formData);
     },
     success: function (responseText, statusText, xhr, $form)  {
