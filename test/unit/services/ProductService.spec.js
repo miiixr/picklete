@@ -74,7 +74,7 @@ describe("about product service", () => {
     }
   });
 
-  it.only('product update', async (done) => {
+  it('product update', async (done) => {
 
     try {
       let updateProduct = {
@@ -141,10 +141,10 @@ describe("about product service", () => {
       let productGm = await ProductService.findGmWithImages(createdProductGm.id);
       console.log(productGm.Products);
       productGm.Products.length.should.above(1);
-      done();  
+      done();
     } catch (e) {
       done(e);
     }
-    
+
   });
 });
