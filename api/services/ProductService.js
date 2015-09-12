@@ -29,8 +29,8 @@ module.exports = {
       brandId: brandId,
       name: req.body.name,
       brandName: brandName,
-      dptId: req.body['dptId[]'],
-      dptSubId: req.body['dptSubId[]'],
+      // dptId: req.body['dptId[]'],
+      // dptSubId: req.body['dptSubId[]'],
       explain: req.body.explain || "",
       usage: req.body.usage || "",
       notice: req.body.notice || "",
@@ -170,7 +170,7 @@ module.exports = {
         product.productNumber = good.productNumber;
         product.stockQuantity = good.stockQuantity;
         product.description = good.description;
-        product.isPublish = good.isPublish;
+        product.isPublish = (good.isPublish == "false") ? false : true;
 
 
         let photos = [];

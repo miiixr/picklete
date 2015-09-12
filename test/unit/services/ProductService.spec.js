@@ -102,7 +102,7 @@ describe("about product service", () => {
              description: '22222',
              productNumber: '2222',
              stockQuantity: '999',
-             isPublish: 'false',
+             isPublish: 'true',
              id:createdProduct2.id } ],
         productGm: {
           id: createdProductGm.id
