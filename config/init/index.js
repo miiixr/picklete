@@ -12,7 +12,7 @@ module.exports = {
     let force = sails.config.db.force;
     await db.sequelize.sync({force});
   },
-  
+
   basicData: async () => {
     var roleUser = {
       authority: 'user',
@@ -383,19 +383,26 @@ module.exports = {
     // selectionActive
     let images = [
       {
-        link: 'http://fakeimg.pl/1100x160'
+        path: 'http://fakeimg.pl/1100x160',
+        url: 'https://github.com'
       },{
-        link: 'http://fakeimg.pl/1100x350'
+        path: 'http://fakeimg.pl/1100x350',
+        url: 'https://google.com'
       },{
-        link: 'http://fakeimg.pl/545x350'
+        path: 'http://fakeimg.pl/545x350',
+        url: 'https://yahoo.com'
       },{
-        link: 'http://fakeimg.pl/545x350'
+        path: 'http://fakeimg.pl/545x350',
+        url: ''
       },{
-        link: 'http://fakeimg.pl/360x240'
+        path: 'http://fakeimg.pl/360x240',
+        url: ''
       },{
-        link: 'http://fakeimg.pl/360x240'
+        path: 'http://fakeimg.pl/360x240',
+        url: ''
       },{
-        link: 'http://fakeimg.pl/360x240'
+        path: 'http://fakeimg.pl/360x240',
+        url: ''
       }
     ]
     let createdImages = await* images.map((image) => db.Image.create(image));

@@ -74,7 +74,7 @@ describe("about product service", () => {
     }
   });
 
-  it.only("product create", async (done) => {
+  it("product create", async (done) => {
     let newProduct = { 
       brandType: 'origin',
       brandId: '1',
@@ -194,10 +194,10 @@ describe("about product service", () => {
       let productGm = await ProductService.findGmWithImages(createdProductGm.id);
       console.log(productGm.Products);
       productGm.Products.length.should.above(1);
-      done();  
+      done();
     } catch (e) {
       done(e);
     }
-    
+
   });
 });
