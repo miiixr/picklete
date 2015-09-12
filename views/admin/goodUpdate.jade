@@ -254,11 +254,11 @@ block body
               label.col-sm-3.control-label 狀態
               .col-sm-9
                 .btn-group.btn-group-switch(data-toggle='buttons')
-                  label.btn.btn-default.btn-hide.btn-sm
-                    input#option1(type='radio', name="good[#{i}][isPublish]", value='false', autocomplete='off', checked=product.isPublish == 'false', form='goodForm')
+                  label.btn-status.btn.btn-default.btn-hide.btn-sm(class=(!product.isPublish) ? "active": "")
+                    input#option1(type='radio', name="good[#{i}][isPublish]", value='false', autocomplete='off', checked=(product.isPublish == 'false') ? "true": undefined, form='goodForm')
                     span.btn-text 隱藏
-                  label.btn.btn-default.btn-sm.active
-                    input#option2(type='radio', name="good[#{i}][isPublish]", value='true', autocomplete='off', checked=product.isPublish == 'true' form='goodForm')
+                  label.btn-status.btn.btn-default.btn-sm(class=(product.isPublish) ? "active": "")
+                    input#option2(type='radio', name="good[#{i}][isPublish]", value='true', autocomplete='off', checked=(product.isPublish == 'true') ? "true": undefined form='goodForm')
                     span.btn-text 上架
                 // /btn-group-switch
             // /form-group

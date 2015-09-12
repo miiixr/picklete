@@ -45,6 +45,12 @@
 
   });
 
+  // isPublish button click
+  $('.well').on('click','.btn-status',function(e){
+    var that = $(this);
+    that.find("input[type=radio]").prop("checked", true);
+  });
+
 
   $('.row').on('click','.btn-remove',function(e){
     e.preventDefault();
