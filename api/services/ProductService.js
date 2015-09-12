@@ -69,6 +69,7 @@ module.exports = {
         service: req.body.service,
         country: req.body.country,
         madeby: req.body.madeby,
+        spec: req.body.spec,
         color: color,
         productNumber: productNumber,
         photos: photos || [],
@@ -104,6 +105,7 @@ module.exports = {
         service: req.body.service,
         country: req.body.country,
         madeby: req.body.madeby,
+        spec: req.body.spec,
         color: req.body['good[color]'][i] || color,
         productNumber: req.body['good[productNumber]'][i] || productNumber,
         photos: photos,
@@ -150,13 +152,14 @@ module.exports = {
         }
       });
 
-      product.name = updateProduct.name;
+      product.name = updateProduct.good[0].description;
       product.price = updateProduct.price;
       product.size = updateProduct.size;
       product.comment = updateProduct.comment;
       product.service = updateProduct.service;
       product.country = updateProduct.country;
       product.madeby = updateProduct.madeby;
+      product.spec = updateProduct.spec;
       product.color = updateProduct.good[0].color;
       product.productNumber = updateProduct.good[0].productNumber;
       product.stockQuantity = updateProduct.good[0].stockQuantity;
