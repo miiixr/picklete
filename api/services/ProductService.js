@@ -27,6 +27,7 @@ module.exports = {
 
     let newProductGm = {
       brandId: brandId,
+      name: req.body.name,
       brandName: brandName,
       dptId: req.body['dptId[]'],
       dptSubId: req.body['dptSubId[]'],
@@ -146,39 +147,47 @@ module.exports = {
         }
       });
 
-      let product = await db.Product.find({
-        where: {
-          id: updateProduct.good[0].id
-        }
-      });
+      var goods = updateProduct.good;
+      for (var i = 0 ; i < goods.length ; i++) {
 
-      product.name = updateProduct.good[0].description;
-      product.price = updateProduct.price;
-      product.size = updateProduct.size;
-      product.comment = updateProduct.comment;
-      product.service = updateProduct.service;
-      product.country = updateProduct.country;
-      product.madeby = updateProduct.madeby;
-      product.spec = updateProduct.spec;
-      product.color = updateProduct.good[0].color;
-      product.productNumber = updateProduct.good[0].productNumber;
-      product.stockQuantity = updateProduct.good[0].stockQuantity;
-      product.description = updateProduct.good[0].description;
-      product.isPublish = updateProduct.good[0].isPublish;
+        var good = goods[i];
+
+        let product = await db.Product.find({
+          where: {
+            id: good.id
+          }
+        });
+
+        product.name = good.description;
+        product.price = updateProduct.price;
+        product.size = updateProduct.size;
+        product.comment = updateProduct.comment;
+        product.service = updateProduct.service;
+        product.country = updateProduct.country;
+        product.madeby = updateProduct.madeby;
+        product.spec = updateProduct.spec;
+        product.color = good.color;
+        product.productNumber = good.productNumber;
+        product.stockQuantity = good.stockQuantity;
+        product.description = good.description;
+        product.isPublish = good.isPublish;
 
 
-      let photos = [];
+        let photos = [];
 
 
-      if (updateProduct.good[0]['photos-1'])
-        photos.push(updateProduct.good[0]['photos-1']);
+        if (good['photos-1'])
+          photos.push(good['photos-1']);
 
-      if (updateProduct.good[0]['photos-2'])
-        photos.push(updateProduct.good[0]['photos-2']);
+        if (good['photos-2'])
+          photos.push(good['photos-2']);
 
-      product.photos = photos;
+        product.photos = photos;
 
-      await product.save();
+        await product.save();
+
+      }
+
 
 
       productGm.brandId = brand.id;
@@ -204,6 +213,20 @@ module.exports = {
       console.error(e.stack);
       throw e;
     }
+  },
+
+  findGmWithImages: async (productGmId) => {
+    let productGm = await db.ProductGm.find({
+      where: {id: productGmId},
+      include: [
+        {model: db.Product},
+        {model: db.Dpt}, 
+        {model: db.DptSub}
+      ]
+    });
+
+    // console.log(productGm.products);
+    return productGm;
   },
 
   findWithImages: async (productId) => {
