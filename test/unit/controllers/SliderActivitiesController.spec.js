@@ -23,7 +23,12 @@ describe('SliderActivities Spec', function() {
     request(sails.hooks.http.app)
     .post('/admin/slider/create')
     .set('cookie', cookie)
-    .field('test', 'test')
+    .field('cover', 'http://cover.jpg') // 活動主圖
+    .field('title', '活動標題') // 活動標題
+    .field('description', '活動文案') // 活動文案
+    .field('location', '文案位置') // 文案位置
+    .field('color', 123) // 文案顏色
+    .field('link', '活動網址') // 活動網址
     .end(function(err, res) {
       console.log('-----------------------');
       console.log('* hello world spec')
