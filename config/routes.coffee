@@ -53,6 +53,11 @@ module.exports.routes = {
 
   'get /admin/slider/create' : 'SliderActivitiesController.create'
   'post /admin/slider/create' : 'SliderActivitiesController.create'
+  'get /admin/slider/show' : 'SliderActivitiesController.show'
+  'get /admin/slider/update' : 'SliderActivitiesController.update'
+  'post /admin/slider/update' : 'SliderActivitiesController.update'
+  'get /admin/slider' : 'SliderActivitiesController.list'
+
 
   'get /admin/department' : 'DptController.list'
   'post /admin/department/update': 'DptController.update'

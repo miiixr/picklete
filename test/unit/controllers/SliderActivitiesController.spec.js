@@ -18,7 +18,7 @@ describe('SliderActivities Spec', function() {
   });
 
 
-  it('should return new brand object', function(done) {
+  it('Create a new SliderActivities', function(done) {
 
     request(sails.hooks.http.app)
     .post('/admin/slider/create')
@@ -39,6 +39,15 @@ describe('SliderActivities Spec', function() {
 
       return done();
     });
+  });
+
+  it('Show an exist SliderActivities', function(done) {
+  });
+
+  it('Update an exist SliderActivities', function(done) {
+  });
+
+  it('List the all SliderActivities', function(done) {
   });
 
 });

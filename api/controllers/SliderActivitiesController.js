@@ -28,5 +28,14 @@ let SliderActivitiesController = {
     }
   }
 
+  show: async (req, res) => {
+  }
+
+  update: async (req, res) => {
+  }
+
+  list: async (req, res) => {
+  }
+
 };
 module.exports = SliderActivitiesController;
