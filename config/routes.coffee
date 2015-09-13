@@ -34,10 +34,10 @@ module.exports.routes = {
   'get /register': 'AuthController.register'
 
   'get /admin/login' : 'UserController.controlLogin'
-  'get /admin/index-slider' : 'UserController.indexSlider'
-  'get /admin/index-slider-detail' : 'UserController.indexSliderDetail'
+  #'get /admin/index-slider' : 'UserController.indexSlider'
+  #'get /admin/index-slider-detail' : 'UserController.indexSliderDetail'
   'get /admin/index-exclusive' : 'UserController.indexExclusive'
-  'get /admin/index-theme' : 'UserController.indexTheme'
+  #'get /admin/index-theme' : 'UserController.indexTheme'
 
   'get /admin/password' : 'UserController.password'
   'post /admin/password' : 'UserController.password'
@@ -51,6 +51,8 @@ module.exports.routes = {
   'get /admin/exclusive' : view: 'admin/exclusive'
   'get /admin/index-theme' : view: 'admin/themeActivities'
 
+  'get /admin/slider/create' : 'SliderActivitiesController.create'
+  'post /admin/slider/create' : 'SliderActivitiesController.create'
 
   'get /admin/department' : 'DptController.list'
   'post /admin/department/update': 'DptController.update'
