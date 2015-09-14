@@ -277,8 +277,9 @@ block body
       span.label.label-default.p-10-15 圖片上傳
     .row.row-m
       // /col-md-4
-      - var coverPhotos = good.ProductGm.coverPhoto.length > 0 ? good.ProductGm.coverPhoto : [0];
-      - for (var i=0; i < coverPhotos.length; i++)
+      - var coverPhotoLength = good.ProductGm.coverPhoto.length;
+      - var coverPhotos = coverPhotoLength > 0 ? good.ProductGm.coverPhoto : [];
+      - for (var i=0; i <= coverPhotoLength; i++)
 
         .col-md-4
           .edit-block.m-bottom-4
@@ -305,8 +306,9 @@ block body
             // /fileinput
             a.btn-remove(href='#')
               span.glyphicon.glyphicon-remove
-            a.btn-add(href='#')
-              span.glyphicon.glyphicon-plus
+            - if (i == coverPhotoLength)
+              a.btn-add(href='#')
+                span.glyphicon.glyphicon-plus
           // /edit-block
         // /col-md-4
 

@@ -21,6 +21,7 @@ module.exports.bootstrap = async (cb) => {
 
     // inject moment for jade views
     sails.moment = require('moment');
+    sails.moment.lang("zh-TW");
 
     // Development environment
     /*
@@ -45,7 +46,7 @@ module.exports.bootstrap = async (cb) => {
       if(createInitData) await init.testData();
     }
 
-    await init.basicData();  
+    await init.basicData();
 
     cb();
 
