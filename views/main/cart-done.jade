@@ -2,12 +2,12 @@ extends ../_layout_head
 
 block body
     .navmenu.navmenu-default.navmenu-fixed-right.offcanvas
-      a.navmenu-brand(href='index') i+Deal
+      a.navmenu-brand(href='index') {BRAND}
       ul.nav.navmenu-nav.navmenu-nav-top
         li
           a(href='brands-list') BRANDS
-        li
-          a(href='http://blog.iplusdeal.com/') BLOG
+        //- li
+        //-   a(href='{URL}') BLOG
         li.dropdown
           a.dropdown-toggle(href='#', data-toggle='dropdown')
             | SHOP
@@ -146,7 +146,7 @@ block body
             span.icon-bar
             span.icon-bar
             span.icon-bar
-          a.navbar-brand(href='control-index-slider') i+Deal
+          a.navbar-brand(href='control-index-slider') {BRAND}
           h4.navbar-text.pull-left control panel
         // /navbar-header
         // Collect the nav links, forms, and other content for toggling
