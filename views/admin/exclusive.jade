@@ -8,13 +8,16 @@ block body
         a.btn.btn-danger.btn-lg.m-bottom-2(href='#', data-toggle='modal', data-target='#modal-control-index-exclusive-type') 建立活動
       // /col-xs-6
       .col-xs-6.text-right
-        a.btn.btn-green.btn-lg.m-bottom-2(href='#') 儲存變更
+        input.btn.btn-green.btn-lg.m-bottom-2(type='submit', form='activesData', value='儲存變更')
       // /col-xs-6
     // /row
     hr.dashed-line
-    each activity in activities
+    form#activesData(action='/admin/exclusive', method='POST')
+    each activity, index in activities
+      input(type='hidden', name='actives[#{index}][type]', value=activity.type, form='activesData')
       case activity.type
         when 'oneLong'
+          - activity.Images[0] = activity.Images[0] || { url: "", path: "http://fakeimg.pl/1100x160", openWindow: false};
           li.well.control-well.p-10-20.m-bottom-8.type1
             .row
               .col-sm-6
@@ -30,7 +33,7 @@ block body
                 .col-xs-12
                   .fileinput.fileinput-new(data-provides='fileinput')
                     .fileinput-new
-                      img.img-full(src = activity.Images[0].path)
+                      img.img-full(src=activity.Images[0] && activity.Images[0].path?'#{activity.Images[0].path}':'http://fakeimg.pl/1100x160')
                     // /fileinput-new
                     .fileinput-preview.fileinput-exists
                     // /fileinput-preview
@@ -40,6 +43,7 @@ block body
                           span.fileinput-new Select image
                           span.fileinput-exists Change
                           input.fileInput(type='file', name='uploadfile')
+                          input(type='hidden', name='actives[#{index}][Images][0][path]', form='activesData')
                       a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
                     // /fileinput-btn
                   // /fileinput
@@ -47,17 +51,18 @@ block body
               // /row
               .form-group
                 .col-sm-9.col-md-9
-                  input.form-control(type='text', placeholder='http://連結網址', value=activity.Images[0].url?activity.Images[0].url:'')
+                  input.form-control(type='text', name='actives[#{index}][Images][0][url]', form='activesData', placeholder='http://連結網址', value=activity.Images[0].url?activity.Images[0].url:'')
                 // /col-sm-9
                 .col-sm-3.col-md-3
                   .checkbox
                     label
-                      input(type='checkbox', checked=activity.openWindow)
+                      input(type='checkbox', checked=activity.Images[0].openWindow, value='true', name='actives[#{index}][Images][0][openWindow]', form='activesData')
                       |  另開視窗
               // /form-group
           // /well
 
         when 'oneBig'
+          - activity.Images[0] = activity.Images[0] || { url: "", path: "http://fakeimg.pl/1100x350", openWindow: false};
           li.well.control-well.p-10-20.m-bottom-8.type2
             .row
               .col-sm-6
@@ -73,7 +78,7 @@ block body
                 .col-xs-12
                   .fileinput.fileinput-new(data-provides='fileinput')
                     .fileinput-new
-                      img.img-full(src = activity.Images[0].path)
+                      img.img-full(src=activity.Images[0] && activity.Images[0].path?'#{activity.Images[0].path}':'http://fakeimg.pl/1100x350')
                     // /fileinput-new
                     .fileinput-preview.fileinput-exists
                     // /fileinput-preview
@@ -83,6 +88,7 @@ block body
                           span.fileinput-new Select image
                           span.fileinput-exists Change
                           input.fileInput(type='file', name='uploadfile')
+                          input(type='hidden', name='actives[#{index}][Images][0][path]', form='activesData')
                       a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
                         span.glyphicon.glyphicon-remove
                     // /fileinput-btn
@@ -91,12 +97,12 @@ block body
               // /row
               .form-group
                 .col-sm-9.col-md-9
-                  input.form-control(type='text', placeholder='http://連結網址', value=activity.Images[0].url?activity.Images[0].url:'')
+                  input.form-control(type='text', name='actives[#{index}][Images][0][url]', form='activesData', placeholder='http://連結網址', value=activity.Images[0].url?activity.Images[0].url:'')
                 // /col-sm-9
                 .col-sm-3.col-md-3
                   .checkbox
                     label
-                      input(type='checkbox', checked=activity.openWindow)
+                      input(type='checkbox', checked=activity.Images[0].openWindow, value='true', name='actives[#{index}][Images][0][openWindow]', form='activesData')
                       |  另開視窗
               // /form-group
           // /well
@@ -115,10 +121,11 @@ block body
             .form-horizontal
               .row.row-s
                 - for (var i=0; i<2; i++)
+                  - activity.Images[i] = activity.Images[i] || { url: "", path: "http://fakeimg.pl/545x350", openWindow: false};
                   .col-xs-6
                     .fileinput.fileinput-new.m-bottom-4(data-provides='fileinput')
                       .fileinput-new
-                        img.img-full(src = activity.Images[i].path)
+                        img.img-full(src=activity.Images[i] && activity.Images[i].path?'#{activity.Images[i].path}':'http://fakeimg.pl/545x350')
                       // /fileinput-new
                       .fileinput-preview.fileinput-exists
                       // /fileinput-preview
@@ -128,17 +135,18 @@ block body
                             span.fileinput-new Select image
                             span.fileinput-exists Change
                             input.fileInput(type='file', name='uploadfile')
+                            input(type='hidden', name='actives[#{index}][Images][#{i}][path]', form='activesData')
                         a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
                       // /fileinput-btn
                     // /fileinput
                     .form-group.m-left-0.m-right-0
                       .col-sm-9.col-md-9
-                        input.form-control(type='text', placeholder='http://連結網址', value=activity.Images[i].url?activity.Images[i].url:'')
+                        input.form-control(type='text', name='actives[#{index}][Images][#{i}][url]', form='activesData', placeholder='http://連結網址', value=activity.Images[i].url?activity.Images[i].url:'')
                       // /col-sm-9
                       .col-sm-3.col-md-3
                         .checkbox
                           label
-                            input(type='checkbox', checked=activity.openWindow)
+                            input(type='checkbox', checked=activity.Images[i].openWindow, value='true', name='actives[#{index}][Images][#{i}][openWindow]', form='activesData')
                             |  另開視窗
                     // /form-group
                   // /col-xs-6
@@ -159,10 +167,11 @@ block body
             .form-horizontal
               .row.row-s.m-bottom-4
                 - for (var i=0; i<3; i++)
+                  - activity.Images[i] = activity.Images[i] || { url: "", path: "http://fakeimg.pl/360x240", openWindow: false};
                   .col-xs-4
                     .fileinput.fileinput-new.m-bottom-4(data-provides='fileinput')
                       .fileinput-new
-                        img.img-full(src = activity.Images[i].path)
+                        img.img-full(src=activity.Images[i] && activity.Images[i].path?'#{activity.Images[i].path}':'http://fakeimg.pl/360x240')
                       // /fileinput-new
                       .fileinput-preview.fileinput-exists
                       // /fileinput-preview
@@ -172,17 +181,18 @@ block body
                             span.fileinput-new Select image
                             span.fileinput-exists Change
                             input.fileInput(type='file', name='uploadfile')
+                            input(type='hidden', name='actives[#{index}][Images][#{i}][path]', form='activesData')
                         a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
                       // /fileinput-btn
                     // /fileinput
                     .form-group.m-left-0.m-right-0
                       .col-sm-12
-                        input.form-control(type='text', placeholder='http://連結網址', value=activity.Images[i].url?activity.Images[i].url:'')
+                        input.form-control(type='text', name='actives[#{index}][Images][#{i}][url]', form='activesData', placeholder='http://連結網址', value=activity.Images[i].url?activity.Images[i].url:'')
                       // /col-sm-12
                       .col-sm-12
                         .checkbox
                           label
-                            input(type='checkbox', checked=activity.openWindow)
+                            input(type='checkbox', checked=activity.Images[i].openWindow, value='true', name='actives[#{index}][Images][#{i}][openWindow]', form='activesData')
                             |  另開視窗
                       // /col-sm-12
                     // /form-group
