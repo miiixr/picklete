@@ -1,10 +1,6 @@
 let SliderActivitiesController = {
     
   create: async (req, res) => {
-  	console.log('-----------------------');
-    console.log('* hello world controller');
-  	console.log('-----------------------');
-
   	// console.log('Todo: write data into database');
     var params = req.body;
     // console.log(params);
@@ -29,10 +25,6 @@ let SliderActivitiesController = {
   },
 
   createSlider: async (req, res) => {
-  	console.log('-----------------------');
-    console.log('* hello world controller API');
-  	console.log('-----------------------');
-
   	var params = req.body;
 
     let slider = {
@@ -54,18 +46,24 @@ let SliderActivitiesController = {
   },
 
   	
-
-
-
-
-  // show: async (req, res) => {
-  // }
-
   // update: async (req, res) => {
   // }
 
-  // list: async (req, res) => {
-  // }
+  list: async (req, res) => {
+
+  	let listSliders = await db.Slider.findAll();
+  	return res.view("admin/sliderActivities", { 
+  			sliders: listSliders
+      });
+  },
+
+  listSlider: async (req, res) => {
+
+    let listSliders = await db.Slider.findAll();
+		return res.ok(listSliders);
+  
+  }
+
 
 };
 module.exports = SliderActivitiesController;

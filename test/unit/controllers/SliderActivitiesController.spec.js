@@ -30,9 +30,9 @@ describe('SliderActivities Spec', function() {
     .field('color', 123) // 文案顏色
     .field('link', '活動網址') // 活動網址
     .end(function(err, res) {
-      console.log('-----------------------');
-      console.log('* hello world spec')
-      console.log('-----------------------');
+      // console.log('-----------------------');
+      // console.log('* Create a new SliderActivities')
+      // console.log('-----------------------');
 
       res.statusCode.should.be.equal(302);
       res.headers.location.should.be.equal('/');
@@ -43,7 +43,7 @@ describe('SliderActivities Spec', function() {
 
   it('Create a new SliderActivities for API', (done) => {
     request(sails.hooks.http.app)
-      .post('/api/slider/create/')
+      .post('/api/slider/create')
       .set('cookie', cookie)
       .send({
         cover: 'http://cover.jpg',
@@ -54,11 +54,10 @@ describe('SliderActivities Spec', function() {
         link: '活動網址'
       })
       .end((err,res) => {
-
-        console.log('-----------------------');
-        console.log('* hello world spec API')
-        console.log('-----------------------');
-        console.log(res.body);
+        // console.log('-----------------------');
+        // console.log('* Create a new SliderActivities for API')
+        // console.log('-----------------------');
+        //console.log(res.body);
 
         res.statusCode.should.be.equal(200);
             
@@ -74,7 +73,35 @@ describe('SliderActivities Spec', function() {
   // it('Update an exist SliderActivities', function(done) {
   // });
 
-  // it('List the all SliderActivities', function(done) {
-  // });
+  it('List the all SliderActivities', function(done) {
+    request(sails.hooks.http.app)
+    .get('/admin/slider')
+    .set('cookie', cookie)
+    .end(function(err, res) {
+      // console.log('-----------------------');
+      // console.log('* Create a new SliderActivities')
+      // console.log('-----------------------');
+
+      res.statusCode.should.be.equal(200);
+      return done();
+    });
+  });
+
+  it('Create a new SliderActivities for API', (done) => {
+    request(sails.hooks.http.app)
+      .get('/api/slider/list')
+      .set('cookie', cookie)
+      .end((err,res) => {
+        // console.log('-----------------------');
+        // console.log('* Create a new SliderActivities for API')
+        // console.log('-----------------------');
+        //console.log(res.body);
+
+        res.statusCode.should.be.equal(200);
+            
+        done(err);
+
+    });
+  });  
 
 });

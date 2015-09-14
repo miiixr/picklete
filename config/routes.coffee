@@ -53,10 +53,9 @@ module.exports.routes = {
 
   'get /admin/slider/create' : 'SliderActivitiesController.create'
   'post /admin/slider/create' : 'SliderActivitiesController.create'
-  # 'get /admin/slider/show' : 'SliderActivitiesController.show'
   # 'get /admin/slider/update' : 'SliderActivitiesController.update'
   # 'post /admin/slider/update' : 'SliderActivitiesController.update'
-  # 'get /admin/slider' : 'SliderActivitiesController.list'
+  'get /admin/slider' : 'SliderActivitiesController.list'
 
 
   'get /admin/department' : 'DptController.list'
@@ -303,6 +302,15 @@ module.exports.routes = {
   'post /api/slider/create': {
     controller: "SliderActivitiesController",
     action: "createSlider",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+
+  'get /api/slider/list': {
+    controller: "SliderActivitiesController",
+    action: "listSlider",
     cors: {
      origin: "http://localhost:1337, http://localhost:8080",
      credentials: false
