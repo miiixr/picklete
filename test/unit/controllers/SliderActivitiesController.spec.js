@@ -96,7 +96,7 @@ describe('SliderActivities Spec', function() {
     });
   });
 
-  it('Create a new SliderActivities for API', (done) => {
+  it('List the all SliderActivities for API', (done) => {
     request(sails.hooks.http.app)
       .get('/api/slider/list')
       .set('cookie', cookie)
