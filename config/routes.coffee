@@ -107,6 +107,7 @@ module.exports.routes = {
   'get /auth/:provider/callback': 'AuthController.callback'
   'get /auth/:provider/:action': 'AuthController.callback'
 
+  'get /admin/allpay': 'OrderController.allpayPage'
 
   "get /admin/login": view: "admin/login"
 
@@ -182,14 +183,6 @@ module.exports.routes = {
   'post /api/order': {
     controller: "OrderController",
     action: "create",
-    cors: {
-     origin: "http://localhost:1337, http://localhost:8080",
-     credentials: false
-    }
-  }
-  'post /api/payorder': {
-    controller: "OrderController",
-    action: "allPayCreate",
     cors: {
      origin: "http://localhost:1337, http://localhost:8080",
      credentials: false

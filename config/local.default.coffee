@@ -1,5 +1,6 @@
 module.exports = {
   createInitData: false
+  useAllPay: true
   environment: ''
   initData: ''
   domain: 'http://localhost:1337'

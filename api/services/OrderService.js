@@ -1,5 +1,15 @@
 import moment from 'moment';
+import crypto from 'crypto';
 let sprintf = require("sprintf-js").sprintf;
+
+var Allpay = require('../../api/services/AllpayService');
+var _ = require('lodash');
+var allpay = new Allpay({
+  merchantID: '2000132',
+  hashKey: '5294y06JbISpM5x9',
+  hashIV: 'v77hoKGq4kWxNNIS',
+  debug: false,
+});
 
 module.exports = {
   generateOrderSerialNumber: async () => {
@@ -64,6 +74,53 @@ module.exports = {
       }
     });
     return orders;
+  },
+
+  allPayCreate: async (order) => {
+    try {
+      var time = Date.now();
+      let data = {
+        MerchantID:'2000132',
+        // MerchantTradeNo: order.id.replace(/-/g,''),
+        MerchantTradeNo: '111',
+        // MerchantTradeDate: sails.moment(time).format('YYYY/MM/DD HH:mm:ss'),
+        // MerchantTradeDate:'2015/09/15 01:01:15',
+        PaymentType: 'aio',
+        TotalAmount: '100',
+        // TotalAmount: order.paymentTotalAmount,
+        TradeDesc: 'Allpaypushordertest',
+        ItemName: 'BBB',
+        ReturnURL: 'aaaa',
+        ChoosePayment: {name:'WebATM'},
+        ClientBackURL: 'bbb'
+        // ChooseSubPayment: '',
+        // Remark: '',
+      };
+      // order.OrderItems.forEach((orderItem) => {
+      //   data.ItemName.push(orderItem.name);
+      // });
+      var checkMacValue = allpay.genCheckMacValue(data);
+      data.CheckMacValue = checkMacValue;
+      return data;
+
+      // var result = await new Promise((resolve) =>
+      //   crypto.randomBytes(20, (error, buf) => resolve(buf.toString("hex")))
+      // );
+      //
+      // allpay.aioCheckOut(data, async function(result) {
+      //   let orderData = await db.Order.findById(order.id);
+      //   orderData.MerchantTradeDate = result.MerchantTradeDate;
+      //   orderData.CheckMacValue = result.CheckMacValue;
+      //   await orderData.save();
+      //   return result;
+      // });
+
+    } catch (e) {
+      console.error(e.stack);
+      let {message} = e;
+      let success = false;
+      return res.serverError({message, success});
+    }
   },
 
   create: async (newOrder) => {

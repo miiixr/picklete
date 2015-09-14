@@ -33,7 +33,7 @@ module.exports.policies = {
     find: []
     sync: []
     bonus: []
-    allPayCreate:[]
+    allpayPage:[]
 }
 
 

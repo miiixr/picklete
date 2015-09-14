@@ -3,14 +3,6 @@
 // # 3. 建立訂單 order
 var OrderController;
 
-var Allpay = require('../../api/services/AllpayService');
-var _ = require('lodash');
-var allpay = new Allpay({
-  merchantID: '2000132',
-  hashKey: '5294y06JbISpM5x9',
-  hashIV: 'v77hoKGq4kWxNNIS',
-  debug: false,
-});
 
 OrderController = {
   debug: async (req, res) => {
@@ -149,47 +141,19 @@ OrderController = {
   create: async (req, res) => {
     var newOrder = req.body.order;
     try {
+      let useAllPay = false;
+      if(sails.config.useAllPay !== undefined)
+        useAllPay = sails.config.useAllPay;
       let result = await OrderService.create(newOrder);
-      return res.ok(result);
-    } catch (e) {
-      console.error(e.stack);
-      let {message} = e;
-      let success = false;
-      return res.serverError({message, success});
-    }
-  },
-  allPayCreate: async (req, res) => {
-    var newOrder = req.body.order;
-    try {
-      let result = await OrderService.create(newOrder);
-      let order = result.order;
-      let data = {
-        MerchantTradeNo: order.id,
-        TotalAmount: order.paymentTotalAmount,
-        TradeDesc: 'Allpay push order test',
-        ItemName: [],
-        ChoosePayment: {name: 'ATM'},
-        ReturnURL: 'http://localhost:3000',
-        ClientBackURL: 'http://localhost:3000'
-      };
-
-      order.OrderItems.forEach((orderItem) => {
-        data.ItemName.push(orderItem.name);
-      });
-
-      allpay.aioCheckOut(data, async function(result) {
-
-        let orderData = await db.Order.findById(order.id);
-        orderData.MerchantTradeDate = result.MerchantTradeDate;
-        orderData.CheckMacValue = result.CheckMacValue;
-        await orderData.save();
-
-        return res.ok({
-          result
+      if(useAllPay){
+        var allPayData = await OrderService.allPayCreate(result.order);
+        console.log("!!!",allPayData);
+        res.view('order/allpay',{
+          allPayData
         });
-
-      });
-
+      }else{
+        return res.ok(result);
+      }
     } catch (e) {
       console.error(e.stack);
       let {message} = e;
@@ -197,13 +161,21 @@ OrderController = {
       return res.serverError({message, success});
     }
   },
+
+  allpayPage: async(req, res) => {
+    console.log("allpay call me");
+    res.view('order/allpay',{
+      pageName: "allpay"
+    });
+  },
+
   // 查詢
   status: async function(req, res) {
 
     try{
 
       var email = req.query.email;
-      
+
       let userData = await db.User.findOne({
         where: {email}
       });

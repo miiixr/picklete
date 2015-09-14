@@ -1,11 +1,10 @@
 describe("about Order", () => {
   describe("create Order", () => {
-    it("order", (done) => {
+    it.only("order", (done) => {
       let newOrder ={
         orderItems:
          [ { ProductId: '1', price: '475', quantity: '1' },
-           { ProductId: '2', price: '590', quantity: '2' },
-           { ProductId: '3', price: '710', quantity: '1' }],
+           { ProductId: '1', price: '590', quantity: '2' }],
         paymentTotalAmount: '565',
         user:
          { username: 'AAAd',
@@ -37,44 +36,6 @@ describe("about Order", () => {
         res.body.order.User.id.should.be.number;
         res.body.products.forEach((product) => product.id.should.be.number);
         res.body.order.OrderItems.forEach((orderItem) => orderItem.id.should.be.number);
-        return done();
-      });
-    });
-
-    it.only("payorder", (done) => {
-      let newOrder ={
-        orderItems:
-         [ { ProductId: '1', price: '475', quantity: '1' },
-           { ProductId: '2', price: '590', quantity: '2' },
-           { ProductId: '3', price: '710', quantity: '1' }],
-        paymentTotalAmount: '565',
-        user:
-         { username: 'AAAd',
-           email: 'user1@picklete.localhost',
-           mobile: '0912345678',
-           city: '苗栗縣',
-           district: '竹南鎮',
-           zipcode: '350',
-           address: '測試用地址不用太在意' },
-        shipment:
-         { username: 'AAAd',
-           email: 'user1@picklete.localhost',
-           mobile: '0912345678',
-           city: '苗栗縣',
-           district: '竹南鎮',
-           zipcode: '350',
-           address: '測試用地址不用太在意' },
-        usedDiscountPoint: 'false' };
-
-      request(sails.hooks.http.app).post("/api/payorder").send({
-        order: newOrder
-      }).end((err, res) => {
-        if (res.statusCode === 500) {
-          return done(err);
-        }
-        res.body.result.MerchantID.should.be.String;
-        res.body.result.PaymentType.should.be.String;
-        res.body.result.CheckMacValue.should.be.String;
         return done();
       });
     });
