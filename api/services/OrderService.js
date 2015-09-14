@@ -1,6 +1,7 @@
 import moment from 'moment';
-import crypto from 'crypto';
 let sprintf = require("sprintf-js").sprintf;
+import dataRequest from 'request';
+
 
 var Allpay = require('../../api/services/AllpayService');
 var _ = require('lodash');
@@ -81,39 +82,36 @@ module.exports = {
       var time = Date.now();
       let data = {
         MerchantID:'2000132',
-        // MerchantTradeNo: order.id.replace(/-/g,''),
-        MerchantTradeNo: '111',
-        // MerchantTradeDate: sails.moment(time).format('YYYY/MM/DD HH:mm:ss'),
-        // MerchantTradeDate:'2015/09/15 01:01:15',
+        MerchantTradeNo: order.id.replace(/-/g,''),
+        MerchantTradeDate: sails.moment(time).format('YYYY/MM/DD HH:mm:ss'),
         PaymentType: 'aio',
-        TotalAmount: '100',
-        // TotalAmount: order.paymentTotalAmount,
-        TradeDesc: 'Allpaypushordertest',
-        ItemName: 'BBB',
+        TotalAmount: order.paymentTotalAmount,
+        TradeDesc: 'Allpay push order test',
+        ItemName: '',
         ReturnURL: 'aaaa',
-        ChoosePayment: {name:'WebATM'},
+        ChoosePayment: 'ALL',
         ClientBackURL: 'bbb'
         // ChooseSubPayment: '',
         // Remark: '',
       };
-      // order.OrderItems.forEach((orderItem) => {
-      //   data.ItemName.push(orderItem.name);
+      var itemArray = [];
+      order.OrderItems.forEach((orderItem) => {
+        itemArray.push(orderItem.name);
+      });
+      data.ItemName = itemArray.join('#');
+
+      // let checkMacValue = await new Promise((done) => {
+      //   dataRequest.post( {
+    	// 		url: 'http://payment-stage.allpay.com.tw/AioHelper/GenCheckMacValue',
+    	// 		form:data,
+    	// 		followRedirect: true
+    	// 	},(error, res, body) => {
+    	// 		done(res.body);
+    	// 	})
       // });
       var checkMacValue = allpay.genCheckMacValue(data);
       data.CheckMacValue = checkMacValue;
       return data;
-
-      // var result = await new Promise((resolve) =>
-      //   crypto.randomBytes(20, (error, buf) => resolve(buf.toString("hex")))
-      // );
-      //
-      // allpay.aioCheckOut(data, async function(result) {
-      //   let orderData = await db.Order.findById(order.id);
-      //   orderData.MerchantTradeDate = result.MerchantTradeDate;
-      //   orderData.CheckMacValue = result.CheckMacValue;
-      //   await orderData.save();
-      //   return result;
-      // });
 
     } catch (e) {
       console.error(e.stack);
