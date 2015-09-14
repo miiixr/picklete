@@ -19,6 +19,7 @@
       console.log(statusText);
       if(statusText == 'success') {
         console.log(inputName);
+        console.log(that);
         that.find('input[name="' + responseText.filename + '"]').val(responseText[0].fd);
       }
     }
