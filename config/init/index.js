@@ -12,7 +12,13 @@ module.exports = {
     let force = sails.config.db.force;
     await db.sequelize.sync({force});
   },
+
   basicData: async () => {
+    var roleUser = {
+      authority: 'user',
+      comment: 'site user'
+    };
+    var createRoleUser = await db.Role.create(roleUser);
 
     var roleAdmin = {
       authority: 'admin',
@@ -81,136 +87,6 @@ module.exports = {
       comment: "this is newBuyer2"
     };
     var createNewBuyer2 = await db.User.create(newBuyer2);
-
-
-    let newProductGm = [{
-      brandId: 1,
-      dptId: ["1"],
-      dptSubId: ["1"],
-      explain: 'lalalalal',
-      usage: 'noanoa',
-      notice: 'doludolu',
-      tag: [
-        "aa",
-        "情人"
-      ],
-      coverPhoto: []
-    },{
-      brandId: 2,
-      dptId: ["2"],
-      dptSubId: ["2"],
-      explain: 'explainexplain',
-      usage: 'usageusage',
-      notice: 'noticenotice',
-      tag: [
-            "咖啡",
-            "午茶",
-            "旅行"
-      ],
-      coverPhoto: []
-    }];
-    // create product gm
-    let createdProductGm = await db.ProductGm.bulkCreate(newProductGm);
-
-
-    var fruitProducts = [{
-      name: '好物三選1',
-      description: '好東西，買買買',
-      stockQuantity: 100,
-      price: 500,
-      ProductGmId: 1,
-      size: 'super-big',
-      service: ["express","store","package"],
-      country: 'Taiwan',
-      madeby: 'Peter Chou',
-      color: 5,
-      productNumber: '1-DDT-2-G',
-      spec: '鋁'
-    },{
-      name: '好物三選2',
-      description: '好東西，買買買',
-      stockQuantity: 100,
-      price: 625,
-      ProductGmId: 2,
-      size: 'super-small',
-      service: ["package"],
-      country: 'U.S.A',
-      madeby: 'Tony Stack',
-      color: 4,
-      productNumber: '2-DDE-2-G',
-      spec: '汎合金'
-    },{
-      name: '好物三選3',
-      description: '好東西，買買買',
-      stockQuantity: 100,
-      price: 750,
-      ProductGmId: 2,
-      size: 'super-big',
-      service: ["store"],
-      country: 'Japan',
-      madeby: 'doraemon',
-      color: 2,
-      productNumber: '1-ABC-2-G',
-      spec: '塑膠'
-    }];
-    let createdProducts =  await db.Product.bulkCreate(fruitProducts);
-
-    var newProduct = {
-      name: '超值精選組合',
-      description: '精選組合 - 重金包裝',
-      stockQuantity: 10,
-      price: 100,
-      image: 'http://localhost:1337/images/product/1.jpg',
-      isPublish: true,
-      comment: '限量只有 10 個',
-      ProductGmId: 2,
-      size: 'normal',
-      service: ["express"],
-      country: 'U.K',
-      madeby: 'unknow',
-      color: 3,
-      productNumber: '1-GOLD-2-G',
-      spec: 'super-metal'
-    };
-    var createdProduct = await db.Product.create(newProduct);
-
-    var newOrder = {
-      serialNumber: '0000000',
-      paymentTotalAmount: 1234.567,
-      quantity: 10,
-      orderId: '1111',
-      UserId: createNewBuyer.id,
-      ProductId: createdProduct.id,
-      size: '正常尺寸',
-      service: ["express"],
-      country: '克里普頓星',
-      madeby: '超人套裝批發製作 Corp.',
-      color: 2,
-      productNumber: '1-alien-9-Z',
-      description: '凱·艾爾的超級披風（紅）',
-      spec: '克利普頓絲'
-    };
-    var createdOrder = await db.Order.create(newOrder);
-
-    var shipment = {
-      username: '收件者',
-      mobile: '0922-222-222',
-      taxId: '123456789',
-      email: 'receiver@gmail.com',
-      address: '收件者的家',
-      OrderId: createdOrder.id
-    }
-    var createShipment = await db.Shipment.create(shipment);
-
-    var orderItems ={
-      name: '好物三選1',
-      description: '好東西，買買買',
-      quantity: 4,
-      price: 500,
-      OrderId: createdOrder.id,
-      ProductId: createdProduct.id
-    }
-    var createOrderItems = await db.OrderItem.create(orderItems);
 
     var brandExample = [{
       name: '好棒棒品牌',
@@ -307,8 +183,8 @@ module.exports = {
       }));
     }
 
-    let createdProductGmComplete;
-    let productGmA, productGmB, dptA, dptB, dptSubA, dptSubB;
+    let createdProductGmComplete, createdProductGmGood;
+    let dptA, dptB, dptSubA, dptSubB, noneNameProduct;
 
 
     dptA = await db.Dpt.create({
@@ -340,9 +216,10 @@ module.exports = {
 
     createdProductGmComplete = await db.ProductGm.create({
       brandId: 1,
-      explain: 'req.body.explain',
-      usage: 'req.body.usage',
-      notice: 'req.body.notice',
+      name: "好東西商品",
+      explain: '好東西就是要買，買買買',
+      usage: '請安心服用',
+      notice: '18 歲以下請勿使用',
       depId: dptA.id,
       depSubId: dptSubA.id
     });
@@ -350,22 +227,51 @@ module.exports = {
     await createdProductGmComplete.setDpts([dptA]);
     await createdProductGmComplete.setDptSubs([dptSubA]);
 
+    createdProductGmGood = await db.ProductGm.create({
+      brandId: 1,
+      name: "威力棒棒",
+      explain: '好棒棒，好棒棒',
+      usage: '大口吸，潮爽的',
+      notice: '18 歲以下請勿使用',
+      depId: dptA.id,
+      depSubId: dptSubA.id
+    });
 
-    createdProduct = await db.Product.create({
-      description: '11',
-      name: '111',
+    await createdProductGmGood.setDpts([dptA]);
+    await createdProductGmGood.setDptSubs([dptSubA]);
+
+
+    let createdProduct = await db.Product.create({
+      name: '超值組',
+      description: '讚讚讚',
       stockQuantity: '100',
-      isPublish: 'false',
-      price: 0,
-      ProductGmId: createdProductGmComplete.id,
+      isPublish: 'true',
+      price: 999,
       size: 'normal',
       service: ["express"],
       country: 'U.K',
-      madeby: 'unknow',
+      madeby: 'TW',
       color: 3,
       productNumber: '1-USA-2-G',
       spec: 'super-metal'
     });
+
+    await createdProductGmComplete.setProducts(createdProduct);
+
+    noneNameProduct = await db.Product.create({
+      stockQuantity: '999',
+      isPublish: 'true',
+      price: 999,
+      size: 'normal',
+      service: ["express"],
+      country: 'U.K',
+      madeby: 'TW',
+      color: 3,
+      productNumber: '2-USA-3-G',
+      spec: 'super-metal'
+    });
+
+    await createdProductGmGood.setProducts(noneNameProduct);
 
     // create tag
     let tags = ["男人", "女人", "兒童", "情人", "學生", "寵物", "旅行", "閱讀", "咖啡", "午茶", "派對", "時尚", "印花", "夏日", "冬季", "聖誕", "森林", "動物", "花園", "浪漫", "可愛", "趣味", "復古", "環保", "工業", "簡約"];
@@ -477,24 +383,31 @@ module.exports = {
       var  createBonusPoints = await db.BonusPoint.create(bonuspoint);
     }
 
+    // selectionActive
     let images = [
       {
-        link: 'http://fakeimg.pl/1100x160'
+        path: 'http://fakeimg.pl/1100x160',
+        url: 'https://github.com'
       },{
-        link: 'http://fakeimg.pl/1100x350'
+        path: 'http://fakeimg.pl/1100x350',
+        url: 'https://google.com'
       },{
-        link: 'http://fakeimg.pl/545x350'
+        path: 'http://fakeimg.pl/545x350',
+        url: 'https://yahoo.com'
       },{
-        link: 'http://fakeimg.pl/545x350'
+        path: 'http://fakeimg.pl/545x350',
+        url: ''
       },{
-        link: 'http://fakeimg.pl/360x240'
+        path: 'http://fakeimg.pl/360x240',
+        url: ''
       },{
-        link: 'http://fakeimg.pl/360x240'
+        path: 'http://fakeimg.pl/360x240',
+        url: ''
       },{
-        link: 'http://fakeimg.pl/360x240'
+        path: 'http://fakeimg.pl/360x240',
+        url: ''
       }
     ]
-
     let createdImages = await* images.map((image) => db.Image.create(image));
 
     let selectionActives = [
@@ -508,7 +421,6 @@ module.exports = {
         type: 'three'
       }
     ]
-
     let createdSelectionActive = await* selectionActives.map((selectionActive) =>
       db.SelectionActive.create(selectionActive)
     );
@@ -517,6 +429,7 @@ module.exports = {
     await createdSelectionActive[1].setImages([createdImages[1]]);
     await createdSelectionActive[2].setImages([createdImages[2], createdImages[3]]);
     await createdSelectionActive[3].setImages([createdImages[4], createdImages[5], createdImages[6]]);
+    // end selectionActive
 
     // promotions
     var promotion1 = {
