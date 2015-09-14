@@ -54,36 +54,45 @@ describe('SliderActivities Spec', function() {
         link: '活動網址'
       })
       .end((err,res) => {
-        // console.log('-----------------------');
-        // console.log('* Create a new SliderActivities for API')
-        // console.log('-----------------------');
-        //console.log(res.body);
 
-        res.statusCode.should.be.equal(200);
-            
+        res.statusCode.should.be.equal(200);    
         done(err);
 
     });
   });
 
 
-  // it('Show an exist SliderActivities', function(done) {
-  // });
+  it('Update an exist SliderActivities API', function(done) {
 
-  // it('Update an exist SliderActivities', function(done) {
-  // });
+    request(sails.hooks.http.app)
+    .post('/api/slider/update/1')
+    .set('cookie', cookie)
+    .send({
+      cover: '1http://cover.jpg',
+      title: '1活動標題',
+      description: '1文案位置',
+      location: '1123',
+      color: 1123,
+      link: '1活動網址'
+    })
+    .end((err,res) => {
+
+
+      res.statusCode.should.be.equal(200);          
+      done(err);
+
+    });
+  });
 
   it('List the all SliderActivities', function(done) {
     request(sails.hooks.http.app)
     .get('/admin/slider')
     .set('cookie', cookie)
     .end(function(err, res) {
-      // console.log('-----------------------');
-      // console.log('* Create a new SliderActivities')
-      // console.log('-----------------------');
 
       res.statusCode.should.be.equal(200);
       return done();
+
     });
   });
 
@@ -92,13 +101,8 @@ describe('SliderActivities Spec', function() {
       .get('/api/slider/list')
       .set('cookie', cookie)
       .end((err,res) => {
-        // console.log('-----------------------');
-        // console.log('* Create a new SliderActivities for API')
-        // console.log('-----------------------');
-        //console.log(res.body);
 
-        res.statusCode.should.be.equal(200);
-            
+        res.statusCode.should.be.equal(200);            
         done(err);
 
     });

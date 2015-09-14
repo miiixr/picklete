@@ -51,11 +51,11 @@ module.exports.routes = {
   'get /admin/exclusive' : view: 'admin/exclusive'
   'get /admin/index-theme' : view: 'admin/themeActivities'
 
-  'get /admin/slider/create' : 'SliderActivitiesController.create'
-  'post /admin/slider/create' : 'SliderActivitiesController.create'
-  # 'get /admin/slider/update' : 'SliderActivitiesController.update'
-  # 'post /admin/slider/update' : 'SliderActivitiesController.update'
+  'get /admin/slider/create' : view: 'admin/SliderActivitiesDetail'
+  'get /admin/slider/update' : view: 'admin/SliderActivitiesDetail'
   'get /admin/slider' : 'SliderActivitiesController.list'
+  'post /admin/slider/create' : 'SliderActivitiesController.create'
+  
 
 
   'get /admin/department' : 'DptController.list'
@@ -311,6 +311,15 @@ module.exports.routes = {
   'get /api/slider/list': {
     controller: "SliderActivitiesController",
     action: "listSlider",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+
+  'post /api/slider/update/:id': {
+    controller: "SliderActivitiesController",
+    action: "updateSlider",
     cors: {
      origin: "http://localhost:1337, http://localhost:8080",
      credentials: false

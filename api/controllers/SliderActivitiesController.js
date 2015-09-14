@@ -45,9 +45,23 @@ let SliderActivitiesController = {
     }
   },
 
+
+  updateSlider: async (req, res) => {
   	
-  // update: async (req, res) => {
-  // }
+  	let id = req.params.id;
+    let updateSlider = await db.Slider.findOne({ where: {id: id} });
+    
+		updateSlider.cover = req.body['cover'];
+		updateSlider.title = req.body['title'];
+		updateSlider.description = req.body['description'];
+		updateSlider.location = req.body['location'];
+		updateSlider.color = req.body['color'];
+		updateSlider.link = req.body['link'];
+
+    let updatedSlider = await updateSlider.save();
+		return res.ok(updatedSlider)
+
+  },
 
   list: async (req, res) => {
 
@@ -61,7 +75,6 @@ let SliderActivitiesController = {
 
     let listSliders = await db.Slider.findAll();
 		return res.ok(listSliders);
-  
   }
 
 
