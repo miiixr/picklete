@@ -30,7 +30,7 @@ block body
                 .col-xs-12
                   .fileinput.fileinput-new(data-provides='fileinput')
                     .fileinput-new
-                      img.img-full(src = activity.Images[0].link)
+                      img.img-full(src = activity.Images[0].path)
                     // /fileinput-new
                     .fileinput-preview.fileinput-exists
                     // /fileinput-preview
@@ -47,7 +47,7 @@ block body
               // /row
               .form-group
                 .col-sm-9.col-md-9
-                  input.form-control(type='text', placeholder='http://連結網址', value=activity.Images[0].link?activity.Images[0].link:'')
+                  input.form-control(type='text', placeholder='http://連結網址', value=activity.Images[0].url?activity.Images[0].url:'')
                 // /col-sm-9
                 .col-sm-3.col-md-3
                   .checkbox
@@ -73,7 +73,7 @@ block body
                 .col-xs-12
                   .fileinput.fileinput-new(data-provides='fileinput')
                     .fileinput-new
-                      img.img-full(src = activity.Images[0].link)
+                      img.img-full(src = activity.Images[0].path)
                     // /fileinput-new
                     .fileinput-preview.fileinput-exists
                     // /fileinput-preview
@@ -91,7 +91,7 @@ block body
               // /row
               .form-group
                 .col-sm-9.col-md-9
-                  input.form-control(type='text', placeholder='http://連結網址', value=activity.Images[0].link?activity.Images[0].link:'')
+                  input.form-control(type='text', placeholder='http://連結網址', value=activity.Images[0].url?activity.Images[0].url:'')
                 // /col-sm-9
                 .col-sm-3.col-md-3
                   .checkbox
@@ -118,7 +118,7 @@ block body
                   .col-xs-6
                     .fileinput.fileinput-new.m-bottom-4(data-provides='fileinput')
                       .fileinput-new
-                        img.img-full(src = activity.Images[i].link)
+                        img.img-full(src = activity.Images[i].path)
                       // /fileinput-new
                       .fileinput-preview.fileinput-exists
                       // /fileinput-preview
@@ -133,7 +133,7 @@ block body
                     // /fileinput
                     .form-group.m-left-0.m-right-0
                       .col-sm-9.col-md-9
-                        input.form-control(type='text', placeholder='http://連結網址', value=activity.Images[i].link?activity.Images[i].link:'')
+                        input.form-control(type='text', placeholder='http://連結網址', value=activity.Images[i].url?activity.Images[i].url:'')
                       // /col-sm-9
                       .col-sm-3.col-md-3
                         .checkbox
@@ -162,7 +162,7 @@ block body
                   .col-xs-4
                     .fileinput.fileinput-new.m-bottom-4(data-provides='fileinput')
                       .fileinput-new
-                        img.img-full(src = activity.Images[i].link)
+                        img.img-full(src = activity.Images[i].path)
                       // /fileinput-new
                       .fileinput-preview.fileinput-exists
                       // /fileinput-preview
@@ -177,7 +177,7 @@ block body
                     // /fileinput
                     .form-group.m-left-0.m-right-0
                       .col-sm-12
-                        input.form-control(type='text', placeholder='http://連結網址', value=activity.Images[i].link?activity.Images[i].link:'')
+                        input.form-control(type='text', placeholder='http://連結網址', value=activity.Images[i].url?activity.Images[i].url:'')
                       // /col-sm-12
                       .col-sm-12
                         .checkbox
