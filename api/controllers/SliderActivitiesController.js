@@ -26,16 +26,46 @@ let SliderActivitiesController = {
     } catch (e) {
        return res.serverError(e);
     }
-  }
+  },
 
-  show: async (req, res) => {
-  }
+  createSlider: async (req, res) => {
+  	console.log('-----------------------');
+    console.log('* hello world controller API');
+  	console.log('-----------------------');
 
-  update: async (req, res) => {
-  }
+  	var params = req.body;
 
-  list: async (req, res) => {
-  }
+    let slider = {
+      cover: params['cover'],
+      title: params['title'],
+      description: params['description'] || '',
+      location: params['location'],
+      color: params['color'],
+      link: params['link'] || ''
+    };
+
+    try {
+       let createSlider = await db.Slider.create(slider);
+       return res.ok(createSlider);
+    } catch (e) {
+      let msg = e.message;
+      return res.serverError({msg});
+    }
+  },
+
+  	
+
+
+
+
+  // show: async (req, res) => {
+  // }
+
+  // update: async (req, res) => {
+  // }
+
+  // list: async (req, res) => {
+  // }
 
 };
 module.exports = SliderActivitiesController;

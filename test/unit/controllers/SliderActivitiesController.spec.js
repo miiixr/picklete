@@ -41,13 +41,40 @@ describe('SliderActivities Spec', function() {
     });
   });
 
-  it('Show an exist SliderActivities', function(done) {
+  it('Create a new SliderActivities for API', (done) => {
+    request(sails.hooks.http.app)
+      .post('/api/slider/create/')
+      .set('cookie', cookie)
+      .send({
+        cover: 'http://cover.jpg',
+        title: '活動標題',
+        description: '文案位置',
+        location: '123',
+        color: 123,
+        link: '活動網址'
+      })
+      .end((err,res) => {
+
+        console.log('-----------------------');
+        console.log('* hello world spec API')
+        console.log('-----------------------');
+        console.log(res.body);
+
+        res.statusCode.should.be.equal(200);
+            
+        done(err);
+
+    });
   });
 
-  it('Update an exist SliderActivities', function(done) {
-  });
 
-  it('List the all SliderActivities', function(done) {
-  });
+  // it('Show an exist SliderActivities', function(done) {
+  // });
+
+  // it('Update an exist SliderActivities', function(done) {
+  // });
+
+  // it('List the all SliderActivities', function(done) {
+  // });
 
 });
