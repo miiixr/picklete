@@ -158,7 +158,7 @@ describe("about Product", () => {
     request(sails.hooks.http.app)
     .post('/admin/goods/create')
     .set('cookie', cookie)
-    .field('brandType', 'origin') // origin, custom, 
+    .field('brandType', 'origin') // origin, custom,
     .field('brandId', '1')
     .field('dptId[]', JSON.stringify([ '1', '2', '3' ]))
     .field('dptSubId[]', JSON.stringify([ '1', '4', '8' ]))
@@ -193,7 +193,7 @@ describe("about Product", () => {
     request(sails.hooks.http.app)
     .post('/admin/goods/create')
     .set('cookie', cookie)
-    .field('brandType', 'custom') // origin, custom, 
+    .field('brandType', 'custom') // origin, custom,
     .field('customBrand', 'otherBrand')
     .field('dptId[]', JSON.stringify([ '1', '2', '3' ]))
     .field('dptSubId[]', JSON.stringify([ '1', '4', '8' ]))
@@ -225,7 +225,7 @@ describe("about Product", () => {
     });
   });
 
-  it.only('create a product for multiple type, test about - ProductController.createUpdate', (done) => {
+  it('create a product for multiple type, test about - ProductController.createUpdate', (done) => {
 
     request(sails.hooks.http.app)
     .post('/admin/goods/create')
@@ -245,7 +245,7 @@ describe("about Product", () => {
     .field('madeby', 'TW')
     .field('spec', 'red')
     .field('size', '100*20')
-    .field('service', 'express') 
+    .field('service', 'express')
     .field('service', 'store')
     .field('service', 'package')
     .field('comment', 'keker')
@@ -353,7 +353,7 @@ describe("about Product", () => {
   //   .attach('good[0][photos][]', banner)
   //   .attach('coverPhoto[]', photos1)
   //   .attach('coverPhoto[]', photos2)
-    
+
   //   // .attach('photos[]', photos1)
   //   // .attach('photos[]', photos2)
   //   .end(function(err, res) {
