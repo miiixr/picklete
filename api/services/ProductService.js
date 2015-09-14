@@ -44,7 +44,7 @@ module.exports = {
       await createdProductGm.setDptSubs(updateProduct.dptSubId);
 
       // if(updateProduct.dptSubId != undefined && updateProduct.dptSubId != '')
-        
+
 
     } catch (e) {
       console.error(e);
@@ -59,7 +59,7 @@ module.exports = {
     for (var i = 0 ; i < goods.length ; i++) {
       var good = goods[i];
       var productNumber = good.productNumber;
-      
+
       if ( ! productNumber || productNumber.length < 1) {
         continue;
       }
@@ -176,7 +176,7 @@ module.exports = {
       productGm.notice = updateProduct.notice;
       productGm.tag = updateProduct.tag;
       productGm.coverPhoto = updateProduct.coverPhoto;
-      
+
 
       await productGm.save();
 
@@ -198,7 +198,7 @@ module.exports = {
       where: {id: productGmId},
       include: [
         {model: db.Product},
-        {model: db.Dpt}, 
+        {model: db.Dpt},
         {model: db.DptSub}
       ]
     });
@@ -347,7 +347,7 @@ module.exports = {
     // format datetime
     products = products.map(ProductService.withImage);
     for (let product of products) {
-      product.createdAt = moment(product.createdAt).format("YYYY-MM-DD");
+      product.createdAt = moment(product.createdAt).format("YYYY/MM/DD");
     }
     return products;
   }

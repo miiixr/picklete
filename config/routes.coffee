@@ -51,6 +51,19 @@ module.exports.routes = {
   'get /admin/exclusive' : 'SelectionActiveController.list'
   'get /admin/index-theme' : view: 'admin/themeActivities'
 
+  
+  'get /index' : view: 'main/index'
+  'get /member/fav' : view: 'main/member-fav'
+  'get /member/purchase' : view: 'main/member-purchase'
+  'get /member/setting' : view: 'main/member-setting'
+  'get /shop/product' : view: 'main/shop-product'
+  'get /user/signup' : view: 'main/signup'
+  'get /shop/products' : 'ShopController.list'
+  'get /brands' : view: 'main/brands'
+  'get /user/cart' : view: 'main/cart'
+  'get /user/cart-step-2' : view: 'main/cart-step-2'
+  'get /user/cart-done' : view: 'main/cart-done'
+
 
   'get /admin/department' : 'DptController.list'
   'post /admin/department/update': 'DptController.update'
