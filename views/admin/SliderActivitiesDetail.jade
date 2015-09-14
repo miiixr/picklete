@@ -3,7 +3,7 @@ extends ../_layout_auth
 block body
   h2.m-bottom-6 燈箱活動設定
   .well.control-well.p-30.m-bottom-8
-    form.form-horizontal
+    form.form-horizontal(name='Form', action='/admin/slider/create', method='POST')
       .form-group
         label.col-sm-3.col-md-2.control-label 活動主圖
         .col-sm-9.col-md-10
@@ -32,57 +32,57 @@ block body
       .form-group
         label.col-sm-3.col-md-2.control-label 活動標題
         .col-sm-9.col-md-10
-          input.form-control(type='text')
+          input.form-control(type='text', name='title')
         // /col-sm-10
       // /form-group
       .form-group
         label.col-sm-3.col-md-2.control-label 活動文案
         .col-sm-9.col-md-10
-          textarea.form-control(rows='3')
+          textarea.form-control(rows='3', name='description')
         // /col-sm-9
       // /form-group
       .form-group
         label.col-sm-3.col-md-2.control-label 文案位置
         .col-sm-9.col-md-10
           label.radio-inline
-            input#inlineRadio1(type='radio', name='inlineRadioOptions', value='option1', checked='')
+            input#inlineRadio1(type='radio', name='location', value='option1', checked='')
             |  左上
           label.radio-inline
-            input#inlineRadio2(type='radio', name='inlineRadioOptions', value='option2')
+            input#inlineRadio2(type='radio', name='location', value='option2')
             |  中上
           label.radio-inline
-            input#inlineRadio3(type='radio', name='inlineRadioOptions', value='option3')
+            input#inlineRadio3(type='radio', name='location', value='option3')
             |  右上
           label.radio-inline
-            input#inlineRadio4(type='radio', name='inlineRadioOptions', value='option4')
+            input#inlineRadio4(type='radio', name='location', value='option4')
             |  左中
           label.radio-inline
-            input#inlineRadio5(type='radio', name='inlineRadioOptions', value='option5')
+            input#inlineRadio5(type='radio', name='location', value='option5')
             |  中中
           label.radio-inline
-            input#inlineRadio6(type='radio', name='inlineRadioOptions', value='option6')
+            input#inlineRadio6(type='radio', name='location', value='option6')
             |  右中
           label.radio-inline
-            input#inlineRadio7(type='radio', name='inlineRadioOptions', value='option7')
+            input#inlineRadio7(type='radio', name='location', value='option7')
             |  左下
           label.radio-inline
-            input#inlineRadio8(type='radio', name='inlineRadioOptions', value='option8')
+            input#inlineRadio8(type='radio', name='location', value='option8')
             |  中下
           label.radio-inline
-            input#inlineRadio9(type='radio', name='inlineRadioOptions', value='option9')
+            input#inlineRadio9(type='radio', name='location', value='option9')
             |  右下
         // /col-sm-9
       // /form-group
       .form-group
         label.col-sm-3.col-md-2.control-label 文案顏色
         .col-sm-9.col-md-10
-          input#myColor.form-control.width-10(type='color', value='#333333')
+          input#myColor.form-control.width-10(type='color', value='#333333' name='color')
         // /col-sm-9
       // /form-group
       .form-group
         label.col-sm-3.col-md-2.control-label 活動網址
         .col-sm-6.col-md-7
-          input.form-control(type='text', placeholder='http://')
+          input.form-control(type='text', placeholder='http://', name='link')
         // /col-sm-9
         .col-sm-3.col-md-3
           .checkbox
@@ -92,6 +92,6 @@ block body
       // /form-group
       .m-top-6.text-right
         a.btn.btn-link.delete-link.btn-lg(href='#', data-toggle='modal', data-target='#modal-delete') 刪除
-        a.btn.btn-green.btn-lg(href='index-slider') 確定
+        input.btn.btn-green.btn-lg(type='submit' value='確定')
       // /text-right
   // /well

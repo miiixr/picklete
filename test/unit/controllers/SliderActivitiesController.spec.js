@@ -61,7 +61,6 @@ describe('SliderActivities Spec', function() {
     });
   });
 
-
   it('Update an exist SliderActivities API', function(done) {
 
     request(sails.hooks.http.app)
@@ -86,7 +85,7 @@ describe('SliderActivities Spec', function() {
 
   it('List the all SliderActivities', function(done) {
     request(sails.hooks.http.app)
-    .get('/admin/slider')
+    .get('/admin/index-slider')
     .set('cookie', cookie)
     .end(function(err, res) {
 
@@ -96,16 +95,6 @@ describe('SliderActivities Spec', function() {
     });
   });
 
-  it('List the all SliderActivities for API', (done) => {
-    request(sails.hooks.http.app)
-      .get('/api/slider/list')
-      .set('cookie', cookie)
-      .end((err,res) => {
 
-        res.statusCode.should.be.equal(200);            
-        done(err);
-
-    });
-  });  
 
 });

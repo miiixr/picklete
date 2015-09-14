@@ -51,9 +51,8 @@ module.exports.routes = {
   'get /admin/exclusive' : view: 'admin/exclusive'
   'get /admin/index-theme' : view: 'admin/themeActivities'
 
-  'get /admin/slider/create' : view: 'admin/SliderActivitiesDetail'
-  'get /admin/slider/update' : view: 'admin/SliderActivitiesDetail'
-  'get /admin/slider' : 'SliderActivitiesController.list'
+  'get /admin/index-slider' : 'SliderActivitiesController.list'
+  'get /admin/index-slider-detail': view: 'admin/SliderActivitiesDetail'
   'post /admin/slider/create' : 'SliderActivitiesController.create'
   
 

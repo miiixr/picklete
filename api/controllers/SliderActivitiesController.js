@@ -3,7 +3,10 @@ let SliderActivitiesController = {
   create: async (req, res) => {
   	// console.log('Todo: write data into database');
     var params = req.body;
-    // console.log(params);
+    console.log('------------');
+    console.log(params);
+    console.log('------------');
+
 
     let slider = {
       cover: params['cover'],
@@ -18,7 +21,7 @@ let SliderActivitiesController = {
 
     try {
        await db.Slider.create(slider);
-       return res.redirect("/");
+       return res.redirect("/admin/index-slider");
     } catch (e) {
        return res.serverError(e);
     }
