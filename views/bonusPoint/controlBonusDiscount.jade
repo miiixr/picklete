@@ -20,9 +20,11 @@ block body
     .col-sm-6.col-md-4
       form.form-horizontal(name="searchBonus", action="bonus", method="get")
         .input-group
-          input.form-control(type='text',name="keyword", placeholder='Search for...',value = query.keyword)
+          input#keyword.form-control(type='text',name="keyword", placeholder='Search for...',value = query.keyword)
           span.input-group-btn
             input(type='hidden', name='page' value = query.page)
+            button.btn.btn-default.p-left-2.p-right-2(type='button' onClick='$("#keyword").val("");$("form[name=\'searchBonus\']").submit()')
+              span.glyphicon.glyphicon-remove
             button.btn.btn-default.p-left-2.p-right-2(type='button' onClick='$("form[name=\'searchBonus\']").submit()')
               span.glyphicon.glyphicon-search
       // /input-group
