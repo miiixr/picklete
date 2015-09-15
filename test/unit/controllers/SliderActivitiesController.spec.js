@@ -4,17 +4,19 @@ describe('SliderActivities Spec', function() {
 
   var cookie;
 
-  before(async (done) => {
-
-    request(sails.hooks.http.app)
-    .post('/auth/local')
-    .send({ identifier: 'admin', password: 'admin' })
-    .end(function (err, res) {
-      cookie = res.headers['set-cookie'];
-      return done();
+  import sinon from 'sinon';
+  before( async (done) => {
+    let admin = db.User.find ({
+      where: {username: 'admin'},
+      include: [db.Role]
     });
-    // done();
-
+    sinon.stub(UserService, 'getLoginState', (req) => {
+      return true;
+    });
+    sinon.stub(UserService, 'getLoginUser', (req) => {
+      return admin;
+    });
+    return done();
   });
 
   it('Create a new SliderActivities', function(done) {
@@ -105,7 +107,7 @@ describe('SliderActivities Spec', function() {
   it('Delete an exist SliderActivities', function(done) {
 
     request(sails.hooks.http.app)
-    .post('/admin/slider/delete/1')
+    .post('/admin/slider/delete')
     .field('id', 1)
     .set('cookie', cookie)
     .end(function(err, res) {
@@ -153,5 +155,10 @@ describe('SliderActivities Spec', function() {
     });
   });
 
+  after( (done) => {
+    UserService.getLoginState.restore();
+    UserService.getLoginUser.restore();
+    done();
+  });
 
 });
