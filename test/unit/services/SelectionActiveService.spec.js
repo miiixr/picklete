@@ -11,8 +11,8 @@ describe("SelectionActiveService", () => {
 
       // console.log('=== result ==>',result);
       // console.log('=== selectionActives.length ==>',selectionActives.length);
-      // console.log('=== selectionActives[0].Images.link ==>',selectionActives[0].Images[0].link);
-      // console.log('=== selectionActives[0].Images[0] ==>',selectionActives[0].Images[0].link);
+      // console.log('=== selectionActives[0].Images.url ==>',selectionActives[0].Images[0].url);
+      // console.log('=== selectionActives[0].Images[0] ==>',selectionActives[0].Images[0].url);
 
       selectionActives.length.should.be.equal(4);
       selectionActives[0].type.should.be.equal("oneLong");
@@ -22,7 +22,7 @@ describe("SelectionActiveService", () => {
         'createdAt',
         'updatedAt',
         'id',
-        'link',
+        'url',
         'path',
         'openWindow');
 
@@ -51,35 +51,35 @@ describe("SelectionActiveService", () => {
         {
           type: 'oneLong',
           Images: [{
-            link: 'http://fakeimg.pl/1100x160',
-            path: ''
+            url: 'http://github.com',
+            path: 'http://fakeimg.pl/1100x160'
           }]
         },{
           type: 'oneBig',
           Images: [{
-            link: 'http://fakeimg.pl/1100x350',
-            path: ''
+            url: 'http://github.com',
+            path: 'http://fakeimg.pl/1100x350'
           }]
         },{
           type: 'two',
           Images: [{
-            link: 'http://fakeimg.pl/545x350',
-            path: ''
+            url: 'http://github.com',
+            path: 'http://fakeimg.pl/545x350'
           },{
-            link: 'http://fakeimg.pl/545x350',
-            path: ''
+            url: 'http://github.com',
+            path: 'http://fakeimg.pl/545x350'
           }]
         },{
           type: 'three',
           Images: [{
-            link: 'http://fakeimg.pl/360x240',
-            path: ''
+            url: 'http://github.com',
+            path: 'http://fakeimg.pl/360x240'
           },{
-            link: 'http://fakeimg.pl/360x240',
-            path: ''
+            url: 'http://github.com',
+            path: 'http://fakeimg.pl/360x240'
           },{
-            link: 'http://fakeimg.pl/360x240',
-            path: ''
+            url: 'http://github.com',
+            path: 'http://fakeimg.pl/360x240'
           }]
         }
       ];

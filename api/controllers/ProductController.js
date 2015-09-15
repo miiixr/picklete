@@ -150,12 +150,12 @@ let ProductController = {
   },
 
   doCreate: async (req, res) => {
-    let newProduct = req.body;
+    // let newProduct = req.body;
     // console.log('----------');
     // console.log(newProduct);
     // console.log('----------');
     try {
-      await ProductService.createProduct(req);
+      await ProductService.create(req.body);
     } catch (error) {
       console.error(error.stack);
       let msg = error.message;
