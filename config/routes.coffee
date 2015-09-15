@@ -49,7 +49,7 @@ module.exports.routes = {
   'get /admin/brands/update' : 'BrandController.update'
   'post /admin/brands/update' : 'BrandController.update'
   'get /admin/exclusive' : 'SelectionActiveController.list'
-  'post /admin/exclusive' : 'SelectionActiveController.update'  
+  'post /admin/exclusive' : 'SelectionActiveController.update'
   'get /admin/index-theme' : view: 'admin/themeActivities'
 
 
@@ -127,6 +127,8 @@ module.exports.routes = {
   'get /api/order/pay': 'OrderController.pay'
 
   "get /admin/login": view: "admin/login"
+
+  'get /api/search/:keywords': 'SearchController.products'
 
   ###*
     ProductController
