@@ -49,69 +49,7 @@ block body
                 span.glyphicon.glyphicon-search
           // /input-group
     // /navmenu-fixed-right
-    //
-      modal-login
-      ==================================================
-    #modal-login.modal.fade
-      .modal-dialog.modal-sm(role='document')
-        .modal-content
-          .modal-header.p-30
-            button.close(type='button', data-dismiss='modal', aria-label='Close')
-              span(aria-hidden='true') ×
-            h1.modal-title.text-center 登入
-          // /modal-header
-          .modal-body.text-center.p-30
-            form.m-bottom-4
-              .form-group
-                input.form-control(type='email', placeholder='Email')
-              // /form-group
-              .form-group
-                input.form-control(type='password', placeholder='Password')
-              // /form-group
-              button.btn.btn-black.border-radius-circle.btn-block.m-bottom-2(type='button', data-toggle='modal', data-target='#modal-login-feedback', data-dismiss='modal') 登入會員
-              button.btn.btn-fb.border-radius-circle.btn-block(type='button', data-dismiss='modal') FACEBOOK 登入
-            a(href='#', data-toggle='modal', data-target='#modal-password', data-dismiss='modal') 忘記密碼
-            hr.m-top-4.m-bottom-4
-            h5.m-bottom-4 還沒有帳號？
-            a.btn.btn-line.border-radius-circle.btn-block(href='signup.html') 申請會員
-          // /modal-body
-        // /modal-content
-      // /modal-dialog
-    // /modal
-    //
-      modal-login-feedback
-      ==================================================
-    #modal-login-feedback.modal.fade
-      .modal-dialog.modal-sm(role='document')
-        .modal-content
-          .modal-header.p-30
-            button.close(type='button', data-dismiss='modal', aria-label='Close')
-              span(aria-hidden='true') ×
-            h1.modal-title.text-center 登入
-          // /modal-header
-          .modal-body.text-center.p-30
-            form.m-bottom-4
-              .form-group.has-success.has-feedback
-                input.form-control(type='email', placeholder='Email')
-                span.glyphicon.glyphicon-ok.form-control-feedback(aria-hidden='true')
-              // /form-group
-              .form-group.has-error.has-feedback
-                input#exampleInputPassword1.form-control(type='password', placeholder='Password')
-                span.glyphicon.glyphicon-remove.form-control-feedback(aria-hidden='true')
-              // /form-group
-              button.btn.btn-black.border-radius-circle.btn-block.m-bottom-2(type='submit', data-dismiss='modal') 登入會員
-              button.btn.btn-fb.border-radius-circle.btn-block(type='submit', data-dismiss='modal') FACEBOOK 登入
-            a(href='#', data-toggle='modal', data-target='#modal-password', data-dismiss='modal') 忘記密碼
-            hr.m-top-4.m-bottom-4
-            h5.m-bottom-4 還沒有帳號？
-            a.btn.btn-line.border-radius-circle.btn-block(href='signup.html') 申請會員
-          // /modal-body
-        // /modal-content
-      // /modal-dialog
-    // /modal
-    //
-      modal-password
-      ==================================================
+
     #modal-password.modal.fade
       .modal-dialog.modal-sm(role='document')
         .modal-content
@@ -181,21 +119,21 @@ block body
                     | 帳號
                     span.text-danger *
                   .col-sm-9
-                    input.form-control(type='email', name='email', placeholder='請填寫電子郵件信箱')
+                    input.form-control(type='email', name='email', placeholder='請填寫電子郵件信箱', required)
                 // /form-group
                 .form-group
                   label.col-sm-3.control-label
                     | 密碼
                     span.text-danger *
                   .col-sm-9
-                    input.form-control(type='password', name='password', placeholder='最少六位數字 + 英文')
+                    input.form-control(type='password', name='password', placeholder='最少六位數字 + 英文', required)
                 // /form-group
                 .form-group
                   label.col-sm-3.control-label
                     | 確認密碼
                     span.text-danger *
                   .col-sm-9
-                    input.form-control(type='password', name='passwordAgain', placeholder='請再次輸入密碼')
+                    input.form-control(type='password', name='passwordAgain', placeholder='請再次輸入密碼', required)
                 // /form-group
               // /form-horizontal
               h2 基本資料
@@ -206,13 +144,13 @@ block body
                     | 中文姓名
                     span.text-danger *
                   .col-sm-5
-                    input.form-control(type='text', name='username', placeholder='請填寫本名')
+                    input.form-control(type='text', name='fullName', placeholder='請填寫本名', required)
                   .col-sm-4
                     label.radio-inline
-                      input#inlineRadio1(type='radio', name='gender', value='Male')
+                      input#inlineRadio1(type='radio', name='gender', value='male')
                       |  先生
                     label.radio-inline
-                      input#inlineRadio2(type='radio', name='gender', value='Female')
+                      input#inlineRadio2(type='radio', name='gender', value='female')
                       |  小姐
                 // /form-group
                 .form-group
@@ -220,12 +158,12 @@ block body
                     | 手機號碼
                     span.text-danger *
                   .col-sm-9
-                    input.form-control(type='text', name='mobile', placeholder='請輸入正確號碼，以便出貨聯繫')
+                    input.form-control(type='text', name='mobile', placeholder='請輸入正確號碼，以便出貨聯繫', required)
                 // /form-group
                 .form-group
                   label.col-sm-3.control-label 生日
                   .col-sm-9
-                    select.form-control.width-auto.inline-block(name='yyyy')
+                    select.form-control.width-auto.inline-block(name='yyyy', required)
                       option(value='') 年
                       option(value='1986') 1986
                       option(value='2009') 2009
@@ -324,31 +262,31 @@ block body
                       option(value='1916') 1916
                     |  年　
                     select.form-control.width-auto.inline-block(name='mm')
-                      option(value='4') 4
-                      option(value='1') 1
-                      option(value='2') 2
-                      option(value='3') 3
-                      option(value='4') 4
-                      option(value='5') 5
-                      option(value='6') 6
-                      option(value='7') 7
-                      option(value='8') 8
-                      option(value='9') 9
+                      option(value='04') 4
+                      option(value='01') 1
+                      option(value='02') 2
+                      option(value='03') 3
+                      option(value='04') 4
+                      option(value='05') 5
+                      option(value='06') 6
+                      option(value='07') 7
+                      option(value='08') 8
+                      option(value='09') 9
                       option(value='10') 10
                       option(value='11') 11
                       option(value='12') 12
                     |  月　
-                    select.form-control.width-auto.inline-block(name='dd')
+                    select.form-control.width-auto.inline-block(name='dd', required)
                       option(value='26') 26
-                      option(value='1') 1
-                      option(value='2') 2
-                      option(value='3') 3
-                      option(value='4') 4
-                      option(value='5') 5
-                      option(value='6') 6
-                      option(value='7') 7
-                      option(value='8') 8
-                      option(value='9') 9
+                      option(value='01') 1
+                      option(value='02') 2
+                      option(value='03') 3
+                      option(value='04') 4
+                      option(value='05') 5
+                      option(value='06') 6
+                      option(value='07') 7
+                      option(value='08') 8
+                      option(value='09') 9
                       option(value='10') 10
                       option(value='11') 11
                       option(value='12') 12
@@ -378,19 +316,19 @@ block body
                     | 聯絡地址
                     span.text-danger *
                   .col-sm-9
-                    select(name='city').form-control.width-auto.inline-block
+                    select(name='city', required).form-control.width-auto.inline-block
                       option 台北市
                       option 2
                       option 3
                       option 4
                       option 5
-                    select(name='region').form-control.width-auto.inline-block
+                    select(name='region', required).form-control.width-auto.inline-block
                       option 大安區
                       option 2
                       option 3
                       option 4
                       option 5
-                    input.form-control.width-12.inline-block(type='text', name='address')
+                    input.form-control.width-12.inline-block(type='text', name='address', required)
                   .col-sm-9.col-sm-offset-3.m-top-3
                     input.form-control(type='text')
                 // /form-group

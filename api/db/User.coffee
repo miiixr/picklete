@@ -3,6 +3,7 @@ module.exports = (sequelize, DataTypes) ->
   User = sequelize.define('User', {
     username: DataTypes.STRING
     fullName: DataTypes.STRING
+    gender: DataTypes.ENUM('none', 'male', 'female')
     email: DataTypes.STRING
     mobile: DataTypes.STRING
     birthDate:
@@ -20,6 +21,9 @@ module.exports = (sequelize, DataTypes) ->
     lastUpdated:
       type: DataTypes.DATE
       defaultValue: DataTypes.NOW
+    privacyTermsAgree:
+      type: DataTypes.BOOLEAN
+      defaultValue: false
   }, classMethods: associate: (models) ->
     User.hasMany models.Passport
     User.belongsTo models.Role
