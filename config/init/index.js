@@ -496,7 +496,7 @@ module.exports = {
         ImageC1Id: createdImages[4].id,
         ImageC2Id: createdImages[5].id
       }]
-      db.TopicActive.bulkCreate(topicActives);
+      await db.TopicActive.bulkCreate(topicActives);
       // End TopicActive
 
       // promotions
