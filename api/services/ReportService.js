@@ -4,17 +4,17 @@ import fs from 'fs';
 
 module.exports = {
 
-  buildExcel: async (param) => {
+  buildExcel: async (data, startDate, endDate) => {
     try {
-      console.log(param);
       var excelData = {};
+      var filename = '';
+      if (startDate === endDate) {
+        filename = 'Report-' + startDate;
+      } else {
+        filename = 'Report-' + startDate + '-' + endDate;
+      }
+      let filePath = 'report/' + filename + '.xlsx';
 
-      excelData.data = param;
-      excelData.name = 'Report-' + moment().format('YYYY-MM').toString();
-      let filePath = 'report/' + excelData.name + '.xlsx';
-
-      var data = [];
-      data.push(excelData);
       var buffer = await xlsx.build(data);
       fs.writeFileSync(filePath, buffer);
       return filePath;

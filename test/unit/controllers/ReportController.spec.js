@@ -1,12 +1,44 @@
 var moment = require('moment');
 var sinon = require('sinon');
-describe("about Report", () => {
-
+describe('about Report', () => {
   before(async (done) => {
 
     sinon.stub(UserService, 'getLoginState', (req) => {
       return true;
     });
+
+    let newUser = {
+      username: 'testOrderUser',
+      email: 'smlsun@gmail.com',
+      password: 'testuser',
+    };
+    let createdUser = await db.User.create(newUser);
+
+    let newOrder = {
+      quantity: 10,
+      serialNumber: '11223344',
+      UserId: createdUser.id,
+    };
+    let testOrder = await db.Order.create(newOrder);
+
+    let productOne = {
+      name: '泡麵',
+      description: '就泡麵',
+      stockQuantity: 5,
+      price: 5,
+    };
+    let testProducts = await db.Product.create(productOne);
+
+    let orderItemOne = {
+      name: testProducts.name,
+      description: testProducts.description,
+      quantity: 10,
+      price: 10,
+      spec: testProducts.spec,
+      ProductId: testProducts.id,
+      OrderId: 1,
+    };
+    await db.OrderItem.create(orderItemOne);
 
     done();
   });
@@ -15,9 +47,11 @@ describe("about Report", () => {
     UserService.getLoginState.restore();
     done();
   });
-  it('build Excel', (done) => {
+
+  it('Report export to Excel', (done) => {
+
     let data = {
-      date: moment().format('YYYY-MM'),
+      date: moment().format('YYYY-MM').toString(),
     };
 
     request(sails.hooks.http.app).post('/report/export').send(data).end((err, res) => {
@@ -28,23 +62,6 @@ describe("about Report", () => {
       res.statusCode.should.equal(200);
       let result = res.body;
       console.log(result);
-      done(err);
-    });
-  });
-
-  it('Report export to Excel', (done) => {
-    let data = moment().format('YYYY/MM');
-    console.log(data);
-    request(sails.hooks.http.app).post('/report/export').send(data).end((err, res) => {
-      if (res.statusCode === 500) {
-        return done();
-      }
-      console.log("test=>", res);
-      res.statusCode.should.equal(200);
-      let result = res.body;
-      console.log(result);
-      (result instanceof Buffer).should.be.true;
-      // assert.equal(xlsData.toString('base64').substr(0, 12), fs.readFileSync(filename).toString('base64').substr(0, 12));
       done(err);
     });
   });

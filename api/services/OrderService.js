@@ -57,11 +57,14 @@ module.exports = {
 
   },
 
-  findAllByDateComplete: async (date) => {
-    console.log(date);
+  findAllByDateComplete: async (startDate, endDate) => {
+    console.log(startDate._d, endDate._d);
     let orders = await db.Order.findAll({
       where: {
-        updatedAt: date,
+        updatedAt: {
+          $gt: startDate._d,
+          $lt: endDate._d,
+        },
       },
       include: [
         {
@@ -73,7 +76,6 @@ module.exports = {
         }
       ]
     });
-
     return orders;
 
   },
