@@ -66,6 +66,7 @@ module.exports = {
     ];
 
     await db.Like.bulkCreate(like);
+    await createdAdmin.setLikes([1, 2, 3, 4, 5]);
 
     if(sails.config.initData === 'production' && production !== undefined)
       await production.createBasicData();

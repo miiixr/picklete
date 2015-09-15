@@ -104,7 +104,7 @@ exports.login = function(req, identifier, password, next) {
   isEmail = validator.isEmail(identifier);
   query = {
     where: {},
-    include: [db.Role]
+    include: [db.Role, db.Like]
   };
   if (isEmail) {
     query.where.email = identifier;

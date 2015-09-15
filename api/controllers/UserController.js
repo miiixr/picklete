@@ -10,11 +10,79 @@ let moment = require("moment");
 
 let UserController = {
   edit: async (req, res) => {
-    let user = UserService.getLoginUser(req);
+    let loginUser = UserService.getLoginUser(req);
+
+    let user = (await db.User.find({
+      where: {id: loginUser.id},
+      include: [db.Like]
+    })).toJSON();
+
+
+    let passport = await db.Passport.find({where: {UserId: user.id}});
+    user.password = passport.password;
+    user.passwordAgain = passport.password;
+
+
+    user.userLikes = user.Likes.map((like) => like.id+"");
+
     let likes = await db.Like.findAll();
-    res.view('main/member-setting', {
-      user
+    res.view({
+      user,
+      likes
     });
+  },
+  update: async (req, res) => {
+
+    try {
+      let loginUser = UserService.getLoginUser(req);
+      let updateUser = req.body;
+      let passport = await db.Passport.find({where: {UserId: loginUser.id}});
+
+      let user = await db.User.findById(loginUser.id);
+
+      if(updateUser.password != passport.password){
+        passport.password = updateUser.password;
+        await passport.save()
+      }
+
+      let updateUserKeys = Object.keys(updateUser);
+
+      console.log('=== updateUserKeys ===', updateUserKeys);
+
+      console.log('=== updateUser ===', updateUser);
+
+      updateUserKeys.forEach((key)=>{
+        console.log(typeof(user[key]) != undefined);
+        if(typeof(user[key]) != undefined) user[key] = updateUser[key];
+
+        console.log('updateUser[key]', updateUser[key]);
+        console.log('user[key]', key, user[key]);
+      });
+
+      console.log('=== user ===', user);
+
+      await user.save();
+
+      if(updateUser.userLikes != undefined)
+        await user.setLikes(updateUser.userLikes);
+
+
+
+      return res.redirect('/member/setting');
+
+
+    } catch (e) {
+      console.error(e.stack);
+      let {message} = e;
+      res.serverError({message});
+
+    }
+
+
+
+
+
+
   },
 
   controlLogin: function(req, res) {
@@ -306,32 +374,6 @@ let UserController = {
       }
       return res.redirect('user/index/');
     }catch(error){
-      return res.serverError(error);
-    }
-  },
-
-  update: async (req, res) => {
-    try {
-      let userId = req.param("id");
-      let findUser = await UserService.findOne(userId);
-      if (!findUser) {
-        return res.serverError({
-          msg: '找不到User！ 請確認User ID！'
-        });
-      }
-      findUser.username = req.body.user.username
-      findUser.email = req.body.user.email
-      findUser.mobile = req.body.user.mobile
-      findUser.address = req.body.user.address
-      findUser.RoleId = req.body.user.RoleId
-      findUser.comment = req.body.user.comment
-      let updateInfo = await findUser.save();
-      if(!updateInfo) {
-        return res.serverError({msg: '更新User失敗'});
-      } else {
-        return res.ok(findUser.toJSON());
-      }
-    } catch (error) {
       return res.serverError(error);
     }
   },
