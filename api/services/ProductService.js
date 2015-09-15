@@ -199,7 +199,7 @@ module.exports = {
       productGm.notice = updateProduct.notice;
       productGm.tag = updateProduct.tag;
       productGm.coverPhoto = updateProduct.coverPhoto;
-      
+
 
       await productGm.save();
 
@@ -216,12 +216,35 @@ module.exports = {
     }
   },
 
+  // delete
+  delete: async (productGmId) => {
+    console.log('=== productGmId ==>',productGmId);
+    try {
+      // find and delete products
+
+      // delete productGm
+      let findProductGm = await db.ProductGm.findById(productGmId);
+      if (!findProductGm) {
+        throw new Error('找不到商品！ 請確認商品ID！');
+      }
+      await findProductGm.destroy();
+      // finish
+      return;
+    } catch (error) {
+      console.error(error.stack);
+      let msg = error.message;
+      return res.serverError({msg});
+    }
+  },
+  // end delete
+
+
   findGmWithImages: async (productGmId) => {
     let productGm = await db.ProductGm.find({
       where: {id: productGmId},
       include: [
         {model: db.Product},
-        {model: db.Dpt}, 
+        {model: db.Dpt},
         {model: db.DptSub}
       ]
     });

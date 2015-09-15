@@ -165,9 +165,20 @@ let ProductController = {
     // return res.json(newProduct);
   },
 
-
-
-
+  // delete
+  doDelete: async (req, res) => {
+    let productGmId = req.param("id");
+    console.log('=== productGmId ==>', productGmId);
+    try {
+      // await ProductService.delete(productGmId);
+      return res.redirect('/admin/goods/');
+    } catch (error) {
+      console.error(error.stack);
+      let msg = error.message;
+      return res.serverError({msg});
+    }
+  },
+  // end delete
 
   findOne: async (req, res) => {
     try {

@@ -108,6 +108,26 @@
     });
   });
 
+  // delete
+  $('.modal-content').on('click', '.btn-green', function(e){
+    e.preventDefault();
+    var id = $("input[name='productGm[id]']").attr('value');
+    // console.log('=== id is ==>',id);
+    var path = "/admin/goods/" + id;
+    $.ajax({
+      type: "DELETE",
+      url: path,
+      success: function (responseText, statusText, xhr, $form)  {
+        console.log(responseText);
+        windows.replace('/admin/goods/')
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.log(textStatus, errorThrown);
+      }
+    });
+  });
+  // end delete
+
   // $(".fileinput").on('change.bs.fileinput', function (e) {
   //   console.log(e)
   //   console.log("click from select");
