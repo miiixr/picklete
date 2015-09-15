@@ -54,7 +54,7 @@ module.exports = (sequelize, DataTypes) => {
 
         if(value) {
           try {
-            return JSON.parse(value);  
+            return JSON.parse(value);
           } catch (e) {
           }
         }
@@ -96,7 +96,9 @@ module.exports = (sequelize, DataTypes) => {
         ProductGm.belongsToMany(models.DptSub, {through: 'DptSubProductGm'});
         return
       }
-    }
+    },
+      // deletedAt: 'destroyTime',
+      paranoid: true
   });
 
   return ProductGm;
