@@ -6,10 +6,10 @@ import dataRequest from 'request';
 var Allpay = require('../../api/services/AllpayService');
 var _ = require('lodash');
 var allpay = new Allpay({
-  merchantID: '2000132',
-  hashKey: '5294y06JbISpM5x9',
-  hashIV: 'v77hoKGq4kWxNNIS',
-  debug: false,
+  merchantID: sails.config.allpay.merchantID,
+  hashKey: sails.config.allpay.hashKey,
+  hashIV: sails.config.allpay.hashIV,
+  debug: sails.config.allpay.debug,
 });
 
 module.exports = {

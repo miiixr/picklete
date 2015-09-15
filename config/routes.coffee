@@ -51,7 +51,7 @@ module.exports.routes = {
   'get /admin/exclusive' : view: 'admin/exclusive'
   'get /admin/index-theme' : view: 'admin/themeActivities'
 
-  
+
   'get /index' : view: 'main/index'
   'get /member/fav' : view: 'main/member-fav'
   'get /member/purchase' : view: 'main/member-purchase'
@@ -121,6 +121,7 @@ module.exports.routes = {
   'get /auth/:provider/:action': 'AuthController.callback'
 
   'get /admin/allpay': 'OrderController.allpayPage'
+  'get /api/order/pay': 'OrderController.pay'
 
   "get /admin/login": view: "admin/login"
 

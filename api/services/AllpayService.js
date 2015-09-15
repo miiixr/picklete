@@ -140,8 +140,7 @@ Allpay.prototype = {
     var sortedKeys = _.sortBy(keys, function(key) {
       return key;
     });
-		console.log('!!!',sortedKeys);
-
+		
     var uri = _.map(sortedKeys, function(key) {
       return key + '=' + data[key];
     }).join('&');

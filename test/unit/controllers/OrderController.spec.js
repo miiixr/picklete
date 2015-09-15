@@ -1,6 +1,44 @@
 describe("about Order", () => {
-  describe("create Order", () => {
-    it.only("order", (done) => {
+  describe.only("pay Order", () => {
+    let testdOrder;
+    before( async (done) => {
+      var newOrder2 = {
+        serialNumber: '99999',
+        paymentIsConfirmed: true,
+        paymentTotalAmount: 1000,
+        paymentConfirmName:  '測試',
+        paymentConfirmPostfix: '54321',
+        quantity: 2,
+        UserId: 2,
+      };
+      testdOrder = await db.Order.create(newOrder2);
+
+      var orderItems2 =[{
+        name: '好物三選1',
+        description: '好東西，買買買',
+        quantity: 1,
+        price: 500,
+        OrderId: testdOrder.id,
+        ProductId: 1
+      },{
+        name: '好物三選2',
+        description: '好東西，買買買',
+        quantity: 2,
+        price: 100,
+        OrderId: testdOrder.id,
+        ProductId: 1
+      },{
+        name: '好物三選3',
+        description: '好東西，買買買',
+        quantity: 3,
+        price: 200,
+        OrderId: testdOrder.id,
+        ProductId: 1
+      }];
+      let createOrderItems = await db.OrderItem.bulkCreate(orderItems2);
+      done();
+    });
+    it("order", (done) => {
       let newOrder ={
         orderItems:
          [ { ProductId: '1', price: '475', quantity: '1' },
@@ -30,12 +68,25 @@ describe("about Order", () => {
         if (res.statusCode === 500) {
           return done(err);
         }
-        console.log("!!!",res.body);
-        res.body.success.should.be["true"];
-        res.body.order.Shipment.id.should.be.number;
-        res.body.order.User.id.should.be.number;
-        res.body.products.forEach((product) => product.id.should.be.number);
-        res.body.order.OrderItems.forEach((orderItem) => orderItem.id.should.be.number);
+        // console.log("!!!",res.body);
+        // res.body.success.should.be["true"];
+        // res.body.order.Shipment.id.should.be.number;
+        // res.body.order.User.id.should.be.number;
+        // res.body.products.forEach((product) => product.id.should.be.number);
+        // res.body.order.OrderItems.forEach((orderItem) => orderItem.id.should.be.number);
+        res.statusCode.should.equal(200);
+        return done();
+      });
+    });
+
+    it("find and pay", (done) => {
+      request(sails.hooks.http.app)
+      .get(`/api/order/pay?id=${testdOrder.id}`)
+      .end((err, res) => {
+        if (res.statusCode === 500) {
+          return done(body)
+        }
+        res.statusCode.should.equal(200);
         return done();
       });
     });
@@ -59,7 +110,6 @@ describe("about Order", () => {
 
       testOrder = await db.Order.create(newOrder);
       done();
-
     });
 
     let syncLink = '';

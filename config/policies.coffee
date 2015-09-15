@@ -19,7 +19,7 @@ module.exports.policies = {
 
   # '*': [ 'passport', 'loginRequired']
   '/shop/*': true
-  
+
 
   'auth':
     '*': ['passport']
@@ -36,6 +36,7 @@ module.exports.policies = {
     sync: []
     bonus: []
     allpayPage:[]
+    pay: []
 }
 
 

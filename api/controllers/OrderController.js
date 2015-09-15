@@ -161,6 +161,34 @@ OrderController = {
       return res.serverError({message, success});
     }
   },
+  pay: async (req, res)=> {
+    try {
+      var id = req.query.id;
+      let orderData = await db.Order.findOne({
+        where: {id},
+        include:{
+            model: db.OrderItem
+          }
+      });
+
+      if (!orderData) {
+        return res.serverError({
+          msg: '再確認一下喔，驗證碼錯誤哟 :)！'
+        });
+      }
+      console.log("!!!",orderData);
+      var allPayData = await OrderService.allPayCreate(orderData);
+      res.view('order/allpay',{
+        allPayData
+      });
+
+    } catch (e) {
+      console.error(e.stack);
+      let {message} = e;
+      let success = false;
+      return res.serverError({message, success});
+    }
+  },
 
   allpayPage: async(req, res) => {
     console.log("allpay call me");
@@ -175,7 +203,6 @@ OrderController = {
     try{
 
       var email = req.query.email;
-
       let userData = await db.User.findOne({
         where: {email}
       });
