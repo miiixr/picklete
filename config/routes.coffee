@@ -52,11 +52,11 @@ module.exports.routes = {
   'get /admin/index-theme' : view: 'admin/themeActivities'
 
   'get /admin/index-slider' : 'SliderActivitiesController.list'
-  'get /admin/index-slider-detail': view: 'admin/sliderActivitiesDetail'
+  'get /admin/slider/create': view: 'admin/sliderActivitiesDetail'
   'post /admin/slider/create' : 'SliderActivitiesController.create'
   'get /admin/slider/update' : 'SliderActivitiesController.showUpdate'
   'post /admin/slider/update' : 'SliderActivitiesController.update'
-  'get /admin/slider/delete' : 'SliderActivitiesController.delete'
+  'post /admin/slider/delete' : 'SliderActivitiesController.delete'
 
 
 

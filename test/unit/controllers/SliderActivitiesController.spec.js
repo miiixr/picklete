@@ -29,15 +29,33 @@ describe('SliderActivities Spec', function() {
     .field('color', '123') // 文案顏色
     .field('link', '活動網址') // 活動網址
     .end(function(err, res) {
-      // console.log('-----------------------');
-      // console.log('* Create a new SliderActivities')
-      // console.log('-----------------------');
+
 
       res.statusCode.should.be.equal(302);
       res.headers.location.should.be.equal('/admin/index-slider');
 
       return done();
     });
+  });
+
+  it('Create a new SliderActivities using API', (done) => {
+      request(sails.hooks.http.app)
+        .post('/api/slider/create')
+        .set('cookie', cookie)
+        .send({
+          cover: 'http://cover.jpg',
+          title: '活動標題',
+          description: '文案位置',
+          location: '123',
+          color: '123',
+          link: '活動網址'
+        })
+        .end((err,res) => {
+
+          res.statusCode.should.be.equal(200);
+          done(err);
+
+      });
   });
 
   it('Update an exist SliderActivities', function(done) {
@@ -64,10 +82,45 @@ describe('SliderActivities Spec', function() {
     });
   });
 
+  it('Update an exist SliderActivities using API', (done) => {
+    request(sails.hooks.http.app)
+      .post('/api/slider/update/1')
+      .set('cookie', cookie)
+      .send({
+        cover: '1http://cover.jpg',
+        title: '1活動標題',
+        description: '1文案位置',
+        location: '1123',
+        color: '1123',
+        link: '1活動網址'
+      })
+      .end((err,res) => {
+
+        res.statusCode.should.be.equal(200);
+        done(err);
+
+    });
+  });
+
+  it('Delete an exist SliderActivities', function(done) {
+
+    request(sails.hooks.http.app)
+    .post('/admin/slider/delete/1')
+    .field('id', 1)
+    .set('cookie', cookie)
+    .end(function(err, res) {
+
+      res.statusCode.should.be.equal(302);
+      res.headers.location.should.be.equal('/admin/index-slider');
+    
+      return done();
+    });
+  });
+
   it('Delete an exist SliderActivities using API', function(done) {
 
     request(sails.hooks.http.app)
-    .post('/api/slider/delete/1')
+    .post('/api/slider/delete/2')
     .set('cookie', cookie)
     .end(function(err, res) {
 
@@ -88,6 +141,17 @@ describe('SliderActivities Spec', function() {
     });
   });
 
+  it('List the all SliderActivities using API', (done) => {
+    request(sails.hooks.http.app)
+      .get('/api/slider/list')
+      .set('cookie', cookie)
+      .end((err,res) => {
+
+        res.statusCode.should.be.equal(200);
+        done(err);
+
+    });
+  });
 
 
 });

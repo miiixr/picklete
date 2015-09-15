@@ -113,7 +113,8 @@ let SliderActivitiesController = {
 
   delete: async (req, res) => {
     
-    let id = req.query.id;
+    let id = req.body['id'];
+
     let slider = await db.Slider.findOne({ where: {id: id} });
     await slider.destroy();
     
