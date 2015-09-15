@@ -18,13 +18,16 @@ module.exports = {
       authority: 'user',
       comment: 'site user'
     };
-    var createRoleUser = await db.Role.create(roleUser);
+    let roleUserOptions = {where: {authority: 'user'}, defaults: roleUser}
+    var createRoleUser = (await db.Role.findOrCreate(roleUserOptions))[0];
+
 
     var roleAdmin = {
       authority: 'admin',
       comment: 'site admin'
     };
-    var createRoleAdmin = await db.Role.create(roleAdmin);
+    let roleAdminOptions = {where: {authority: 'admin'}, defaults: roleAdmin}
+    var createRoleAdmin = (await db.Role.findOrCreate(roleAdminOptions))[0];
 
     let admin = {
       username: "admin",
@@ -46,6 +49,8 @@ module.exports = {
     let passportOptions = {where: {UserId: createdAdmin.id}, defaults: passport}
 
     await db.Passport.findOrCreate(passportOptions);
+
+
 
     if(sails.config.initData === 'production' && production !== undefined)
       await production.createBasicData();
