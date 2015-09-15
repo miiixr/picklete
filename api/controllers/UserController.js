@@ -9,6 +9,14 @@
 let moment = require("moment");
 
 let UserController = {
+  edit: async (req, res) => {
+    let user = UserService.getLoginUser(req);
+    let likes = await db.Like.findAll();
+    res.view('main/member-setting', {
+      user
+    });
+  },
+
   controlLogin: function(req, res) {
     if(UserService.getLoginState(req))
       res.redirect('/admin/goods');

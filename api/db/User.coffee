@@ -6,9 +6,16 @@ module.exports = (sequelize, DataTypes) ->
     gender: DataTypes.ENUM('none', 'male', 'female')
     email: DataTypes.STRING
     mobile: DataTypes.STRING
+    birthYear: DataTypes.STRING
+    birthMonth: DataTypes.STRING
+    birthDay: DataTypes.STRING
     birthDate:
       type: DataTypes.DATE
       defaultValue: DataTypes.NOW
+    address: DataTypes.STRING
+    city: DataTypes.STRING
+    region: DataTypes.STRING
+    zipcode: DataTypes.STRING
     address: DataTypes.STRING
     comment: DataTypes.STRING
     orderSyncToken: DataTypes.STRING

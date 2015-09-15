@@ -163,7 +163,7 @@ block body
                 .form-group
                   label.col-sm-3.control-label 生日
                   .col-sm-9
-                    select.form-control.width-auto.inline-block(name='yyyy', required)
+                    select.form-control.width-auto.inline-block(name='birthYear', required)
                       option(value='') 年
                       option(value='1986') 1986
                       option(value='2009') 2009
@@ -261,7 +261,7 @@ block body
                       option(value='1917') 1917
                       option(value='1916') 1916
                     |  年　
-                    select.form-control.width-auto.inline-block(name='mm')
+                    select.form-control.width-auto.inline-block(name='birthMonth')
                       option(value='04') 4
                       option(value='01') 1
                       option(value='02') 2
@@ -276,7 +276,7 @@ block body
                       option(value='11') 11
                       option(value='12') 12
                     |  月　
-                    select.form-control.width-auto.inline-block(name='dd', required)
+                    select.form-control.width-auto.inline-block(name='birthDay', required)
                       option(value='26') 26
                       option(value='01') 1
                       option(value='02') 2
@@ -340,7 +340,7 @@ block body
                     p.form-control-static 可複選，最多六項！
                     each like in likes
                       label.checkbox-inline
-                        input(type='checkbox', name='like', value=like.id)
+                        input(type='checkbox', name='Likes[]', value=like.id)
                         |  #{like.title}
 
               .row

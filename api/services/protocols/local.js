@@ -36,18 +36,22 @@ exports.register = async function(req, res, next) {
       gender: newUserParams.gender || 'none',
       RoleId: role.id,
       mobile: newUserParams.mobile,
-      birthDate: moment(`${newUserParams.yyyy}${newUserParams.mm}${newUserParams.dd}`, "YYYYMMDD"),
+      birthDate: moment(`${newUserParams.birthYear}${newUserParams.birthMonth}${newUserParams.birthDay}`, "YYYYMMDD"),
+      birthYear: newUserParams.birthYear,
+      birthMonth: newUserParams.birthMonth,
+      birthDay: newUserParams.birthDay,
       city: newUserParams.city,
       region: newUserParams.region,
       address: newUserParams.address,
-      privacyTermsAgree: newUserParams.privacyTermsAgree || false
-
+      privacyTermsAgree: newUserParams.privacyTermsAgree || false,
     }
+
+    console.log('=== newUserParams ===', newUserParams);
 
     let user = await db.User.create(newUser);
 
     if(newUserParams.like.length)
-      await user.setLikes(newUserParams.like);
+      await user.setLikes(newUserParams.userLikes);
 
     var token = crypto.randomBytes(48).toString('base64');
     let passport = db.Passport.create({

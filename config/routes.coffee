@@ -55,7 +55,7 @@ module.exports.routes = {
   'get /index' : view: 'main/index'
   'get /member/fav' : view: 'main/member-fav'
   'get /member/purchase' : view: 'main/member-purchase'
-  'get /member/setting' : view: 'main/member-setting'
+  'get /member/setting' : 'UserController.edit'
   'get /shop/product' : view: 'main/shop-product'
 
   'get /shop/products' : 'ShopController.list'
