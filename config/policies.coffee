@@ -35,7 +35,6 @@ module.exports.policies = {
     find: []
     sync: []
     bonus: []
-    allpayPage:[]
     pay: []
 }
 
