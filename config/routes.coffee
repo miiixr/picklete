@@ -99,7 +99,7 @@ module.exports.routes = {
   'get /admin/about' : 'AboutController.create'
   'post /admin/about' : 'AboutController.create'
 
-  'get /admin/qa' : 'UserController.controlQa'
+  'get /admin/FAQ' : 'FAQController.FAQ'
   'get /admin/qa-detail' : 'UserController.controlQaDetail'
   'get /admin/qa-type' : 'UserController.controlQaType'
   'get /admin/qa-add' : 'UserController.controlQaAdd'

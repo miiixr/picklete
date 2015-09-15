@@ -21,7 +21,7 @@ block body
             ==================================================
           .fileinput.fileinput-new(data-provides='fileinput')
             .fileinput-new.dashed-block-2.min-height-150
-              img.img-full(src=(productPhoto[0] != "null") ? productPhoto[0] :'http://fakeimg.pl/1000x1000/dddddd/FFF/?text=1000x800')
+              img.img-full(src=(productPhoto[0] != '') ? productPhoto[0] :'http://fakeimg.pl/1000x1000/dddddd/FFF/?text=1000x800')
             // /fileinput-new
 
             //- TODO: need to update brand
@@ -49,7 +49,7 @@ block body
             ==================================================
           .fileinput.fileinput-new(data-provides='fileinput')
             .fileinput-new.dashed-block-2.min-height-150
-              img.img-full(src=(productPhoto[1] != "null") ? productPhoto[1] :'http://fakeimg.pl/1000x1000/dddddd/FFF/?text=1000x800')
+              img.img-full(src=(productPhoto[1] != '') ? productPhoto[1] :'http://fakeimg.pl/1000x1000/dddddd/FFF/?text=1000x800')
             // /fileinput-new
             //- TODO: need to update brand
             form(action="/admin/image/upload", method="POST", enctype="multipart/form-data")
@@ -76,7 +76,7 @@ block body
             ==================================================
           .fileinput.fileinput-new(data-provides='fileinput')
             .fileinput-new.dashed-block-2.min-height-150
-              img.img-full(src=(productPhoto[2] != "null") ? productPhoto[2] :'http://fakeimg.pl/1000x1000/dddddd/FFF/?text=1000x800')
+              img.img-full(src=(productPhoto[2] != '') ? productPhoto[2] :'http://fakeimg.pl/1000x1000/dddddd/FFF/?text=1000x800')
             // /fileinput-new
             .fileinput-preview.fileinput-exists.border-block-1
             // /fileinput-preview
