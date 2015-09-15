@@ -13,6 +13,8 @@ block body
   #collapse-member.collapse.in
     .well.control-well.p-30.m-bottom-8
       form.form-horizontal(name="searchUsers", action="members", method="get")
+        input(type='hidden', name='page', value=query.page?query.page:0)
+        input(type='hidden', name='limit', value=limit)
         .row.row-m
           .col-md-4
             .form-group
@@ -46,7 +48,6 @@ block body
                 p.form-control-static 至
               .col-md-4
                 input.form-control(type='date', name='createdEnd', value = query.createdEnd?query.createdEnd: null)
-                input(type='hidden', name='page' value = query.page?query.page: 0)
             // /form-group
           // /col-md-8
           .col-md-12.text-right
@@ -67,7 +68,7 @@ block body
             option(selected=(limit==30)) 30
             option(selected=(limit==40)) 40
             option(selected=(limit==50)) 50
-          label 筆資料（共 #{members.length} 筆）
+          label 筆資料（共 #{members.count} 筆）
         // /form-group
     // /col-md-6
     .col-md-6.desktop-text-right
@@ -126,20 +127,23 @@ block body
     script.
       $(function() {
         $('#query-limit').change(function() {
-          location.href='/admin/members?limit='+$(this).val();
+          //location.href='/admin/members?limit='+$(this).val();
+          $('input[name=page]').val(0);
+          $('input[name=limit]').val($(this).val());
+          $('form[name=searchUsers]').submit();
         });
 
-        $('.form-control').change(function(){
+        $('.form-control').change(function() {
           $("input[name='page']").val(0);
         });
 
-        $('#next').click(function(){
+        $('#next').click(function() {
           console.log()
           $("input[name='page']").val(parseInt($("input[name='page']").val())+1);
           $("form[name='searchUsers']").submit();
         });
 
-        $('#previous').click(function(){
+        $('#previous').click(function() {
           $("input[name='page']").val($(parseInt("input[name='page']").val())-1);
           $("form[name='searchUsers']").submit();
         });
