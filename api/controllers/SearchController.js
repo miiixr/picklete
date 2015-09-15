@@ -14,13 +14,21 @@ module.exports = /* SearchController */ {
     let keywords = req.param('keywords');
     let limit = parseInt(req.param('limit', 100));
 
+    let conditions = {};
+
+    conditions.$or = [];
+
+    let eachKeywords = keywords.split('+');
+
+    for (var i=0; i<eachKeywords.length; i++) {
+      let keyword = eachKeywords[i];
+
+      conditions.$or.push({ name: { $like: '%'+keyword+'%' }});
+      conditions.$or.push({ description: { $like: '%'+keyword+'%' }});
+    }
+
     let products = await db.Product.findAndCountAll({
-      where: {
-        $or: [
-          { name: { $like: '%'+keywords+'%' }},
-          { description: { $like: '%'+keywords+'%' }}
-        ]
-      },
+      where: conditions,
       limit: limit
     });
 
