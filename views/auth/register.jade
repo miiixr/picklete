@@ -400,57 +400,10 @@ block body
                   label.col-sm-3.control-label 我喜歡/我覺得...
                   .col-sm-9
                     p.form-control-static 可複選，最多六項！
-                    label.checkbox-inline
-                      input(type='checkbox', name='like', value='1')
-                      |  我是文具控
-                    label.checkbox-inline
-                      input(type='checkbox', name='like', value='2')
-                      |  沒有咖啡醒不來
-                    label.checkbox-inline
-                      input(type='checkbox', name='like', value='3')
-                      |  流浪的迷途，是旅行的終點
-                    label.checkbox-inline
-                      input(type='checkbox', name='like', value='4')
-                      |  喝午茶、聊是非
-                    label.checkbox-inline
-                      input(type='checkbox', name='like', value='5')
-                      |  給孩子最好的一切
-                    label.checkbox-inline
-                      input(type='checkbox', name='like', value='6')
-                      |  絕不錯過最新的科技產品！
-                    label.checkbox-inline
-                      input(type='checkbox', name='like', value='7')
-                      |  妝點居家生活
-                    label.checkbox-inline
-                      input(type='checkbox', name='like', value='8')
-                      |  音樂是我的靈魂
-                    label.checkbox-inline
-                      input(type='checkbox', name='like', value='9')
-                      |  享受美學是我的生活態度
-                    label.checkbox-inline
-                      input(type='checkbox', name='like', value='10')
-                      |  寵物就是兒女
-                    label.checkbox-inline
-                      input(type='checkbox', name='like', value='11')
-                      |  皮革的溫度無法取代
-                    label.checkbox-inline
-                      input(type='checkbox', name='like', value='12')
-                      |  我總是不小心造成流行
-                    label.checkbox-inline
-                      input(type='checkbox', name='like', value='13')
-                      |  空氣中香味瀰漫
-                    label.checkbox-inline
-                      input(type='checkbox', name='like', value='14')
-                      |  我運動所以我存在
-                    label.checkbox-inline
-                      input(type='checkbox', name='like', value='15')
-                      |  呼朋引伴、派對 all night
-                    label.checkbox-inline
-                      input(type='checkbox', name='like', value='16')
-                      |  上班偷逛網購...！
-                    label.checkbox-inline
-                      input(type='checkbox', name='like', value='17')
-                      |  微醺是種享受、宿醉好想請假
+                    each like in likes
+                      label.checkbox-inline
+                        input(type='checkbox', name='like', value=like.id)
+                        |  #{like.title}
 
               .row
                 .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3.col-lg-4.col-lg-offset-4.text-center

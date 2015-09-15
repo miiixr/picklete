@@ -33,9 +33,11 @@ AuthController = {
     return res.redirect('/login');
 
   },
-  register: function(req, res) {
+  register: async (req, res) => {
+    let likes = await db.Like.findAll();
     res.view({
-      errors: req.flash('error')
+      errors: req.flash('error'),
+      likes
     });
   },
   provider: function(req, res) {
