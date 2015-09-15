@@ -17,7 +17,6 @@ describe('SliderActivities Spec', function() {
 
   });
 
-
   it('Create a new SliderActivities', function(done) {
 
     request(sails.hooks.http.app)
@@ -65,12 +64,24 @@ describe('SliderActivities Spec', function() {
     });
   });
 
+  it('Delete an exist SliderActivities using API', function(done) {
+
+    request(sails.hooks.http.app)
+    .post('/api/slider/delete/1')
+    .set('cookie', cookie)
+    .end(function(err, res) {
+
+      res.statusCode.should.be.equal(200);
+    
+      return done();
+    });
+  });
+
   it('List the all SliderActivities', function(done) {
     request(sails.hooks.http.app)
     .get('/admin/index-slider')
     .set('cookie', cookie)
     .end(function(err, res) {
-
       res.statusCode.should.be.equal(200);
       return done();
 

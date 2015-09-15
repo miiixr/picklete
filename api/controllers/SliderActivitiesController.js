@@ -48,6 +48,18 @@ let SliderActivitiesController = {
     }
   },
 
+  showUpdate: async (req, res) => {
+
+    let id = req.query.id;
+    let updateSlider = await db.Slider.findOne({ where: {id: id} });
+    
+    try {
+       return res.view("admin/sliderActivitiesUpdate",{ slider: updateSlider });
+    } catch (e) {
+       return res.serverError(e);
+    }
+  },
+
   update: async (req, res) => {
 
     var params = req.body;
@@ -97,6 +109,28 @@ let SliderActivitiesController = {
 
     let listSliders = await db.Slider.findAll();
 		return res.ok(listSliders);
+  },
+
+  delete: async (req, res) => {
+    
+    let id = req.query.id;
+    let slider = await db.Slider.findOne({ where: {id: id} });
+    await slider.destroy();
+    
+    try {
+       return res.redirect("/admin/index-slider");
+    } catch (e) {
+       return res.serverError(e);
+    }
+  },
+
+
+  deleteSlider: async (req, res) => {
+    
+    let id = req.params.id;
+    let slider = await db.Slider.findOne({ where: {id: id} });
+    await slider.destroy();
+    return res.ok(slider);
   }
 
 

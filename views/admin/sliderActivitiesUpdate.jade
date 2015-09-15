@@ -1,9 +1,10 @@
 extends ../_layout_auth
 
 block body
-  h2.m-bottom-6 燈箱活動設定 #{slider}
+  h2.m-bottom-6 燈箱活動設定
   .well.control-well.p-30.m-bottom-8
-    form.form-horizontal(name='Form', action='/admin/slider/create', method='POST')
+    form.form-horizontal(name='Form', action='/admin/slider/update', method='POST')
+      input(type='hidden', name='id', value='#{slider.id}')
       .form-group
         label.col-sm-3.col-md-2.control-label 活動主圖
         .col-sm-9.col-md-10
@@ -32,20 +33,20 @@ block body
       .form-group
         label.col-sm-3.col-md-2.control-label 活動標題
         .col-sm-9.col-md-10
-          input.form-control(type='text', name='title')
+          input.form-control(type='text', name='title', value='#{slider.title}')
         // /col-sm-10
       // /form-group
       .form-group
         label.col-sm-3.col-md-2.control-label 活動文案
         .col-sm-9.col-md-10
-          textarea.form-control(rows='3', name='description')
+          textarea.form-control(rows='3', name='description') #{slider.description}
         // /col-sm-9
       // /form-group
       .form-group
         label.col-sm-3.col-md-2.control-label 文案位置
         .col-sm-9.col-md-10
           label.radio-inline
-            input#inlineRadio1(type='radio', name='location', value='option1', checked='')
+            input#inlineRadio1(type='radio', name='location', value='option1')
             |  左上
           label.radio-inline
             input#inlineRadio2(type='radio', name='location', value='option2')
@@ -76,13 +77,13 @@ block body
       .form-group
         label.col-sm-3.col-md-2.control-label 文案顏色
         .col-sm-9.col-md-10
-          input#myColor.form-control.width-10(type='color', value='#333333' name='color')
+          input#myColor.form-control.width-10(type='color', value='#{slider.color}', name='color')
         // /col-sm-9
       // /form-group
       .form-group
         label.col-sm-3.col-md-2.control-label 活動網址
         .col-sm-6.col-md-7
-          input.form-control(type='text', placeholder='http://', name='link')
+          input.form-control(type='text', placeholder='http://', name='link', value='#{slider.link}')
         // /col-sm-9
         .col-sm-3.col-md-3
           .checkbox
@@ -95,3 +96,9 @@ block body
         input.btn.btn-green.btn-lg(type='submit' value='確定')
       // /text-right
   // /well
+
+block js
+  script.
+    $("input[value=#{slider.location}]").prop('checked', true);
+    
+

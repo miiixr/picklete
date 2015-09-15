@@ -52,10 +52,12 @@ module.exports.routes = {
   'get /admin/index-theme' : view: 'admin/themeActivities'
 
   'get /admin/index-slider' : 'SliderActivitiesController.list'
-  'get /admin/index-slider-detail': view: 'admin/SliderActivitiesDetail'
+  'get /admin/index-slider-detail': view: 'admin/sliderActivitiesDetail'
   'post /admin/slider/create' : 'SliderActivitiesController.create'
+  'get /admin/slider/update' : 'SliderActivitiesController.showUpdate'
   'post /admin/slider/update' : 'SliderActivitiesController.update'
-  
+  'get /admin/slider/delete' : 'SliderActivitiesController.delete'
+
 
 
   'get /admin/department' : 'DptController.list'
@@ -326,6 +328,14 @@ module.exports.routes = {
     }
   }
 
+  'post /api/slider/delete/:id': {
+    controller: "SliderActivitiesController",
+    action: "deleteSlider",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
 }
 
 ###*
