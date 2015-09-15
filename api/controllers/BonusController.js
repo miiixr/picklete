@@ -88,8 +88,6 @@ let BonusController = {
       else
         throw new Error ('更新紅利點數異常');
 
-      console.log("!!",bonus.remain);
-      console.log("!!",updateData.used);
       if(updateData.used >= bonus.used)
         bonus.used = updateData.used;
       else

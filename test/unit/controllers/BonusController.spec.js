@@ -9,7 +9,7 @@ describe.only('Bonus', () => {
     let bonuspoint={
         remain: 100,
         used: 500,
-        email: 'uniTestBonus@picklete.localhost'
+        email: 'uniTestBonus@picklete.local'
       }
     testBonus = await db.BonusPoint.create(bonuspoint);
 
@@ -27,7 +27,7 @@ describe.only('Bonus', () => {
       .send({
         remain: 100,
         used: 30,
-        email: 'user999@picklete.localhost'
+        email: 'user999@picklete.local'
       })
       .end((err, res) => {
         if (res.statusCode === 500) {
@@ -36,7 +36,7 @@ describe.only('Bonus', () => {
         res.statusCode.should.equal(200);
         res.body[0].remain.should.be.equal(100);
         res.body[0].used.should.be.equal(30);
-        res.body[0].email.should.be.equal("user999@picklete.localhost");
+        res.body[0].email.should.be.equal("user999@picklete.local");
         return done();
       })
   });
@@ -63,7 +63,7 @@ describe.only('Bonus', () => {
 
   it("get a Bonus point. ", async (done) => {
     request(sails.hooks.http.app)
-    .get("/order/bonus?email=uniTestBonus@picklete.localhost")
+    .get("/order/bonus?email=uniTestBonus@picklete.local")
     .end(async (err, res) => {
       if (res.statusCode === 500) {
         return done(body)
