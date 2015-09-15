@@ -43,6 +43,14 @@ let BonusController = {
     try{
       var newBonus = req.body;
       console.log('req',newBonus);
+
+      var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+      if(!re.test(newBonus.email))
+        throw new Error ('請輸入mail');
+
+      if(newBonus.remain <0)
+        throw new Error ('紅利點數異常');
+
       let createBonusPoints = await db.BonusPoint.findOrCreate({
         where:{
           email: newBonus.email
@@ -61,11 +69,20 @@ let BonusController = {
     try{
       var query = req.param('query');
       var updateData = req.body;
+
+      var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+      if(!re.test(query))
+        throw new Error ('請輸入mail');
+
       let bonus = await db.BonusPoint.findOne({
         where: {
           email: query
         }
       });
+
+      if(updateData.remain != bonus.remain && updateData.used == bonus.used)
+        throw new Error ('更新紅利點數異常');
+
       if(updateData.remain > 0)
         bonus.remain = updateData.remain;
       else

@@ -61,7 +61,7 @@ describe.only('Bonus', () => {
       })
   });
 
-  it("get an Bonus point. ", async (done) => {
+  it("get a Bonus point. ", async (done) => {
     request(sails.hooks.http.app)
     .get("/order/bonus?email=uniTestBonus@picklete.localhost")
     .end(async (err, res) => {
