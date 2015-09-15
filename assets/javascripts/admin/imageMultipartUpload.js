@@ -1,5 +1,6 @@
 (function ($) {
   var inputName;
+
   var that;
   $(document).on('change.bs.fileinput', '.fileinput', function (e) {
 
