@@ -3,9 +3,9 @@ let SliderActivitiesController = {
   create: async (req, res) => {
   	// console.log('Todo: write data into database');
     var params = req.body;
-    console.log('------------');
-    console.log(params);
-    console.log('------------');
+    // console.log('------------');
+    // console.log(params);
+    // console.log('------------');
 
 
     let slider = {
@@ -48,6 +48,26 @@ let SliderActivitiesController = {
     }
   },
 
+  update: async (req, res) => {
+
+    var params = req.body;
+    let id = req.body['id'];
+    let updateSlider = await db.Slider.findOne({ where: {id: id} });
+    
+    updateSlider.cover = req.body['cover'];
+    updateSlider.title = req.body['title'];
+    updateSlider.description = req.body['description'];
+    updateSlider.location = req.body['location'];
+    updateSlider.color = req.body['color'];
+    updateSlider.link = req.body['link'];
+
+    try {
+       await updateSlider.save();
+       return res.redirect("/admin/index-slider");
+    } catch (e) {
+       return res.serverError(e);
+    }
+  },
 
   updateSlider: async (req, res) => {
   	
@@ -62,8 +82,7 @@ let SliderActivitiesController = {
 		updateSlider.link = req.body['link'];
 
     let updatedSlider = await updateSlider.save();
-		return res.ok(updatedSlider)
-
+		return res.ok(updatedSlider);
   },
 
   list: async (req, res) => {

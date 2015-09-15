@@ -54,6 +54,7 @@ module.exports.routes = {
   'get /admin/index-slider' : 'SliderActivitiesController.list'
   'get /admin/index-slider-detail': view: 'admin/SliderActivitiesDetail'
   'post /admin/slider/create' : 'SliderActivitiesController.create'
+  'post /admin/slider/update' : 'SliderActivitiesController.update'
   
 
 
