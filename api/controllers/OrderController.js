@@ -190,13 +190,6 @@ OrderController = {
     }
   },
 
-  allpayPage: async(req, res) => {
-    console.log("allpay call me");
-    res.view('order/allpay',{
-      pageName: "allpay"
-    });
-  },
-
   // 查詢
   status: async function(req, res) {
 
