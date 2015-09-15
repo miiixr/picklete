@@ -47,19 +47,9 @@ let UserController = {
 
       let updateUserKeys = Object.keys(updateUser);
 
-      console.log('=== updateUserKeys ===', updateUserKeys);
-
-      console.log('=== updateUser ===', updateUser);
-
       updateUserKeys.forEach((key)=>{
-        console.log(typeof(user[key]) != undefined);
         if(typeof(user[key]) != undefined) user[key] = updateUser[key];
-
-        console.log('updateUser[key]', updateUser[key]);
-        console.log('user[key]', key, user[key]);
       });
-
-      console.log('=== user ===', user);
 
       await user.save();
 
