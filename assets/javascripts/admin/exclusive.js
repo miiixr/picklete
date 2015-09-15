@@ -34,8 +34,23 @@
       }
       if(check == 4){
         $('ul.col-sm-9.col-md-10').append($type4);
-      }        
+      }
     }
-  });  
-  
+  });
+
+  // input check when form submit
+  $('form#activesData').submit(function(e){
+    var finished = true;
+    $('input[form="activesData"]').map(function(index, input){
+      var value = $(input).val();
+      if(value.length<1) {
+        finished = false;
+      }
+    });
+    if(!finished) {
+      alert('請完整填寫圖片及連結欄位');
+    }
+    return finished;
+  });
+
 }(jQuery));
