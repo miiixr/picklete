@@ -80,7 +80,7 @@ let BonusController = {
         }
       });
 
-      if(updateData.remain != bonus.remain && updateData.used == bonus.used)
+      if(updateData.remain < bonus.remain && updateData.used == bonus.used)
         throw new Error ('更新紅利點數異常');
 
       if(updateData.remain > 0)
@@ -88,7 +88,9 @@ let BonusController = {
       else
         throw new Error ('更新紅利點數異常');
 
-      if(updateData.used > bonus.used)
+      console.log("!!",bonus.remain);
+      console.log("!!",updateData.used);
+      if(updateData.used >= bonus.used)
         bonus.used = updateData.used;
       else
         throw new Error ('更新紅利點數異常');
