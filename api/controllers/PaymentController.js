@@ -10,7 +10,7 @@ var allpay = new Allpay({
   merchantID: '2000132',
   hashKey: '5294y06JbISpM5x9',
   hashIV: 'v77hoKGq4kWxNNIS',
-  debug: false,
+  debug: false
 });
 
 module.exports = {
