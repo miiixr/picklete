@@ -95,7 +95,10 @@ module.exports.routes = {
 
   # 'get /admin/shop-item-list' : 'UserController.controlShopItemList'
   'get /admin/order' : 'OrderController.index'
-  'get /admin/about' : 'UserController.controlAbout'
+
+  'get /admin/about' : 'AboutController.create'
+  'post /admin/about' : 'AboutController.create'
+
   'get /admin/qa' : 'UserController.controlQa'
   'get /admin/qa-detail' : 'UserController.controlQaDetail'
   'get /admin/qa-type' : 'UserController.controlQaType'
