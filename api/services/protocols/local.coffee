@@ -25,6 +25,8 @@ crypto = require('crypto')
 ###
 
 exports.register = (req, res, next) ->
+  console.log '=== exports.register ===', req.param
+
   email = req.param('email')
   username = req.param('username')
   password = req.param('password')

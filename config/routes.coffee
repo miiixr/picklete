@@ -31,7 +31,7 @@ module.exports.routes = {
   "/": view: "homepage"
   'get /login': 'AuthController.login'
   'get /logout': 'AuthController.logout'
-  'get /register': 'AuthController.register'
+  'get /register' : 'AuthController.register'
 
   'get /admin/login' : 'UserController.controlLogin'
   'get /admin/index-slider' : 'UserController.indexSlider'
@@ -51,13 +51,13 @@ module.exports.routes = {
   'get /admin/exclusive' : view: 'admin/exclusive'
   'get /admin/index-theme' : view: 'admin/themeActivities'
 
-  
+
   'get /index' : view: 'main/index'
   'get /member/fav' : view: 'main/member-fav'
   'get /member/purchase' : view: 'main/member-purchase'
   'get /member/setting' : view: 'main/member-setting'
   'get /shop/product' : view: 'main/shop-product'
-  'get /user/signup' : view: 'main/signup'
+
   'get /shop/products' : 'ShopController.list'
   'get /brands' : view: 'main/brands'
   'get /user/cart' : view: 'main/cart'

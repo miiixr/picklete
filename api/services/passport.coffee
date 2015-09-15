@@ -201,6 +201,8 @@ passport.endpoint = (req, res) ->
 ###
 
 passport.callback = (req, res, next) ->
+
+  console.log '=== passport.callback ===', req.body
   provider = req.param('provider', 'local')
   action = req.param('action')
 
