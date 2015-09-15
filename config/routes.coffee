@@ -100,6 +100,12 @@ module.exports.routes = {
   'post /admin/about' : 'AboutController.create'
 
   'get /admin/FAQ' : 'FAQController.FAQ'
+  'get /admin/FAQAdd' : 'FAQController.FAQAdd'
+  'post /admin/FAQAdd' : 'FAQController.FAQAdd'
+  'get /admin/FAQTypeUpdate' : 'FAQController.FAQTypeUpdate'
+  'post /admin/FAQTypeUpdate' : 'FAQController.FAQTypeUpdate'
+
+
   'get /admin/qa-detail' : 'UserController.controlQaDetail'
   'get /admin/qa-type' : 'UserController.controlQaType'
   'get /admin/qa-add' : 'UserController.controlQaAdd'
