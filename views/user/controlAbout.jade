@@ -5,76 +5,95 @@ block body
   .well.control-well.p-30.m-left-2.m-bottom-8
     h3
       span.label.label-default.p-10-15 品牌願景
-    textarea.form-control(rows='6', placeholder='請輸入品牌願景')
+    form#about-data(action="/admin/about", method="POST")
+      textarea.form-control(rows='6', placeholder='請輸入品牌願景',name="brandVision")
+        | #{about.brandVision}
   // /well
   .well.control-well.p-30.m-left-2.m-bottom-8
     h3
       span.label.label-default.p-10-15 圖片上傳
     .row.row-m
       .col-md-4
-        .edit-block.m-bottom-4
-          a.btn-remove(href='#', data-toggle='modal', data-target='#modal-delete')
-            span.glyphicon.glyphicon-remove
+        .edit-block.m-bottom-4 
+          -var productPhoto = JSON.parse(about.productPhotos); 
           //
             fileinput-img
             ==================================================
           .fileinput.fileinput-new(data-provides='fileinput')
             .fileinput-new.dashed-block-2.min-height-150
+              img.img-full(src=(productPhoto[0] != "null") ? productPhoto[0] :'http://fakeimg.pl/1000x1000/dddddd/FFF/?text=1000x800')
             // /fileinput-new
-            .fileinput-preview.fileinput-exists.border-block-1
-            // /fileinput-preview
-            .fileinput-btn
-              span.btn.btn-default.btn-sm.btn-file
-                span.fileinput-new Select image
-                span.fileinput-exists Change
-                input(type='file', name='...')
-              a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
+
+            //- TODO: need to update brand
+            form(action="/admin/image/upload", method="POST", enctype="multipart/form-data")
+              .fileinput-preview.fileinput-exists.border-block-1
+              // /fileinput-preview
+              .fileinput-btn
+                span.btn.btn-default.btn-sm.btn-file
+                  span.fileinput-new Select image
+                  span.fileinput-exists Change
+                  input.fileInput(type='file', name="uploadfile", data-name='productPhotos[]')
+                  input(type='hidden', name="filename", value='productPhotos[]')
+                  input(type='hidden', name="width", value='1000')
+                  input(type='hidden', name="height", value='800')
+                  input(type='hidden', name='productPhotos[]', form='about-data', value=(productPhoto[0] != "") ? productPhoto[0] : product)                
+                a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
             // /fileinput-btn
           // /fileinput
         // /edit-block
       // /col-md-4
       .col-md-4
         .edit-block.m-bottom-4
-          a.btn-remove(href='#', data-toggle='modal', data-target='#modal-delete')
-            span.glyphicon.glyphicon-remove
           //
             fileinput-img
             ==================================================
           .fileinput.fileinput-new(data-provides='fileinput')
             .fileinput-new.dashed-block-2.min-height-150
+              img.img-full(src=(productPhoto[1] != "null") ? productPhoto[1] :'http://fakeimg.pl/1000x1000/dddddd/FFF/?text=1000x800')
             // /fileinput-new
-            .fileinput-preview.fileinput-exists.border-block-1
-            // /fileinput-preview
-            .fileinput-btn
-              span.btn.btn-default.btn-sm.btn-file
-                span.fileinput-new Select image
-                span.fileinput-exists Change
-                input(type='file', name='...')
-              a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
+            //- TODO: need to update brand
+            form(action="/admin/image/upload", method="POST", enctype="multipart/form-data")
+              .fileinput-preview.fileinput-exists.border-block-1
+              // /fileinput-preview
+              .fileinput-btn
+                span.btn.btn-default.btn-sm.btn-file
+                  span.fileinput-new Select image
+                  span.fileinput-exists Change
+                  input.fileInput(type='file', name="uploadfile", data-name='productPhotos[]')
+                  input(type='hidden', name="filename", value='productPhotos[]')
+                  input(type='hidden', name="width", value='1000')
+                  input(type='hidden', name="height", value='800')
+                  input(type='hidden', name='productPhotos[]', form='about-data', value=(productPhoto[1] != "") ? productPhoto[1] : product)                
+                 a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
             // /fileinput-btn
           // /fileinput
         // /edit-block
       // /col-md-4
       .col-md-4
         .edit-block.m-bottom-4
-          a.btn-remove(href='#', data-toggle='modal', data-target='#modal-delete')
-            span.glyphicon.glyphicon-remove
-          a.btn-add(href='#')
-            span.glyphicon.glyphicon-plus
           //
             fileinput-img
             ==================================================
           .fileinput.fileinput-new(data-provides='fileinput')
             .fileinput-new.dashed-block-2.min-height-150
+              img.img-full(src=(productPhoto[2] != "null") ? productPhoto[2] :'http://fakeimg.pl/1000x1000/dddddd/FFF/?text=1000x800')
             // /fileinput-new
             .fileinput-preview.fileinput-exists.border-block-1
             // /fileinput-preview
-            .fileinput-btn
-              span.btn.btn-default.btn-sm.btn-file
-                span.fileinput-new Select image
-                span.fileinput-exists Change
-                input(type='file', name='...')
-              a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
+             //- TODO: need to update brand
+            form(action="/admin/image/upload", method="POST", enctype="multipart/form-data")
+              .fileinput-preview.fileinput-exists.border-block-1
+              // /fileinput-preview
+              .fileinput-btn
+                span.btn.btn-default.btn-sm.btn-file
+                  span.fileinput-new Select image
+                  span.fileinput-exists Change
+                  input.fileInput(type='file', name="uploadfile", data-name='productPhotos[]')
+                  input(type='hidden', name="filename", value='productPhotos[]')
+                  input(type='hidden', name="width", value='1000')
+                  input(type='hidden', name="height", value='800')
+                  input(type='hidden', name='productPhotos[]', form='about-data', value=(productPhoto[2] != "") ? productPhoto[2] : product)                              
+                a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
             // /fileinput-btn
           // /fileinput
         // /edit-block
@@ -86,143 +105,89 @@ block body
   .well.control-well.p-30.m-left-2.m-bottom-8
     h3
       span.label.label-default.p-10-15 公司簡介
-    textarea.form-control(rows='6', placeholder='請輸入公司簡介')
+    textarea.form-control(rows='6', placeholder='請輸入公司簡介' , form='about-data', name='aboutCompany')
+      | #{about.brandVision}
   // /well
   .well.control-well.p-30.m-left-2.m-bottom-8
     h3
       span.label.label-default.p-10-15 經銷商
     .row.row-m
+      - var photos = (about && about.dealerPhotos) ? JSON.parse(about.dealerPhotos) : undefined;
+      - var dealerName = (about && about.dealerNames) ? JSON.parse(about.dealerNames) : "";
+      each photo, index in photos
+        if(photo!='')
+          .col-md-3
+              .edit-block.m-bottom-4
+                // fileinput-img
+                .fileinput.fileinput-new(data-provides='fileinput')
+                  .fileinput-new.fileinput-square
+                    img.img-full(src='#{photo}')
+                  // /fileinput-new
+                  .fileinput-preview.fileinput-exists.border-block-1
+                  // /fileinput-preview
+                  .fileinput-btn
+                    form(action="/admin/image/upload", method="POST", enctype="multipart/form-data")
+                      span.btn.btn-default.btn-sm.btn-file
+                        span.fileinput-new Select image
+                        span.fileinput-exists Change
+                        input.fileInput(type='file', name="uploadfile", data-name='dealerPhotos[]')
+                        input(type='hidden', name="filename", value='dealerPhotos[]')
+                        input(type='hidden', name="width", value='800')
+                        input(type='hidden', name="height", value='800')
+                        input(type='hidden', name='dealerPhotos[]', form='about-data', value='#{photo}')
+                      a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
+                    // /form
+                  // /fileinput-btn
+                // /fileinput
+                a.btn-remove(href='#')
+                  span.glyphicon.glyphicon-remove
+                .form-group.m-top-2.m-bottom-0
+                  input.form-control(type='text', form='about-data', name="dealerNames[]", value="#{dealerName[index]}")
+              // /edit-block
+            // /col-md-3
+
       .col-md-3
         .edit-block.m-bottom-4
-          a.btn-remove(href='#', data-toggle='modal', data-target='#modal-delete')
-            span.glyphicon.glyphicon-remove
-          //
-            fileinput-img-square
-            ==================================================
+          // fileinput-img
           .fileinput.fileinput-new(data-provides='fileinput')
-            .fileinput-new.dashed-block-2.fileinput-square
+            .fileinput-new.fileinput-square
+              img.img-full(src='http://fakeimg.pl/1000x1000/dddddd/FFF/?text=800x800')
             // /fileinput-new
             .fileinput-preview.fileinput-exists.border-block-1
             // /fileinput-preview
             .fileinput-btn
-              span.btn.btn-default.btn-sm.btn-file
-                span.fileinput-new Select image
-                span.fileinput-exists Change
-                input(type='file', name='...')
-              a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
+              form(action="/admin/image/upload", method="POST", enctype="multipart/form-data")
+                span.btn.btn-default.btn-sm.btn-file
+                  span.fileinput-new Select image
+                  span.fileinput-exists Change
+                  input.fileInput(type='file', name="uploadfile", data-name='dealerPhotos[]')
+                  input(type='hidden', name="filename", value='dealerPhotos[]')
+                  input(type='hidden', name="width", value='800')
+                  input(type='hidden', name="height", value='800')
+                  input(type='hidden', name='dealerPhotos[]', form='about-data', value='')
+                a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
+              // /form
             // /fileinput-btn
           // /fileinput
-          .form-group.m-top-2.m-bottom-0
-            input.form-control(type='text')
-          // /form-group
-        // /edit-block
-      // /col-md-3
-      .col-md-3
-        .edit-block.m-bottom-4
-          a.btn-remove(href='#', data-toggle='modal', data-target='#modal-delete')
-            span.glyphicon.glyphicon-remove
-          //
-            fileinput-img-square
-            ==================================================
-          .fileinput.fileinput-new(data-provides='fileinput')
-            .fileinput-new.dashed-block-2.fileinput-square
-            // /fileinput-new
-            .fileinput-preview.fileinput-exists.border-block-1
-            // /fileinput-preview
-            .fileinput-btn
-              span.btn.btn-default.btn-sm.btn-file
-                span.fileinput-new Select image
-                span.fileinput-exists Change
-                input(type='file', name='...')
-              a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
-            // /fileinput-btn
-          // /fileinput
-          .form-group.m-top-2.m-bottom-0
-            input.form-control(type='text')
-          // /form-group
-        // /edit-block
-      // /col-md-3
-      .col-md-3
-        .edit-block.m-bottom-4
-          a.btn-remove(href='#', data-toggle='modal', data-target='#modal-delete')
-            span.glyphicon.glyphicon-remove
-          //
-            fileinput-img-square
-            ==================================================
-          .fileinput.fileinput-new(data-provides='fileinput')
-            .fileinput-new.dashed-block-2.fileinput-square
-            // /fileinput-new
-            .fileinput-preview.fileinput-exists.border-block-1
-            // /fileinput-preview
-            .fileinput-btn
-              span.btn.btn-default.btn-sm.btn-file
-                span.fileinput-new Select image
-                span.fileinput-exists Change
-                input(type='file', name='...')
-              a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
-            // /fileinput-btn
-          // /fileinput
-          .form-group.m-top-2.m-bottom-0
-            input.form-control(type='text')
-          // /form-group
-        // /edit-block
-      // /col-md-3
-      .col-md-3
-        .edit-block.m-bottom-4
-          a.btn-remove(href='#', data-toggle='modal', data-target='#modal-delete')
-            span.glyphicon.glyphicon-remove
-          //
-            fileinput-img-square
-            ==================================================
-          .fileinput.fileinput-new(data-provides='fileinput')
-            .fileinput-new.dashed-block-2.fileinput-square
-            // /fileinput-new
-            .fileinput-preview.fileinput-exists.border-block-1
-            // /fileinput-preview
-            .fileinput-btn
-              span.btn.btn-default.btn-sm.btn-file
-                span.fileinput-new Select image
-                span.fileinput-exists Change
-                input(type='file', name='...')
-              a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
-            // /fileinput-btn
-          // /fileinput
-          .form-group.m-top-2.m-bottom-0
-            input.form-control(type='text')
-          // /form-group
-        // /edit-block
-      // /col-md-3
-      .col-md-3
-        .edit-block.m-bottom-4
-          a.btn-remove(href='#', data-toggle='modal', data-target='#modal-delete')
+          a.btn-remove(href='#')
             span.glyphicon.glyphicon-remove
           a.btn-add(href='#')
             span.glyphicon.glyphicon-plus
-          //
-            fileinput-img-square
-            ==================================================
-          .fileinput.fileinput-new(data-provides='fileinput')
-            .fileinput-new.dashed-block-2.fileinput-square
-            // /fileinput-new
-            .fileinput-preview.fileinput-exists.border-block-1
-            // /fileinput-preview
-            .fileinput-btn
-              span.btn.btn-default.btn-sm.btn-file
-                span.fileinput-new Select image
-                span.fileinput-exists Change
-                input(type='file', name='...')
-              a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
-            // /fileinput-btn
-          // /fileinput
           .form-group.m-top-2.m-bottom-0
-            input.form-control(type='text')
-          // /form-group
+            input.form-control(type='text', form='about-data', name="dealerNames[]")
         // /edit-block
       // /col-md-3
+
+
+
+
+      
     // /row
     a(href='#', data-toggle='tooltip', title='', data-original-title='商品圖長寬 800x800 像素，限 JPG/GIF 格式，檔案大小 500KB 以下')
       span.glyphicon.glyphicon-info
   // /well
   .text-center.m-bottom-6
-    a.btn.btn-green.btn-lg(href='#') 確認送出
+    input.btn.btn-green.btn-lg(type='submit', form='about-data', value='確認送出') 
   // /text-center
+block js
+  script(src='/javascripts/admin/controlAbout.js')

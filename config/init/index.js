@@ -68,6 +68,15 @@ module.exports = {
     };
     var createRoleUser = await db.Role.create(roleUser);
 
+    var initAbout = {
+      brandVision: '請輸入品牌願景',
+      productPhotos: ["null","null","null"],
+      aboutCompany: '請輸入公司簡介',
+      dealerPhotos: [''],
+      dealerNames: ['']
+    };
+    var createAbout = await db.About.create(initAbout);
+
     var newBuyer = {
       username: "buyer",
       email: "smlsun@gmail.com",
