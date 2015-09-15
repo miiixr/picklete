@@ -18,7 +18,7 @@ block body
               // /input-group
       // /form-group
       .m-top-6.text-right
-        a.btn.btn-link.delete-link.btn-lg(href='../../admin/bonus') 取消
+        a.btn.btn-link.delete-link.btn-lg(href='../../../admin/bonus') 取消
         a.btn.btn-green.btn-lg(id="addBonus") 確定
 block js
   script.
@@ -32,7 +32,7 @@ block js
           data : postData,
           success:function(data, textStatus, jqXHR) 
           {
-              location.href='../../admin/bonus?keyword='+$("input[name='email']").val();
+              location.href='../../../admin/bonus?keyword='+$("input[name='email']").val();
           }
       });
     });
