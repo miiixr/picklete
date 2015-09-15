@@ -1,6 +1,10 @@
 
 module.exports = (sequelize, DataTypes) ->
   Order = sequelize.define('Order', {
+    id:
+      type: DataTypes.UUID
+      primaryKey: true
+      defaultValue: DataTypes.UUIDV4
     serialNumber: DataTypes.STRING
     quantity: DataTypes.INTEGER
     paymentTotalAmount: DataTypes.FLOAT
@@ -10,6 +14,8 @@ module.exports = (sequelize, DataTypes) ->
     paymentConfirmPostfix: DataTypes.STRING
     paymentConfirmAmount: DataTypes.FLOAT
     useBunusPoint: DataTypes.INTEGER
+    CheckMacValue: DataTypes.STRING
+    MerchantTradeDate: DataTypes.DATE
     status:
       type: DataTypes.ENUM('new', 'paymentConfirm', 'deliveryConfirm')
       defaultValue: 'new'
