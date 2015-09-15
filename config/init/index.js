@@ -70,7 +70,7 @@ module.exports = {
 
     var initAbout = {
       brandVision: '請輸入品牌願景',
-      productPhotos: ["null","null","null"],
+      productPhotos: ['','',''],
       aboutCompany: '請輸入公司簡介',
       dealerPhotos: [''],
       dealerNames: ['']
@@ -156,6 +156,22 @@ module.exports = {
     var brandAgent = await db.Brand.bulkCreate(brandAgent);
 
     var otherAgent = await db.Brand.create(otherAgent);
+    
+    let FAQTypes = ['會員常見問題','購物常見問題','配送取貨問題','退換貨及退款','發票常見問題','海外會員訂購','產品保養問題'];
+
+    for (let i in FAQTypes){
+      var FAQType = await (db.FAQType.create({
+        name: FAQTypes[i]
+      }));  
+
+      for (var j =1; j<3; j++){
+        await db.FAQ.create({
+          title: 'test' + j,
+          answer: '無解',
+          FAQTypeId: FAQType.id
+        })
+      }
+    }
 
     let dpts = ['A', 'B', 'C', 'D', 'E', 'F'];
 
