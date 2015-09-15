@@ -3,7 +3,6 @@
 
   var that;
   $(document).on('change.bs.fileinput', '.fileinput', function (e) {
-
     that = $(e.currentTarget || this);
     inputName = that.find('input[name="uploadfile"]').data('name');
 

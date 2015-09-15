@@ -1,5 +1,16 @@
 import moment from 'moment';
 let sprintf = require("sprintf-js").sprintf;
+import dataRequest from 'request';
+
+
+var Allpay = require('../../api/services/AllpayService');
+var _ = require('lodash');
+var allpay = new Allpay({
+  merchantID: sails.config.allpay.merchantID,
+  hashKey: sails.config.allpay.hashKey,
+  hashIV: sails.config.allpay.hashIV,
+  debug: sails.config.allpay.debug,
+});
 
 module.exports = {
   generateOrderSerialNumber: async () => {
@@ -64,6 +75,52 @@ module.exports = {
       }
     });
     return orders;
+  },
+
+  allPayCreate: async (order) => {
+    try {
+      var time = Date.now();
+      let domain = sails.config.domain || process.env.domain || 'http://localhost:1337';
+      let data = {
+        MerchantID: sails.config.allpay.merchantID,
+        MerchantTradeNo: order.id.replace(/-/g,''),
+        MerchantTradeDate: sails.moment(time).format('YYYY/MM/DD HH:mm:ss'),
+        PaymentType: 'aio',
+        TotalAmount: order.paymentTotalAmount,
+        TradeDesc: 'Allpay push order test',
+        ItemName: '',
+        // 這裏是要放當使用者付款後，allpay會post我們的api，通知使用者付款完成的，api spec詳見allpay文件29頁
+        ReturnURL: `${domain}/allpay/return`,
+        ChoosePayment: 'ALL',
+        ClientBackURL: `${domain}/shop`
+        // ChooseSubPayment: '',
+        // Remark: '',
+      };
+      var itemArray = [];
+      order.OrderItems.forEach((orderItem) => {
+        itemArray.push(orderItem.name);
+      });
+      data.ItemName = itemArray.join('#');
+
+      // let checkMacValue = await new Promise((done) => {
+      //   dataRequest.post( {
+    	// 		url: 'http://payment-stage.allpay.com.tw/AioHelper/GenCheckMacValue',
+    	// 		form:data,
+    	// 		followRedirect: true
+    	// 	},(error, res, body) => {
+    	// 		done(res.body);
+    	// 	})
+      // });
+      var checkMacValue = allpay.genCheckMacValue(data);
+      data.CheckMacValue = checkMacValue;
+      return data;
+
+    } catch (e) {
+      console.error(e.stack);
+      let {message} = e;
+      let success = false;
+      return res.serverError({message, success});
+    }
   },
 
   create: async (newOrder) => {

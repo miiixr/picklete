@@ -48,7 +48,8 @@ module.exports.routes = {
   'post /admin/brands/create' : 'BrandController.create'
   'get /admin/brands/update' : 'BrandController.update'
   'post /admin/brands/update' : 'BrandController.update'
-  'get /admin/exclusive' : view: 'admin/exclusive'
+  'get /admin/exclusive' : 'SelectionActiveController.list'
+  'post /admin/exclusive' : 'SelectionActiveController.update'  
   'get /admin/index-theme' : view: 'admin/themeActivities'
 
 
@@ -99,7 +100,7 @@ module.exports.routes = {
   'get /admin/about' : 'AboutController.create'
   'post /admin/about' : 'AboutController.create'
 
-  'get /admin/qa' : 'UserController.controlQa'
+  'get /admin/FAQ' : 'FAQController.FAQ'
   'get /admin/qa-detail' : 'UserController.controlQaDetail'
   'get /admin/qa-type' : 'UserController.controlQaType'
   'get /admin/qa-add' : 'UserController.controlQaAdd'
@@ -123,6 +124,7 @@ module.exports.routes = {
   'get /auth/:provider/callback': 'AuthController.callback'
   'get /auth/:provider/:action': 'AuthController.callback'
 
+  'get /api/order/pay': 'OrderController.pay'
 
   "get /admin/login": view: "admin/login"
 

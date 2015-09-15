@@ -1,4 +1,4 @@
-describe.only("SelectionActiveService", () => {
+describe("SelectionActiveService", () => {
 
   it('get SelectionActive', async (done) => {
 

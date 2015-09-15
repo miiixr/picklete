@@ -33,7 +33,6 @@ describe('about Payment', () => {
       if (res.statusCode === 500) {
         return done();
       }
-
       res.statusCode.should.equal(200);
       let result = res.body.result;
       result.should.have.property('MerchantID', 'MerchantTradeDate', 'PaymentType', 'CheckMacValue');
