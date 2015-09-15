@@ -349,14 +349,14 @@ html
             h1.modal-title.text-center &#x767B;&#x5165;
           // /modal-header
           .modal-body.text-center.p-30
-            form.m-bottom-4
+            form.m-bottom-4(action='/auth/local/', method='post')
               .form-group
                 input.form-control(type='email', placeholder='Email')
               // /form-group
               .form-group
                 input.form-control(type='password', placeholder='Password')
-              // /form-group
-              button.btn.btn-black.border-radius-circle.btn-block.m-bottom-2(type='button', data-toggle='modal', data-target='#modal-login-feedback', data-dismiss='modal') &#x767B;&#x5165;&#x6703;&#x54E1;
+              // /form-group SSS
+              button.btn.btn-black.border-radius-circle.btn-block.m-bottom-2(type='submit', data-toggle='modal', data-target='#modal-login-feedback', data-dismiss='modal') &#x767B;&#x5165;&#x6703;&#x54E1;
               | &#x9;&#x9;&#x9;&#x9;&#x9;
               button.btn.btn-fb.border-radius-circle.btn-block(type='button', data-dismiss='modal') FACEBOOK &#x767B;&#x5165;
             | &#x9;&#x9;&#x9;&#x9;
