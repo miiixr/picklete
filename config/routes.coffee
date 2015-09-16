@@ -31,7 +31,7 @@ module.exports.routes = {
   "/": view: "homepage"
   'get /login': 'AuthController.login'
   'get /logout': 'AuthController.logout'
-  'get /register': 'AuthController.register'
+  'get /register' : 'AuthController.register'
 
   'get /admin/login' : 'UserController.controlLogin'
   'get /admin/index-slider' : 'UserController.indexSlider'
@@ -48,16 +48,18 @@ module.exports.routes = {
   'post /admin/brands/create' : 'BrandController.create'
   'get /admin/brands/update' : 'BrandController.update'
   'post /admin/brands/update' : 'BrandController.update'
-  'get /admin/exclusive' : view: 'admin/exclusive'
+  'get /admin/exclusive' : 'SelectionActiveController.list'
+  'post /admin/exclusive' : 'SelectionActiveController.update'
   'get /admin/index-theme' : view: 'admin/themeActivities'
 
-  
+
   'get /index' : view: 'main/index'
   'get /member/fav' : view: 'main/member-fav'
   'get /member/purchase' : view: 'main/member-purchase'
-  'get /member/setting' : view: 'main/member-setting'
+  'get /member/setting' : 'UserController.edit'
+  'post /member/update' : 'UserController.update'
   'get /shop/product' : view: 'main/shop-product'
-  'get /user/signup' : view: 'main/signup'
+
   'get /shop/products' : 'ShopController.list'
   'get /brands' : view: 'main/brands'
   'get /user/cart' : view: 'main/cart'
@@ -76,6 +78,7 @@ module.exports.routes = {
   'post /admin/goods/update' : 'ProductController.doUpdate'
   'get /admin/goods/create' : 'ProductController.showCreate'
   'post /admin/goods/create' : 'ProductController.doCreate'
+  'post /admin/goods/delete' : 'ProductController.doDelete'
   'post /admin/image/upload' : 'ImageController.upload'
 
   # promotions
@@ -92,6 +95,10 @@ module.exports.routes = {
   # end promotions
 
   'get /admin/bonus' : 'BonusController.list'
+  'post /admin/bonus' : 'BonusController.create'
+  'put /admin/bonus/:query' : 'BonusController.update'
+  'get /admin/bonus/edit' : 'BonusController.edit'
+  'get /admin/bonus/add' : 'BonusController.add'
 
   # 'get /admin/shop-item-list' : 'UserController.controlShopItemList'
   'get /admin/order' : 'OrderController.index'
@@ -131,8 +138,20 @@ module.exports.routes = {
   'get /auth/:provider/callback': 'AuthController.callback'
   'get /auth/:provider/:action': 'AuthController.callback'
 
+  'get /api/order/pay': 'OrderController.pay'
 
   "get /admin/login": view: "admin/login"
+
+  'get /api/search/:keywords': 'SearchController.products'
+
+  'post /allpay/paid':{
+    controller: "PaymentController",
+    action: "paid"
+    cors: {
+      origin: "*",
+      credentials: false
+    }
+  }
 
   ###*
     ProductController

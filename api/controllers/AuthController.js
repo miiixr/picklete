@@ -33,15 +33,49 @@ AuthController = {
     return res.redirect('/login');
 
   },
-  register: function(req, res) {
-    res.view({
-      errors: req.flash('error')
-    });
+  register: async (req, res) => {
+
+    try {
+      let likes = await db.Like.findAll();
+      let defaultUser = {
+        username: '',
+        email: '',
+        fullName: '',
+        gender: '',
+        mobile: '',
+        birthYear: '1983',
+        birthMonth: '01',
+        birthDay: '01',
+        city: '',
+        region: '',
+        zipcode: '',
+        address: '',
+        privacyTermsAgree: false,
+        userLikes: []
+      }
+      let tempUser = req.flash('form');
+      let user = defaultUser;
+
+      if(tempUser.length)
+        user = tempUser[0];
+
+      if(user.userLikes == undefined) user.userLikes = []
+
+
+      res.view('user/register.jade', {
+        errors: req.flash('error'),
+        likes,
+        user
+      });
+    } catch (e) {
+      console.error(e.stack);
+    }
+
   },
   provider: function(req, res) {
     passport.endpoint(req, res);
   },
-  callback: function(req, res) {
+  callback: async function(req, res) {
     var tryAgain;
     tryAgain = function(err) {
       var action, flashError;
@@ -70,7 +104,7 @@ AuthController = {
 
       }
     };
-    passport.callback(req, res, function(err, user, challenges, statuses) {
+    await passport.callback(req, res, function(err, user, challenges, statuses) {
       if (err || !user) {
         return tryAgain(challenges);
       }
@@ -80,11 +114,12 @@ AuthController = {
           return tryAgain(err);
         }
         req.session.authenticated = true;
-        console.log('=== user.Roles ===', user);
 
-        if (user.Role.authority == 'admin') {
+        if (user.Role != undefined && user.Role.authority == 'admin') {
           return res.redirect('/admin/goods');
         }
+
+        console.log('=== user.Role ===', user);
 
         return res.redirect('/');
       });

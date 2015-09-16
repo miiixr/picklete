@@ -1,67 +1,66 @@
 describe("about Order", () => {
-  describe("create Order", () => {
-
-    let testProducts = [];
-
-    before(async (done) => {
-      let productOne = {
-        name: '泡麵',
-        description: '就泡麵',
-        stockQuantity: 5,
-        price: 5
+  describe("pay Order", () => {
+    let testdOrder;
+    before( async (done) => {
+      var newOrder2 = {
+        serialNumber: '99999',
+        paymentIsConfirmed: true,
+        paymentTotalAmount: 1000,
+        paymentConfirmName:  '測試',
+        paymentConfirmPostfix: '54321',
+        quantity: 2,
+        UserId: 2,
       };
+      testdOrder = await db.Order.create(newOrder2);
 
-      let productTwo = {
-        name: '糖果',
-        description: '就糖果',
-        stockQuantity: 5,
-        price: 10
-      };
-
-      testProducts.push(await db.Product.create(productOne));
-      testProducts.push(await db.Product.create(productTwo));
-
+      var orderItems2 =[{
+        name: '好物三選1',
+        description: '好東西，買買買',
+        quantity: 1,
+        price: 500,
+        OrderId: testdOrder.id,
+        ProductId: 1
+      },{
+        name: '好物三選2',
+        description: '好東西，買買買',
+        quantity: 2,
+        price: 100,
+        OrderId: testdOrder.id,
+        ProductId: 1
+      },{
+        name: '好物三選3',
+        description: '好東西，買買買',
+        quantity: 3,
+        price: 200,
+        OrderId: testdOrder.id,
+        ProductId: 1
+      }];
+      let createOrderItems = await db.OrderItem.bulkCreate(orderItems2);
       done();
-
     });
-
-    it("should be success.", (done) => {
-      let orderItemOne = {
-        name: testProducts[0].name,
-        description: testProducts[0].description,
-        quantity: 1,
-        spec: testProducts[0].spec,
-        ProductId: testProducts[0].id
-      };
-
-      let orderItemTwo = {
-        name: testProducts[1].name,
-        description: testProducts[1].description,
-        quantity: 1,
-        spec: testProducts[1].spec,
-        ProductId: testProducts[1].id
-      };
-
-      let newOrder = {
-        quantity: 10,
-        orderItems: [
-          orderItemOne,
-          orderItemTwo
-        ],
-        user: {
-          email: 'smlsun@gmail.com',
-          mobile: '0911-111-111',
-          address: 'addres',
-          username: 'test'
-        },
-        shipment: {
-          username: '收件者',
-          mobile: '0922-222-222',
-          taxId: '123456789',
-          email: 'smlsun@gmail.com',
-          address: '收件者的家'
-        }
-      };
+    it("order", (done) => {
+      let newOrder ={
+        orderItems:
+         [ { ProductId: '1', price: '475', quantity: '1' },
+           { ProductId: '1', price: '590', quantity: '2' }],
+        paymentTotalAmount: '565',
+        user:
+         { username: 'AAAd',
+           email: 'user1@picklete.localhost',
+           mobile: '0912345678',
+           city: '苗栗縣',
+           district: '竹南鎮',
+           zipcode: '350',
+           address: '測試用地址不用太在意' },
+        shipment:
+         { username: 'AAAd',
+           email: 'user1@picklete.localhost',
+           mobile: '0912345678',
+           city: '苗栗縣',
+           district: '竹南鎮',
+           zipcode: '350',
+           address: '測試用地址不用太在意' },
+        usedDiscountPoint: 'false' };
 
       request(sails.hooks.http.app).post("/api/order").send({
         order: newOrder
@@ -69,13 +68,25 @@ describe("about Order", () => {
         if (res.statusCode === 500) {
           return done(err);
         }
-        console.log('res.body', res.body);
-        res.body.success.should.be["true"];
-        res.body.order.id.should.be.number;
-        res.body.order.Shipment.id.should.be.number;
-        res.body.order.User.id.should.be.number;
-        res.body.products.forEach((product) => product.id.should.be.number);
-        res.body.order.OrderItems.forEach((orderItem) => orderItem.id.should.be.number);
+        // console.log("!!!",res.body);
+        // res.body.success.should.be["true"];
+        // res.body.order.Shipment.id.should.be.number;
+        // res.body.order.User.id.should.be.number;
+        // res.body.products.forEach((product) => product.id.should.be.number);
+        // res.body.order.OrderItems.forEach((orderItem) => orderItem.id.should.be.number);
+        res.statusCode.should.equal(200);
+        return done();
+      });
+    });
+
+    it("find and pay", (done) => {
+      request(sails.hooks.http.app)
+      .get(`/api/order/pay?id=${testdOrder.id}`)
+      .end((err, res) => {
+        if (res.statusCode === 500) {
+          return done(body)
+        }
+        res.statusCode.should.equal(200);
         return done();
       });
     });
@@ -99,7 +110,6 @@ describe("about Order", () => {
 
       testOrder = await db.Order.create(newOrder);
       done();
-
     });
 
     let syncLink = '';
@@ -183,7 +193,7 @@ describe("about Order", () => {
 
     it("get an Bonus point. ", async (done) => {
       request(sails.hooks.http.app)
-      .get("/order/bonus?email=user1@picklete.localhost")
+      .get("/order/bonus?email=user1@picklete.local")
       .end(async (err, res) => {
         if (res.statusCode === 500) {
           return done(body)
@@ -195,7 +205,5 @@ describe("about Order", () => {
         done(err);
       });
     });
-
-
   });
 });

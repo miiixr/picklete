@@ -1,0 +1,41 @@
+extends ../_layout_auth
+
+block body
+  h2.m-bottom-6 紅利點數編輯
+  .well.control-well.p-30.m-bottom-8
+    form.form-horizontal(id="bonudUpdateData")
+      .form-group
+        label.col-sm-3.col-md-2.control-label 帳號
+        .col-sm-4.col-md-3
+            label #{bonus.email}
+      .form-group
+        label.col-sm-3.col-md-2.control-label 剩餘紅利點數
+        .col-sm-4.col-md-3
+            label
+              input.form-control(type='text',name="remain", placeholder= bonus.remain)
+      .form-group
+        label.col-sm-3.col-md-2.control-label 已使用的點數
+        .col-sm-4.col-md-3
+            label #{bonus.used}
+              input.form-control(type='hidden',name="used", value= bonus.used)
+              // /input-group
+      // /form-group
+      .m-top-6.text-right
+        a.btn.btn-link.delete-link.btn-lg(href='../../../admin/bonus') 取消
+        a.btn.btn-green.btn-lg(id="updateBonus") 確定
+block js
+  script.
+    $("#updateBonus").click(function()
+    {
+      var postData = $("#bonudUpdateData").serializeArray();
+      $.ajax(
+      {
+          url : '/admin/bonus/#{bonus.email}',
+          type: "put",
+          data : postData,
+          success:function(data, textStatus, jqXHR) 
+          {
+              location.href='../../../admin/bonus?keyword=#{bonus.email}';
+          }
+      });
+    });

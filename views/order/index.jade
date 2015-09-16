@@ -23,14 +23,14 @@ block body
             .form-group
               label.col-md-4.control-label 訂單編號
               .col-md-8
-                input.form-control(type='text',name='serialNumber', value = query.serialNumber?query.serialNumber: '')
+                input.form-control(type='text',name='serialNumber', value = query.serialNumber)
             // /form-group
           // /col-md-4
           .col-md-4
             .form-group
               label.col-md-4.control-label 運送方式
               .col-md-8
-                select.form-control(name='shippingMethod', value = query.shippingMethod?query.shippingMethod: 0)
+                select.form-control(name='shippingMethod', value = query.shippingMethod)
                   option(value=0) 選擇狀態
                   option(value=1) 1
                   option(value=2) 2
@@ -51,7 +51,7 @@ block body
             .form-group
               label.col-md-4.control-label 購買人
               .col-md-8
-                input.form-control(type='text', name='userName', value = query.userName?query.userName: '')
+                input.form-control(type='text', name='userName', value = query.userName)
             // /form-group
           // /col-md-4
           .col-md-4
@@ -59,7 +59,7 @@ block body
               label.col-md-4.control-label 付款狀態
               .col-md-8
                 select.form-control(name='status', value = query.status?query.status: 0)
-                  option(value=0) 選擇狀態
+                  option(value='0') 選擇狀態
                   option(value='new') new
                   option(value='paymentConfirm') paymentConfirm
                   option(value='deliveryConfirm') deliveryConfirm
@@ -83,7 +83,7 @@ block body
             .form-group
               label.col-md-4.control-label 收件人
               .col-md-8
-                input.form-control(type='text', name='addressee', value = query.addressee?query.addressee: '')
+                input.form-control(type='text', name='addressee', value = query.addressee)
             // /form-group
           // /col-md-4
           .col-md-8
@@ -281,4 +281,3 @@ block body
           $("form[name='searchOrders']").submit();
         });
       });
-
