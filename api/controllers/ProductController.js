@@ -167,8 +167,8 @@ let ProductController = {
 
   // delete
   doDelete: async (req, res) => {
-    let productGmId = req.param("id");
-    console.log('=== productGmId ==>', productGmId);
+    let productGmId = req.body.id;
+    console.log('=== productGmId ==>',productGmId);
     try {
       await ProductService.delete(productGmId);
       return res.redirect('/admin/goods/');

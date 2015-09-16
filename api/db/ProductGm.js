@@ -97,8 +97,7 @@ module.exports = (sequelize, DataTypes) => {
         return
       }
     },
-      // deletedAt: 'destroyTime',
-      paranoid: true
+    paranoid: true
   });
 
   return ProductGm;

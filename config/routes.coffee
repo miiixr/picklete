@@ -49,7 +49,7 @@ module.exports.routes = {
   'get /admin/brands/update' : 'BrandController.update'
   'post /admin/brands/update' : 'BrandController.update'
   'get /admin/exclusive' : 'SelectionActiveController.list'
-  'post /admin/exclusive' : 'SelectionActiveController.update'  
+  'post /admin/exclusive' : 'SelectionActiveController.update'
   'get /admin/index-theme' : view: 'admin/themeActivities'
 
 
@@ -73,11 +73,11 @@ module.exports.routes = {
   'post /admin/department/sub/delete' : 'DptSubController.smDelete'
 
   'get /admin/goods' : 'ProductController.list'
-  'delete /admin/goods/:id' : 'ProductController.doDelete'
   'get /admin/goods/update' : 'ProductController.showUpdate'
   'post /admin/goods/update' : 'ProductController.doUpdate'
   'get /admin/goods/create' : 'ProductController.showCreate'
   'post /admin/goods/create' : 'ProductController.doCreate'
+  'post /admin/goods/delete' : 'ProductController.doDelete'
   'post /admin/image/upload' : 'ImageController.upload'
 
   # promotions

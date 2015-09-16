@@ -198,6 +198,16 @@ module.exports = {
     console.log('=== productGmId ==>',productGmId);
     try {
       // find and delete products
+      let findProducts = await db.Product.findAll({
+        where: {
+          ProductGmId: productGmId
+        }
+      });
+      if(findProducts.length>0){
+        let deleteProducts = await* findProducts.map((product) => {
+          product.destroy();
+        });
+      }
 
       // delete productGm
       let findProductGm = await db.ProductGm.findById(productGmId);

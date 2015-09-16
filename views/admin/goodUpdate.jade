@@ -372,7 +372,9 @@ block body
         // /modal-body
         .modal-footer
           button.btn.btn-default(type='button', data-dismiss='modal') 取消
-          button.btn.btn-green(type='button', data-dismiss='modal') 確定
+          form#goodDelete(action='/admin/goods/delete', method='POST')
+            input(type='hidden', name='id', id='id', value='#{good.ProductGm.id}')
+            input.btn.btn-green.btn.delete(type='submit', form='goodDelete', value='確認')
         // /modal-footer
       // /modal-content
     // /modal-dialog

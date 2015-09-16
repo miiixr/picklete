@@ -50,8 +50,10 @@ module.exports = (sequelize, DataTypes) ->
 
       set: (value) ->
         return this.setDataValue('photos', JSON.stringify(value))
-  }, classMethods: associate: (models) ->
+  },
+  paranoid: true,
+  classMethods: associate: (models) ->
     return Product.belongsTo(models.ProductGm)
-  paranoid: true
-  
+
+
   return Product

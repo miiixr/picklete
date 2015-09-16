@@ -15,7 +15,6 @@ describe("about Product", () => {
       isPublish: true,
       comment: 'this is a comment.'
     };
-
     testProduct = await db.Product.create(newProduct);
 
     request(sails.hooks.http.app)
@@ -408,5 +407,21 @@ describe("about Product", () => {
   //   });
 
   // });
+
+  it.only('delete productGm', (done) => {
+    request(sails.hooks.http.app)
+    .delete(`/admin/goods/delete/1`)
+    .end((err,res) => {
+      if(res.statusCode === 500){
+        return done(err);
+      }
+      res.statusCode.should.equal(302);
+      // res.statusCode.should.equal(200);
+      // res.body.should.be.Object;
+      // res.body.isPublish.should.equal(false);
+      done(err);
+    });
+  });
+
 
 });
