@@ -193,7 +193,7 @@ describe("about Order", () => {
 
     it("get an Bonus point. ", async (done) => {
       request(sails.hooks.http.app)
-      .get("/order/bonus?email=user1@picklete.localhost")
+      .get("/order/bonus?email=user1@picklete.local")
       .end(async (err, res) => {
         if (res.statusCode === 500) {
           return done(body)

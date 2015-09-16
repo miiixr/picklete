@@ -1,0 +1,27 @@
+extends ../_layout_head
+
+block body
+    .container
+      .m-top-6.m-bottom-10
+        .row.m-bottom-4
+          .col-md-6
+            p.font-size-slarge.line-height-xlarge.m-bottom-4 會員帳號：email@example.com
+          // /col-md-6
+          .col-md-6.desktop-text-right
+            ul.list-inline
+              li
+                a.btn.btn-default.border-radius-circle(href='/member/fav') 我的收藏
+              li
+                a.btn.btn-default.border-radius-circle(href='/member/purchase') 我的訂單記錄
+              li
+                a.btn.btn-default.border-radius-circle.active(href='/member/setting') 修改會員資料
+          // /col-md-6
+        // /row
+        .row
+          form.col-md-8.col-md-offset-2(action='/member/update', method='post')
+            h5.text-green.m-bottom-6 ※ 部分資料以 * 或隱藏處理，保護您的個人隱私
+            include ./_form
+            .row
+              .col-sm-4.col-sm-offset-4
+                button.btn.btn-black.border-radius-circle.btn-block(type='submit') 確認修改
+            

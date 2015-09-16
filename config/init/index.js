@@ -18,13 +18,16 @@ module.exports = {
       authority: 'user',
       comment: 'site user'
     };
-    var createRoleUser = await db.Role.create(roleUser);
+    let roleUserOptions = {where: {authority: 'user'}, defaults: roleUser}
+    var createRoleUser = (await db.Role.findOrCreate(roleUserOptions))[0];
+
 
     var roleAdmin = {
       authority: 'admin',
       comment: 'site admin'
     };
-    var createRoleAdmin = await db.Role.create(roleAdmin);
+    let roleAdminOptions = {where: {authority: 'admin'}, defaults: roleAdmin}
+    var createRoleAdmin = (await db.Role.findOrCreate(roleAdminOptions))[0];
 
     let admin = {
       username: "admin",
@@ -46,6 +49,24 @@ module.exports = {
     let passportOptions = {where: {UserId: createdAdmin.id}, defaults: passport}
 
     await db.Passport.findOrCreate(passportOptions);
+
+    let like = [
+      {title: '我是文具控'},
+      {title: '沒有咖啡醒不來'},
+      {title: '流浪的迷途，是旅行的終點 喝午茶、聊是非'},
+      {title: '給孩子最好的一切'},
+      {title: '絕不錯過最新的科技產品！ 妝點居家生活'},
+      {title: '音樂是我的靈魂'},
+      {title: '享受美學是我的生活態度 寵物就是兒女'},
+      {title: '皮革的溫度無法取代'},
+      {title: '我總是不小心造成流行 空氣中香味瀰漫'},
+      {title: '我運動所以我存在'},
+      {title: '呼朋引伴、派對 all night 上班偷逛網購...！'},
+      {title: '微醺是種享受、宿醉好想請假'}
+    ];
+
+    await db.Like.bulkCreate(like);
+    await createdAdmin.setLikes([1, 2, 3, 4, 5]);
 
     if(sails.config.initData === 'production' && production !== undefined)
       await production.createBasicData();
@@ -343,7 +364,7 @@ module.exports = {
         username: "user" + i,
         fullName: commonLastNames[randomInt(0, commonLastNames.length)] + commonFirstNames[randomInt(0, commonFirstNames.length)],
         birthDate: randomDate(new Date(1930, 0, 1), new Date(2005, 0, 1)),
-        email: "user" + i + "@picklete.localhost",
+        email: "user" + i + "@picklete.local",
         password: "0000",
         RoleId: createRoleUser.id,
         comment: "i'm a fake user",

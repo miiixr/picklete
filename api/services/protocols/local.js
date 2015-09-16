@@ -3,39 +3,55 @@ var crypto, validator;
 validator = require('validator');
 
 crypto = require('crypto');
-
+import moment from 'moment';
 
 
 exports.register = async function(req, res, next) {
   var email, password, username;
-  console.log('=== exports.register ===');
   email = req.param('email');
   username = req.param('username');
   password = req.param('password');
-  if (!email) {
-    req.flash('error', 'Error.Passport.Email.Missing');
-    return next(new Error('No email was entered.'));
-  }
-  if (!username) {
-    req.flash('error', 'Error.Passport.Username.Missing');
-    return next(new Error('No username was entered.'));
-  }
-  if (!password) {
-    req.flash('error', 'Error.Passport.Password.Missing');
-    return next(new Error('No password was entered.'));
-  }
 
   try {
 
-    let role = await db.Role.create({
-      authority: 'user'
+    if (!email) {
+      throw new Error('No email was entered.');
+    }
+
+    if (!password) {
+      throw new Error('No password was entered.');
+    }
+
+
+    let newUserParams = req.body;
+
+    let role = await db.Role.find({
+      where: {authority: 'user'}
     });
 
-    let user = await db.User.create({
+    let newUser = {
       username: username,
       email: email,
-      RoleId: role.id
-    });
+      fullName: username,
+      gender: newUserParams.gender || 'none',
+      RoleId: role.id,
+      mobile: newUserParams.mobile,
+      birthDate: moment(`${newUserParams.birthYear}${newUserParams.birthMonth}${newUserParams.birthDay}`, "YYYYMMDD"),
+      birthYear: newUserParams.birthYear,
+      birthMonth: newUserParams.birthMonth,
+      birthDay: newUserParams.birthDay,
+      city: newUserParams.city,
+      region: newUserParams.region,
+      address: newUserParams.address,
+      privacyTermsAgree: newUserParams.privacyTermsAgree || false,
+    }
+
+    console.log('=== newUserParams ===', newUserParams);
+
+    let user = await db.User.create(newUser);
+
+    if(newUserParams.like.length)
+      await user.setLikes(newUserParams.userLikes);
 
     var token = crypto.randomBytes(48).toString('base64');
     let passport = db.Passport.create({
@@ -88,7 +104,7 @@ exports.login = function(req, identifier, password, next) {
   isEmail = validator.isEmail(identifier);
   query = {
     where: {},
-    include: [db.Role]
+    include: [db.Role, db.Like]
   };
   if (isEmail) {
     query.where.email = identifier;

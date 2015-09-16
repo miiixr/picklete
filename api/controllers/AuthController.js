@@ -33,10 +33,44 @@ AuthController = {
     return res.redirect('/login');
 
   },
-  register: function(req, res) {
-    res.view({
-      errors: req.flash('error')
-    });
+  register: async (req, res) => {
+
+    try {
+      let likes = await db.Like.findAll();
+      let defaultUser = {
+        username: '',
+        email: '',
+        fullName: '',
+        gender: '',
+        mobile: '',
+        birthYear: '1983',
+        birthMonth: '01',
+        birthDay: '01',
+        city: '',
+        region: '',
+        zipcode: '',
+        address: '',
+        privacyTermsAgree: false,
+        userLikes: []
+      }
+      let tempUser = req.flash('form');
+      let user = defaultUser;
+
+      if(tempUser.length)
+        user = tempUser[0];
+
+      if(user.userLikes == undefined) user.userLikes = []
+
+
+      res.view('user/register.jade', {
+        errors: req.flash('error'),
+        likes,
+        user
+      });
+    } catch (e) {
+      console.error(e.stack);
+    }
+
   },
   provider: function(req, res) {
     passport.endpoint(req, res);

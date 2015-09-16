@@ -20,7 +20,6 @@ module.exports.policies = {
   '*': [ 'passport', 'loginRequired']
   '/shop/*': true
 
-
   'auth':
     '*': ['passport']
 
@@ -38,6 +37,10 @@ module.exports.policies = {
     pay: []
   PaymentController:
     paid: []
+
+  #'/api/search/*': []
+  SearchController:
+    products: []
 }
 
 

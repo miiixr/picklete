@@ -48,14 +48,16 @@ module.exports.routes = {
   'post /admin/brands/create' : 'BrandController.create'
   'get /admin/brands/update' : 'BrandController.update'
   'post /admin/brands/update' : 'BrandController.update'
-  'get /admin/exclusive' : view: 'admin/exclusive'
+  'get /admin/exclusive' : 'SelectionActiveController.list'
+  'post /admin/exclusive' : 'SelectionActiveController.update'
   'get /admin/index-theme' : view: 'admin/themeActivities'
 
 
   'get /index' : view: 'main/index'
   'get /member/fav' : view: 'main/member-fav'
   'get /member/purchase' : view: 'main/member-purchase'
-  'get /member/setting' : view: 'main/member-setting'
+  'get /member/setting' : 'UserController.edit'
+  'post /member/update' : 'UserController.update'
   'get /shop/product' : view: 'main/shop-product'
 
   'get /shop/products' : 'ShopController.list'
@@ -92,6 +94,10 @@ module.exports.routes = {
   # end promotions
 
   'get /admin/bonus' : 'BonusController.list'
+  'post /admin/bonus' : 'BonusController.create'
+  'put /admin/bonus/:query' : 'BonusController.update'
+  'get /admin/bonus/edit' : 'BonusController.edit'
+  'get /admin/bonus/add' : 'BonusController.add'
 
   # 'get /admin/shop-item-list' : 'UserController.controlShopItemList'
   'get /admin/order' : 'OrderController.index'
@@ -100,6 +106,12 @@ module.exports.routes = {
   'post /admin/about' : 'AboutController.create'
 
   'get /admin/FAQ' : 'FAQController.FAQ'
+  'get /admin/FAQAdd' : 'FAQController.FAQAdd'
+  'post /admin/FAQAdd' : 'FAQController.FAQAdd'
+  'get /admin/FAQTypeUpdate' : 'FAQController.FAQTypeUpdate'
+  'post /admin/FAQTypeUpdate' : 'FAQController.FAQTypeUpdate'
+
+
   'get /admin/qa-detail' : 'UserController.controlQaDetail'
   'get /admin/qa-type' : 'UserController.controlQaType'
   'get /admin/qa-add' : 'UserController.controlQaAdd'
@@ -127,6 +139,8 @@ module.exports.routes = {
   'post /api/allpay/paid': 'PaymentController.paid'
 
   "get /admin/login": view: "admin/login"
+
+  'get /api/search/:keywords': 'SearchController.products'
 
   ###*
     ProductController
