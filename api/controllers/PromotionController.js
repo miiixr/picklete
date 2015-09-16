@@ -91,7 +91,6 @@ let PromotionController = {
   controlShopBuyMore: async (req, res) => {
     try {
       let additionalPurchase = await db.AdditionalPurchase.findAll();
-      // console.log("!!",additionalPurchase);
       res.view('promotion/controlShopBuyMore',{
         pageName: "shop-buy-more",
         additionalPurchase
