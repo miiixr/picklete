@@ -55,4 +55,32 @@ describe('about Payment', () => {
     });
   });
 
+  it.only('order paid allpay return post',(done) => {
+    let data = {
+      MerchantID : '123456789',
+      MerchantTradeNo : '123456abc',
+      RtnCode : '1',
+      RtnMsg : 'paid',
+      TradeNo : '201203151740582564',
+      TradeAmt : 22000,
+      PaymentDate : '2012/03/16 12:03:12',
+      PaymentType : 'ATM_TAISHIN',
+      PaymentTypeChargeFee : 25,
+      TradeDate : '2012/03/15 17:40:58',
+      SimulatePaid : 0,
+      CheckMacValue : '',
+    };
+    request(sails.hooks.http.app)
+    .post('/api/allpay/paid')
+    .send(data)
+    .end((err, res) => {
+      if (res.statusCode === 500) {
+        return done(body)
+      }
+      console.log(res.body);
+      res.statusCode.should.equal(200);
+      return done();
+    });
+  });
+
 });

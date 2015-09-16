@@ -1,5 +1,5 @@
 describe("about Order", () => {
-  describe.only("pay Order", () => {
+  describe("pay Order", () => {
     let testdOrder;
     before( async (done) => {
       var newOrder2 = {

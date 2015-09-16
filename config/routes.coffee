@@ -124,6 +124,7 @@ module.exports.routes = {
   'get /auth/:provider/:action': 'AuthController.callback'
 
   'get /api/order/pay': 'OrderController.pay'
+  'post /api/allpay/paid': 'PaymentController.paid'
 
   "get /admin/login": view: "admin/login"
 

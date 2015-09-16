@@ -13,7 +13,7 @@ var allpay = new Allpay({
   debug: sails.config.allpay.debug,
 });
 
-module.exports = {
+let PaymentController = {
   create: (req, res) => {
     let data = req.body;
 
@@ -41,4 +41,17 @@ module.exports = {
       return res.serverError(error);
     }
   },
+
+  paid: async(req, res) => {
+    try {
+      console.log('req',req.body);
+      return res.ok('OK');
+    } catch (e) {
+      console.error(e.stack);
+      let {message} = e;
+      res.serverError({message, success: false});
+    }
+  },
 };
+
+module.exports = PaymentController;
