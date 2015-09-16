@@ -1,12 +1,7 @@
 let SliderActivitiesController = {
     
   create: async (req, res) => {
-  	// console.log('Todo: write data into database');
     var params = req.body;
-    // console.log('------------');
-    // console.log(params);
-    // console.log('------------');
-
 
     let slider = {
       cover: params['cover'],
@@ -16,8 +11,6 @@ let SliderActivitiesController = {
       color: params['color'],
       link: params['link'] || ''
     };
-
-		// console.log(slider);
 
     try {
        await db.Slider.create(slider);
