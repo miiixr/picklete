@@ -13,7 +13,7 @@ describe.only("TopicActiveService", () => {
       // console.log('=== selectionActives.length ==>',selectionActives.length);
       // console.log('=== selectionActives[0].Images.url ==>',selectionActives[0].Images[0].url);
       // console.log('=== selectionActives[0].Images[0] ==>',selectionActives[0].Images[0].url);
-      console.log(JSON.stringify(topicActives, null, 4));
+      // console.log(JSON.stringify(topicActives, null, 4));
       topicActives.length.should.be.equal(2);
       topicActives[0].title.should.be.equal("title1");
       topicActives[0].toJSON().should.have.keys(
@@ -57,23 +57,36 @@ describe.only("TopicActiveService", () => {
     try {
 
       let topicActives = [{
-        "id": 2,
         "title": "title2",
         "weight": 0,
-        "Images": [
-          {"ImageA": {"path": 'http://fakeimg.pl/1100x160'}},
-          {"ImageA1": {"path": 'http://fakeimg.pl/1100x160'}},
-          {"ImageA2": {"path": 'http://fakeimg.pl/1100x160'}},
-          {"ImageB": {"path": 'http://fakeimg.pl/600x800'}},
-          {"ImageB1": {"path": 'http://fakeimg.pl/600x800'}},
-          {"ImageB2": {"path": 'http://fakeimg.pl/600x800'}},
-          {"ImageC": {"path": 'http://fakeimg.pl/1200x400'}},
-          {"ImageC1": {"path": 'http://fakeimg.pl/1200x400'}},
-          {"ImageC2": {"path": 'http://fakeimg.pl/1200x400'}}
-        ]
+        "ImageA": {"path": 'http://fakeimg.pl/1100x160'},
+        "ImageA1": {"path": 'http://fakeimg.pl/1100x160'},
+        "ImageA2": {"path": 'http://fakeimg.pl/1100x160'},
+        "ImageB": {"path": 'http://fakeimg.pl/600x800'},
+        "ImageB1": {"path": 'http://fakeimg.pl/600x800'},
+        "ImageB2": {"path": 'http://fakeimg.pl/600x800'},
+        "ImageC": {"path": 'http://fakeimg.pl/1200x400'},
+        "ImageC1": {"path": 'http://fakeimg.pl/1200x400'},
+        "ImageC2": {"path": 'http://fakeimg.pl/1200x400'}
+      },{
+        "title": "title3",
+        "weight": 0,
+        "ImageA": {"path": 'http://fakeimg.pl/600x800'},
+        "ImageA1": {"path": 'http://fakeimg.pl/600x800'},
+        "ImageA2": {"path": 'http://fakeimg.pl/600x800'},
+        "ImageB": {"path": 'http://fakeimg.pl/600x800'},
+        "ImageB1": {"path": 'http://fakeimg.pl/600x800'},
+        "ImageB2": {"path": 'http://fakeimg.pl/600x800'},
+        "ImageC": {"path": 'http://fakeimg.pl/600x800'},
+        "ImageC1": {"path": 'http://fakeimg.pl/600x800'},
+        "ImageC2": {"path": 'http://fakeimg.pl/600x800'}
       }];
 
       let result = await TopicActiveService.save(topicActives);
+      result.savedTopicActive[0].title.should.be.equal(topicActives[0].title);
+      result.savedTopicActive[1].title.should.be.equal(topicActives[1].title);
+
+      console.log(JSON.stringify(result, null, 4));
 
       result.success.should.be.true;
 
