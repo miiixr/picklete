@@ -23,6 +23,7 @@ jsFilesToInject = [
   "bower/moment/*.js"
   "!bower/jquery-form/*.js"
   "!bower/ckeditor/*.js"
+  "!javascripts/plugin/ckeditor/config.js"
   "javascripts/plugin/bootstrap.js"
   "javascripts/**/*.js"
   "javascripts/login.js"

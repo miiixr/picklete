@@ -119,10 +119,10 @@ let UserController = {
 
       if (query.keyword) {
         queryObj.$or = [
-          {comment: { $like: '%'+query.keyword+'%' }},
-          {email: { $like: '%'+query.keyword+'%' }},
-          {mobile: { $like: '%'+query.keyword+'%' }},
-          {fullName: { $like: '%'+query.keyword+'%' }}
+          { comment:  { $like: '%'+query.keyword+'%' }},
+          { email:    { $like: '%'+query.keyword+'%' }},
+          { mobile:   { $like: '%'+query.keyword+'%' }},
+          { fullName: { $like: '%'+query.keyword+'%' }}
         ];
       }
 

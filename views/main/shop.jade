@@ -1,0 +1,205 @@
+extends ../_layout_head
+
+block body
+    .mobile-hide
+      .container
+        ul.list-inline.list-shop-type
+          each dpt, index in dpts
+            li.active.dpt(data-id='#{dpt.id}')
+              a(href='#')
+                | #{dpt.name}
+          li.li-btn
+            a.btn.btn-default.border-radius-circle(data-toggle='collapse', href='#dropdown-menu-brands-3', aria-expanded='false') 品牌列表
+        // /list-shop-type
+      // /container
+      #dropdown-menu-brands-3.dropdown-menu-full.collapse
+        .container.p-top-4.p-bottom-4
+          h2.text-center.text-gray-darker 品牌列表
+          //
+            dropdown-menu-brands-shop
+            ==================================================
+          .clearfix.m-bottom-2.text-left
+            h4.text-gray-darker.m-bottom-4 代理品牌
+            ul.list-inline.list-brand
+              li
+                a(href='brands-shop')
+                  img.border-block-1.img-full(src='images/demo/brands-logo-1.jpg')
+              li
+                a(href='brands-shop')
+                  img.border-block-1.img-full(src='images/demo/brands-logo-2.jpg')
+              li
+                a(href='brands-shop')
+                  img.border-block-1.img-full(src='images/demo/brands-logo-3.jpg')
+              li
+                a(href='brands-shop')
+                  img.border-block-1.img-full(src='images/demo/brands-logo-4.jpg')
+              li
+                a(href='brands-shop')
+                  img.border-block-1.img-full(src='images/demo/brands-logo-5.jpg')
+              li
+                a(href='brands-shop')
+                  img.border-block-1.img-full(src='images/demo/brands-logo-6.jpg')
+              li
+                a(href='brands-shop')
+                  img.border-block-1.img-full(src='images/demo/brands-logo-7.jpg')
+              li
+                a(href='brands-shop')
+                  img.border-block-1.img-full(src='images/demo/brands-logo-8.jpg')
+              li
+                a(href='brands-shop')
+                  img.border-block-1.img-full(src='images/demo/brands-logo-9.jpg')
+              li
+                a(href='brands-shop')
+                  img.border-block-1.img-full(src='images/demo/brands-logo-10.jpg')
+              li
+                a(href='brands-shop')
+                  img.border-block-1.img-full(src='images/demo/brands-logo-11.jpg')
+              li
+                a(href='brands-shop')
+                  img.border-block-1.img-full(src='images/demo/brands-logo-12.jpg')
+              li
+                a(href='brands-shop')
+                  img.border-block-1.img-full(src='images/demo/brands-logo-13.jpg')
+          // /clearfix
+          .clearfix.m-bottom-2
+            h4.text-gray-darker.m-bottom-4 精選品牌
+            ul.list-inline.list-brand
+              li
+                a(href='brands-shop')
+                  img.border-block-1.img-full(src='images/demo/brands-logo-1.jpg')
+              li
+                a(href='brands-shop')
+                  img.border-block-1.img-full(src='images/demo/brands-logo-2.jpg')
+              li
+                a(href='brands-shop')
+                  img.border-block-1.img-full(src='images/demo/brands-logo-3.jpg')
+              li
+                a(href='brands-shop')
+                  img.border-block-1.img-full(src='images/demo/brands-logo-4.jpg')
+              li
+                a(href='brands-shop')
+                  img.border-block-1.img-full(src='images/demo/brands-logo-5.jpg')
+              li
+                a(href='brands-shop')
+                  img.border-block-1.img-full(src='images/demo/brands-logo-6.jpg')
+              li
+                a(href='brands-shop')
+                  img.border-block-1.img-full(src='images/demo/brands-logo-7.jpg')
+          // /clearfix
+        // /container
+      // /dropdown-menu
+    // /mobile-hide
+    .gray-lighter.min-height-38
+      .container
+        .tab-content
+          each dpt, val in dpts
+            - if (dpt.DptSubs.length)
+              .tab-pane.fade(id = "subDpt"+dpt.id)
+                  ul.list-inline.list-shop-type-sm.font-size-small
+                    each subDpt, index in dpt.DptSubs
+                      li(class=(index==0)?"active subDpt":"subDpt" data-id='#{subDpt.id}') 
+                        a(href='?dptSubId=#{subDpt.id}&dptId=#{dpt.id}')
+                          | #{subDpt.name}
+          // /list-shop-type-9
+        // /tab-content
+      // /container
+    // /gray-lighter
+    .container
+      .m-top-8.m-bottom-8
+        //
+          shop-filter
+          ==================================================
+        .btn-group
+          button.btn.btn-default.border-radius-circle.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+            span.glyphicon.glyphicon-list.m-right-1
+            | 預設排序
+          ul.dropdown-menu.width-210.m-top-2.p-top-2.p-bottom-2
+            li
+              a(href='#')
+                | 受關注度優先
+                span.glyphicon.glyphicon-chevron-thin-right.pull-right
+            li
+              a(href='#')
+                | 熱門收藏優先
+                span.glyphicon.glyphicon-chevron-thin-right.pull-right
+            li
+              a(href='#')
+                | 最新上架優先
+                span.glyphicon.glyphicon-chevron-thin-right.pull-right
+            li
+              a(href='#')
+                | 價格由高至低
+                span.glyphicon.glyphicon-chevron-thin-right.pull-right
+            li
+              a(href='#')
+                | 價格由低至高
+                span.glyphicon.glyphicon-chevron-thin-right.pull-right
+            li.p-8-30
+              | 顏色：
+              br
+              a.color-filter.color-red(href='#')
+              a.color-filter.color-orange(href='#')
+              a.color-filter.color-yellow(href='#')
+              a.color-filter.color-green(href='#')
+              a.color-filter.color-blue(href='#')
+              a.color-filter.color-purple(href='#')
+              a.color-filter.color-deeppink(href='#')
+              a.color-filter.color-pink(href='#')
+              a.color-filter.color-black(href='#')
+              a.color-filter.color-gray(href='#')
+              a.color-filter.color-graylight(href='#')
+              a.color-filter.color-gold(href='#')
+              a.color-filter.color-brown(href='#')
+              a.color-filter.color-mix(href='#')
+          // /dropdown-menu
+        // /btn-group
+        // /m-top-8 m-bottom-8
+      .row
+        each product,val in products
+          .col-md-3.col-sm-4.col-xs-6
+            .item-block.m-bottom-4
+              a.item-like.active(href='#')
+                span.glyphicon.glyphicon-heart
+              // /item-like
+              a(href='/shop/product')
+                img.img-full.item-show(src='images/demo/shop-item-d-1.jpg')
+                img.img-full.item-hide(src='images/demo/shop-item-1-2.jpg')
+            // /item-block
+            .item-text-block.m-bottom-8
+              h6.text-muted
+                a(href='brands.html')
+                | #{product.madeby}
+              h4.m-bottom-2.h4-max-two-hide
+                a(href='/shop/product')
+                | #{product.name}
+              h5
+                | #{product.price}
+            // /item-text-block
+          // /col-md-3
+        // /row
+      .text-center.m-bottom-8
+        //
+          pagination-block
+          ==================================================
+        nav
+          ul.pagination
+            li
+              a(href='#', aria-label='Previous')
+                span(aria-hidden='true') «
+            li.active
+              a(href='#') 1
+            li
+              a(href='#') 2
+            li
+              a(href='#') 3
+            li
+              a(href='#') 4
+            li
+              a(href='#') 5
+            li
+              a(href='#', aria-label='Next')
+                span(aria-hidden='true') »
+      // /text-center
+    // /container
+block js
+  script(src="/javascripts/main/shop.js")

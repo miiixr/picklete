@@ -41,7 +41,7 @@ AuthController = {
   provider: function(req, res) {
     passport.endpoint(req, res);
   },
-  callback: function(req, res) {
+  callback: async function(req, res) {
     var tryAgain;
     tryAgain = function(err) {
       var action, flashError;
@@ -70,7 +70,7 @@ AuthController = {
 
       }
     };
-    passport.callback(req, res, function(err, user, challenges, statuses) {
+    await passport.callback(req, res, function(err, user, challenges, statuses) {
       if (err || !user) {
         return tryAgain(challenges);
       }
@@ -81,9 +81,11 @@ AuthController = {
         }
         req.session.authenticated = true;
 
-        if (user.RoleId == 2) {
+        if (user.Role != undefined && user.Role.authority == 'admin') {
           return res.redirect('/admin/goods');
         }
+
+        console.log('=== user.Role ===', user);
 
         return res.redirect('/');
       });

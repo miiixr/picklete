@@ -5,6 +5,7 @@ var querystring = require('querystring');
 var moment = require('moment');
 var util = require('util');
 var _ = require('lodash');
+var dataRequest = require('request');
 
 /**
  *  * API 查詢端點
@@ -20,7 +21,7 @@ var _ENDPOINT = {
   queryPeriodCreditCardTradeInfo: '/Cashier/QueryPeriodCreditCardTradeInfo',
 	// 信用卡關帳/退刷/取消/放棄
   creditDetailDoAction: '/CreditDetail/DoAction',
-	//廠商通知退款	
+	//廠商通知退款
   aioChargeback: '/Cashier/AioChargeback'
 };
 
@@ -63,6 +64,7 @@ var _api = {
   merchantID: '',
   hashKey: '',
   hashIV: '',
+  testBaseUrl: 'http://payment-stage.allpay.com.tw',
   baseUrl: 'payment.allpay.com.tw',
   port: 443,
   useSSL: true,
@@ -121,7 +123,7 @@ Allpay.prototype = {
     _api.port = opts.port || _api.port;
     _api.useSSL = opts.hasOwnProperty('useSSL') ? opts.useSSL : _api.useSSL;
   },
-	
+
 /**
   * 產生交易檢查碼
   *
@@ -138,14 +140,21 @@ Allpay.prototype = {
     var sortedKeys = _.sortBy(keys, function(key) {
       return key;
     });
-
+		
     var uri = _.map(sortedKeys, function(key) {
       return key + '=' + data[key];
     }).join('&');
 
     uri = util.format('HashKey=%s&%s&HashIV=%s', _api.hashKey, uri, _api.hashIV);
-    uri = encodeURIComponent(uri).replace(/%20/g, '+').toLowerCase();
-
+		uri = encodeURIComponent(uri);
+		var regex;
+		var find = ["%2d", "%5f", "%2e", "%21", "%2a", "%28", "%29", "%20"];
+		var replace = ["-", "_", ".", "!", "*", "(", ")", "+"];
+		for (var i = 0; i < find.length; i++) {
+		  regex = new RegExp(find[i], "g");
+		  uri = uri.replace(regex, replace[i]);
+		}
+    uri = uri.toLowerCase();
     var checksum = crypto.createHash('md5').update(uri).digest('hex').toUpperCase();
 
     return checksum;
@@ -190,7 +199,7 @@ Allpay.prototype = {
 
 		// 交易類型，設定為aio
 		data.PaymentType = 'aio';
-		
+
 		// 交易金額
 		data.TotalAmount = opts.TotalAmount;
 
@@ -206,9 +215,9 @@ Allpay.prototype = {
 				data.ItemName += '#'
 			}
 		}
-	
+
 		// 付款完成通知回傳網址，預設為Allpay所提供的網站
-		data.ReturnURL = (opts.ReturnURL) ? opts.ReturnURL : 'http://www.allpay.com.tw/receive.php'; 
+		data.ReturnURL = (opts.ReturnURL) ? opts.ReturnURL : 'http://www.allpay.com.tw/receive.php';
 
 		// 選擇預設付款方式
 		if(typeof opts.ChoosePayment !== 'object'){
@@ -257,14 +266,26 @@ Allpay.prototype = {
 
 		// 檢查碼
 		data.CheckMacValue = opts.hasOwnProperty('CheckMacValue') ? opts.CheckMacValue : this.genCheckMacValue(data);
-		//callback(this.createFormHtml(data));
-		var obj = {};
-		var keys = _.difference(_.keys(data), _.keys(opts));
+		// sendRequest('POST', _ENDPOINT.aioCheckOut, data, callback);
+		dataRequest.post( {
+			url: _api.testBaseUrl + _ENDPOINT.aioCheckOut,
+			form:data,
+			followRedirect: true,
+			// followAllRedirects: true,
 
-		for(var i = 0; i<keys.length; i++){
-			obj[keys[i]] = data[keys[i]];
-		}
-		callback(obj);
+		}, function (error, res, body) {
+			console.log(res.statusCode);
+			console.log(res.body);
+		})
+		// callback(this.createFormHtml(data));
+		// console.log(data);
+		// var obj = {};
+		// var keys = _.difference(_.keys(data), _.keys(opts));
+		//
+		// for(var i = 0; i<keys.length; i++){
+		// 	obj[keys[i]] = data[keys[i]];
+		// }
+		// callback(obj);
 	},
 
 /**

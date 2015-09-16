@@ -3,6 +3,7 @@
 // # 3. 建立訂單 order
 var OrderController;
 
+
 OrderController = {
   debug: async (req, res) => {
     try {
@@ -149,11 +150,21 @@ OrderController = {
     }
   },
   create: async (req, res) => {
-
     var newOrder = req.body.order;
     try {
+      let useAllPay = false;
+      if(sails.config.useAllPay !== undefined)
+        useAllPay = sails.config.useAllPay;
       let result = await OrderService.create(newOrder);
-      return res.ok(result);
+      if(useAllPay){
+        var allPayData = await OrderService.allPayCreate(result.order);
+        console.log("!!!",allPayData);
+        res.view('order/allpay',{
+          allPayData
+        });
+      }else{
+        return res.ok(result);
+      }
     } catch (e) {
       console.error(e.stack);
       let {message} = e;
@@ -161,13 +172,41 @@ OrderController = {
       return res.serverError({message, success});
     }
   },
+  pay: async (req, res)=> {
+    try {
+      var id = req.query.id;
+      let orderData = await db.Order.findOne({
+        where: {id},
+        include:{
+            model: db.OrderItem
+          }
+      });
+
+      if (!orderData) {
+        return res.serverError({
+          msg: '再確認一下喔，驗證碼錯誤哟 :)！'
+        });
+      }
+      console.log("!!!",orderData);
+      var allPayData = await OrderService.allPayCreate(orderData);
+      res.view('order/allpay',{
+        allPayData
+      });
+
+    } catch (e) {
+      console.error(e.stack);
+      let {message} = e;
+      let success = false;
+      return res.serverError({message, success});
+    }
+  },
+
   // 查詢
   status: async function(req, res) {
 
     try{
 
       var email = req.query.email;
-      
       let userData = await db.User.findOne({
         where: {email}
       });

@@ -4,11 +4,10 @@ let domain = sails.config.domain || process.env.domain || 'http://localhost:1337
 module.exports = {
   upload: async (req, res) => {
 
-    // console.log(files)
     var object = {
-      filename: req.body['filename'] || '',
-      width: parseInt(req.body['width'], 10) || 0,
-      height: parseInt(req.body['height'], 10) || 0,
+      filename: req.body['filename'] || req.query['filename'] || '',
+      width: parseInt(req.body['width'], 10) || req.query['width'] || 0,
+      height: parseInt(req.body['height'], 10) || req.query['height'] || 0,
     }
     console.log(object);
 

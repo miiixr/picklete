@@ -31,7 +31,7 @@ module.exports.routes = {
   "/": view: "homepage"
   'get /login': 'AuthController.login'
   'get /logout': 'AuthController.logout'
-  'get /register': 'AuthController.register'
+  'get /register' : 'AuthController.register'
 
   'get /admin/login' : 'UserController.controlLogin'
   'get /admin/index-slider' : 'UserController.indexSlider'
@@ -48,8 +48,22 @@ module.exports.routes = {
   'post /admin/brands/create' : 'BrandController.create'
   'get /admin/brands/update' : 'BrandController.update'
   'post /admin/brands/update' : 'BrandController.update'
-  'get /admin/exclusive' : view: 'admin/exclusive'
+  'get /admin/exclusive' : 'SelectionActiveController.list'
+  'post /admin/exclusive' : 'SelectionActiveController.update'
   'get /admin/index-theme' : view: 'admin/themeActivities'
+
+
+  'get /index' : view: 'main/index'
+  'get /member/fav' : view: 'main/member-fav'
+  'get /member/purchase' : view: 'main/member-purchase'
+  'get /member/setting' : view: 'main/member-setting'
+  'get /shop/product' : view: 'main/shop-product'
+
+  'get /shop/products' : 'ShopController.list'
+  'get /brands' : view: 'main/brands'
+  'get /user/cart' : view: 'main/cart'
+  'get /user/cart-step-2' : view: 'main/cart-step-2'
+  'get /user/cart-done' : view: 'main/cart-done'
 
 
   'get /admin/department' : 'DptController.list'
@@ -86,8 +100,11 @@ module.exports.routes = {
 
   # 'get /admin/shop-item-list' : 'UserController.controlShopItemList'
   'get /admin/order' : 'OrderController.index'
-  'get /admin/about' : 'UserController.controlAbout'
-  'get /admin/qa' : 'UserController.controlQa'
+
+  'get /admin/about' : 'AboutController.create'
+  'post /admin/about' : 'AboutController.create'
+
+  'get /admin/FAQ' : 'FAQController.FAQ'
   'get /admin/qa-detail' : 'UserController.controlQaDetail'
   'get /admin/qa-type' : 'UserController.controlQaType'
   'get /admin/qa-add' : 'UserController.controlQaAdd'
@@ -111,8 +128,11 @@ module.exports.routes = {
   'get /auth/:provider/callback': 'AuthController.callback'
   'get /auth/:provider/:action': 'AuthController.callback'
 
+  'get /api/order/pay': 'OrderController.pay'
 
   "get /admin/login": view: "admin/login"
+
+  'get /api/search/:keywords': 'SearchController.products'
 
   ###*
     ProductController

@@ -113,20 +113,21 @@
   padding: 0 !important;
   border-radius: $border-radius-circle;
   margin-top: 5px;
-  &.color-red, &.color-red:hover { background: #e73a3a; }
-  &.color-orange, &.color-orange:hover { background: #f29100; }
-  &.color-yellow, &.color-yellow:hover { background: #fcc232; }
-  &.color-green, &.color-green:hover { background: #adce74; }
-  &.color-blue, &.color-blue:hover { background: #40bfef; }
-  &.color-purple, &.color-purple:hover { background: #8c589f; }
-  &.color-deeppink, &.color-deeppink:hover { background: #e8476d; }
-  &.color-pink, &.color-pink:hover { background: #ffabbf; }
-  &.color-black, &.color-black:hover { background: #33363b; }
-  &.color-gray, &.color-gray:hover { background: #adafb1; }
-  &.color-graylight, &.color-graylight:hover { background: #ebeced; }
-  &.color-gold, &.color-gold:hover { background: #d8b419; }
-  &.color-brown, &.color-brown:hover { background: #a07444; }
-  &.color-mix, &.color-mix:hover { background: url(../images/bg-color-mix.png); }
+  margin-right: 5px;
+  &.color-red, &.color-red:hover, &.color-red:focus { background: #e73a3a; }
+  &.color-orange, &.color-orange:hover, &.color-orange:focus { background: #f29100; }
+  &.color-yellow, &.color-yellow:hover, &.color-yellow:focus { background: #fcc232; }
+  &.color-green, &.color-green:hover, &.color-green:focus { background: #adce74; }
+  &.color-blue, &.color-blue:hover, &.color-blue:focus { background: #40bfef; }
+  &.color-purple, &.color-purple:hover, &.color-purple:focus { background: #8c589f; }
+  &.color-deeppink, &.color-deeppink:hover, &.color-deeppink:focus { background: #e8476d; }
+  &.color-pink, &.color-pink:hover, &.color-pink:focus { background: #ffabbf; }
+  &.color-black, &.color-black:hover, &.color-black:focus { background: #33363b; }
+  &.color-gray, &.color-gray:hover, &.color-gray:focus { background: #adafb1; }
+  &.color-graylight, &.color-graylight:hover, &.color-graylight:focus { background: #ebeced; }
+  &.color-gold, &.color-gold:hover, &.color-gold:focus { background: #d8b419; }
+  &.color-brown, &.color-brown:hover, &.color-brown:focus { background: #a07444; }
+  &.color-mix, &.color-mix:hover, &.color-mix:focus { background: url(../images/bg-color-mix.png); }
 }
 
 .edit-link {

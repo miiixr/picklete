@@ -1,4 +1,6 @@
 module.exports = {
+  createInitData: false
+  useAllPay: true
   environment: ''
   initData: ''
   domain: 'http://localhost:1337'
@@ -20,5 +22,11 @@ module.exports = {
     'database': 'picklete',
     'dialect': 'mysql',
     'force': true
+  }
+  allpay: {
+    merchantID: '2000132',
+    hashKey: '5294y06JbISpM5x9',
+    hashIV: 'v77hoKGq4kWxNNIS',
+    debug: false,
   }
 }
