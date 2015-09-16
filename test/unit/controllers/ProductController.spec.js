@@ -1,4 +1,5 @@
   import path from 'path';
+  var sinon = require('sinon');
 
 describe("about Product", () => {
 
@@ -6,6 +7,12 @@ describe("about Product", () => {
   var cookie;
 
   before(async (done) => {
+
+    // simulate login
+    sinon.stub(UserService, 'getLoginState', (req) => {
+      return true;
+    });
+
     let newProduct = {
       name: '斗六文旦柚禮盒',
       description: '3斤裝',
@@ -17,15 +24,13 @@ describe("about Product", () => {
     };
     testProduct = await db.Product.create(newProduct);
 
-    request(sails.hooks.http.app)
-    .post('/auth/local')
-    .send({ identifier: 'admin', password: 'admin' })
-    .end(function (err, res) {
-      cookie = res.headers['set-cookie'];
-      return done();
-    });
-    // done();
+    done();
+  });
 
+  after((done) => {
+    // end this simulated login
+    UserService.getLoginState.restore();
+    done();
   });
 
   it('one', (done) => {
@@ -408,6 +413,7 @@ describe("about Product", () => {
 
   // });
 
+  // delete productGm
   it.only('delete productGm', (done) => {
     request(sails.hooks.http.app)
     .post(`/admin/goods/delete`)
@@ -416,13 +422,17 @@ describe("about Product", () => {
       if(res.statusCode === 500){
         return done(err);
       }
+      console.log('=== res.body ==>\n',res.body);
+      console.log('=== res.body.id ==>\n',res.body.id);
+      console.log('=== res.body.deletedAt ==>\n',res.body.deletedAt);
       res.statusCode.should.equal(200);
-      // res.statusCode.should.equal(200);
-      // res.body.should.be.Object;
-      // res.body.isPublish.should.equal(false);
+      res.body.should.be.Object;
+      res.body.id.should.equal(1);
+      res.body.deletedAt.should.be.Date;
       done();
     });
   });
+  // end delete productGm
 
 
 });

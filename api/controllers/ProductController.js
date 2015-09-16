@@ -170,13 +170,7 @@ let ProductController = {
     try {
       let productGmId = req.body.id;
       let jsonOut = req.body.jsonOut;
-      // console.log('=== req.body ==>',req.body);
-      // console.log('=== jsonOutput ==>',jsonOutput);
-      // console.log('=== productDelete ==>',productDelete);
-      // console.log('=== productGmId ==>',productGmId);
-      // console.log('=== jsonOut ==>',jsonOut);
       let productDelete = await ProductService.delete(productGmId);
-      // console.log('=== productDelete ==>',productDelete);
       if(jsonOut){
         return res.ok(productDelete.toJSON());
       }

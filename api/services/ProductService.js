@@ -196,12 +196,13 @@ module.exports = {
   // delete
   delete: async (productGmId) => {
     try {
-      // find and delete products
+      // find products first
       let findProducts = await db.Product.findAll({
         where: {
           ProductGmId: productGmId
         }
       });
+      // lets delete all of them.
       if(findProducts.length>0){
         let deleteProducts = await* findProducts.map((product) => {
           product.destroy();
@@ -212,9 +213,9 @@ module.exports = {
       if (!findProductGm) {
         throw new Error('找不到商品！ 請確認商品ID！');
       }
-      await findProductGm.destroy();
+      let deleteProductGm = await findProductGm.destroy();
       // finish
-      return;
+      return deleteProductGm;
     } catch (error) {
       console.error(error.stack);
       let msg = error.message;
