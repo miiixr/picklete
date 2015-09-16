@@ -43,6 +43,9 @@ module.exports.policies = {
 
   shopController:
     list: []
+
+  SelectionActiveController:
+    index: []
 }
 
 

@@ -151,42 +151,33 @@ block body
     // /page-header
     hr.hr-6.m-bottom-6
     | &#x9;
-    .row.row-s
-      .col-xs-12
-        a(href='#')
-          img.img-full.m-bottom-4(src='http://fakeimg.pl/1100x160/dddddd/FFF/?text=1100x160')
-      // /col-xs-12
-    // /row
-    .row.row-s
-      .col-xs-12
-        a(href='#')
-          img.img-full.m-bottom-4(src='http://fakeimg.pl/1100x350/dddddd/FFF/?text=1100x350')
-      // /col-xs-12
-    // /row
-    .row.row-s
-      .col-xs-6
-        a(href='#')
-          img.img-full.m-bottom-4(src='http://fakeimg.pl/545x350/dddddd/FFF/?text=545x350')
-      // /col-xs-6
-      .col-xs-6
-        a(href='#')
-          img.img-full.m-bottom-4(src='http://fakeimg.pl/545x350/dddddd/FFF/?text=545x350')
-      // /col-xs-6
-    // /row
-    .row.row-s
-      .col-xs-4
-        a(href='#')
-          img.img-full.m-bottom-4(src='http://fakeimg.pl/360x230/dddddd/FFF/?text=360x230')
-      // /col-xs-4
-      .col-xs-4
-        a(href='#')
-          img.img-full.m-bottom-4(src='http://fakeimg.pl/360x230/dddddd/FFF/?text=360x230')
-      // /col-xs-4
-      .col-xs-4
-        a(href='#')
-          img.img-full.m-bottom-4(src='http://fakeimg.pl/360x230/dddddd/FFF/?text=360x230')
-      // /col-xs-4
-    // /row
+    each activity in activities
+      .row.row-s
+        each image in activity.Images
+          case activity.Images.length
+            when 1
+              .col-xs-12
+                if image.openWindow
+                  a(href= image.url ,target='_blank')
+                else
+                  a(href= image.url)
+                    img.img-full.m-bottom-4(src= image.path)
+            when 2
+              .col-xs-6
+                if image.openWindow
+                  a(href= image.url ,target='_blank')
+                else
+                  a(href= image.url)
+                    img.img-full.m-bottom-4(src= image.path)
+            when 3
+              .col-xs-4
+                if image.openWindow
+                  a(href= image.url ,target='_blank')
+                else
+                  a(href= image.url)
+                    img.img-full.m-bottom-4(src= image.path)
+          // /col-xs-12
+        // /row
     .page-header.text-center.text-uppercase
       h3
         | limited time offer
