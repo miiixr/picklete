@@ -19,7 +19,6 @@ let SelectionActiveController = {
   index: async (req, res) => {
     try {
       let activities = await SelectionActiveService.getModel();
-      console.log("!!",activities[0]);
       res.view("main/index", {
         pageName: "/index",
         activities
