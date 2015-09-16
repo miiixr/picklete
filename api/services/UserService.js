@@ -13,7 +13,7 @@ module.exports = {
   },
 
   getLoginUser: function(req) {
-    if (req.session.passport.user) {
+    if (req.session.passport != undefined && req.session.passport.user) {
       return req.session.passport.user;
     } else {
       return null;
