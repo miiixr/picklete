@@ -1,16 +1,16 @@
 let AboutController = {
   create : async(req,res) => {
     try{
-      let about = await db.About.findById(1);
+      let about = await db.About.findOne();
       if (req.method === "GET") {
-         return res.view("user/controlAbout", {
+         return res.view("admin/controlAbout", {
            pageName: "/admin/about",
            about: about.dataValues || null
         });
       }
 
       var params = req.body;
-      console.log(params);
+
       if (! params) {
         return res.redirect("/admin/about");
       }
