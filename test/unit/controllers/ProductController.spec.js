@@ -414,7 +414,7 @@ describe("about Product", () => {
   // });
 
   // delete productGm
-  it.only('delete productGm', (done) => {
+  it('delete productGm', (done) => {
     request(sails.hooks.http.app)
     .post(`/admin/goods/delete`)
     .send({id:1, jsonOut: true})
