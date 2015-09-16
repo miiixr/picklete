@@ -13,7 +13,7 @@ var allpay = new Allpay({
   debug: sails.config.allpay.debug,
 });
 
-module.exports = {
+let PaymentController = {
   create: (req, res) => {
     let data = req.body;
 
@@ -41,4 +41,39 @@ module.exports = {
       return res.serverError(error);
     }
   },
+
+
+  paid: async(req, res) => {
+    try {
+      console.log('req',req.body);
+      let data = req.body;
+      let checkMacValue = allpay.genCheckMacValue(data);
+      let find = data.MerchantTradeNo.replace(/(\w{8})(\w{4})(\w{4})(\w{4})(\w{12})/,"$1-$2-$3-$4-$5");
+      let order = await db.Order.findById(find);
+
+      if(!order)
+        throw new Error(`${find} 嚴重錯誤!!付款後找不到訂單!!`);
+        
+      if (!(sails.config.environment === 'development' || sails.config.environment === 'test')) {
+        if(checkMacValue != data.CheckMacValue)
+          throw new Error(`CheckMacError!!`);
+      }
+      order.TradeNo = data.TradeNo;
+      order.allPayRtnCode = data.RtnCode;
+      order.allPayRtnMsg = data.RtnMsg;
+      order.allPayPaymentType = data.PaymentType;
+      order.paymentIsConfirmed = true
+      order.paymentConfirmDate = data.PaymentDate;
+      order.paymentConfirmAmount = data.TradeAmt;
+      await order.save();
+
+      return res.ok('OK');
+    } catch (e) {
+      console.error(e.stack);
+      let {message} = e;
+      res.serverError(message);
+    }
+  },
 };
+
+module.exports = PaymentController;

@@ -7,6 +7,10 @@ module.exports = (sequelize, DataTypes) ->
       defaultValue: DataTypes.UUIDV4
     serialNumber: DataTypes.STRING
     quantity: DataTypes.INTEGER
+    TradeNo: DataTypes.STRING
+    allPayRtnCode: DataTypes.INTEGER
+    allPayRtnMsg: DataTypes.STRING
+    allPayPaymentType: DataTypes.STRING
     paymentTotalAmount: DataTypes.FLOAT
     paymentIsConfirmed: DataTypes.BOOLEAN
     paymentConfirmDate: DataTypes.DATE

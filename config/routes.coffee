@@ -141,6 +141,16 @@ module.exports.routes = {
 
   'get /api/search/:keywords': 'SearchController.products'
 
+  'post /allpay/paid':{
+    controller: "PaymentController",
+    action: "paid"
+    cors: {
+      allRoutes: true,
+      origin: "*",
+      credentials: false
+    }
+  }
+
   ###*
     ProductController
   ###

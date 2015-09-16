@@ -35,6 +35,8 @@ module.exports.policies = {
     sync: []
     bonus: []
     pay: []
+  PaymentController:
+    paid: []
 
   #'/api/search/*': []
   SearchController:
