@@ -88,10 +88,20 @@ let PromotionController = {
       pageName: "shop-discount-add-item"
     });
   },
-  controlShopBuyMore: function(req, res) {
-    res.view('promotion/controlShopBuyMore',{
-      pageName: "shop-buy-more"
-    });
+  controlShopBuyMore: async (req, res) => {
+    try {
+      let additionalPurchase = await db.AdditionalPurchase.findAll();
+      // console.log("!!",additionalPurchase);
+      res.view('promotion/controlShopBuyMore',{
+        pageName: "shop-buy-more",
+        additionalPurchase
+      });
+    } catch (e) {
+      console.error(e.stack);
+      let {message} = e;
+      let success = false;
+      return res.serverError({message, success});
+    }
   },
   controlShopBuyMoreDetail: function(req, res) {
     res.view('promotion/controlShopBuyMoreDetail',{
