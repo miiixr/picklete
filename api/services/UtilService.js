@@ -6,5 +6,35 @@ module.exports = {
       crypto.randomBytes(20, (error, buf) => resolve(buf.toString("hex")))
     );
     return token;
+  },
+
+  errorHandle: async (req, res) => {
+    console.log('=== errorHandle ===');
+
+    try {
+      let loginUser = UserService.getLoginUser(req);
+      let redirectUrl = '';
+
+      if(loginUser == undefined) {
+        redirectUrl = '/shop/list';
+      } else if(loginUser.role.authority == 'admin'){
+        redirectUrl = '/admin/goods';
+      } else if(loginUser.role.authority == 'user'){
+        redirectUrl = '/shop/list';
+      }else {
+        redirectUrl = '/shop/list';
+      }
+
+      console.log('=== redirectUrl ===', redirectUrl);
+
+
+
+      return res.redirect(redirectUrl);
+
+    } catch (e) {
+
+      console.error(e.stack);
+
+    }
   }
 }
