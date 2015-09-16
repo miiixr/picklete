@@ -34,10 +34,10 @@ module.exports.routes = {
   'get /register' : 'AuthController.register'
 
   'get /admin/login' : 'UserController.controlLogin'
-  'get /admin/index-slider' : 'UserController.indexSlider'
-  'get /admin/index-slider-detail' : 'UserController.indexSliderDetail'
+  #'get /admin/index-slider' : 'UserController.indexSlider'
+  #'get /admin/index-slider-detail' : 'UserController.indexSliderDetail'
   'get /admin/index-exclusive' : 'UserController.indexExclusive'
-  'get /admin/index-theme' : 'UserController.indexTheme'
+  #'get /admin/index-theme' : 'UserController.indexTheme'
 
   'get /admin/password' : 'UserController.password'
   'post /admin/password' : 'UserController.password'
@@ -51,6 +51,14 @@ module.exports.routes = {
   'get /admin/exclusive' : 'SelectionActiveController.list'
   'post /admin/exclusive' : 'SelectionActiveController.update'
   'get /admin/index-theme' : view: 'admin/themeActivities'
+
+  'get /admin/index-slider' : 'SliderActivitiesController.list'
+  'get /admin/slider/create': view: 'admin/sliderActivitiesDetail'
+  'post /admin/slider/create' : 'SliderActivitiesController.create'
+  'get /admin/slider/update' : 'SliderActivitiesController.showUpdate'
+  'post /admin/slider/update' : 'SliderActivitiesController.update'
+  'post /admin/slider/delete' : 'SliderActivitiesController.delete'
+
 
 
   'get /index' : view: 'main/index'
@@ -334,6 +342,41 @@ module.exports.routes = {
 
   "/:controller/:action/:id?": {}
 
+  'post /api/slider/create': {
+    controller: "SliderActivitiesController",
+    action: "createSlider",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+
+  'get /api/slider/list': {
+    controller: "SliderActivitiesController",
+    action: "listSlider",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+
+  'post /api/slider/update/:id': {
+    controller: "SliderActivitiesController",
+    action: "updateSlider",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+
+  'post /api/slider/delete/:id': {
+    controller: "SliderActivitiesController",
+    action: "deleteSlider",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
 }
 
 ###*
