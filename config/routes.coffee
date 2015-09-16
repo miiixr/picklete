@@ -104,6 +104,8 @@ module.exports.routes = {
   'post /admin/FAQAdd' : 'FAQController.FAQAdd'
   'get /admin/FAQTypeUpdate' : 'FAQController.FAQTypeUpdate'
   'post /admin/FAQTypeUpdate' : 'FAQController.FAQTypeUpdate'
+  'post /admin/FAQDelete' : 'FAQController.FAQDelete'
+  'post /admin/FAQTypeDelete' : 'FAQController.FAQTypeDelete'
 
 
   'get /admin/qa-detail' : 'UserController.controlQaDetail'
