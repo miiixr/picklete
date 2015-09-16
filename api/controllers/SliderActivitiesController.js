@@ -55,22 +55,23 @@ let SliderActivitiesController = {
 
   update: async (req, res) => {
 
-    var params = req.body;
-    let id = req.body['id'];
-    let updateSlider = await db.Slider.findOne({ where: {id: id} });
-    
-    updateSlider.cover = req.body['cover'];
-    updateSlider.title = req.body['title'];
-    updateSlider.description = req.body['description'];
-    updateSlider.location = req.body['location'];
-    updateSlider.color = req.body['color'];
-    updateSlider.link = req.body['link'];
-
     try {
-       await updateSlider.save();
-       return res.redirect("/admin/index-slider");
+      var params = req.body;
+      let id = parseInt(req.body['id'] || req.query.id);
+      let updateSlider = await db.Slider.findOne({ where: {id: id} });
+      
+      updateSlider.cover = req.body['cover'];
+      updateSlider.title = req.body['title'];
+      updateSlider.description = req.body['description'];
+      updateSlider.location = req.body['location'];
+      updateSlider.color = req.body['color'];
+      updateSlider.link = req.body['link'];
+
+    
+      await updateSlider.save();
+      return res.redirect("/admin/index-slider");
     } catch (e) {
-       return res.serverError(e);
+      return res.serverError(e);
     }
   },
 
