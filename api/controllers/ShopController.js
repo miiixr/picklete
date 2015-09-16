@@ -28,7 +28,7 @@ let ShopController = {
 
         include: [{
           model: db.ProductGm,
-          require:true,
+          required:true,
           include: [
             includeDpt,
             includeDptSub
@@ -54,6 +54,7 @@ let ShopController = {
 
 
     } catch (e) {
+      console.log(e.stack);
 
       return res.serverError(e);
     }
