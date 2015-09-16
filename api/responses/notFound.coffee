@@ -34,8 +34,8 @@ module.exports = notFound = (data, options) ->
   else
     sails.log.verbose "Sending 404 (\"Not Found\") response"
 
-
-  return UtilService.errorHandle(req, res);
+  if(eq.options.controller != undefined)
+    return UtilService.errorHandle(req, res);
 
   # Only include errors in response if application environment
   # is not set to 'production'.  In production, we shouldn't
