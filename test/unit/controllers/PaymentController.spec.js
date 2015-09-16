@@ -2,12 +2,47 @@ var Allpay = require('../../../api/services/AllpayService');
 var sinon = require('sinon');
 
 describe('about Payment', () => {
-
+  let testdOrder;
   before(async (done) => {
 
     sinon.stub(UserService, 'getLoginState', (req) => {
       return true;
     });
+
+    var newOrder2 = {
+      serialNumber: '99999',
+      paymentIsConfirmed: true,
+      paymentTotalAmount: 1000,
+      paymentConfirmName:  '測試',
+      paymentConfirmPostfix: '54321',
+      quantity: 2,
+      UserId: 2,
+    };
+    testdOrder = await db.Order.create(newOrder2);
+
+    var orderItems2 =[{
+      name: '好物三選1',
+      description: '好東西，買買買',
+      quantity: 1,
+      price: 500,
+      OrderId: testdOrder.id,
+      ProductId: 1
+    },{
+      name: '好物三選2',
+      description: '好東西，買買買',
+      quantity: 2,
+      price: 100,
+      OrderId: testdOrder.id,
+      ProductId: 1
+    },{
+      name: '好物三選3',
+      description: '好東西，買買買',
+      quantity: 3,
+      price: 200,
+      OrderId: testdOrder.id,
+      ProductId: 1
+    }];
+    let createOrderItems = await db.OrderItem.bulkCreate(orderItems2);
 
     done();
   });
@@ -58,7 +93,7 @@ describe('about Payment', () => {
   it.only('order paid allpay return post',(done) => {
     let data = {
       MerchantID : '123456789',
-      MerchantTradeNo : '123456abc',
+      MerchantTradeNo : testdOrder.id.replace(/-/g,''),
       RtnCode : '1',
       RtnMsg : 'paid',
       TradeNo : '201203151740582564',
@@ -68,7 +103,7 @@ describe('about Payment', () => {
       PaymentTypeChargeFee : 25,
       TradeDate : '2012/03/15 17:40:58',
       SimulatePaid : 0,
-      CheckMacValue : '',
+      CheckMacValue : '989ED3A9503EEF31CF07C387F7E2AD5C',
     };
     request(sails.hooks.http.app)
     .post('/api/allpay/paid')

@@ -83,7 +83,7 @@ module.exports = {
       let domain = sails.config.domain || process.env.domain || 'http://localhost:1337';
       let data = {
         MerchantID: sails.config.allpay.merchantID,
-        MerchantTradeNo: order.serialNumber,
+        MerchantTradeNo: order.id.replace(/-/g,''),
         MerchantTradeDate: sails.moment(time).format('YYYY/MM/DD HH:mm:ss'),
         PaymentType: 'aio',
         TotalAmount: order.paymentTotalAmount,

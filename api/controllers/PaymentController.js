@@ -42,9 +42,19 @@ let PaymentController = {
     }
   },
 
+
   paid: async(req, res) => {
     try {
       console.log('req',req.body);
+      let data = req.body;
+      let find = data.MerchantTradeNo.replace(/(\w{8})(\w{4})(\w{4})(\w{4})(\w{12})/,"$1-$2-$3-$4-$5");
+      let order = await db.Order.findById(find);
+      if(order)
+        console.log("!!!",order);
+      else
+        throw new Error(`${find} 嚴重錯誤!!付款後找不到訂單!!`);
+
+      var checkMacValue = allpay.genCheckMacValue(data);
       return res.ok('OK');
     } catch (e) {
       console.error(e.stack);
