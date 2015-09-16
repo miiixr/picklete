@@ -11,7 +11,7 @@ describe('about Payment', () => {
 
     var newOrder2 = {
       serialNumber: '99999',
-      paymentIsConfirmed: true,
+      paymentIsConfirmed: false,
       paymentTotalAmount: 1000,
       paymentConfirmName:  '測試',
       paymentConfirmPostfix: '54321',
@@ -112,7 +112,7 @@ describe('about Payment', () => {
       if (res.statusCode === 500) {
         return done(body)
       }
-      console.log(res.body);
+      console.log(res.text);
       res.statusCode.should.equal(200);
       return done();
     });
