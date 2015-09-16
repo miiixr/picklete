@@ -167,10 +167,19 @@ let ProductController = {
 
   // delete
   doDelete: async (req, res) => {
-    let productGmId = req.body.id;
-    console.log('=== productGmId ==>',productGmId);
     try {
-      await ProductService.delete(productGmId);
+      let productGmId = req.body.id;
+      let jsonOut = req.body.jsonOut;
+      // console.log('=== req.body ==>',req.body);
+      // console.log('=== jsonOutput ==>',jsonOutput);
+      // console.log('=== productDelete ==>',productDelete);
+      // console.log('=== productGmId ==>',productGmId);
+      // console.log('=== jsonOut ==>',jsonOut);
+      let productDelete = await ProductService.delete(productGmId);
+      // console.log('=== productDelete ==>',productDelete);
+      if(jsonOut){
+        return res.ok(productDelete.toJSON());
+      }
       return res.redirect('/admin/goods/');
     } catch (error) {
       console.error(error.stack);

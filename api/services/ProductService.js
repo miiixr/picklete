@@ -195,7 +195,6 @@ module.exports = {
 
   // delete
   delete: async (productGmId) => {
-    console.log('=== productGmId ==>',productGmId);
     try {
       // find and delete products
       let findProducts = await db.Product.findAll({
@@ -208,7 +207,6 @@ module.exports = {
           product.destroy();
         });
       }
-
       // delete productGm
       let findProductGm = await db.ProductGm.findById(productGmId);
       if (!findProductGm) {
@@ -224,7 +222,6 @@ module.exports = {
     }
   },
   // end delete
-
 
   findGmWithImages: async (productGmId) => {
     let productGm = await db.ProductGm.find({

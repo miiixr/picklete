@@ -410,16 +410,17 @@ describe("about Product", () => {
 
   it.only('delete productGm', (done) => {
     request(sails.hooks.http.app)
-    .delete(`/admin/goods/delete/1`)
+    .post(`/admin/goods/delete`)
+    .send({id:1, jsonOut: true})
     .end((err,res) => {
       if(res.statusCode === 500){
         return done(err);
       }
-      res.statusCode.should.equal(302);
+      res.statusCode.should.equal(200);
       // res.statusCode.should.equal(200);
       // res.body.should.be.Object;
       // res.body.isPublish.should.equal(false);
-      done(err);
+      done();
     });
   });
 
