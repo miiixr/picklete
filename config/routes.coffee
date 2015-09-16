@@ -145,7 +145,6 @@ module.exports.routes = {
     controller: "PaymentController",
     action: "paid"
     cors: {
-      allRoutes: true,
       origin: "*",
       credentials: false
     }

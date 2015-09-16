@@ -177,13 +177,13 @@ module.exports = {
     var brandAgent = await db.Brand.bulkCreate(brandAgent);
 
     var otherAgent = await db.Brand.create(otherAgent);
-    
+
     let FAQTypes = ['會員常見問題','購物常見問題','配送取貨問題','退換貨及退款','發票常見問題','海外會員訂購','產品保養問題'];
 
     for (let i in FAQTypes){
       var FAQType = await (db.FAQType.create({
         name: FAQTypes[i]
-      }));  
+      }));
 
       for (var j =1; j<3; j++){
         await db.FAQ.create({
@@ -427,6 +427,15 @@ module.exports = {
         email: createFakeUser.email
       }
       var  createBonusPoints = await db.BonusPoint.create(bonuspoint);
+
+      var additionalPurchase = {
+        name: '加價購測試商品'+i ,
+        discount: 100 ,
+        startDate: randomDate(new Date(2015, 9, 8), new Date(2015, 9, 20)),
+        endDate: randomDate(new Date(2015, 9, 21), new Date(2015, 10, 31))
+      }
+
+      var createAdditionalPurchase = await db.AdditionalPurchase.create(additionalPurchase);
     }
 
     // selectionActive
