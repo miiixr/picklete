@@ -170,7 +170,7 @@ let ProductController = {
     let productGmId = req.param("id");
     console.log('=== productGmId ==>', productGmId);
     try {
-      // await ProductService.delete(productGmId);
+      await ProductService.delete(productGmId);
       return res.redirect('/admin/goods/');
     } catch (error) {
       console.error(error.stack);

@@ -47,7 +47,7 @@
       index = parseInt(index, 10) + 1;
       s = s.replace(/good\[\d/g, "good[" + index);
     }
-    
+
     that.parent().parent().after(s);
     that.remove();
 
@@ -120,17 +120,19 @@
   $('.modal-content').on('click', '.btn-green', function(e){
     e.preventDefault();
     var id = $("input[name='productGm[id]']").attr('value');
-    // console.log('=== id is ==>',id);
+    console.log('=== id is ==>',id);
     var path = "/admin/goods/" + id;
     $.ajax({
       type: "DELETE",
       url: path,
       success: function (responseText, statusText, xhr, $form)  {
         console.log(responseText);
+        console.log('success');
         windows.replace('/admin/goods/')
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.log(textStatus, errorThrown);
+        console.log('console.error();');
       }
     });
   });
