@@ -136,11 +136,19 @@ module.exports.routes = {
   'get /auth/:provider/:action': 'AuthController.callback'
 
   'get /api/order/pay': 'OrderController.pay'
-  'post /allpay/paid': 'PaymentController.paid'
 
   "get /admin/login": view: "admin/login"
 
   'get /api/search/:keywords': 'SearchController.products'
+
+  'post /allpay/paid':{
+      controller: "PaymentController",
+      action: "paid"
+      cors: {
+       origin: "*",
+       credentials: false
+      }
+    }
 
   ###*
     ProductController
