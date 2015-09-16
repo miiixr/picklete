@@ -61,7 +61,6 @@ describe('about Report', () => {
 
       res.statusCode.should.equal(200);
       let result = res.body;
-      console.log(result);
       done(err);
     });
   });
