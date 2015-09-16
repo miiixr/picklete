@@ -3,6 +3,7 @@
 // # 3. 建立訂單 order
 var OrderController;
 
+
 OrderController = {
   debug: async (req, res) => {
     try {
@@ -23,31 +24,41 @@ OrderController = {
       let queryObj = {};
       let queryShipmentObj = {};
       let queryUserObj = {};
-      if(query.serialNumber) {
+
+      if(query.serialNumber)
         queryObj.serialNumber = { 'like': '%'+query.serialNumber+'%'};
-      }
-      if(query.shippingMethod != '0' && query.shippingMethod) {
+      else
+        query.serialNumber =''
+
+      if(query.shippingMethod != '0' && query.shippingMethod)
         queryObj.shippingMethod = query.shippingMethod;
-      }
-      // if(query.keyword) {
+      else
+        query.shippingMethod = 0
+
+      // if(query.keyword)
       //   queryObj.keyword = { 'like': '%'+query.keyword+'%'};
-      // }
+      
       if(query.userName) {
         queryUserObj.username = { 'like': '%'+query.userName+'%'};
       }else{
         queryUserObj.username = { 'like': '%'};
+        query.username = ''
       }
-      if(query.status != '0' && query.status ) {
+      if(query.status != '0' && query.status )
         queryObj.status = query.status;
-      }
-      // if(query.shipmentNotify != '0' && query.shipmentNotify) {
+      else
+        query.status = 0;
+
+      // if(query.shipmentNotify != '0' && query.shipmentNotify)
       //   queryObj.shipmentNotify = query.shipmentNotify;
-      // }
+      
       if(query.addressee) {
         queryShipmentObj.username = { 'like': '%'+query.addressee+'%'};
       }else{
         queryShipmentObj.username = { 'like': '%'};
+        query.username = ''
       }
+      
       if(query.createdStart && query.createdEnd) {
          queryObj.createdAt = { between : [new Date(query.createdStart), new Date(query.createdEnd)]};
       }else if(query.createdStart || query.createdEnd) {
@@ -86,6 +97,7 @@ OrderController = {
       };
 
       let orders = await db.Order.findAndCountAll(queryObj);
+
       return res.view({orders,query,page,limit});
     } catch (error) {
       return res.serverError(error);
@@ -138,11 +150,21 @@ OrderController = {
     }
   },
   create: async (req, res) => {
-
     var newOrder = req.body.order;
     try {
+      let useAllPay = false;
+      if(sails.config.useAllPay !== undefined)
+        useAllPay = sails.config.useAllPay;
       let result = await OrderService.create(newOrder);
-      return res.ok(result);
+      if(useAllPay){
+        var allPayData = await OrderService.allPayCreate(result.order);
+        console.log("!!!",allPayData);
+        res.view('order/allpay',{
+          allPayData
+        });
+      }else{
+        return res.ok(result);
+      }
     } catch (e) {
       console.error(e.stack);
       let {message} = e;
@@ -150,13 +172,41 @@ OrderController = {
       return res.serverError({message, success});
     }
   },
+  pay: async (req, res)=> {
+    try {
+      var id = req.query.id;
+      let orderData = await db.Order.findOne({
+        where: {id},
+        include:{
+            model: db.OrderItem
+          }
+      });
+
+      if (!orderData) {
+        return res.serverError({
+          msg: '再確認一下喔，驗證碼錯誤哟 :)！'
+        });
+      }
+      console.log("!!!",orderData);
+      var allPayData = await OrderService.allPayCreate(orderData);
+      res.view('order/allpay',{
+        allPayData
+      });
+
+    } catch (e) {
+      console.error(e.stack);
+      let {message} = e;
+      let success = false;
+      return res.serverError({message, success});
+    }
+  },
+
   // 查詢
   status: async function(req, res) {
 
     try{
 
       var email = req.query.email;
-      
       let userData = await db.User.findOne({
         where: {email}
       });

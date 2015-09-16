@@ -47,7 +47,7 @@
       index = parseInt(index, 10) + 1;
       s = s.replace(/good\[\d/g, "good[" + index);
     }
-    
+
     that.parent().parent().after(s);
     that.remove();
 

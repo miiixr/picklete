@@ -69,7 +69,7 @@ let BrandController = {
 
     try {
       let brandId = req.query.id;
-      let brand = await db.Brand.findById(brandId)
+      let brand = await db.Brand.findById(brandId);
       if( ! brand) throw new Error ('找不到這個 brand');
       if (req.method === "GET") {
         return res.view("admin/brandCreate", {

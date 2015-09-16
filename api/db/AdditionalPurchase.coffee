@@ -1,6 +1,7 @@
 
 module.exports = (sequelize, DataTypes) ->
   AdditionalPurchase = sequelize.define('AdditionalPurchase', {
+    name: DataTypes.STRING
     discount: DataTypes.FLOAT
     startDate: DataTypes.DATE
     endDate: DataTypes.DATE

@@ -193,6 +193,37 @@ module.exports = {
     }
   },
 
+  // delete
+  delete: async (productGmId) => {
+    try {
+      // find products first
+      let findProducts = await db.Product.findAll({
+        where: {
+          ProductGmId: productGmId
+        }
+      });
+      // lets delete all of them.
+      if(findProducts.length>0){
+        let deleteProducts = await* findProducts.map((product) => {
+          product.destroy();
+        });
+      }
+      // delete productGm
+      let findProductGm = await db.ProductGm.findById(productGmId);
+      if (!findProductGm) {
+        throw new Error('找不到商品！ 請確認商品ID！');
+      }
+      let deleteProductGm = await findProductGm.destroy();
+      // finish
+      return deleteProductGm;
+    } catch (error) {
+      console.error(error.stack);
+      let msg = error.message;
+      return res.serverError({msg});
+    }
+  },
+  // end delete
+
   findGmWithImages: async (productGmId) => {
     let productGm = await db.ProductGm.find({
       where: {id: productGmId},

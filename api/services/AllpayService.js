@@ -140,14 +140,21 @@ Allpay.prototype = {
     var sortedKeys = _.sortBy(keys, function(key) {
       return key;
     });
-
+		
     var uri = _.map(sortedKeys, function(key) {
       return key + '=' + data[key];
     }).join('&');
 
     uri = util.format('HashKey=%s&%s&HashIV=%s', _api.hashKey, uri, _api.hashIV);
-    uri = encodeURIComponent(uri).replace(/%20/g, '+').toLowerCase();
-
+		uri = encodeURIComponent(uri);
+		var regex;
+		var find = ["%2d", "%5f", "%2e", "%21", "%2a", "%28", "%29", "%20"];
+		var replace = ["-", "_", ".", "!", "*", "(", ")", "+"];
+		for (var i = 0; i < find.length; i++) {
+		  regex = new RegExp(find[i], "g");
+		  uri = uri.replace(regex, replace[i]);
+		}
+    uri = uri.toLowerCase();
     var checksum = crypto.createHash('md5').update(uri).digest('hex').toUpperCase();
 
     return checksum;
