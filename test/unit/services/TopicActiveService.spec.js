@@ -9,11 +9,6 @@ describe.only("TopicActiveService", () => {
 
       let topicActives = result;
 
-      // console.log('=== result ==>',result);
-      // console.log('=== selectionActives.length ==>',selectionActives.length);
-      // console.log('=== selectionActives[0].Images.url ==>',selectionActives[0].Images[0].url);
-      // console.log('=== selectionActives[0].Images[0] ==>',selectionActives[0].Images[0].url);
-      // console.log(JSON.stringify(topicActives, null, 4));
       topicActives.length.should.be.equal(2);
       topicActives[0].title.should.be.equal("title1");
       topicActives[0].toJSON().should.have.keys(
