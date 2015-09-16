@@ -106,7 +106,7 @@ describe('about Payment', () => {
       CheckMacValue : '989ED3A9503EEF31CF07C387F7E2AD5C',
     };
     request(sails.hooks.http.app)
-    .post('/api/allpay/paid')
+    .post('/allpay/paid')
     .send(data)
     .end((err, res) => {
       if (res.statusCode === 500) {
