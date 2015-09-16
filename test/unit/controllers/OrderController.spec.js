@@ -1,5 +1,5 @@
 describe("about Order", () => {
-  describe.only("pay Order", () => {
+  describe("pay Order", () => {
     let testdOrder;
     before( async (done) => {
       var newOrder2 = {
@@ -193,7 +193,7 @@ describe("about Order", () => {
 
     it("get an Bonus point. ", async (done) => {
       request(sails.hooks.http.app)
-      .get("/order/bonus?email=user1@picklete.localhost")
+      .get("/order/bonus?email=user1@picklete.local")
       .end(async (err, res) => {
         if (res.statusCode === 500) {
           return done(body)

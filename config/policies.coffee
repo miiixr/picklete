@@ -18,8 +18,6 @@ http://sailsjs.org/#/documentation/reference/sails.config/sails.config.policies.
 module.exports.policies = {
 
   '*': [ 'passport', 'loginRequired']
-  '/shop/*': true
-
 
   'auth':
     '*': ['passport']
@@ -36,6 +34,15 @@ module.exports.policies = {
     sync: []
     bonus: []
     pay: []
+  PaymentController:
+    paid: []
+
+  #'/api/search/*': []
+  SearchController:
+    products: []
+
+  shopController:
+    list: []
 }
 
 

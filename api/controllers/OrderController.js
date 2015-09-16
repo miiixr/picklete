@@ -24,31 +24,41 @@ OrderController = {
       let queryObj = {};
       let queryShipmentObj = {};
       let queryUserObj = {};
-      if(query.serialNumber) {
+
+      if(query.serialNumber)
         queryObj.serialNumber = { 'like': '%'+query.serialNumber+'%'};
-      }
-      if(query.shippingMethod != '0' && query.shippingMethod) {
+      else
+        query.serialNumber =''
+
+      if(query.shippingMethod != '0' && query.shippingMethod)
         queryObj.shippingMethod = query.shippingMethod;
-      }
-      // if(query.keyword) {
+      else
+        query.shippingMethod = 0
+
+      // if(query.keyword)
       //   queryObj.keyword = { 'like': '%'+query.keyword+'%'};
-      // }
+      
       if(query.userName) {
         queryUserObj.username = { 'like': '%'+query.userName+'%'};
       }else{
         queryUserObj.username = { 'like': '%'};
+        query.username = ''
       }
-      if(query.status != '0' && query.status ) {
+      if(query.status != '0' && query.status )
         queryObj.status = query.status;
-      }
-      // if(query.shipmentNotify != '0' && query.shipmentNotify) {
+      else
+        query.status = 0;
+
+      // if(query.shipmentNotify != '0' && query.shipmentNotify)
       //   queryObj.shipmentNotify = query.shipmentNotify;
-      // }
+      
       if(query.addressee) {
         queryShipmentObj.username = { 'like': '%'+query.addressee+'%'};
       }else{
         queryShipmentObj.username = { 'like': '%'};
+        query.username = ''
       }
+      
       if(query.createdStart && query.createdEnd) {
          queryObj.createdAt = { between : [new Date(query.createdStart), new Date(query.createdEnd)]};
       }else if(query.createdStart || query.createdEnd) {
@@ -87,6 +97,7 @@ OrderController = {
       };
 
       let orders = await db.Order.findAndCountAll(queryObj);
+
       return res.view({orders,query,page,limit});
     } catch (error) {
       return res.serverError(error);
