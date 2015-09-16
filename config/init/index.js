@@ -343,7 +343,7 @@ module.exports = {
         username: "user" + i,
         fullName: commonLastNames[randomInt(0, commonLastNames.length)] + commonFirstNames[randomInt(0, commonFirstNames.length)],
         birthDate: randomDate(new Date(1930, 0, 1), new Date(2005, 0, 1)),
-        email: "user" + i + "@picklete.localhost",
+        email: "user" + i + "@picklete.local",
         password: "0000",
         RoleId: createRoleUser.id,
         comment: "i'm a fake user",

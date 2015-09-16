@@ -93,6 +93,10 @@ module.exports.routes = {
   # end promotions
 
   'get /admin/bonus' : 'BonusController.list'
+  'post /admin/bonus' : 'BonusController.create'
+  'put /admin/bonus/:query' : 'BonusController.update'
+  'get /admin/bonus/edit' : 'BonusController.edit'
+  'get /admin/bonus/add' : 'BonusController.add'
 
   # 'get /admin/shop-item-list' : 'UserController.controlShopItemList'
   'get /admin/order' : 'OrderController.index'
