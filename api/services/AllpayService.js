@@ -97,10 +97,14 @@ var Allpay = function(opts) {
   if (!opts.hasOwnProperty('hashIV') || !opts.hashIV) {
     return sendErrorResponse(null, new Error(_ERROR_MESSAGES.wrongParameter + '"hashIV"'));
   }
+	try {
+		if (!(this instanceof Allpay)) {
+			return new Allpay(opts);
+		}
+	} catch (e) {
+		console.error(e.message);
+	}
 
-  if (!(this instanceof Allpay)) {
-    return new Allpay(opts);
-  }
 
   _api.merchantID = opts.merchantID;
   _api.hashKey = opts.hashKey;
@@ -140,7 +144,7 @@ Allpay.prototype = {
     var sortedKeys = _.sortBy(keys, function(key) {
       return key;
     });
-		
+
     var uri = _.map(sortedKeys, function(key) {
       return key + '=' + data[key];
     }).join('&');

@@ -1,49 +1,46 @@
-web:
-  image: artificial/docker-sails
+build:
+  image: smlsunxie/picklete_env
+  extends:
+    file: ./dockerConfig/development.yml
+    service: build
+
   working_dir: /picklete
-  command: "/bin/bash -c 'source ~/.bashrc && npm start'"
-  ports:
-    - "1337:1337"
   volumes:
     - ./:/picklete
+
+  restart: always
+
+web:
+  image: smlsunxie/picklete_env
+  extends:
+    file: ./dockerConfig/development.yml
+    service: web
+
   links:
     - mysql
 
-  environment:
-    MYSQL_PASSWORD: "picklete"
-    MYSQL_USER: "picklete"
-    PORT: "1337"
-    NODE_ENV: "production"
-    DOMAIN_HOST: "shop.agricloud.cc"
+  working_dir: /picklete
+  volumes:
+    - ./:/picklete
+
   restart: always
 
-mobile:
-  image: iojs
-  command: "node server.js"
-  working_dir: /app
-  ports:
-    - "3000:3000"
-  links:
-    - web
+frontend:
+  extends:
+    file: ./dockerConfig/development.yml
+    service: frontend
 
-  volumes:
-    - ../agricloud-mobile-cart:/app
-  environment:
-    NODE_ENV: "production"
-    DOMAIN_HOST: "m.agricloud.cc"
+  image: iojs
+  working_dir: /app
   restart: always
 
 
 mysql:
   image: dgraziotin/mysql
-  ports:
-    - "3306:3306"
+  extends:
+    file: ./dockerConfig/development.yml
+    service: mysql
   volumes:
-    - "../database:/var/lib/mysql/"
-  environment:
-    MYSQL_ADMIN_PASS: "root"
-    MYSQL_USER_NAME: "picklete"
-    MYSQL_USER_DB: "picklete_prod"
-    MYSQL_USER_PASS: "picklete"
-    CREATE_MYSQL_BASIC_USER_AND_DB: "true"
+    - ../database:/var/lib/mysql/
+
   restart: always
