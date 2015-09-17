@@ -1,6 +1,21 @@
 
 let ProductController = {
-
+  debug: async (req, res) => {
+    try {
+      res.ok(await db.Product.findAndCountAll());
+    }
+    catch (error) {
+      return res.serverError(error);
+    }
+  },
+  image: async (req, res) => {
+    try {
+      res.ok({product: await db.Product.findById(req.param('id'))});
+    }
+    catch (error) {
+      return res.serverError(error);
+    }
+  },
   // show create page and prepare all stuff
   showCreate: async (req, res) => {
     // let products = await ProductService.findAllWithImages();
@@ -165,9 +180,23 @@ let ProductController = {
     // return res.json(newProduct);
   },
 
-
-
-
+  // delete
+  doDelete: async (req, res) => {
+    try {
+      let productGmId = req.body.id;
+      let jsonOut = req.body.jsonOut;
+      let productDelete = await ProductService.delete(productGmId);
+      if(jsonOut){
+        return res.ok(productDelete.toJSON());
+      }
+      return res.redirect('/admin/goods/');
+    } catch (error) {
+      console.error(error.stack);
+      let msg = error.message;
+      return res.serverError({msg});
+    }
+  },
+  // end delete
 
   findOne: async (req, res) => {
     try {

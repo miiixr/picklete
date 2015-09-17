@@ -1,5 +1,5 @@
 (function ($) {
-  $('.dpt').click(function(e){
+  $('.dpt').on("click", function(e){
     var e = $(event.currentTarget);
     //正式上線後要依據大館別固定數量更改
     for(i=1; i<=9; i++) {

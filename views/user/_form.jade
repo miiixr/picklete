@@ -204,19 +204,24 @@ hr
       | 聯絡地址
       span.text-danger *
     .col-sm-9
-      select(name='city', required).form-control.width-auto.inline-block
-        option 台北市
-        option 2
-        option 3
-        option 4
-        option 5
-      select(name='region', required).form-control.width-auto.inline-block
-        option 大安區
-        option 2
-        option 3
-        option 4
-        option 5
-      input.form-control.width-12.inline-block(type='text', value=user.zipcode, name='zipcode', required)
+      #twzipcode
+        div(data-role='city', data-name='city')
+        div(data-role='region', data-name='region')
+
+      //- select(name='city', required).form-control.width-auto.inline-block
+      //-   option 台北市
+      //-   option 2
+      //-   option 3
+      //-   option 4
+      //-   option 5
+      //- select(name='region', required).form-control.width-auto.inline-block
+      //-   option 大安區
+      //-   option 2
+      //-   option 3
+      //-   option 4
+      //-   option 5
+      //- input.form-control.width-12.inline-block(type='text', value=user.zipcode, name='zipcode', required)
+      
     .col-sm-9.col-sm-offset-3.m-top-3
       input.form-control(type='text', value=user.address, name='address', required)
   // /form-group
@@ -230,4 +235,5 @@ hr
         label.checkbox-inline
           
           input(type='checkbox', name='userLikes[]', value=like.id, checked=(user.userLikes.indexOf(''+like.id)>=0))
-          |  #{like.title}
+          |  #{like.title}      
+        

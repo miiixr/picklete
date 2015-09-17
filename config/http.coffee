@@ -27,9 +27,9 @@ module.exports.http = {
       app.locals.pretty = true
       # app.enable('view cache');
 
-    if sails.config.environment is 'production'
-      app.set('view options', {cache: true})
-      app.enable('view cache');
+    # if sails.config.environment is 'production'
+      # app.set('view options', {cache: true})
+      # app.enable('view cache');
 }
 
 ###*

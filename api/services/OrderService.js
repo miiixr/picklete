@@ -68,6 +68,29 @@ module.exports = {
 
   },
 
+  findAllByDateComplete: async (startDate, endDate) => {
+    console.log(startDate._d, endDate._d);
+    let orders = await db.Order.findAll({
+      where: {
+        updatedAt: {
+          $gt: startDate._d,
+          $lt: endDate._d,
+        },
+      },
+      include: [
+        {
+          model: db.User
+        }, {
+          model: db.Shipment
+        }, {
+          model: db.OrderItem
+        }
+      ]
+    });
+    return orders;
+
+  },
+
   find: async (sn) => {
     let orders = await db.Order.findAll({
       where: {

@@ -16,7 +16,7 @@ module.exports = {
 
   db:
     'dialect': 'sqlite',
-    'storage': './db.development.sqlite',
+    'storage': './db.development.sqlite', # ':memory:'
     'username': null,
     'password': null,
     'database': null,

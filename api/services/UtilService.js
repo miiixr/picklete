@@ -17,9 +17,9 @@ module.exports = {
 
       if(loginUser == undefined) {
         redirectUrl = '/shop/list';
-      } else if(loginUser.role.authority == 'admin'){
+      } else if(loginUser.Role.authority == 'admin'){
         redirectUrl = '/admin/goods';
-      } else if(loginUser.role.authority == 'user'){
+      } else if(loginUser.Role.authority == 'user'){
         redirectUrl = '/shop/list';
       }else {
         redirectUrl = '/shop/list';

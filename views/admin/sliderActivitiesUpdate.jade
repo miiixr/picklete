@@ -1,0 +1,106 @@
+extends ../_layout_auth
+
+block body
+  h2.m-bottom-6 燈箱活動設定
+  .well.control-well.p-30.m-bottom-8
+    .form-horizontal
+      input(type='hidden', name='id', value='#{slider.id}', form='activeCreateForm')
+      .form-group
+        label.col-sm-3.col-md-2.control-label 活動主圖
+        .col-sm-9.col-md-10
+          .max-width-260
+            .fileinput.fileinput-new(data-provides='fileinput')
+              .fileinput-new
+                img.img-full(src=slider.cover ? '#{slider.cover}' : 'http://fakeimg.pl/2000x1000/dddddd/FFF/?text=2000x1000')
+              // /fileinput-new
+              .fileinput-preview.fileinput-exists.border-block-1
+              // /fileinput-preview
+              .fileinput-btn
+                form(action="/admin/image/upload", method="POST", enctype="multipart/form-data")
+                  span.btn.btn-default.btn-sm.btn-file
+                    span.fileinput-new Select image
+                    span.fileinput-exists Change
+                    input.fileInput(type='file', name="uploadfile", data-name='cover')
+                    input(type='hidden', name="filename", value='cover')
+                    input(type='hidden', name="width", value='1000')
+                    input(type='hidden', name="height", value='1000')
+                    input(type='hidden', name='cover', form='activeCreateForm', value=value='#{slider.cover}')
+              // /fileinput-btn
+            // /fileinput
+          // /max-width-150
+          a(href='#', data-toggle='tooltip', title='', data-original-title='商品圖長寬 2000x1200 像素，限 JPG/GIF 格式，檔案大小 500KB 以下')
+            span.glyphicon.glyphicon-info
+        // /col-sm-10
+      // /form-group
+      form(name='Form', action='/admin/slider/update', method='POST', id="activeCreateForm")
+        .form-group
+          label.col-sm-3.col-md-2.control-label 活動標題
+          .col-sm-9.col-md-10
+            input.form-control(type='text', name='title', value='#{slider.title}', form='activeCreateForm')
+          // /col-sm-10
+        // /form-group
+        .form-group
+          label.col-sm-3.col-md-2.control-label 活動文案
+          .col-sm-9.col-md-10
+            textarea.form-control(rows='3', name='description', form='activeCreateForm') #{slider.description}
+          // /col-sm-9
+        // /form-group
+        .form-group
+          label.col-sm-3.col-md-2.control-label 文案位置
+          .col-sm-9.col-md-10
+            label.radio-inline
+              input#inlineRadio1(type='radio', name='location', value='caption-left caption-top', form='activeCreateForm')
+              |  左上
+            label.radio-inline
+              input#inlineRadio2(type='radio', name='location', value='caption-center caption-top', form='activeCreateForm')
+              |  中上
+            label.radio-inline
+              input#inlineRadio3(type='radio', name='location', value='caption-right caption-top', form='activeCreateForm')
+              |  右上
+            label.radio-inline
+              input#inlineRadio4(type='radio', name='location', value='caption-left caption-middle', form='activeCreateForm')
+              |  左中
+            label.radio-inline
+              input#inlineRadio5(type='radio', name='location', value='caption-center caption-middle', form='activeCreateForm')
+              |  中中
+            label.radio-inline
+              input#inlineRadio6(type='radio', name='location', value='caption-right caption-middle', form='activeCreateForm')
+              |  右中
+            label.radio-inline
+              input#inlineRadio7(type='radio', name='location', value='caption-left caption-bottom', form='activeCreateForm')
+              |  左下
+            label.radio-inline
+              input#inlineRadio8(type='radio', name='location', value='caption-center caption-bottom', form='activeCreateForm')
+              |  中下
+            label.radio-inline
+              input#inlineRadio9(type='radio', name='location', value='caption-right caption-bottom', form='activeCreateForm')
+              |  右下
+          // /col-sm-9
+        // /form-group
+        .form-group
+          label.col-sm-3.col-md-2.control-label 文案顏色
+          .col-sm-9.col-md-10
+            input#myColor.form-control.width-10(type='color', value='#{slider.color}', name='color', form='activeCreateForm')
+          // /col-sm-9
+        // /form-group
+        .form-group
+          label.col-sm-3.col-md-2.control-label 活動網址
+          .col-sm-6.col-md-7
+            input.form-control(type='text', placeholder='http://', name='link', value='#{slider.link}', form='activeCreateForm')
+          // /col-sm-9
+          .col-sm-3.col-md-3
+            .checkbox
+              label
+                input(type='checkbox')
+                |  另開視窗
+        // /form-group
+      .m-top-6.text-right
+        a.btn.btn-link.delete-link.btn-lg(href='#', data-toggle='modal', data-target='#modal-delete') 刪除
+        input.btn.btn-green.btn-lg(type='submit' value='確定', , form='activeCreateForm')
+      // /text-right
+  // /well
+
+block js
+  script(id="myscript", src="/javascripts/admin/sliderActivitiesUpdate.js", slider-location="#{slider.location}", slider-id="#{slider.id}")
+
+
