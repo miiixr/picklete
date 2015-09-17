@@ -50,18 +50,21 @@ describe("SelectionActiveService", () => {
       let selectionActives = [
         {
           type: 'oneLong',
+          weight: '0',
           Images: [{
             url: 'http://github.com',
             path: 'http://fakeimg.pl/1100x160'
           }]
         },{
           type: 'oneBig',
+          weight: '1',
           Images: [{
             url: 'http://github.com',
             path: 'http://fakeimg.pl/1100x350'
           }]
         },{
           type: 'two',
+          weight: '2',
           Images: [{
             url: 'http://github.com',
             path: 'http://fakeimg.pl/545x350'
@@ -71,6 +74,7 @@ describe("SelectionActiveService", () => {
           }]
         },{
           type: 'three',
+          weight: '3',
           Images: [{
             url: 'http://github.com',
             path: 'http://fakeimg.pl/360x240'

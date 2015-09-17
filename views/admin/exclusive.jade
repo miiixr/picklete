@@ -19,6 +19,7 @@ block body
           - activity.Images[0] = activity.Images[0] || { url: "", path: "http://fakeimg.pl/1100x160", openWindow: false};
           li.well.control-well.p-10-20.m-bottom-8.type1
             input(type='hidden', name='actives[#{index}][type]', value=activity.type, form='activesData')
+            input(type='hidden', name='actives[#{index}][weight]',class='activityWeigth', form='activesData')
             .row
               .col-sm-6
                 span.glyphicon.glyphicon-menu.font-size-xlarge.m-top-1
@@ -68,6 +69,7 @@ block body
           - activity.Images[0] = activity.Images[0] || { url: "", path: "http://fakeimg.pl/1100x350", openWindow: false};
           li.well.control-well.p-10-20.m-bottom-8.type2
             input(type='hidden', name='actives[#{index}][type]', value=activity.type, form='activesData')
+            input(type='hidden', name='actives[#{index}][weight]',class='activityWeigth', form='activesData')
             .row
               .col-sm-6
                 span.glyphicon.glyphicon-menu.font-size-xlarge.m-top-1
@@ -117,6 +119,7 @@ block body
         when 'two'
           li.well.control-well.p-10-20.m-bottom-8.type3
             input(type='hidden', name='actives[#{index}][type]', value=activity.type, form='activesData')
+            input(type='hidden', name='actives[#{index}][weight]',class='activityWeigth', form='activesData')
             .row
               .col-sm-6
                 span.glyphicon.glyphicon-menu.font-size-xlarge.m-top-1
@@ -167,6 +170,7 @@ block body
         when 'three'
           li.well.control-well.p-10-20.m-bottom-8.type4
             input(type='hidden', name='actives[#{index}][type]', value=activity.type, form='activesData')
+            input(type='hidden', name='actives[#{index}][weight]',class='activityWeigth', form='activesData')
             .row
               .col-sm-6
                 span.glyphicon.glyphicon-menu.font-size-xlarge.m-top-1

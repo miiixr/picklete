@@ -8,7 +8,7 @@ module.exports = {
   getModel: async () => {
     let selectionActives = await db.SelectionActive.findAll({
       include: [ { model: db.Image } ],
-      order: [ 'SelectionActive.id' ]
+      order: [ 'SelectionActive.weight' ]
     });
     return selectionActives;
   },
@@ -23,7 +23,7 @@ module.exports = {
         console.log('=== now destroying oldOne id ==>',oldOne.id);
         oldOne.destroy();
       });
-      
+
       // take out images from input raw selectionActives.
       let newImages = await* selectionActives.map((selectionActive) => {
         return selectionActive.Images;
