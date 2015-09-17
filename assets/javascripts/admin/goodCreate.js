@@ -13,6 +13,11 @@
     $("input[type='radio'][name='brandType'][value='custom']").prop("checked", true);
     $("input[type='radio'][name='brandType'][value='origin']").prop("checked", false);
 
+    $("#brandSelect option").removeAttr('selected');
+  });
+
+  $('input[type=radio][name=brandType][value=custom]').click(function() {
+    $('#brandSelect option').removeAttr('selected');
   });
 
   $('input[type=submit]').click(function () {
@@ -47,7 +52,7 @@
       index = parseInt(index, 10) + 1;
       s = s.replace(/good\[\d/g, "good[" + index);
     }
-    
+
     that.parent().parent().after(s);
     that.remove();
 
