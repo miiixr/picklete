@@ -507,6 +507,33 @@ module.exports = {
     await createdSelectionActive[3].setImages([createdImages[4], createdImages[5], createdImages[6]]);
     // end selectionActive
 
+    // TopicActive
+    let topicActives = [{
+      title: 'title1',
+      ImageAId: createdImages[0].id,
+      ImageA1Id: createdImages[1].id,
+      ImageA2Id: createdImages[2].id,
+      ImageBId: createdImages[0].id,
+      ImageB1Id: createdImages[1].id,
+      ImageB2Id: createdImages[2].id,
+      ImageCId: createdImages[0].id,
+      ImageC1Id: createdImages[1].id,
+      ImageC2Id: createdImages[2].id
+    }, {
+      title: 'title2',
+      ImageAId: createdImages[3].id,
+      ImageA1Id: createdImages[4].id,
+      ImageA2Id: createdImages[5].id,
+      ImageBId: createdImages[3].id,
+      ImageB1Id: createdImages[4].id,
+      ImageB2Id: createdImages[5].id,
+      ImageCId: createdImages[3].id,
+      ImageC1Id: createdImages[4].id,
+      ImageC2Id: createdImages[5].id
+    }]
+    await db.TopicActive.bulkCreate(topicActives);
+    // End TopicActive
+
     // promotions
     var promotion1 = {
       title : 'best price!',
