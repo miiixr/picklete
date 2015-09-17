@@ -36,6 +36,8 @@ let ShopController = {
         }]
       });
 
+      brands = await db.Brand.findAll();
+
       console.log('products.length', products.length);
 
       let dpts = await db.Dpt.findAll({
@@ -48,6 +50,7 @@ let ShopController = {
 
       res.view('main/shop', {
         dpts,
+        brands,
         products: products || {},
         pageName: 'main/shop'
       });

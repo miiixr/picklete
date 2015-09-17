@@ -5,7 +5,7 @@ block body
       .container
         ul.list-inline.list-shop-type
           each dpt, index in dpts
-            li.active.dpt(data-id='#{dpt.id}')
+            li.dpt(data-id='#{dpt.id}')
               a(href='#')
                 | #{dpt.name}
           li.li-btn
@@ -97,7 +97,7 @@ block body
               .tab-pane.fade(id = "subDpt"+dpt.id)
                   ul.list-inline.list-shop-type-sm.font-size-small
                     each subDpt, index in dpt.DptSubs
-                      li(class=(index==0)?"active subDpt":"subDpt" data-id='#{subDpt.id}') 
+                      li(class= (index==0)? "active subDpt" : "subDpt" data-id='#{subDpt.id}') 
                         a(href='?dptSubId=#{subDpt.id}&dptId=#{dpt.id}')
                           | #{subDpt.name}
           // /list-shop-type-9
@@ -162,18 +162,19 @@ block body
                 span.glyphicon.glyphicon-heart
               // /item-like
               a(href='/shop/product')
-                img.img-full.item-show(src='images/demo/shop-item-d-1.jpg')
-                img.img-full.item-hide(src='images/demo/shop-item-1-2.jpg')
+                img.img-full.item-show(src=product.photos && product.photos[0]? product.photos[0] : "http://www.culpwrit.com/wp-content/uploads/2012/09/no11.jpg")
+                img.img-full.item-hide(src=product.photos && product.photos[1]? product.photos[1] : "http://www.culpwrit.com/wp-content/uploads/2012/09/no11.jpg")
             // /item-block
             .item-text-block.m-bottom-8
               h6.text-muted
                 a(href='brands.html')
-                | #{product.madeby}
+                | #{product.ProductGm.brandId}
               h4.m-bottom-2.h4-max-two-hide
                 a(href='/shop/product')
-                | #{product.name}
+                - var name = product.name ? "(" + product.name + ")" : "";
+                | #{product.ProductGm.name} #{name}
               h5
-                | #{product.price}
+                | $ #{product.price}
             // /item-text-block
           // /col-md-3
         // /row
