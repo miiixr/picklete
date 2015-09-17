@@ -4,30 +4,32 @@ block body
 
   .container.font-size-slarge.line-height-large
 
-    // ABOUT US
+    // brandVision 品牌願景
     .row.m-top-10.m-bottom-10
         .col-md-8.col-md-offset-2.text-center
           h1.page-title.m-bottom-6
             | ABOUT US
             br
             small 關於我們
-          p 自詡為盡善盡美的「Creative Shop」，追求「for an ideal tomorrow」的極致體現，致力於創造能不斷提升理想生活質感的想法、環境、精品、以及態度， 用心打造對品味有意義、對美感有助益的好創意，為更理想的明日感動生活方式認真努力！
+          p #{about.brandVision}
         // /col-md-8
       // /row
     
-    // Images  
-    img.img-responsive.m-h-auto.m-bottom-6(src='https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/about.jpg')
+    // productPhotos
+    .row
+      each productPhoto in productPhotos
+        .col-md-4
+          img.img-responsive.m-h-auto.m-bottom-6(src= productPhoto)
 
-    
-    // Description
+    // aboutCompany 公司簡介
     .row.m-top-10.m-bottom-10
       .col-md-8.col-md-offset-2.text-center
         h2.text-black.m-bottom-6 創意俯拾即是，靈光垂手可得
-        p 威伯國際有限公司創立於2006年底，是一個以代理國內外設計品牌的專業貿易代理商，我們期許自己與其他貿易代理商不同的價值在於設計品牌的行銷與建 立，以及設計產業通路、設計產品等相關資訊服務。
+        p #{about.aboutCompany}
       // /col-md-8
     // /row
 
-    // Icon
+    // dealerPhotos, dealerNames
     .row.m-top-10.m-bottom-10
       .col-sm-4.text-center.m-bottom-6
         a.max-width-260.show.m-h-auto(href='mailto:info@wevo.com.tw')
@@ -60,39 +62,12 @@ block body
       h1.page-title.m-bottom-6
         | SHOPS
         br
-        small 實體通路
+        small 實體通路 
       .row
-        .col-sm-3.col-xs-4.m-bottom-6
-          img.img-responsive.m-h-auto.m-bottom-4.border-block-img(src='https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/logo-dealers-1.jpg')
-          h5.text-muted.h5-two-hide eslite 誠品
-        // /col-sm-3
-        .col-sm-3.col-xs-4.m-bottom-6
-          img.img-responsive.m-h-auto.m-bottom-4.border-block-img(src='https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/logo-dealers-1.jpg')
-          h5.text-muted.h5-two-hide eslite 誠品
-        // /col-sm-3
-        .col-sm-3.col-xs-4.m-bottom-6
-          img.img-responsive.m-h-auto.m-bottom-4.border-block-img(src='https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/logo-dealers-1.jpg')
-          h5.text-muted.h5-two-hide eslite 誠品
-        // /col-sm-3
-        .col-sm-3.col-xs-4.m-bottom-6
-          img.img-responsive.m-h-auto.m-bottom-4.border-block-img(src='https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/logo-dealers-1.jpg')
-          h5.text-muted.h5-two-hide eslite 誠品
-        // /col-sm-3
-        .col-sm-3.col-xs-4.m-bottom-6
-          img.img-responsive.m-h-auto.m-bottom-4.border-block-img(src='https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/logo-dealers-1.jpg')
-          h5.text-muted.h5-two-hide eslite 誠品
-        // /col-sm-3
-        .col-sm-3.col-xs-4.m-bottom-6
-          img.img-responsive.m-h-auto.m-bottom-4.border-block-img(src='https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/logo-dealers-1.jpg')
-          h5.text-muted.h5-two-hide eslite 誠品
-        // /col-sm-3
-        .col-sm-3.col-xs-4.m-bottom-6
-          img.img-responsive.m-h-auto.m-bottom-4.border-block-img(src='https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/logo-dealers-1.jpg')
-          h5.text-muted.h5-two-hide eslite 誠品
-        // /col-sm-3
-        .col-sm-3.col-xs-4.m-bottom-6
-          img.img-responsive.m-h-auto.m-bottom-4.border-block-img(src='https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/logo-dealers-1.jpg')
-          h5.text-muted.h5-two-hide eslite 誠品
-        // /col-sm-3
+        each dealerPhoto,index in dealerPhotos
+          .col-sm-3.col-xs-4.m-bottom-6
+            img.img-responsive.m-h-auto.m-bottom-4.border-block-img(src= dealerPhoto)
+            h5.text-muted.h5-two-hide= dealerNames[index]
+          // /col-sm-3
       // /row
     // /m-top-8 m-bottom-8
