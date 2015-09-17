@@ -117,13 +117,17 @@ module.exports.routes = {
   'get /admin/FAQ' : 'FAQController.FAQ'
   'get /admin/FAQAdd' : 'FAQController.FAQAdd'
   'post /admin/FAQAdd' : 'FAQController.FAQAdd'
+  'get /admin/FAQUpdate' : 'FAQController.FAQUpdate'
+  'post /admin/FAQUpdate' : 'FAQController.FAQUpdate'
   'get /admin/FAQTypeUpdate' : 'FAQController.FAQTypeUpdate'
   'post /admin/FAQTypeUpdate' : 'FAQController.FAQTypeUpdate'
+  'post /admin/FAQDelete' : 'FAQController.FAQDelete'
+  'post /admin/FAQTypeDelete' : 'FAQController.FAQTypeDelete'
 
 
-  'get /admin/qa-detail' : 'UserController.controlQaDetail'
-  'get /admin/qa-type' : 'UserController.controlQaType'
-  'get /admin/qa-add' : 'UserController.controlQaAdd'
+  #'get /admin/qa-detail' : 'UserController.controlQaDetail'
+  #'get /admin/qa-type' : 'UserController.controlQaType'
+  #'get /admin/qa-add' : 'UserController.controlQaAdd'
   'get /admin/members' : 'UserController.controlMembers'
   'get /admin/member-detail/:id' : 'UserController.controlMemberDetail'
 

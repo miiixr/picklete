@@ -3,23 +3,23 @@ extends ../_layout_auth
 block body
   h2.m-bottom-6 建立問題
   .well.control-well.p-20.m-bottom-4
-    form.form-horizontal(action="/admin/FAQAdd", method="POST", id="FAQForm")
+    form.form-horizontal(action=FAQ ? "/admin/FAQUpdate?FAQId=" + FAQ.id : "/admin/FAQAdd", method="POST", id="FAQForm")
       .form-group
         label.col-sm-3.col-md-2.control-label 問題標題
         .col-sm-9.col-md-10
-          input.form-control(type='text', placeholder='問題標題', name='title', id='title')
+          input.form-control(type='text', placeholder='問題標題', name='title', id='title' value=FAQ ? FAQ.title : undefined)
       // /form-group
       .form-group
         label.col-sm-3.col-md-2.control-label 問題標題
         .col-sm-9.col-md-10
           select.form-control(name='typeId')
             each FAQType, index in FAQTypes
-              option(value=FAQType.id)| #{FAQType.name}
+              option(value=FAQType.id,selected = (FAQ && FAQ.FAQTypeId ==FAQType.id) ? "true" : undefined)| #{FAQType.name}
       // /form-group
       .form-group
         label.col-sm-3.col-md-2.control-label 問題解答
         .col-sm-9.col-md-10
-          textarea.form-control(rows='6' ,name='answer', id='answer')
+          textarea.form-control(rows='6' ,name='answer', id='answer')=FAQ ? FAQ.answer : undefined
       // /form-group
       .text-right
         a.btn.btn-link.delete-link.btn-lg(href='FAQ') 取消
