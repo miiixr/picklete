@@ -13,6 +13,11 @@
     $("input[type='radio'][name='brandType'][value='custom']").prop("checked", true);
     $("input[type='radio'][name='brandType'][value='origin']").prop("checked", false);
 
+    $("#brandSelect option").removeAttr('selected');
+  });
+
+  $('input[type=radio][name=brandType][value=custom]').click(function() {
+    $('#brandSelect option').removeAttr('selected');
   });
 
   $('input[type=submit]').click(function () {

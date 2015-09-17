@@ -307,7 +307,7 @@ module.exports = {
     noneNameProduct = await db.Product.create({
       stockQuantity: '999',
       isPublish: 'true',
-      price: 999,
+      price: 888,
       size: 'normal',
       service: ["express"],
       country: 'U.K',
@@ -318,6 +318,27 @@ module.exports = {
     });
 
     await createdProductGmGood.setProducts(noneNameProduct);
+
+    let productNames = ['黃金曼特寧', '夏威夷可娜', '耶加雪夫', '肯亞AA', '巴西喜拉朵', '薇薇特南果', '薩爾瓦多伊莎貝爾', '瓜地馬拉．安提瓜．花神', '星巴克過期豆'];
+
+    for (var i=0; i < productNames.length; i++) {
+      await db.Product.create({
+        name: productNames[i],
+        description: '超級精選' + productNames[i] + '咖啡豆',
+        stockQuantity: 1111,
+        isPublish: true,
+        price: 1399,
+        size: 'normal',
+        service: ["express"],
+        country: 'U.K',
+        madeby: 'TW',
+        color: 3,
+        productNumber: '2-USA-3-G',
+        spec: 'super-metal'
+      });
+
+      console.log('______--------__________-------------______________');
+    }
 
     // create tag
     let tags = ["男人", "女人", "兒童", "情人", "學生", "寵物", "旅行", "閱讀", "咖啡", "午茶", "派對", "時尚", "印花", "夏日", "冬季", "聖誕", "森林", "動物", "花園", "浪漫", "可愛", "趣味", "復古", "環保", "工業", "簡約"];
@@ -485,6 +506,33 @@ module.exports = {
     await createdSelectionActive[2].setImages([createdImages[2], createdImages[3]]);
     await createdSelectionActive[3].setImages([createdImages[4], createdImages[5], createdImages[6]]);
     // end selectionActive
+
+    // TopicActive
+    let topicActives = [{
+      title: 'title1',
+      ImageAId: createdImages[0].id,
+      ImageA1Id: createdImages[1].id,
+      ImageA2Id: createdImages[2].id,
+      ImageBId: createdImages[0].id,
+      ImageB1Id: createdImages[1].id,
+      ImageB2Id: createdImages[2].id,
+      ImageCId: createdImages[0].id,
+      ImageC1Id: createdImages[1].id,
+      ImageC2Id: createdImages[2].id
+    }, {
+      title: 'title2',
+      ImageAId: createdImages[3].id,
+      ImageA1Id: createdImages[4].id,
+      ImageA2Id: createdImages[5].id,
+      ImageBId: createdImages[3].id,
+      ImageB1Id: createdImages[4].id,
+      ImageB2Id: createdImages[5].id,
+      ImageCId: createdImages[3].id,
+      ImageC1Id: createdImages[4].id,
+      ImageC2Id: createdImages[5].id
+    }]
+    await db.TopicActive.bulkCreate(topicActives);
+    // End TopicActive
 
     // promotions
     var promotion1 = {
