@@ -146,13 +146,9 @@ let ProductController = {
   },
 
   doUpdate: async (req, res) => {
-
     let productUpdate = req.body;
-
-    console.log('=== productUpdate ===', productUpdate);
-
+    console.log('=== ProductContoller : productUpdate ==>\n', productUpdate);
     try {
-
       await ProductService.update(productUpdate);
       return res.redirect('/admin/goods/');
     } catch (error) {
@@ -160,7 +156,6 @@ let ProductController = {
       let msg = error.message;
       return res.serverError({msg});
     }
-
     // return res.json(newProduct);
   },
 
