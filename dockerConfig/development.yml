@@ -6,22 +6,12 @@ web:
   environment:
     PORT: "1337"
     NODE_ENV: "development"
+    DOMAIN_HOST: "localhost:1337"
 
   ports:
     - "1337:1337"
 
-
-frontend:
-  command: "node server.js"
-  environment:
-    NODE_ENV: "development"
-
-  ports:
-    - "3000:3000"
-
-
 mysql:
-
   ports:
     - "3306:3306"
   environment:

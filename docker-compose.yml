@@ -11,6 +11,7 @@ build:
   restart: always
 
 web:
+  container_name: picklete
   image: smlsunxie/picklete_env
   extends:
     file: ./dockerConfig/development.yml
@@ -23,15 +24,6 @@ web:
   volumes:
     - ./:/picklete
 
-  restart: always
-
-frontend:
-  extends:
-    file: ./dockerConfig/development.yml
-    service: frontend
-
-  image: iojs
-  working_dir: /app
   restart: always
 
 
