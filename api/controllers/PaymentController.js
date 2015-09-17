@@ -53,7 +53,7 @@ let PaymentController = {
 
       if(!order)
         throw new Error(`${find} 嚴重錯誤!!付款後找不到訂單!!`);
-        
+
       if (!(sails.config.environment === 'development' || sails.config.environment === 'test')) {
         if(checkMacValue != data.CheckMacValue)
           throw new Error(`CheckMacError!!`);
@@ -67,7 +67,7 @@ let PaymentController = {
       order.paymentConfirmAmount = data.TradeAmt;
       await order.save();
 
-      return res.ok('OK');
+      return res.ok('1|OK');
     } catch (e) {
       console.error(e.stack);
       let {message} = e;

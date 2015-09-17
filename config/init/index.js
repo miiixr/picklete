@@ -448,6 +448,15 @@ module.exports = {
         email: createFakeUser.email
       }
       var  createBonusPoints = await db.BonusPoint.create(bonuspoint);
+
+      var additionalPurchase = {
+        name: '加價購測試商品'+i ,
+        discount: 100 ,
+        startDate: randomDate(new Date(2015, 9, 8), new Date(2015, 9, 20)),
+        endDate: randomDate(new Date(2015, 9, 21), new Date(2015, 10, 31))
+      }
+
+      var createAdditionalPurchase = await db.AdditionalPurchase.create(additionalPurchase);
     }
 
     // selectionActive

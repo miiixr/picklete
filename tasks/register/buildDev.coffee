@@ -1,5 +1,5 @@
 module.exports = (grunt) ->
-  grunt.registerTask "default", [
+  grunt.registerTask "buildDev", [
     "clean"
     "bower:dev"
     "compileAssets"

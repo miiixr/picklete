@@ -358,12 +358,34 @@ block body
           span.tag.label.label-default #{tag.name}
     // /form-group
   // /well
-
+    
   //
   .text-center.m-bottom-6
-    a.btn.btn-link.delete-link.btn-lg(href='#', data-toggle='modal', data-target='#modal-delete') 刪除此商品及所有品項
+    a.btn.btn-link.delete-link.btn-lg( data-toggle='modal', data-target='#modal-delete') 刪除此商品及所有品項
     input.btn.btn-green.btn-lg(type='submit', value='確認送出', form='goodForm')
   // /text-center
+    
+  // 刪除商品確認
+  #modal-delete.modal.fade
+    .modal-dialog(role='document')
+      .modal-content.font-size-slarge
+        .modal-header.p-30
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') ×
+          h2.modal-title 刪除
+        // /modal-header
+        .modal-body.p-30.p-top-0
+          p 您確定要將此商品及所有品項刪除？
+        // /modal-body
+        .modal-footer
+          button.btn.btn-default(type='button', data-dismiss='modal') 取消
+          form#goodDelete(action='/admin/goods/delete', method='POST', name='goodDelete')
+            input(type='hidden', name='id', value='#{good.ProductGm.id}')
+            button.btn.btn-green.btn.delete(type='submit', form='goodDelete') 確認
+        // /modal-footer
+      // /modal-content
+    // /modal-dialog
+
 
 block js
   script.
