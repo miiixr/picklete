@@ -40,6 +40,9 @@
 
   // input check when form submit
   $('form#activesData').submit(function(e){
+    $(".activityWeigth").map(function(index, input){
+      $(this).val(index)
+    });
     var finished = true;
     $('input[form="activesData"]').map(function(index, input){
       var value = $(input).val();
