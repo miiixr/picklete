@@ -8,8 +8,6 @@ build:
   volumes:
     - ./:/picklete
 
-  restart: always
-
 web:
   container_name: picklete
   image: smlsunxie/picklete_env
