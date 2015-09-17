@@ -35,6 +35,34 @@ let FAQController = {
       console.log(e);
     }
   },
+  FAQUpdate : async(req,res) => {
+    try{
+      var FAQId = req.query.FAQId;
+      let FAQ = await db.FAQ.findById(FAQId);
+      let FAQTypes = await db.FAQType.findAll();
+      if(req.method == "GET"){
+        return res.view("user/controlFAQAdd",{
+          FAQ :FAQ,
+          FAQTypes : FAQTypes || null
+        });
+      }
+      var params = req.body;
+
+      if (! params) {
+        return res.redirect("/admin/FAQ");
+      }
+      FAQ.title = params["title"];
+      FAQ.FAQTypeId = params["typeId"];
+      FAQ.answer = params["answer"];
+      console.log(FAQ);
+      let updatedFAQ = await FAQ.save();
+      return res.redirect("/admin/FAQ");
+
+    } catch(e){
+      console.log(e);
+      return res.redirect("/admin/FAQ");
+    }
+  },
   FAQTypeUpdate : async(req,res) => {
     try{
       let FAQTypes = await db.FAQType.findAll();
