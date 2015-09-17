@@ -43,6 +43,9 @@ module.exports.policies = {
 
   shopController:
     list: []
+
+  AboutController:
+    show: []
 }
 
 

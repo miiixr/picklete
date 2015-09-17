@@ -1,4 +1,9 @@
 let AboutController = {
+
+  show : async(req,res) => {
+    return res.view("main/about")
+  },
+
   create : async(req,res) => {
     try{
       let about = await db.About.findOne();

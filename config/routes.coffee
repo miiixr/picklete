@@ -33,8 +33,6 @@ module.exports.routes = {
   'get /logout': 'AuthController.logout'
   'get /register' : 'AuthController.register'
 
-  'get /about' : view: 'main/about'
-
   'get /admin/login' : 'UserController.controlLogin'
   #'get /admin/index-slider' : 'UserController.indexSlider'
   #'get /admin/index-slider-detail' : 'UserController.indexSliderDetail'
@@ -113,6 +111,7 @@ module.exports.routes = {
   # 'get /admin/shop-item-list' : 'UserController.controlShopItemList'
   'get /admin/order' : 'OrderController.index'
 
+  'get /about' : 'AboutController.show'
   'get /admin/about' : 'AboutController.create'
   'post /admin/about' : 'AboutController.create'
 
