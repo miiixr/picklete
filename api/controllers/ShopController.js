@@ -36,7 +36,7 @@ let ShopController = {
         }]
       });
 
-      brands = await db.Brand.findAll();
+      let brands = await db.Brand.findAll();
 
       console.log('products.length', products.length);
 
