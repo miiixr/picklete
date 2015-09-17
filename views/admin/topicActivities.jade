@@ -2,10 +2,10 @@ extends ../_layout_auth
 
 block body
   h2.m-bottom-6 主題活動
-  a.btn.btn-danger.btn-lg.m-bottom-2(href='#') 建立主題
+  //- a.btn.btn-danger.btn-lg.m-bottom-2(href='#') 建立主題
   hr.dashed-line
-  .form-group
-    input.form-control(type='text', placeholder='請輸入主題活動標題')
+  form#ActivitiesData.form-group(action='/admin/topicActivities', method='POST')
+    input.form-control(type='text', placeholder='請輸入主題活動標題', name='title')
   // /form-group
 
   ul.imageSection
@@ -13,7 +13,7 @@ block body
       .row
         .col-sm-6
           span.glyphicon.glyphicon-menu.font-size-xlarge.m-top-1 
-          input.weight(type='hidden', name='weight', value=0)
+          input.weight(type='hidden', name='weight', value=0, form='ActivitiesData')
         // /col-sm-6
         .col-sm-6.text-right
           a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
@@ -29,7 +29,8 @@ block body
                   control-index-theme-block
                   ==================================================
                 .dashed-block-2.fileinput-square.bg-white.text-center
-                  a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="1")
+                  form(action="/admin/image/upload", method="POST", enctype="multipart/form-data")
+                    a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="1")
                     span.glyphicon.glyphicon-plus.font-size-xxxxlarge
                 // /fileinput-square
               // m-bottom-4
@@ -134,7 +135,8 @@ block body
         // /col-sm-4
       // /row
     // /well
-
+  
+  // / modal
   button.btn.btn-add.btn-default(type='button') 新增圖片區塊
   hr.dashed-line
   .text-center.m-bottom-6.m-top-6

@@ -18,12 +18,14 @@
   var $type4 = $('.type4')[0].outerHTML;
 
   $('#modal-control-index-exclusive-type').on('click','.btn-green',function(e){
+    alert('a');
     e.preventDefault();
     var $checked = $('input:checkbox:checked[name="exclusive-type"]').map(function() { return $(this).val(); }).get();
 
     for (var i in $checked){
       var check = $checked[i];
       if(check == 1){
+        alert('b');
         $('ul.col-sm-9.col-md-10').append($type1);
       }
       if(check == 2){

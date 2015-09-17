@@ -50,7 +50,8 @@ module.exports.routes = {
   'post /admin/brands/update' : 'BrandController.update'
   'get /admin/exclusive' : 'SelectionActiveController.list'
   'post /admin/exclusive' : 'SelectionActiveController.update'
-  'get /admin/index-theme' : view: 'admin/themeActivities'
+  'get /admin/topicActivities' : 'TopicActiveController.list'
+  'post /admin/topicActivities' : 'TopicActiveController.save'
 
   'get /admin/index-slider' : 'SliderActivitiesController.list'
   'get /admin/slider/create': view: 'admin/sliderActivitiesDetail'
