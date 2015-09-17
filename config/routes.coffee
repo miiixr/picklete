@@ -33,6 +33,8 @@ module.exports.routes = {
   'get /logout': 'AuthController.logout'
   'get /register' : 'AuthController.register'
 
+  'get /about' : view: 'main/about'
+
   'get /admin/login' : 'UserController.controlLogin'
   #'get /admin/index-slider' : 'UserController.indexSlider'
   #'get /admin/index-slider-detail' : 'UserController.indexSliderDetail'
