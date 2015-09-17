@@ -1,0 +1,62 @@
+extends ../_layout_auth
+
+block body
+  h2.m-bottom-6 燈箱活動 
+  a.btn.btn-danger.btn-lg.m-bottom-2(href='/admin/slider/create') 建立活動
+  hr.dashed-line
+  table.table.table-striped
+    thead
+      tr
+        th.width-200 主圖
+        th 標題
+        th 文案
+        th
+    tbody
+      each slider in sliders
+        tr
+        td
+          img.max-width-150(src='#{slider.cover}')
+        td #{slider.title}
+        td #{slider.description}
+        td.text-right
+          a.btn.btn-link(href='/admin/slider/update?id=#{slider.id}')
+            span.glyphicon.glyphicon-pencil2
+          input(type='hidden', value='#{slider.id}')
+          a.btn.btn-link.delete-link(href='', data-toggle='modal', data-target='#modal-delete')
+            span.glyphicon.glyphicon-remove
+  hr.dashed-line
+  .text-center
+    //
+      pagination-block
+      ==================================================
+    ul.list-inline.m-bottom-0.m-top-1
+      li.border-right-1.p-right-2
+        a(href='#') 上一頁
+      li.border-right-1.p-right-2 第 15 之 20
+      li
+        a(href='#') 下一頁
+  // /text-center
+
+  #modal-delete.modal.fade
+    .modal-dialog(role='document')
+      .modal-content.font-size-slarge
+        .modal-header.p-30
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') ×
+          h2.modal-title 刪除
+        // /modal-header
+        .modal-body.p-30.p-top-0
+          p 您確定要將此 Section 刪除？
+        // /modal-body
+        .modal-footer
+          button.btn.btn-default(type='button', data-dismiss='modal') 取消
+          button.btn.btn-green(type='button', data-dismiss='modal') 確定
+        // /modal-footer
+      // /modal-content
+    // /modal-dialog
+
+// /row
+
+
+block js
+  script(src="/javascripts/admin/sliderActivitiesUpdate.js")

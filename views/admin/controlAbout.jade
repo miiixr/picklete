@@ -142,7 +142,7 @@ block body
                 a.btn-remove(href='#')
                   span.glyphicon.glyphicon-remove
                 .form-group.m-top-2.m-bottom-0
-                  input.form-control(type='text', form='about-data', name="dealerNames[]", value="#{dealerName[index]}")
+                  input.form-control(type='url', form='about-data', name="dealerNames[]", value="#{dealerName[index]}", required)
               // /edit-block
             // /col-md-3
 
@@ -174,7 +174,7 @@ block body
           a.btn-add(href='#')
             span.glyphicon.glyphicon-plus
           .form-group.m-top-2.m-bottom-0
-            input.form-control(type='text', form='about-data', name="dealerNames[]")
+            input.form-control(type='url', form='about-data', name="dealerNames[]", required)
         // /edit-block
       // /col-md-3
 
