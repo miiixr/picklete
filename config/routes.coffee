@@ -111,6 +111,7 @@ module.exports.routes = {
   # 'get /admin/shop-item-list' : 'UserController.controlShopItemList'
   'get /admin/order' : 'OrderController.index'
 
+  'get /about' : 'AboutController.show'
   'get /admin/about' : 'AboutController.create'
   'post /admin/about' : 'AboutController.create'
 

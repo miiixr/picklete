@@ -47,6 +47,9 @@ module.exports.policies = {
 
   SelectionActiveController:
     index: []
+
+  AboutController:
+    show: []
 }
 
 

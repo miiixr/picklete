@@ -1,4 +1,21 @@
 let AboutController = {
+
+  show : async(req,res) => {
+    let about = await db.About.findOne();
+    
+    var productPhotos = JSON.parse(about.dataValues.productPhotos);
+    var dealerPhotos = JSON.parse(about.dataValues.dealerPhotos);
+    var dealerNames = JSON.parse(about.dataValues.dealerNames);
+
+    return res.view("main/about",{
+           pageName: "/about",
+           about: about.dataValues || null,
+           productPhotos: productPhotos || null,
+           dealerPhotos: dealerPhotos || null,
+           dealerNames: dealerNames || null
+        });
+  },
+
   create : async(req,res) => {
     try{
       let about = await db.About.findOne();
