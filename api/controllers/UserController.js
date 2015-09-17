@@ -151,26 +151,26 @@ let UserController = {
       pageName: "about"
     });
   },
-  controlQa: function(req, res) {
-    res.view({
-      pageName: "qa"
-    });
-  },
-  controlQaDetail: function(req, res) {
-    res.view({
-      pageName: "qa-detail"
-    });
-  },
-  controlQaType: function(req, res) {
-    res.view({
-      pageName: "qa-type"
-    });
-  },
-  controlQaAdd: function(req, res) {
-    res.view({
-      pageName: "qa-add"
-    });
-  },
+  // controlQa: function(req, res) {
+  //   res.view({
+  //     pageName: "qa"
+  //   });
+  // },
+  // controlQaDetail: function(req, res) {
+  //   res.view({
+  //     pageName: "qa-detail"
+  //   });
+  // },
+  // controlQaType: function(req, res) {
+  //   res.view({
+  //     pageName: "qa-type"
+  //   });
+  // },
+  // controlQaAdd: function(req, res) {
+  //   res.view({
+  //     pageName: "qa-add"
+  //   });
+  // },
   controlMembers: async function(req, res) {
 
     try {

@@ -70,30 +70,28 @@ let FAQController = {
     }
   },
   FAQDelete : async(req,res) => {
-    return db.FAQ.destroy({
-      where: {
-        id: req.body.id
-      }
-    })
-    .then(function(newDpt) {
-      return res.redirect('/admin/FAQ');
-    })
-    .catch(function(error) {
-      return res.serverError(error);
-    });
+    try{
+      var FAQDelete = await db.FAQ.destroy({
+        where: {
+          id :req.body.id
+        }
+      });
+      return res.redirect("/admin/FAQ");
+    } catch(e){
+      console.log(e);
+    }
   },
   FAQTypeDelete : async(req,res) => {
-    return db.FAQType.destroy({
-      where: {
-        id: req.body.id
-      }
-    })
-    .then(function(newDpt) {
-      return res.redirect('/admin/FAQTypeUpdate');
-    })
-    .catch(function(error) {
-      return res.serverError(error);
-    });
+    try{
+      var FAQDelete = await db.FAQType.destroy({
+        where: {
+          id :req.body.id
+        }
+      });
+      return res.redirect("/admin/FAQTypeUpdate");
+    } catch(e){
+      console.log(e);
+    }
   }
 };
 module.exports = FAQController;
