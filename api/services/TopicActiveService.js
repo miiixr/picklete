@@ -27,6 +27,14 @@ module.exports = {
   // save
   save: async (topicActives) => {
     try {
+
+      // clear old topicActive data
+      let oldDatas = await db.TopicActive.findAll();
+      let deleteAll = await* oldDatas.map((oldOne) => {
+        console.log('=== now destroying oldOne id ==>',oldOne.id);
+        oldOne.destroy();
+      });
+
       let imageNames = ['ImageA','ImageA1','ImageA2','ImageB','ImageB1','ImageB2','ImageC','ImageC1','ImageC2'];
       let topicActivesData = [];
 

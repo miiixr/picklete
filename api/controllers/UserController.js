@@ -17,7 +17,6 @@ let UserController = {
       include: [db.Like]
     })).toJSON();
 
-
     let passport = await db.Passport.find({where: {UserId: user.id}});
     user.password = passport.password;
     user.passwordAgain = passport.password;
