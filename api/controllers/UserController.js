@@ -17,7 +17,6 @@ let UserController = {
       include: [db.Like]
     })).toJSON();
 
-
     let passport = await db.Passport.find({where: {UserId: user.id}});
     user.password = passport.password;
     user.passwordAgain = passport.password;
@@ -151,26 +150,26 @@ let UserController = {
       pageName: "about"
     });
   },
-  controlQa: function(req, res) {
-    res.view({
-      pageName: "qa"
-    });
-  },
-  controlQaDetail: function(req, res) {
-    res.view({
-      pageName: "qa-detail"
-    });
-  },
-  controlQaType: function(req, res) {
-    res.view({
-      pageName: "qa-type"
-    });
-  },
-  controlQaAdd: function(req, res) {
-    res.view({
-      pageName: "qa-add"
-    });
-  },
+  // controlQa: function(req, res) {
+  //   res.view({
+  //     pageName: "qa"
+  //   });
+  // },
+  // controlQaDetail: function(req, res) {
+  //   res.view({
+  //     pageName: "qa-detail"
+  //   });
+  // },
+  // controlQaType: function(req, res) {
+  //   res.view({
+  //     pageName: "qa-type"
+  //   });
+  // },
+  // controlQaAdd: function(req, res) {
+  //   res.view({
+  //     pageName: "qa-add"
+  //   });
+  // },
   controlMembers: async function(req, res) {
 
     try {

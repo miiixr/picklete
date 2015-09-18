@@ -73,6 +73,43 @@
         form(action='/admin/department/sub/delete', method='POST')
           input(id='del-sm-id',type='hidden', name='id', required='true',value="")
           button.btn.btn-green(type='submit') 確定
+
+#modal-FAQ-delete.modal.fade
+  .modal-dialog(role='document')
+    .modal-content.font-size-slarge
+      .modal-header.p-30
+        button.close(type='button', data-dismiss='modal', aria-label='Close')
+          span(aria-hidden='true') ×
+        h2.modal-title 刪除
+      // /modal-header
+      .modal-body.p-30.p-top-0
+        p 您確定要將
+          span.FAQTitle          
+          | 刪除？
+      // /modal-body
+      .modal-footer
+        button.btn.btn-default(type='button', data-dismiss='modal') 取消
+        form(action='/admin/FAQDelete', method='POST')
+          input(id='del-FAQ-id',type='hidden', name='id', required='true',value="")
+          button.btn.btn-green(type='submit') 確定
+#modal-FAQType-delete.modal.fade
+  .modal-dialog(role='document')
+    .modal-content.font-size-slarge
+      .modal-header.p-30
+        button.close(type='button', data-dismiss='modal', aria-label='Close')
+          span(aria-hidden='true') ×
+        h2.modal-title 刪除
+      // /modal-header
+      .modal-body.p-30.p-top-0
+        p 您確定要將
+          span.FAQTypeTitle          
+          | 刪除？
+      // /modal-body
+      .modal-footer
+        button.btn.btn-default(type='button', data-dismiss='modal') 取消
+        form(action='/admin/FAQTypeDelete', method='POST')
+          input(id='del-FAQType-id',type='hidden', name='id', required='true',value="")
+          button.btn.btn-green(type='submit') 確定
       // /modal-footer
     // /modal-content
   // /modal-dialog

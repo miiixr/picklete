@@ -8,15 +8,27 @@ build:
   volumes:
     - ./:/picklete
 
-  restart: always
+test:
+  image: smlsunxie/picklete_env
+  extends:
+    file: ./dockerConfig/development.yml
+    service: test
+
+  external_links:
+    - mysql
+
+  working_dir: /picklete
+  volumes:
+    - ./:/picklete
 
 web:
+  container_name: picklete
   image: smlsunxie/picklete_env
   extends:
     file: ./dockerConfig/development.yml
     service: web
 
-  links:
+  external_links:
     - mysql
 
   working_dir: /picklete
@@ -25,17 +37,9 @@ web:
 
   restart: always
 
-frontend:
-  extends:
-    file: ./dockerConfig/development.yml
-    service: frontend
-
-  image: iojs
-  working_dir: /app
-  restart: always
-
 
 mysql:
+  container_name: mysql
   image: dgraziotin/mysql
   extends:
     file: ./dockerConfig/development.yml

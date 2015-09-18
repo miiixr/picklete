@@ -4,5 +4,6 @@ module.exports = (grunt) ->
     "bower:dev"
     "compileAssets"
     "linkAssets"
+    "watch"
   ]
   return
