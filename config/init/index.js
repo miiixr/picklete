@@ -349,20 +349,20 @@ module.exports = {
     }
     // end of create tag
 
-    let isolationLevel = db.Sequelize.Transaction.ISOLATION_LEVELS.SERIALIZABLE;
-    let transaction = await db.sequelize.transaction({isolationLevel});
+    //let isolationLevel = db.Sequelize.Transaction.ISOLATION_LEVELS.SERIALIZABLE;
+    //let transaction = await db.sequelize.transaction({isolationLevel});
 
     // Greeting Message to New Buyer
     var mail = CustomMailerService.greeting(newBuyer);
-    let msg = await db.Message.create(mail, {transaction});
-    transaction.commit();
+    let msg = await db.Message.create(mail/*, {transaction}*/);
+    //transaction.commit();
     CustomMailerService.sendMail(msg);
 
-    transaction = await db.sequelize.transaction({isolationLevel});
+    //transaction = await db.sequelize.transaction({isolationLevel});
 
     var sms = SimpleMessageService.greeting(newBuyer);
-    msg = await db.Message.create(sms, {transaction});
-    transaction.commit();
+    msg = await db.Message.create(sms/*, {transaction}*/);
+    //transaction.commit();
     SimpleMessageService.send(msg);
 
 

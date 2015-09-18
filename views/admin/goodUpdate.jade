@@ -264,10 +264,15 @@ block body
             // /form-group
           // /col-md-4
           .col-md-1.text-right
+            //- if(i == 0)
             a.btn-remove(href='#')
               span.glyphicon.glyphicon-remove
-            a.btn-add(href='#')
-              span.glyphicon.glyphicon-plus
+            if(i == good.Products.length-1)
+              a.btn-add(href='#', type='')
+                span.glyphicon.glyphicon-plus
+            //- else
+            //-   a.btn-add(href='#', style='visibility:hidden')
+            //-     span.glyphicon.glyphicon-plus
           // /col-md-1
   // /well
 
