@@ -1,0 +1,15 @@
+.fileinput-square.add-image {
+  &>a>span {
+    opacity: 0;
+  }
+  &:hover {
+    &>a {
+      &>span {
+        opacity: 1;
+      }
+      &>img {
+        opacity: 0.65;
+      }
+    }
+  }
+}
