@@ -8,6 +8,19 @@ build:
   volumes:
     - ./:/picklete
 
+test:
+  image: smlsunxie/picklete_env
+  extends:
+    file: ./dockerConfig/development.yml
+    service: test
+
+  external_links:
+    - mysql
+
+  working_dir: /picklete
+  volumes:
+    - ./:/picklete
+
 web:
   container_name: picklete
   image: smlsunxie/picklete_env
@@ -15,7 +28,7 @@ web:
     file: ./dockerConfig/development.yml
     service: web
 
-  links:
+  external_links:
     - mysql
 
   working_dir: /picklete
@@ -26,6 +39,7 @@ web:
 
 
 mysql:
+  container_name: mysql
   image: dgraziotin/mysql
   extends:
     file: ./dockerConfig/development.yml
