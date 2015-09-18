@@ -100,9 +100,7 @@ module.exports = {
   },
 
   update: async (updateProduct) => {
-
-    console.log('=== ProductService : updateProduct ==>\n', updateProduct);
-
+    // console.log('=== ProductService : updateProduct ==>\n', updateProduct);
     try {
       var {brandType} = updateProduct;
       var brand;
@@ -117,7 +115,7 @@ module.exports = {
         tag = tag.split(',');
       }
 
-      console.log('=== updateProduct.productGm.id ==>', updateProduct.productGm.id);
+      // console.log('=== updateProduct.productGm.id ==>', updateProduct.productGm.id);
       let productGm = await db.ProductGm.find({
         where: {
           id: updateProduct.productGm.id
@@ -126,7 +124,7 @@ module.exports = {
 
       var goods = updateProduct.good;
       for (var i = 0 ; i < goods.length ; i++) {
-        console.log('=== now deal with good ==>',i);
+        // console.log('=== now deal with good ==>',i);
         var good = goods[i];
 
         // find product in db first
@@ -139,7 +137,7 @@ module.exports = {
         // let's check whether we find this product.
         if (product){
           // product is exists
-          console.log('=== product ',i,' exists and name is ==>',good.description);
+          // console.log('=== product ',i,' exists and name is ==>',good.description);
           product.name = good.description;
           product.price = updateProduct.price;
           product.size = updateProduct.size;
@@ -164,7 +162,7 @@ module.exports = {
 
         }else {
           // product not exists
-          console.log('=== product ',i,' NOT exists and name is ===', good.description);
+          // console.log('=== product ',i,' NOT exists and name is ===', good.description);
           let isPublish = (good.isPublish == "false") ? false : true;
           let newProduct = {
             name : good.description,
