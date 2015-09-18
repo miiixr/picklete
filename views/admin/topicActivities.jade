@@ -239,11 +239,11 @@ block body
                       span.btn.btn-default.btn-sm.btn-file
                         span.fileinput-new Select image
                         span.fileinput-exists Change
-                        input(type='file', name='uploadfile')
+                        input#inputUploadFile(type='file', name='uploadfile')
                         input#uploadFileName(type='hidden', name="filename", value='modalFileInput')
                         input#fileInputPath(type='hidden', name='modalFileInput')
-                        input(type='hidden', name="width", value='1100')
-                        input(type='hidden', name="height", value='350')
+                        input#fileInputWidth(type='hidden', name="width", value='500')
+                        input#fileInputHeight(type='hidden', name="height", value='500')
                       a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
                   // /fileinput-btn
                 // /fileinput
