@@ -1,0 +1,22 @@
+build:
+  command: "/bin/bash -l -c 'npm i && node_modules/.bin/grunt prod'"
+
+web:
+  command: "/bin/bash -l -c 'npm start'"
+  environment:
+    PORT: "1337"
+    NODE_ENV: "production"
+    DOMAIN_HOST: "localhost:1337"
+
+  ports:
+    - "1337:1337"
+
+mysql:
+  ports:
+    - "3306:3306"
+  environment:
+    MYSQL_ADMIN_PASS: "root"
+    MYSQL_USER_NAME: "picklete"
+    MYSQL_USER_DB: "picklete_prod"
+    MYSQL_USER_PASS: "picklete"
+    CREATE_MYSQL_BASIC_USER_AND_DB: "true"

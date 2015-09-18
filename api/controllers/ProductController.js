@@ -1,6 +1,21 @@
 
 let ProductController = {
-
+  debug: async (req, res) => {
+    try {
+      res.ok(await db.Product.findAndCountAll());
+    }
+    catch (error) {
+      return res.serverError(error);
+    }
+  },
+  image: async (req, res) => {
+    try {
+      res.ok({product: await db.Product.findById(req.param('id'))});
+    }
+    catch (error) {
+      return res.serverError(error);
+    }
+  },
   // show create page and prepare all stuff
   showCreate: async (req, res) => {
     // let products = await ProductService.findAllWithImages();
@@ -131,13 +146,9 @@ let ProductController = {
   },
 
   doUpdate: async (req, res) => {
-
     let productUpdate = req.body;
-
-    console.log('=== productUpdate ===', productUpdate);
-
+    // console.log('=== ProductContoller : productUpdate ==>\n', productUpdate);
     try {
-
       await ProductService.update(productUpdate);
       return res.redirect('/admin/goods/');
     } catch (error) {
@@ -145,7 +156,6 @@ let ProductController = {
       let msg = error.message;
       return res.serverError({msg});
     }
-
     // return res.json(newProduct);
   },
 

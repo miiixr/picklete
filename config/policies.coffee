@@ -40,9 +40,16 @@ module.exports.policies = {
   #'/api/search/*': []
   SearchController:
     products: []
+    productsJson: []
 
   shopController:
     list: []
+
+  SelectionActiveController:
+    index: []
+
+  AboutController:
+    show: []
 }
 
 

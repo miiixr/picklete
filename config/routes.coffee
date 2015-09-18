@@ -61,7 +61,7 @@ module.exports.routes = {
 
 
 
-  'get /index' : view: 'main/index'
+  'get /index' : 'SelectionActiveController.index'
   'get /member/fav' : view: 'main/member-fav'
   'get /member/purchase' : view: 'main/member-purchase'
   'get /member/setting' : 'UserController.edit'
@@ -111,6 +111,7 @@ module.exports.routes = {
   # 'get /admin/shop-item-list' : 'UserController.controlShopItemList'
   'get /admin/order' : 'OrderController.index'
 
+  'get /about' : 'AboutController.show'
   'get /admin/about' : 'AboutController.create'
   'post /admin/about' : 'AboutController.create'
 
@@ -152,7 +153,8 @@ module.exports.routes = {
 
   "get /admin/login": view: "admin/login"
 
-  'get /api/search/:keywords': 'SearchController.products'
+  'get /api/search/:keywords': 'SearchController.productsJson'
+  'get /search/:keywords': 'SearchController.products'
 
   'post /allpay/paid':{
     controller: "PaymentController",

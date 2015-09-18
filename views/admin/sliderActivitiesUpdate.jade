@@ -49,31 +49,31 @@ block body
           label.col-sm-3.col-md-2.control-label 文案位置
           .col-sm-9.col-md-10
             label.radio-inline
-              input#inlineRadio1(type='radio', name='location', value='option1', form='activeCreateForm')
+              input#inlineRadio1(type='radio', name='location', value='caption-left caption-top', form='activeCreateForm')
               |  左上
             label.radio-inline
-              input#inlineRadio2(type='radio', name='location', value='option2', form='activeCreateForm')
+              input#inlineRadio2(type='radio', name='location', value='caption-center caption-top', form='activeCreateForm')
               |  中上
             label.radio-inline
-              input#inlineRadio3(type='radio', name='location', value='option3', form='activeCreateForm')
+              input#inlineRadio3(type='radio', name='location', value='caption-right caption-top', form='activeCreateForm')
               |  右上
             label.radio-inline
-              input#inlineRadio4(type='radio', name='location', value='option4', form='activeCreateForm')
+              input#inlineRadio4(type='radio', name='location', value='caption-left caption-middle', form='activeCreateForm')
               |  左中
             label.radio-inline
-              input#inlineRadio5(type='radio', name='location', value='option5', form='activeCreateForm')
+              input#inlineRadio5(type='radio', name='location', value='caption-center caption-middle', form='activeCreateForm')
               |  中中
             label.radio-inline
-              input#inlineRadio6(type='radio', name='location', value='option6', form='activeCreateForm')
+              input#inlineRadio6(type='radio', name='location', value='caption-right caption-middle', form='activeCreateForm')
               |  右中
             label.radio-inline
-              input#inlineRadio7(type='radio', name='location', value='option7', form='activeCreateForm')
+              input#inlineRadio7(type='radio', name='location', value='caption-left caption-bottom', form='activeCreateForm')
               |  左下
             label.radio-inline
-              input#inlineRadio8(type='radio', name='location', value='option8', form='activeCreateForm')
+              input#inlineRadio8(type='radio', name='location', value='caption-center caption-bottom', form='activeCreateForm')
               |  中下
             label.radio-inline
-              input#inlineRadio9(type='radio', name='location', value='option9', form='activeCreateForm')
+              input#inlineRadio9(type='radio', name='location', value='caption-right caption-bottom', form='activeCreateForm')
               |  右下
           // /col-sm-9
         // /form-group
@@ -101,7 +101,4 @@ block body
   // /well
 
 block js
-  script(src="/javascripts/admin/sliderActivitiesUpdate.js")
-    
-    
-
+  script(id="myscript", src="/javascripts/admin/sliderActivitiesUpdate.js", slider-location="#{slider.location}", slider-id="#{slider.id}")

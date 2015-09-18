@@ -37,7 +37,7 @@ OrderController = {
 
       // if(query.keyword)
       //   queryObj.keyword = { 'like': '%'+query.keyword+'%'};
-      
+
       if(query.userName) {
         queryUserObj.username = { 'like': '%'+query.userName+'%'};
       }else{
@@ -51,14 +51,14 @@ OrderController = {
 
       // if(query.shipmentNotify != '0' && query.shipmentNotify)
       //   queryObj.shipmentNotify = query.shipmentNotify;
-      
+
       if(query.addressee) {
         queryShipmentObj.username = { 'like': '%'+query.addressee+'%'};
       }else{
         queryShipmentObj.username = { 'like': '%'};
         query.username = ''
       }
-      
+
       if(query.createdStart && query.createdEnd) {
          queryObj.createdAt = { between : [new Date(query.createdStart), new Date(query.createdEnd)]};
       }else if(query.createdStart || query.createdEnd) {
@@ -159,7 +159,7 @@ OrderController = {
       if(useAllPay){
         var allPayData = await OrderService.allPayCreate(result.order);
         console.log("!!!",allPayData);
-        res.view('order/allpay',{
+        res.view('order/allPay',{
           allPayData
         });
       }else{
@@ -189,7 +189,7 @@ OrderController = {
       }
       console.log("!!!",orderData);
       var allPayData = await OrderService.allPayCreate(orderData);
-      res.view('order/allpay',{
+      res.view('order/allPay',{
         allPayData
       });
 
