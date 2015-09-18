@@ -12,7 +12,7 @@ let SelectionActiveController = {
   update : async (req, res) => {
     let selectionActives = req.body.actives;
     let result = await SelectionActiveService.save(selectionActives);
-    // console.log(result);
+    console.log("!!!",req.body);
     return res.redirect("/admin/exclusive");
   },
 

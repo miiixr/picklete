@@ -24,18 +24,21 @@
     for (var i in $checked){
       var check = $checked[i];
       if(check == 1){
-        $('ul.col-sm-9.col-md-10').append($type1);
+        $("#activityList").append($type1);
       }
       if(check == 2){
-        $('ul.col-sm-9.col-md-10').append($type2);
+        $("#activityList").append($type2);
       }
       if(check == 3){
-        $('ul.col-sm-9.col-md-10').append($type3);
+        $("#activityList").append($type3);
       }
       if(check == 4){
-        $('ul.col-sm-9.col-md-10').append($type4);
+        $("#activityList").append($type4);
       }
     }
+
+    var maxType = $("li.control-well").length;
+    $("li.control-well")[5].
   });
 
   // input check when form submit

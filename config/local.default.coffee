@@ -1,9 +1,9 @@
 module.exports = {
-  createInitData: false
+  createInitData: true
   useAllPay: true
   environment: ''
   initData: ''
-  domain: 'http://localhost:1337'
+  domain: 'http://fud.dscloud.me:1337'
   mail: {
     type: 'ses'
     config: {
