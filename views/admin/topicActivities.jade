@@ -6,136 +6,171 @@ block body
   hr.dashed-line
   form#ActivitiesData.form-group(action='/admin/topicActivities', method='POST')
     input.form-control(type='text', placeholder='請輸入主題活動標題', name='title')
-  // /form-group
-
-  ul.imageSection
-    li.well.control-well.p-10-20.m-bottom-4.imageSection
-      .row
-        .col-sm-6
-          span.glyphicon.glyphicon-menu.font-size-xlarge.m-top-1 
-          input.weight(type='hidden', name='weight', value=0, form='ActivitiesData')
-        // /col-sm-6
-        .col-sm-6.text-right
-          a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
-            span.glyphicon.glyphicon-remove
-        // /col-sm-6
-      // /row
-      .row.m-bottom-4
-        .col-sm-4
-          .row.row-m
-            .col-xs-12
-              .m-bottom-4
-                //
-                  control-index-theme-block
-                  ==================================================
-                .dashed-block-2.fileinput-square.bg-white.text-center
-                  form(action="/admin/image/upload", method="POST", enctype="multipart/form-data")
-                    a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="1")
-                    span.glyphicon.glyphicon-plus.font-size-xxxxlarge
-                // /fileinput-square
-              // m-bottom-4
-            // /col-xs-12
-            .col-xs-6
-              .m-bottom-4
-                //
-                  control-index-theme-block
-                  ==================================================
-                .dashed-block-2.fileinput-square.bg-white.text-center
-                  a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="2")
-                    span.glyphicon.glyphicon-plus.font-size-xxxxlarge
-                // /fileinput-square
-              // m-bottom-4
-            // /col-xs-6
-            .col-xs-6
-              .m-bottom-4
-                //
-                  control-index-theme-block
-                  ==================================================
-                .dashed-block-2.fileinput-square.bg-white.text-center
-                  a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="3")
-                    span.glyphicon.glyphicon-plus.font-size-xxxxlarge
-                // /fileinput-square
-              // m-bottom-4
-            // /col-xs-6
+    // /form-group
+    ul.imageSection
+      each activity, index in activities
+        li.well.control-well.p-10-20.m-bottom-4.imageSection
+          .row
+            .col-sm-6
+              span.glyphicon.glyphicon-menu.font-size-xlarge.m-top-1 
+              input.weight(type='hidden', name='activities[#{index}][weight]', value=0)
+            // /col-sm-6
+            .col-sm-6.text-right
+              a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
+                span.glyphicon.glyphicon-remove
+            // /col-sm-6
           // /row
-        // /col-sm-4
-        .col-sm-4
-          .row.row-m
-            .col-xs-6
-              .m-bottom-4
-                //
-                  control-index-theme-block
-                  ==================================================
-                .dashed-block-2.fileinput-square.bg-white.text-center
-                  a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="4")
-                    span.glyphicon.glyphicon-plus.font-size-xxxxlarge
-                // /fileinput-square
-              // m-bottom-4
-            // /col-xs-6
-            .col-xs-6
-              .m-bottom-4
-                //
-                  control-index-theme-block
-                  ==================================================
-                .dashed-block-2.fileinput-square.bg-white.text-center
-                  a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="5")
-                    span.glyphicon.glyphicon-plus.font-size-xxxxlarge
-                // /fileinput-square
-              // m-bottom-4
-            // /col-xs-6
-            .col-xs-12
-              .m-bottom-4
-                //
-                  control-index-theme-block
-                  ==================================================
-                .dashed-block-2.fileinput-square.bg-white.text-center
-                  a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="6")
-                    span.glyphicon.glyphicon-plus.font-size-xxxxlarge
-                // /fileinput-square
-              // m-bottom-4
-            // /col-xs-12
+          .row.m-bottom-4
+            .col-sm-4
+              .row.row-m
+                .col-xs-12
+                  .m-bottom-4
+                    //
+                      control-index-theme-block
+                      ==================================================
+                    .fileinput-square.bg-white.text-center.add-image
+                      a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="1")
+                        img(src='#{activity.ImageA.path}', border=0, width=281.656, height=285.656)  
+                        input(type='hidden', name='activities[#{index}][ImageA][path]', data-content="path")
+                        input(type='hidden', name='activities[#{index}][ImageA][url]', data-content="url")
+                        input(type='hidden', name='activities[#{index}][ImageA][openWindow]', data-content='openWindow')
+                        span.glyphicon.glyphicon-plus.font-size-xxxxlarge
+                    // /fileinput-square
+                  // m-bottom-4
+                // /col-xs-12
+                .col-xs-6
+                  .m-bottom-4
+                    //
+                      control-index-theme-block
+                      ==================================================
+                    .fileinput-square.bg-white.text-center.add-image
+                      a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="2")
+                        img(src='#{activity.ImageA1.path}', border=0, width=130.828, height=134.828)  
+                        input(type='hidden', name='activities[#{index}][ImageA1][path]', data-content="path")
+                        input(type='hidden', name='activities[#{index}][ImageA1][url]', data-content="url")
+                        input(type='hidden', name='activities[#{index}][ImageA1][openWindow]', data-content='openWindow')
+                        span.glyphicon.glyphicon-plus.font-size-xxxxlarge
+                    // /fileinput-square
+                  // m-bottom-4
+                // /col-xs-6
+                .col-xs-6
+                  .m-bottom-4
+                    //
+                      control-index-theme-block
+                      ==================================================
+                    .fileinput-square.bg-white.text-center.add-image
+                      a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="3")
+                        img(src='#{activity.ImageA2.path}', border=0, width=130.828, height=134.828)  
+                        input(type='hidden', name='activities[#{index}][ImageA2][path]', data-content="path")
+                        input(type='hidden', name='activities[#{index}][ImageA2][url]', data-content="url")
+                        input(type='hidden', name='activities[#{index}][ImageA2][openWindow]', data-content='openWindow')
+                        span.glyphicon.glyphicon-plus.font-size-xxxxlarge
+                    // /fileinput-square
+                  // m-bottom-4
+                // /col-xs-6
+              // /row
+            // /col-sm-4
+            .col-sm-4
+              .row.row-m
+                .col-xs-6
+                  .m-bottom-4
+                    //
+                      control-index-theme-block
+                      ==================================================
+                    .fileinput-square.bg-white.text-center.add-image
+                      a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="4")
+                        img(src='#{activity.ImageB1.path}', border=0, width=130.828, height=134.828)  
+                        input(type='hidden', name='activities[#{index}][ImageB1][path]', data-content="path")
+                        input(type='hidden', name='activities[#{index}][ImageB1][url]', data-content="url")
+                        input(type='hidden', name='activities[#{index}][ImageB1][openWindow]', data-content='openWindow')
+                        span.glyphicon.glyphicon-plus.font-size-xxxxlarge
+                    // /fileinput-square
+                  // m-bottom-4
+                // /col-xs-6
+                .col-xs-6
+                  .m-bottom-4
+                    //
+                      control-index-theme-block
+                      ==================================================
+                    .fileinput-square.bg-white.text-center.add-image
+                      a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="5")
+                        img(src='#{activity.ImageB2.path}', border=0, width=130.828, height=134.828)  
+                        input(type='hidden', name='activities[#{index}][ImageB2][path]', data-content="path")
+                        input(type='hidden', name='activities[#{index}][ImageB2][url]', data-content="url")
+                        input(type='hidden', name='activities[#{index}][ImageB2][openWindow]', data-content='openWindow')
+                        span.glyphicon.glyphicon-plus.font-size-xxxxlarge
+                    // /fileinput-square
+                  // m-bottom-4
+                // /col-xs-6
+                .col-xs-12
+                  .m-bottom-4
+                    //
+                      control-index-theme-block
+                      ==================================================
+                    .fileinput-square.bg-white.text-center.add-image
+                      a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="6")
+                        img(src='#{activity.ImageB.path}', border=0, width=281.656, height=285.656)  
+                        input(type='hidden', name='activities[#{index}][ImageB][path]', data-content="path")
+                        input(type='hidden', name='activities[#{index}][ImageB][url]', data-content="url")
+                        input(type='hidden', name='activities[#{index}][ImageB][openWindow]', data-content='openWindow')
+                        span.glyphicon.glyphicon-plus.font-size-xxxxlarge
+                    // /fileinput-square
+                  // m-bottom-4
+                // /col-xs-12
+              // /row
+            // /col-sm-4
+            .col-sm-4
+              .row.row-m
+                .col-xs-12
+                  .m-bottom-4
+                    //
+                      control-index-theme-block
+                      ==================================================
+                    .fileinput-square.bg-white.text-center.add-image
+                      a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="7")
+                        img(src='#{activity.ImageC.path}', border=0, width=281.656, height=285.656)  
+                        input(type='hidden', name='activities[#{index}][ImageC][path]', data-content="path")
+                        input(type='hidden', name='activities[#{index}][ImageC][url]', data-content="url")
+                        input(type='hidden', name='activities[#{index}][ImageC][openWindow]', data-content='openWindow')
+                        span.glyphicon.glyphicon-plus.font-size-xxxxlarge
+                    // /fileinput-square
+                  // m-bottom-4
+                // /col-xs-12
+                .col-xs-6
+                  .m-bottom-4
+                    //
+                      control-index-theme-block
+                      ==================================================
+                    .fileinput-square.bg-white.text-center.add-image
+                      a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="8")
+                        img(src='#{activity.ImageC1.path}', border=0, width=130.828, height=134.828)  
+                        input(type='hidden', name='activities[#{index}][ImageC1][path]', data-content="path")
+                        input(type='hidden', name='activities[#{index}][ImageC1][url]', data-content="url")
+                        input(type='hidden', name='activities[#{index}][ImageC1][openWindow]', data-content='openWindow')
+                        span.glyphicon.glyphicon-plus.font-size-xxxxlarge
+                    // /fileinput-square
+                  // m-bottom-4
+                // /col-xs-6
+                .col-xs-6
+                  .m-bottom-4
+                    //
+                      control-index-theme-block
+                      ==================================================
+                    .fileinput-square.bg-white.text-center.add-image
+                      a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="9")
+                        img(src='#{activity.ImageC2.path}', border=0, width=130.828, height=134.828)  
+                        input(type='hidden', name='activities[#{index}][ImageC2][path]', data-content="path")
+                        input(type='hidden', name='activities[#{index}][ImageC2][url]', data-content="url")
+                        input(type='hidden', name='activities[#{index}][ImageC2][openWindow]', data-content='openWindow')
+                        span.glyphicon.glyphicon-plus.font-size-xxxxlarge
+                    // /fileinput-square
+                  // m-bottom-4
+                // /col-xs-6
+              // /row
+            // /col-sm-4
           // /row
-        // /col-sm-4
-        .col-sm-4
-          .row.row-m
-            .col-xs-12
-              .m-bottom-4
-                //
-                  control-index-theme-block
-                  ==================================================
-                .dashed-block-2.fileinput-square.bg-white.text-center
-                  a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="7")
-                    span.glyphicon.glyphicon-plus.font-size-xxxxlarge
-                // /fileinput-square
-              // m-bottom-4
-            // /col-xs-12
-            .col-xs-6
-              .m-bottom-4
-                //
-                  control-index-theme-block
-                  ==================================================
-                .dashed-block-2.fileinput-square.bg-white.text-center
-                  a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="8")
-                    span.glyphicon.glyphicon-plus.font-size-xxxxlarge
-                // /fileinput-square
-              // m-bottom-4
-            // /col-xs-6
-            .col-xs-6
-              .m-bottom-4
-                //
-                  control-index-theme-block
-                  ==================================================
-                .dashed-block-2.fileinput-square.bg-white.text-center
-                  a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="9")
-                    span.glyphicon.glyphicon-plus.font-size-xxxxlarge
-                // /fileinput-square
-              // m-bottom-4
-            // /col-xs-6
-          // /row
-        // /col-sm-4
-      // /row
-    // /well
-  
+        // /well
+    
   // / modal
   button.btn.btn-add.btn-default(type='button') 新增圖片區塊
   hr.dashed-line
@@ -174,48 +209,52 @@ block body
           h2.modal-title 加入商品或圖片及鏈接
         // /modal-header
         .modal-body.p-30.p-top-0
-          form
-            .form-group
-              .radio
-                label
-                  input#optionsRadios1(type='radio', name='optionsRadios', value='option1', checked='')
-                  |                 輸入商品網址
-              // /radio
-              input.form-control#productUrl1(type='url', placeholder='http://')
-            // /form-group
-            hr
-            .form-group
-              .radio
-                label
-                  input#optionsRadios2(type='radio', name='optionsRadios', value='option2')
-                  |                 上傳圖片及輸入鏈接網址
-              // /radio
-              .row.m-bottom-2
-                .col-md-6
-                  //
-                    fileinput-img-square
-                    ==================================================
-                  .fileinput.fileinput-new(data-provides='fileinput')
-                    .fileinput-new.dashed-block-2.fileinput-square
-                    // /fileinput-new
-                    .fileinput-preview.fileinput-exists.border-block-1
-                    // /fileinput-preview
-                    .fileinput-btn
+          .form-group
+            .radio
+              label
+                input#optionsRadios1(type='radio', name='optionsRadios', value='option1', checked='')
+                |                 輸入商品網址
+            // /radio
+            input.form-control#productUrl1(type='url', placeholder='http://')
+          // /form-group
+          hr
+          .form-group
+            .radio
+              label
+                input#optionsRadios2(type='radio', name='optionsRadios', value='option2')
+                |                 上傳圖片及輸入鏈接網址
+            // /radio
+            .row.m-bottom-2
+              .col-md-6
+                //
+                  fileinput-img-square
+                  ==================================================
+                .fileinput.fileinput-new(data-provides='fileinput')
+                  .fileinput-new.dashed-block-2.fileinput-square
+                  // /fileinput-new
+                  .fileinput-preview.fileinput-exists.border-block-1
+                  // /fileinput-preview
+                  .fileinput-btn
+                    form(action="/admin/image/upload", method="POST", enctype="multipart/form-data")
                       span.btn.btn-default.btn-sm.btn-file
                         span.fileinput-new Select image
                         span.fileinput-exists Change
-                        input(type='file', name='...')
+                        input(type='file', name='uploadfile')
+                        input#uploadFileName(type='hidden', name="filename", value='modalFileInput')
+                        input#fileInputPath(type='hidden', name='modalFileInput')
+                        input(type='hidden', name="width", value='1100')
+                        input(type='hidden', name="height", value='350')
                       a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
-                    // /fileinput-btn
-                  // /fileinput
-                // /col-md-6
-              // /row
-              input.form-control#productUrl2(type='url', placeholder='http://')
-              .checkbox
-                label
-                  input#checkbox(type='checkbox')
-                  |  另開視窗
-            // /form-group
+                  // /fileinput-btn
+                // /fileinput
+              // /col-md-6
+            // /row
+            input.form-control#productUrl2(type='url', placeholder='http://')
+            .checkbox
+              label
+                input#openWindow(type='checkbox', value='true')
+                |  另開視窗
+          // /form-group
         // /modal-body
         .modal-footer
           button.btn.btn-default(type='button', data-dismiss='modal') 取消
@@ -224,6 +263,135 @@ block body
       // /modal-content
     // /modal-dialog
   // /modal
+  
+  // /sample
+  //-   li.well.control-well.p-10-20.m-bottom-4.imageSection
+  //-     .row
+  //-       .col-sm-6
+  //-         span.glyphicon.glyphicon-menu.font-size-xlarge.m-top-1 
+  //-         input.weight(type='hidden', name='activities[][weight]', value=0, form='ActivitiesData')
+  //-       // /col-sm-6
+  //-       .col-sm-6.text-right
+  //-         a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
+  //-           span.glyphicon.glyphicon-remove
+  //-       // /col-sm-6
+  //-     // /row
+  //-     .row.m-bottom-4
+  //-       .col-sm-4
+  //-         .row.row-m
+  //-           .col-xs-12
+  //-             .m-bottom-4
+  //-               //
+  //-                 control-index-theme-block
+  //-                 ==================================================
+  //-               form.dashed-block-2.fileinput-square.bg-white.text-center
+  //-                 (action="/admin/image/upload", method="POST", enctype="multipart/form-data")
+  //-                   a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="1")
+  //-                   span.glyphicon.glyphicon-plus.font-size-xxxxlarge
+  //-               // /fileinput-square
+  //-             // m-bottom-4
+  //-           // /col-xs-12
+  //-           .col-xs-6
+  //-             .m-bottom-4
+  //-               //
+  //-                 control-index-theme-block
+  //-                 ==================================================
+  //-               .dashed-block-2.fileinput-square.bg-white.text-center
+  //-                 a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="2")
+  //-                   span.glyphicon.glyphicon-plus.font-size-xxxxlarge
+  //-               // /fileinput-square
+  //-             // m-bottom-4
+  //-           // /col-xs-6
+  //-           .col-xs-6
+  //-             .m-bottom-4
+  //-               //
+  //-                 control-index-theme-block
+  //-                 ==================================================
+  //-               .dashed-block-2.fileinput-square.bg-white.text-center
+  //-                 a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="3")
+  //-                   span.glyphicon.glyphicon-plus.font-size-xxxxlarge
+  //-               // /fileinput-square
+  //-             // m-bottom-4
+  //-           // /col-xs-6
+  //-         // /row
+  //-       // /col-sm-4
+  //-       .col-sm-4
+  //-         .row.row-m
+  //-           .col-xs-6
+  //-             .m-bottom-4
+  //-               //
+  //-                 control-index-theme-block
+  //-                 ==================================================
+  //-               .dashed-block-2.fileinput-square.bg-white.text-center
+  //-                 a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="4")
+  //-                   span.glyphicon.glyphicon-plus.font-size-xxxxlarge
+  //-               // /fileinput-square
+  //-             // m-bottom-4
+  //-           // /col-xs-6
+  //-           .col-xs-6
+  //-             .m-bottom-4
+  //-               //
+  //-                 control-index-theme-block
+  //-                 ==================================================
+  //-               .dashed-block-2.fileinput-square.bg-white.text-center
+  //-                 a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="5")
+  //-                   span.glyphicon.glyphicon-plus.font-size-xxxxlarge
+  //-               // /fileinput-square
+  //-             // m-bottom-4
+  //-           // /col-xs-6
+  //-           .col-xs-12
+  //-             .m-bottom-4
+  //-               //
+  //-                 control-index-theme-block
+  //-                 ==================================================
+  //-               .dashed-block-2.fileinput-square.bg-white.text-center
+  //-                 a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="6")
+  //-                   span.glyphicon.glyphicon-plus.font-size-xxxxlarge
+  //-               // /fileinput-square
+  //-             // m-bottom-4
+  //-           // /col-xs-12
+  //-         // /row
+  //-       // /col-sm-4
+  //-       .col-sm-4
+  //-         .row.row-m
+  //-           .col-xs-12
+  //-             .m-bottom-4
+  //-               //
+  //-                 control-index-theme-block
+  //-                 ==================================================
+  //-               .dashed-block-2.fileinput-square.bg-white.text-center
+  //-                 a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="7")
+  //-                   span.glyphicon.glyphicon-plus.font-size-xxxxlarge
+  //-               // /fileinput-square
+  //-             // m-bottom-4
+  //-           // /col-xs-12
+  //-           .col-xs-6
+  //-             .m-bottom-4
+  //-               //
+  //-                 control-index-theme-block
+  //-                 ==================================================
+  //-               .dashed-block-2.fileinput-square.bg-white.text-center
+  //-                 a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="8")
+  //-                   span.glyphicon.glyphicon-plus.font-size-xxxxlarge
+  //-               // /fileinput-square
+  //-             // m-bottom-4
+  //-           // /col-xs-6
+  //-           .col-xs-6
+  //-             .m-bottom-4
+  //-               //
+  //-                 control-index-theme-block
+  //-                 ==================================================
+  //-               .dashed-block-2.fileinput-square.bg-white.text-center
+  //-                 a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="9")
+  //-                   span.glyphicon.glyphicon-plus.font-size-xxxxlarge
+  //-               // /fileinput-square
+  //-             // m-bottom-4
+  //-           // /col-xs-6
+  //-         // /row
+  //-       // /col-sm-4
+  //-     // /row
+  //-   // /well
+  //- 
 
 block js
   script(src="/javascripts/admin/themeActivities.js")
