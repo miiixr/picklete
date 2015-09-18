@@ -107,7 +107,7 @@ module.exports = {
       let domain = sails.config.domain || process.env.domain || 'http://localhost:1337';
       let orderNo;
       if(sails.config.environment === 'development' || sails.config.environment === 'test'){
-        var randomString = crypto.randomBytes(32).toString('base64').substr(0, 8);
+        var randomString = crypto.randomBytes(32).toString('hex').substr(0, 8);
         orderNo = sails.config.allpay.merchantID + randomString + order.id;
       }else {
         orderNo = sails.config.allpay.merchantID + order.id ;
