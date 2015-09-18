@@ -75,7 +75,7 @@ let PaymentController = {
       order.paymentConfirmAmount = data.TradeAmt;
       await order.save();
 
-      return res.ok('OK');
+      return res.ok('1|OK');
     } catch (e) {
       console.error(e.stack);
       let {message} = e;
