@@ -1,10 +1,10 @@
 
 module.exports = (sequelize, DataTypes) ->
   Order = sequelize.define('Order', {
-    id:
-      type: DataTypes.UUID
-      primaryKey: true
-      defaultValue: DataTypes.UUIDV4
+    # id:
+    #   type: DataTypes.UUID
+    #   primaryKey: true
+    #   defaultValue: DataTypes.UUIDV4
     serialNumber: DataTypes.STRING
     quantity: DataTypes.INTEGER
     TradeNo: DataTypes.STRING
