@@ -40,6 +40,7 @@
     that.parent().parent().parent().find('input[type=hidden]').val(val);
   });
 
+  // btn-add
   $('.well').on('click','.btn-add',function(e){
     e.preventDefault();
     var that = $(this);
@@ -52,11 +53,22 @@
       index = parseInt(index, 10) + 1;
       s = s.replace(/good\[\d/g, "good[" + index);
     }
-
     that.parent().parent().after(s);
     that.remove();
-
   });
+  // end btn-add
+
+  // btn-remove
+  $('.row').on('click','.btn-remove',function(e){
+    e.preventDefault();
+    var that = $(this);
+    console.log('=== that.context.previousElementSibling is ==>',that.context.previousElementSibling);
+    console.log('=== that.context.nextElementSibling is ==>',that.context.nextElementSibling);
+    if(that.context.nextElementSibling == null){
+      that.parent().parent().remove();
+    }
+  });
+  // end btn-remove
 
   // isPublish button click
   $('.well').on('click','.btn-status',function(e){
@@ -64,14 +76,6 @@
     that.find("input[type=radio]").prop("checked", true);
   });
 
-
-  $('.row').on('click','.btn-remove',function(e){
-    e.preventDefault();
-    var that = $(this);
-    if(that.context.nextElementSibling == null){
-      that.parent().parent().remove();
-    }
-  });
 
 
   $('.tag').click(function(e){

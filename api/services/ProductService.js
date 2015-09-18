@@ -115,7 +115,7 @@ module.exports = {
         tag = tag.split(',');
       }
 
-      // console.log('=== updateProduct.productGm.id ==>', updateProduct.productGm.id);
+      console.log('=== updateProduct.productGm.id ==>', updateProduct.productGm.id);
       let productGm = await db.ProductGm.find({
         where: {
           id: updateProduct.productGm.id
@@ -136,29 +136,39 @@ module.exports = {
 
         // let's check whether we find this product.
         if (product){
-          // product is exists
-          // console.log('=== product ',i,' exists and name is ==>',good.description);
-          product.name = good.description;
-          product.price = updateProduct.price;
-          product.size = updateProduct.size;
-          product.comment = updateProduct.comment;
-          product.service = updateProduct.service;
-          product.country = updateProduct.country;
-          product.madeby = updateProduct.madeby;
-          product.spec = updateProduct.spec;
-          product.color = good.color;
-          product.productNumber = good.productNumber;
-          product.stockQuantity = good.stockQuantity;
-          product.description = good.description;
-          product.isPublish = (good.isPublish == "false") ? false : true;
+          // product is exists.
+          // so let's check if user want to remove this product or not.
+          if(!good.description){
+            // if this product is be deleted at view
+            console.log('=== product ',i,' exists but need to be delete ===');
+            let deleteProduct = await product.destroy();
+            // check status
+            console.log('=== deleteProduct ',i,' status is ==>',deleteProduct.deletedAt);
+          }else{
+            // this product is just be updated.
+            console.log('=== product ',i,' exists and name is ==>',good.description);
+            product.name = good.description;
+            product.price = updateProduct.price;
+            product.size = updateProduct.size;
+            product.comment = updateProduct.comment;
+            product.service = updateProduct.service;
+            product.country = updateProduct.country;
+            product.madeby = updateProduct.madeby;
+            product.spec = updateProduct.spec;
+            product.color = good.color;
+            product.productNumber = good.productNumber;
+            product.stockQuantity = good.stockQuantity;
+            product.description = good.description;
+            product.isPublish = (good.isPublish == "false") ? false : true;
 
-          let photos = [];
-          if (good['photos-1']) photos.push(good['photos-1']);
-          if (good['photos-2']) photos.push(good['photos-2']);
+            let photos = [];
+            if (good['photos-1']) photos.push(good['photos-1']);
+            if (good['photos-2']) photos.push(good['photos-2']);
 
-          product.photos = photos;
+            product.photos = photos;
 
-          await product.save();
+            await product.save();
+          } // end if
 
         }else {
           // product not exists

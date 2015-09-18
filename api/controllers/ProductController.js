@@ -147,7 +147,7 @@ let ProductController = {
 
   doUpdate: async (req, res) => {
     let productUpdate = req.body;
-    console.log('=== ProductContoller : productUpdate ==>\n', productUpdate);
+    // console.log('=== ProductContoller : productUpdate ==>\n', productUpdate);
     try {
       await ProductService.update(productUpdate);
       return res.redirect('/admin/goods/');
