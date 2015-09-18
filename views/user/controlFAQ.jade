@@ -22,7 +22,7 @@ block body
           td.text-right
             a.btn.btn-link(href='FAQUpdate?FAQId='+FAQ.id)
               span.glyphicon.glyphicon-pencil2
-            a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
+            a.delete.FAQ(href='#', data-toggle='modal', data-id="#{FAQ.id}",data-name="#{FAQ.title}")
               span.glyphicon.glyphicon-remove
   hr.dashed-line
   .text-center
@@ -35,4 +35,6 @@ block body
       li.border-right-1.p-right-2 第 15 之 20
       li
         a(href='#') 下一頁
-  // /text-center
+          // /text-center
+block js
+  script(src="/javascripts/admin/FAQ.js")

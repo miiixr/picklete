@@ -1,0 +1,73 @@
+extends ../_layout_head
+
+block body
+
+  .container.font-size-slarge.line-height-large
+
+    // brandVision 品牌願景
+    .row.m-top-10.m-bottom-10
+        .col-md-8.col-md-offset-2.text-center
+          h1.page-title.m-bottom-6
+            | ABOUT US
+            br
+            small 關於我們
+          p #{about.brandVision}
+        // /col-md-8
+      // /row
+    
+    // productPhotos
+    .row
+      each productPhoto in productPhotos
+        .col-md-4
+          img.img-responsive.m-h-auto.m-bottom-6(src= productPhoto)
+
+    // aboutCompany 公司簡介
+    .row.m-top-10.m-bottom-10
+      .col-md-8.col-md-offset-2.text-center
+        h2.text-black.m-bottom-6 創意俯拾即是，靈光垂手可得
+        p #{about.aboutCompany}
+      // /col-md-8
+    // /row
+
+    // dealerPhotos, dealerNames
+    .row.m-top-10.m-bottom-10
+      .col-sm-4.text-center.m-bottom-6
+        a.max-width-260.show.m-h-auto(href='mailto:info@wevo.com.tw')
+          .label.label-success.label-circle.m-h-auto
+            span.glyphicon.glyphicon-briefcase
+          // /label
+          h3.m-top-4.m-bottom-3.text-black 經銷商夥伴合作
+          p.text-gray-light 期待認識對生活品味提昇有使命感的您與我們合作
+      // /col-sm-4
+      .col-sm-4.text-center.m-bottom-6
+        a.max-width-260.show.m-h-auto(href='mailto:info@wevo.com.tw')
+          .label.label-success.label-circle.m-h-auto
+            span.glyphicon.glyphicon-gift
+          // /label
+          h3.m-top-4.m-bottom-3.text-black 企業禮贈品採購
+          p.text-gray-light 提供企業禮贈品、空間專案合作、大量企業採購等服務
+      // /col-sm-4
+      .col-sm-4.text-center.m-bottom-6
+        a.max-width-260.show.m-h-auto(href='mailto:info@wevo.com.tw')
+          .label.label-success.label-circle.m-h-auto
+            span.glyphicon.glyphicon-screen
+          // /label
+          h3.m-top-4.m-bottom-3.text-black 媒體公關需求
+          p.text-gray-light 提供媒體報導圖文以及公關需求
+      // /col-sm-4
+    // /row
+
+    // SHOPS
+    .m-top-10.m-bottom-10.text-center
+      h1.page-title.m-bottom-6
+        | SHOPS
+        br
+        small 實體通路 
+      .row
+        each dealerPhoto,index in dealerPhotos
+          .col-sm-3.col-xs-4.m-bottom-6
+            img.img-responsive.m-h-auto.m-bottom-4.border-block-img(src= dealerPhoto)
+            h5.text-muted.h5-two-hide= dealerNames[index]
+          // /col-sm-3
+      // /row
+    // /m-top-8 m-bottom-8
