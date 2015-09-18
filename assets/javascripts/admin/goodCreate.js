@@ -62,8 +62,8 @@
   $('.row').on('click','.btn-remove',function(e){
     e.preventDefault();
     var that = $(this);
-    console.log('=== that.context.previousElementSibling is ==>',that.context.previousElementSibling);
-    console.log('=== that.context.nextElementSibling is ==>',that.context.nextElementSibling);
+    // console.log('=== that.context.previousElementSibling is ==>',that.context.previousElementSibling);
+    // console.log('=== that.context.nextElementSibling is ==>',that.context.nextElementSibling);
     if(that.context.nextElementSibling == null){
       that.parent().parent().remove();
     }

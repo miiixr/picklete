@@ -110,12 +110,13 @@ module.exports = {
         brand = {id: updateProduct.brandId};
       }
 
+      // console.log('=== updateProduct.tag ==>', updateProduct.tag);
       var tag = updateProduct.tag || '';
       if (tag) {
         tag = tag.split(',');
       }
 
-      console.log('=== updateProduct.productGm.id ==>', updateProduct.productGm.id);
+      // console.log('=== updateProduct.productGm.id ==>', updateProduct.productGm.id);
       let productGm = await db.ProductGm.find({
         where: {
           id: updateProduct.productGm.id
@@ -140,13 +141,13 @@ module.exports = {
           // so let's check if user want to remove this product or not.
           if(!good.description){
             // if this product is be deleted at view
-            console.log('=== product ',i,' exists but need to be delete ===');
+            // console.log('=== product ',i,' exists but need to be delete ===');
             let deleteProduct = await product.destroy();
             // check status
-            console.log('=== deleteProduct ',i,' status is ==>',deleteProduct.deletedAt);
+            // console.log('=== deleteProduct ',i,' status is ==>',deleteProduct.deletedAt);
           }else{
             // this product is just be updated.
-            console.log('=== product ',i,' exists and name is ==>',good.description);
+            // console.log('=== product ',i,' exists and name is ==>',good.description);
             product.name = good.description;
             product.price = updateProduct.price;
             product.size = updateProduct.size;
