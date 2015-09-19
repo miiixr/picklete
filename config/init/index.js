@@ -555,6 +555,24 @@ module.exports = {
     var createPromotion2 = await db.Promotion.create(promotion2);
     // end promotions
 
+    // slide active
+    let slideObj = [{
+      cover: 'https://cldup.com/B92LRiUl-c.gif',
+      title: '咖啡香',
+      description: '好香的大咖啡',
+      location: 'caption-right caption-top',
+      color: '#fff',
+      link: 'http://tw.tw'
+    }, {
+      cover: 'https://cldup.com/SYygy60MzN.jpg',
+      title: '白色胖胖杯',
+      description: '我佛慈悲，善哉善哉',
+      location: 'caption-center caption-middle',
+      color: '#fff',
+      link: 'http://tw.com'
+    }]
+
+    await db.Slider.bulkCreate(slideObj);
 
   }
   // end testData
