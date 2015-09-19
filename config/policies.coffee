@@ -17,11 +17,23 @@ http://sailsjs.org/#/documentation/reference/sails.config/sails.config.policies.
 ###
 module.exports.policies = {
 
-  '*': ['global']
-  'admin/*': ['passport', 'loginRequired']
+  '*': ['global', 'loginRequired']
+  'AuthController': ['passport']
 
-  'auth':
-    '*': ['passport']
+  'UserController':
+    controlLogin: ['global']
+
+  'MainController': ['global']
+
+  'ShopController':
+    list: ['global']
+
+  'AboutController':
+    show: ['global']
+
+  'SearchController':
+    products: ['global']
+  # 'admin/*': ['passport', 'loginRequired']
 
   # ProductController:
   #   list: ['loginRequired']
