@@ -66,7 +66,8 @@ module.exports.routes = {
   'get /member/purchase' : view: 'main/member-purchase'
   'get /member/setting' : 'UserController.edit'
   'post /member/update' : 'UserController.update'
-  'get /shop/product' : view: 'main/shop-product'
+
+  'get /shop/product/:productGmid/:productId' : 'ShopController.show'
 
   'get /shop/products' : 'ShopController.list'
   'get /brands' : view: 'main/brands'
