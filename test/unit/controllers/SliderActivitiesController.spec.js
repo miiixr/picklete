@@ -23,7 +23,7 @@ describe('SliderActivities Spec', function() {
 
     request(sails.hooks.http.app)
     .post('/admin/slider/create')
-    .set('cookie', cookie)
+    // .set('cookie', cookie)
     .field('cover', 'http://cover.jpg') // 活動主圖
     .field('title', '活動標題') // 活動標題
     .field('description', '活動文案') // 活動文案
@@ -43,7 +43,7 @@ describe('SliderActivities Spec', function() {
   it('Create a new SliderActivities using API', (done) => {
       request(sails.hooks.http.app)
         .post('/api/slider/create')
-        .set('cookie', cookie)
+        // .set('cookie', cookie)
         .send({
           cover: 'http://cover.jpg',
           title: '活動標題',
@@ -64,7 +64,7 @@ describe('SliderActivities Spec', function() {
 
     request(sails.hooks.http.app)
     .post('/admin/slider/update')
-    .set('cookie', cookie)
+    // .set('cookie', cookie)
     .field('id', 1)
     .field('cover', '1http://cover.jpg') // 活動主圖
     .field('title', '1活動標題') // 活動標題
@@ -87,7 +87,7 @@ describe('SliderActivities Spec', function() {
   it('Update an exist SliderActivities using API', (done) => {
     request(sails.hooks.http.app)
       .post('/api/slider/update/1')
-      .set('cookie', cookie)
+      // .set('cookie', cookie)
       .send({
         cover: '1http://cover.jpg',
         title: '1活動標題',
@@ -109,7 +109,7 @@ describe('SliderActivities Spec', function() {
     request(sails.hooks.http.app)
     .post('/admin/slider/delete')
     .field('id', 1)
-    .set('cookie', cookie)
+    // .set('cookie', cookie)
     .end(function(err, res) {
 
       res.statusCode.should.be.equal(302);
@@ -123,7 +123,7 @@ describe('SliderActivities Spec', function() {
 
     request(sails.hooks.http.app)
     .post('/api/slider/delete/2')
-    .set('cookie', cookie)
+    // .set('cookie', cookie)
     .end(function(err, res) {
 
       res.statusCode.should.be.equal(200);
@@ -135,7 +135,7 @@ describe('SliderActivities Spec', function() {
   it('List the all SliderActivities', function(done) {
     request(sails.hooks.http.app)
     .get('/admin/index-slider')
-    .set('cookie', cookie)
+    // .set('cookie', cookie)
     .end(function(err, res) {
       res.statusCode.should.be.equal(200);
       return done();
@@ -146,7 +146,7 @@ describe('SliderActivities Spec', function() {
   it('List the all SliderActivities using API', (done) => {
     request(sails.hooks.http.app)
       .get('/api/slider/list')
-      .set('cookie', cookie)
+      // .set('cookie', cookie)
       .end((err,res) => {
 
         res.statusCode.should.be.equal(200);

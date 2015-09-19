@@ -95,7 +95,13 @@ AuthController = {
           res.redirect('back');
           break;
         default:
-          let reference = url.parse(req.headers.referer);
+          var reference;
+          try {
+            reference = url.parse(req.headers.referer);  
+          } catch (e) {
+            reference = { path : "" };
+          }
+          
           if (reference.path === '/admin/login') {
             res.redirect('/admin/login');
           }else {

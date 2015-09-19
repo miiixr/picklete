@@ -35,10 +35,8 @@ module.exports.routes = {
 
   'get /admin/' : 'AuthController.admin'
   'get /admin/login' : 'UserController.controlLogin'
-  #'get /admin/index-slider' : 'UserController.indexSlider'
-  #'get /admin/index-slider-detail' : 'UserController.indexSliderDetail'
   'get /admin/index-exclusive' : 'UserController.indexExclusive'
-  #'get /admin/index-theme' : 'UserController.indexTheme'
+  
   'get /admin/password' : 'UserController.password'
   'post /admin/password' : 'UserController.password'
   'get /admin/brands' : 'BrandController.list'
@@ -50,7 +48,7 @@ module.exports.routes = {
   'get /admin/exclusive' : 'SelectionActiveController.list'
   'post /admin/exclusive' : 'SelectionActiveController.update'
   'get /admin/index-theme' : view: 'admin/themeActivities'
-  # 'get /admin/index-slider' : 'SliderActivitiesController.list'
+  'get /admin/index-slider' : 'SliderActivitiesController.list'
 
   'get /admin/slider/create': view: 'admin/sliderActivitiesDetail'
   'post /admin/slider/create' : 'SliderActivitiesController.create'
@@ -66,9 +64,7 @@ module.exports.routes = {
   'get /member/purchase' : view: 'main/member-purchase'
   'get /member/setting' : 'UserController.edit'
   'post /member/update' : 'UserController.update'
-  'get /shop/product' : view: 'main/shop-product'
 
-  'get /shop/products' : 'ShopController.list'
   'get /brands' : view: 'main/brands'
   'get /user/cart' : view: 'main/cart'
   'get /user/cart-step-2' : view: 'main/cart-step-2'
@@ -142,9 +138,11 @@ module.exports.routes = {
   'get /about' : 'AboutController.show'
 
   'get /shop/products' : 'ShopController.list'
-  'get /shop/product/:productGmid/:productId' : 'ShopController.show'
+
+  'get /shop/products/:productGmid/:productId' : 'ShopController.show'
   
-  'get /brands' : view: 'main/brands'
+  'get /brands/:id' : 'BrandController.show'
+
   'get /user/cart' : view: 'main/cart'
   'get /user/cart-step-2' : view: 'main/cart-step-2'
   'get /user/cart-done' : view: 'main/cart-done'

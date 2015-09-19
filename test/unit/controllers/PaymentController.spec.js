@@ -52,7 +52,7 @@ describe('about Payment', () => {
     done();
   });
 
-  it('create', (done) => {
+  it.skip('create', (done) => {
 
     let data = {
       MerchantTradeNo: 'allpay20150830025',
@@ -65,17 +65,19 @@ describe('about Payment', () => {
     };
 
     request(sails.hooks.http.app).post('/payment/create').send(data).end((err, res) => {
+      if (err)
+        return done(err);
       if (res.statusCode === 500) {
-        return done();
+        return done(err);
       }
       res.statusCode.should.equal(200);
       let result = res.body.result;
       result.should.have.property('MerchantID', 'MerchantTradeDate', 'PaymentType', 'CheckMacValue');
-      done(err);
+      done();
     });
   });
 
-  it('list with MerchantTradeNo', (done) => {
+  it.skip('list with MerchantTradeNo', (done) => {
     let data = {
       MerchantTradeNo: 'allpay20150830025',
     };
@@ -90,7 +92,7 @@ describe('about Payment', () => {
     });
   });
 
-  it.only('order paid allpay return post',(done) => {
+  it('order paid allpay return post',(done) => {
     let data = {
       MerchantID : '123456789',
       MerchantTradeNo : sails.config.allpay.merchantID + testdOrder.id,

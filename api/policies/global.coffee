@@ -6,9 +6,10 @@ module.exports = (req, res, next) ->
   req.locals = req.locals or {}
 
   db.Company.findOne()
-  .then((result) =>
+  .then (result) ->
     res.locals.company = result.dataValues;
-    # console.log(result);
-    # process.exit(1);
-    next()
-  )
+  .then () ->
+    db.Brand.findAll()
+    .then (brands) ->
+      res.locals.brands = brands;
+      next()
