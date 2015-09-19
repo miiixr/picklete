@@ -1,4 +1,17 @@
 let FAQController = {
+
+  show : async(req,res) => {
+    let FAQTypes = await db.FAQType.findAll({
+        include: [{
+          model: db.FAQ
+        }],
+        //order: []
+    });  
+    return res.view("main/FAQ",{
+      FAQTypes : FAQTypes
+    }); 
+  },
+
   FAQ : async(req,res) => {
     try{
 
@@ -92,27 +105,18 @@ let FAQController = {
         });
       }
       var name = req.body.name;
-      
-      for(var i=0;i<name.length;i++){
-        if(name[i] != ""){
-          var createTypeData = await db.FAQType.create({
-            name: name[i]
-          });
-        }
+
+      try{
+        FAQService.create(name);
+      } catch(e){
+        console.log(e);
       }
-      
+
       try{
         var FAQTypeId = req.body.FAQTypeId;
         var FAQType = req.body.FAQType;
 
-        for(var i=0;i<FAQTypeId.length;i++){
-          var updateFAQType = await db.FAQType.findById(FAQTypeId[i]);
-          if(FAQType[i]!=""){
-            updateFAQType.name = FAQType[i];
-            var update = updateFAQType.save();
-          }
-        }
-        
+        FAQService.update(FAQType,FAQTypeId);
       } catch(e){
         console.log(e);
       }

@@ -62,6 +62,7 @@ module.exports.routes = {
 
 
   'get /index' : 'SelectionActiveController.index'
+  'get /FAQ' : 'FAQController.show'
   'get /member/fav' : view: 'main/member-fav'
   'get /member/purchase' : view: 'main/member-purchase'
   'get /member/setting' : 'UserController.edit'

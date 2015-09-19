@@ -1,0 +1,45 @@
+extends ../_layout_head
+
+block body
+  .mobile-hide
+    .container
+      .row.m-top-10.m-bottom-4
+        .col-sm-3
+          h3.m-top-0.m-bottom-6 Q&A
+          ul.list-unstyled.font-size-slarge.text-green.line-height-xlarge.m-bottom-6
+            each FAQType in FAQTypes
+              li
+                a(href='#' data-id=FAQType.id data-length=FAQTypes.length class="type name") #{FAQType.name}
+          // /list-unstyled
+        // /col-sm-3
+        .col-sm-9
+          each FAQType ,index in FAQTypes
+            .FAQContainer(id="FAQ#{FAQType.id}" style= (index==0)?"":"display:none")
+              .row
+                .col-md-4
+                  h2
+                    span.glyphicon.glyphicon-more.m-right-2.text-green.m-bottom-4
+                    | #{FAQType.name}
+                // /col-md-4
+                .col-md-8
+                  ol.text-green.font-size-slarge.line-height-xlarge.m-bottom-10
+                    each FAQ ,val in FAQType.FAQs
+                      li
+                        a(href='#q#{index}#{val}') #{FAQ.title}
+
+                // /col-md-8
+              // /row
+              .font-size-slarge.line-height-large.m-bottom-10
+                each FAQ ,val in FAQType.FAQs
+                  div.tag-box(id="#q#{index}#{val}")
+                    hr.m-top-0.m-bottom-6
+                    h4.m-bottom-2 #{FAQ.title}
+                    p
+                      #{FAQ.answer}
+
+            // /font-size-slarge
+          // /col-sm-9
+        // /row
+      // /container
+block js
+  script(src="/javascripts/main/FAQ.js")
