@@ -472,13 +472,13 @@ module.exports = {
         url: 'https://yahoo.com'
       },{
         path: 'http://fakeimg.pl/545x350',
-        url: ''
+        url: 'https://www.wikipedia.org/'
       },{
         path: 'http://fakeimg.pl/360x240',
-        url: ''
+        url: 'http://www.w3schools.com/'
       },{
         path: 'http://fakeimg.pl/360x240',
-        url: ''
+        url: 'https://nodejs.org/en/'
       },{
         path: 'http://fakeimg.pl/360x240',
         url: ''
