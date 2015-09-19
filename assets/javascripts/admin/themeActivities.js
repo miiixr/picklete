@@ -1,14 +1,25 @@
  "use strict";
 $(function  () {
-  let $imageSectionContainer = $('ul.imageSection');
+  let $imageSectionContainer = $('ul.imageSection'),
+      $imageSectionSample = $('#imageSectionSample'),
+      $imageSectionSample_inputs = $imageSectionSample.find('input');
+
+  // modal
   let $uploadFileName = $('#uploadFileName'),
       $openWindow = $('#openWindow'),
       $productUrl1 = $('#productUrl1'),
       $productUrl2 = $('#productUrl2'),
       $fileInputPath = $('#fileInputPath'),
       $inputUploadFile = $('#inputUploadFile'),
-      $fileInputWidth = $('fileInputWidth'),
-      $fileInputHeight = $('fileInputWidth');
+      $fileInputWidth = $('#fileInputWidth'),
+      $fileInputHeight = $('#fileInputHeight'),
+      $fileInputResetButton = $('#modal-control-index-theme a[data-dismiss="fileinput"]'),
+      $modalConfirmButton = $('#modalConfirmButton');
+
+  // clear hidden input value when fileinput reset button click
+  $fileInputResetButton.click(function() {
+    $fileInputPath.val('');
+  });
 
   $("ul").sortable();
 
@@ -23,15 +34,6 @@ $(function  () {
   });
 
   var $weightCount = 1;
-
-  /* copy the first one imageSection to hidden imageSectionSample */
-  let imageSectionHtml = $('li.imageSection')[0].outerHTML;
-  let $imageSectionSample = $('#imageSectionSample');
-  $imageSectionSample.append(imageSectionHtml);
-  /* initialize imageSectionSample */
-  // $imageSectionSample.find('input')
-  $imageSectionSample.find('image-exist').removeClass('image-exist').addClass('dashed-block-2');
-  let $imageSectionSample_inputs = $imageSectionSample.find('input');
 
   /* add new imageSection */
   $('body').on('click','.btn-add',function(e) {
@@ -96,7 +98,6 @@ $(function  () {
   /* modal confirm button - click event */
   $('.modal-content').on('click', '.btn-green', function(e) {
     e.preventDefault();
-
     let that = $(this),
         url = '',
         path = '',
@@ -108,6 +109,10 @@ $(function  () {
         fileInputPath = $fileInputPath.val();
 
     if(modalRatioValue == 'option1'){
+      // 目前Task先不管選項一 這邊預設空值無法完成
+      // to do
+      path = '';
+      url = '';
       // path = productUrl1Value;
       // url = productUrl1Value;
     }
@@ -116,26 +121,26 @@ $(function  () {
       url = productUrl2Value;
     }
 
-    /* add image openWindow, path & url back to form hidden input */
-    $imageContainer.find('input[data-content="path"]').val(path);
-    $imageContainer.find('input[data-content="url"]').val(url);
-    if($openWindow.is(':checked'))
-      $imageContainer.find('input[data-content="openWindow"]').val('true');
+    if( !url.length || !path.length ) {
+      alert('請上傳圖片，並填寫圖片連結');
+      // keep modal exist
+      $modalConfirmButton.attr('data-dismiss','');
+    }
+    else {
+      /* add image openWindow, path & url back to form hidden input */
+      $imageContainer.find('input[data-content="path"]').val(path);
+      $imageContainer.find('input[data-content="url"]').val(url);
+      if($openWindow.is(':checked'))
+        $imageContainer.find('input[data-content="openWindow"]').val('true');
 
-    /* add image url to ime tag */
-    $imageContainer.find('img').attr('src',path);
+      /* add image url to ime tag */
+      $imageContainer.find('img').attr('src',path);
+      $imageContainer.parent().removeClass('dashed-block-2').addClass('image-exist');
+
+      // close modal
+      $modalConfirmButton.attr('data-dismiss','modal');
+    }
 
   });
-  // /* add imageSectionSample */
-  // let $imageSectionSample = $('#imageSectionSample');
-  // let imageSectionSample = $('form#ActivitiesData>ul>li').html();
-  // console.log(imageSectionSample);
-  // $imageSectionSample
 
 });
-
-// $weight = parseInt(that.parent().parent().parent().parent().parent().parent().parent().find('input[name="weight"]').val());
-// $target.attr('href', url);
-// $target.append($fileinput_url);
-// $fileinput_url = '<img src="http://fakeimg.pl/600x600/dddddd/FFF/?text=600x600" class="img-full">';
-// $target = $("input[value='"+weight+"']").parent().parent().parent().find("a[data-id='"+imageContainerId+"']");
