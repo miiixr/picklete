@@ -103,7 +103,7 @@ let ShopController = {
       }
       else{  
         let resData = { productGm: productGm, products: products, product: product, photos: photos, services: services, coverPhotos: coverPhotos };
-        return res.view("main/shop-Product", resData);
+        return res.view("main/shopProduct", resData);
       }
 
     } catch (e) {
