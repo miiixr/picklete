@@ -33,26 +33,25 @@ module.exports.routes = {
   'get /logout': 'AuthController.logout'
   'get /register' : 'AuthController.register'
 
+  'get /admin/' : 'AuthController.admin'
   'get /admin/login' : 'UserController.controlLogin'
   #'get /admin/index-slider' : 'UserController.indexSlider'
   #'get /admin/index-slider-detail' : 'UserController.indexSliderDetail'
   'get /admin/index-exclusive' : 'UserController.indexExclusive'
   #'get /admin/index-theme' : 'UserController.indexTheme'
-
   'get /admin/password' : 'UserController.password'
   'post /admin/password' : 'UserController.password'
-
-  'get /admin/' : 'AuthController.admin'
   'get /admin/brands' : 'BrandController.list'
   'get /admin/brands/create' : 'BrandController.create'
   'post /admin/brands/create' : 'BrandController.create'
   'get /admin/brands/update' : 'BrandController.update'
   'post /admin/brands/update' : 'BrandController.update'
+
   'get /admin/exclusive' : 'SelectionActiveController.list'
   'post /admin/exclusive' : 'SelectionActiveController.update'
   'get /admin/index-theme' : view: 'admin/themeActivities'
+  # 'get /admin/index-slider' : 'SliderActivitiesController.list'
 
-  'get /admin/index-slider' : 'SliderActivitiesController.list'
   'get /admin/slider/create': view: 'admin/sliderActivitiesDetail'
   'post /admin/slider/create' : 'SliderActivitiesController.create'
   'get /admin/slider/update' : 'SliderActivitiesController.showUpdate'
@@ -75,7 +74,6 @@ module.exports.routes = {
   'get /user/cart-step-2' : view: 'main/cart-step-2'
   'get /user/cart-done' : view: 'main/cart-done'
 
-
   'get /admin/department' : 'DptController.list'
   'post /admin/department/update': 'DptController.update'
   'post /admin/department/sub/create' : 'DptSubController.create'
@@ -90,19 +88,6 @@ module.exports.routes = {
   'post /admin/goods/delete' : 'ProductController.doDelete'
   'post /admin/image/upload' : 'ImageController.upload'
 
-  # promotions
-  'get /admin/shop-discount' : 'PromotionController.list'
-  'get /admin/shop-discount-detail' : 'PromotionController.controlShopDiscountDetail'
-  'get /admin/shop-discount-detail2' : 'PromotionController.controlShopDiscountDetail2'
-  'get /admin/shop-discount-add-item' : 'PromotionController.controlShopDiscountAddItem'
-  'get /admin/shop-buy-more' : 'PromotionController.controlShopBuyMore'
-  'get /admin/shop-buy-more-detail' : 'PromotionController.controlShopBuyMoreDetail'
-  'get /admin/shop-buy-more-add-item' : 'PromotionController.controlShopBuyMoreAddItem'
-  'get /admin/shop-code' : 'PromotionController.controlShopCode'
-  'get /admin/shop-code-detail' : 'PromotionController.controlShopCodeDetail'
-  'get /admin/shop-report-form' : 'PromotionController.controlShopReportForm'
-  # end promotions
-
   'get /admin/bonus' : 'BonusController.list'
   'post /admin/bonus' : 'BonusController.create'
   'put /admin/bonus/:query' : 'BonusController.update'
@@ -112,7 +97,7 @@ module.exports.routes = {
   # 'get /admin/shop-item-list' : 'UserController.controlShopItemList'
   'get /admin/order' : 'OrderController.index'
 
-  'get /about' : 'AboutController.show'
+  'get /contact': 'ContactController.index'
   'get /admin/about' : 'AboutController.create'
   'post /admin/about' : 'AboutController.create'
 
@@ -132,6 +117,35 @@ module.exports.routes = {
   #'get /admin/qa-add' : 'UserController.controlQaAdd'
   'get /admin/members' : 'UserController.controlMembers'
   'get /admin/member-detail/:id' : 'UserController.controlMemberDetail'
+
+  # promotions
+  'get /admin/shop-discount' : 'PromotionController.list'
+  'get /admin/shop-discount-detail' : 'PromotionController.controlShopDiscountDetail'
+  'get /admin/shop-discount-detail2' : 'PromotionController.controlShopDiscountDetail2'
+  'get /admin/shop-discount-add-item' : 'PromotionController.controlShopDiscountAddItem'
+  'get /admin/shop-buy-more' : 'PromotionController.controlShopBuyMore'
+  'get /admin/shop-buy-more-detail' : 'PromotionController.controlShopBuyMoreDetail'
+  'get /admin/shop-buy-more-add-item' : 'PromotionController.controlShopBuyMoreAddItem'
+  'get /admin/shop-code' : 'PromotionController.controlShopCode'
+  'get /admin/shop-code-detail' : 'PromotionController.controlShopCodeDetail'
+  'get /admin/shop-report-form' : 'PromotionController.controlShopReportForm'
+  # end promotions
+
+  # client side / Have to login 
+  'get /member/fav' : view: 'main/member-fav'
+  'get /member/purchase' : view: 'main/member-purchase'
+  'get /member/setting' : 'UserController.edit'
+  'post /member/update' : 'UserController.update'
+
+  # client side / no need to login
+  'get /index' : 'MainController.index'
+  'get /about' : 'AboutController.show'
+  'get /shop/products' : 'ShopController.list'
+  'get /brands' : view: 'main/brands'
+  'get /user/cart' : view: 'main/cart'
+  'get /user/cart-step-2' : view: 'main/cart-step-2'
+  'get /user/cart-done' : view: 'main/cart-done'
+
 
   # 'get /admin/brand' : 'BrandController.list'
   # 'post /admin/brand' : 'BrandController.create'
