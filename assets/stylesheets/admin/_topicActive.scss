@@ -24,10 +24,17 @@
     &>img {
       opacity: 0;
     }
+    &:hover {
+      &>span{
+        opacity: 1;
+      }
+      &>img {
+        opacity: 0;
+      }
+    }
   }
 }
 
 .hidden-section {
-  opacity: 0;
-  height: 0px;
+  display: none;
 }
