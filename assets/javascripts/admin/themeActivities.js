@@ -1,6 +1,6 @@
  "use strict";
 $(function  () {
-
+  let $imageSectionContainer = $('ul.imageSection');
   let $uploadFileName = $('#uploadFileName'),
       $openWindow = $('#openWindow'),
       $productUrl1 = $('#productUrl1'),
@@ -23,13 +23,30 @@ $(function  () {
   });
 
   var $weightCount = 1;
-  var $imageSection = $('li.imageSection')[0].outerHTML;
+
+  /* copy the first one imageSection to hidden imageSectionSample */
+  let imageSectionHtml = $('li.imageSection')[0].outerHTML;
+  let $imageSectionSample = $('#imageSectionSample');
+  $imageSectionSample.append(imageSectionHtml);
+  /* initialize imageSectionSample */
+  // $imageSectionSample.find('input')
+  $imageSectionSample.find('image-exist').removeClass('image-exist').addClass('dashed-block-2');
+  let $imageSectionSample_inputs = $imageSectionSample.find('input');
 
   /* add new imageSection */
   $('body').on('click','.btn-add',function(e) {
-    $('ul.imageSection').append($imageSection);
-    $('li.imageSection').last().find('input').attr('value', $weightCount);
-    $weightCount = $weightCount + 1;
+    // get imageSection count (include imageSectionSample)
+    let index = $('li.imageSection').length;
+    // replace imageSectionSample's name index
+    $imageSectionSample_inputs.map(function() {
+      let $input = $(this);
+      let newName = $input.attr('name').replace('0', index);
+      $input.attr('name', newName);
+    });
+    // append new imageSection
+    $imageSectionContainer.append( $imageSectionSample.html() );
+    // $('li.imageSection').last().find('input').attr('value', $weightCount);
+    // $weightCount = $weightCount + 1;
   });
 
   let weight, imageContainerId, $imageContainer;
@@ -109,6 +126,11 @@ $(function  () {
     $imageContainer.find('img').attr('src',path);
 
   });
+  // /* add imageSectionSample */
+  // let $imageSectionSample = $('#imageSectionSample');
+  // let imageSectionSample = $('form#ActivitiesData>ul>li').html();
+  // console.log(imageSectionSample);
+  // $imageSectionSample
 
 });
 
