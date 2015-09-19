@@ -2,134 +2,24 @@ extends ../_layout_head
 
 block body
   #carousel-index.carousel.slide(data-ride='carousel')
+    - var slideLength = sliders.length;
+    //- h3=slideLength
     ol.carousel-indicators
-      li.active(data-target='#carousel-index', data-slide-to='0')
-      | &#x9;&#x9;
-      li(data-target='#carousel-index', data-slide-to='1')
-      | &#x9;&#x9;
-      li(data-target='#carousel-index', data-slide-to='2')
-      | &#x9;&#x9;
-      li(data-target='#carousel-index', data-slide-to='3')
-      | &#x9;&#x9;
-      li(data-target='#carousel-index', data-slide-to='4')
-      | &#x9;&#x9;
-      li(data-target='#carousel-index', data-slide-to='5')
-      | &#x9;&#x9;
-      li(data-target='#carousel-index', data-slide-to='6')
-      | &#x9;&#x9;
-      li(data-target='#carousel-index', data-slide-to='7')
-      | &#x9;&#x9;
-      li(data-target='#carousel-index', data-slide-to='8')
-    // /carousel-indicators
+      - for(var i=0; i< slideLength; i++)
+        - var classActiveSlide = (i == 0) ? 'active' : '';
+        li(data-target='#carousel-index', data-slide-to='#{i}', class=classActiveSlide)
+        | &#x9;&#x9;
+      //- // /carousel-indicators
+
     .carousel-inner(role='listbox')
-      a.item.active(href='#')
-        img.img-full(src='http://stuweb.ctsjh.chc.edu.tw/~1011232/image/baby-3.jpg', alt='First slide image')
-        | &#x9;&#x9;&#x9;
-        .carousel-caption.caption-left.caption-top
-          h1 labrador
-          | &#x9;&#x9;&#x9;&#x9;
-          p
-            | &#x54C1;&#x5473;&#x4F86;&#x81EA;&#x65BC;&#x751F;&#x6D3B;&#x4E8B;&#x7269;&#x7684;&#x63A8;&#x758A;
-            br
-            | &#x982D;&#x5C64;&#x771F;&#x76AE;&#x624B;&#x63D0;&#x888B; S
-        // /carousel-caption
-      // /item
-      a.item(href='#')
-        img.img-full(src='http://s01.tku.edu.tw/~401610869/666.jpg', alt='Second slide image')
-        | &#x9;&#x9;&#x9;
-        .carousel-caption.caption-center.caption-top
-          h1 labrador
-          | &#x9;&#x9;&#x9;&#x9;
-          p
-            | &#x54C1;&#x5473;&#x4F86;&#x81EA;&#x65BC;&#x751F;&#x6D3B;&#x4E8B;&#x7269;&#x7684;&#x63A8;&#x758A;
-            br
-            | &#x982D;&#x5C64;&#x771F;&#x76AE;&#x624B;&#x63D0;&#x888B; S
-        // /carousel-caption
-      // /item
-      a.item(href='#')
-        img.img-full(src='http://s01.tku.edu.tw/~401610869/888.jpg', alt='Third slide image')
-        | &#x9;&#x9;&#x9;
-        .carousel-caption.caption-right.caption-top
-          h1 labrador
-          | &#x9;&#x9;&#x9;&#x9;
-          p
-            | &#x54C1;&#x5473;&#x4F86;&#x81EA;&#x65BC;&#x751F;&#x6D3B;&#x4E8B;&#x7269;&#x7684;&#x63A8;&#x758A;
-            br
-            | &#x982D;&#x5C64;&#x771F;&#x76AE;&#x624B;&#x63D0;&#x888B; S
-        // /carousel-caption
-      // /item
-      a.item(href='#')
-        img.img-full(src='http://dl.stickershop.line.naver.jp/products/0/0/1/718/android/stickers/8523.png', alt='Third slide image')
-        | &#x9;&#x9;&#x9;
-        .carousel-caption.caption-left.caption-bottom
-          h1 labrador
-          | &#x9;&#x9;&#x9;&#x9;
-          p
-            | &#x54C1;&#x5473;&#x4F86;&#x81EA;&#x65BC;&#x751F;&#x6D3B;&#x4E8B;&#x7269;&#x7684;&#x63A8;&#x758A;
-            br
-            | &#x982D;&#x5C64;&#x771F;&#x76AE;&#x624B;&#x63D0;&#x888B; S
-        // /carousel-caption
-      // /item
-      a.item(href='#')
-        img.img-full(src='images/demo/index-slider-1.jpg', alt='First slide image')
-        | &#x9;&#x9;&#x9;
-        .carousel-caption.caption-center.caption-bottom
-          h1 labrador
-          | &#x9;&#x9;&#x9;&#x9;
-          p
-            | &#x54C1;&#x5473;&#x4F86;&#x81EA;&#x65BC;&#x751F;&#x6D3B;&#x4E8B;&#x7269;&#x7684;&#x63A8;&#x758A;
-            br
-            | &#x982D;&#x5C64;&#x771F;&#x76AE;&#x624B;&#x63D0;&#x888B; S
-        // /carousel-caption
-      // /item
-      a.item(href='#')
-        img.img-full(src='images/demo/index-slider-2.jpg', alt='Second slide image')
-        | &#x9;&#x9;&#x9;
-        .carousel-caption.caption-right.caption-bottom
-          h1 labrador
-          | &#x9;&#x9;&#x9;&#x9;
-          p
-            | &#x54C1;&#x5473;&#x4F86;&#x81EA;&#x65BC;&#x751F;&#x6D3B;&#x4E8B;&#x7269;&#x7684;&#x63A8;&#x758A;
-            br
-            | &#x982D;&#x5C64;&#x771F;&#x76AE;&#x624B;&#x63D0;&#x888B; S
-        // /carousel-caption
-      // /item
-      a.item(href='#')
-        img.img-full(src='images/demo/index-slider-3.jpg', alt='Second slide image')
-        | &#x9;&#x9;&#x9;
-        .carousel-caption.caption-left.caption-middle
-          h1 labrador
-          | &#x9;&#x9;&#x9;&#x9;
-          p
-            | &#x54C1;&#x5473;&#x4F86;&#x81EA;&#x65BC;&#x751F;&#x6D3B;&#x4E8B;&#x7269;&#x7684;&#x63A8;&#x758A;
-            br
-            | &#x982D;&#x5C64;&#x771F;&#x76AE;&#x624B;&#x63D0;&#x888B; S
-        // /carousel-caption
-      // /item
-      a.item(href='#')
-        img.img-full(src='images/demo/index-slider-4.jpg', alt='Second slide image')
-        | &#x9;&#x9;&#x9;
-        .carousel-caption.caption-center.caption-middle
-          h1 labrador
-          | &#x9;&#x9;&#x9;&#x9;
-          p
-            | &#x54C1;&#x5473;&#x4F86;&#x81EA;&#x65BC;&#x751F;&#x6D3B;&#x4E8B;&#x7269;&#x7684;&#x63A8;&#x758A;
-            br
-            | &#x982D;&#x5C64;&#x771F;&#x76AE;&#x624B;&#x63D0;&#x888B; S
-        // /carousel-caption
-      // /item
-      a.item(href='#')
-        img.img-full(src='images/demo/index-slider-1.jpg', alt='Second slide image')
-        | &#x9;&#x9;&#x9;
-        .carousel-caption.caption-right.caption-middle
-          h1 labrador
-          | &#x9;&#x9;&#x9;&#x9;
-          p
-            | &#x54C1;&#x5473;&#x4F86;&#x81EA;&#x65BC;&#x751F;&#x6D3B;&#x4E8B;&#x7269;&#x7684;&#x63A8;&#x758A;
-            br
-            | &#x982D;&#x5C64;&#x771F;&#x76AE;&#x624B;&#x63D0;&#x888B; S
-        // /carousel-caption
-      // /item
+      each slider, index in sliders
+        - var classActiveSlider = (index == 0) ? 'active' : '';
+        a(href='#{slider.link}', class='item #{classActiveSlider}')
+          img.img-full(src='#{slider.cover}', alt='#{slider.title}')
+          div(class="carousel-caption #{slider.location}", style="color: #{slider.color}")
+            h1 #{slider.title}
+            p #{slider.description}
+          // /carousel-caption
     // /carousel-inner
     a.left.carousel-control(href='#carousel-index', role='button', data-slide='prev')
       span.glyphicon.glyphicon-chevron-thin-left(aria-hidden='true')
