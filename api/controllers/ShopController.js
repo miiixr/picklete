@@ -61,7 +61,49 @@ let ShopController = {
 
       return res.serverError(e);
     }
+  },
+
+  show: async(req,res) => {
+
+    let productGmid = req.params.productGmid;
+    let productId = req.params.productId
+
+    let productGm = await db.ProductGm.findOne({ 
+          where: {id: productGmid}, 
+          include:[{ model: db.Product }] 
+        });
+    let product = await db.Product.findOne({where: {id: productId}});
+    
+    productGm = productGm.dataValues;
+    product = product.dataValues;
+
+    let products = await productGm.Products;
+    var coverPhotos = JSON.parse(productGm.coverPhoto);
+    var photos = JSON.parse(product.photos);
+    var service = JSON.parse(product.service);
+
+    var services = [];
+    var servicesTerm = ['快遞宅配', '超商取貨', '國際運送', '禮品包裝'];
+    for (var i in servicesTerm){
+      if(service.indexOf(servicesTerm[i]) >= 0){
+        services.push(true);
+      }
+      else{
+        services.push(false);
+      }
+    }
+    
+    if(product.ProductGmId != productGmid){
+      return res.view('common/warning', {errors:'not found'});
+    }
+    else{  
+      let resData = { productGm: productGm, products: products, product: product, photos: photos, services: services, coverPhotos: coverPhotos };
+      return res.view("main/shop-Product", resData);
+    }
+
   }
+
+
 }
 
 module.exports = ShopController;

@@ -124,12 +124,14 @@ module.exports.routes = {
   # client side / no need to login
   'get /index' : 'MainController.index'
   'get /about' : 'AboutController.show'
+
   'get /shop/products' : 'ShopController.list'
+  'get /shop/product/:productGmid/:productId' : 'ShopController.show'
+  
   'get /brands' : view: 'main/brands'
   'get /user/cart' : view: 'main/cart'
   'get /user/cart-step-2' : view: 'main/cart-step-2'
   'get /user/cart-done' : view: 'main/cart-done'
-
 
   # 'get /admin/brand' : 'BrandController.list'
   # 'post /admin/brand' : 'BrandController.create'

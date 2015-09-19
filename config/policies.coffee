@@ -26,6 +26,7 @@ module.exports.policies = {
   'MainController': ['global']
 
   'ShopController':
+    show: ['global']
     list: ['global']
 
   'AboutController':

@@ -267,7 +267,8 @@ module.exports = {
       usage: '請安心服用',
       notice: '18 歲以下請勿使用',
       depId: dptA.id,
-      depSubId: dptSubA.id
+      depSubId: dptSubA.id,
+      coverPhoto: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/JC1121-set-My-Mug-blue-2.jpg']
     });
 
     await createdProductGmComplete.setDpts([dptA]);
@@ -280,7 +281,8 @@ module.exports = {
       usage: '大口吸，潮爽的',
       notice: '18 歲以下請勿使用',
       depId: dptA.id,
-      depSubId: dptSubA.id
+      depSubId: dptSubA.id,
+      coverPhoto: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/JC1121-set-My-Mug-blue-22.jpg', 'https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/JC1121-set-My-Mug-blue-2.jpg']
     });
 
     await createdProductGmGood.setDpts([dptA]);
@@ -299,30 +301,33 @@ module.exports = {
       madeby: 'TW',
       color: 3,
       productNumber: '1-USA-2-G',
-      spec: 'super-metal'
+      spec: 'super-metal',
+      photos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg']
     });
 
-    await createdProductGmComplete.setProducts(createdProduct);
+    // await createdProductGmComplete.setProducts(createdProduct);
 
     noneNameProduct = await db.Product.create({
       stockQuantity: '999',
       isPublish: 'true',
       price: 888,
       size: 'normal',
-      service: ["express"],
+      service: ["快遞宅配", "超商取貨", "禮品包裝"],
       country: 'U.K',
       madeby: 'TW',
       color: 3,
       productNumber: '2-USA-3-G',
-      spec: 'super-metal'
+      spec: 'super-metal',
+      photos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg']
     });
 
-    await createdProductGmGood.setProducts(noneNameProduct);
+    await createdProductGmComplete.setProducts([noneNameProduct, createdProduct]);
 
     let productNames = ['黃金曼特寧', '夏威夷可娜', '耶加雪夫', '肯亞AA', '巴西喜拉朵', '薇薇特南果', '薩爾瓦多伊莎貝爾', '瓜地馬拉．安提瓜．花神', '星巴克過期豆'];
 
+    var xs = []
     for (var i=0; i < productNames.length; i++) {
-      await db.Product.create({
+      var x = await db.Product.create({
         name: productNames[i],
         description: '超級精選' + productNames[i] + '咖啡豆',
         stockQuantity: 1111,
@@ -334,11 +339,13 @@ module.exports = {
         madeby: 'TW',
         color: 3,
         productNumber: '2-USA-3-G',
-        spec: 'super-metal'
+        spec: 'super-metal',
+        photos: ["https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg", "https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/JC1121-set-My-Mug-blue-22.jpg"]
       });
-
+      xs.push(x);
       console.log('______--------__________-------------______________');
     }
+    await createdProductGmGood.setProducts(xs);
 
     // create tag
     let tags = ["男人", "女人", "兒童", "情人", "學生", "寵物", "旅行", "閱讀", "咖啡", "午茶", "派對", "時尚", "印花", "夏日", "冬季", "聖誕", "森林", "動物", "花園", "浪漫", "可愛", "趣味", "復古", "環保", "工業", "簡約"];
