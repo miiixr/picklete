@@ -21,7 +21,16 @@ $(function  () {
     $fileInputPath.val('');
   });
 
-  $("ul").sortable();
+  // imageSection sortable, reset weight when imageSection drop
+  $("ul").sortable({
+    onDrop: function($item, container, _super) {
+      /* sort imageSection weight */
+      $('li.imageSection').map(function(index) {
+        $(this).find('.weight').val(index);
+      });
+      _super($item, container);
+    }
+  });
 
   $('.row').on('click','.delete-link',function(e){
     e.preventDefault();
