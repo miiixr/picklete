@@ -34,6 +34,15 @@ module.exports.policies = {
 
   'SearchController':
     products: ['global']
+
+  'ContactController':
+    index: ['global']
+
+  'FAQController':
+    show: ['global']
+
+  'BrandController':
+    show: ['global']
   # 'admin/*': ['passport', 'loginRequired']
 
   # ProductController:

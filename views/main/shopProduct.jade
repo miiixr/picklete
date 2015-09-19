@@ -56,11 +56,11 @@ block body
               // breadcrumb
               ol.breadcrumb.p-left-0.m-bottom-8
                 li
-                  a(href='/shop/product/') 全部商品
+                  a(href='/shop/products/') 全部商品
                 li
-                  a(href='/shop/product/?dptId=#{productGm.Dpts.id}') #{productGm.Dpts.name} 
+                  a(href='/shop/products/?dptId=#{productGm.Dpts.id}') #{productGm.Dpts.name} 
                 li
-                  a(href='/shop/product/?dptId=#{productGm.Dpts.id}&subdptId=#{productGm.DptSubs.id}') #{productGm.DptSubs.name} 
+                  a(href='/shop/products/?dptId=#{productGm.Dpts.id}&subdptId=#{productGm.DptSubs.id}') #{productGm.DptSubs.name} 
                 - var name = product.name ? "(" + product.name + ")" : "";
                 li.active #{productGm.name} #{name}
               // /breadcrumb
@@ -113,7 +113,7 @@ block body
                   .col-xs-3.col-sm-2
                     if thisProduct.id == product.id
                       .item-block.border-block-img.m-bottom-4.active
-                        a(href='/shop/product/#{thisProduct.ProductGmId}/#{thisProduct.id}')
+                        a(href='/shop/products/#{thisProduct.ProductGmId}/#{thisProduct.id}')
                           img.img-full(src='#{thisProduct.photos[0]}')
                           // /item-block
                     else if thisProduct.isPublish == 'false'
@@ -123,12 +123,12 @@ block body
                             | SOLD
                             br
                             | OUT
-                          a(href='/shop/product/#{thisProduct.ProductGmId}/#{thisProduct.id}')
+                          a(href='/shop/products/#{thisProduct.ProductGmId}/#{thisProduct.id}')
                           img.img-full(src='#{thisProduct.photos[0]}')
                           // /item-block
                     else
                       .item-block.border-block-img.m-bottom-4
-                        a(href='/shop/product/#{thisProduct.ProductGmId}/#{thisProduct.id}')
+                        a(href='/shop/products/#{thisProduct.ProductGmId}/#{thisProduct.id}')
                           img.img-full(src='#{thisProduct.photos[0]}')
                           // /item-block
                   // /col-xs-3
@@ -231,37 +231,37 @@ block body
             .row.m-bottom-10
               .col-xs-4.col-sm-4.col-md-2
                 .item-block.m-bottom-4
-                  a(href='/shop/product')
+                  a(href='/shop/products')
                     img.img-full(src='images/demo/shop-item-24-1.jpg')
                 // /item-block
               // /col-xs-4
               .col-xs-4.col-sm-4.col-md-2
                 .item-block.m-bottom-4
-                  a(href='/shop/product')
+                  a(href='/shop/products')
                     img.img-full(src='images/demo/shop-item-23-1.jpg')
                 // /item-block
               // /col-xs-4
               .col-xs-4.col-sm-4.col-md-2
                 .item-block.m-bottom-4
-                  a(href='/shop/product')
+                  a(href='/shop/products')
                     img.img-full(src='images/demo/shop-item-22-1.jpg')
                 // /item-block
               // /col-xs-4
               .col-xs-4.col-sm-4.col-md-2
                 .item-block.m-bottom-4
-                  a(href='/shop/product')
+                  a(href='/shop/products')
                     img.img-full(src='images/demo/shop-item-21-1.jpg')
                 // /item-block
               // /col-xs-4
               .col-xs-4.col-sm-4.col-md-2
                 .item-block.m-bottom-4
-                  a(href='/shop/product')
+                  a(href='/shop/products')
                     img.img-full(src='images/demo/shop-item-20-1.jpg')
                 // /item-block
               // /col-xs-4
               .col-xs-4.col-sm-4.col-md-2
                 .item-block.m-bottom-4
-                  a(href='/shop/product')
+                  a(href='/shop/products')
                     img.img-full(src='images/demo/shop-item-19-1.jpg')
                 // /item-block
               // /col-xs-4
