@@ -141,8 +141,12 @@ $(function  () {
       /* add image openWindow, path & url back to form hidden input */
       $imageContainer.find('input[data-content="path"]').val(path);
       $imageContainer.find('input[data-content="url"]').val(url);
-      if($openWindow.is(':checked'))
+      if($openWindow.is(':checked')) {
         $imageContainer.find('input[data-content="openWindow"]').val('true');
+      }
+      else {
+        $imageContainer.find('input[data-content="openWindow"]').val('false');
+      }
 
       /* add image url to ime tag */
       $imageContainer.find('img').attr('src',path);
