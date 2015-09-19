@@ -3,11 +3,11 @@ html
   head
     meta(charset='utf-8')
     | &#x9;
-    title {BRAND} - Platform
+    title Platform - #{company.name}
     // Mobile device set
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     // Fav and touch icons
-    link(rel='shortcut icon', href='images/ico/favicon.ico')
+    link(rel='shortcut icon', href='#{company.avatar}')
     // Style
     link(href='/stylesheets/bootstrap.css', media='screen', rel='stylesheet', type='text/css')
     | &#x9;
@@ -40,7 +40,7 @@ html
             | &#x9;&#x9;&#x9;&#x9;
             span.icon-bar
           | &#x9;&#x9;&#x9;
-          a.navbar-brand(href='/index') {BRAND}
+          a.navbar-brand(href='/index', style='background-image: url(#{company.avatar})') #{company.name}
         // /navbar-header
         // Collect the nav links, forms, and other content for toggling
         .collapse.navbar-collapse

@@ -1,0 +1,87 @@
+extends ../_layout_head
+
+block body
+  .page-header.text-center
+    h1.page-title.m-bottom-6
+      | CONTACT US
+      br
+      small 聯絡我們
+    h4.m-bottom-8.letter-spacing-1
+      | 服務時間
+      br
+      |       週一至週五 早上10:00 -下午5:00
+      br
+      a(href='mailto:#{company.email}') #{company.email}
+    img.m-bottom-8(src='#{company.line}')
+    h4.letter-spacing-1
+      | 有問題想詢問？請先看
+      a(href='qa.html') 常見問與答
+  // /page-header
+  .row
+    .col-md-6.col-md-offset-3
+      form.font-size-slarge.desktop-max-width-470.m-h-auto(action="mailto:#{company.email}", enctype="text/plain", method="post")
+        .form-group
+          input.form-control(type='text', name='name' placeholder='姓名')
+        // /form-group
+        .form-group
+          input.form-control(type='email', name='email', placeholder='Email')
+        // /form-group
+        .form-group
+          input.form-control(type='text', name='contact',placeholder='聯絡電話')
+        // /form-group
+        .form-group.m-bottom-4
+          .row
+            .col-sm-4.col-xs-6
+              .checkbox
+                label
+                  input(type='checkbox', name='issue[]', value='商品問題')
+                  |  商品問題
+              // /checkbox
+            // /col-sm-4
+            .col-sm-4.col-xs-6
+              .checkbox
+                label
+                  input(type='checkbox', name='issue[]', value='庫存詢問')
+                  |  庫存詢問
+              // /checkbox
+            // /col-sm-4
+            .col-sm-4.col-xs-6
+              .checkbox
+                label
+                  input(type='checkbox', name='issue[]', value='付款問題')
+                  |  付款問題
+              // /checkbox
+            // /col-sm-4
+            .col-sm-4.col-xs-6
+              .checkbox
+                label
+                  input(type='checkbox', name='issue[]', value='運費、運送問題')
+                  |  運費、運送問題
+              // /checkbox
+            // /col-sm-4
+            .col-sm-4.col-xs-6
+              .checkbox
+                label
+                  input(type='checkbox', name='issue[]', value='會員問題')
+                  |  會員問題
+              // /checkbox
+            // /col-sm-4
+            .col-sm-4.col-xs-6
+              .checkbox
+                label
+                  input(type='checkbox', name='issue[]', value='發票問題')
+                  |  發票問題
+              // /checkbox
+            // /col-sm-4
+          // /row
+        // /form-group
+        .form-group
+          textarea.form-control(rows='7', name='question', placeholder='我想詢問...')
+        // /form-group
+        .row.text-center.m-bottom-8.m-top-4
+          .col-xs-4.col-xs-offset-4
+            input.btn.btn-black.btn-block.border-radius-circle(type='submit', value='提問') 
+          // /col-xs-4
+        // /row
+    // /col-md-6
+  // /row
