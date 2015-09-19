@@ -564,9 +564,9 @@ module.exports = {
       color: '#fff',
       link: 'http://tw.tw'
     }, {
-      cover: 'https://cldup.com/LXdNw2KyRN.e',
+      cover: 'https://cldup.com/LXdNw2KyRN.jpg',
       title: '白色胖胖杯',
-      description: '我佛慈悲，善哉善哉',
+      description: '我佛瓷杯，善哉善哉',
       location: 'caption-center caption-middle',
       color: '#fff',
       link: 'http://tw.com'
