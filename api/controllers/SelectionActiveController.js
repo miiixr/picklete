@@ -20,7 +20,7 @@ let SelectionActiveController = {
     try {
       let activities = await SelectionActiveService.getModel();
       let sliders = await db.Slider.findAll();
-      console.log(sliders);
+
       res.view("main/index", {
         activities,
         sliders
