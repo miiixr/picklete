@@ -106,15 +106,10 @@ let BrandController = {
     try {
       let brandId = req.params["id"] || null;
 
-      console.log("-----");
-      console.log(brandId);
-      
       if ( ! brandId)
         return res.redirect("/");
     
       let brand = await db.Brand.findOne({ where: {id: brandId}});
-
-      console.log(brand);
 
       return res.view("main/brands", {
         brand
