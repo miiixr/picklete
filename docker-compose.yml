@@ -1,4 +1,5 @@
 build:
+  container_name: picklete_build
   image: smlsunxie/picklete_env
   extends:
     file: ./dockerConfig/development.yml
@@ -9,6 +10,7 @@ build:
     - ./:/picklete
 
 test:
+  container_name: picklete_test
   image: smlsunxie/picklete_env
   extends:
     file: ./dockerConfig/development.yml
