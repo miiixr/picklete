@@ -90,10 +90,10 @@ describe('about Payment', () => {
     });
   });
 
-  it('order paid allpay return post',(done) => {
+  it.only('order paid allpay return post',(done) => {
     let data = {
       MerchantID : '123456789',
-      MerchantTradeNo : testdOrder.id.replace(/-/g,''),
+      MerchantTradeNo : sails.config.allpay.merchantID + testdOrder.id,
       RtnCode : '1',
       RtnMsg : 'paid',
       TradeNo : '201203151740582564',

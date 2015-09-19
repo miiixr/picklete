@@ -17,39 +17,43 @@ http://sailsjs.org/#/documentation/reference/sails.config/sails.config.policies.
 ###
 module.exports.policies = {
 
-  '*': [ 'passport', 'loginRequired']
+  '*': ['global']
+  'admin/*': ['passport', 'loginRequired']
 
   'auth':
     '*': ['passport']
 
-  ProductController:
-    list: ['loginRequired']
-  OrderController:
-    index: ['loginRequired']
-    paymentConfirm: []
-    paymentConfirmSave: []
-    create: []
-    status: []
-    find: []
-    sync: []
-    bonus: []
-    pay: []
-  PaymentController:
-    paid: []
+  # ProductController:
+  #   list: ['loginRequired']
+  # OrderController:
+  #   index: ['loginRequired']
+  #   paymentConfirm: []
+  #   paymentConfirmSave: []
+  #   create: []
+  #   status: []
+  #   find: []
+  #   sync: []
+  #   bonus: []
+  #   pay: []
+  # PaymentController:
+  #   paid: []
 
-  #'/api/search/*': []
-  SearchController:
-    products: []
-    productsJson: []
+  # #'/api/search/*': []
+  # SearchController:
+  #   products: []
+  #   productsJson: []
 
-  shopController:
-    list: []
+  # shopController:
+  #   list: []
 
-  SelectionActiveController:
-    index: []
+  # SelectionActiveController: 
+  #   index: []
 
-  AboutController:
-    show: []
+  # AboutController:
+  #   show: []
+
+  # ContactController:
+  #   index: []
 }
 
 

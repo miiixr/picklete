@@ -349,20 +349,20 @@ module.exports = {
     }
     // end of create tag
 
-    let isolationLevel = db.Sequelize.Transaction.ISOLATION_LEVELS.SERIALIZABLE;
-    let transaction = await db.sequelize.transaction({isolationLevel});
+    //let isolationLevel = db.Sequelize.Transaction.ISOLATION_LEVELS.SERIALIZABLE;
+    //let transaction = await db.sequelize.transaction({isolationLevel});
 
     // Greeting Message to New Buyer
     var mail = CustomMailerService.greeting(newBuyer);
-    let msg = await db.Message.create(mail, {transaction});
-    transaction.commit();
+    let msg = await db.Message.create(mail/*, {transaction}*/);
+    //transaction.commit();
     CustomMailerService.sendMail(msg);
 
-    transaction = await db.sequelize.transaction({isolationLevel});
+    //transaction = await db.sequelize.transaction({isolationLevel});
 
     var sms = SimpleMessageService.greeting(newBuyer);
-    msg = await db.Message.create(sms, {transaction});
-    transaction.commit();
+    msg = await db.Message.create(sms/*, {transaction}*/);
+    //transaction.commit();
     SimpleMessageService.send(msg);
 
 
@@ -459,29 +459,29 @@ module.exports = {
       var createAdditionalPurchase = await db.AdditionalPurchase.create(additionalPurchase);
     }
 
-    // selectionActive
+    // selectionActive EXCLUSIVES
     let images = [
       {
-        path: 'http://fakeimg.pl/1100x160',
-        url: 'https://github.com'
+        path: 'https://cldup.com/ajrNdux7HG.jpg',
+        url: 'http://fakeimg.pl/1100x160'
       },{
-        path: 'http://fakeimg.pl/1100x350',
-        url: 'https://google.com'
+        path: 'https://cldup.com/aDqu4Jae_3.jpg',
+        url: 'http://fakeimg.pl/1100x350'
       },{
-        path: 'http://fakeimg.pl/545x350',
-        url: 'https://yahoo.com'
+        path: 'https://cldup.com/QcvL0Il2kf.jpg',
+        url: 'http://fakeimg.pl/545x350'
       },{
-        path: 'http://fakeimg.pl/545x350',
-        url: ''
+        path: 'https://cldup.com/cLwOjMkY0c.jpg',
+        url: 'http://fakeimg.pl/545x350'
       },{
-        path: 'http://fakeimg.pl/360x240',
-        url: ''
+        path: 'https://cldup.com/DrVIRreS6B.jpg',
+        url: 'http://fakeimg.pl/360x240'
       },{
-        path: 'http://fakeimg.pl/360x240',
-        url: ''
+        path: 'https://cldup.com/oasn_O2itT.jpg',
+        url: 'http://fakeimg.pl/360x240'
       },{
-        path: 'http://fakeimg.pl/360x240',
-        url: ''
+        path: 'https://cldup.com/i1WZixmSMF.jpg',
+        url: 'http://fakeimg.pl/360x240'
       }
     ]
     let createdImages = await* images.map((image) => db.Image.create(image));
@@ -555,7 +555,36 @@ module.exports = {
     var createPromotion2 = await db.Promotion.create(promotion2);
     // end promotions
 
+    // slide active
+    let slideObj = [{
+      cover: 'https://cldup.com/GajCorhh1j.gif',
+      title: '咖啡香',
+      description: '好香的大咖啡',
+      location: 'caption-right caption-top',
+      color: '#fff',
+      link: 'http://tw.tw'
+    }, {
+      cover: 'https://cldup.com/LXdNw2KyRN.jpg',
+      title: '白色胖胖杯',
+      description: '我佛瓷杯，善哉善哉',
+      location: 'caption-center caption-middle',
+      color: '#fff',
+      link: 'http://tw.com'
+    }]
 
+    await db.Slider.bulkCreate(slideObj);
+
+    // create company
+    let companyObj = {
+      avatar: "https://cldup.com/VOUpIxN-AH.png",
+      name: "Picklete",
+      fullname: "Picklete INTERNATIONAL CO.,LTD.",
+      email: "hq@picklete.com",
+      desc: "週一至週五 早上10:00 -下午5:00",
+      line: "https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/contact.png"
+    };
+
+    await db.Company.create(companyObj);
   }
   // end testData
 }

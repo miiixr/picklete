@@ -69,9 +69,9 @@ describe('SliderActivities Spec', function() {
     .field('cover', '1http://cover.jpg') // 活動主圖
     .field('title', '1活動標題') // 活動標題
     .field('description', '1活動文案') // 活動文案
-    .field('location', '1文案位置') // 文案位置
+    .field('location', 'caption-right caption-top') // 文案位置
     .field('color', '1123') // 文案顏色
-    .field('link', '1活動網址') // 活動網址
+    .field('link', 'http://tw.com') // 活動網址
     .end(function(err, res) {
       // console.log('-----------------------');
       // console.log('* Create a new SliderActivities')
