@@ -56,6 +56,22 @@ module.exports.routes = {
   'post /admin/slider/update' : 'SliderActivitiesController.update'
   'post /admin/slider/delete' : 'SliderActivitiesController.delete'
 
+
+
+  'get /index' : 'SelectionActiveController.index'
+  'get /FAQ' : 'FAQController.show'
+  'get /member/fav' : view: 'main/member-fav'
+  'get /member/purchase' : view: 'main/member-purchase'
+  'get /member/setting' : 'UserController.edit'
+  'post /member/update' : 'UserController.update'
+  'get /shop/product' : view: 'main/shop-product'
+
+  'get /shop/products' : 'ShopController.list'
+  'get /brands' : view: 'main/brands'
+  'get /user/cart' : view: 'main/cart'
+  'get /user/cart-step-2' : view: 'main/cart-step-2'
+  'get /user/cart-done' : view: 'main/cart-done'
+
   'get /admin/department' : 'DptController.list'
   'post /admin/department/update': 'DptController.update'
   'post /admin/department/sub/create' : 'DptSubController.create'
