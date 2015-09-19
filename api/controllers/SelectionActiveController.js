@@ -3,7 +3,6 @@ let SelectionActiveController = {
   list : async (req, res) => {
     let activities = await SelectionActiveService.getModel();
     //db.SelectionActive.findAll({include: [db.Image]});
-
     res.view("admin/exclusive", {
       pageName: "/admin/exclusive",
       activities

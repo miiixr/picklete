@@ -3,11 +3,11 @@ html
   head
     meta(charset='utf-8')
     | &#x9;
-    title {BRAND} - Platform
+    title Platform - #{company.name}
     // Mobile device set
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     // Fav and touch icons
-    link(rel='shortcut icon', href='images/ico/favicon.ico')
+    link(rel='shortcut icon', href='#{company.avatar}')
     // Style
     link(href='/stylesheets/bootstrap.css', media='screen', rel='stylesheet', type='text/css')
     | &#x9;
@@ -40,7 +40,7 @@ html
             | &#x9;&#x9;&#x9;&#x9;
             span.icon-bar
           | &#x9;&#x9;&#x9;
-          a.navbar-brand(href='/index') {BRAND}
+          a.navbar-brand(href='/index', style='background-image: url(#{company.avatar})') #{company.name}
         // /navbar-header
         // Collect the nav links, forms, and other content for toggling
         .collapse.navbar-collapse
@@ -57,92 +57,27 @@ html
                     dropdown-menu-brands
                     ==================================================
                   .clearfix.m-bottom-2.text-left
-                    h4.text-gray-darker.m-bottom-4 &#x4EE3;&#x7406;&#x54C1;&#x724C;
+                    h4.text-gray-darker.m-bottom-4 代理品牌
                     | &#x9;
                     ul.list-inline.list-brand
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-1.jpg')
-                      | &#x9;&#x9;
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-2.jpg')
-                      | &#x9;&#x9;
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-3.jpg')
-                      | &#x9;&#x9;
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-4.jpg')
-                      | &#x9;&#x9;
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-5.jpg')
-                      | &#x9;&#x9;
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-6.jpg')
-                      | &#x9;&#x9;
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-7.jpg')
-                      | &#x9;&#x9;
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-8.jpg')
-                      | &#x9;&#x9;
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-9.jpg')
-                      | &#x9;&#x9;
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-10.jpg')
-                      | &#x9;&#x9;
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-11.jpg')
-                      | &#x9;&#x9;
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-12.jpg')
-                      | &#x9;&#x9;
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-13.jpg')
+                      each brand, idx in brands
+                        - if (brand.type === 'AGENT')
+                          li
+                            a(href='/brands/#{brand.id}')
+                              img.border-block-1.img-full(src='#{brand.avatar}')
+                          | &#x9;&#x9;
                   // /clearfix
                   .clearfix.m-bottom-2
-                    h4.text-gray-darker.m-bottom-4 &#x7CBE;&#x9078;&#x54C1;&#x724C;
+                    h4.text-gray-darker.m-bottom-4 精選品牌
                     | &#x9;
                     ul.list-inline.list-brand
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-1.jpg')
-                      | &#x9;&#x9;
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-2.jpg')
-                      | &#x9;&#x9;
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-3.jpg')
-                      | &#x9;&#x9;
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-4.jpg')
-                      | &#x9;&#x9;
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-5.jpg')
-                      | &#x9;&#x9;
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-6.jpg')
-                      | &#x9;&#x9;
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-7.jpg')
+
+                      each brand, idx in brands
+                        - if (brand.type === 'PRIME_GOOD')
+                          li
+                            a(href='/brands/#{brand.id}')
+                              img.border-block-1.img-full(src='#{brand.avatar}')
+                          | &#x9;&#x9;
                   // /clearfix
                 // /container
               // /dropdown-menu

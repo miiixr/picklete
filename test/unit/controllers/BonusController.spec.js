@@ -1,6 +1,6 @@
 var sinon = require('sinon');
 
-describe.only('Bonus', () => {
+describe('Bonus', () => {
   let testBonus=null;
   before(async (done) => {
     sinon.stub(UserService, 'getLoginState', (req) => {

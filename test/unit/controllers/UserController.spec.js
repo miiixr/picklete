@@ -1,4 +1,4 @@
-describe("about User", () => {
+describe.skip("about User", () => {
   // start
 
   let testUser = null;

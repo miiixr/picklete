@@ -165,15 +165,10 @@ block body
         ==================================================
       #carousel-brands.carousel.slide(data-ride='carousel')
         .carousel-inner(role='listbox')
-          a.item.active(href='#')
-            img.img-full(src='images/demo/brands-slider-1.jpg', alt='First slide image')
-          // /item
-          a.item(href='#')
-            img.img-full(src='images/demo/brands-slider-1.jpg', alt='Second slide image')
-          // /item
-          a.item(href='#')
-            img.img-full(src='images/demo/brands-slider-1.jpg', alt='Third slide image')
-          // /item
+          each photo, index in brand.photos
+            - var activeClass = index === 0 ? "active" : "";
+            a.item(href='#', class=activeClass)
+              img.img-full(src='#{photo}')
         // /carousel-inner
         a.left.carousel-control(href='#carousel-brands', role='button', data-slide='prev')
           span.glyphicon.glyphicon-chevron-thin-left(aria-hidden='true')
@@ -186,24 +181,17 @@ block body
       // /carousel-brands
       .row.m-top-6
         .col-md-5.col-lg-5
-          img.img-responsive.m-h-auto.m-top-4.m-bottom-4(src='images/demo/brands-logo-1.jpg')
+          img.img-responsive.m-h-auto.m-top-4.m-bottom-4(src='#{brand.avatar}')
         // /col-md-5
         .col-md-7.col-lg-6.desktop-p-left-6
-          h1.text-gray-darker.m-bottom-6.mobile-text-center.text-roboto.letter-spacing-3 Kerker
+          h1.text-gray-darker.m-bottom-6.mobile-text-center.text-roboto.letter-spacing-3 #{brand.name}
           .m-bottom-10
-            p
-              | 三持過玩好臺寫詩己羅哥下情年；場著先聲，得內公題到：著政增明行感全的程入形慢球下推清來法成的斷合太員著裡鄉濟前我跟不美他
-            p
-              | 化樣言如由有由護、大於一風空處能善河教。性的什……心使她病眼不媽體我所可受心傳！教然活
-            p
-              | 三社的子人分什起建光土直冷長正精比這照展家的導器！到事不，充參夫成的未且好情準
-            p
-              | 曾然配行減時來我真趣點是麼文的童重？還去相大急不是盡草中然心分義然，目馬他我每處
+            p #{brand.desc}
           // /font-size-small
         // /col-md-7
       // /row
       .text-center.m-bottom-6
-        a.btn.btn-line.btn-sm.btn-circle(href='brands-shop')
+        a.btn.btn-line.btn-sm.btn-circle(href='/shop/products/')
           span.text-en
             | GO TO
             br

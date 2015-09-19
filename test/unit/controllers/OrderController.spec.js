@@ -1,4 +1,4 @@
-describe("about Order", () => {
+describe.skip("about Order", () => {
   describe("pay Order", () => {
     let testdOrder;
     before( async (done) => {

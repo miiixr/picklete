@@ -33,27 +33,26 @@ module.exports.routes = {
   'get /logout': 'AuthController.logout'
   'get /register' : 'AuthController.register'
 
+  'get /admin/' : 'AuthController.admin'
   'get /admin/login' : 'UserController.controlLogin'
-  #'get /admin/index-slider' : 'UserController.indexSlider'
-  #'get /admin/index-slider-detail' : 'UserController.indexSliderDetail'
   'get /admin/index-exclusive' : 'UserController.indexExclusive'
-  #'get /admin/index-theme' : 'UserController.indexTheme'
 
   'get /admin/password' : 'UserController.password'
   'post /admin/password' : 'UserController.password'
-
-  'get /admin/' : 'AuthController.admin'
   'get /admin/brands' : 'BrandController.list'
   'get /admin/brands/create' : 'BrandController.create'
   'post /admin/brands/create' : 'BrandController.create'
   'get /admin/brands/update' : 'BrandController.update'
   'post /admin/brands/update' : 'BrandController.update'
+
   'get /admin/exclusive' : 'SelectionActiveController.list'
   'post /admin/exclusive' : 'SelectionActiveController.update'
+
   'get /admin/topicActivities' : 'TopicActiveController.list'
   'post /admin/topicActivities' : 'TopicActiveController.save'
 
   'get /admin/index-slider' : 'SliderActivitiesController.list'
+
   'get /admin/slider/create': view: 'admin/sliderActivitiesDetail'
   'post /admin/slider/create' : 'SliderActivitiesController.create'
   'get /admin/slider/update' : 'SliderActivitiesController.showUpdate'
@@ -62,19 +61,17 @@ module.exports.routes = {
 
 
 
-  'get /index' : view: 'main/index'
+  'get /index' : 'SelectionActiveController.index'
+  'get /FAQ' : 'FAQController.show'
   'get /member/fav' : view: 'main/member-fav'
   'get /member/purchase' : view: 'main/member-purchase'
   'get /member/setting' : 'UserController.edit'
   'post /member/update' : 'UserController.update'
-  'get /shop/product' : view: 'main/shop-product'
 
-  'get /shop/products' : 'ShopController.list'
   'get /brands' : view: 'main/brands'
   'get /user/cart' : view: 'main/cart'
   'get /user/cart-step-2' : view: 'main/cart-step-2'
   'get /user/cart-done' : view: 'main/cart-done'
-
 
   'get /admin/department' : 'DptController.list'
   'post /admin/department/update': 'DptController.update'
@@ -90,6 +87,36 @@ module.exports.routes = {
   'post /admin/goods/delete' : 'ProductController.doDelete'
   'post /admin/image/upload' : 'ImageController.upload'
 
+  'get /admin/bonus' : 'BonusController.list'
+  'post /admin/bonus' : 'BonusController.create'
+  'put /admin/bonus/:query' : 'BonusController.update'
+  'get /admin/bonus/edit' : 'BonusController.edit'
+  'get /admin/bonus/add' : 'BonusController.add'
+
+  # 'get /admin/shop-item-list' : 'UserController.controlShopItemList'
+  'get /admin/order' : 'OrderController.index'
+
+  'get /contact': 'ContactController.index'
+  'get /admin/about' : 'AboutController.create'
+  'post /admin/about' : 'AboutController.create'
+
+  'get /admin/FAQ' : 'FAQController.FAQ'
+  'get /admin/FAQAdd' : 'FAQController.FAQAdd'
+  'post /admin/FAQAdd' : 'FAQController.FAQAdd'
+  'get /admin/FAQUpdate' : 'FAQController.FAQUpdate'
+  'post /admin/FAQUpdate' : 'FAQController.FAQUpdate'
+  'get /admin/FAQTypeUpdate' : 'FAQController.FAQTypeUpdate'
+  'post /admin/FAQTypeUpdate' : 'FAQController.FAQTypeUpdate'
+  'post /admin/FAQDelete' : 'FAQController.FAQDelete'
+  'post /admin/FAQTypeDelete' : 'FAQController.FAQTypeDelete'
+
+
+  #'get /admin/qa-detail' : 'UserController.controlQaDetail'
+  #'get /admin/qa-type' : 'UserController.controlQaType'
+  #'get /admin/qa-add' : 'UserController.controlQaAdd'
+  'get /admin/members' : 'UserController.controlMembers'
+  'get /admin/member-detail/:id' : 'UserController.controlMemberDetail'
+
   # promotions
   'get /admin/shop-discount' : 'PromotionController.list'
   'get /admin/shop-discount-detail' : 'PromotionController.controlShopDiscountDetail'
@@ -103,30 +130,23 @@ module.exports.routes = {
   'get /admin/shop-report-form' : 'PromotionController.controlShopReportForm'
   # end promotions
 
-  'get /admin/bonus' : 'BonusController.list'
-  'post /admin/bonus' : 'BonusController.create'
-  'put /admin/bonus/:query' : 'BonusController.update'
-  'get /admin/bonus/edit' : 'BonusController.edit'
-  'get /admin/bonus/add' : 'BonusController.add'
+  # client side / Have to login
+  'get /member/fav' : view: 'main/member-fav'
+  'get /member/purchase' : view: 'main/member-purchase'
+  'get /member/setting' : 'UserController.edit'
+  'post /member/update' : 'UserController.update'
 
-  # 'get /admin/shop-item-list' : 'UserController.controlShopItemList'
-  'get /admin/order' : 'OrderController.index'
+  # client side / no need to login
+  'get /index' : 'MainController.index'
+  'get /about' : 'AboutController.show'
 
-  'get /admin/about' : 'AboutController.create'
-  'post /admin/about' : 'AboutController.create'
+  'get /shop/products' : 'ShopController.list'
+  'get /shop/products/:productGmid/:productId' : 'ShopController.show'
 
-  'get /admin/FAQ' : 'FAQController.FAQ'
-  'get /admin/FAQAdd' : 'FAQController.FAQAdd'
-  'post /admin/FAQAdd' : 'FAQController.FAQAdd'
-  'get /admin/FAQTypeUpdate' : 'FAQController.FAQTypeUpdate'
-  'post /admin/FAQTypeUpdate' : 'FAQController.FAQTypeUpdate'
-
-
-  'get /admin/qa-detail' : 'UserController.controlQaDetail'
-  'get /admin/qa-type' : 'UserController.controlQaType'
-  'get /admin/qa-add' : 'UserController.controlQaAdd'
-  'get /admin/members' : 'UserController.controlMembers'
-  'get /admin/member-detail/:id' : 'UserController.controlMemberDetail'
+  'get /brands/:id' : 'BrandController.show'
+  'get /user/cart' : view: 'main/cart'
+  'get /user/cart-step-2' : view: 'main/cart-step-2'
+  'get /user/cart-done' : view: 'main/cart-done'
 
   # 'get /admin/brand' : 'BrandController.list'
   # 'post /admin/brand' : 'BrandController.create'

@@ -100,6 +100,25 @@ let BrandController = {
 
     }
 
+  },
+
+  show: async (req, res) => {
+    try {
+      let brandId = req.params["id"] || null;
+
+      if ( ! brandId)
+        return res.redirect("/");
+    
+      let brand = await db.Brand.findOne({ where: {id: brandId}});
+
+      return res.view("main/brands", {
+        brand
+      });
+    } catch (e) {
+      let msg = e.message;
+      return res.serverError({msg});      
+    }
+    
   }
 
 };

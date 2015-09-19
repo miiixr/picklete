@@ -16,7 +16,7 @@ block body
               input.form-control(type='text', value=FAQType.name ,name='FAQType[]', required)
             // /col-md-9
             .col-md-2.col-sm-3
-              a.btn-remove(href='#', data-toggle='modal', data-target='#modal-delete',data-id=FAQType.id)
+              a.delete.FAQType.btn-remove(href='#', data-toggle='modal', data-id="#{FAQType.id}",data-name="#{FAQType.name}")
                 span.glyphicon.glyphicon-remove
             // /col-md-2
           // /row
@@ -30,8 +30,6 @@ block body
           input.form-control(type='text', placeholder='分類名稱', name='name[]')
         // /col-md-9
         .col-md-2.col-sm-3
-          a.btn-remove(href='#', data-toggle='modal', data-target='#modal-delete')
-            span.glyphicon.glyphicon-remove
           a.btn-add(href='#')
             span.glyphicon.glyphicon-plus
         // /col-md-2

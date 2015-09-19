@@ -1,4 +1,4 @@
-describe.only("TopicActiveService", () => {
+describe("TopicActiveService", () => {
 
   it('get TopicActive', async(done) => {
 
