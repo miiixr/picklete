@@ -4,6 +4,8 @@ block body
     #cbp-so-scroller.cbp-so-scroller
       section.cbp-so-section
         .container-fluid
+          script.
+            var s= !{JSON.stringify(productGm)}
           .row
             #sticky.col-md-6.p-left-0.p-right-0.carousel-shop-product-wrapper
               //
@@ -54,20 +56,21 @@ block body
               // breadcrumb
               ol.breadcrumb.p-left-0.m-bottom-8
                 li
-                  a(href='#') 全部商品
+                  a(href='/shop/product/') 全部商品
                 li
-                  a(href='#') 廚房用品
+                  a(href='/shop/product/?dptId=#{productGm.Dpts.id}') #{productGm.Dpts.name} 
                 li
-                  a(href='#') 杯子
-                li.active #{productGm.brandName} #{productGm.name}
+                  a(href='/shop/product/?dptId=#{productGm.Dpts.id}&subdptId=#{productGm.DptSubs.id}') #{productGm.DptSubs.name} 
+                - var name = product.name ? "(" + product.name + ")" : "";
+                li.active #{productGm.name} #{name}
               // /breadcrumb
 
               // 品牌名稱，商品名稱，商品價格
               .row.m-bottom-4
                 .col-sm-10.col-xs-9.m-bottom-4
                   h5.text-muted.letter-spacing-3.text-roboto.m-bottom-2
-                    a(href='brands.html') #{productGm.brandName}
-                  h2.text-black.m-bottom-6.text-roboto #{product.name}
+                    a(href='brands.html') #{productGm.name}
+                  h2.text-black.m-bottom-6.text-roboto #{productGm.name} #{name}
                   h3.text-black.m-bottom-4 $ #{product.price}
                 // /col-sm-10
                 .col-sm-2.col-xs-3
