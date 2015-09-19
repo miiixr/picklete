@@ -2,175 +2,178 @@ extends ../_layout_auth
 
 block body
   h2.m-bottom-6 主題活動
-  //- a.btn.btn-danger.btn-lg.m-bottom-2(href='#') 建立主題
+  a.btn.btn-danger.btn-lg.m-bottom-2(href='#') 建立主題
   hr.dashed-line
-  form#ActivitiesData.form-group(action='/admin/topicActivities', method='POST')
-    input.form-control(type='text', placeholder='請輸入主題活動標題', name='title')
-    // /form-group
+  form(action='/admin/topicActivities', method='POST')
+    #ActivitiesData.form-group
+      input.form-control(type='text', placeholder='請輸入主題活動標題', name='title')
+      // /form-group
     ul.imageSection
-      each activity, index in activities
-        li.well.control-well.p-10-20.m-bottom-4.imageSection
-          .row
-            .col-sm-6
-              span.glyphicon.glyphicon-menu.font-size-xlarge.m-top-1 
-              input.weight(type='hidden', name='activities[#{index}][weight]', value=0)
-            // /col-sm-6
-            .col-sm-6.text-right
-              a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
-                span.glyphicon.glyphicon-remove
-            // /col-sm-6
-          // /row
-          .row.m-bottom-4
-            .col-sm-4
-              .row.row-m
-                .col-xs-12
-                  .m-bottom-4
-                    //
-                      control-index-theme-block
-                      ==================================================
-                    .fileinput-square.bg-white.text-center.add-image
-                      a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="1")
-                        img(src='#{activity.ImageA.path}', border=0, width=281.656, height=285.656)  
-                        input(type='hidden', name='activities[#{index}][ImageA][path]', data-content="path", value="#{activity.ImageA.path}")
-                        input(type='hidden', name='activities[#{index}][ImageA][url]', data-content="url", value="#{activity.ImageA.url}")
-                        input(type='hidden', name='activities[#{index}][ImageA][openWindow]', data-content='openWindow', value="#{activity.ImageA.openWindow}")
-                        span.glyphicon.glyphicon-plus.font-size-xxxxlarge
-                    // /fileinput-square
-                  // m-bottom-4
-                // /col-xs-12
-                .col-xs-6
-                  .m-bottom-4
-                    //
-                      control-index-theme-block
-                      ==================================================
-                    .fileinput-square.bg-white.text-center.add-image
-                      a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="2")
-                        img(src='#{activity.ImageA1.path}', border=0, width=130.828, height=134.828)  
-                        input(type='hidden', name='activities[#{index}][ImageA1][path]', data-content="path", value="#{activity.ImageA1.path}")
-                        input(type='hidden', name='activities[#{index}][ImageA1][url]', data-content="url", value="#{activity.ImageA1.url}")
-                        input(type='hidden', name='activities[#{index}][ImageA1][openWindow]', data-content='openWindow', value="#{activity.ImageA1.openWindow}")
-                        span.glyphicon.glyphicon-plus.font-size-xxxxlarge
-                    // /fileinput-square
-                  // m-bottom-4
-                // /col-xs-6
-                .col-xs-6
-                  .m-bottom-4
-                    //
-                      control-index-theme-block
-                      ==================================================
-                    .fileinput-square.bg-white.text-center.add-image
-                      a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="3")
-                        img(src='#{activity.ImageA2.path}', border=0, width=130.828, height=134.828)  
-                        input(type='hidden', name='activities[#{index}][ImageA2][path]', data-content="path", value="#{activity.ImageA2.path}")
-                        input(type='hidden', name='activities[#{index}][ImageA2][url]', data-content="url", value="#{activity.ImageA2.url}")
-                        input(type='hidden', name='activities[#{index}][ImageA2][openWindow]', data-content='openWindow', value="#{activity.ImageA2.openWindow}")
-                        span.glyphicon.glyphicon-plus.font-size-xxxxlarge
-                    // /fileinput-square
-                  // m-bottom-4
-                // /col-xs-6
-              // /row
-            // /col-sm-4
-            .col-sm-4
-              .row.row-m
-                .col-xs-6
-                  .m-bottom-4
-                    //
-                      control-index-theme-block
-                      ==================================================
-                    .fileinput-square.bg-white.text-center.add-image
-                      a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="4")
-                        img(src='#{activity.ImageB1.path}', border=0, width=130.828, height=134.828)  
-                        input(type='hidden', name='activities[#{index}][ImageB1][path]', data-content="path", value="#{activity.ImageB1.path}")
-                        input(type='hidden', name='activities[#{index}][ImageB1][url]', data-content="url", value="#{activity.ImageB1.url}")
-                        input(type='hidden', name='activities[#{index}][ImageB1][openWindow]', data-content='openWindow', value="#{activity.ImageB1.openWindow}")
-                        span.glyphicon.glyphicon-plus.font-size-xxxxlarge
-                    // /fileinput-square
-                  // m-bottom-4
-                // /col-xs-6
-                .col-xs-6
-                  .m-bottom-4
-                    //
-                      control-index-theme-block
-                      ==================================================
-                    .fileinput-square.bg-white.text-center.add-image
-                      a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="5")
-                        img(src='#{activity.ImageB2.path}', border=0, width=130.828, height=134.828)  
-                        input(type='hidden', name='activities[#{index}][ImageB2][path]', data-content="path", value="#{activity.ImageB2.path}")
-                        input(type='hidden', name='activities[#{index}][ImageB2][url]', data-content="url", value="#{activity.ImageB2.url}")
-                        input(type='hidden', name='activities[#{index}][ImageB2][openWindow]', data-content='openWindow', value="#{activity.ImageB2.openWindow}")
-                        span.glyphicon.glyphicon-plus.font-size-xxxxlarge
-                    // /fileinput-square
-                  // m-bottom-4
-                // /col-xs-6
-                .col-xs-12
-                  .m-bottom-4
-                    //
-                      control-index-theme-block
-                      ==================================================
-                    .fileinput-square.bg-white.text-center.add-image
-                      a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="6")
-                        img(src='#{activity.ImageB.path}', border=0, width=281.656, height=285.656)  
-                        input(type='hidden', name='activities[#{index}][ImageB][path]', data-content="path", value="#{activity.ImageB.path}")
-                        input(type='hidden', name='activities[#{index}][ImageB][url]', data-content="url", value="#{activity.ImageB.url}")
-                        input(type='hidden', name='activities[#{index}][ImageB][openWindow]', data-content='openWindow', value="#{activity.ImageB.openWindow}")
-                        span.glyphicon.glyphicon-plus.font-size-xxxxlarge
-                    // /fileinput-square
-                  // m-bottom-4
-                // /col-xs-12
-              // /row
-            // /col-sm-4
-            .col-sm-4
-              .row.row-m
-                .col-xs-12
-                  .m-bottom-4
-                    //
-                      control-index-theme-block
-                      ==================================================
-                    .fileinput-square.bg-white.text-center.add-image
-                      a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="7")
-                        img(src='#{activity.ImageC.path}', border=0, width=281.656, height=285.656)  
-                        input(type='hidden', name='activities[#{index}][ImageC][path]', data-content="path", value="#{activity.ImageC.path}")
-                        input(type='hidden', name='activities[#{index}][ImageC][url]', data-content="url", value="#{activity.ImageC.url}")
-                        input(type='hidden', name='activities[#{index}][ImageC][openWindow]', data-content='openWindow', value="#{activity.ImageC.openWindow}")
-                        span.glyphicon.glyphicon-plus.font-size-xxxxlarge
-                    // /fileinput-square
-                  // m-bottom-4
-                // /col-xs-12
-                .col-xs-6
-                  .m-bottom-4
-                    //
-                      control-index-theme-block
-                      ==================================================
-                    .fileinput-square.bg-white.text-center.add-image
-                      a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="8")
-                        img(src='#{activity.ImageC1.path}', border=0, width=130.828, height=134.828)  
-                        input(type='hidden', name='activities[#{index}][ImageC1][path]', data-content="path", value="#{activity.ImageC1.path}")
-                        input(type='hidden', name='activities[#{index}][ImageC1][url]', data-content="url", value="#{activity.ImageC1.url}")
-                        input(type='hidden', name='activities[#{index}][ImageC1][openWindow]', data-content='openWindow', value="#{activity.ImageC1.openWindow}")
-                        span.glyphicon.glyphicon-plus.font-size-xxxxlarge
-                    // /fileinput-square
-                  // m-bottom-4
-                // /col-xs-6
-                .col-xs-6
-                  .m-bottom-4
-                    //
-                      control-index-theme-block
-                      ==================================================
-                    .fileinput-square.bg-white.text-center.add-image
-                      a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="9")
-                        img(src='#{activity.ImageC2.path}', border=0, width=130.828, height=134.828)  
-                        input(type='hidden', name='activities[#{index}][ImageC2][path]', data-content="path", value="#{activity.ImageC2.path}")
-                        input(type='hidden', name='activities[#{index}][ImageC2][url]', data-content="url", value="#{activity.ImageC2.url}")
-                        input(type='hidden', name='activities[#{index}][ImageC2][openWindow]', data-content='openWindow', value="#{activity.ImageC2.openWindow}")
-                        span.glyphicon.glyphicon-plus.font-size-xxxxlarge
-                    // /fileinput-square
-                  // m-bottom-4
-                // /col-xs-6
-              // /row
-            // /col-sm-4
-          // /row
-        // /well
-    
+      if activities.length>0 
+        each activity, index in activities
+          li.well.control-well.p-10-20.m-bottom-4.imageSection
+            .row
+              .col-sm-6
+                span.glyphicon.glyphicon-menu.font-size-xlarge.m-top-1 
+                input.weight(type='hidden', name='activities[#{index}][weight]', value=0)
+              // /col-sm-6
+              .col-sm-6.text-right
+                a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
+                  span.glyphicon.glyphicon-remove
+              // /col-sm-6
+            // /row
+            .row.m-bottom-4
+              .col-sm-4
+                .row.row-m
+                  .col-xs-12
+                    .m-bottom-4
+                      //
+                        control-index-theme-block
+                        ==================================================
+                      .fileinput-square.bg-white.text-center.image-exist
+                        a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="1")
+                          img(src='#{activity.ImageA.path}', border=0, width=281.656, height=285.656)  
+                          input(type='hidden', name='activities[#{index}][ImageA][path]', data-content="path", value="#{activity.ImageA.path}")
+                          input(type='hidden', name='activities[#{index}][ImageA][url]', data-content="url", value="#{activity.ImageA.url}")
+                          input(type='hidden', name='activities[#{index}][ImageA][openWindow]', data-content='openWindow', value="#{activity.ImageA.openWindow}")
+                          span.glyphicon.glyphicon-plus.font-size-xxxxlarge
+                      // /fileinput-square
+                    // m-bottom-4
+                  // /col-xs-12
+                  .col-xs-6
+                    .m-bottom-4
+                      //
+                        control-index-theme-block
+                        ==================================================
+                      .fileinput-square.bg-white.text-center.image-exist
+                        a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="2")
+                          img(src='#{activity.ImageA1.path}', border=0, width=130.828, height=134.828)  
+                          input(type='hidden', name='activities[#{index}][ImageA1][path]', data-content="path", value="#{activity.ImageA1.path}")
+                          input(type='hidden', name='activities[#{index}][ImageA1][url]', data-content="url", value="#{activity.ImageA1.url}")
+                          input(type='hidden', name='activities[#{index}][ImageA1][openWindow]', data-content='openWindow', value="#{activity.ImageA1.openWindow}")
+                          span.glyphicon.glyphicon-plus.font-size-xxxxlarge
+                      // /fileinput-square
+                    // m-bottom-4
+                  // /col-xs-6
+                  .col-xs-6
+                    .m-bottom-4
+                      //
+                        control-index-theme-block
+                        ==================================================
+                      .fileinput-square.bg-white.text-center.image-exist
+                        a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="3")
+                          img(src='#{activity.ImageA2.path}', border=0, width=130.828, height=134.828)  
+                          input(type='hidden', name='activities[#{index}][ImageA2][path]', data-content="path", value="#{activity.ImageA2.path}")
+                          input(type='hidden', name='activities[#{index}][ImageA2][url]', data-content="url", value="#{activity.ImageA2.url}")
+                          input(type='hidden', name='activities[#{index}][ImageA2][openWindow]', data-content='openWindow', value="#{activity.ImageA2.openWindow}")
+                          span.glyphicon.glyphicon-plus.font-size-xxxxlarge
+                      // /fileinput-square
+                    // m-bottom-4
+                  // /col-xs-6
+                // /row
+              // /col-sm-4
+              .col-sm-4
+                .row.row-m
+                  .col-xs-6
+                    .m-bottom-4
+                      //
+                        control-index-theme-block
+                        ==================================================
+                      .fileinput-square.bg-white.text-center.image-exist
+                        a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="4")
+                          img(src='#{activity.ImageB1.path}', border=0, width=130.828, height=134.828)  
+                          input(type='hidden', name='activities[#{index}][ImageB1][path]', data-content="path", value="#{activity.ImageB1.path}")
+                          input(type='hidden', name='activities[#{index}][ImageB1][url]', data-content="url", value="#{activity.ImageB1.url}")
+                          input(type='hidden', name='activities[#{index}][ImageB1][openWindow]', data-content='openWindow', value="#{activity.ImageB1.openWindow}")
+                          span.glyphicon.glyphicon-plus.font-size-xxxxlarge
+                      // /fileinput-square
+                    // m-bottom-4
+                  // /col-xs-6
+                  .col-xs-6
+                    .m-bottom-4
+                      //
+                        control-index-theme-block
+                        ==================================================
+                      .fileinput-square.bg-white.text-center.image-exist
+                        a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="5")
+                          img(src='#{activity.ImageB2.path}', border=0, width=130.828, height=134.828)  
+                          input(type='hidden', name='activities[#{index}][ImageB2][path]', data-content="path", value="#{activity.ImageB2.path}")
+                          input(type='hidden', name='activities[#{index}][ImageB2][url]', data-content="url", value="#{activity.ImageB2.url}")
+                          input(type='hidden', name='activities[#{index}][ImageB2][openWindow]', data-content='openWindow', value="#{activity.ImageB2.openWindow}")
+                          span.glyphicon.glyphicon-plus.font-size-xxxxlarge
+                      // /fileinput-square
+                    // m-bottom-4
+                  // /col-xs-6
+                  .col-xs-12
+                    .m-bottom-4
+                      //
+                        control-index-theme-block
+                        ==================================================
+                      .fileinput-square.bg-white.text-center.image-exist
+                        a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="6")
+                          img(src='#{activity.ImageB.path}', border=0, width=281.656, height=285.656)  
+                          input(type='hidden', name='activities[#{index}][ImageB][path]', data-content="path", value="#{activity.ImageB.path}")
+                          input(type='hidden', name='activities[#{index}][ImageB][url]', data-content="url", value="#{activity.ImageB.url}")
+                          input(type='hidden', name='activities[#{index}][ImageB][openWindow]', data-content='openWindow', value="#{activity.ImageB.openWindow}")
+                          span.glyphicon.glyphicon-plus.font-size-xxxxlarge
+                      // /fileinput-square
+                    // m-bottom-4
+                  // /col-xs-12
+                // /row
+              // /col-sm-4
+              .col-sm-4
+                .row.row-m
+                  .col-xs-12
+                    .m-bottom-4
+                      //
+                        control-index-theme-block
+                        ==================================================
+                      .fileinput-square.bg-white.text-center.image-exist
+                        a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="7")
+                          img(src='#{activity.ImageC.path}', border=0, width=281.656, height=285.656)  
+                          input(type='hidden', name='activities[#{index}][ImageC][path]', data-content="path", value="#{activity.ImageC.path}")
+                          input(type='hidden', name='activities[#{index}][ImageC][url]', data-content="url", value="#{activity.ImageC.url}")
+                          input(type='hidden', name='activities[#{index}][ImageC][openWindow]', data-content='openWindow', value="#{activity.ImageC.openWindow}")
+                          span.glyphicon.glyphicon-plus.font-size-xxxxlarge
+                      // /fileinput-square
+                    // m-bottom-4
+                  // /col-xs-12
+                  .col-xs-6
+                    .m-bottom-4
+                      //
+                        control-index-theme-block
+                        ==================================================
+                      .fileinput-square.bg-white.text-center.image-exist
+                        a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="8")
+                          img(src='#{activity.ImageC1.path}', border=0, width=130.828, height=134.828)  
+                          input(type='hidden', name='activities[#{index}][ImageC1][path]', data-content="path", value="#{activity.ImageC1.path}")
+                          input(type='hidden', name='activities[#{index}][ImageC1][url]', data-content="url", value="#{activity.ImageC1.url}")
+                          input(type='hidden', name='activities[#{index}][ImageC1][openWindow]', data-content='openWindow', value="#{activity.ImageC1.openWindow}")
+                          span.glyphicon.glyphicon-plus.font-size-xxxxlarge
+                      // /fileinput-square
+                    // m-bottom-4
+                  // /col-xs-6
+                  .col-xs-6
+                    .m-bottom-4
+                      //
+                        control-index-theme-block
+                        ==================================================
+                      .fileinput-square.bg-white.text-center.image-exist
+                        a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="9")
+                          img(src='#{activity.ImageC2.path}', border=0, width=130.828, height=134.828)  
+                          input(type='hidden', name='activities[#{index}][ImageC2][path]', data-content="path", value="#{activity.ImageC2.path}")
+                          input(type='hidden', name='activities[#{index}][ImageC2][url]', data-content="url", value="#{activity.ImageC2.url}")
+                          input(type='hidden', name='activities[#{index}][ImageC2][openWindow]', data-content='openWindow', value="#{activity.ImageC2.openWindow}")
+                          span.glyphicon.glyphicon-plus.font-size-xxxxlarge
+                      // /fileinput-square
+                    // m-bottom-4
+                  // /col-xs-6
+                // /row
+              // /col-sm-4
+            // /row
+          // /well
+      else
+        include ../partials/_topicActive_imageSection
   // / modal
   button.btn.btn-add.btn-default(type='button') 新增圖片區塊
   hr.dashed-line
@@ -265,133 +268,9 @@ block body
   // /modal
   
   // /sample
-  //-   li.well.control-well.p-10-20.m-bottom-4.imageSection
-  //-     .row
-  //-       .col-sm-6
-  //-         span.glyphicon.glyphicon-menu.font-size-xlarge.m-top-1 
-  //-         input.weight(type='hidden', name='activities[][weight]', value=0, form='ActivitiesData')
-  //-       // /col-sm-6
-  //-       .col-sm-6.text-right
-  //-         a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
-  //-           span.glyphicon.glyphicon-remove
-  //-       // /col-sm-6
-  //-     // /row
-  //-     .row.m-bottom-4
-  //-       .col-sm-4
-  //-         .row.row-m
-  //-           .col-xs-12
-  //-             .m-bottom-4
-  //-               //
-  //-                 control-index-theme-block
-  //-                 ==================================================
-  //-               form.dashed-block-2.fileinput-square.bg-white.text-center
-  //-                 (action="/admin/image/upload", method="POST", enctype="multipart/form-data")
-  //-                   a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="1")
-  //-                   span.glyphicon.glyphicon-plus.font-size-xxxxlarge
-  //-               // /fileinput-square
-  //-             // m-bottom-4
-  //-           // /col-xs-12
-  //-           .col-xs-6
-  //-             .m-bottom-4
-  //-               //
-  //-                 control-index-theme-block
-  //-                 ==================================================
-  //-               .dashed-block-2.fileinput-square.bg-white.text-center
-  //-                 a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="2")
-  //-                   span.glyphicon.glyphicon-plus.font-size-xxxxlarge
-  //-               // /fileinput-square
-  //-             // m-bottom-4
-  //-           // /col-xs-6
-  //-           .col-xs-6
-  //-             .m-bottom-4
-  //-               //
-  //-                 control-index-theme-block
-  //-                 ==================================================
-  //-               .dashed-block-2.fileinput-square.bg-white.text-center
-  //-                 a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="3")
-  //-                   span.glyphicon.glyphicon-plus.font-size-xxxxlarge
-  //-               // /fileinput-square
-  //-             // m-bottom-4
-  //-           // /col-xs-6
-  //-         // /row
-  //-       // /col-sm-4
-  //-       .col-sm-4
-  //-         .row.row-m
-  //-           .col-xs-6
-  //-             .m-bottom-4
-  //-               //
-  //-                 control-index-theme-block
-  //-                 ==================================================
-  //-               .dashed-block-2.fileinput-square.bg-white.text-center
-  //-                 a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="4")
-  //-                   span.glyphicon.glyphicon-plus.font-size-xxxxlarge
-  //-               // /fileinput-square
-  //-             // m-bottom-4
-  //-           // /col-xs-6
-  //-           .col-xs-6
-  //-             .m-bottom-4
-  //-               //
-  //-                 control-index-theme-block
-  //-                 ==================================================
-  //-               .dashed-block-2.fileinput-square.bg-white.text-center
-  //-                 a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="5")
-  //-                   span.glyphicon.glyphicon-plus.font-size-xxxxlarge
-  //-               // /fileinput-square
-  //-             // m-bottom-4
-  //-           // /col-xs-6
-  //-           .col-xs-12
-  //-             .m-bottom-4
-  //-               //
-  //-                 control-index-theme-block
-  //-                 ==================================================
-  //-               .dashed-block-2.fileinput-square.bg-white.text-center
-  //-                 a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="6")
-  //-                   span.glyphicon.glyphicon-plus.font-size-xxxxlarge
-  //-               // /fileinput-square
-  //-             // m-bottom-4
-  //-           // /col-xs-12
-  //-         // /row
-  //-       // /col-sm-4
-  //-       .col-sm-4
-  //-         .row.row-m
-  //-           .col-xs-12
-  //-             .m-bottom-4
-  //-               //
-  //-                 control-index-theme-block
-  //-                 ==================================================
-  //-               .dashed-block-2.fileinput-square.bg-white.text-center
-  //-                 a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="7")
-  //-                   span.glyphicon.glyphicon-plus.font-size-xxxxlarge
-  //-               // /fileinput-square
-  //-             // m-bottom-4
-  //-           // /col-xs-12
-  //-           .col-xs-6
-  //-             .m-bottom-4
-  //-               //
-  //-                 control-index-theme-block
-  //-                 ==================================================
-  //-               .dashed-block-2.fileinput-square.bg-white.text-center
-  //-                 a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="8")
-  //-                   span.glyphicon.glyphicon-plus.font-size-xxxxlarge
-  //-               // /fileinput-square
-  //-             // m-bottom-4
-  //-           // /col-xs-6
-  //-           .col-xs-6
-  //-             .m-bottom-4
-  //-               //
-  //-                 control-index-theme-block
-  //-                 ==================================================
-  //-               .dashed-block-2.fileinput-square.bg-white.text-center
-  //-                 a(href='#', data-toggle='modal', data-target='#modal-control-index-theme', data-id="9")
-  //-                   span.glyphicon.glyphicon-plus.font-size-xxxxlarge
-  //-               // /fileinput-square
-  //-             // m-bottom-4
-  //-           // /col-xs-6
-  //-         // /row
-  //-       // /col-sm-4
-  //-     // /row
-  //-   // /well
-  //- 
+  #imageSectionSample.hidden-section
+    include ../partials/_topicActive_imageSection
+
 
 block js
   script(src="/javascripts/admin/themeActivities.js")
