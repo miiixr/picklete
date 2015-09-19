@@ -68,26 +68,20 @@ let ShopController = {
     let productGmid = req.params.productGmid;
     let productId = req.params.productId
 
-    let productGm = await db.ProductGm.findOne({ where: {id: productGmid}, include:[{
-          model: db.Product
-        }] });
+    let productGm = await db.ProductGm.findOne({ 
+          where: {id: productGmid}, 
+          include:[{ model: db.Product }] 
+        });
     let product = await db.Product.findOne({where: {id: productId}});
     
     productGm = productGm.dataValues;
-    let products = await productGm.Products;
     product = product.dataValues;
 
+    let products = await productGm.Products;
 
-    console.log('--------');
-    console.log(productGm);
-    console.log('--------');
-    console.log(products);
-    console.log('--------');
-    console.log(product);
-    console.log('--------');
+    let resData = { productGm: productGm, products: products, product: product };
 
-
-    return res.view("main/shop-Product");
+    return res.view("main/shop-Product", resData);
 
 
   }
