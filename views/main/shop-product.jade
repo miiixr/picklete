@@ -10,25 +10,38 @@ block body
                 shop-product-carousel
                 ==================================================
               #carousel-shop-product.carousel(data-ride='carousel')
-                ol.carousel-indicators.carousel-indicators-v
-                  li.active(data-target='#carousel-shop-product', data-slide-to='0')
-                  li(data-target='#carousel-shop-product', data-slide-to='1')
-                  li(data-target='#carousel-shop-product', data-slide-to='2')
-                  li(data-target='#carousel-shop-product', data-slide-to='3')
-                // /carousel-indicators
+                //- ol.carousel-indicators.carousel-indicators-v
+                //-   li.active(data-target='#carousel-shop-product', data-slide-to='0')
+                //-   li(data-target='#carousel-shop-product', data-slide-to='1')
+                //-   // /carousel-indicators
+                //- .carousel-inner.carousel-inner-v(role='listbox')
+                //-   .item.active
+                //-     img.img-full(src='images/demo/JC1121-set-My-Mug-blue-2.jpg', alt='First slide image', href='#carousel-shop-product', data-slide='next')
+                //-   // /item
+                //-   .item
+                //-     img.img-full(src='images/demo/JC1121-set-My-Mug-blue-22.jpg', alt='Second slide image', href='#carousel-shop-product', data-slide='next')
+                //-   // /item
+                
+                ol.carousel-indicators.carousel-indicators-v.ac.active
+                  each photo, index in coverPhotos
+                    if index == 0
+                      li.active(data-target='#carousel-shop-product', data-slide-to=index)
+                    else
+                      li(data-target='#carousel-shop-product', data-slide-to=index)
+                  // /carousel-indicators
                 .carousel-inner.carousel-inner-v(role='listbox')
-                  .item.active
-                    img.img-full(src='images/demo/JC1121-set-My-Mug-blue-2.jpg', alt='First slide image', href='#carousel-shop-product', data-slide='next')
+                  each photo, index in coverPhotos
+                    if index == 0
+                      .item.active
+                        img.img-full(src='#{photo}', alt='Second slide image', href='#carousel-shop-product', data-slide='next')
+                    else
+                      .item
+                        img.img-full(src='#{photo}', alt='Second slide image', href='#carousel-shop-product', data-slide='next')
+                      
                   // /item
-                  .item
-                    img.img-full(src='images/demo/JC1121-set-My-Mug-blue-22.jpg', alt='Second slide image', href='#carousel-shop-product', data-slide='next')
-                  // /item
-                  .item
-                    img.img-full(src='images/demo/JC1121-set-My-Mug-blue-2.jpg', alt='Second slide image', href='#carousel-shop-product', data-slide='next')
-                  // /item
-                  .item
-                    img.img-full(src='images/demo/JC1121-set-My-Mug-blue-22.jpg', alt='Second slide image', href='#carousel-shop-product', data-slide='next')
-                  // /item
+                  
+
+                  
                 // /carousel-inner
               // /carousel-shop-product
             // /col-md-6
@@ -37,6 +50,8 @@ block body
         .container
           .row.m-top-6.m-bottom-10
             .col-md-6.col-md-offset-6.desktop-p-left-82.min-height-1000
+               
+              // breadcrumb
               ol.breadcrumb.p-left-0.m-bottom-8
                 li
                   a(href='#') 全部商品
@@ -44,14 +59,16 @@ block body
                   a(href='#') 廚房用品
                 li
                   a(href='#') 杯子
-                li.active Jansen+co 調色杯
+                li.active #{productGm.brandName} #{productGm.name}
               // /breadcrumb
+
+              // 品牌名稱，商品名稱，商品價格
               .row.m-bottom-4
                 .col-sm-10.col-xs-9.m-bottom-4
                   h5.text-muted.letter-spacing-3.text-roboto.m-bottom-2
-                    a(href='brands.html') Jansen+co
-                  h2.text-black.m-bottom-6.text-roboto 調色杯調色杯調色杯調色杯M(藍＋紅)
-                  h3.text-black.m-bottom-4 $2,500
+                    a(href='brands.html') #{productGm.brandName}
+                  h2.text-black.m-bottom-6.text-roboto #{product.name}
+                  h3.text-black.m-bottom-4 $ #{product.price}
                 // /col-sm-10
                 .col-sm-2.col-xs-3
                   //
@@ -65,7 +82,9 @@ block body
                       span.label-like-text 已加入收藏
                     // /label-like
                 // /col-sm-2
-              // /row
+              // /row 
+
+              // 商品數量
               .row.m-bottom-6
                 .col-sm-4
                   .input-group.input-group-count.input-group-lg.m-bottom-4.max-width-150
@@ -73,7 +92,7 @@ block body
                       button.btn.btn-default.btn-number.p-left-2.p-right-2(type='button', disabled='disabled', data-type='minus', data-field='quant[1]')
                         span.glyphicon.glyphicon-minus
                     // /input-group-btn
-                    input.form-control.input-number.text-center.font-size-large(type='text', name='quant[1]', value='1', min='1', max='10')
+                    input.form-control.input-number.text-center.font-size-large(type='text', name='quant[1]', value='1', min='1', max=' //')
                     span.input-group-btn
                       button.btn.btn-default.btn-number.p-left-2.p-right-2(type='button', data-type='plus', data-field='quant[1]')
                         span.glyphicon.glyphicon-plus
@@ -84,62 +103,35 @@ block body
                   a.btn.btn-black.border-radius-circle.btn-block.btn-lg.add-to-cart(href='#') 加入購物車
                 // /col-sm-8
               // /row
+              
+              // 其他商品 
               .row.row-m.m-bottom-6
-                .col-xs-3.col-sm-2
-                  .item-block.border-block-img.m-bottom-4.active
-                    a(href='#')
-                      img.img-full(src='images/demo/shop-type-1.jpg')
-                  // /item-block
-                // /col-xs-3
-                .col-xs-3.col-sm-2
-                  .item-block.border-block-img.m-bottom-4
-                    a(href='#')
-                      img.img-full(src='images/demo/shop-type-2.jpg')
-                  // /item-block
-                // /col-xs-3
-                .col-xs-3.col-sm-2
-                  .item-block.border-block-img.m-bottom-4.item-soldout
-                    .item-soldout-text
-                      h6
-                        | SOLD
-                        br
-                        | OUT
-                    // /item-soldout-text
-                    a(href='#')
-                      img.img-full(src='images/demo/shop-type-3.jpg')
-                  // /item-block
-                // /col-xs-3
-                .col-xs-3.col-sm-2
-                  .item-block.border-block-img.m-bottom-4
-                    a(href='#')
-                      img.img-full(src='images/demo/shop-type-4.jpg')
-                  // /item-block
-                // /col-xs-3
-                .col-xs-3.col-sm-2
-                  .item-block.border-block-img.m-bottom-4
-                    a(href='#')
-                      img.img-full(src='images/demo/shop-type-5.jpg')
-                  // /item-block
-                // /col-xs-3
-                .col-xs-3.col-sm-2
-                  .item-block.border-block-img.m-bottom-4
-                    a(href='#')
-                      img.img-full(src='images/demo/shop-type-6.jpg')
-                  // /item-block
-                // /col-xs-3
-                .col-xs-3.col-sm-2
-                  .item-block.border-block-img.m-bottom-4
-                    a(href='#')
-                      img.img-full(src='images/demo/shop-type-7.jpg')
-                  // /item-block
-                // /col-xs-3
-                .col-xs-3.col-sm-2
-                  .item-block.border-block-img.m-bottom-4
-                    a(href='#')
-                      img.img-full(src='images/demo/shop-type-8.jpg')
-                  // /item-block
-                // /col-xs-3
-              // /row
+                each thisProduct in products
+                  .col-xs-3.col-sm-2
+                    if thisProduct.id == product.id
+                      .item-block.border-block-img.m-bottom-4.active
+                        a(href='/shop/product/#{thisProduct.ProductGmId}/#{thisProduct.id}')
+                          img.img-full(src='#{thisProduct.photos[0]}')
+                          // /item-block
+                    else if thisProduct.isPublish == 'false'
+                      .item-block.border-block-img.m-bottom-4.item-soldout
+                        .item-soldout-text
+                          h6
+                            | SOLD
+                            br
+                            | OUT
+                          a(href='/shop/product/#{thisProduct.ProductGmId}/#{thisProduct.id}')
+                          img.img-full(src='#{thisProduct.photos[0]}')
+                          // /item-block
+                    else
+                      .item-block.border-block-img.m-bottom-4
+                        a(href='/shop/product/#{thisProduct.ProductGmId}/#{thisProduct.id}')
+                          img.img-full(src='#{thisProduct.photos[0]}')
+                          // /item-block
+                  // /col-xs-3
+              // /row 
+
+              // 商品介紹，注意事項，品牌故事，服務項目
               .m-bottom-6
                 ul.nav.nav-pills.nav-pills-gray.nav-justified.m-bottom-4.letter-spacing-1.line-height-large
                   li.active
@@ -151,57 +143,53 @@ block body
                 .tab-content.m-bottom-10.font-size-slarge
                   #p-tab-1.tab-pane.fade.in.active
                     p.m-bottom-4
-                      | 注入濃醇的色調，收藏一杯清晨的氣味。
-                      br
-                      |                   來自荷蘭阿姆斯特丹的品牌，採用1200度高溫燒製，純手工著色與雙層釉料塗佈，兼具美觀與耐用，完美結合了工業與手工技術，極力打造出最高品質的瓷器。簡約的設計，為忙碌的早晨、慵懶的午後注入一股溫潤的手感。經典造型搭配明亮色彩及城市色調，與系列調色杯、盤、壺組合，更能營造獨特的餐桌風景，體驗單純濃烈的色調，沉澱屬於一人的空間。
+                      | #{product.description}
                     p.m-bottom-4
-                      | 品牌國家 - 荷蘭
+                      | 品牌國家 - #{product.country}
                       br
-                      |                   製造產地 - 荷蘭
+                      | 製造產地 - #{product.madeby}
                       br
-                      |                   產品尺寸 - 直徑 8cm、高 7cm、容量 225ml
+                      | 產品尺寸 - #{product.size}
                       br
-                      |                   產品材質 - 陶瓷
+                      | 產品材質 - #{product.spec}
+                      br
+                      | 產品顏色 - #{product.color}
+                      br
+                      | 產品貨號 - #{product.productNumber}
+                      br
+                      | 備註 - #{product.comment}
                   // /tab-pane
                   #p-tab-2.tab-pane.fade
                     p
-                      | Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.
+                      | 使用方法
+                      br
+                      | #{productGm.notice}
+                      br
+                      | 注意事項
+                      br  
+                      | #{productGm.usage}
                   // /tab-pane
                   #p-tab-3.tab-pane.fade
                     p
-                      | Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork. Williamsburg banh mi whatever gluten-free, carles pitchfork biodiesel fixie etsy retro mlkshk vice blog. Scenester cred you probably haven't heard of them, vinyl craft beer blog stumptown. Pitchfork sustainable tofu synth chambray yr.
+                      | #{productGm.explain}
                   // /tab-pane
                 // /tab-content
-                h4.m-bottom-4 服務項目
+                h4.m-bottom-4 服務項目 #{product.services}
                 .row.row-s.m-bottom-10
-                  .col-sm-6
-                    .border-block-2.text-center.p-10.m-bottom-2
-                      h4
-                        span.glyphicon.glyphicon-truck.m-right-2.font-size-xlarge
-                        | 快遞宅配
-                    // /border-block-2
-                  // /col-sm-6
-                  .col-sm-6
-                    .border-block-2.text-center.p-10.m-bottom-2
-                      h4
-                        span.glyphicon.glyphicon-store.m-right-2.font-size-xlarge
-                        | 超商取貨
-                    // /border-block-2
-                  // /col-sm-6
-                  .col-sm-6
-                    .border-block-2.text-center.p-10.m-bottom-2.disabled
-                      h4
-                        span.glyphicon.glyphicon-globe.m-right-2.font-size-xlarge
-                        | 國際運送
-                    // /border-block-2
-                  // /col-sm-6
-                  .col-sm-6
-                    .border-block-2.text-center.p-10.m-bottom-2
-                      h4
-                        span.glyphicon.glyphicon-gift2.m-right-2.font-size-xlarge
-                        | 禮品包裝
-                    // /border-block-2
-                  // /col-sm-6
+                  each service, index in ['快遞宅配', '超商取貨', '國際運送', '禮品包裝']
+                    .col-sm-6
+                      if services[index]
+                        .border-block-2.text-center.p-10.m-bottom-2
+                          h4
+                            span.glyphicon.glyphicon-truck.m-right-2.font-size-xlarge
+                            | #{service}
+                      else
+                        .border-block-2.text-center.p-10.m-bottom-2.disabled
+                          h4
+                            span.glyphicon.glyphicon-truck.m-right-2.font-size-xlarge
+                            | #{service}
+                      // /border-block-2
+                    // /col-sm-6
                 // /row
                 h4.m-bottom-4 分享至
                 ul.list-inline.list-social.m-bottom-10
@@ -227,6 +215,7 @@ block body
                         span.glyphicon.glyphicon-mail
                 // /list-social
               // /font-size-slarge
+
               #sticky-anchor
             // /col-md-6
           // /row
