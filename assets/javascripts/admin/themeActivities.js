@@ -2,7 +2,9 @@
 $(function  () {
   let $imageSectionContainer = $('ul.imageSection'),
       $imageSectionSample = $('#imageSectionSample'),
-      $imageSectionSample_inputs = $imageSectionSample.find('input');
+      $imageSectionSample_inputs = $imageSectionSample.find('input'),
+      $topicActiveForm = $('form#ActivitiesData'),
+      $topicTitle = $('#topicTitle');
 
   // modal
   let $uploadFileName = $('#uploadFileName'),
@@ -13,7 +15,7 @@ $(function  () {
       $inputUploadFile = $('#inputUploadFile'),
       $fileInputWidth = $('#fileInputWidth'),
       $fileInputHeight = $('#fileInputHeight'),
-      $fileInputResetButton = $('#modal-control-index-theme a[data-dismiss="fileinput"]'),
+      $fileInputResetButton = $('#fileInputResetButton'),
       $modalConfirmButton = $('#modalConfirmButton');
 
   // clear hidden input value when fileinput reset button click
@@ -71,7 +73,7 @@ $(function  () {
 
     /* initialize modal Section */
     let isOpenWindow = $imageContainer.find('input[data-content="openWindow"]').val();
-    if(isOpenWindow)
+    if(isOpenWindow == 'true')
       isOpenWindow = true;
     else
       isOpenWindow = false;
@@ -105,7 +107,7 @@ $(function  () {
   });
 
   /* modal confirm button - click event */
-  $('.modal-content').on('click', '.btn-green', function(e) {
+  $('.modal-content').on('click', '#modalConfirmButton', function(e) {
     e.preventDefault();
     let that = $(this),
         url = '',
@@ -129,7 +131,7 @@ $(function  () {
       path = fileInputPath;
       url = productUrl2Value;
     }
-
+    // check inputs isfilled
     if( !url.length || !path.length ) {
       alert('請上傳圖片，並填寫圖片連結');
       // keep modal exist
@@ -150,6 +152,27 @@ $(function  () {
       $modalConfirmButton.attr('data-dismiss','modal');
     }
 
+  });
+
+  $topicActiveForm.submit(function() {
+    let result = true;
+    let $requiredInputs = $topicActiveForm.find('input[type="hidden"]').not('[data-content="openWindow"]');
+    $requiredInputs.map(function() {
+      if( !$(this).val().length ) {
+        result = false;
+      }
+    });
+
+    if(!result) {
+      alert('資料未填寫完整');
+    }
+    else {
+      // write title into imageSection before submit
+      $('li.imageSection').map(function() {
+        $(this).find('.topicTitle').val( $topicTitle.val() );
+      });
+    }
+    return result;
   });
 
 });

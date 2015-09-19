@@ -10,7 +10,7 @@ module.exports = {
   },
 
   save: async(req, res) => {
-    let topicActives = req.body.actives;
+    let topicActives = req.body.activities;
     let result = await TopicActiveService.save(topicActives);
     // console.log(result);
     return res.redirect("/admin/topicActivities");
