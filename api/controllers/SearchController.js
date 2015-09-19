@@ -62,6 +62,8 @@ module.exports = /* SearchController */ {
         conditions.$or.push({ description: { $like: '%'+keyword+'%' }});
       }
 
+      console.log('abcde');
+
       let products = await db.Product.findAndCountAll({
         where: conditions,
         limit: limit

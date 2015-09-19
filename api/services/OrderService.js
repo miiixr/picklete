@@ -1,6 +1,7 @@
 import moment from 'moment';
 let sprintf = require("sprintf-js").sprintf;
 import dataRequest from 'request';
+import crypto from 'crypto';
 
 
 var Allpay = require('../../api/services/AllpayService');
@@ -104,18 +105,25 @@ module.exports = {
     try {
       var time = Date.now();
       let domain = sails.config.domain || process.env.domain || 'http://localhost:1337';
+      let orderNo;
+      if(sails.config.environment === 'development' || sails.config.environment === 'test'){
+        var randomString = crypto.randomBytes(32).toString('hex').substr(0, 8);
+        orderNo = sails.config.allpay.merchantID + randomString + order.id;
+      }else {
+        orderNo = sails.config.allpay.merchantID + order.id ;
+      }
       let data = {
         MerchantID: sails.config.allpay.merchantID,
-        MerchantTradeNo: order.id.replace(/-/g,''),
+        MerchantTradeNo: orderNo,
         MerchantTradeDate: sails.moment(time).format('YYYY/MM/DD HH:mm:ss'),
         PaymentType: 'aio',
         TotalAmount: order.paymentTotalAmount,
         TradeDesc: 'Allpay push order test',
         ItemName: '',
         // 這裏是要放當使用者付款後，allpay會post我們的api，通知使用者付款完成的，api spec詳見allpay文件29頁
-        ReturnURL: `${domain}/allpay/paid`,
+        ReturnURL: `${domain}allpay/paid`,
         ChoosePayment: 'ATM',
-        ClientBackURL: `${domain}/shop`
+        ClientBackURL: `${domain}shop`
         // ChooseSubPayment: '',
         // Remark: '',
       };

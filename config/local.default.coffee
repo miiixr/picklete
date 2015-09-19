@@ -1,5 +1,5 @@
 module.exports = {
-  createInitData: false
+  createInitData: true
   useAllPay: true
   environment: ''
   initData: ''

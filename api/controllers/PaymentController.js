@@ -48,7 +48,15 @@ let PaymentController = {
       console.log('req',req.body);
       let data = req.body;
       let checkMacValue = allpay.genCheckMacValue(data);
-      let find = data.MerchantTradeNo.replace(/(\w{8})(\w{4})(\w{4})(\w{4})(\w{12})/,"$1-$2-$3-$4-$5");
+      let find;
+      if(sails.config.environment === 'development' || sails.config.environment === 'test'){
+        find = data.MerchantTradeNo.replace(sails.config.allpay.merchantID,"");
+        find = find.replace(/\w{8}/,"");
+      }
+      else{
+        find = data.MerchantTradeNo.replace(sails.config.allpay.merchantID ,"");
+      }
+
       let order = await db.Order.findById(find);
 
       if(!order)
