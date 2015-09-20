@@ -2,11 +2,13 @@ module.exports = {
 
   index: async (req, res) => {
     try {
-      let activities = await SelectionActiveService.getModel();
+      let selectionActivities = await SelectionActiveService.getModel();
       let sliders = await db.Slider.findAll();
+      let topicActivities = await TopicActiveService.getModel();
 
       res.view("main/index", {
-        activities,
+        selectionActivities,
+        topicActivities,
         sliders
       });
 

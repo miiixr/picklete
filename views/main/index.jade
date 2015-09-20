@@ -41,7 +41,7 @@ block body
     // /page-header
     hr.hr-6.m-bottom-6
     | &#x9;
-    each activity in activities
+    each activity in selectionActivities
       .row.row-s
         each image in activity.Images
           case activity.Images.length
@@ -281,113 +281,68 @@ block body
     //-         |  more
     //-     // /m-bottom-8
     //-   // /col-md-4
+
+
     // /row THEME OF THE MONTH
-    //- hr.hr-6.m-bottom-6
-    //- | &#x9;
-    //- .page-header.text-center.text-uppercase
-    //-   h3
-    //-     | theme of the month
-    //-     br
-    //-     | &#x672C;&#x6708;&#x4E3B;&#x984C; &#x8569;&#x6F3E;&#x5348;&#x8336;&#x6642;&#x5149;
-    //- // /page-header
-    //- .row.m-bottom-4
-    //-   .col-sm-4
-    //-     .row.row-m
-    //-       .col-xs-12
-    //-         a.link-border.m-bottom-4(href='#')
-    //-           img.img-full(src='images/demo/shop-item-1-2.jpg')
-    //-       // /col-xs-12
-    //-       .col-xs-6
-    //-         a.link-border.m-bottom-4(href='#')
-    //-           img.img-full(src='images/demo/shop-item-16-1.jpg')
-    //-       // /col-xs-6
-    //-       .col-xs-6
-    //-         a.link-border.m-bottom-4(href='#')
-    //-           img.img-full(src='images/demo/shop-item-17-1.jpg')
-    //-       // /col-xs-6
-    //-     // /row
-    //-   // /col-sm-4
-    //-   .col-sm-4
-    //-     .row.row-m
-    //-       .col-xs-6
-    //-         a.link-border.m-bottom-4(href='#')
-    //-           img.img-full(src='images/demo/shop-item-15-1.jpg')
-    //-       // /col-xs-6
-    //-       .col-xs-6
-    //-         a.link-border.m-bottom-4(href='#')
-    //-           img.img-full(src='images/demo/shop-item-14-1.jpg')
-    //-       // /col-xs-6
-    //-       .col-xs-12
-    //-         a.link-border.m-bottom-4(href='#')
-    //-           img.img-full(src='images/demo/shop-item-6-2.jpg')
-    //-       // /col-xs-12
-    //-     // /row
-    //-   // /col-sm-4
-    //-   .col-sm-4
-    //-     .row.row-m
-    //-       .col-xs-12
-    //-         a.link-border.m-bottom-4(href='#')
-    //-           img.img-full(src='images/demo/shop-item-8-1.jpg')
-    //-       // /col-xs-12
-    //-       .col-xs-6
-    //-         a.link-border.m-bottom-4(href='#')
-    //-           img.img-full(src='images/demo/shop-item-9-1.jpg')
-    //-       // /col-xs-6
-    //-       .col-xs-6
-    //-         a.link-border.m-bottom-4(href='#')
-    //-           img.img-full(src='images/demo/shop-item-10-1.jpg')
-    //-       // /col-xs-6
-    //-     // /row
-    //-   // /col-sm-4
-    //- // /row
-    //- .row.m-bottom-4
-    //-   .col-sm-4
-    //-     .row.row-m
-    //-       .col-xs-12
-    //-         a.link-border.m-bottom-4(href='#')
-    //-           img.img-full(src='images/demo/shop-item-23-1.jpg')
-    //-       // /col-xs-12
-    //-       .col-xs-6
-    //-         a.link-border.m-bottom-4(href='#')
-    //-           img.img-full(src='images/demo/shop-item-23-2.jpg')
-    //-       // /col-xs-6
-    //-       .col-xs-6
-    //-         a.link-border.m-bottom-4(href='#')
-    //-           img.img-full(src='images/demo/shop-item-23-3.jpg')
-    //-       // /col-xs-6
-    //-     // /row
-    //-   // /col-sm-4
-    //-   .col-sm-4
-    //-     .row.row-m
-    //-       .col-xs-6
-    //-         a.link-border.m-bottom-4(href='#')
-    //-           img.img-full(src='images/demo/shop-item-22-2.jpg')
-    //-       // /col-xs-6
-    //-       .col-xs-6
-    //-         a.link-border.m-bottom-4(href='#')
-    //-           img.img-full(src='images/demo/shop-item-22-3.jpg')
-    //-       // /col-xs-6
-    //-       .col-xs-12
-    //-         a.link-border.m-bottom-4(href='#')
-    //-           img.img-full(src='images/demo/shop-item-22-1.jpg')
-    //-       // /col-xs-12
-    //-     // /row
-    //-   // /col-sm-4
-    //-   .col-sm-4
-    //-     .row.row-m
-    //-       .col-xs-12
-    //-         a.link-border.m-bottom-4(href='#')
-    //-           img.img-full(src='images/demo/shop-item-21-1.jpg')
-    //-       // /col-xs-12
-    //-       .col-xs-6
-    //-         a.link-border.m-bottom-4(href='#')
-    //-           img.img-full(src='images/demo/shop-item-21-2.jpg')
-    //-       // /col-xs-6
-    //-       .col-xs-6
-    //-         a.link-border.m-bottom-4(href='#')
-    //-           img.img-full(src='images/demo/shop-item-21-3.jpg')
-    //-       // /col-xs-6
-    //-     // /row
-    //-   // /col-sm-4
-    // /row
+    - if (topicActivities && topicActivities[0])
+      hr.hr-6.m-bottom-6
+      | &#x9;
+      .page-header.text-center.text-uppercase
+        h3
+          | theme of the month
+          br
+          =topicActivities[0].dataValues.title
+      // /page-header
+      each activity, index in topicActivities
+        - var activity = activity.dataValues;
+        .row.m-bottom-4
+          .col-sm-4
+            .row.row-m
+              .col-xs-12
+                a.link-border.m-bottom-4(href='#{activity.ImageA.url}')
+                  img.img-full(src='#{activity.ImageA.path}')
+              // /col-xs-12
+              .col-xs-6
+                a.link-border.m-bottom-4(href='#{activity.ImageA1.url}')
+                  img.img-full(src='#{activity.ImageA1.path}')
+              // /col-xs-6
+              .col-xs-6
+                a.link-border.m-bottom-4(href='#{activity.ImageA2.url}')
+                  img.img-full(src='#{activity.ImageA2.path}')
+              // /col-xs-6
+            // /row
+          // /col-sm-4
+          .col-sm-4
+            .row.row-m
+              .col-xs-6
+                a.link-border.m-bottom-4(href='#{activity.ImageB.url}')
+                  img.img-full(src='#{activity.ImageB.path}')
+              // /col-xs-6
+              .col-xs-6
+                a.link-border.m-bottom-4(href='#{activity.ImageB1.url}')
+                  img.img-full(src='#{activity.ImageB1.path}')
+              // /col-xs-6
+              .col-xs-12
+                a.link-border.m-bottom-4(href='#{activity.ImageB2.url}')
+                  img.img-full(src='#{activity.ImageB2.path}')
+              // /col-xs-12
+            // /row
+          // /col-sm-4
+          .col-sm-4
+            .row.row-m
+              .col-xs-12
+                a.link-border.m-bottom-4(href='#{activity.ImageC.url}')
+                  img.img-full(src='#{activity.ImageC.path}')
+              // /col-xs-12
+              .col-xs-6
+                a.link-border.m-bottom-4(href='#{activity.ImageC.url}')
+                  img.img-full(src='#{activity.ImageC1.path}')
+              // /col-xs-6
+              .col-xs-6
+                a.link-border.m-bottom-4(href='#{activity.ImageC2.url}')
+                  img.img-full(src='#{activity.ImageC2.path}')
+              // /col-xs-6
+            // /row
+          // /col-sm-4
+      // /row
   // /container

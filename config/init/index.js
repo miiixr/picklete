@@ -119,21 +119,21 @@ module.exports = {
     var createNewBuyer2 = await db.User.create(newBuyer2);
 
     var brandExample = [{
-      name: '好棒棒品牌',
-      avatar: 'http://goo.gl/ksTMyn',
+      name: '星球精選品牌',
+      avatar: 'https://cldup.com/sYD4KQMADm.jpg',
       type: 'PRIME_GOOD',
-      desc: 'Steve Aoki 最棒惹',
-      banner: 'http://goo.gl/tl4513',
+      desc: '超級精選，超值精選',
+      banner: 'https://cldup.com/u4aO1VQKny.jpg',
       photos: [
         'http://goo.gl/IRT1EM',
         'http://goo.gl/p9Y2BF'
       ]
     },{
-      name: 'Sydney-精選',
-      avatar: 'https://goo.gl/XbP9t3',
+      name: '決戰星球牌',
+      avatar: 'https://cldup.com/fwzBMT3VZl.jpg',
       type: 'PRIME_GOOD',
-      desc: '',
-      banner: 'http://goo.gl/tl4513',
+      desc: '這是屬於大家的榮耀，衝吧！',
+      banner: 'https://cldup.com/u4aO1VQKny.jpg',
       photos: [
       'http://goo.gl/IRT1EM',
       'http://goo.gl/p9Y2BF'
@@ -145,20 +145,20 @@ module.exports = {
 
     var brandAgent = [{
       name: '好代理品牌',
-      avatar: 'http://goo.gl/ksTMyn',
+      avatar: 'https://cldup.com/Vc-cKfhlBJ.jpg',
       type: 'AGENT',
-      desc: 'Steve Aoki 最喜歡代理惹',
-      banner: 'http://goo.gl/tl4513',
+      desc: '代理代理，好代理，我最喜歡大大的代理了',
+      banner: 'https://cldup.com/u4aO1VQKny.jpg',
       photos: [
         'http://goo.gl/IRT1EM',
         'http://goo.gl/p9Y2BF'
       ]
     },{
-      name: 'Sydney-代理',
-      avatar: 'https://goo.gl/XbP9t3',
+      name: 'Sydney',
+      avatar: 'https://cldup.com/9lKpUDaf23.jpg',
       type: 'AGENT',
-      desc: '',
-      banner: 'http://goo.gl/tl4513',
+      desc: '雪梨最棒的品牌，全世界唯一選擇',
+      banner: 'https://cldup.com/u4aO1VQKny.jpg',
       photos: [
       'http://goo.gl/IRT1EM',
       'http://goo.gl/p9Y2BF'
@@ -489,6 +489,14 @@ module.exports = {
       },{
         path: 'https://cldup.com/i1WZixmSMF.jpg',
         url: 'http://fakeimg.pl/360x240'
+      },
+      // image 7, 8 for top active
+      {
+        path: 'https://cldup.com/s3EHE6f2MP.jpg',
+        url: 'http://fakeimg.pl/500x500'
+      },{
+        path: 'https://cldup.com/ZUs-Ng2nVv.jpg',
+        url: 'http://fakeimg.pl/500x500'
       }
     ]
     let createdImages = await* images.map((image) => db.Image.create(image));
@@ -516,27 +524,27 @@ module.exports = {
 
     // TopicActive
     let topicActives = [{
-      title: 'title1',
-      ImageAId: createdImages[0].id,
-      ImageA1Id: createdImages[1].id,
-      ImageA2Id: createdImages[2].id,
-      ImageBId: createdImages[0].id,
-      ImageB1Id: createdImages[1].id,
-      ImageB2Id: createdImages[2].id,
-      ImageCId: createdImages[0].id,
-      ImageC1Id: createdImages[1].id,
-      ImageC2Id: createdImages[2].id
+      title: '本月主題活動',
+      ImageAId: createdImages[7].id,
+      ImageA1Id: createdImages[8].id,
+      ImageA2Id: createdImages[7].id,
+      ImageBId: createdImages[8].id,
+      ImageB1Id: createdImages[7].id,
+      ImageB2Id: createdImages[8].id,
+      ImageCId: createdImages[7].id,
+      ImageC1Id: createdImages[8].id,
+      ImageC2Id: createdImages[7].id
     }, {
-      title: 'title2',
-      ImageAId: createdImages[3].id,
-      ImageA1Id: createdImages[4].id,
-      ImageA2Id: createdImages[5].id,
-      ImageBId: createdImages[3].id,
-      ImageB1Id: createdImages[4].id,
-      ImageB2Id: createdImages[5].id,
-      ImageCId: createdImages[3].id,
-      ImageC1Id: createdImages[4].id,
-      ImageC2Id: createdImages[5].id
+      title: '本月主題活動 2',
+      ImageAId: createdImages[8].id,
+      ImageA1Id: createdImages[7].id,
+      ImageA2Id: createdImages[8].id,
+      ImageBId: createdImages[7].id,
+      ImageB1Id: createdImages[8].id,
+      ImageB2Id: createdImages[7].id,
+      ImageCId: createdImages[8].id,
+      ImageC1Id: createdImages[7].id,
+      ImageC2Id: createdImages[8].id
     }]
     await db.TopicActive.bulkCreate(topicActives);
     // End TopicActive
