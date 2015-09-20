@@ -489,6 +489,14 @@ module.exports = {
       },{
         path: 'https://cldup.com/i1WZixmSMF.jpg',
         url: 'http://fakeimg.pl/360x240'
+      },
+      // image 7, 8 for top active
+      {
+        path: 'https://cldup.com/s3EHE6f2MP.jpg',
+        url: 'http://fakeimg.pl/500x500'
+      },{
+        path: 'https://cldup.com/ZUs-Ng2nVv.jpg',
+        url: 'http://fakeimg.pl/500x500'
       }
     ]
     let createdImages = await* images.map((image) => db.Image.create(image));
@@ -516,27 +524,27 @@ module.exports = {
 
     // TopicActive
     let topicActives = [{
-      title: 'title1',
-      ImageAId: createdImages[0].id,
-      ImageA1Id: createdImages[1].id,
-      ImageA2Id: createdImages[2].id,
-      ImageBId: createdImages[0].id,
-      ImageB1Id: createdImages[1].id,
-      ImageB2Id: createdImages[2].id,
-      ImageCId: createdImages[0].id,
-      ImageC1Id: createdImages[1].id,
-      ImageC2Id: createdImages[2].id
+      title: '本月主題活動',
+      ImageAId: createdImages[7].id,
+      ImageA1Id: createdImages[8].id,
+      ImageA2Id: createdImages[7].id,
+      ImageBId: createdImages[8].id,
+      ImageB1Id: createdImages[7].id,
+      ImageB2Id: createdImages[8].id,
+      ImageCId: createdImages[7].id,
+      ImageC1Id: createdImages[8].id,
+      ImageC2Id: createdImages[7].id
     }, {
-      title: 'title2',
-      ImageAId: createdImages[3].id,
-      ImageA1Id: createdImages[4].id,
-      ImageA2Id: createdImages[5].id,
-      ImageBId: createdImages[3].id,
-      ImageB1Id: createdImages[4].id,
-      ImageB2Id: createdImages[5].id,
-      ImageCId: createdImages[3].id,
-      ImageC1Id: createdImages[4].id,
-      ImageC2Id: createdImages[5].id
+      title: '本月主題活動 2',
+      ImageAId: createdImages[8].id,
+      ImageA1Id: createdImages[7].id,
+      ImageA2Id: createdImages[8].id,
+      ImageBId: createdImages[7].id,
+      ImageB1Id: createdImages[8].id,
+      ImageB2Id: createdImages[7].id,
+      ImageCId: createdImages[8].id,
+      ImageC1Id: createdImages[7].id,
+      ImageC2Id: createdImages[8].id
     }]
     await db.TopicActive.bulkCreate(topicActives);
     // End TopicActive
