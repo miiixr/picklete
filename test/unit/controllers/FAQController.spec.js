@@ -7,24 +7,29 @@ describe("about FAQ" , () => {
 
 	before(async (done) => {
 
-		sinon.stub(UserService, 'getLoginState', (req) => {
-      return true;
-    });
-		
-		let newFAQType = {
-			name: "測試類別"
-		};
-		testFAQType = await db.FAQType.create(newFAQType);
-		
-		let newFAQ = {
-			title: "我該怎測試",
-			answer: "這樣做測試",
-			FAQTypeId: testFAQType.id
-		};
-		testFAQ = await db.FAQ.create(newFAQ);
+		try {
+			sinon.stub(UserService, 'getLoginState', (req) => {
+				return true;
+			});
 
-		allFAQType = await db.FAQType.findAll();
-		done();
+			let newFAQType = {
+				name: "測試類別"
+			};
+			testFAQType = await db.FAQType.create(newFAQType);
+
+			let newFAQ = {
+				title: "我該怎測試",
+				answer: "這樣做測試",
+				FAQTypeId: testFAQType.id
+			};
+			testFAQ = await db.FAQ.create(newFAQ);
+
+			allFAQType = await db.FAQType.findAll();
+			done();
+
+		} catch (e) {
+			done(e);
+		}
 	});
 
 	after((done) => {
