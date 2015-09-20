@@ -67,6 +67,8 @@ $(function  () {
       isOpenWindow = false;
     $openWindow.prop('checked', isOpenWindow);
     $fileInputPath.val(imagePath);
+    // reset fileinput
+    $fileInputResetButton.click();
     // $inputUploadFile.val(imagePath);
 
     /* set image width & height */
