@@ -17,4 +17,4 @@ module.exports = (req, res, next) ->
   if referer['1'] is 'admin'
     return res.redirect('/admin/login')
   else
-    return res.redirect('/login')
+    return res.redirect('/')

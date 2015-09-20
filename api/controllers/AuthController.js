@@ -30,7 +30,7 @@ AuthController = {
     if (referencePath[1] === 'admin') {
       return res.redirect('/admin/login');
     }
-    return res.redirect('/login');
+    return res.redirect('/');
 
   },
   register: async (req, res) => {
