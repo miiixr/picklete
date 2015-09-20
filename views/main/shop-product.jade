@@ -1,0 +1,272 @@
+extends ../_layout_head
+
+block body
+    #cbp-so-scroller.cbp-so-scroller
+      section.cbp-so-section
+        .container-fluid
+          script.
+            var s= !{JSON.stringify(productGm)}
+          .row
+            #sticky.col-md-6.p-left-0.p-right-0.carousel-shop-product-wrapper
+              //
+                shop-product-carousel
+                ==================================================
+              #carousel-shop-product.carousel(data-ride='carousel')
+                //- ol.carousel-indicators.carousel-indicators-v
+                //-   li.active(data-target='#carousel-shop-product', data-slide-to='0')
+                //-   li(data-target='#carousel-shop-product', data-slide-to='1')
+                //-   // /carousel-indicators
+                //- .carousel-inner.carousel-inner-v(role='listbox')
+                //-   .item.active
+                //-     img.img-full(src='images/demo/JC1121-set-My-Mug-blue-2.jpg', alt='First slide image', href='#carousel-shop-product', data-slide='next')
+                //-   // /item
+                //-   .item
+                //-     img.img-full(src='images/demo/JC1121-set-My-Mug-blue-22.jpg', alt='Second slide image', href='#carousel-shop-product', data-slide='next')
+                //-   // /item
+                
+                ol.carousel-indicators.carousel-indicators-v.ac.active
+                  each photo, index in coverPhotos
+                    if index == 0
+                      li.active(data-target='#carousel-shop-product', data-slide-to=index)
+                    else
+                      li(data-target='#carousel-shop-product', data-slide-to=index)
+                  // /carousel-indicators
+                .carousel-inner.carousel-inner-v(role='listbox')
+                  each photo, index in coverPhotos
+                    if index == 0
+                      .item.active
+                        img.img-full(src='#{photo}', alt='Second slide image', href='#carousel-shop-product', data-slide='next')
+                    else
+                      .item
+                        img.img-full(src='#{photo}', alt='Second slide image', href='#carousel-shop-product', data-slide='next')
+                      
+                  // /item
+                  
+
+                  
+                // /carousel-inner
+              // /carousel-shop-product
+            // /col-md-6
+          // /row
+        // /container-fluid
+        .container
+          .row.m-top-6.m-bottom-10
+            .col-md-6.col-md-offset-6.desktop-p-left-82.min-height-1000
+               
+              // breadcrumb
+              ol.breadcrumb.p-left-0.m-bottom-8
+                li
+                  a(href='/shop/product/') 全部商品
+                li
+                  a(href='/shop/product/?dptId=#{productGm.Dpts.id}') #{productGm.Dpts.name} 
+                li
+                  a(href='/shop/product/?dptId=#{productGm.Dpts.id}&subdptId=#{productGm.DptSubs.id}') #{productGm.DptSubs.name} 
+                - var name = product.name ? "(" + product.name + ")" : "";
+                li.active #{productGm.name} #{name}
+              // /breadcrumb
+
+              // 品牌名稱，商品名稱，商品價格
+              .row.m-bottom-4
+                .col-sm-10.col-xs-9.m-bottom-4
+                  h5.text-muted.letter-spacing-3.text-roboto.m-bottom-2
+                    a(href='brands.html') #{productGm.name}
+                  h2.text-black.m-bottom-6.text-roboto #{productGm.name} #{name}
+                  h3.text-black.m-bottom-4 $ #{product.price}
+                // /col-sm-10
+                .col-sm-2.col-xs-3
+                  //
+                    item-label-like
+                    ==================================================
+                  a(href='#')
+                    span.label.label-like.pull-right
+                      span.glyphicon.glyphicon-heart
+                      br
+                      | 123
+                      span.label-like-text 已加入收藏
+                    // /label-like
+                // /col-sm-2
+              // /row 
+
+              // 商品數量
+              .row.m-bottom-6
+                .col-sm-4
+                  .input-group.input-group-count.input-group-lg.m-bottom-4.max-width-150
+                    span.input-group-btn
+                      button.btn.btn-default.btn-number.p-left-2.p-right-2(type='button', disabled='disabled', data-type='minus', data-field='quant[1]')
+                        span.glyphicon.glyphicon-minus
+                    // /input-group-btn
+                    input.form-control.input-number.text-center.font-size-large(type='text', name='quant[1]', value='1', min='1', max=' //')
+                    span.input-group-btn
+                      button.btn.btn-default.btn-number.p-left-2.p-right-2(type='button', data-type='plus', data-field='quant[1]')
+                        span.glyphicon.glyphicon-plus
+                    // /input-group-btn
+                  // /input-group
+                // /col-sm-4
+                .col-sm-8
+                  a.btn.btn-black.border-radius-circle.btn-block.btn-lg.add-to-cart(href='#') 加入購物車
+                // /col-sm-8
+              // /row
+              
+              // 其他商品 
+              .row.row-m.m-bottom-6
+                each thisProduct in products
+                  .col-xs-3.col-sm-2
+                    if thisProduct.id == product.id
+                      .item-block.border-block-img.m-bottom-4.active
+                        a(href='/shop/product/#{thisProduct.ProductGmId}/#{thisProduct.id}')
+                          img.img-full(src='#{thisProduct.photos[0]}')
+                          // /item-block
+                    else if thisProduct.isPublish == 'false'
+                      .item-block.border-block-img.m-bottom-4.item-soldout
+                        .item-soldout-text
+                          h6
+                            | SOLD
+                            br
+                            | OUT
+                          a(href='/shop/product/#{thisProduct.ProductGmId}/#{thisProduct.id}')
+                          img.img-full(src='#{thisProduct.photos[0]}')
+                          // /item-block
+                    else
+                      .item-block.border-block-img.m-bottom-4
+                        a(href='/shop/product/#{thisProduct.ProductGmId}/#{thisProduct.id}')
+                          img.img-full(src='#{thisProduct.photos[0]}')
+                          // /item-block
+                  // /col-xs-3
+              // /row 
+
+              // 商品介紹，注意事項，品牌故事，服務項目
+              .m-bottom-6
+                ul.nav.nav-pills.nav-pills-gray.nav-justified.m-bottom-4.letter-spacing-1.line-height-large
+                  li.active
+                    a#home-tab(href='#p-tab-1', role='tab', data-toggle='tab', aria-controls='home', aria-expanded='true') 商品介紹
+                  li
+                    a(href='#p-tab-2', role='tab', data-toggle='tab') 注意事項
+                  li
+                    a(href='#p-tab-3', role='tab', data-toggle='tab') 品牌故事
+                .tab-content.m-bottom-10.font-size-slarge
+                  #p-tab-1.tab-pane.fade.in.active
+                    p.m-bottom-4
+                      | #{product.description}
+                    p.m-bottom-4
+                      | 品牌國家 - #{product.country}
+                      br
+                      | 製造產地 - #{product.madeby}
+                      br
+                      | 產品尺寸 - #{product.size}
+                      br
+                      | 產品材質 - #{product.spec}
+                      br
+                      | 產品顏色 - #{product.color}
+                      br
+                      | 產品貨號 - #{product.productNumber}
+                      br
+                      | 備註 - #{product.comment}
+                  // /tab-pane
+                  #p-tab-2.tab-pane.fade
+                    p
+                      | 使用方法
+                      br
+                      | #{productGm.notice}
+                      br
+                      | 注意事項
+                      br  
+                      | #{productGm.usage}
+                  // /tab-pane
+                  #p-tab-3.tab-pane.fade
+                    p
+                      | #{productGm.explain}
+                  // /tab-pane
+                // /tab-content
+                h4.m-bottom-4 服務項目 #{product.services}
+                .row.row-s.m-bottom-10
+                  each service, index in ['快遞宅配', '超商取貨', '國際運送', '禮品包裝']
+                    .col-sm-6
+                      if services[index]
+                        .border-block-2.text-center.p-10.m-bottom-2
+                          h4
+                            span.glyphicon.glyphicon-truck.m-right-2.font-size-xlarge
+                            | #{service}
+                      else
+                        .border-block-2.text-center.p-10.m-bottom-2.disabled
+                          h4
+                            span.glyphicon.glyphicon-truck.m-right-2.font-size-xlarge
+                            | #{service}
+                      // /border-block-2
+                    // /col-sm-6
+                // /row
+                h4.m-bottom-4 分享至
+                ul.list-inline.list-social.m-bottom-10
+                  li
+                    a(href='#', target='_blank')
+                      span.label.label-social.label-fb
+                        span.glyphicon.glyphicon-fb
+                  li
+                    a(href='#', target='_blank')
+                      span.label.label-social.label-twitter
+                        span.glyphicon.glyphicon-twitter
+                  li
+                    a(href='#', target='_blank')
+                      span.label.label-social.label-pinterest
+                        span.glyphicon.glyphicon-pinterest
+                  li
+                    a(href='#', target='_blank')
+                      span.label.label-social.label-google
+                        span.glyphicon.glyphicon-google
+                  li
+                    a(href='#', target='_blank')
+                      span.label.label-social.label-mail
+                        span.glyphicon.glyphicon-mail
+                // /list-social
+              // /font-size-slarge
+
+              #sticky-anchor
+            // /col-md-6
+          // /row
+        // /container
+      // /cbp-so-section
+      section.cbp-so-section.p-top-10.p-bottom-10
+        .cbp-so-side.cbp-so-side-bottom
+          .container
+            h4.m-bottom-6.m-top-10 你可能會喜歡
+            .row.m-bottom-10
+              .col-xs-4.col-sm-4.col-md-2
+                .item-block.m-bottom-4
+                  a(href='/shop/product')
+                    img.img-full(src='images/demo/shop-item-24-1.jpg')
+                // /item-block
+              // /col-xs-4
+              .col-xs-4.col-sm-4.col-md-2
+                .item-block.m-bottom-4
+                  a(href='/shop/product')
+                    img.img-full(src='images/demo/shop-item-23-1.jpg')
+                // /item-block
+              // /col-xs-4
+              .col-xs-4.col-sm-4.col-md-2
+                .item-block.m-bottom-4
+                  a(href='/shop/product')
+                    img.img-full(src='images/demo/shop-item-22-1.jpg')
+                // /item-block
+              // /col-xs-4
+              .col-xs-4.col-sm-4.col-md-2
+                .item-block.m-bottom-4
+                  a(href='/shop/product')
+                    img.img-full(src='images/demo/shop-item-21-1.jpg')
+                // /item-block
+              // /col-xs-4
+              .col-xs-4.col-sm-4.col-md-2
+                .item-block.m-bottom-4
+                  a(href='/shop/product')
+                    img.img-full(src='images/demo/shop-item-20-1.jpg')
+                // /item-block
+              // /col-xs-4
+              .col-xs-4.col-sm-4.col-md-2
+                .item-block.m-bottom-4
+                  a(href='/shop/product')
+                    img.img-full(src='images/demo/shop-item-19-1.jpg')
+                // /item-block
+              // /col-xs-4
+            // /row
+          // /container
+        // /cbp-so-side
+      // /cbp-so-section
+    // /cbp-so-scroller

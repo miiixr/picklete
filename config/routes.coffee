@@ -141,9 +141,11 @@ module.exports.routes = {
   'get /about' : 'AboutController.show'
 
   'get /shop/products' : 'ShopController.list'
+
   'get /shop/products/:productGmid/:productId' : 'ShopController.show'
 
   'get /brands/:id' : 'BrandController.show'
+
   'get /user/cart' : view: 'main/cart'
   'get /user/cart-step-2' : view: 'main/cart-step-2'
   'get /user/cart-done' : view: 'main/cart-done'

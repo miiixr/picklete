@@ -49,14 +49,9 @@ let FAQController = {
         FAQTypeId: req.body.typeId
       }
 
-      return db.FAQ.create(FAQData)
-      .then(function(newDptSub) {
-        return res.redirect("/admin/FAQ");
-      })
-      .catch(function(error) {
-        return res.serverError(error);
-      });
+      let FAQAdd = db.FAQ.create(FAQData);
       
+      return res.redirect("/admin/FAQ");
     } catch(e){
       console.log(e);
     }
@@ -110,6 +105,7 @@ let FAQController = {
         FAQService.create(name);
       } catch(e){
         console.log(e);
+        return res.serverError(e);
       }
 
       try{
@@ -119,6 +115,7 @@ let FAQController = {
         FAQService.update(FAQType,FAQTypeId);
       } catch(e){
         console.log(e);
+        return res.serverError(e);
       }
       
       return res.redirect("/admin/FAQ");
