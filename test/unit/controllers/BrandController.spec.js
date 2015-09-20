@@ -13,15 +13,14 @@ describe('Brand API - 品牌', function() {
     });
 
     done();
-    // request(sails.hooks.http.app)
-    // .post('/auth/local')
-    // .send({ identifier: 'admin', password: 'admin' })
-    // .expect(302)
-    // .end(function (err, res) {
-    //   cookie = res.headers['set-cookie'];
-    //   return done();
-    // });
   });
+
+  after((done) => {
+    // end this simulated login
+    UserService.getLoginState.restore();
+    done();
+  });
+
 
   it('should return new brand object', function(done) {
     // var avatar = path.join(process.cwd(), './test/unit/resources/avatar.jpg');
