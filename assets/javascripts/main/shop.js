@@ -1,4 +1,7 @@
 (function ($) {
+
+  var FAV_KEY = "picklete_fav";
+
   $('.dpt').on("click", function(e){
     var e = $(event.currentTarget);
     //正式上線後要依據大館別固定數量更改
@@ -19,19 +22,45 @@
 
     // save item to favorite
     var target = e.currentTarget;
-    var FAV_KEY = "picklete_fav";
-    var favs;
+    
+    var favs = Cookies.getJSON(FAV_KEY) || {};
+    var productId = $(target).attr("data-productId");
 
     if ($(target).hasClass("active")) {
       $(target).removeClass("active");
-      favs = Cookies.get(FAV_KEY);
-
+      
+      if (favs[productId]) {
+        favs[productId] = null;
+        delete favs[productId];
+      }
     } else {
       $(target).addClass("active");
-      Cookies.set(FAV_KEY, , { expires: 90 });
+      favs[productId] = true;
     }
+
+    Cookies.set(FAV_KEY, favs, { expires: 90 });
       
   });
+
+  var travelFavorite = function () {
+
+    var favs = Cookies.getJSON(FAV_KEY) || {};
+    var target = $(".label-like");
+    if (target) {
+      var productId = target.attr("data-productId");
+      if (favs[productId])
+        target.addClass("active");
+    }
+
+    for (prop in favs) {
+      var target = $(".item-like[data-productId=" + prop + "]");
+      if (target)
+        target.addClass("active");
+    }
+
+  };
+
+  travelFavorite();
 
   // add to cart
   $(".container").on("click", ".add-to-cart", function (e) {
@@ -49,7 +78,7 @@
     var price = $('#price').text();
     var photos = JSON.parse($(this).attr("data-photos"));
     var brand = $(this).attr("data-brand");
-    var name = $(this).attr("data-name");
+    var name = $(this).attr("data-name") || "";
 
 
 
@@ -58,7 +87,7 @@
     console.log('=== quantity ===', quantity);
     console.log('=== price ===', price);
 
-    addProduct = {
+    var addProduct = {
       id: productId,
       quantity: quantity,
       price: price,
