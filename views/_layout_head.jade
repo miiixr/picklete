@@ -124,7 +124,7 @@ html
                   span.text-en LOGIN
                   |             
                   span.text-active 登入
-            - if (user)
+            - if (true || user)
               |         
               li.dropdown.icon-link
                 a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
@@ -134,7 +134,7 @@ html
                   dropdown-cart
                   ==================================================
                 ul.dropdown-menu.dropdown-menu-right.dropdown-cart
-                  .dropdown-cart-content
+                  .dropdown-cart-content#dropdown-cart-content
                     li
                       .row
                         .col-xs-4

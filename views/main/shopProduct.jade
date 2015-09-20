@@ -104,7 +104,9 @@ block body
                   // /input-group
                 // /col-sm-4
                 .col-sm-8
-                  a.btn.btn-black.border-radius-circle.btn-block.btn-lg.add-to-cart(data-productId=product.id) 加入購物車
+                  a.btn.btn-black.border-radius-circle.btn-block.btn-lg.add-to-cart(
+                  data-productId=product.id, data-photos=product.photos, 
+                  data-brand=productGm.name, data-name=product.name) 加入購物車 
                 // /col-sm-8
               // /row
               
