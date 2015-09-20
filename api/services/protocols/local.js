@@ -54,10 +54,10 @@ exports.register = async function(req, res, next) {
       await user.setLikes(newUserParams.userLikes);
 
     var token = crypto.randomBytes(48).toString('base64');
-    let passport = db.Passport.create({
+    let passport = await db.Passport.create({
       protocol: 'local',
       password: password,
-      user: user.id,
+      UserId: user.id,
       accessToken: token
     });
 
