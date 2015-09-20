@@ -24,15 +24,7 @@ $(function  () {
   });
 
   // imageSection sortable, reset weight when imageSection drop
-  $("ul").sortable({
-    onDrop: function($item, container, _super) {
-      /* sort imageSection weight */
-      $('li.imageSection').map(function(index) {
-        $(this).find('.weight').val(index);
-      });
-      _super($item, container);
-    }
-  });
+  $("ul").sortable({});
 
   $('.row').on('click','.delete-link',function(e){
     e.preventDefault();
@@ -43,8 +35,6 @@ $(function  () {
       }
     });
   });
-
-  var $weightCount = 1;
 
   /* add new imageSection */
   $('body').on('click','.btn-add',function(e) {
@@ -58,11 +48,9 @@ $(function  () {
     });
     // append new imageSection
     $imageSectionContainer.append( $imageSectionSample.html() );
-    // $('li.imageSection').last().find('input').attr('value', $weightCount);
-    // $weightCount = $weightCount + 1;
   });
 
-  let weight, imageContainerId, $imageContainer;
+  let imageContainerId, $imageContainer;
 
   /* image container + icon click event */
   $(document).on("click", ".fileinput-square a", function (e) {
@@ -79,6 +67,8 @@ $(function  () {
       isOpenWindow = false;
     $openWindow.prop('checked', isOpenWindow);
     $fileInputPath.val(imagePath);
+    // reset fileinput
+    $fileInputResetButton.click();
     // $inputUploadFile.val(imagePath);
 
     /* set image width & height */
@@ -160,7 +150,12 @@ $(function  () {
 
   $topicActiveForm.submit(function() {
     let result = true;
-    let $requiredInputs = $topicActiveForm.find('input[type="hidden"]').not('[data-content="openWindow"]');
+    // sort imageSection weight
+    $('li.imageSection').map(function(index) {
+      $(this).find('.weight').val(index);
+    });
+    // check requiredInputs filled
+    let $requiredInputs = $topicActiveForm.find('input[type="hidden"]').not('[data-content="openWindow"]').not('.topicTitle');
     $requiredInputs.map(function() {
       if( !$(this).val().length ) {
         result = false;

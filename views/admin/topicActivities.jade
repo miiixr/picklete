@@ -16,7 +16,7 @@ block body
             .row
               .col-sm-6
                 span.glyphicon.glyphicon-menu.font-size-xlarge.m-top-1 
-                input.weight(type='hidden', name='activities[#{index}][weight]', value=0)
+                input.weight(type='hidden', name='activities[#{index}][weight]', value=activity.weight)
                 input.topicTitle(type='hidden', name='activities[#{index}][title]', value='#{activity.title}')
               // /col-sm-6
               .col-sm-6.text-right
