@@ -2,7 +2,7 @@ import Promise from "bluebird";
 import easyimg from "easyimage";
 import gm from "gm";
 import path from 'path';
-
+import fse from 'fs-extra';
 
 var domain = sails.config.domain || process.env.domain || 'http://localhost:1337';
 let home = process.cwd();
@@ -32,7 +32,7 @@ module.exports = {
         width: imageResizeConfig.width || 100,
         height: imageResizeConfig.height || 100
       }
-
+      await fse.ensureDirSync(path.join(home, `./.tmp/images`));
       let result = await gm(resizeConfig.src).resize(resizeConfig.width, resizeConfig.height, "!").writeAsync(resizeConfig.dst);
       return resizeConfig;
 
@@ -63,7 +63,7 @@ module.exports = {
             dst: buffers[i].fd,
             width: width,
             height: height
-          });  
+          });
         } catch (e) {
           console.error(e);
         }
