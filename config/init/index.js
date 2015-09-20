@@ -119,21 +119,21 @@ module.exports = {
     var createNewBuyer2 = await db.User.create(newBuyer2);
 
     var brandExample = [{
-      name: '好棒棒品牌',
-      avatar: 'http://goo.gl/ksTMyn',
+      name: '星球精選品牌',
+      avatar: 'https://cldup.com/sYD4KQMADm.jpg',
       type: 'PRIME_GOOD',
-      desc: 'Steve Aoki 最棒惹',
-      banner: 'http://goo.gl/tl4513',
+      desc: '超級精選，超值精選',
+      banner: 'https://cldup.com/u4aO1VQKny.jpg',
       photos: [
         'http://goo.gl/IRT1EM',
         'http://goo.gl/p9Y2BF'
       ]
     },{
-      name: 'Sydney-精選',
-      avatar: 'https://goo.gl/XbP9t3',
+      name: '決戰星球牌',
+      avatar: 'https://cldup.com/fwzBMT3VZl.jpg',
       type: 'PRIME_GOOD',
-      desc: '',
-      banner: 'http://goo.gl/tl4513',
+      desc: '這是屬於大家的榮耀，衝吧！',
+      banner: 'https://cldup.com/u4aO1VQKny.jpg',
       photos: [
       'http://goo.gl/IRT1EM',
       'http://goo.gl/p9Y2BF'
@@ -145,20 +145,20 @@ module.exports = {
 
     var brandAgent = [{
       name: '好代理品牌',
-      avatar: 'http://goo.gl/ksTMyn',
+      avatar: 'https://cldup.com/Vc-cKfhlBJ.jpg',
       type: 'AGENT',
-      desc: 'Steve Aoki 最喜歡代理惹',
-      banner: 'http://goo.gl/tl4513',
+      desc: '代理代理，好代理，我最喜歡大大的代理了',
+      banner: 'https://cldup.com/u4aO1VQKny.jpg',
       photos: [
         'http://goo.gl/IRT1EM',
         'http://goo.gl/p9Y2BF'
       ]
     },{
-      name: 'Sydney-代理',
-      avatar: 'https://goo.gl/XbP9t3',
+      name: 'Sydney',
+      avatar: 'https://cldup.com/9lKpUDaf23.jpg',
       type: 'AGENT',
-      desc: '',
-      banner: 'http://goo.gl/tl4513',
+      desc: '雪梨最棒的品牌，全世界唯一選擇',
+      banner: 'https://cldup.com/u4aO1VQKny.jpg',
       photos: [
       'http://goo.gl/IRT1EM',
       'http://goo.gl/p9Y2BF'
