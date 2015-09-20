@@ -77,9 +77,9 @@ exports.connect = function(req, res, next) {
   var password, user;
   user = req.user;
   password = req.param('password');
-  db.Passport.findOne({
+  db.Passport.find({
     protocol: 'local',
-    user: user.id
+    UserId: user.id
   }, function(err, passport) {
     if (err) {
       return next(err);
@@ -88,7 +88,7 @@ exports.connect = function(req, res, next) {
       db.Passport.create({
         protocol: 'local',
         password: password,
-        user: user.id
+        UserId: user.id
       }, function(err, passport) {
         next(err, user);
       });
@@ -100,6 +100,7 @@ exports.connect = function(req, res, next) {
 
 
 exports.login = function(req, identifier, password, next) {
+  console.log('=== doLogin ===');
   var isEmail, query;
   isEmail = validator.isEmail(identifier);
   query = {
@@ -120,12 +121,14 @@ exports.login = function(req, identifier, password, next) {
       }
       return next(null, false);
     }
+    console.log('== user ==', user);
     db.Passport.findOne({
       where: {
         protocol: 'local',
-        userId: user.id
+        UserId: user.id
       }
     }).then(function(passport) {
+      console.log('== passport ==', passport);
       if (passport) {
         passport.validatePassword(password, function(err, res) {
           if (err) {

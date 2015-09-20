@@ -69,6 +69,7 @@ passport.protocols = require('./protocols');
  */
 
 passport.connect = function(req, query, profile, next) {
+  console.log('=== do login ===');
   var provider, user;
   user = {};
   provider = void 0;

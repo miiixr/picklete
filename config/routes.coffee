@@ -28,7 +28,7 @@ etc. depending on your default view engine) your home page.              *
 `assets` directory)                                                      *
 ###
 module.exports.routes = {
-  "/": view: "homepage"
+  "/": 'MainController.index'
   'get /login': 'AuthController.login'
   'get /logout': 'AuthController.logout'
   'get /register' : 'AuthController.register'
