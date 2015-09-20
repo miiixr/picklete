@@ -345,6 +345,9 @@ html
   script(type='text/javascript' src='/javascripts/common/head_layout.js')
   script(type='text/javascript' src='/javascripts/user/login.js')
 
+  script.
+    window.USER = !{JSON.stringify(user)};
+
   block js
     //- //ＢＵＧ 放shop裡不行
   //- script(src="/javascripts/main/shop.js")
