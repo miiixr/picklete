@@ -18,11 +18,18 @@
 
     // save item to favorite
     var target = e.currentTarget;
-    
-    if ($(target).hasClass("active"))
+    var FAV_KEY = "picklete_fav";
+    var favs;
+
+    if ($(target).hasClass("active")) {
       $(target).removeClass("active");
-    else
+      favs = Cookies.get(FAV_KEY);
+
+    } else {
       $(target).addClass("active");
+      Cookies.set(FAV_KEY, , { expires: 90 });
+    }
+      
   });
 
 
