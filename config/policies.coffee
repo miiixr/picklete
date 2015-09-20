@@ -18,7 +18,7 @@ http://sailsjs.org/#/documentation/reference/sails.config/sails.config.policies.
 module.exports.policies = {
 
   '*': ['global', 'loginRequired']
-  'AuthController': ['passport']
+  'AuthController': ['global', 'passport']
 
   'UserController':
     controlLogin: ['global']
