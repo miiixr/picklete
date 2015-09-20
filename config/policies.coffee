@@ -16,7 +16,7 @@ For more information on configuring policies, check out:
 http://sailsjs.org/#/documentation/reference/sails.config/sails.config.policies.html
 ###
 module.exports.policies = {
-
+                      
   '*': ['global', 'loginRequired']
   'AuthController': ['global', 'passport']
 
@@ -24,7 +24,7 @@ module.exports.policies = {
     controlLogin: ['global']
 
   'MainController': ['global']
-
+      
   'ShopController':
     show: ['global']
     list: ['global']
