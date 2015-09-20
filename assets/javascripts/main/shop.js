@@ -10,6 +10,7 @@
     $('.productDptId'+e.data('id')).css("display","block");
   });
 
+  // add to favorite
   $(".container").on("click", ".item-like, .label-like", function (e) {
     e.preventDefault();
 
@@ -18,14 +19,21 @@
 
     // save item to favorite
     var target = e.currentTarget;
+    var FAV_KEY = "picklete_fav";
+    var favs;
 
-    if ($(target).hasClass("active"))
+    if ($(target).hasClass("active")) {
       $(target).removeClass("active");
-    else
+      favs = Cookies.get(FAV_KEY);
+
+    } else {
       $(target).addClass("active");
+      Cookies.set(FAV_KEY, , { expires: 90 });
+    }
+      
   });
 
-
+  // add to cart
   $(".container").on("click", ".add-to-cart", function (e) {
     e.preventDefault();
     console.log('add to cart');
