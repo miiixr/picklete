@@ -101,6 +101,12 @@ AuthController = {
           } catch (e) {
             reference = { path : "" };
           }
+
+          if (req.xhr)
+            return res.ok({
+              status: "fail",
+              message: "login fail"
+            });
           
           if (reference.path === '/admin/login') {
             res.redirect('/admin/login');
@@ -126,6 +132,12 @@ AuthController = {
         }
 
         console.log('=== user.Role ===', user);
+
+        if (req.xhr)
+          return res.ok({
+            status: "ok",
+            message: "login success"
+          });
 
         return res.redirect('/');
       });

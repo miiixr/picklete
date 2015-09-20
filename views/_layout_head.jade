@@ -327,71 +327,21 @@ html
   script(src='/javascripts/plugin/jasny-bootstrap.js')
   // /jasny-bootstrap
   script(src='/javascripts/plugin/classie.js')
-  | &#x9;
   script(src='/javascripts/plugin/uisearch.js')
-  | &#x9;
-  script.
-    new UISearch( document.getElementById( 'sb-search' ) );
+  
   // /sb-search
   script(src='/javascripts/plugin/input-number.js')
+  
   // /input-number
   script(src='/javascripts/plugin/tagsinput.js')
   script(src='/javascripts/plugin/cbpAnimatedHeader.js')
   // /cbpAnimatedHeader
   script(type='text/javascript', src='/javascripts/plugin/notifyme.js')
-  script(type='text/javascript').
-    $(document).ready(function(){
-      $('.add-to-cart').on('click', function(){
-        $(this).notifyMe(
-          'top',
-          'cart',
-          '<span class="glyphicon glyphicon-ok-circle m-right-2"></span>已加入購物車',
-          '',
-          300,
-          1500
-        );
-      });
-    });
-  // /notifyme
+  
   script(src='/javascripts/plugin/cbpScroller.js')
-  | &#x9;
-  script.
-    new cbpScroller( document.getElementById( 'cbp-so-scroller' ) );
-  // /cbpScroller
-  script(type='text/javascript').
-    $(document).ready(function(){
-      $('input[type="checkbox"]').click(function(){
-        if($(this).attr("value")=="showhide-sent"){
-          $(".showhide-sent").toggle();
-        }
-        if($(this).attr("value")=="showhide-invoice"){
-          $(".showhide-invoice").toggle();
-        }
-      });
-    });
-  | &#x9;
-  script(type='text/javascript').
-    $(window).load(function() {
-      $(".loader").fadeOut("slow");
-    })
-    $(document).ready(function(){
-      $('[data-toggle="tooltip"]').tooltip();
-    });
-  | &#x9;
-  script(type='text/javascript').
-    function sticky_relocate() {
-      var window_top = $(window).scrollTop();
-      var div_top = $('#sticky-anchor').offset().top - $(window).width() /2;
-      if (window_top > div_top) {
-        $('#sticky').addClass('stick');
-      } else {
-        $('#sticky').removeClass('stick');
-      }
-    }
-    $(function () {
-      $(window).scroll(sticky_relocate);
-      sticky_relocate();
-    });
+  script(type='text/javascript' src='/javascripts/common/head_layout.js')
+  script(type='text/javascript' src='/javascripts/user/login.js')
+
   block js
     //- //ＢＵＧ 放shop裡不行
   //- script(src="/javascripts/main/shop.js")
