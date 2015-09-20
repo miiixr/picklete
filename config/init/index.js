@@ -109,10 +109,16 @@ module.exports = {
     };
     var createNewBuyer = await db.User.create(newBuyer);
 
+    let passport = await db.Passport.create({
+      protocol: 'local',
+      password: 'buyer',
+      UserId: createNewBuyer.id
+    });
+
+
     var newBuyer2 = {
       username: "buyer2",
       email: "buyer2@gmail.com",
-      password: "buyer2",
       RoleId: createRoleUser.id,
       comment: "this is newBuyer2"
     };
