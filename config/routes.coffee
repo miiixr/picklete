@@ -63,7 +63,6 @@ module.exports.routes = {
 
   'get /index' : 'SelectionActiveController.index'
   'get /FAQ' : 'FAQController.show'
-  'get /member/fav' : view: 'main/member-fav'
   'get /member/purchase' : view: 'main/member-purchase'
   'get /member/setting' : 'UserController.edit'
   'post /member/update' : 'UserController.update'
@@ -131,7 +130,8 @@ module.exports.routes = {
   # end promotions
 
   # client side / Have to login
-  'get /member/fav' : view: 'main/member-fav'
+  # 'get /member/fav' : view: 'main/member-fav'
+  'get /member/favorite' : 'UserController.favorite'
   'get /member/purchase' : view: 'main/member-purchase'
   'get /member/setting' : 'UserController.edit'
   'post /member/update' : 'UserController.update'

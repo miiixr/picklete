@@ -200,4 +200,19 @@ describe("about product service", () => {
     }
 
   });
+
+  it.only('find Favorite list', async (done) => {
+    try {
+      let product = await ProductService.findFavorite({
+        11: true,
+        5: true,
+        6: true
+      });
+      console.log(product);
+      product.should.be.an.Object;
+      done();
+    } catch (e) {
+      done(e);
+    }
+  });
 });

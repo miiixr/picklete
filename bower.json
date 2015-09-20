@@ -15,6 +15,7 @@
     "jquery": "~2.1.4",
     "jquery-form": "~3.46.0",
     "jquery-twzipcode": "~1.6.7",
-    "moment": "~2.10.6"
+    "moment": "~2.10.6",
+    "js-cookie": "~2.0.3"
   }
 }

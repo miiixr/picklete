@@ -71,14 +71,15 @@ block body
                   h5.text-muted.letter-spacing-3.text-roboto.m-bottom-2
                     a(href='brands.html') #{productGm.name}
                   h2.text-black.m-bottom-6.text-roboto #{productGm.name} #{name}
-                  h3.text-black.m-bottom-4 $ #{product.price}
+                  .h3.text-black.m-bottom-4 $ 
+                    span#price #{product.price}
                 // /col-sm-10
                 .col-sm-2.col-xs-3
                   //
                     item-label-like
                     ==================================================
                   a(href='#')
-                    span.label.label-like.pull-right
+                    span.label.label-like.pull-right(data-productId=product.id)
                       span.glyphicon.glyphicon-heart
                       br
                       //- | 123
@@ -103,7 +104,9 @@ block body
                   // /input-group
                 // /col-sm-4
                 .col-sm-8
-                  a.btn.btn-black.border-radius-circle.btn-block.btn-lg.add-to-cart(href='#') 加入購物車
+                  a.btn.btn-black.border-radius-circle.btn-block.btn-lg.add-to-cart(
+                  data-productId=product.id, data-photos=product.photos, 
+                  data-brand=productGm.name, data-name=product.name) 加入購物車 
                 // /col-sm-8
               // /row
               
