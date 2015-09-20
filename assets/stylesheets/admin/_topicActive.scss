@@ -1,0 +1,40 @@
+/* image exist */
+.fileinput-square.image-exist {
+  &>a>span {
+    opacity: 0;
+  }
+  &:hover {
+    &>a {
+      &>span {
+        opacity: 1;
+      }
+      &>img {
+        opacity: 0.65;
+      }
+    }
+  }
+}
+
+/* image does not exist */
+.fileinput-square.dashed-block-2 {
+  &>a {
+    &>span{
+      opacity: 0.2;
+    }
+    &>img {
+      opacity: 0;
+    }
+    &:hover {
+      &>span{
+        opacity: 1;
+      }
+      &>img {
+        opacity: 0;
+      }
+    }
+  }
+}
+
+.hidden-section {
+  display: none;
+}
