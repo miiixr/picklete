@@ -22,7 +22,6 @@
 
     // save item to favorite
     var target = e.currentTarget;
-    
     var favs = Cookies.getJSON(FAV_KEY) || {};
     var productId = $(target).attr("data-productId");
 
@@ -41,6 +40,29 @@
     Cookies.set(FAV_KEY, favs, { expires: 90 });
       
   });
+
+  // remove from favorite list
+  $(".container").on("click", ".fav-item-move", function (e) {
+    e.preventDefault();
+    if ( ! window.USER)
+      return $('#modal-login').modal('show');
+
+    // save item to favorite
+    var target = e.currentTarget;
+    var favs = Cookies.getJSON(FAV_KEY) || {};
+    var productId = $(target).attr("data-productId");
+
+    if (favs[productId]) {
+      favs[productId] = null;
+      delete favs[productId];
+    }
+
+    Cookies.set(FAV_KEY, favs, { expires: 90 });
+    $(target).parent().parent().remove();
+
+  });
+
+  
 
   var travelFavorite = function () {
 
@@ -74,7 +96,7 @@
     }
 
     var productId = $(this).attr("data-productId");
-    var quantity = $('input[name="quant[1]"]').val();
+    var quantity = $('input[name="quant[1]"]').val() || 1;
     var price = $('#price').text();
     var photos = JSON.parse($(this).attr("data-photos"));
     var brand = $(this).attr("data-brand");
