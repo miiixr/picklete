@@ -73,6 +73,7 @@
       picklete_cart = JSON.parse(picklete_cart);
     }
 
+    $('#order-items-count').text(picklete_cart.orderItems.length);
     var dropdownCart = $('#dropdown-cart-content');
 
     dropdownCart.empty();
