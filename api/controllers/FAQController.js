@@ -105,16 +105,17 @@ let FAQController = {
         FAQService.create(name);
       } catch(e){
         console.log(e);
-        return res.error(e);
+        return res.serverError(e);
       }
 
       try{
         var FAQTypeId = req.body.FAQTypeId;
         var FAQType = req.body.FAQType;
+
         FAQService.update(FAQType,FAQTypeId);
       } catch(e){
-        return res.error(e);
         console.log(e);
+        return res.serverError(e);
       }
       
       return res.redirect("/admin/FAQ");
