@@ -10,7 +10,7 @@
     $('.productDptId'+e.data('id')).css("display","block");
   });
 
-  $(".container").on("click", ".item-like", function (e) {
+  $(".container").on("click", ".item-like, .label-like", function (e) {
     e.preventDefault();
     
     if ( ! window.USER)
@@ -18,7 +18,11 @@
 
     // save item to favorite
     var target = e.currentTarget;
-    $(target).addClass("active");
+    
+    if ($(target).hasClass("active"))
+      $(target).removeClass("active");
+    else
+      $(target).addClass("active");
   });
 
 
