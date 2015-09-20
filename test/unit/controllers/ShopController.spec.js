@@ -21,12 +21,11 @@ describe('ShopController Spec', function() {
 
   it('Show one product detail', function(done) {
     request(sails.hooks.http.app)
-    .get('/shop/product/1/1')
+    .get('/shop/products/1/1')
     // .set('cookie', cookie)
     .end(function(err, res) {
-
       res.statusCode.should.be.equal(200);
-      return done();
+      return done(err);
 
     });
   });
