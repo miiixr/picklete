@@ -12,18 +12,54 @@
 
   $(".container").on("click", ".item-like, .label-like", function (e) {
     e.preventDefault();
-    
+
     if ( ! window.USER)
       return $('#modal-login').modal('show');
 
     // save item to favorite
     var target = e.currentTarget;
-    
+
     if ($(target).hasClass("active"))
       $(target).removeClass("active");
     else
       $(target).addClass("active");
   });
+
+
+  $(".container").on("click", ".add-to-cart", function (e) {
+    e.preventDefault();
+    console.log('add to cart');
+
+    var picklete_cart = Cookies.get('picklete_cart');
+    if (picklete_cart == undefined) picklete_cart = {products: []};
+    else {
+      picklete_cart = JSON.parse(picklete_cart);
+    }
+
+    var productId = $(this).attr("data-productId");
+    var quantity = $('input[name="quant[1]"]').val();
+    var price = $('#price').text();
+
+
+    console.log('=== picklete_cart ===', picklete_cart);
+    console.log('=== productId ===', productId);
+    console.log('=== quantity ===', quantity);
+    console.log('=== price ===', price);
+
+    addProduct = {
+      id: productId,
+      quantity: quantity,
+      price: price
+    }
+
+    picklete_cart.products.push(addProduct);
+    Cookies.set('picklete_cart', picklete_cart);
+
+  });
+
+
+
+
 
 
 }(jQuery));

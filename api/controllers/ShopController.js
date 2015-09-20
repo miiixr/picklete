@@ -69,8 +69,8 @@ let ShopController = {
     let productId = req.params.productId
     try {
 
-      let productGm = await db.ProductGm.findOne({ 
-            where: {id: productGmid}, 
+      let productGm = await db.ProductGm.findOne({
+            where: {id: productGmid},
             include: [
               { model: db.Product },
               { model: db.Dpt},
@@ -78,7 +78,7 @@ let ShopController = {
             ]
           });
       let product = await db.Product.findOne({where: {id: productId}});
-      
+
       productGm = productGm.dataValues;
       product = product.dataValues;
 
@@ -97,12 +97,19 @@ let ShopController = {
           services.push(false);
         }
       }
-      
+
       if(product.ProductGmId != productGmid){
         return res.view('common/warning', {errors:'not found'});
       }
-      else{  
-        let resData = { productGm: productGm, products: products, product: product, photos: photos, services: services, coverPhotos: coverPhotos };
+      else{
+        let resData = {
+          productGm: productGm,
+          products: products,
+          product: product,
+          photos: photos,
+          services: services, 
+          coverPhotos: coverPhotos
+         };
 
         return res.view("main/shopProduct", resData);
 
@@ -112,7 +119,7 @@ let ShopController = {
       console.error(e);
       return res.view('common/warning', {errors:'not found'});
     };
-    
+
 
   }
 
