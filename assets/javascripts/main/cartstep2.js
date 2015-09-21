@@ -2,6 +2,19 @@
   var picklete_cart = Cookies.getJSON('picklete_cart');
   picklete_cart = picklete_cart ? picklete_cart : window.location.replace("/shop/products");
 
+  var subtotalDiv = $('#subtotal');
+  var totalPriceDiv = $('#totalPrice');
+
+  var subtotal = 0;
+  var totalPrice = 0;
+
+  picklete_cart.orderItems.forEach(function(orderItem, index){
+    subtotal += parseInt(orderItem.price, 10);
+    subtotalDiv.text(subtotal);
+    totalPrice = subtotal;
+    totalPriceDiv.text(totalPrice);
+  });
+
   $("#orderCreate").click(function()
   {
     var postData = $("form[name='orderCreate']").serializeJSON();
@@ -13,33 +26,9 @@
         data : postData,
         success:function(data, textStatus, jqXHR)
         {
-            location.href='../../../admin/bonus?keyword='+$("input[name='email']").val();
+            $(document.body).html(data);
         }
     });
   });
-
-
-
-  // orderItems:
-  //  [ { ProductId: '1', price: '475', quantity: '1' },
-  //    { ProductId: '1', price: '590', quantity: '2' }],
-  // paymentTotalAmount: '565',
-  // user:
-  //  { username: 'AAAd',
-  //    email: 'user1@picklete.localhost',
-  //    mobile: '0912345678',
-  //    city: '苗栗縣',
-  //    district: '竹南鎮',
-  //    zipcode: '350',
-  //    address: '測試用地址不用太在意' },
-  // shipment:
-  //  { username: 'AAAd',
-  //    email: 'user1@picklete.localhost',
-  //    mobile: '0912345678',
-  //    city: '苗栗縣',
-  //    district: '竹南鎮',
-  //    zipcode: '350',
-  //    address: '測試用地址不用太在意' },
-  // usedDiscountPoint: 'false' };
 
 }(jQuery));
