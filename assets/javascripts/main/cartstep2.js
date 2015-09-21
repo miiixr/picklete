@@ -17,8 +17,22 @@
 
   $("#orderCreate").click(function()
   {
+    if($("input[name='order[user][username]']").val()==""){
+      alert("請輸入姓名");
+      return;
+    }
+    if($("input[name='order[user][mobile]']").val()==""){
+      alert("請輸入電話");
+      return;
+    }
+    if($("input[name='order[user][address]']").val()==""){
+      alert("請輸入住址");
+      return;
+    }
     var postData = $("form[name='orderCreate']").serializeJSON();
     postData.order.orderItems = picklete_cart.orderItems;
+    postData.order.shippingFee = Cookies.getJSON('shippingFee');
+    postData.order.paymentMethod = Cookies.getJSON('paymentMethod');
     $.ajax(
     {
         url : '/api/order',

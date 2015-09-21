@@ -47,11 +47,11 @@ block body
                     label
                       | 付款方式
                       span.text-danger *
-                    select.form-control
-                      option 請選擇
-                      option 信用卡
-                      option ATM
-                      option 超商付款
+                    select#paymentMethod.form-control
+                      option(value='0') 請選擇
+                      option(value='credit') 信用卡
+                      option(value='atm') ATM
+                      option(value='cvs') 超商付款
                   // /form-group
                 // /col-sm-4
               // /row
@@ -82,7 +82,7 @@ block body
                     th 總計
                     td.text-right
                       h3#totalPrice.m-top-0 0
-              a.btn.btn-black.border-radius-circle.btn-block.m-bottom-2(href='/user/cart-step-2') 下一步、填寫資料
+              a#nextSetp.btn.btn-black.border-radius-circle.btn-block.m-bottom-2 下一步、填寫資料
               a.btn.btn-link.btn-block.text-gray-light.m-bottom-6(href='/shop/products') 繼續購物
               .form-group
                 label
