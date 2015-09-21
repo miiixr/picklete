@@ -20,12 +20,21 @@ let UserController = {
       favoriteKeys = null;
       return res.view("main/memberFavorite");
     }
-    
+
     let products = await ProductService.findFavorite(favoriteKeys);
 
     res.view("main/memberFavorite", {
       products
     });
+  },
+
+  cart: async (req, res) => {
+    console.log('=== cart ===');
+    let company = await db.Company.findOne();
+    let brands = await db.Brand.findAll();
+
+    console.log('=== company ===', company);
+    return res.view('main/cart', {company, brands});
   },
 
   edit: async (req, res) => {
