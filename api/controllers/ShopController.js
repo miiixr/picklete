@@ -32,8 +32,9 @@ let ShopController = {
           include: [
             includeDpt,
             includeDptSub
-          ]
-        }]
+          ],
+        }],
+        order: [['id', 'ASC']]
       });
 
       let brands = await db.Brand.findAll();
