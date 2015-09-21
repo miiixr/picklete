@@ -1,7 +1,7 @@
 extends ../_layout_auth
 
 block body
-  ul#activityList
+  ul.col-sm-9.col-md-10
     h2.m-bottom-6 精選活動
     .row
       .col-xs-6
@@ -55,7 +55,7 @@ block body
               // /row
               .form-group
                 .col-sm-9.col-md-9
-                  input.form-control(type='text', name='actives[#{index}][Images][0][url]', form='activesData', placeholder='http://連結網址', value=activity.Images[0].url?activity.Images[0].url:'')
+                  input.form-control.urlInput(type='text', name='actives[#{index}][Images][0][url]', form='activesData', placeholder='http://連結網址', value=activity.Images[0].url?activity.Images[0].url:'')
                 // /col-sm-9
                 .col-sm-3.col-md-3
                   .checkbox
@@ -106,7 +106,7 @@ block body
               // /row
               .form-group
                 .col-sm-9.col-md-9
-                  input.form-control(type='text', name='actives[#{index}][Images][0][url]', form='activesData', placeholder='http://連結網址', value=activity.Images[0].url?activity.Images[0].url:'')
+                  input.form-control.urlInput(type='text', name='actives[#{index}][Images][0][url]', form='activesData', placeholder='http://連結網址', value=activity.Images[0].url?activity.Images[0].url:'')
                 // /col-sm-9
                 .col-sm-3.col-md-3
                   .checkbox
@@ -155,7 +155,7 @@ block body
                     // /fileinput
                     .form-group.m-left-0.m-right-0
                       .col-sm-9.col-md-9
-                        input.form-control(type='text', name='actives[#{index}][Images][#{i}][url]', form='activesData', placeholder='http://連結網址', value=activity.Images[i].url?activity.Images[i].url:'')
+                        input.form-control.urlInput(type='text', name='actives[#{index}][Images][#{i}][url]', form='activesData', placeholder='http://連結網址', value=activity.Images[i].url?activity.Images[i].url:'')
                       // /col-sm-9
                       .col-sm-3.col-md-3
                         .checkbox
@@ -206,7 +206,7 @@ block body
                     // /fileinput
                     .form-group.m-left-0.m-right-0
                       .col-sm-12
-                        input.form-control(type='text', name='actives[#{index}][Images][#{i}][url]', form='activesData', placeholder='http://連結網址', value=activity.Images[i].url?activity.Images[i].url:'')
+                        input.form-control.urlInput(type='text', name='actives[#{index}][Images][#{i}][url]', form='activesData', placeholder='http://連結網址', value=activity.Images[i].url?activity.Images[i].url:'')
                       // /col-sm-12
                       .col-sm-12
                         .checkbox
