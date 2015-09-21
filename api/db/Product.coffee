@@ -53,7 +53,7 @@ module.exports = (sequelize, DataTypes) ->
 
       set: (value) ->
         return this.setDataValue('photos', JSON.stringify(value))
-    # wieght
+    # weight
     weight: {
       type: DataTypes.INTEGER,
       defaultValue: 0

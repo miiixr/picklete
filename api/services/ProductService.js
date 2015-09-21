@@ -90,7 +90,7 @@ module.exports = {
         productNumber: productNumber,
         photos: photos,
         ProductGmId: createdProductGm.id,
-        weight: updateProduct.weight
+        weight: updateProduct.weight || 0
       };
 
       try {
@@ -105,7 +105,7 @@ module.exports = {
 
   update: async (updateProduct) => {
     let product;
-    console.log('=== ProductService : updateProduct ==>\n', updateProduct);
+    // console.log('=== ProductService : updateProduct ==>\n', updateProduct);
     try {
       var {brandType} = updateProduct;
       var brand;
@@ -164,9 +164,9 @@ module.exports = {
             product.color = good.color;
             product.productNumber = good.productNumber;
             product.stockQuantity = good.stockQuantity;
-            // product.description = good.description;
+            product.description = good.description;
             product.isPublish = (good.isPublish == "false") ? false : true;
-            product.weight = good.weight;
+            product.weight = good.weight || 0;
 
             let photos = [];
             if (good['photos-1']) photos.push(good['photos-1']);
@@ -193,10 +193,10 @@ module.exports = {
             color : good.color,
             productNumber : good.productNumber,
             stockQuantity : good.stockQuantity,
-            // description : good.description,
+            description : good.description,
             isPublish : isPublish,
             ProductGmId: productGm.id,
-            weight: good.weight
+            weight: good.weight || 0
           };
 
           let photos = [];
@@ -226,7 +226,6 @@ module.exports = {
 
       if(updateProduct.dptSubId != '')
         await productGm.setDptSubs(updateProduct.dptSubId);
-
 
       return product;
     } catch (e) {

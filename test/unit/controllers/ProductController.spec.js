@@ -25,7 +25,7 @@ describe("about Product", () => {
     testProductTotal = testProduct.pTotal;
     testProductGmId = testProduct.gmId;
     testProductGmName = testProduct.gmName;
-    console.log('=== testProduct ==>\n',testProduct);
+    // console.log('=== testProduct ==>\n',testProduct);
 
     done();
   });
