@@ -3,7 +3,7 @@ module.exports = {
   useAllPay: true
   environment: ''
   initData: ''
-  domain: 'http://fud.dscloud.me:1337'
+  domain: 'http://localhost:1337'
   mail: {
     type: 'ses'
     config: {
