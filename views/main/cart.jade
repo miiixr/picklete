@@ -17,106 +17,8 @@ block body
       .border-block-3.m-bottom-10
         .row
           .col-md-9.border-right-1-desktop.desktop-p-right-0.min-height-500
-            .p-20.border-bottom-1
-              .row.row-m
-                .col-xs-4.col-sm-3.col-md-2
-                  .item-block
-                    a.item-like(href='#')
-                      span.glyphicon.glyphicon-heart
-                    // /item-like
-                    a(href='shop-product')
-                      img.img-full(src='images/demo/shop-item-5-1.jpg')
-                  // /item-block
-                // /col-xs-4
-                .col-xs-8.col-sm-8.col-md-3.desktop-m-top-4.m-bottom-1.mobile-min-height-100
-                  h6.text-muted.text-roboto.letter-spacing-1.m-bottom-1-min
-                    a(href='brands') Le mouton noir & co
-                  h5.text-roboto.letter-spacing-1.m-top-1-min
-                    a(href='shop-product') B.B.bank / BB豬
-                // /col-xs-8
-                .col-xs-6.col-sm-3.col-md-2.desktop-p-left-0.desktop-m-top-5.m-bottom-2
-                  .input-group.input-group-count.max-width-150
-                    span.input-group-btn
-                      button.btn.btn-default.btn-number.p-left-2.p-right-2(type='button', disabled='disabled', data-type='minus', data-field='quant[1]')
-                        span.glyphicon.glyphicon-minus
-                    // /input-group-btn
-                    input.form-control.input-number.text-center.font-size-slarge(type='text', name='quant[1]', value='1', min='1', max='10')
-                    span.input-group-btn
-                      button.btn.btn-default.btn-number.p-left-2.p-right-2(type='button', data-type='plus', data-field='quant[1]')
-                        span.glyphicon.glyphicon-plus
-                    // /input-group-btn
-                  // /input-group
-                // /col-xs-6
-                .col-xs-6.col-sm-3.col-md-2.desktop-p-right-0.desktop-text-center.desktop-m-top-5.m-bottom-2
-                  .form-inline
-                    .form-group.m-bottom-0
-                      label 包裝
-                      select.form-control.m-left-1.font-size-slarge
-                        option 0
-                        option 1
-                        option 2
-                        option 3
-                        option 4
-                        option 5
-                    // /form-group
-                  // /form-inline
-                // /col-xs-6
-                .col-xs-6.col-sm-2.col-md-2.desktop-text-center.desktop-m-top-5.m-bottom-1
-                  h4.m-top-0
-                    | $1,400
-                    br
-                    small.text-line-through $3,000
-                // /col-xs-6
-                .col-xs-6.col-sm-1.col-md-1.text-right.desktop-m-top-5
-                  a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
-                    span.glyphicon.glyphicon-remove
-                // /col-xs-6
-              // /row
-            // /p-20
-            .p-20.border-bottom-1
-              .row.row-m
-                .col-xs-4.col-sm-3.col-md-2
-                  .item-block
-                    a.item-like(href='#')
-                      span.glyphicon.glyphicon-heart
-                    // /item-like
-                    a(href='shop-product')
-                      img.img-full(src='images/demo/shop-item-6-1.jpg')
-                  // /item-block
-                // /col-xs-4
-                .col-xs-8.col-sm-8.col-md-3.desktop-m-top-4.m-bottom-1.mobile-min-height-100
-                  h6.text-muted.text-roboto.letter-spacing-1.m-bottom-1-min
-                    a(href='brands') labrador
-                  h5.text-roboto.letter-spacing-1.m-top-1-min
-                    a(href='shop-product') softcase A5 麂皮文件袋
-                // /col-xs-8
-                .col-xs-6.col-sm-3.col-md-2.desktop-p-left-0.desktop-m-top-5.m-bottom-2
-                  .input-group.input-group-count.max-width-150
-                    span.input-group-btn
-                      button.btn.btn-default.btn-number.p-left-2.p-right-2(type='button', disabled='disabled', data-type='minus', data-field='quant[1]')
-                        span.glyphicon.glyphicon-minus
-                    // /input-group-btn
-                    input.form-control.input-number.text-center.font-size-slarge(type='text', name='quant[1]', value='1', min='1', max='10')
-                    span.input-group-btn
-                      button.btn.btn-default.btn-number.p-left-2.p-right-2(type='button', data-type='plus', data-field='quant[1]')
-                        span.glyphicon.glyphicon-plus
-                    // /input-group-btn
-                  // /input-group
-                // /col-xs-6
-                .col-xs-6.col-sm-3.col-md-2.desktop-p-right-0.desktop-text-center.desktop-m-top-5.m-bottom-2
-                  | 此商品不提供
-                  br
-                  | 包裝服務
-                // /col-xs-6
-                .col-xs-6.col-sm-2.col-md-2.desktop-text-center.desktop-m-top-5.m-bottom-1
-                  h4.m-top-0 $1,400
-                // /col-xs-6
-                .col-xs-6.col-sm-1.col-md-1.text-right.desktop-m-top-5
-                  a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
-                    span.glyphicon.glyphicon-remove
-                // /col-xs-6
-              // /row
-            // /p-20
+            #cart-viewer
+            
             .p-20
               h2.m-bottom-4 運送付款
               .row
@@ -134,10 +36,10 @@ block body
                     label
                       | 運送區域
                       span.text-danger *
-                    select.form-control
-                      option 請選擇
-                      option 台灣 - 運費70元
-                      option 離島 - 運費150元
+                    select#shippingFeeSelect.form-control
+                      option(value='0') 請選擇
+                      option(value='70') 台灣 - 運費70元
+                      option(value='150') 離島 - 運費150元
                   // /form-group
                 // /col-sm-4
                 .col-sm-4
@@ -161,25 +63,25 @@ block body
                 tbody
                   tr
                     th 小計
-                    td.text-right 3,240
+                      td#subtotal.text-right 0
                   tr
                     th 總折扣
                     td.text-right
-                      span.text-danger -300
+                      span.text-danger 0
                   tr
                     th 運費
-                    td.text-right 免運
+                    td#shippingFeeField.text-right 0
                   tr
                     th 禮品包裝
-                    td.text-right 120
+                    td.text-right 0
                   tr
                     th 折扣碼
                     td.text-right
-                      span.text-danger -30
+                      span.text-danger 0
                   tr
                     th 總計
                     td.text-right
-                      h3.m-top-0 $2,940
+                      h3#totalPrice.m-top-0 0
               a.btn.btn-black.border-radius-circle.btn-block.m-bottom-2(href='/user/cart-step-2') 下一步、填寫資料
               a.btn.btn-link.btn-block.text-gray-light.m-bottom-6(href='/shop/products') 繼續購物
               .form-group
@@ -383,13 +285,18 @@ block body
             h2.modal-title 刪除
           // /modal-header
           .modal-body.p-30.p-top-0
-            p 您確定要將此 XXXXXXX 刪除？
-            p 您確定要將此 XXXXXXX 移出此折扣活動？
+            p 您確定要將此 
+              span#deleteOrderItemName
+              | 刪除？
+            
           // /modal-body
           .modal-footer
             button.btn.btn-default(type='button', data-dismiss='modal') 取消
-            button.btn.btn-green(type='button', data-dismiss='modal') 確定
+            button.btn.btn-green(type='button', data-dismiss='modal', id='confirmedDeleteOrderItem') 確定
           // /modal-footer
         // /modal-content
       // /modal-dialog
     // /modal
+  block js
+    script(src="/javascripts/main/cart.js")
+    script(src="/javascripts/main/shop.js")
