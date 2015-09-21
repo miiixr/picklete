@@ -16,6 +16,7 @@
     "jquery-form": "~3.46.0",
     "jquery-twzipcode": "~1.6.7",
     "moment": "~2.10.6",
-    "js-cookie": "~2.0.3"
+    "js-cookie": "~2.0.3",
+    "jquery.serializeJSON": "~2.5.0"
   }
 }

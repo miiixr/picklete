@@ -1,4 +1,4 @@
-describe.skip("about Order", () => {
+describe("about Order", () => {
   describe("pay Order", () => {
     let testdOrder;
     before( async (done) => {
@@ -38,7 +38,7 @@ describe.skip("about Order", () => {
       let createOrderItems = await db.OrderItem.bulkCreate(orderItems2);
       done();
     });
-    it("order", (done) => {
+    it.only("order", (done) => {
       let newOrder ={
         orderItems:
          [ { ProductId: '1', price: '475', quantity: '1' },

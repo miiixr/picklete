@@ -10,7 +10,7 @@
 
   var picklete_cart = Cookies.getJSON('picklete_cart');
   picklete_cart = picklete_cart ? picklete_cart : {orderItems: []};
-  
+
   var cartViewerInit = function(){
 
     picklete_cart.orderItems.forEach(function(orderItem, index){
@@ -123,7 +123,7 @@
 
   var calcTatalPrice = function () {
 
-    totalPrice = subtotal - shippingFee;
+    totalPrice = subtotal + shippingFee;
     console.log('=== calcTatalPrice ===', totalPrice);
 
     totalPriceDiv.text(totalPrice);
