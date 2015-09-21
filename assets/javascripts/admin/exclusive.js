@@ -50,18 +50,11 @@
       dom.value = "" ;
     });
 
-    // var newTypeUrl = $("li.control-well")[maxType-1].getElementsByClassName('checkInput');
-    // $.each( newTypeUrl, function( key, dom ) {
-    //   console.log( key + ": " + dom.value);
-    //   dom.value = "" ;
-    // });
-
   });
 
   // input check when form submit
   $('form#activesData').submit(function(e){
     $(".activityWeigth").map(function(index, input){
-      console.log("!!!!");
       $(this).val(index)
     });
     var finished = true;
