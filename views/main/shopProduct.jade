@@ -86,6 +86,10 @@ block body
                       span.label-like-text 已加入收藏
                     // /label-like
                 // /col-sm-2
+              - if (product.comment)
+                hr.m-top-4.m-bottom-4
+                p #{product.comment}
+                hr.m-top-4.m-bottom-4
               // /row 
 
               // 商品數量
