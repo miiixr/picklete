@@ -6,7 +6,7 @@ block body
         ul.list-inline.list-shop-type
           each dpt, index in dpts
             li.dpt(data-id='#{dpt.id}')
-              a(href='#')
+              a(href='#', aria-expanded='false', data-toggle='collapse')
                 | #{dpt.name}
           li.li-btn
             a.btn.btn-default.border-radius-circle(data-toggle='collapse', href='#dropdown-menu-brands-3', aria-expanded='false') 品牌列表

@@ -2,8 +2,8 @@
 let ShopController = {
 
   list: async(req,res) => {
-    let dptSubId = req.query.dptSubId || -1;
-    let dptId = req.query.dptId || -1;
+    let dptSubId = req.query.dptSubId || 1;
+    let dptId = req.query.dptId || 1;
 
     let products;
 
