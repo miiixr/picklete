@@ -9,7 +9,7 @@
   let testProductId, testProductTotal;
   let testProductGmId, testProductGmName;
 
-describe.only("about Product", () => {
+describe("about Product", () => {
 
   // before testing
   before(async (done) => {
