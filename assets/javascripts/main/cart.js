@@ -8,12 +8,9 @@
   var totalPrice = 0;
   var shippingFee = 0;
 
-  var picklete_cart = Cookies.get('picklete_cart');
-  if (picklete_cart == undefined) picklete_cart = {orderItems: []};
-  else {
-    picklete_cart = JSON.parse(picklete_cart);
-  }
-
+  var picklete_cart = Cookies.getJSON('picklete_cart');
+  picklete_cart = picklete_cart ? picklete_cart : {orderItems: []};
+  
   var cartViewerInit = function(){
 
     picklete_cart.orderItems.forEach(function(orderItem, index){
