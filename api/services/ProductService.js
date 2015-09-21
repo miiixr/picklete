@@ -75,6 +75,7 @@ module.exports = {
 
       let newProduct = {
         name: good.name || "",
+        description: good.description || "",
         stockQuantity: good.stockQuantity || 0,
         isPublish: good.isPublish || false,
         price: updateProduct.price,
@@ -88,6 +89,7 @@ module.exports = {
         productNumber: productNumber,
         photos: photos,
         ProductGmId: createdProductGm.id,
+        weight: updateProduct.weight
       };
 
       try {
@@ -139,7 +141,7 @@ module.exports = {
         if (product){
           // product is exists.
           // so let's check if user want to remove this product or not.
-          if(!good.description){
+          if(!good.name){
             // if this product is be deleted at view
             // console.log('=== product ',i,' exists but need to be delete ===');
             let deleteProduct = await product.destroy();
@@ -147,8 +149,8 @@ module.exports = {
             // console.log('=== deleteProduct ',i,' status is ==>',deleteProduct.deletedAt);
           }else{
             // this product is just be updated.
-            // console.log('=== product ',i,' exists and name is ==>',good.description);
-            product.name = good.description;
+            // console.log('=== product ',i,' exists and name is ==>',good.name);
+            product.name = good.name;
             product.price = updateProduct.price;
             product.size = updateProduct.size;
             product.comment = updateProduct.comment;
@@ -159,8 +161,9 @@ module.exports = {
             product.color = good.color;
             product.productNumber = good.productNumber;
             product.stockQuantity = good.stockQuantity;
-            product.description = good.description;
+            // product.description = good.description;
             product.isPublish = (good.isPublish == "false") ? false : true;
+            product.weight = good.weight;
 
             let photos = [];
             if (good['photos-1']) photos.push(good['photos-1']);
@@ -173,10 +176,10 @@ module.exports = {
 
         }else {
           // product not exists
-          // console.log('=== product ',i,' NOT exists and name is ===', good.description);
+          // console.log('=== product ',i,' NOT exists and name is ===', good.name);
           let isPublish = (good.isPublish == "false") ? false : true;
           let newProduct = {
-            name : good.description,
+            name : good.name,
             price : updateProduct.price,
             size : updateProduct.size,
             comment : updateProduct.comment,
@@ -187,9 +190,10 @@ module.exports = {
             color : good.color,
             productNumber : good.productNumber,
             stockQuantity : good.stockQuantity,
-            description : good.description,
+            // description : good.description,
             isPublish : isPublish,
-            ProductGmId: productGm.id
+            ProductGmId: productGm.id,
+            weight: good.weight
           };
 
           let photos = [];
@@ -257,6 +261,7 @@ module.exports = {
   },
   // end delete
 
+
   findGmWithImages: async (productGmId) => {
     let productGm = await db.ProductGm.find({
       where: {id: productGmId},
@@ -264,9 +269,9 @@ module.exports = {
         {model: db.Product},
         {model: db.Dpt},
         {model: db.DptSub}
-      ]
+      ],
+      order: ['Products.weight']
     });
-
     // console.log(productGm.products);
     return productGm;
   },
@@ -275,7 +280,7 @@ module.exports = {
 
     if ( ! productIds)
       return [];
-    
+
     var prop;
     let subQuery = { "$or": [] };
 
@@ -286,7 +291,7 @@ module.exports = {
 
     if (subQuery["$or"].length < 1)
       return [];
-    
+
     let products = await db.Product.findAll({
       where: subQuery,
       include: [{

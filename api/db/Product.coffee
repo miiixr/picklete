@@ -1,10 +1,13 @@
 
 module.exports = (sequelize, DataTypes) ->
   Product = sequelize.define 'Product', {
-    # 商品款式
+    # 商品款式名稱
     name: DataTypes.STRING
+    # 庫存量
     stockQuantity: DataTypes.INTEGER
+    # 售價
     price: DataTypes.INTEGER
+    # 是否上架
     isPublish: {
       type: DataTypes.BOOLEAN,
       set: (value) ->
@@ -50,6 +53,11 @@ module.exports = (sequelize, DataTypes) ->
 
       set: (value) ->
         return this.setDataValue('photos', JSON.stringify(value))
+    # wieght
+    weight: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0
+    }
   },
   paranoid: true,
   classMethods: associate: (models) ->
