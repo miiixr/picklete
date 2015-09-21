@@ -216,7 +216,7 @@ describe("about product service", () => {
     }
   });
 
-  it.only('find NOT Favorite list', async (done) => {
+  it('find NOT Favorite list', async (done) => {
     try {
       let product = await ProductService.findFavorite({});
       console.log(product);

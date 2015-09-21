@@ -108,7 +108,7 @@ let ShopController = {
           products: products,
           product: product,
           photos: photos,
-          services: services, 
+          services: services,
           coverPhotos: coverPhotos
          };
 
@@ -122,6 +122,18 @@ let ShopController = {
     };
 
 
+  },
+
+  cartStep2: async(req,res) => {
+    try {
+      console.log("!!!",req.body);
+      res.view("main/cart-step-2");
+    } catch (e) {
+      console.error(e.stack);
+      let {message} = e;
+      let success = false;
+      return res.serverError({message, success});
+    }
   }
 
 
