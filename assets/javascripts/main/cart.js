@@ -1,5 +1,13 @@
 (function ($) {
 
+  var cartViewer = $('#cart-viewer');
+  var subtotalDiv = $('#subtotal');
+  var totalPriceDiv = $('#totalPrice');
+
+  var subtotal = 0;
+  var totalPrice = 0;
+  var shippingFee = 0;
+
   var cartViewerInit = function(){
     var picklete_cart = Cookies.get('picklete_cart');
     if (picklete_cart == undefined) picklete_cart = {orderItems: []};
@@ -7,12 +15,7 @@
       picklete_cart = JSON.parse(picklete_cart);
     }
 
-    $('#order-items-count').text(picklete_cart.orderItems.length);
-    var cartViewer = $('#cart-viewer');
-    var subtotalDiv = $('#subtotal');
-    var totalPriceDiv = $('#totalPrice');
 
-    var subtotal = 0;
 
     picklete_cart.orderItems.forEach(function(orderItem){
 
@@ -57,13 +60,36 @@
 
       subtotal += parseInt(orderItem.price, 10);
       subtotalDiv.text(subtotal);
-      totalPriceDiv.text(subtotal);
+      totalPrice = subtotal;
+      totalPriceDiv.text(totalPrice);
 
       cartViewer.append(liOrderItem);
 
 
     });
   };
+
+  $(".container").on("change", "#shippingFeeSelect", function (e) {
+    e.preventDefault();
+
+    shippingFee = parseInt($(this).val(), 10);
+
+    var shippingFeeField = $('#shippingFeeField');
+    shippingFeeField.text(shippingFee)
+
+    calcTatalPrice();
+
+
+  });
+
+  var calcTatalPrice = function () {
+
+    totalPrice = subtotal - shippingFee;
+    console.log('=== calcTatalPrice ===', totalPrice);
+
+    totalPriceDiv.text(totalPrice);
+
+  }
 
   cartViewerInit();
 

@@ -36,10 +36,10 @@ block body
                     label
                       | 運送區域
                       span.text-danger *
-                    select.form-control
-                      option 請選擇
-                      option 台灣 - 運費70元
-                      option 離島 - 運費150元
+                    select#shippingFeeSelect.form-control
+                      option(value='0') 請選擇
+                      option(value='70') 台灣 - 運費70元
+                      option(value='150') 離島 - 運費150元
                   // /form-group
                 // /col-sm-4
                 .col-sm-4
@@ -70,7 +70,7 @@ block body
                       span.text-danger 0
                   tr
                     th 運費
-                    td.text-right 免運
+                    td#shippingFeeField.text-right 0
                   tr
                     th 禮品包裝
                     td.text-right 0
