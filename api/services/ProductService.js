@@ -272,6 +272,10 @@ module.exports = {
   },
 
   findFavorite: async (productIds) => {
+
+    if ( ! productIds)
+      return [];
+    
     var prop;
     let subQuery = { "$or": [] };
 
@@ -279,6 +283,9 @@ module.exports = {
     for (prop in productIds) {
       subQuery["$or"].push({id: prop});
     }
+
+    if (subQuery["$or"].length < 1)
+      return [];
     
     let products = await db.Product.findAll({
       where: subQuery,

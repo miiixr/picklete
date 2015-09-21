@@ -201,7 +201,7 @@ describe("about product service", () => {
 
   });
 
-  it.only('find Favorite list', async (done) => {
+  it('find Favorite list', async (done) => {
     try {
       let product = await ProductService.findFavorite({
         11: true,
@@ -210,6 +210,17 @@ describe("about product service", () => {
       });
       console.log(product);
       product.should.be.an.Object;
+      done();
+    } catch (e) {
+      done(e);
+    }
+  });
+
+  it.only('find NOT Favorite list', async (done) => {
+    try {
+      let product = await ProductService.findFavorite({});
+      console.log(product);
+      product.should.be.an.Array;
       done();
     } catch (e) {
       done(e);
