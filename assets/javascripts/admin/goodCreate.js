@@ -70,11 +70,12 @@
   });
   // end btn-remove
 
-  // isPublish button click
+  // btn-isPublish
   $('.well').on('click','.btn-status',function(e){
     var that = $(this);
     that.find("input[type=radio]").prop("checked", true);
   });
+  // end btn-isPublish
 
 
 
@@ -101,6 +102,7 @@
   });
 
   // CKEDITOR
+  // tab-1
   CKEDITOR.replace( 'editor1' );
   // load data from db if exists
   var explainPreLoad = $("#explainContainer").val();
@@ -108,7 +110,7 @@
   if( explainPreLoad!=null && explainPreLoad.length>0 ){
     CKEDITOR.instances.editor1.setData( explainPreLoad );
   }
-
+  // tab-2
   CKEDITOR.replace( 'editor2' );
   // load data from db if exists
   var noticePreLoad = $("#noticeContainer").val();
@@ -117,6 +119,20 @@
     CKEDITOR.instances.editor2.setData( noticePreLoad );
   }
   // end of CKEDITOR
+
+  // form submit
+  $(function  () {
+    $("form#goodForm").submit(function() {
+
+      // give weight
+      $('li.productWeight').map(function(index) {
+        $(this).find('.weight').val(index);
+      });
+      // end give weight
+
+    });
+  });
+  // end form submit
 
   $(function  () {
     $("ol.drag-container").sortable({

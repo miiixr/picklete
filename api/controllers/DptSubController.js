@@ -5,7 +5,7 @@ let DptSubController = {
 
     var dptSubData = {
       name: req.body.subDptName,
-      weight: req.body.wieght || 1,
+      weight: req.body.weight || 1,
       official: false,
       DptId: req.body.dptId
     };
