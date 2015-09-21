@@ -1,10 +1,17 @@
   import path from 'path';
+
+  // simulate login
   var sinon = require('sinon');
 
-describe("about Product", () => {
+  // import test data foler
+  let testData = require('./testData/product.js');
+  let testProduct;
+  let testProductId, testProductTotal;
+  let testProductGmId, testProductGmName;
 
-  let testProduct = null;
+describe.only("about Product", () => {
 
+  // before testing
   before(async (done) => {
 
     // simulate login
@@ -12,149 +19,189 @@ describe("about Product", () => {
       return true;
     });
 
-    let newProduct = {
-      name: '斗六文旦柚禮盒',
-      description: '3斤裝',
-      stockQuantity: 10,
-      price: 100,
-      image: 'http://localhost:1337/images/product/1.jpg',
-      isPublish: true,
-      comment: 'this is a comment.'
-    };
-    testProduct = await db.Product.create(newProduct);
+    // get pre-built product/prouctGm infos
+    testProduct = await testData.testData();
+    testProductId = testProduct.pId;
+    testProductTotal = testProduct.pTotal;
+    testProductGmId = testProduct.gmId;
+    testProductGmName = testProduct.gmName;
+    console.log('=== testProduct ==>\n',testProduct);
 
     done();
   });
+  // end before
 
+  // after testing
   after((done) => {
-    // end this simulated login
+
+    // simulated loginout
     UserService.getLoginState.restore();
+
     done();
   });
+  // end after
 
-  it('one', (done) => {
+  // get update view
+  it('show update', (done) => {
     request(sails.hooks.http.app)
-    .get(`/api/product/${testProduct.id}`)
+    .get(`/admin/goods/update?id=${testProductGmId}&responseType=json`)
     .end((err, res) => {
       if (res.statusCode === 500) {
         return done(body)
       }
+      console.log('=== res.body.good. ===>',res.body.good.Products[0]);
       res.statusCode.should.equal(200);
-      res.body.product.should.be.Object;
-      res.body.product.id.should.be.number;
-      res.body.product.image.should.be.String;
-
-      done(err);
-
-    });
-  });
-
-  it('all', (done) => {
-    request(sails.hooks.http.app)
-    .get(`/api/product`)
-    .end((err, res) => {
-      if (res.statusCode === 500) {
-        return done(body)
-      }
-      res.statusCode.should.equal(200);
-      res.body.products.should.be.Array;
-
-      res.body.products.forEach(product => {
-        product.image.should.be.String;
+      res.body.good.id.should.be.equal(testProductGmId);
+      res.body.good.name.should.be.equal(testProductGmName);
+      res.body.good.Products.length.should.be.equal(testProductTotal);
+      res.body.good.Products.forEach(product => {
+        product.id.should.be.number;
+        product.ProductGmId.should.be.equal(testProductGmId);
       });
       done(err);
     });
   });
+  // end get update view
 
-  it('update', (done) => {
-    var updateProduct = {
-      name: 'specUpdated',
-      description: '10斤裝',
-      stockQuantity: 10,
-      price: 999,
-      image: 'http://localhost:1337/images/product/1.jpg',
-      isPublish: true,
-      comment: 'this is a comment.'
-    };
+  // do update
+  it('do update', (done) => {
     request(sails.hooks.http.app)
-    .post(`/api/product/update/${testProduct.id}`)
-    .send({updateProduct})
-    .end((err,res) => {
-      if(res.statusCode === 500){
-        return done(err);
+    .post(`/admin/goods/update?responseType=json`)
+    .send({ good:
+     [ { id: testProductId,
+         weight: '0',
+         'photos-1': '',
+         'photos-2': '',
+         color: '3',
+         name: 'changed',
+         productNumber: '1-USA-2-G',
+         stockQuantity: '100',
+         isPublish: 'true' } ],
+    productGm: { id: testProductGmId },
+    brandType: 'origin',
+    brandId: '1',
+    customBrand: '',
+    dptId: [ '8' ],
+    dptSubId: [ '22' ],
+    name: '好東西商品',
+    price: '999',
+    country: 'U.K',
+    madeby: 'TW',
+    spec: 'super-metal',
+    size: 'normal',
+    service: [ 'express' ],
+    comment: '',
+    coverPhoto:
+     [ 'https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/JC1121-set-My-Mug-blue-2.jpg',
+       '' ],
+    explain: '<p>好東西就是要買，買買買</p>\r\n',
+    notice: '<p>18 歲以下請勿使用</p>\r\n',
+    tag: '' })
+    .end((err, res) => {
+      if (res.statusCode === 500) {
+        return done(body)
       }
-      else {
-        done();
-      }
+      console.log('=== res.body ==>',res.body);
+      res.statusCode.should.equal(200);
+      res.body.id.should.be.equal(testProductId);
+      res.body.ProductGmId.should.be.equal(testProductGmId);
+      res.body.name.should.be.equal('changed');
+      done(err);
     });
   });
+  // end do update
 
-  it('add', (done) => {
-    var product = {
-      name: 'specAdd',
-      description: '10斤裝',
-      stockQuantity: 10,
-      price: 999,
-      image: 'http://localhost:1337/images/product/1.jpg',
-      isPublish: true,
-      comment: 'this is a comment.'
-    };
+  // do create
+  it('do create', (done) => {
     request(sails.hooks.http.app)
-    .post(`/api/product/`)
-    .send({product})
-    .end((err,res) => {
-      if(res.statusCode === 500){
-        return done(err);
+    .post(`/admin/goods/create?responseType=json`)
+    .send({ brandType: 'origin',
+      brandId: '1',
+      customBrand: '',
+      dptId: [ '1' ],
+      dptSubId: [ '1' ],
+      name: 'test',
+      price: '1',
+      country: '1',
+      madeby: '1',
+      spec: '1',
+      size: '1',
+      service: [ 'express', 'store', 'package' ],
+      comment: '1',
+      good:
+       [ { weight: '0',
+           'photos-1': '',
+           'photos-2': '',
+           color: '1',
+           name: '111',
+           productNumber: '1',
+           stockQuantity: '999',
+           isPublish: 'false' } ],
+      coverPhoto: [ '' ],
+      explain: '',
+      notice: '',
+      tag: '' })
+    .end((err, res) => {
+      if (res.statusCode === 500) {
+        return done(body)
+      }
+      console.log('=== res.body ==>',res.body);
+      res.statusCode.should.equal(200);
+      res.body.id.should.be.number;
+      res.body.ProductGmId.should.be.number;
+      done(err);
+    });
+  });
+  // end do create
+
+  // list all
+  it('show good list', (done) => {
+    request(sails.hooks.http.app)
+    .get(`/admin/goods?responseType=json`)
+    .end((err, res) => {
+      if (res.statusCode === 500) {
+        return done(body)
       }
       res.statusCode.should.equal(200);
+      res.body.pageName.should.be.equal("/admin/goods");
+      res.body.query.responseType.should.be.equal("json");
+      res.body.brands.forEach(brand => {
+        brand.name.should.be.String;
+      });
+      res.body.dpts.forEach(dpt => {
+        dpt.name.should.be.String;
+      });
+      res.body.products.forEach(product => {
+        product.id.should.be.number;
+        product.ProductGmId.should.be.number;
+      });
+      done(err);
+    });
+  });
+  // end list all
+
+  // delete productGm
+  it('delete productGm', (done) => {
+    request(sails.hooks.http.app)
+    .post(`/admin/goods/delete`)
+    .send({id:1, jsonOut: true})
+    .end((err,res) => {
+      if(res.statusCode === 500){
+        return done(err);
+      }
+      console.log('=== res.body ==>\n',res.body);
+      console.log('=== res.body.id ==>\n',res.body.id);
+      console.log('=== res.body.deletedAt ==>\n',res.body.deletedAt);
+      res.statusCode.should.equal(200);
       res.body.should.be.Object;
-      res.body.name.should.equal("specAdd");
-      res.body.id.should.be.number;
-      done(err);
+      res.body.id.should.equal(1);
+      res.body.deletedAt.should.be.Date;
+      done();
     });
   });
+  // end delete productGm
 
-  it('delete', (done) => {
-    request(sails.hooks.http.app)
-    .delete(`/api/product/1`)
-    .end((err,res) => {
-      if(res.statusCode === 500){
-        return done(err);
-      }
-      res.statusCode.should.equal(302);
-      done(err);
-    });
-  });
 
-  it('publish', (done) => {
-    request(sails.hooks.http.app)
-    .put(`/api/product/publish/${testProduct.id}`)
-    .end((err,res) => {
-      if(res.statusCode === 500){
-        return done(err);
-      }
-      res.statusCode.should.equal(302);
-      // res.statusCode.should.equal(200);
-      // res.body.should.be.Object;
-      // res.body.isPublish.should.equal(true);
-      done(err);
-    });
-  });
-
-  it('unpublish', (done) => {
-    request(sails.hooks.http.app)
-    .put(`/api/product/unpublish/${testProduct.id}`)
-    .end((err,res) => {
-      if(res.statusCode === 500){
-        return done(err);
-      }
-      res.statusCode.should.equal(302);
-      // res.statusCode.should.equal(200);
-      // res.body.should.be.Object;
-      // res.body.isPublish.should.equal(false);
-      done(err);
-    });
-  });
 
   it('create a product for one type, origin brandType, test about - ProductController.createUpdate', (done) => {
 
@@ -409,26 +456,106 @@ describe("about Product", () => {
 
   // });
 
-  // delete productGm
-  it('delete productGm', (done) => {
-    request(sails.hooks.http.app)
-    .post(`/admin/goods/delete`)
-    .send({id:1, jsonOut: true})
-    .end((err,res) => {
-      if(res.statusCode === 500){
-        return done(err);
-      }
-      console.log('=== res.body ==>\n',res.body);
-      console.log('=== res.body.id ==>\n',res.body.id);
-      console.log('=== res.body.deletedAt ==>\n',res.body.deletedAt);
-      res.statusCode.should.equal(200);
-      res.body.should.be.Object;
-      res.body.id.should.equal(1);
-      res.body.deletedAt.should.be.Date;
-      done();
-    });
-  });
-  // end delete productGm
+  //
+  // old things
+  //
+  // // add
+  // it('add', (done) => {
+  //   var product = {
+  //     name: 'specAdd',
+  //     description: '10斤裝',
+  //     stockQuantity: 10,
+  //     price: 999,
+  //     image: 'http://localhost:1337/images/product/1.jpg',
+  //     isPublish: true,
+  //     comment: 'this is a comment.'
+  //   };
+  //   request(sails.hooks.http.app)
+  //   .post(`/api/product/`)
+  //   .send({product})
+  //   .end((err,res) => {
+  //     if(res.statusCode === 500){
+  //       return done(err);
+  //     }
+  //     res.statusCode.should.equal(200);
+  //     res.body.should.be.Object;
+  //     res.body.name.should.equal("specAdd");
+  //     res.body.id.should.be.number;
+  //     done(err);
+  //   });
+  // });
+  // // end add
+  //
+  // // publish
+  // it('publish', (done) => {
+  //   request(sails.hooks.http.app)
+  //   .put(`/api/product/publish/${testProduct.id}`)
+  //   .end((err,res) => {
+  //     if(res.statusCode === 500){
+  //       return done(err);
+  //     }
+  //     res.statusCode.should.equal(302);
+  //     // res.statusCode.should.equal(200);
+  //     // res.body.should.be.Object;
+  //     // res.body.isPublish.should.equal(true);
+  //     done(err);
+  //   });
+  // });
+  // // end publish
+  //
+  // // unpublish
+  // it('unpublish', (done) => {
+  //   request(sails.hooks.http.app)
+  //   .put(`/api/product/unpublish/${testProduct.id}`)
+  //   .end((err,res) => {
+  //     if(res.statusCode === 500){
+  //       return done(err);
+  //     }
+  //     res.statusCode.should.equal(302);
+  //     // res.statusCode.should.equal(200);
+  //     // res.body.should.be.Object;
+  //     // res.body.isPublish.should.equal(false);
+  //     done(err);
+  //   });
+  // });
+  // // end unpublish
+  //
+  // // delete
+  // it('delete', (done) => {
+  //   request(sails.hooks.http.app)
+  //   .delete(`/api/product/1`)
+  //   .end((err,res) => {
+  //     if(res.statusCode === 500){
+  //       return done(err);
+  //     }
+  //     res.statusCode.should.equal(302);
+  //     done(err);
+  //   });
+  // });
+  // // end delete
+  // //
+  // it('update', (done) => {
+  //   var updateProduct = {
+  //     name: 'specUpdated',
+  //     description: '10斤裝',
+  //     stockQuantity: 10,
+  //     price: 999,
+  //     image: 'http://localhost:1337/images/product/1.jpg',
+  //     isPublish: true,
+  //     comment: 'this is a comment.'
+  //   };
+  //   request(sails.hooks.http.app)
+  //   .post(`/api/product/update/${testProduct.id}`)
+  //   .send({updateProduct})
+  //   .end((err,res) => {
+  //     if(res.statusCode === 500){
+  //       return done(err);
+  //     }
+  //     else {
+  //       done();
+  //     }
+  //   });
+  // });
 
 
 });

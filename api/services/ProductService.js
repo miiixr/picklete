@@ -6,9 +6,10 @@ import util from "util";
 module.exports = {
 
   create: async (updateProduct) => {
-    console.log('----------');
-    console.log(updateProduct);
-    console.log('----------');
+    // console.log('----------');
+    // console.log(updateProduct);
+    // console.log('----------');
+    let product;
 
     // 如果選擇其他品牌的話，找出其他品牌的 id
     var brandType = updateProduct.brandType;
@@ -93,7 +94,8 @@ module.exports = {
       };
 
       try {
-        await db.Product.create(newProduct);
+        product =  await db.Product.create(newProduct);
+        return product;
       } catch (e) {
         return console.error(e)
       }
@@ -102,7 +104,8 @@ module.exports = {
   },
 
   update: async (updateProduct) => {
-    // console.log('=== ProductService : updateProduct ==>\n', updateProduct);
+    let product;
+    console.log('=== ProductService : updateProduct ==>\n', updateProduct);
     try {
       var {brandType} = updateProduct;
       var brand;
@@ -131,7 +134,7 @@ module.exports = {
         var good = goods[i];
 
         // find product in db first
-        let product = await db.Product.find({
+        product = await db.Product.find({
           where: {
             id: good.id
           }
@@ -224,6 +227,8 @@ module.exports = {
       if(updateProduct.dptSubId != '')
         await productGm.setDptSubs(updateProduct.dptSubId);
 
+
+      return product;
     } catch (e) {
       console.error(e.stack);
       throw e;
