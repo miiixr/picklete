@@ -19,7 +19,7 @@ module.exports = {
 
     let files = await promise.then();
     // console.log('files >>>>', files);
-    
+
 
     try {
       for (let i in files) {
@@ -29,7 +29,7 @@ module.exports = {
           width: object.width,
           height: object.height
         });
-        
+
         files[i].fd = domain + ImageService.processPath(files[i].fd);
       }
 
@@ -42,14 +42,14 @@ module.exports = {
 
 
 
-    
+
     // req.file("uploadfile").upload(async (err, files) => {
-      
+
     //   if ( ! files.length)
     //     return res.ok([]);
 
 
-      
+
     //   for (let i in files) {
     //     try {
     //       files[i] = await ImageService.resize({
@@ -61,7 +61,7 @@ module.exports = {
     //     } catch (e){
     //       console.error(e);
     //     }
-        
+
     //     files[i].fd = domain + ImageService.processPath(files[i].fd);
     //   }
     //   object[0] = files[0];

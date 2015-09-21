@@ -30,7 +30,7 @@ AuthController = {
     if (referencePath[1] === 'admin') {
       return res.redirect('/admin/login');
     }
-    return res.redirect('/login');
+    return res.redirect('/');
 
   },
   register: async (req, res) => {
@@ -95,7 +95,19 @@ AuthController = {
           res.redirect('back');
           break;
         default:
-          let reference = url.parse(req.headers.referer);
+          var reference;
+          try {
+            reference = url.parse(req.headers.referer);  
+          } catch (e) {
+            reference = { path : "" };
+          }
+
+          if (req.xhr)
+            return res.ok({
+              status: "fail",
+              message: "login fail"
+            });
+          
           if (reference.path === '/admin/login') {
             res.redirect('/admin/login');
           }else {
@@ -120,6 +132,12 @@ AuthController = {
         }
 
         console.log('=== user.Role ===', user);
+
+        if (req.xhr)
+          return res.ok({
+            status: "ok",
+            message: "login success"
+          });
 
         return res.redirect('/');
       });

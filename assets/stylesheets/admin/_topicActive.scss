@@ -1,0 +1,55 @@
+/* image exist */
+#ActivitiesData {
+  .fileinput-square {
+    overflow: hidden;
+  }
+
+  .fileinput-square.image-exist {
+    &>a>span {
+      opacity: 0;
+    }
+    &:hover {
+      &>a {
+        &>span {
+          opacity: 1;
+        }
+        &>img {
+          opacity: 0.65;
+        }
+      }
+    }
+  }
+
+  /* image does not exist */
+  .fileinput-square.dashed-block-2 {
+    &>a {
+      &>span{
+        opacity: 0.2;
+      }
+      &>img {
+        opacity: 0;
+      }
+      &:hover {
+        &>span{
+          opacity: 1;
+        }
+        &>img {
+          opacity: 0;
+        }
+      }
+    }
+  }
+
+  .hidden-section {
+    display: none;
+  }
+
+}
+
+#imageSectionSample {
+  &.hidden-section {
+    display: none;
+  }
+}
+
+  

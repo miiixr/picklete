@@ -1,4 +1,4 @@
-describe.only("TopicActiveService", () => {
+describe("TopicActiveService", () => {
 
   it('get TopicActive', async(done) => {
 
@@ -10,7 +10,7 @@ describe.only("TopicActiveService", () => {
       let topicActives = result;
 
       topicActives.length.should.be.equal(2);
-      topicActives[0].title.should.be.equal("title1");
+      topicActives[0].title.should.be.not.equal("");
       topicActives[0].toJSON().should.have.keys(
         'title',
         'createdAt',
@@ -37,7 +37,7 @@ describe.only("TopicActiveService", () => {
         'ImageC2'
       );
 
-      topicActives[1].title.should.be.equal("title2");
+      topicActives[1].title.should.be.not.equal("");
 
       done();
     } catch (e) {

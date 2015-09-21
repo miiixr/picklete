@@ -108,19 +108,23 @@ block body
         each product,val in products
           .col-md-3.col-sm-4.col-xs-6
             .item-block.m-bottom-4
-              a.item-like.active(href='#')
+              a.item-like(href='#', data-productId=product.id)
                 span.glyphicon.glyphicon-heart
               // /item-like
-              a(href='/shop/product?pid=#{product.id}')
+
+              a(href='/shop/products/#{product.ProductGm.id}/#{product.id}')
+
                 img.img-full.item-show(src=product.photos && product.photos[0]? product.photos[0] : "http://www.culpwrit.com/wp-content/uploads/2012/09/no11.jpg")
                 img.img-full.item-hide(src=product.photos && product.photos[1]? product.photos[1] : "http://www.culpwrit.com/wp-content/uploads/2012/09/no11.jpg")
             // /item-block
             .item-text-block.m-bottom-8
               h6.text-muted
-                a(href='brands.html') #{_.find(brands, {id: product.ProductGm.brandId}).name }
+                a(href='/brands/#{product.ProductGm.brandId}') #{_.find(brands, {id: product.ProductGm.brandId}).name }
               h4.m-bottom-2.h4-max-two-hide
                 - var name = product.name ? "(" + product.name + ")" : "";
-                a(href='/shop/product?pid=#{product.id}') #{product.ProductGm.name} #{name}
+                //- a(href='/shop/product?pid=#{product.id}') #{product.ProductGm.name} #{name}
+
+                a(href='/shop/products/#{product.ProductGm.id}/#{product.id}') #{product.ProductGm.name} #{name}
               h5
                 | $ #{product.price}
             // /item-text-block

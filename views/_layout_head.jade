@@ -3,11 +3,11 @@ html
   head
     meta(charset='utf-8')
     | &#x9;
-    title {BRAND} - Platform
+    title Platform - #{company.name}
     // Mobile device set
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     // Fav and touch icons
-    link(rel='shortcut icon', href='images/ico/favicon.ico')
+    link(rel='shortcut icon', href='#{company.avatar}')
     // Style
     link(href='/stylesheets/bootstrap.css', media='screen', rel='stylesheet', type='text/css')
     | &#x9;
@@ -35,12 +35,12 @@ html
         .navbar-header
           button.navbar-toggle(type='button', data-toggle='offcanvas', data-target='.navmenu', data-canvas='body')
             span.icon-bar
-            | &#x9;&#x9;&#x9;&#x9;
+            |         
             span.icon-bar
-            | &#x9;&#x9;&#x9;&#x9;
+            |         
             span.icon-bar
-          | &#x9;&#x9;&#x9;
-          a.navbar-brand(href='/index') {BRAND}
+          |       
+          a.navbar-brand(href='/', style='background-image: url(#{company.avatar})') #{company.name}
         // /navbar-header
         // Collect the nav links, forms, and other content for toggling
         .collapse.navbar-collapse
@@ -48,211 +48,97 @@ html
             li
               a.width-11.text-center(data-toggle='collapse', aria-expanded='true', href='#dropdown-menu-brands')
                 span.text-en BRANDS
-                | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
-                span.text-active &#x54C1;&#x724C;&#x4ECB;&#x7D39;
-              | &#x9;&#x9;&#x9;&#x9;&#x9;
+                |             
+                span.text-active 品牌介紹
+              |           
               #dropdown-menu-brands.dropdown-menu-full.collapse
                 .container.p-top-4.p-bottom-4
                   //
                     dropdown-menu-brands
                     ==================================================
                   .clearfix.m-bottom-2.text-left
-                    h4.text-gray-darker.m-bottom-4 &#x4EE3;&#x7406;&#x54C1;&#x724C;
-                    | &#x9;
+                    h4.text-gray-darker.m-bottom-4 代理品牌
+                    |   
                     ul.list-inline.list-brand
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-1.jpg')
-                      | &#x9;&#x9;
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-2.jpg')
-                      | &#x9;&#x9;
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-3.jpg')
-                      | &#x9;&#x9;
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-4.jpg')
-                      | &#x9;&#x9;
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-5.jpg')
-                      | &#x9;&#x9;
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-6.jpg')
-                      | &#x9;&#x9;
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-7.jpg')
-                      | &#x9;&#x9;
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-8.jpg')
-                      | &#x9;&#x9;
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-9.jpg')
-                      | &#x9;&#x9;
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-10.jpg')
-                      | &#x9;&#x9;
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-11.jpg')
-                      | &#x9;&#x9;
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-12.jpg')
-                      | &#x9;&#x9;
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-13.jpg')
+                      each brand, idx in brands
+                        - if (brand.type === 'AGENT')
+                          li
+                            a(href='/brands/#{brand.id}')
+                              img.border-block-1.img-full(src='#{brand.avatar}')
+                          |     
                   // /clearfix
                   .clearfix.m-bottom-2
-                    h4.text-gray-darker.m-bottom-4 &#x7CBE;&#x9078;&#x54C1;&#x724C;
-                    | &#x9;
+                    h4.text-gray-darker.m-bottom-4 精選品牌
+                    |   
                     ul.list-inline.list-brand
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-1.jpg')
-                      | &#x9;&#x9;
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-2.jpg')
-                      | &#x9;&#x9;
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-3.jpg')
-                      | &#x9;&#x9;
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-4.jpg')
-                      | &#x9;&#x9;
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-5.jpg')
-                      | &#x9;&#x9;
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-6.jpg')
-                      | &#x9;&#x9;
-                      li
-                        a(href='/brands')
-                          img.border-block-1.img-full(src='images/demo/brands-logo-7.jpg')
+
+                      each brand, idx in brands
+                        - if (brand.type === 'PRIME_GOOD')
+                          li
+                            a(href='/brands/#{brand.id}')
+                              img.border-block-1.img-full(src='#{brand.avatar}')
+                          |     
                   // /clearfix
                 // /container
               // /dropdown-menu
-            | &#x9;&#x9;&#x9;&#x9;
+            |         
             //- li
             //-   a.width-10.text-center(href='http://blog.XXXXXX.com/')
             //-     span.text-en BLOG
-            //-     | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
-            //-     span.text-active &#x751F;&#x6D3B;&#x8A8C;
-            //- | &#x9;&#x9;&#x9;&#x9;
+            //-     |             
+            //-     span.text-active 生活誌
+            //- |   
             li
               a.width-10.text-center(href='/shop/products')
                 span.text-en SHOP
-                | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
-                span.text-active &#x7DDA;&#x4E0A;&#x8CFC;&#x7269;
-            | &#x9;&#x9;&#x9;&#x9;
-            li.dropdown
-              a.dropdown-toggle.width-11.text-center(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
-                span.text-en ACCOUNT
-                | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
-                span.text-active &#x6703;&#x54E1;&#x4E2D;&#x5FC3;
-              | &#x9;&#x9;&#x9;&#x9;&#x9;
-              ul.dropdown-menu.dropdown-menu-right.dropdown-menu-noborder
-                li
-                  a(href='/member/fav') &#x6211;&#x7684;&#x6536;&#x85CF;
-                | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
-                li
-                  a(href='/member/purchase') &#x6211;&#x7684;&#x8A02;&#x55AE;&#x8A18;&#x9304;
-                | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
-                li
-                  a(href='/member/setting') &#x4FEE;&#x6539;&#x6703;&#x54E1;&#x8CC7;&#x6599;
-                | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
-                li.divider(role='separator')
-                | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
-                li
-                  a(href='#') &#x767B;&#x51FA;
-            | &#x9;&#x9;&#x9;&#x9;
-            li
-              a.width-12.text-center(href='#', data-toggle='modal', data-target='#modal-login')
-                span.glyphicon.glyphicon-user.font-size-slarge
-                | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
-                span.text-en LOGIN
-                | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
-                span.text-active &#x767B;&#x5165;
-            | &#x9;&#x9;&#x9;&#x9;
-            li.dropdown.icon-link
-              a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
-                span.glyphicon.glyphicon-shopping-cart.m-right-1.font-size-slarge
-                span.text-green 5
-              //
-                dropdown-cart
-                ==================================================
-              ul.dropdown-menu.dropdown-menu-right.dropdown-cart
-                .dropdown-cart-content
+                |             
+                span.text-active 線上購物
+            - if (user)
+              |         
+              li.dropdown
+                a.dropdown-toggle.width-11.text-center(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+                  span.text-en ACCOUNT
+                  |             
+                  span.text-active 會員中心
+                |           
+                ul.dropdown-menu.dropdown-menu-right.dropdown-menu-noborder
                   li
-                    .row
-                      .col-xs-4
-                        .item-block
-                          span.badge 3
-                          | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
-                          img.img-full(src='images/demo/shop-item-5-1.jpg')
-                        // /item-block
-                      // /col-xs-4
-                      .col-xs-8.p-left-0
-                        h6.text-muted
-                          a(href='/brands') Le mouton noir &amp; co
-                        | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
-                        h5
-                          a(href='shop-product') B.B.bank / BB&#x8C6C;
-                        | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
-                        h5 $490
-                      // /col-xs-8
-                    // /row
-                  | &#x9;&#x9;
+                    a(href='/member/favorite') 我的收藏
+                  |             
                   li
-                    a(href='shop-product')
-                      .row
-                        .col-xs-4
-                          .item-block
-                            span.badge 1
-                            | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
-                            img.img-full(src='images/demo/shop-item-6-1.jpg')
-                          // /item-block
-                        // /col-xs-4
-                        .col-xs-8.p-left-0
-                          h6.text-muted
-                            a(href='brands') Jansen+co
-                          | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
-                          h5
-                            a(href='shop-product') My Mug Set &#x8ABF;&#x8272;&#x676F;&#x7D44;
-                          | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
-                          h5 $490
-                        // /col-xs-8
-                      // /row
-                  | &#x9;&#x9;
+                    a(href='/member/purchase') 我的訂單記錄
+                  |             
                   li
-                    .row
-                      .col-xs-6
-                        h2.text-center.text-black.line-height-small.m-top-0.m-bottom-0
-                          | $1,990
-                          br
-                          small.font-size-50 subtotal
-                      // /col-xs-6
-                      .col-xs-6
-                        a.btn.btn-black.border-radius-circle.btn-block(href='/user/cart') &#x7D50;&#x5E33;
-                      // /col-xs-6
-                    // /row
-                // /dropdown-cart-content
-              // /dropdown-cart
-            | &#x9;&#x9;&#x9;&#x9;
+                    a(href='/member/setting') 修改會員資料
+                  |             
+                  li.divider(role='separator')
+                  |             
+                  li
+                    a(href='/logout') 登出
+            - if ( ! user)
+              |         
+              li
+                a.width-12.text-center(href='#', data-toggle='modal', data-target='#modal-login')
+                  span.glyphicon.glyphicon-user.font-size-slarge
+                  |             
+                  span.text-en LOGIN
+                  |             
+                  span.text-active 登入
+            - if (true || user)
+              |         
+              li.dropdown.icon-link
+                a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+                  span.glyphicon.glyphicon-shopping-cart.m-right-1.font-size-slarge
+                  span.text-green 
+                    span#order-items-count 0
+                //
+                  dropdown-cart
+                  ==================================================
+                ul.dropdown-menu.dropdown-menu-right.dropdown-cart
+                  .dropdown-cart-content#dropdown-cart-content
+
+                        
+            |         
             li.icon-link.m-right-0
               //
                 search
@@ -260,7 +146,7 @@ html
               #sb-search.sb-search
                 form
                   input#search.sb-search-input.form-control(placeholder='Search for...', type='text', value='', name='search')
-                  | &#x9;&#x9;
+                  |     
                   input.sb-search-submit(type='submit', value='')
                   |     
                   span.glyphicon.glyphicon-search.font-size-slarge
@@ -272,174 +158,73 @@ html
       navmenu-fixed-right
       ==================================================
     .navmenu.navmenu-default.navmenu-fixed-right.offcanvas
-      a.navmenu-brand(href='index') {BRAND}
-      | &#x9;
+      a.navmenu-brand(href='/') #{company.name}
+      |   
       ul.nav.navmenu-nav.navmenu-nav-top
         li
           a(href='brands-list') BRANDS
-        | &#x9;&#x9;
+        |     
         //- li
         //-   a(href='http://blog.xxxxx.com/') BLOG
-        //- | &#x9;&#x9;
+        //- |     
         li.dropdown
           a.dropdown-toggle(href='#', data-toggle='dropdown')
             | SHOP
             span.glyphicon.glyphicon-chevron-down.m-left-1
-          | &#x9;&#x9;&#x9;
-          ul.dropdown-menu.navmenu-nav(role='menu')
+          |       
+          //- ul.dropdown-menu.navmenu-nav(role='menu')
             li
-              a(href='shop/products') &#x65B0;&#x54C1;&#x4E0A;&#x5E02;
-            | &#x9;&#x9;&#x9;&#x9;
+              a(href='shop/products') 新品上市
+            |         
             li
-              a(href='shop/products') &#x5C45;&#x5BB6;&#x751F;&#x6D3B;
-            | &#x9;&#x9;&#x9;&#x9;
+              a(href='shop/products') 居家生活
+            |         
             li
-              a(href='shop/products') &#x9910;&#x5EDA;&#x98DF;&#x5668;
-            | &#x9;&#x9;&#x9;&#x9;
+              a(href='shop/products') 餐廚食器
+            |         
             li
-              a(href='shop/products') &#x4E8B;&#x52D9;&#x6587;&#x5177;
-            | &#x9;&#x9;&#x9;&#x9;
+              a(href='shop/products') 事務文具
+            |         
             li
-              a(href='shop/products') &#x6536;&#x7D0D;&#x6574;&#x7406;
-            | &#x9;&#x9;&#x9;&#x9;
+              a(href='shop/products') 收納整理
+            |         
             li
-              a(href='shop/products') &#x914D;&#x4EF6;&#x5C0F;&#x7269;
-            | &#x9;&#x9;&#x9;&#x9;
+              a(href='shop/products') 配件小物
+            |         
             li
-              a(href='shop/products') &#x6578;&#x4F4D;&#x79D1;&#x6280;
-            | &#x9;&#x9;&#x9;&#x9;
+              a(href='shop/products') 數位科技
+            |         
             li
-              a(href='shop/products') &#x5DE5;&#x85DD;&#x8077;&#x4EBA;
-            | &#x9;&#x9;&#x9;&#x9;
+              a(href='shop/products') 工藝職人
+            |         
             li
-              a(href='shop/products') &#x7279;&#x5225;&#x4F01;&#x5283;
-            | &#x9;&#x9;&#x9;&#x9;
+              a(href='shop/products') 特別企劃
+            |         
             li
-              a.btn.btn-default(href='brands-list-shop') &#x54C1;&#x724C;&#x5217;&#x8868;
-        | &#x9;&#x9;
+              a.btn.btn-default(href='brands-list-shop') 品牌列表
+        |     
         li
           a(href='login')
             span.glyphicon.glyphicon-user.m-right-1
             | LOGIN
-        | &#x9;&#x9;
+        |     
         li
           a(href='user/cart')
             span.glyphicon.glyphicon-shopping-cart.m-right-1
             span.text-green 5
-        | &#x9;&#x9;
+        |     
         li
           .input-group.m-bottom-2.m-top-2
             input.form-control(type='text', placeholder='Search for...')
-            | &#x9;&#x9;&#x9;&#x9;
+            |         
             span.input-group-btn
               a.btn.btn-default.p-left-2.p-right-2(href='search-result')
                 span.glyphicon.glyphicon-search
           // /input-group
+    
     // /navmenu-fixed-right
-    //
-      modal-login
-      ==================================================
-    #modal-login.modal.fade
-      .modal-dialog.modal-sm(role='document')
-        .modal-content
-          .modal-header.p-30
-            button.close(type='button', data-dismiss='modal', aria-label='Close')
-              span(aria-hidden='true') &times;
-            | &#x9;&#x9;&#x9;&#x9;
-            h1.modal-title.text-center &#x767B;&#x5165;
-          // /modal-header
-          .modal-body.text-center.p-30
-            form.m-bottom-4(action='/auth/local/', method='post')
-              .form-group
-                input.form-control(type='email', name='identifier', placeholder='Email')
-              // /form-group
-              .form-group
-                input.form-control(type='password', name='password', placeholder='Password')
-              // /form-group SSS
-              button.btn.btn-black.border-radius-circle.btn-block.m-bottom-2(type='submit') &#x767B;&#x5165;&#x6703;&#x54E1;
-              | &#x9;&#x9;&#x9;&#x9;&#x9;
-              button.btn.btn-fb.border-radius-circle.btn-block(type='button', data-dismiss='modal') FACEBOOK &#x767B;&#x5165;
-            | &#x9;&#x9;&#x9;&#x9;
-            a(href='#', data-toggle='modal', data-target='#modal-password', data-dismiss='modal') &#x5FD8;&#x8A18;&#x5BC6;&#x78BC;
-            | &#x9;&#x9;&#x9;&#x9;
-            hr.m-top-4.m-bottom-4
-            | &#x9;&#x9;&#x9;&#x9;
-            h5.m-bottom-4 &#x9084;&#x6C92;&#x6709;&#x5E33;&#x865F;&#xFF1F;
-            | &#x9;&#x9;&#x9;&#x9;
-            a.btn.btn-line.border-radius-circle.btn-block(href='/user/signup') &#x7533;&#x8ACB;&#x6703;&#x54E1;
-          // /modal-body
-        // /modal-content
-      // /modal-dialog
-    // /modal
-    //
-      modal-login-feedback
-      ==================================================
-    #modal-login-feedback.modal.fade
-      .modal-dialog.modal-sm(role='document')
-        .modal-content
-          .modal-header.p-30
-            button.close(type='button', data-dismiss='modal', aria-label='Close')
-              span(aria-hidden='true') &times;
-            | &#x9;&#x9;&#x9;&#x9;
-            h1.modal-title.text-center &#x767B;&#x5165;
-          // /modal-header
-          .modal-body.text-center.p-30
-            form.m-bottom-4
-              .form-group.has-success.has-feedback
-                input.form-control(type='email', placeholder='Email')
-                | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
-                span.glyphicon.glyphicon-ok.form-control-feedback(aria-hidden='true')
-              // /form-group
-              .form-group.has-error.has-feedback
-                input#exampleInputPassword1.form-control(type='password', placeholder='Password')
-                | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
-                span.glyphicon.glyphicon-remove.form-control-feedback(aria-hidden='true')
-              // /form-group
-              button.btn.btn-black.border-radius-circle.btn-block.m-bottom-2(type='submit', data-dismiss='modal') &#x767B;&#x5165;&#x6703;&#x54E1;
-              | &#x9;&#x9;&#x9;&#x9;&#x9;
-              button.btn.btn-fb.border-radius-circle.btn-block(type='submit', data-dismiss='modal') FACEBOOK &#x767B;&#x5165;
-            | &#x9;&#x9;&#x9;&#x9;
-            a(href='#', data-toggle='modal', data-target='#modal-password', data-dismiss='modal') &#x5FD8;&#x8A18;&#x5BC6;&#x78BC;
-            | &#x9;&#x9;&#x9;&#x9;
-            hr.m-top-4.m-bottom-4
-            | &#x9;&#x9;&#x9;&#x9;
-            h5.m-bottom-4 &#x9084;&#x6C92;&#x6709;&#x5E33;&#x865F;&#xFF1F;
-            | &#x9;&#x9;&#x9;&#x9;
-            a.btn.btn-line.border-radius-circle.btn-block(href='/user/signup') &#x7533;&#x8ACB;&#x6703;&#x54E1;
-          // /modal-body
-        // /modal-content
-      // /modal-dialog
-    // /modal
-    //
-      modal-password
-      ==================================================
-    #modal-password.modal.fade
-      .modal-dialog.modal-sm(role='document')
-        .modal-content
-          .modal-header.p-30
-            button.close(type='button', data-dismiss='modal', aria-label='Close')
-              span(aria-hidden='true') &times;
-            | &#x9;&#x9;&#x9;&#x9;
-            h1.modal-title.text-center &#x5FD8;&#x8A18;&#x5BC6;&#x78BC;
-          // /modal-header
-          .modal-body.text-center.p-30
-            form.m-bottom-4
-              .form-group
-                input.form-control(type='email', placeholder='Email')
-              // /form-group
-              button.btn.btn-black.border-radius-circle.btn-block.m-bottom-2(type='button', data-dismiss='modal') &#x767C;&#x9001;&#x4FE1;&#x7BB1;
-            | &#x9;&#x9;&#x9;&#x9;
-            a(href='#', data-toggle='modal', data-target='#modal-login', data-dismiss='modal') &#x53D6;&#x6D88;
-            | &#x9;&#x9;&#x9;&#x9;
-            hr.m-top-4.m-bottom-4
-            | &#x9;&#x9;&#x9;&#x9;
-            h5.m-bottom-4 &#x9084;&#x6C92;&#x6709;&#x5E33;&#x865F;&#xFF1F;
-            | &#x9;&#x9;&#x9;&#x9;
-            a.btn.btn-line.border-radius-circle.btn-block(href='/user/signup') &#x7533;&#x8ACB;&#x6703;&#x54E1;
-          // /modal-body
-        // /modal-content
-      // /modal-dialog
-    // /modal
+    include ./partial/_main_modal
+    
     //
       Navbar
       ==================================================
@@ -455,30 +240,34 @@ html
             span.icon-bar
             |         
             span.icon-bar
-          | &#x9;&#x9;&#x9;
-          a.navbar-brand(href='control-index-slider') {BRAND}
-          | &#x9;&#x9;&#x9;
+          |       
+          a.navbar-brand(href='/') #{company.name}
+          |       
           h4.navbar-text.pull-left control panel
         // /navbar-header
         // Collect the nav links, forms, and other content for toggling
         #bs-example-navbar-collapse-1.collapse.navbar-collapse
           ul.nav.navbar-nav.navbar-right(aria-multiselectable='true')
             li
-              a.text-center(href='index') &#x767B;&#x51FA;
-            | &#x9;&#x9;&#x9;&#x9;
+              a.text-center(href='index') 登出
+            |         
             li
-              a.text-center(href='control-password') &#x4FEE;&#x6539;&#x5BC6;&#x78BC;
+              a.text-center(href='control-password') 修改密碼
         // /navbar-collapse
       // /container
     // /navbar-fixed-top
+
     - var flash = errors || req.flash('message') || req.flash('error')
     if flash.length != 0
       .row.col-xs-12
         .alert.alert-danger(role='alert')
-          p= flash
+          p 表單送出填寫有誤，請確認填入資料
+          p(style="display:none;")= flash
+    
     block body
 
     include _layout_footer
+
   script(src='/javascripts/plugin/modernizr.custom.js')
   script(src='http://code.jquery.com/jquery-1.9.1.js')
   script(src='/javascripts/plugin/scrolltotop.js')
@@ -489,11 +278,7 @@ html
   script(src='/javascripts/plugin/jasny-bootstrap.js')
   // /jasny-bootstrap
   script(src='/javascripts/plugin/classie.js')
-  | &#x9;
   script(src='/javascripts/plugin/uisearch.js')
-  | &#x9;
-  script.
-    new UISearch( document.getElementById( 'sb-search' ) );
   // /sb-search
   script(src='/javascripts/plugin/input-number.js')
   // /input-number
@@ -501,59 +286,16 @@ html
   script(src='/javascripts/plugin/cbpAnimatedHeader.js')
   // /cbpAnimatedHeader
   script(type='text/javascript', src='/javascripts/plugin/notifyme.js')
-  script(type='text/javascript').
-    $(document).ready(function(){
-      $('.add-to-cart').on('click', function(){
-        $(this).notifyMe(
-          'top',
-          'cart',
-          '<span class="glyphicon glyphicon-ok-circle m-right-2"></span>已加入購物車',
-          '',
-          300,
-          1500
-        );
-      });
-    });
-  // /notifyme
+  script(src='/javascripts/plugin/scrolltotop.js')
   script(src='/javascripts/plugin/cbpScroller.js')
-  | &#x9;
+  script(src="/bower/js-cookie/js.cookie.js")
+  script(type='text/javascript' src='/javascripts/common/head_layout.js')
+  script(type='text/javascript' src='/javascripts/user/login.js')
+  script(type='text/javascript' src='/bower/js-cookie/js.cookie.js')
+
   script.
-    new cbpScroller( document.getElementById( 'cbp-so-scroller' ) );
-  // /cbpScroller
-  script(type='text/javascript').
-    $(document).ready(function(){
-      $('input[type="checkbox"]').click(function(){
-        if($(this).attr("value")=="showhide-sent"){
-          $(".showhide-sent").toggle();
-        }
-        if($(this).attr("value")=="showhide-invoice"){
-          $(".showhide-invoice").toggle();
-        }
-      });
-    });
-  | &#x9;
-  script(type='text/javascript').
-    $(window).load(function() {
-      $(".loader").fadeOut("slow");
-    })
-    $(document).ready(function(){
-      $('[data-toggle="tooltip"]').tooltip();
-    });
-  | &#x9;
-  script(type='text/javascript').
-    function sticky_relocate() {
-      var window_top = $(window).scrollTop();
-      var div_top = $('#sticky-anchor').offset().top - $(window).width() /2;
-      if (window_top > div_top) {
-        $('#sticky').addClass('stick');
-      } else {
-        $('#sticky').removeClass('stick');
-      }
-    }
-    $(function () {
-      $(window).scroll(sticky_relocate);
-      sticky_relocate();
-    });
+    window.USER = !{JSON.stringify(user)};
+
   block js
     //- //ＢＵＧ 放shop裡不行
   //- script(src="/javascripts/main/shop.js")

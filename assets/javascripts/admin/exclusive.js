@@ -18,6 +18,7 @@
   var $type4 = $('.type4')[0].outerHTML;
 
   $('#modal-control-index-exclusive-type').on('click','.btn-green',function(e){
+    alert('a');
     e.preventDefault();
     var $checked = $('input:checkbox:checked[name="exclusive-type"]').map(function() { return $(this).val(); }).get();
 

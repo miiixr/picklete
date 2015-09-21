@@ -271,6 +271,35 @@ module.exports = {
     return productGm;
   },
 
+  findFavorite: async (productIds) => {
+
+    if ( ! productIds)
+      return [];
+    
+    var prop;
+    let subQuery = { "$or": [] };
+
+    // $or: [{a: 5}, {a: 6}]
+    for (prop in productIds) {
+      subQuery["$or"].push({id: prop});
+    }
+
+    if (subQuery["$or"].length < 1)
+      return [];
+    
+    let products = await db.Product.findAll({
+      where: subQuery,
+      include: [{
+        model: db.ProductGm,
+        include: [
+          db.Dpt, db.DptSub
+        ]
+      }]
+    });
+
+    return products;
+  },
+
   findWithImages: async (productId) => {
     let product = await db.Product.find({
       where: {id: productId},
@@ -281,10 +310,10 @@ module.exports = {
         ]
       }]
     });
-    console.log('product', product);
+    // console.log('product', product);
 
     let productWithImage = ProductService.withImage(product);
-    console.log(product);
+    // console.log(product);
     //console.log('productWithImage', productWithImage);
     return productWithImage;
   },

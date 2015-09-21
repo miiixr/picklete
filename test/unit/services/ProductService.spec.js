@@ -33,7 +33,7 @@ describe("about product service", () => {
       await dptA.setDptSubs(dptSubA);
       await dptB.setDptSubs(dptSubB);
 
-      let createdProductGm = await db.ProductGm.create({
+      createdProductGm = await db.ProductGm.create({
         brandId: 1,
         explain: 'req.body.explain',
         usage: 'req.body.usage',
@@ -75,7 +75,7 @@ describe("about product service", () => {
   });
 
   it("product create", async (done) => {
-    let newProduct = { 
+    let newProduct = {
       brandType: 'origin',
       brandId: '1',
       customBrand: '',
@@ -114,17 +114,17 @@ describe("about product service", () => {
       coverPhoto: [ '' ],
       explain: '<p>432432432432432</p>\r\n',
       notice: '<p>423423423432423</p>\r\n',
-      tag: ',學生,寵物,旅行' 
+      tag: ',學生,寵物,旅行'
     };
 
     try {
-      let product = await ProductService.create(newProduct);  
+      let product = await ProductService.create(newProduct);
       console.log(product);
       done();
     } catch (e) {
       return done(e);
     }
-    
+
   });
 
   it('product update', async (done) => {
@@ -199,5 +199,31 @@ describe("about product service", () => {
       done(e);
     }
 
+  });
+
+  it('find Favorite list', async (done) => {
+    try {
+      let product = await ProductService.findFavorite({
+        11: true,
+        5: true,
+        6: true
+      });
+      console.log(product);
+      product.should.be.an.Object;
+      done();
+    } catch (e) {
+      done(e);
+    }
+  });
+
+  it.only('find NOT Favorite list', async (done) => {
+    try {
+      let product = await ProductService.findFavorite({});
+      console.log(product);
+      product.should.be.an.Array;
+      done();
+    } catch (e) {
+      done(e);
+    }
   });
 });

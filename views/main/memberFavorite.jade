@@ -1,0 +1,100 @@
+extends ../_layout_head
+
+block body
+    .container
+      .m-top-6.m-bottom-10
+        .row.m-bottom-4
+          .col-md-6
+            p.font-size-slarge.line-height-xlarge.m-bottom-4 會員帳號：#{user.email}
+          // /col-md-6
+          script.
+            !{JSON.stringify(products)}
+          .col-md-6.desktop-text-right
+            ul.list-inline
+              li
+                a.btn.btn-default.border-radius-circle.active(href='/member/favorite') 我的收藏
+              li
+                a.btn.btn-default.border-radius-circle(href='/member/purchase') 我的訂單記錄
+              li
+                a.btn.btn-default.border-radius-circle(href='/member/setting') 修改會員資料
+          // /col-md-6
+        // /row
+        .m-bottom-6
+          .btn-group
+            button.btn.btn-default.border-radius-circle.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+              span.glyphicon.glyphicon-list.m-right-1
+              | 預設排序
+            ul.dropdown-menu.m-top-2.p-top-2.p-bottom-2
+              li
+                a(href='#')
+                  | 受關注度優先
+                  span.glyphicon.glyphicon-chevron-thin-right.m-left-1
+              li
+                a(href='#')
+                  | 熱門收藏優先
+                  span.glyphicon.glyphicon-chevron-thin-right.m-left-1
+              li
+                a(href='#')
+                  | 最新上架優先
+                  span.glyphicon.glyphicon-chevron-thin-right.m-left-1
+              li
+                a(href='#')
+                  | 價格由高至低
+                  span.glyphicon.glyphicon-chevron-thin-right.m-left-1
+              li
+                a(href='#')
+                  | 價格由低至高
+                  span.glyphicon.glyphicon-chevron-thin-right.m-left-1
+            // /dropdown-menu
+          // /btn-group
+        // /m-bottom-6
+
+        .row.row-m.m-bottom-6
+          each product, index in products
+            .col-md-2.col-sm-3.col-xs-6
+              .fav-item-block.m-bottom-4
+                a.fav-item-move(data-productId=product.id)
+                  span.glyphicon.glyphicon-remove-circle
+                a.fav-item-cart.add-to-cart(data-productId=product.id, data-photos=product.photos, data-brand=product.ProductGm.name, data-name=product.name)
+                  span.glyphicon.glyphicon-shopping-cart
+                a(href='/shop/products/#{product.ProductGm.id}/#{product.id}')
+                  img.img-full(src=product.photos && product.photos[0]? product.photos[0] : "http://www.culpwrit.com/wp-content/uploads/2012/09/no11.jpg")
+                .item-text-block.m-top-2.m-bottom-6
+                  h6.text-muted
+                    a(href='/brands/#{product.ProductGm.brandId}') #{_.find(brands, {id: product.ProductGm.brandId}).name }
+                  h4.m-bottom-2.h4-max-two-hide
+                    - var name = product.name ? "(" + product.name + ")" : "";
+                    a(href='/shop/products/#{product.ProductGm.id}/#{product.id}') #{product.ProductGm.name} #{name}
+                  h5 $ #{product.price}
+                // /item-text-block
+              // /fav-item-block
+            // /col-md-2
+        // /row
+        .text-center.m-bottom-8
+          //
+            pagination-block
+            ==================================================
+          nav
+            ul.pagination
+              li
+                a(href='#', aria-label='Previous')
+                  span(aria-hidden='true') «
+              li.active
+                a(href='#') 1
+              li
+                a(href='#') 2
+              li
+                a(href='#') 3
+              li
+                a(href='#') 4
+              li
+                a(href='#') 5
+              li
+                a(href='#', aria-label='Next')
+                  span(aria-hidden='true') »
+        // /text-center
+      // /m-top-6 m-bottom-10
+    // /container
+
+block js
+  script(src="/javascripts/main/shop.js")

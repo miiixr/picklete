@@ -119,21 +119,21 @@ module.exports = {
     var createNewBuyer2 = await db.User.create(newBuyer2);
 
     var brandExample = [{
-      name: '好棒棒品牌',
-      avatar: 'http://goo.gl/ksTMyn',
+      name: '星球精選品牌',
+      avatar: 'https://cldup.com/sYD4KQMADm.jpg',
       type: 'PRIME_GOOD',
-      desc: 'Steve Aoki 最棒惹',
-      banner: 'http://goo.gl/tl4513',
+      desc: '超級精選，超值精選',
+      banner: 'https://cldup.com/u4aO1VQKny.jpg',
       photos: [
         'http://goo.gl/IRT1EM',
         'http://goo.gl/p9Y2BF'
       ]
     },{
-      name: 'Sydney-精選',
-      avatar: 'https://goo.gl/XbP9t3',
+      name: '決戰星球牌',
+      avatar: 'https://cldup.com/fwzBMT3VZl.jpg',
       type: 'PRIME_GOOD',
-      desc: '',
-      banner: 'http://goo.gl/tl4513',
+      desc: '這是屬於大家的榮耀，衝吧！',
+      banner: 'https://cldup.com/u4aO1VQKny.jpg',
       photos: [
       'http://goo.gl/IRT1EM',
       'http://goo.gl/p9Y2BF'
@@ -145,20 +145,20 @@ module.exports = {
 
     var brandAgent = [{
       name: '好代理品牌',
-      avatar: 'http://goo.gl/ksTMyn',
+      avatar: 'https://cldup.com/Vc-cKfhlBJ.jpg',
       type: 'AGENT',
-      desc: 'Steve Aoki 最喜歡代理惹',
-      banner: 'http://goo.gl/tl4513',
+      desc: '代理代理，好代理，我最喜歡大大的代理了',
+      banner: 'https://cldup.com/u4aO1VQKny.jpg',
       photos: [
         'http://goo.gl/IRT1EM',
         'http://goo.gl/p9Y2BF'
       ]
     },{
-      name: 'Sydney-代理',
-      avatar: 'https://goo.gl/XbP9t3',
+      name: 'Sydney',
+      avatar: 'https://cldup.com/9lKpUDaf23.jpg',
       type: 'AGENT',
-      desc: '',
-      banner: 'http://goo.gl/tl4513',
+      desc: '雪梨最棒的品牌，全世界唯一選擇',
+      banner: 'https://cldup.com/u4aO1VQKny.jpg',
       photos: [
       'http://goo.gl/IRT1EM',
       'http://goo.gl/p9Y2BF'
@@ -267,7 +267,8 @@ module.exports = {
       usage: '請安心服用',
       notice: '18 歲以下請勿使用',
       depId: dptA.id,
-      depSubId: dptSubA.id
+      depSubId: dptSubA.id,
+      coverPhoto: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/JC1121-set-My-Mug-blue-2.jpg']
     });
 
     await createdProductGmComplete.setDpts([dptA]);
@@ -280,7 +281,8 @@ module.exports = {
       usage: '大口吸，潮爽的',
       notice: '18 歲以下請勿使用',
       depId: dptA.id,
-      depSubId: dptSubA.id
+      depSubId: dptSubA.id,
+      coverPhoto: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/JC1121-set-My-Mug-blue-22.jpg', 'https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/JC1121-set-My-Mug-blue-2.jpg']
     });
 
     await createdProductGmGood.setDpts([dptA]);
@@ -299,30 +301,33 @@ module.exports = {
       madeby: 'TW',
       color: 3,
       productNumber: '1-USA-2-G',
-      spec: 'super-metal'
+      spec: 'super-metal',
+      photos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg']
     });
 
-    await createdProductGmComplete.setProducts(createdProduct);
+    // await createdProductGmComplete.setProducts(createdProduct);
 
     noneNameProduct = await db.Product.create({
       stockQuantity: '999',
       isPublish: 'true',
       price: 888,
       size: 'normal',
-      service: ["express"],
+      service: ["快遞宅配", "超商取貨", "禮品包裝"],
       country: 'U.K',
       madeby: 'TW',
       color: 3,
       productNumber: '2-USA-3-G',
-      spec: 'super-metal'
+      spec: 'super-metal',
+      photos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg']
     });
 
-    await createdProductGmGood.setProducts(noneNameProduct);
+    await createdProductGmComplete.setProducts([noneNameProduct, createdProduct]);
 
     let productNames = ['黃金曼特寧', '夏威夷可娜', '耶加雪夫', '肯亞AA', '巴西喜拉朵', '薇薇特南果', '薩爾瓦多伊莎貝爾', '瓜地馬拉．安提瓜．花神', '星巴克過期豆'];
 
+    var xs = []
     for (var i=0; i < productNames.length; i++) {
-      await db.Product.create({
+      var x = await db.Product.create({
         name: productNames[i],
         description: '超級精選' + productNames[i] + '咖啡豆',
         stockQuantity: 1111,
@@ -334,11 +339,13 @@ module.exports = {
         madeby: 'TW',
         color: 3,
         productNumber: '2-USA-3-G',
-        spec: 'super-metal'
+        spec: 'super-metal',
+        photos: ["https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg", "https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/JC1121-set-My-Mug-blue-22.jpg"]
       });
-
+      xs.push(x);
       console.log('______--------__________-------------______________');
     }
+    await createdProductGmGood.setProducts(xs);
 
     // create tag
     let tags = ["男人", "女人", "兒童", "情人", "學生", "寵物", "旅行", "閱讀", "咖啡", "午茶", "派對", "時尚", "印花", "夏日", "冬季", "聖誕", "森林", "動物", "花園", "浪漫", "可愛", "趣味", "復古", "環保", "工業", "簡約"];
@@ -459,29 +466,37 @@ module.exports = {
       var createAdditionalPurchase = await db.AdditionalPurchase.create(additionalPurchase);
     }
 
-    // selectionActive
+    // selectionActive EXCLUSIVES
     let images = [
       {
-        path: 'http://fakeimg.pl/1100x160',
-        url: 'https://github.com'
+        path: 'https://cldup.com/ajrNdux7HG.jpg',
+        url: 'http://fakeimg.pl/1100x160'
       },{
-        path: 'http://fakeimg.pl/1100x350',
-        url: 'https://google.com'
+        path: 'https://cldup.com/aDqu4Jae_3.jpg',
+        url: 'http://fakeimg.pl/1100x350'
       },{
-        path: 'http://fakeimg.pl/545x350',
-        url: 'https://yahoo.com'
+        path: 'https://cldup.com/QcvL0Il2kf.jpg',
+        url: 'http://fakeimg.pl/545x350'
       },{
-        path: 'http://fakeimg.pl/545x350',
-        url: ''
+        path: 'https://cldup.com/cLwOjMkY0c.jpg',
+        url: 'http://fakeimg.pl/545x350'
       },{
-        path: 'http://fakeimg.pl/360x240',
-        url: ''
+        path: 'https://cldup.com/DrVIRreS6B.jpg',
+        url: 'http://fakeimg.pl/360x240'
       },{
-        path: 'http://fakeimg.pl/360x240',
-        url: ''
+        path: 'https://cldup.com/oasn_O2itT.jpg',
+        url: 'http://fakeimg.pl/360x240'
       },{
-        path: 'http://fakeimg.pl/360x240',
-        url: ''
+        path: 'https://cldup.com/i1WZixmSMF.jpg',
+        url: 'http://fakeimg.pl/360x240'
+      },
+      // image 7, 8 for top active
+      {
+        path: 'https://cldup.com/s3EHE6f2MP.jpg',
+        url: 'http://fakeimg.pl/500x500'
+      },{
+        path: 'https://cldup.com/ZUs-Ng2nVv.jpg',
+        url: 'http://fakeimg.pl/500x500'
       }
     ]
     let createdImages = await* images.map((image) => db.Image.create(image));
@@ -509,27 +524,27 @@ module.exports = {
 
     // TopicActive
     let topicActives = [{
-      title: 'title1',
-      ImageAId: createdImages[0].id,
-      ImageA1Id: createdImages[1].id,
-      ImageA2Id: createdImages[2].id,
-      ImageBId: createdImages[0].id,
-      ImageB1Id: createdImages[1].id,
-      ImageB2Id: createdImages[2].id,
-      ImageCId: createdImages[0].id,
-      ImageC1Id: createdImages[1].id,
-      ImageC2Id: createdImages[2].id
+      title: '本月主題活動',
+      ImageAId: createdImages[7].id,
+      ImageA1Id: createdImages[8].id,
+      ImageA2Id: createdImages[7].id,
+      ImageBId: createdImages[8].id,
+      ImageB1Id: createdImages[7].id,
+      ImageB2Id: createdImages[8].id,
+      ImageCId: createdImages[7].id,
+      ImageC1Id: createdImages[8].id,
+      ImageC2Id: createdImages[7].id
     }, {
-      title: 'title2',
-      ImageAId: createdImages[3].id,
-      ImageA1Id: createdImages[4].id,
-      ImageA2Id: createdImages[5].id,
-      ImageBId: createdImages[3].id,
-      ImageB1Id: createdImages[4].id,
-      ImageB2Id: createdImages[5].id,
-      ImageCId: createdImages[3].id,
-      ImageC1Id: createdImages[4].id,
-      ImageC2Id: createdImages[5].id
+      title: '本月主題活動 2',
+      ImageAId: createdImages[8].id,
+      ImageA1Id: createdImages[7].id,
+      ImageA2Id: createdImages[8].id,
+      ImageBId: createdImages[7].id,
+      ImageB1Id: createdImages[8].id,
+      ImageB2Id: createdImages[7].id,
+      ImageCId: createdImages[8].id,
+      ImageC1Id: createdImages[7].id,
+      ImageC2Id: createdImages[8].id
     }]
     await db.TopicActive.bulkCreate(topicActives);
     // End TopicActive
@@ -555,7 +570,36 @@ module.exports = {
     var createPromotion2 = await db.Promotion.create(promotion2);
     // end promotions
 
+    // slide active
+    let slideObj = [{
+      cover: 'https://cldup.com/GajCorhh1j.gif',
+      title: '咖啡香',
+      description: '好香的大咖啡',
+      location: 'caption-right caption-top',
+      color: '#fff',
+      link: 'http://tw.tw'
+    }, {
+      cover: 'https://cldup.com/LXdNw2KyRN.jpg',
+      title: '白色胖胖杯',
+      description: '我佛瓷杯，善哉善哉',
+      location: 'caption-center caption-middle',
+      color: '#fff',
+      link: 'http://tw.com'
+    }]
 
+    await db.Slider.bulkCreate(slideObj);
+
+    // create company
+    let companyObj = {
+      avatar: "https://cldup.com/VOUpIxN-AH.png",
+      name: "Picklete",
+      fullname: "Picklete INTERNATIONAL CO.,LTD.",
+      email: "hq@picklete.com",
+      desc: "週一至週五 早上10:00 -下午5:00",
+      line: "https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/contact.png"
+    };
+
+    await db.Company.create(companyObj);
   }
   // end testData
 }

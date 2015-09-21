@@ -16,40 +16,66 @@ For more information on configuring policies, check out:
 http://sailsjs.org/#/documentation/reference/sails.config/sails.config.policies.html
 ###
 module.exports.policies = {
+                      
+  '*': ['global', 'loginRequired']
+  'AuthController': ['global', 'passport']
 
-  '*': [ 'passport', 'loginRequired']
+  'UserController':
+    controlLogin: ['global']
 
-  'auth':
-    '*': ['passport']
+  'MainController': ['global']
+      
+  'ShopController':
+    show: ['global']
+    list: ['global']
 
-  ProductController:
-    list: ['loginRequired']
-  OrderController:
-    index: ['loginRequired']
-    paymentConfirm: []
-    paymentConfirmSave: []
-    create: []
-    status: []
-    find: []
-    sync: []
-    bonus: []
-    pay: []
-  PaymentController:
-    paid: []
+  'AboutController':
+    show: ['global']
 
-  #'/api/search/*': []
-  SearchController:
-    products: []
-    productsJson: []
+  'SearchController':
+    products: ['global']
 
-  shopController:
-    list: []
+  'ContactController':
+    index: ['global']
 
-  SelectionActiveController:
-    index: []
+  'FAQController':
+    show: ['global']
 
-  AboutController:
-    show: []
+  'BrandController':
+    show: ['global']
+  # 'admin/*': ['passport', 'loginRequired']
+
+  # ProductController:
+  #   list: ['loginRequired']
+  # OrderController:
+  #   index: ['loginRequired']
+  #   paymentConfirm: []
+  #   paymentConfirmSave: []
+  #   create: []
+  #   status: []
+  #   find: []
+  #   sync: []
+  #   bonus: []
+  #   pay: []
+  # PaymentController:
+  #   paid: []
+
+  # #'/api/search/*': []
+  # SearchController:
+  #   products: []
+  #   productsJson: []
+
+  # shopController:
+  #   list: []
+
+  # SelectionActiveController: 
+  #   index: []
+
+  # AboutController:
+  #   show: []
+
+  # ContactController:
+  #   index: []
 }
 
 

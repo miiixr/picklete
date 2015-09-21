@@ -29,6 +29,7 @@
     "bluebird": "^2.9.34",
     "coffee-script": "^1.9.3",
     "easyimage": "^2.1.0",
+    "fs-extra": "^0.24.0",
     "gm": "^1.18.1",
     "include-all": "^0.1.6",
     "jade": "^1.8.2",
