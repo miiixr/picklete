@@ -120,7 +120,7 @@ describe('about Payment', () => {
     });
   });
 
-  it('allpay PaymentInfoURL return post by ATM',(done) => {
+  it.only('allpay PaymentInfoURL return post by ATM',(done) => {
     let data = {
       MerchantID : '123456789',
       MerchantTradeNo : sails.config.allpay.merchantID + testdOrder.id,

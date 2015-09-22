@@ -265,12 +265,16 @@ module.exports = {
         result.order.User = buyer;
         result.order.Shipment = createdShipment;
 
-        let messageConfig = CustomMailerService.orderConfirm(result);
-        let message = await db.Message.create(messageConfig, {transaction});
+        let useAllPay = false;
+        if(sails.config.useAllPay !== undefined)
+          useAllPay = sails.config.useAllPay;
+        if(!useAllPay){
+          let messageConfig = CustomMailerService.orderConfirm(result);
+          let message = await db.Message.create(messageConfig, {transaction});
+          await CustomMailerService.sendMail(message);
+        }
+
         transaction.commit();
-
-        await CustomMailerService.sendMail(message);
-
 
       } catch (e) {
         console.error(e.stack);

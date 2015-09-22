@@ -57,7 +57,7 @@ let PaymentController = {
         find = data.MerchantTradeNo.replace(sails.config.allpay.merchantID ,"");
       }
 
-      let order = await db.Order.findById(find);
+      let order = await db.Order.findOne(find);
 
       if(!order)
         throw new Error(`${find} 嚴重錯誤!!付款後找不到訂單!!`);
@@ -96,7 +96,19 @@ let PaymentController = {
         find = data.MerchantTradeNo.replace(sails.config.allpay.merchantID ,"");
       }
 
-      let order = await db.Order.findById(find);
+      let order = await db.Order.findOne({
+        where:{
+          id:find
+        },
+        include:[{
+            model: db.User
+          },{
+            model: db.OrderItem
+          }, {
+            model: db.Shipment
+          }
+        ]
+      });
       if(!order)
         throw new Error(`${find} 找不到訂單!!`);
 
@@ -104,6 +116,7 @@ let PaymentController = {
         if(checkMacValue != data.CheckMacValue)
           throw new Error(`CheckMacError!!`);
       }
+
 
       order.allPayRtnCode = data.RtnCode;
       order.allPayRtnMsg = data.RtnMsg;
@@ -121,10 +134,16 @@ let PaymentController = {
         order.PaymentNo = data.PaymentNo;
         order.Barcode1 = data.Barcode1;
         order.Barcode2 = data.Barcode2;
-        order.Barcode3 = data.Barcode3;  
+        order.Barcode3 = data.Barcode3;
       }
 
-      await order.save();
+      let result = await order.save();
+
+      result.bank.bankId = data.BankCode;
+      result.bank.accountId = data.vAccount;
+      let messageConfig = CustomMailerService.orderConfirm(result);
+      let message = await db.Message.create(messageConfig);
+      await CustomMailerService.sendMail(message);
 
       return res.ok('1|OK');
     } catch (e) {
