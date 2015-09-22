@@ -143,8 +143,11 @@ module.exports = {
     			done(res.body);
     		})
       });
+      console.log("!!!",checkMacValue);
 
-      // var checkMacValue = allpay.genCheckMacValue(data);
+      var checkMacValue2 = allpay.genCheckMacValue(data);
+      console.log("???",checkMacValue2);
+
       data.CheckMacValue = checkMacValue;
       return data;
 
