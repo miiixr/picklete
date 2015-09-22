@@ -11,28 +11,32 @@ let BrandController = {
     var params = req.body;
 
     console.log('craete server ', params);
+    if(params['task']==1){
+      if (! params) {
+        return res.redirect("/admin/brands");
+      }
 
-    if (! params) {
-      return res.redirect("/admin/brands");
-    }
+      let brandData = {
+        avatar: params['avatar'],
+        name: params['name'],
+        type: params['type'] || "OTHER",
+        desc: params['desc'],
+        banner: params['banner'],
+        photos: params['photos']
+      };
 
-    let brandData = {
-      avatar: params['avatar'],
-      name: params['name'],
-      type: params['type'] || "OTHER",
-      desc: params['desc'],
-      banner: params['banner'],
-      photos: params['photos']
-    };
+      // create brand
+      try {
 
-    // create brand
-    try {
+        await db.Brand.create(brandData);
+        return res.redirect("/admin/brands");
 
-      await db.Brand.create(brandData);
-      return res.redirect("/admin/brands");
+      } catch (e) {
+        return res.serverError(e);
+      }
+    } 
+    else if(params['task']==2){
 
-    } catch (e) {
-      return res.serverError(e);
     }
   },
 
@@ -119,6 +123,22 @@ let BrandController = {
       return res.serverError({msg});      
     }
     
+  },
+
+  delete: async (req, res) => {
+    try{
+
+      let deleteBrand = await db.Brand.destroy({
+        where: {
+          id : req.body.id
+        }
+      });
+
+      return res.redirect("/admin/brands");
+    } catch(e){
+      let msg = e.message;
+      return res.serverError({msg}); 
+    }
   }
 
 };

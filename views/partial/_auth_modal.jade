@@ -114,6 +114,25 @@
     // /modal-content
   // /modal-dialog
 // /modal
+#modal-brand-delete.modal.fade
+  .modal-dialog(role='document')
+    .modal-content.font-size-slarge
+      .modal-header.p-30
+        button.close(type='button', data-dismiss='modal', aria-label='Close')
+          span(aria-hidden='true') ×
+        h2.modal-title 刪除
+      // /modal-header
+      .modal-body.p-30.p-top-0
+        p 您確定要將
+          span.brandName
+          | 刪除？
+        //- p 您確定要將此 XXXXXXX 移出此折扣活動？
+      // /modal-body
+      .modal-footer
+        form(action='/admin/brands/delete/', method='POST')
+          button.btn.btn-default(type='button', data-dismiss='modal') 取消
+          input(type='hidden', name='id', required='true',value="",id='brandId')
+          button.btn.btn-green(type='submit') 確定
 //
   Footer
   ==================================================

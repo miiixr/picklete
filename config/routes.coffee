@@ -44,6 +44,7 @@ module.exports.routes = {
   'post /admin/brands/create' : 'BrandController.create'
   'get /admin/brands/update' : 'BrandController.update'
   'post /admin/brands/update' : 'BrandController.update'
+  'post /admin/brands/delete/' : 'BrandController.delete'
 
   'get /admin/exclusive' : 'SelectionActiveController.list'
   'post /admin/exclusive' : 'SelectionActiveController.update'
