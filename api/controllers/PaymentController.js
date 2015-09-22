@@ -110,27 +110,19 @@ let PaymentController = {
       order.allPayPaymentType = data.PaymentType;
       order.allPayTradeDate = data.TradeDate;
       order.paymentCreateConfirmAmount = data.TradeAmt;
+      order.ExpireDate = data.ExpireDate;
 
-      if(!data.BankCode)
+      if(!data.BankCode){
         order.BankCode = data.BankCode;
-
-      if(!data.vAccount)
         order.vAccount = data.vAccount;
+      }
 
-      if(!data.ExpireDate)
-        order.ExpireDate = data.ExpireDate;
-
-      if(!data.PaymentNo)
+      if(!data.PaymentNo){
         order.PaymentNo = data.PaymentNo;
-
-      if(!data.Barcode1)
         order.Barcode1 = data.Barcode1;
-
-      if(!data.Barcode2)
         order.Barcode2 = data.Barcode2;
-
-      if(!data.Barcode3)
-        order.Barcode3 = data.Barcode3;
+        order.Barcode3 = data.Barcode3;  
+      }
 
       await order.save();
 
