@@ -62,7 +62,7 @@ let ProductController = {
         }],
         order: ['Dpt.weight', 'DptSubs.weight']
       });
-
+      
       let products = await ProductService.productQuery(req);
 
       let query = req.query;
@@ -77,7 +77,8 @@ let ProductController = {
 
       if (query.responseType && query.responseType.toLowerCase() == 'json') {
         return res.ok(result);
-      }else{
+      }
+      else {
         // let products = await ProductService.findAllWithImages();
         return res.view('admin/goodList', result);
       }

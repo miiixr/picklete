@@ -352,12 +352,14 @@ module.exports = {
     return productJson;
   },
 
-  productQuery: async (req) => {
+  productQuery: async (req, offset = 0, limit = 100) => {
+
     let query = req.query,
         queryObj = {},
         queryGmObj = {};
 
-    if(Object.keys(query).length > 0){
+    if (Object.keys(query).length > 0) {
+
       // search condition
       if (query.price) {
         queryObj.price = query.price;
@@ -417,11 +419,15 @@ module.exports = {
         };
       }
     }
+
     // execute query
     queryObj = {
       where: queryObj,
-      include: [db.ProductGm]
+      include: [db.ProductGm],
+      limit: limit,
+      offset: offset,
     };
+
     let products = await db.Product.findAll(queryObj);
 
     queryGmObj = {
