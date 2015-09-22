@@ -77,33 +77,8 @@ module.exports = {
     // Node defaults to 2 minutes.
     // res.setTimeout(30000);
 
-    // req.file('upload')
-    //   .upload({
-    //     // You can apply a file upload limit (in bytes)
-    //     maxBytes: 1000000
-    //
-      // }, function whenDone(err, uploadedFiles) {
-        // let file = uploadedFiles[0];
-        // file.fd = domain + ImageService.processPath(file.fd);
-        // let fileName = file.fd;
-        // if (err) return res.serverError(err);
-        // else {
-        //   let html = "";
-        //   html += "<script type='text/javascript'>";
-        //   html += "    var funcNum = " + req.query.CKEditorFuncNum + ";";
-        //   html += "    var url     = \"" + fileName + "\";";
-        //   html += "    var message = \"Uploaded file successfully\";";
-        //   html += "";
-        //   html += "    window.parent.CKEDITOR.tools.callFunction(funcNum, url, message);";
-        //   html += "</script>";
-        //
-        //   res.send(html);
-        // }
-    //   });
-
     let files = await* req.file('upload').upload(async(err, files) => {
-        // You can apply a file upload limit (in bytes)
-        // maxBytes: 1000000
+
         let file = files[0];
         file.fd = domain + ImageService.processPath(file.fd);
         let fileName = file.fd;
