@@ -57,8 +57,8 @@ module.exports.policies = {
   #   status: []
   #   find: []
   #   sync: []
-  #   bonus: []
-  #   pay: []
+    bonus: []
+    pay: []
   'PaymentController':
     paid: []
 

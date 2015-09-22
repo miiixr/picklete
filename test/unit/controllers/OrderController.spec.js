@@ -1,5 +1,5 @@
 describe("about Order", () => {
-  describe("pay Order", () => {
+  describe.only("pay Order", () => {
     let testdOrder;
     before( async (done) => {
       var newOrder2 = {
@@ -38,7 +38,7 @@ describe("about Order", () => {
       let createOrderItems = await db.OrderItem.bulkCreate(orderItems2);
       done();
     });
-    it.only("order", (done) => {
+    it("order", (done) => {
       let newOrder ={
         orderItems:
          [ { ProductId: '1', price: '475', quantity: '1' },
@@ -90,8 +90,23 @@ describe("about Order", () => {
         return done();
       });
     });
+
+    it("get an Bonus point. ", async (done) => {
+      request(sails.hooks.http.app)
+      .get("/order/bonus?email=user1@picklete.local")
+      .end(async (err, res) => {
+        if (res.statusCode === 500) {
+          return done(body)
+        }
+        res.statusCode.should.equal(200);
+        res.body.bonusPoint.used.should.be.number;
+        res.body.bonusPoint.remain.should.be.number;
+        res.body.bonusPoint.email.should.be.String;
+        done(err);
+      });
+    });
   });
-  describe("about Order status.", () => {
+  describe.skip("about Order status.", () => {
     let testOrder = {};
     before( async (done) => {
       let newUser = {
@@ -191,19 +206,5 @@ describe("about Order", () => {
       });
     });
 
-    it("get an Bonus point. ", async (done) => {
-      request(sails.hooks.http.app)
-      .get("/order/bonus?email=user1@picklete.local")
-      .end(async (err, res) => {
-        if (res.statusCode === 500) {
-          return done(body)
-        }
-        res.statusCode.should.equal(200);
-        res.body.bonusPoint.used.should.be.number;
-        res.body.bonusPoint.remain.should.be.number;
-        res.body.bonusPoint.email.should.be.String;
-        done(err);
-      });
-    });
   });
 });
