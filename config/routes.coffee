@@ -86,6 +86,8 @@ module.exports.routes = {
   'post /admin/goods/delete' : 'ProductController.doDelete'
   'post /admin/image/upload' : 'ImageController.upload'
 
+  'post /ckeditor/upload' : 'ImageController.ckeditorUpload'
+
   'get /admin/bonus' : 'BonusController.list'
   'post /admin/bonus' : 'BonusController.create'
   'put /admin/bonus/:query' : 'BonusController.update'
