@@ -1,5 +1,6 @@
 
 let ProductController = {
+
   debug: async (req, res) => {
     try {
       res.ok(await db.Product.findAndCountAll());
@@ -8,6 +9,7 @@ let ProductController = {
       return res.serverError(error);
     }
   },
+
   image: async (req, res) => {
     try {
       res.ok({product: await db.Product.findById(req.param('id'))});
@@ -16,6 +18,7 @@ let ProductController = {
       return res.serverError(error);
     }
   },
+
   // show create page and prepare all stuff
   showCreate: async (req, res) => {
     // let products = await ProductService.findAllWithImages();
@@ -52,6 +55,7 @@ let ProductController = {
   list: async (req, res) => {
     try {
       let brands = await db.Brand.findAll();
+
       let dpts = await db.Dpt.findAll({
         include: [{
           model: db.DptSub
@@ -59,17 +63,24 @@ let ProductController = {
         order: ['Dpt.weight', 'DptSubs.weight']
       });
 
-      let products = await ProductService.productQuery(req),
-          query = req.query;
+      let products = await ProductService.productQuery(req);
 
-      // let products = await ProductService.findAllWithImages();
-      return res.view('admin/goodList', {
+      let query = req.query;
+
+      let result = {
         brands,
         dpts,
         query,
         products,
         pageName: "/admin/goods"
-      });
+      };
+
+      if (query.responseType && query.responseType.toLowerCase() == 'json') {
+        return res.ok(result);
+      }else{
+        // let products = await ProductService.findAllWithImages();
+        return res.view('admin/goodList', result);
+      }
     } catch (error) {
       console.error(error.stack);
       let msg = error.message;
@@ -92,6 +103,7 @@ let ProductController = {
       let tags = await db.Tag.findAll();
 
       let gid = req.query.id;
+      // console.log('=== gid ===>',gid);
       // query from productGm
       let good = await ProductService.findGmWithImages(gid);
 
@@ -116,7 +128,6 @@ let ProductController = {
           }
           else return;
 
-
           let {DptSubs} = dpt;
           good.ProductGm.DptSubs.forEach((productGmDptSubs) => {
             DptSubs.forEach((dptSub) => {
@@ -127,21 +138,26 @@ let ProductController = {
             });
           });
         });
-
       });
 
-      // have to query this is
-      return res.view('admin/goodUpdate', {
+      let result =  {
         good,
         brands,
         dpts: dptsJson,
         tags
-      });
+      };
 
+      let query = req.query;
+
+      if (query.responseType && query.responseType.toLowerCase() == 'json') {
+        return res.ok(result);
+      }else{
+        // have to query this is
+        return res.view('admin/goodUpdate',result);
+      }
     } catch (e) {
       console.error(e.stack);
       res.serverError(e);
-
     }
   },
 
@@ -149,8 +165,12 @@ let ProductController = {
     let productUpdate = req.body;
     // console.log('=== ProductContoller : productUpdate ==>\n', productUpdate);
     try {
-      await ProductService.update(productUpdate);
-      return res.redirect('/admin/goods/');
+      let result = await ProductService.update(productUpdate);
+      let query = req.query.responseType;
+      if (query && query.toLowerCase() == 'json')
+        return res.ok(result);
+      else
+        return res.redirect('/admin/goods/');
     } catch (error) {
       console.error(error.stack);
       let msg = error.message;
@@ -160,18 +180,22 @@ let ProductController = {
   },
 
   doCreate: async (req, res) => {
-    // let newProduct = req.body;
-    // console.log('----------');
-    // console.log(newProduct);
-    // console.log('----------');
+    let newProduct = req.body;
+    console.log('----------');
+    console.log(newProduct);
+    console.log('----------');
     try {
-      await ProductService.create(req.body);
+      let result = await ProductService.create(req.body);
+      let query = req.query.responseType;
+      if (query && query.toLowerCase() == 'json')
+        return res.ok(result);
+      else
+        return res.redirect('/admin/goods/');
     } catch (error) {
       console.error(error.stack);
       let msg = error.message;
       return res.serverError({msg});
     }
-    return res.redirect('/admin/goods/');
     // return res.json(newProduct);
   },
 

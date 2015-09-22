@@ -119,7 +119,7 @@ describe("about product service", () => {
 
     try {
       let product = await ProductService.create(newProduct);
-      console.log(product);
+      // console.log(product);
       done();
     } catch (e) {
       return done(e);
@@ -146,16 +146,20 @@ describe("about product service", () => {
         comment: '11',
         good:
          [ { color: '1',
+             name: '1111111',
              description: '1111111',
              productNumber: '1111111',
              stockQuantity: '999',
              isPublish: 'false',
+             weight: 0,
              id:createdProduct.id },
             { color: '2',
+             name: '1111111',
              description: '22222',
              productNumber: '2222',
              stockQuantity: '999',
              isPublish: 'true',
+             weight: 1,
              id:createdProduct2.id } ],
         productGm: {
           id: createdProductGm.id
@@ -168,12 +172,14 @@ describe("about product service", () => {
       await ProductService.update(updateProduct);
 
       let updatedProduct = await db.Product.find({
-        where: {id: createdProduct.id},
+        where: {
+          id: createdProduct.id
+        },
         include: [{
-          model: db.ProductGm
-          ,
+          model: db.ProductGm,
           include: [
-            db.Dpt, db.DptSub
+            db.Dpt,
+            db.DptSub
           ]
         }]
       });
@@ -216,7 +222,7 @@ describe("about product service", () => {
     }
   });
 
-  it.only('find NOT Favorite list', async (done) => {
+  it('find NOT Favorite list', async (done) => {
     try {
       let product = await ProductService.findFavorite({});
       console.log(product);
