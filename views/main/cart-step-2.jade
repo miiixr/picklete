@@ -1,6 +1,7 @@
 extends ../_layout_head
 
 block body
+    - console.log("!!!",userData);
     .container
       h1.text-black.m-top-10.m-bottom-6 填寫資料
       .border-block-3.m-bottom-10
@@ -19,7 +20,7 @@ block body
                     input.form-control(name='order[shipment][username]',type='hidden')
                   .col-sm-4
                     label.checkbox-inline
-                      input(type='checkbox', value='option1')
+                      input(type='checkbox', value='option1' ,checked='')
                       |  先生
                     label.checkbox-inline
                       input(type='checkbox', value='option2')
@@ -30,8 +31,8 @@ block body
                     | 手機號碼
                     span.text-danger *
                   .col-sm-9
-                    input.form-control(name='order[user][mobile]',type='text', placeholder='請輸入正確號碼，以便出貨聯繫',required='')
-                    input.form-control(name='order[shipment][mobile]',type='hidden')
+                    input.form-control(name='order[user][mobile]',type='text', placeholder='請輸入正確號碼，以便出貨聯繫',required='',value= userData.mobile)
+                    input.form-control(name='order[shipment][mobile]',type='hidden' ,value= userData.mobile)
                 // /form-group
                 .form-group
                   label.col-sm-3.control-label
@@ -52,8 +53,8 @@ block body
                       option 5
                     input.form-control.width-12.inline-block(type='text')
                   .col-sm-9.col-sm-offset-3.m-top-3
-                    input.form-control(name='order[user][address]',type='text',required='')
-                    input.form-control(name='order[shipment][address]',type='hidden')
+                    input.form-control(name='order[user][address]',type='text',required='' ,value= userData.address)
+                    input.form-control(name='order[shipment][address]',type='hidden',value= userData.address)
                 // /form-group
                 .form-group
                   .col-sm-12
