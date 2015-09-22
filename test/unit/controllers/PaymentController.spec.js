@@ -120,4 +120,62 @@ describe('about Payment', () => {
     });
   });
 
+  it('allpay PaymentInfoURL return post by ATM',(done) => {
+    let data = {
+      MerchantID : '123456789',
+      MerchantTradeNo : sails.config.allpay.merchantID + testdOrder.id,
+      RtnCode : '1',
+      RtnMsg : 'paid',
+      TradeNo : '201203151740582564',
+      TradeAmt : 22000,
+      PaymentType : 'ATM_TAISHIN',
+      TradeDate : '2012/03/15 17:40:58',
+      CheckMacValue : '989ED3A9503EEF31CF07C387F7E2AD5C',
+      BankCode: '812',
+      vAccount: '9103522175887271',
+      ExpireDate: '2013/12/16'
+    };
+    request(sails.hooks.http.app)
+    .post('/allpay/paymentinfo')
+    .send(data)
+    .end((err, res) => {
+      if (res.statusCode === 500) {
+        return done(body)
+      }
+      console.log(res.text);
+      res.statusCode.should.equal(200);
+      return done();
+    });
+  });
+
+  it.only('allpay PaymentInfoURL return post by ATM',(done) => {
+    let data = {
+      MerchantID : '123456789',
+      MerchantTradeNo : sails.config.allpay.merchantID + testdOrder.id,
+      RtnCode : '1',
+      RtnMsg : 'paid',
+      TradeNo : '201203151740582564',
+      TradeAmt : 22000,
+      PaymentType : 'ATM_TAISHIN',
+      TradeDate : '2012/03/15 17:40:58',
+      CheckMacValue : '989ED3A9503EEF31CF07C387F7E2AD5C',
+      PaymentNo: 'GW130412257496',
+      ExpireDate: '2013/12/16 18:00:00',
+      Barcode1: '021030627',
+      Barcode2: '2470200001841540',
+      Barcode3: '103027000000100'
+    };
+    request(sails.hooks.http.app)
+    .post('/allpay/paymentinfo')
+    .send(data)
+    .end((err, res) => {
+      if (res.statusCode === 500) {
+        return done(body)
+      }
+      console.log(res.text);
+      res.statusCode.should.equal(200);
+      return done();
+    });
+  });
+
 });

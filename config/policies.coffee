@@ -48,18 +48,19 @@ module.exports.policies = {
 
   # ProductController:
   #   list: ['loginRequired']
-  # OrderController:
+  OrderController:
   #   index: ['loginRequired']
   #   paymentConfirm: []
   #   paymentConfirmSave: []
-  #   create: []
-  #   status: []
-  #   find: []
-  #   sync: []
-  #   bonus: []
-  #   pay: []
-  # PaymentController:
-  #   paid: []
+    create: []
+    status: []
+    find: []
+    sync: []
+    bonus: []
+    pay: []
+  PaymentController:
+    paid: []
+    paymentinfo:[]
 
   # #'/api/search/*': []
   # SearchController:

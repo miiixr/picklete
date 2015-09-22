@@ -82,6 +82,18 @@ let PaymentController = {
       res.serverError(message);
     }
   },
+
+  paymentinfo: async(req, res) => {
+    try {
+      let data = req.body;
+      console.log("!!!",req.body);
+      return res.ok('1|OK');
+    } catch (e) {
+      console.error(e.stack);
+      let {message} = e;
+      res.serverError(message);
+    }
+  }
 };
 
 module.exports = PaymentController;
