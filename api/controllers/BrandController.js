@@ -11,7 +11,6 @@ let BrandController = {
     var params = req.body;
 
     console.log('craete server ', params);
-
     if (! params) {
       return res.redirect("/admin/brands");
     }
@@ -119,6 +118,22 @@ let BrandController = {
       return res.serverError({msg});      
     }
     
+  },
+
+  delete: async (req, res) => {
+    try{
+
+      let deleteBrand = await db.Brand.destroy({
+        where: {
+          id : req.body.id
+        }
+      });
+
+      return res.redirect("/admin/brands");
+    } catch(e){
+      let msg = e.message;
+      return res.serverError({msg}); 
+    }
   }
 
 };

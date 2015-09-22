@@ -102,6 +102,7 @@ let ShopController = {
       if(product.ProductGmId != productGmid){
         return res.view('common/warning', {errors:'not found'});
       }
+
       else{
         let resData = {
           productGm: productGm,
