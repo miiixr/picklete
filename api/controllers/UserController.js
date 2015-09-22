@@ -9,6 +9,34 @@
 let moment = require("moment");
 
 let UserController = {
+
+  favorite: async (req, res) => {
+    var FAV_KEY = "picklete_fav";
+    var favoriteKeys = req.cookies[FAV_KEY];
+
+    try {
+      favoriteKeys = JSON.parse(favoriteKeys);
+    } catch (e) {
+      favoriteKeys = null;
+      return res.view("main/memberFavorite");
+    }
+
+    let products = await ProductService.findFavorite(favoriteKeys);
+
+    res.view("main/memberFavorite", {
+      products
+    });
+  },
+
+  cart: async (req, res) => {
+    console.log('=== cart ===');
+    let company = await db.Company.findOne();
+    let brands = await db.Brand.findAll();
+
+    console.log('=== company ===', company);
+    return res.view('main/cart', {company, brands});
+  },
+
   edit: async (req, res) => {
     let loginUser = UserService.getLoginUser(req);
 

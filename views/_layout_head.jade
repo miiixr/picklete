@@ -40,7 +40,7 @@ html
             |         
             span.icon-bar
           |       
-          a.navbar-brand(href='/index', style='background-image: url(#{company.avatar})') #{company.name}
+          a.navbar-brand(href='/', style='background-image: url(#{company.avatar})') #{company.name}
         // /navbar-header
         // Collect the nav links, forms, and other content for toggling
         .collapse.navbar-collapse
@@ -103,7 +103,7 @@ html
                 |           
                 ul.dropdown-menu.dropdown-menu-right.dropdown-menu-noborder
                   li
-                    a(href='/member/fav') 我的收藏
+                    a(href='/member/favorite') 我的收藏
                   |             
                   li
                     a(href='/member/purchase') 我的訂單記錄
@@ -124,72 +124,20 @@ html
                   span.text-en LOGIN
                   |             
                   span.text-active 登入
-            - if (user)
+            - if (true || user)
               |         
               li.dropdown.icon-link
                 a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
                   span.glyphicon.glyphicon-shopping-cart.m-right-1.font-size-slarge
-                  span.text-green 5
+                  span.text-green 
+                    span#order-items-count 0
                 //
                   dropdown-cart
                   ==================================================
                 ul.dropdown-menu.dropdown-menu-right.dropdown-cart
-                  .dropdown-cart-content
-                    li
-                      .row
-                        .col-xs-4
-                          .item-block
-                            span.badge 3
-                            |               
-                            img.img-full(src='images/demo/shop-item-5-1.jpg')
-                          // /item-block
-                        // /col-xs-4
-                        .col-xs-8.p-left-0
-                          h6.text-muted
-                            a(href='/brands') Le mouton noir & co
-                          |             
-                          h5
-                            a(href='shop-product') B.B.bank / BB豬
-                          |             
-                          h5 $490
-                        // /col-xs-8
-                      // /row
-                    |     
-                    li
-                      a(href='shop-product')
-                        .row
-                          .col-xs-4
-                            .item-block
-                              span.badge 1
-                              |               
-                              img.img-full(src='images/demo/shop-item-6-1.jpg')
-                            // /item-block
-                          // /col-xs-4
-                          .col-xs-8.p-left-0
-                            h6.text-muted
-                              a(href='brands') Jansen+co
-                            |             
-                            h5
-                              a(href='shop-product') My Mug Set 調色杯組
-                            |             
-                            h5 $490
-                          // /col-xs-8
-                        // /row
-                    |     
-                    li
-                      .row
-                        .col-xs-6
-                          h2.text-center.text-black.line-height-small.m-top-0.m-bottom-0
-                            | $1,990
-                            br
-                            small.font-size-50 subtotal
-                        // /col-xs-6
-                        .col-xs-6
-                          a.btn.btn-black.border-radius-circle.btn-block(href='/user/cart') 結帳
-                        // /col-xs-6
-                      // /row
-                  // /dropdown-cart-content
-                // /dropdown-cart
+                  .dropdown-cart-content#dropdown-cart-content
+
+                        
             |         
             li.icon-link.m-right-0
               //
@@ -331,19 +279,19 @@ html
   // /jasny-bootstrap
   script(src='/javascripts/plugin/classie.js')
   script(src='/javascripts/plugin/uisearch.js')
-  
   // /sb-search
   script(src='/javascripts/plugin/input-number.js')
-  
   // /input-number
   script(src='/javascripts/plugin/tagsinput.js')
   script(src='/javascripts/plugin/cbpAnimatedHeader.js')
   // /cbpAnimatedHeader
   script(type='text/javascript', src='/javascripts/plugin/notifyme.js')
-  
+  script(src='/javascripts/plugin/scrolltotop.js')
   script(src='/javascripts/plugin/cbpScroller.js')
+  script(src="/bower/js-cookie/js.cookie.js")
   script(type='text/javascript' src='/javascripts/common/head_layout.js')
   script(type='text/javascript' src='/javascripts/user/login.js')
+  script(type='text/javascript' src='/bower/js-cookie/js.cookie.js')
 
   script.
     window.USER = !{JSON.stringify(user)};

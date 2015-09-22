@@ -22,6 +22,7 @@ module.exports.policies = {
 
   'UserController':
     controlLogin: ['global']
+    cart: []
 
   'MainController': ['global']
 
@@ -68,7 +69,7 @@ module.exports.policies = {
   # shopController:
   #   list: []
 
-  # SelectionActiveController: 
+  # SelectionActiveController:
   #   index: []
 
   # AboutController:

@@ -1,13 +1,13 @@
  "use strict";
 $(function  () {
-  let $imageSectionContainer = $('ul.imageSection'),
+  var $imageSectionContainer = $('ul.imageSection'),
       $imageSectionSample = $('#imageSectionSample'),
       $imageSectionSample_inputs = $imageSectionSample.find('input'),
       $topicActiveForm = $('form#ActivitiesData'),
       $topicTitle = $('#topicTitle');
 
   // modal
-  let $uploadFileName = $('#uploadFileName'),
+  var $uploadFileName = $('#uploadFileName'),
       $openWindow = $('#openWindow'),
       $productUrl1 = $('#productUrl1'),
       $productUrl2 = $('#productUrl2'),
@@ -39,28 +39,28 @@ $(function  () {
   /* add new imageSection */
   $('body').on('click','.btn-add',function(e) {
     // get imageSection count (include imageSectionSample)
-    let index = $('li.imageSection').length;
+    var index = $('li.imageSection').length;
     // replace imageSectionSample's name index
     $imageSectionSample_inputs.map(function() {
-      let $input = $(this);
-      let newName = $input.attr('name').replace('0', index);
+      var $input = $(this);
+      var newName = $input.attr('name').replace('0', index);
       $input.attr('name', newName);
     });
     // append new imageSection
     $imageSectionContainer.append( $imageSectionSample.html() );
   });
 
-  let imageContainerId, $imageContainer;
+  var imageContainerId, $imageContainer;
 
   /* image container + icon click event */
   $(document).on("click", ".fileinput-square a", function (e) {
 
     $imageContainer = $(this);
     imageContainerId = $imageContainer.data('id');
-    let imagePath = $imageContainer.find('input[data-content="path"]').val();
+    var imagePath = $imageContainer.find('input[data-content="path"]').val();
 
     /* initialize modal Section */
-    let isOpenWindow = $imageContainer.find('input[data-content="openWindow"]').val();
+    var isOpenWindow = $imageContainer.find('input[data-content="openWindow"]').val();
     if(isOpenWindow == 'true')
       isOpenWindow = true;
     else
@@ -99,7 +99,7 @@ $(function  () {
   /* modal confirm button - click event */
   $('.modal-content').on('click', '#modalConfirmButton', function(e) {
     e.preventDefault();
-    let that = $(this),
+    var that = $(this),
         url = '',
         path = '',
         $openWindow = $('#openWindow'),
@@ -149,13 +149,13 @@ $(function  () {
   });
 
   $topicActiveForm.submit(function() {
-    let result = true;
+    var result = true;
     // sort imageSection weight
     $('li.imageSection').map(function(index) {
       $(this).find('.weight').val(index);
     });
     // check requiredInputs filled
-    let $requiredInputs = $topicActiveForm.find('input[type="hidden"]').not('[data-content="openWindow"]').not('.topicTitle');
+    var $requiredInputs = $topicActiveForm.find('input[type="hidden"]').not('[data-content="openWindow"]').not('.topicTitle');
     $requiredInputs.map(function() {
       if( !$(this).val().length ) {
         result = false;

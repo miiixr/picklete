@@ -64,13 +64,12 @@ module.exports.routes = {
 
   'get /index' : 'SelectionActiveController.index'
   'get /FAQ' : 'FAQController.show'
-  'get /member/fav' : view: 'main/member-fav'
   'get /member/purchase' : view: 'main/member-purchase'
   'get /member/setting' : 'UserController.edit'
   'post /member/update' : 'UserController.update'
 
   'get /brands' : view: 'main/brands'
-  'get /user/cart' : view: 'main/cart'
+  'get /user/cart' : 'UserController.cart'
   'get /user/cart-step-2' : view: 'main/cart-step-2'
   'get /user/cart-done' : view: 'main/cart-done'
 
@@ -132,7 +131,8 @@ module.exports.routes = {
   # end promotions
 
   # client side / Have to login
-  'get /member/fav' : view: 'main/member-fav'
+  # 'get /member/fav' : view: 'main/member-fav'
+  'get /member/favorite' : 'UserController.favorite'
   'get /member/purchase' : view: 'main/member-purchase'
   'get /member/setting' : 'UserController.edit'
   'post /member/update' : 'UserController.update'
@@ -147,9 +147,6 @@ module.exports.routes = {
 
   'get /brands/:id' : 'BrandController.show'
 
-  'get /user/cart' : view: 'main/cart'
-  'get /user/cart-step-2' : view: 'main/cart-step-2'
-  'get /user/cart-done' : view: 'main/cart-done'
 
   # 'get /admin/brand' : 'BrandController.list'
   # 'post /admin/brand' : 'BrandController.create'

@@ -122,9 +122,10 @@ block body
     h3
       span.label.label-default.p-10-15 款式規格
     ol.form-horizontal.drag-container
-      li.row.row-s.border-bottom-1.m-bottom-4
+      li.row.row-s.border-bottom-1.m-bottom-4.productWeight
         .col-md-1.text-center
           span.glyphicon.glyphicon-menu.font-size-xlarge
+          input.weight(type='hidden', name='good[0][weight]', form='goodForm')
         // /col-md-1
         .col-md-3
           //
@@ -208,7 +209,7 @@ block body
           .form-group.form-group-sm
             label.col-sm-3.control-label 款式
             .col-sm-9
-              input.form-control(type='text', name="good[0][description]", form='goodForm')
+              input.form-control(type='text', name="good[0][name]", form='goodForm')
           // /form-group
           .form-group.form-group-sm
             label.col-sm-3.control-label 貨號

@@ -73,20 +73,25 @@ block body
                   h5.text-muted.letter-spacing-3.text-roboto.m-bottom-2
                     a(href='brands.html') #{productGm.name}
                   h2.text-black.m-bottom-6.text-roboto #{productGm.name} #{name}
-                  h3.text-black.m-bottom-4 $ #{product.price}
+                  .h3.text-black.m-bottom-4 $ 
+                    span#price #{product.price}
                 // /col-sm-10
                 .col-sm-2.col-xs-3
                   //
                     item-label-like
                     ==================================================
                   a(href='#')
-                    span.label.label-like.pull-right
+                    span.label.label-like.pull-right(data-productId=product.id)
                       span.glyphicon.glyphicon-heart
                       br
                       //- | 123
                       span.label-like-text 已加入收藏
                     // /label-like
                 // /col-sm-2
+              - if (product.comment)
+                hr.m-top-4.m-bottom-4
+                p #{product.comment}
+                hr.m-top-4.m-bottom-4
               // /row 
 
               // 商品數量
@@ -97,7 +102,7 @@ block body
                       button.btn.btn-default.btn-number.p-left-2.p-right-2(type='button', disabled='disabled', data-type='minus', data-field='quant[1]')
                         span.glyphicon.glyphicon-minus
                     // /input-group-btn
-                    input.form-control.input-number.text-center.font-size-large(type='text', name='quant[1]', value='1', min='1', max=' //')
+                    input.form-control.input-number.text-center.font-size-large(type='text', name='quant[1]', value='1', min='1', max='999')
                     span.input-group-btn
                       button.btn.btn-default.btn-number.p-left-2.p-right-2(type='button', data-type='plus', data-field='quant[1]')
                         span.glyphicon.glyphicon-plus
@@ -105,7 +110,9 @@ block body
                   // /input-group
                 // /col-sm-4
                 .col-sm-8
-                  a.btn.btn-black.border-radius-circle.btn-block.btn-lg.add-to-cart(href='#') 加入購物車
+                  a.btn.btn-black.border-radius-circle.btn-block.btn-lg.add-to-cart(
+                  data-productId=product.id, data-photos=product.photos, 
+                  data-brand=productGm.name, data-name=product.name) 加入購物車 
                 // /col-sm-8
               // /row
               

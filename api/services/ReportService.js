@@ -79,6 +79,10 @@ module.exports = {
         filename = 'Report-' + startDate + '-' + endDate;
       }
 
+      if (!fs.existsSync('report')) {
+        fs.mkdirSync('report');
+      }
+
       let filePath = 'report/' + filename + '.xlsx';
       var buffer = await xlsx.build(data);
       fs.writeFileSync(filePath, buffer);
