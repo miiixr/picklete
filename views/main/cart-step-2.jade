@@ -1,7 +1,6 @@
 extends ../_layout_head
 
 block body
-    - console.log("!!!",userData);
     .container
       h1.text-black.m-top-10.m-bottom-6 填寫資料
       .border-block-3.m-bottom-10
@@ -20,7 +19,7 @@ block body
                     input.form-control(name='order[shipment][username]',type='hidden')
                   .col-sm-4
                     label.checkbox-inline
-                      input(type='checkbox', value='option1' ,checked='')
+                      input(type='checkbox', value='option1')
                       |  先生
                     label.checkbox-inline
                       input(type='checkbox', value='option2')
