@@ -29,6 +29,13 @@
       alert("請輸入住址");
       return;
     }
+
+    re = /^[09]{2}[0-9]{8}$/;
+    if (!re.test($("input[name='order[user][mobile]']").val())){
+      alert("你的手機格式不對！");
+      return;
+    }
+
     var postData = $("form[name='orderCreate']").serializeJSON();
     postData.order.orderItems = picklete_cart.orderItems;
     postData.order.shippingFee = Cookies.getJSON('shippingFee');
@@ -43,6 +50,18 @@
             $(document.body).html(data);
         }
     });
+  });
+
+  $( "input[name='order[user][address]']" ).change(function() {
+    $("input[name='order[shipment][address]']").val($( "input[name='order[user][address]']" ).val());
+  });
+
+  $( "input[name='order[user][mobile]']" ).change(function() {
+    $("input[name='order[shipment][mobile]']").val($( "input[name='order[user][mobile]']" ).val());
+  });
+
+  $( "input[name='order[user][username]']" ).change(function() {
+    $("input[name='order[shipment][username]']").val($( "input[name='order[user][username]']" ).val());
   });
 
 }(jQuery));

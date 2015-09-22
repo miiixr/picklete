@@ -126,7 +126,6 @@ let ShopController = {
 
   cartStep2: async(req,res) => {
     try {
-      console.log("!!!",req.body);
       res.view("main/cart-step-2");
     } catch (e) {
       console.error(e.stack);
