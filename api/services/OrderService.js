@@ -121,7 +121,7 @@ module.exports = {
         TradeDesc: 'Allpay push order test',
         ItemName: '',
         ReturnURL: `${domain}allpay/paid`,
-        ChoosePayment: 'WebATM',
+        ChoosePayment: 'ATM',
         ClientBackURL: `${domain}shop`,
         PaymentInfoURL: `${domain}allpay/paymentinfo`
       };
