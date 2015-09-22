@@ -328,6 +328,7 @@ module.exports = {
     var xs = []
     for (var i=0; i < productNames.length; i++) {
       var x = await db.Product.create({
+        weight: [i],
         name: productNames[i],
         description: '超級精選' + productNames[i] + '咖啡豆',
         stockQuantity: 1111,
