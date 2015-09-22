@@ -86,7 +86,54 @@ let PaymentController = {
   paymentinfo: async(req, res) => {
     try {
       let data = req.body;
-      console.log("!!!",req.body);
+      console.log("req",req.body);
+      let find;
+      if(sails.config.environment === 'development' || sails.config.environment === 'test'){
+        find = data.MerchantTradeNo.replace(sails.config.allpay.merchantID,"");
+        find = find.replace(/\w{8}/,"");
+      }
+      else{
+        find = data.MerchantTradeNo.replace(sails.config.allpay.merchantID ,"");
+      }
+
+      let order = await db.Order.findById(find);
+      if(!order)
+        throw new Error(`${find} 找不到訂單!!`);
+
+      if (!(sails.config.environment === 'development' || sails.config.environment === 'test')) {
+        if(checkMacValue != data.CheckMacValue)
+          throw new Error(`CheckMacError!!`);
+      }
+
+      order.allPayRtnCode = data.RtnCode;
+      order.allPayRtnMsg = data.RtnMsg;
+      order.allPayPaymentType = data.PaymentType;
+      order.allPayTradeDate = data.TradeDate;
+      order.paymentCreateConfirmAmount = data.TradeAmt;
+
+      if(!data.BankCode)
+        order.BankCode = data.BankCode;
+
+      if(!data.vAccount)
+        order.vAccount = data.vAccount;
+
+      if(!data.ExpireDate)
+        order.ExpireDate = data.ExpireDate;
+
+      if(!data.PaymentNo)
+        order.PaymentNo = data.PaymentNo;
+
+      if(!data.Barcode1)
+        order.Barcode1 = data.Barcode1;
+
+      if(!data.Barcode2)
+        order.Barcode2 = data.Barcode2;
+
+      if(!data.Barcode3)
+        order.Barcode3 = data.Barcode3;
+
+      await order.save();
+
       return res.ok('1|OK');
     } catch (e) {
       console.error(e.stack);
