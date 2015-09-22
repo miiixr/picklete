@@ -124,8 +124,8 @@ describe('about Payment', () => {
     let data = {
       MerchantID : '123456789',
       MerchantTradeNo : sails.config.allpay.merchantID + testdOrder.id,
-      RtnCode : '1',
-      RtnMsg : 'paid',
+      RtnCode : '2',
+      RtnMsg : 'Get VirtualAccount Succeeded',
       TradeNo : '201203151740582564',
       TradeAmt : 22000,
       PaymentType : 'ATM_TAISHIN',
@@ -152,8 +152,8 @@ describe('about Payment', () => {
     let data = {
       MerchantID : '123456789',
       MerchantTradeNo : sails.config.allpay.merchantID + testdOrder.id,
-      RtnCode : '1',
-      RtnMsg : 'paid',
+      RtnCode : '2',
+      RtnMsg : 'Get VirtualAccount Succeeded',
       TradeNo : '201203151740582564',
       TradeAmt : 22000,
       PaymentType : 'ATM_TAISHIN',
