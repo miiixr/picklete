@@ -134,16 +134,17 @@ module.exports = {
       });
       data.ItemName = itemArray.join('#');
 
-      // let checkMacValue = await new Promise((done) => {
-      //   dataRequest.post( {
-    	// 		url: 'http://payment-stage.allpay.com.tw/AioHelper/GenCheckMacValue',
-    	// 		form:data,
-    	// 		followRedirect: true
-    	// 	},(error, res, body) => {
-    	// 		done(res.body);
-    	// 	})
-      // });
-      var checkMacValue = allpay.genCheckMacValue(data);
+      let checkMacValue = await new Promise((done) => {
+        dataRequest.post( {
+    			url: 'http://payment-stage.allpay.com.tw/AioHelper/GenCheckMacValue',
+    			form:data,
+    			followRedirect: true
+    		},(error, res, body) => {
+    			done(res.body);
+    		})
+      });
+
+      // var checkMacValue = allpay.genCheckMacValue(data);
       data.CheckMacValue = checkMacValue;
       return data;
 
