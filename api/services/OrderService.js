@@ -124,8 +124,6 @@ module.exports = {
         ChoosePayment: 'WebATM',
         ClientBackURL: `${domain}shop`,
         PaymentInfoURL: `${domain}allpay/paymentinfo`
-        // ChooseSubPayment: '',
-        // Remark: '',
       };
       var itemArray = [];
       order.OrderItems.forEach((orderItem) => {
@@ -133,20 +131,18 @@ module.exports = {
       });
       data.ItemName = itemArray.join('#');
 
-      let checkMacValue = await new Promise((done) => {
-        dataRequest.post( {
-    			url: 'http://payment-stage.allpay.com.tw/AioHelper/GenCheckMacValue',
-    			form:data,
-    			followRedirect: true
-    		},(error, res, body) => {
-    			done(res.body);
-    		})
-      });
-      console.log("!!!",checkMacValue);
+      // let checkMacValue = await new Promise((done) => {
+      //   dataRequest.post( {
+    	// 		url: 'http://payment-stage.allpay.com.tw/AioHelper/GenCheckMacValue',
+    	// 		form:data,
+    	// 		followRedirect: true
+    	// 	},(error, res, body) => {
+    	// 		done(res.body);
+    	// 	})
+      // });
+      // console.log("!!!",checkMacValue);
 
-      var checkMacValue2 = allpay.genCheckMacValue(data);
-      console.log("???",checkMacValue2);
-
+      var checkMacValue = allpay.genCheckMacValue(data);
       data.CheckMacValue = checkMacValue;
       return data;
 
