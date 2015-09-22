@@ -1,8 +1,9 @@
 import Promise from "bluebird";
 let domain = sails.config.domain || process.env.domain || 'http://localhost:1337';
+import fs from 'fs-extra';
 
 module.exports = {
-  upload: async (req, res) => {
+  upload: async(req, res) => {
 
     var object = {
       filename: req.body['filename'] || req.query['filename'] || '',
@@ -12,7 +13,7 @@ module.exports = {
     console.log(object);
 
     let promise = new Promise((resolve, reject) => {
-      req.file("uploadfile").upload(async (err, files) => {
+      req.file("uploadfile").upload(async(err, files) => {
         resolve(files);
       });
     });
@@ -40,9 +41,6 @@ module.exports = {
       console.error(e);
     }
 
-
-
-
     // req.file("uploadfile").upload(async (err, files) => {
 
     //   if ( ! files.length)
@@ -67,5 +65,40 @@ module.exports = {
     //   object[0] = files[0];
     //   res.ok(object);
     // });
+
+  },
+  ckeditorUpload: function(req, res) {
+
+    // e.g.
+    // 0 => infinite
+    // 240000 => 4 minutes (240,000 miliseconds)
+    // etc.
+    //
+    // Node defaults to 2 minutes.
+    res.setTimeout(0);
+
+    req.file('upload')
+      .upload({
+        // You can apply a file upload limit (in bytes)
+        maxBytes: 1000000
+
+      }, function whenDone(err, uploadedFiles) {
+        let file = uploadedFiles[0];
+        file.fd = domain + ImageService.processPath(file.fd);
+        let fileName = file.fd;
+        if (err) return res.serverError(err);
+        else {
+          let html = "";
+          html += "<script type='text/javascript'>";
+          html += "    var funcNum = " + req.query.CKEditorFuncNum + ";";
+          html += "    var url     = \"" + fileName + "\";";
+          html += "    var message = \"Uploaded file successfully\";";
+          html += "";
+          html += "    window.parent.CKEDITOR.tools.callFunction(funcNum, url, message);";
+          html += "</script>";
+
+          res.send(html);
+        }
+      });
   }
 };
