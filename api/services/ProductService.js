@@ -144,7 +144,7 @@ module.exports = {
         if (product){
           // product is exists.
           // so let's check if user want to remove this product or not.
-          if(!good.name){
+          if(!good.productNumber){
             // if this product is be deleted at view
             // console.log('=== product ',i,' exists but need to be delete ===');
             let deleteProduct = await product.destroy();
