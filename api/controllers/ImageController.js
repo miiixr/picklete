@@ -3,7 +3,7 @@ let domain = sails.config.domain || process.env.domain || 'http://localhost:1337
 import fs from 'fs-extra';
 
 module.exports = {
-  upload: async (req, res) => {
+  upload: async(req, res) => {
 
     var object = {
       filename: req.body['filename'] || req.query['filename'] || '',
@@ -67,39 +67,38 @@ module.exports = {
     // });
 
   },
-  ckeditorUpload: function (req, res) {
-    // handle ckeditor image upload
-    var dest, fileName, l, tmpPath;
+  ckeditorUpload: function(req, res) {
 
-    tmpPath = req.files.upload.path;
-    l = tmpPath.split('/').length;
-    fileName = tmpPath.split('/')[l - 1] + "_" + req.files.upload.name;
+    // e.g.
+    // 0 => infinite
+    // 240000 => 4 minutes (240,000 miliseconds)
+    // etc.
+    //
+    // Node defaults to 2 minutes.
+    res.setTimeout(0);
 
-    dest = __dirname + "/public/uploads/" + fileName;
-    fs.readFile(req.files.upload.path, function(err, data) {
-      if (err) {
-        console.log(err);
-        return;
-      }
+    req.file('upload')
+      .upload({
+        // You can apply a file upload limit (in bytes)
+        maxBytes: 1000000
 
-      fs.writeFile(dest, data, function(err) {
-        var html;
-        if (err) {
-          console.log(err);
-          return;
+      }, function whenDone(err, uploadedFiles) {
+        let file = uploadedFiles[0];
+        file.fd = domain + ImageService.processPath(file.fd);
+        let fileName = file.fd;
+        if (err) return res.serverError(err);
+        else {
+          let html = "";
+          html += "<script type='text/javascript'>";
+          html += "    var funcNum = " + req.query.CKEditorFuncNum + ";";
+          html += "    var url     = \"" + fileName + "\";";
+          html += "    var message = \"Uploaded file successfully\";";
+          html += "";
+          html += "    window.parent.CKEDITOR.tools.callFunction(funcNum, url, message);";
+          html += "</script>";
+
+          res.send(html);
         }
-
-        html = "";
-        html += "<script type='text/javascript'>";
-        html += "    var funcNum = " + req.query.CKEditorFuncNum + ";";
-        html += "    var url     = \"/uploads/" + fileName + "\";";
-        html += "    var message = \"Uploaded file successfully\";";
-        html += "";
-        html += "    window.parent.CKEDITOR.tools.callFunction(funcNum, url, message);";
-        html += "</script>";
-
-        res.send(html);
       });
-    });
   }
 };
