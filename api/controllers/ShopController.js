@@ -102,6 +102,7 @@ let ShopController = {
         return res.view('common/warning', {errors:'not found'});
       }
       else{  
+        console.log(productGm.Dpts);
         let resData = { productGm: productGm, products: products, product: product, photos: photos, services: services, coverPhotos: coverPhotos };
 
         return res.view("main/shopProduct", resData);
