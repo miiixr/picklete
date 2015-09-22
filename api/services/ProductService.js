@@ -275,7 +275,7 @@ module.exports = {
 
     if ( ! productIds)
       return [];
-    
+
     var prop;
     let subQuery = { "$or": [] };
 
@@ -286,7 +286,7 @@ module.exports = {
 
     if (subQuery["$or"].length < 1)
       return [];
-    
+
     let products = await db.Product.findAll({
       where: subQuery,
       include: [{
@@ -397,10 +397,10 @@ module.exports = {
 
       if (query.brandId > 0)
         queryGmObj.brandId = query.brandId;
-      if (query.dptId > 0)
-        queryGmObj.dptId = query.dptId;
-      if (query.dptSubId > 0)
-        queryGmObj.dptSubId = query.dptSubId;
+      // if (query.dptId > 0)
+      //   queryGmObj.dptId = query.dptId;
+      // if (query.dptSubId > 0)
+        // queryGmObj.dptSubId = query.dptSubId;
       // tag keyword search
       if (query.keyword) {
         queryGmObj.tag = {
@@ -417,17 +417,38 @@ module.exports = {
 
     queryGmObj = {
       where: queryGmObj,
-      include: [db.Product]
+      include: [db.Product, db.Dpt, db.DptSub]
     };
     let productGms = await db.ProductGm.findAll(queryGmObj);
 
-    // 將productGm 搜尋結果的id取出
+    // 過濾館別，將productGm 搜尋結果的id取出
     let gmResultId = [];
     for (let productGm of productGms) {
-      for (let gmProduct of productGm.Products) {
-        gmResultId.push(gmProduct.id);
+      let dptPass = true, dptSubPass = true;
+      if( query.dptId > 0 || query.dptSubId > 0) {
+        if( query.dptId > 0 ) {
+          if( productGm.Dpts[0].id != query.dptId )
+            dptPass = false;
+        }
+        if(query.dptSubId > 0) {
+          if(productGm.DptSubs[0].id != query.dptSubId)
+            dptSubPass = false;
+        }
+        if(dptPass && dptSubPass){
+          for (let gmProduct of productGm.Products) {
+            gmResultId.push(gmProduct.id);
+          }
+        }
+      }
+      else {
+        for (let productGm of productGms) {
+          for (let gmProduct of productGm.Products) {
+            gmResultId.push(gmProduct.id);
+          }
+        }
       }
     }
+
     // productGm 搜尋結果 與 product 搜尋結果 mapping
     let resultArray = [];
     for (let product of products) {
