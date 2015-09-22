@@ -16,15 +16,16 @@ For more information on configuring policies, check out:
 http://sailsjs.org/#/documentation/reference/sails.config/sails.config.policies.html
 ###
 module.exports.policies = {
-                      
+
   '*': ['global', 'loginRequired']
   'AuthController': ['global', 'passport']
 
   'UserController':
     controlLogin: ['global']
+    cart: []
 
   'MainController': ['global']
-      
+
   'ShopController':
     show: ['global']
     list: ['global']
@@ -68,7 +69,7 @@ module.exports.policies = {
   # shopController:
   #   list: []
 
-  # SelectionActiveController: 
+  # SelectionActiveController:
   #   index: []
 
   # AboutController:
