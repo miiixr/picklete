@@ -148,7 +148,7 @@ describe('about Payment', () => {
     });
   });
 
-  it.only('allpay PaymentInfoURL return post by ATM',(done) => {
+  it('allpay PaymentInfoURL return post by CVS or BARCODE',(done) => {
     let data = {
       MerchantID : '123456789',
       MerchantTradeNo : sails.config.allpay.merchantID + testdOrder.id,
