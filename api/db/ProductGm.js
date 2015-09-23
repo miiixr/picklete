@@ -94,6 +94,8 @@ module.exports = (sequelize, DataTypes) => {
         ProductGm.hasMany(models.Product)
         ProductGm.belongsToMany(models.Dpt, {through: 'DptProductGm'});
         ProductGm.belongsToMany(models.DptSub, {through: 'DptSubProductGm'});
+        ProductGm.belongsToMany(models.AdditionalPurchase, {through: 'AdditionalPurchaseProductGm'});
+
         return
       }
     },
