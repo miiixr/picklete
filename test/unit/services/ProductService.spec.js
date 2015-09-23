@@ -240,7 +240,7 @@ describe("about product service", () => {
     try{
       let queryObj = {};
       // get sourceData through db
-      let srcData = await db.Product.findOne();
+      let srcData = await db.Product.findAndCountAll({ limit: queryLimit });
       console.log('sourceData:'+JSON.stringify(srcData, null, 4));
 
       // set target name
