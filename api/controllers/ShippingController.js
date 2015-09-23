@@ -8,7 +8,7 @@ module.exports = {
         // then get data.
         let shippings = await ShippingService.findAll();
         // let's do it.
-        if (responseType && responseType.toLowerCase() == 'json') {
+        if (responseType != undefined && responseType.toLowerCase() == 'json') {
           return res.ok(shippings);
         }else{
           return res.view('admin/shipping', {
@@ -31,9 +31,9 @@ module.exports = {
         let responseType = req.query.responseType;
         // get data set and save.
         let shippings = req.body;
-        let savedShippings = await SippingService.save(shippings);
-        // let's do it.
-        if (responseType && responseType.toLowerCase() == 'json') {
+        let savedShippings = await ShippingService.saveAll(shippings);
+        // output by demanded
+        if (responseType != undefined && responseType.toLowerCase() == 'json') {
           return res.ok(savedShippings);
         }else{
           return res.view('admin/shipping', {
