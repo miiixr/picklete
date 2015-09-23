@@ -35,7 +35,7 @@ block body
         // /form-group
     // /col-md-6
     .col-md-6.desktop-text-right
-      a.btn.btn-green(href='shop-buy-more-detail') 加入已選取商品
+      a#add.btn.btn-green(href='#') 加入已選取商品
     // /col-md-6
   // /row
   hr.dashed-line
@@ -61,7 +61,7 @@ block body
       each purchase in additionalPurchase.rows
         tr
           td
-            input(type='checkbox')
+            input.addSelect(type='checkbox' value= purchase.id)
           td
             img.width-6(src='images/demo/shop-item-1-1.jpg')
           td #{purchase.name}
@@ -101,5 +101,15 @@ block body
         $('#bonusPrevious').click(function(){
           $("input[name='page']").val(parseInt($("input[name='page']").val())-1);
           $("form[name='search']").submit();
+        });
+        
+        $('#add').click(function(){
+          var selsetItem=[];
+          $(".addSelect").each(function(index,dom){
+            if(dom.checked)
+              selsetItem.push(dom.value);
+          });
+          console.log(selsetItem);
+          $
         });
       });

@@ -103,6 +103,7 @@ let PromotionController = {
     }
   },
   controlShopBuyMoreDetail: function(req, res) {
+    console.log('req',req.body);
     res.view('promotion/controlShopBuyMoreDetail',{
       pageName: "shop-buy-more-detail"
     });
