@@ -17,6 +17,15 @@ module.exports = (sequelize, DataTypes) ->
     paymentConfirmName: DataTypes.STRING
     paymentConfirmPostfix: DataTypes.STRING
     paymentConfirmAmount: DataTypes.FLOAT
+    paymentCreateConfirmAmount: DataTypes.FLOAT
+    allPayTradeDate: DataTypes.DATE
+    BankCode: DataTypes.STRING
+    vAccount: DataTypes.STRING
+    ExpireDate: DataTypes.STRING
+    PaymentNo: DataTypes.STRING
+    Barcode1: DataTypes.STRING
+    Barcode2: DataTypes.STRING
+    Barcode3: DataTypes.STRING
     useBunusPoint: DataTypes.INTEGER
     CheckMacValue: DataTypes.STRING
     MerchantTradeDate: DataTypes.DATE

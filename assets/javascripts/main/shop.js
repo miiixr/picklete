@@ -27,7 +27,7 @@
 
     if ($(target).hasClass("active")) {
       $(target).removeClass("active");
-      
+
       if (favs[productId]) {
         favs[productId] = null;
         delete favs[productId];
@@ -38,7 +38,7 @@
     }
 
     Cookies.set(FAV_KEY, favs, { expires: 90 });
-      
+
   });
 
   // remove from favorite list
@@ -62,7 +62,7 @@
 
   });
 
-  
+
 
   var travelFavorite = function () {
 
@@ -110,7 +110,7 @@
     console.log('=== price ===', price);
 
     var addProduct = {
-      id: productId,
+      ProductId: productId,
       quantity: quantity,
       price: price,
       brand: brand,

@@ -29,6 +29,7 @@ module.exports.policies = {
   'ShopController':
     show: ['global']
     list: ['global']
+    cartStep2: ['global']
 
   'AboutController':
     show: ['global']
@@ -48,18 +49,19 @@ module.exports.policies = {
 
   # ProductController:
   #   list: ['loginRequired']
-  # OrderController:
+  'OrderController':
   #   index: ['loginRequired']
   #   paymentConfirm: []
   #   paymentConfirmSave: []
-  #   create: []
-  #   status: []
-  #   find: []
-  #   sync: []
-  #   bonus: []
-  #   pay: []
-  # PaymentController:
-  #   paid: []
+    create: []
+    status: []
+    find: []
+    sync: []
+    bonus: []
+    pay: []
+  'PaymentController':
+    paid: []
+    paymentinfo:[]
 
   # #'/api/search/*': []
   # SearchController:

@@ -9,13 +9,14 @@ block body
             .p-40
               h2 購買人
               hr
-              form.form-horizontal.m-bottom-10
+              form.form-horizontal.m-bottom-10(name='orderCreate', method='post',action='/api/order')
                 .form-group
                   label.col-sm-3.control-label
                     | 中文姓名
                     span.text-danger *
                   .col-sm-5
-                    input.form-control(type='text', placeholder='請填寫本名')
+                    input.form-control(name='order[user][username]',type='text', placeholder='請填寫本名',required='')
+                    input.form-control(name='order[shipment][username]',type='hidden')
                   .col-sm-4
                     label.checkbox-inline
                       input(type='checkbox', value='option1')
@@ -29,7 +30,8 @@ block body
                     | 手機號碼
                     span.text-danger *
                   .col-sm-9
-                    input.form-control(type='text', placeholder='請輸入正確號碼，以便出貨聯繫')
+                    input.form-control(name='order[user][mobile]',type='text', placeholder='請輸入正確號碼，以便出貨聯繫',required='',value= userData.mobile)
+                    input.form-control(name='order[shipment][mobile]',type='hidden' ,value= userData.mobile)
                 // /form-group
                 .form-group
                   label.col-sm-3.control-label
@@ -50,7 +52,8 @@ block body
                       option 5
                     input.form-control.width-12.inline-block(type='text')
                   .col-sm-9.col-sm-offset-3.m-top-3
-                    input.form-control(type='text')
+                    input.form-control(name='order[user][address]',type='text',required='' ,value= userData.address)
+                    input.form-control(name='order[shipment][address]',type='hidden',value= userData.address)
                 // /form-group
                 .form-group
                   .col-sm-12
@@ -160,29 +163,31 @@ block body
                 tbody
                   tr
                     th 小計
-                    td.text-right 3,240
+                      td#subtotal.text-right 0
                   tr
                     th 總折扣
                     td.text-right
-                      span.text-danger -300
+                      span.text-danger 0
                   tr
                     th 運費
-                    td.text-right 免運
+                    td#shippingFeeField.text-right 0
                   tr
                     th 禮品包裝
-                    td.text-right 120
+                    td.text-right 0
                   tr
                     th 折扣碼
                     td.text-right
-                      span.text-danger -30
+                      span.text-danger 0
                   tr
                     th 總計
                     td.text-right
-                      h3.m-top-0 $2,940
-              a.btn.btn-black.border-radius-circle.btn-block.m-bottom-2(href='/user/cart-done') 送出訂單
+                      h3#totalPrice.m-top-0 0
+              a.btn.btn-black.border-radius-circle.btn-block.m-bottom-2#orderCreate 送出訂單
               a.btn.btn-default.border-radius-circle.btn-block(href='/user/cart') 回上一頁
             // /p-20
           // /col-md-3
         // /row
       // /border-block-3
     // /container
+block js
+  script(src="/javascripts/main/cartstep2.js")
