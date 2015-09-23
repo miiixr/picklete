@@ -1,27 +1,60 @@
 extends ../_layout_auth
 
 block body
-  h2.m-bottom-6 選擇加價購商品
+  h2.m-bottom-6 加價購設定
   .well.control-well.p-30.m-bottom-8
-    form.form-inline(name="search", action="shop-buy-more-add-item", method="get")
-      .form-group.m-right-4
-        label 品牌名稱
-        select.form-control
-          option 品牌名稱
-          option 2
-          option 3
-          option 4
-          option 5
+    form.form-horizontal
+      .form-group
+        label.col-sm-3.col-md-2.control-label 是否限滿額
+        .col-sm-9.col-md-10
+          .btn-group.btn-group-switch(data-toggle='buttons')
+            label.btn.btn-default
+              input#option1(type='radio', name='options', autocomplete='off', checked='')
+              span.btn-text 不限金額
+            label.btn.btn-default.active
+              input#option2(type='radio', name='options', autocomplete='off')
+              span.btn-text 限滿 1,500 元
+          // /btn-group-switch
+        // /col-sm-10
       // /form-group
-      .form-group.m-right-4
-        label 關鍵字
-        input#keyword.form-control(type='text',name="keyword",value = query.keyword)
-        input(type='hidden', name='page' value = page)
+      .form-group
+        label.col-sm-3.col-md-2.control-label 活動時間
+        .col-sm-4.col-md-3
+          input.form-control(type='datetime-local')
+        .col-sm-1.col-md-1.p-left-0.p-right-0.text-center
+          p.form-control-static 至
+        .col-sm-4.col-md-3
+          input.form-control(type='datetime-local')
+        .col-sm-9.col-sm-offset-3.col-md-3.col-md-offset-0
+          .checkbox
+            label
+              input(type='checkbox')
+              |  不限時
       // /form-group
-      button.btn.btn-default(type='button', onClick='$("form[name=\'search\']").submit()') 查詢
+      .form-group
+        label.col-sm-3.col-md-2.control-label 折扣設定
+        .col-sm-4.col-md-3
+          .radio
+            label
+              input#optionsRadios1(type='radio', name='optionsRadios', value='option1', checked='')
+              input.form-control(type='text', placeholder='請輸入折扣金額')
+        .col-sm-1.col-md-1
+        .col-sm-4.col-md-3
+          .radio
+            label
+              input#optionsRadios2(type='radio', name='optionsRadios', value='option2')
+              .input-group.width-12
+                input.form-control(type='text')
+                span.input-group-addon 折
+              // /input-group
+      // /form-group
+      .m-top-6.text-right
+        a.btn.btn-link.delete-link.btn-lg(href='#', data-toggle='modal', data-target='#modal-delete') 刪除
+        a.btn.btn-green.btn-lg(href='#') 確定
+      // /text-right
   // /well
   .row
-    .col-md-6
+    .col-md-4
       form.form-inline
         .form-group
           label 顯示
@@ -34,8 +67,24 @@ block body
           label 筆資料（共 #{additionalPurchase.count} 筆）
         // /form-group
     // /col-md-6
-    .col-md-6.desktop-text-right
-      a#add.btn.btn-green(href='#') 加入已選取商品
+    .col-md-8.desktop-text-right
+      form.form-inline(name="search", action="shop-buy-more-add-item", method="get")
+        .form-group.m-right-2
+          label 品牌名稱
+          select.form-control
+            option 品牌名稱
+            option 2
+            option 3
+            option 4
+            option 5
+        // /form-group
+        .form-group.m-right-2
+          .input-group
+            input#keyword.form-control(type='text',name="keyword",placeholder='輸入關鍵字',value = query.keyword)
+            input(type='hidden', name='page',value = page)
+            span.input-group-btn
+              button.btn.btn-default.p-left-2.p-right-2(type='button', onClick='$("form[name=\'search\']").submit()')
+                span.glyphicon.glyphicon-search
     // /col-md-6
   // /row
   hr.dashed-line
@@ -110,7 +159,17 @@ block body
               selsetItem.push(dom.value);
           });
           console.log(selsetItem);
-          //- shop-buy-more-detail
+          
+          $.ajax(
+          {
+              url : '/shop-buy-more-detail',
+              type: "post",
+              data : selsetItem,
+              success:function(data, textStatus, jqXHR) 
+              {
+                  location.href='../admin/bonus';
+              }
+          });
           
         });
       });
