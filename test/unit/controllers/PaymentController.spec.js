@@ -115,7 +115,7 @@ describe('about Payment', () => {
     });
   });
 
-  it('order paid allpay return post',(done) => {
+  it.only('order paid allpay return post',(done) => {
     let data = {
       MerchantID : '123456789',
       MerchantTradeNo : sails.config.allpay.merchantID + testdOrder.id,

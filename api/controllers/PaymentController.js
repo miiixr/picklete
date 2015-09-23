@@ -57,7 +57,7 @@ let PaymentController = {
         find = data.MerchantTradeNo.replace(sails.config.allpay.merchantID ,"");
       }
 
-      let order = await db.Order.findOne(find);
+      let order = await db.Order.findById(find);
 
       if(!order)
         throw new Error(`${find} 嚴重錯誤!!付款後找不到訂單!!`);
