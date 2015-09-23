@@ -236,7 +236,7 @@ describe("about product service", () => {
   it('product query', async (done) => {
 
     let queryLimit = 100;
-
+    let testingTimes = 5;
     try{
 
       let queryObj = {};
@@ -246,7 +246,7 @@ describe("about product service", () => {
           srcProducts = srcData.rows;
 
       // test all srcData
-      for (let srcProduct of srcProducts) {
+      for (let i=1; i<=testingTimes; i++) {
         let randomRowIndex = Math.floor((Math.random() * srcCount));
         let srcProduct = srcProducts[randomRowIndex];
         // check product name exist
