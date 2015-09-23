@@ -126,7 +126,6 @@ module.exports.routes = {
   'get /admin/shop-discount-add-item' : 'PromotionController.controlShopDiscountAddItem'
   'get /admin/shop-buy-more' : 'PromotionController.controlShopBuyMore'
   'get /admin/shop-buy-more-detail' : 'PromotionController.controlShopBuyMoreDetail'
-  'post /admin/shop-buy-more-detail' : 'PromotionController.showAddItem'
   'get /admin/shop-buy-more-add-item' : 'PromotionController.controlShopBuyMoreAddItem'
   'get /admin/shop-code' : 'PromotionController.controlShopCode'
   'get /admin/shop-code-detail' : 'PromotionController.controlShopCodeDetail'

@@ -135,7 +135,7 @@ block body
     script.
       $(function() {
         $('#limit').change(function() {
-          location.href='/shop-buy-more-add-item?limit='+$(this).val();
+          location.href='/admin/shop-buy-more-add-item?limit='+$(this).val();
         });
 
         $('.form-control').change(function(){
@@ -159,17 +159,6 @@ block body
               selsetItem.push(dom.value);
           });
           console.log(selsetItem);
-          
-          $.ajax(
-          {
-              url : '/shop-buy-more-detail',
-              type: "post",
-              data : selsetItem,
-              success:function(data, textStatus, jqXHR) 
-              {
-                  location.href='../admin/bonus';
-              }
-          });
           
         });
       });
