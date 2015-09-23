@@ -129,10 +129,10 @@ module.exports.routes = {
   'get /admin/shop-report-form' : 'PromotionController.controlShopReportForm'
   # end promotions
 
-  # contorl-ship
+  # shipping
   'get /admin/shipping' : 'ShippingController.list'
   'post /admin/shipping' : 'ShippingController.save'
-  # end contorl-ship
+  # end shipping
 
   # client side / Have to login
   # 'get /member/fav' : view: 'main/member-fav'
