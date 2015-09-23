@@ -260,7 +260,7 @@ let UserController = {
         member.totalBonusRemain = await UserService.calcTotalBonusRemain(member);
       }
 
-      res.view({
+      res.view("user/controlMembers", {
         pageName: "members",
         members: members,
         page: page,
@@ -274,7 +274,7 @@ let UserController = {
   },
   controlMemberDetail: async function(req, res) {
     try {
-      res.view({
+      res.view("user/controlMemberDetail", {
         pageName: "member-detail",
         member: await db.User.findById(req.param('id'))
       });
