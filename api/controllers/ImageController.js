@@ -77,8 +77,8 @@ module.exports = {
     // Node defaults to 2 minutes.
     // res.setTimeout(30000);
     try{
-      let files = await* req.file('upload').upload(async(err, files) => {
-
+      let files = await req.file('upload').upload(async(err, files) => {
+          console.log(files);
           let file = files[0];
           file.fd = domain + ImageService.processPath(file.fd);
           let fileName = file.fd;
