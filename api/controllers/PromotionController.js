@@ -128,7 +128,7 @@ let PromotionController = {
       req.session.UserController_controlMembers_limit || 10
     ));
 
-    let additionalPurchase = await db.AdditionalPurchase.findAndCountAll({
+    let additionalPurchase = await db.Product.findAndCountAll({
       where: queryObj,
       offset: page * limit,
       limit: limit
