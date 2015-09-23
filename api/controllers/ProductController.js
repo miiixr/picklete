@@ -62,10 +62,10 @@ let ProductController = {
         }],
         order: ['Dpt.weight', 'DptSubs.weight']
       });
-      
-      let products = await ProductService.productQuery(req);
 
       let query = req.query;
+
+      let products = await ProductService.productQuery(query);
 
       let result = {
         brands,

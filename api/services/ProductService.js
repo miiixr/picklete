@@ -352,10 +352,9 @@ module.exports = {
     return productJson;
   },
 
-  productQuery: async (req, offset = 0, limit = 2000) => {
+  productQuery: async (query, offset = 0, limit = 2000) => {
 
-    let query = req.query,
-        queryObj = {},
+    let queryObj = {},
         queryGmObj = {};
 
     if (Object.keys(query).length > 0) {

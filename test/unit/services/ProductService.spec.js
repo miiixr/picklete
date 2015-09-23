@@ -232,4 +232,38 @@ describe("about product service", () => {
       done(e);
     }
   });
+
+  it('product query', async (done) => {
+
+    let queryLimit = 5;
+
+    try{
+      let queryObj = {};
+      // get sourceData through db
+      let srcData = await db.Product.findOne();
+      console.log('sourceData:'+JSON.stringify(srcData, null, 4));
+
+      // set target name
+      queryObj.name = srcData.name;
+      let queryResult = await ProductService.productQuery(queryObj);
+
+      console.log('sourceData:'+JSON.stringify(queryResult, null, 4));
+
+      let found = true;
+      // search queryResult product.name include target name
+      for (let product of queryResult) {
+        // if not found
+        if( product['name'].search(srcData.name).length < 0 ) {
+          found = false;
+          break;
+        }
+      }
+
+      found.should.be.equal(true);
+
+      done();
+    } catch (e) {
+      done(e);
+    }
+  });
 });
