@@ -1,0 +1,50 @@
+extends ../_layout_auth
+block body
+  h2.m-bottom-6 運費設定
+  .well.control-well.p-30
+    form.form-horizontal#shippingForm(action="/admin/shipping", method="post")
+      each shipping,index in shippings.shippings
+        // /row
+        .row.row-m
+          .col-md-4
+            .form-group
+              label.col-md-5.control-label 運送方式
+              .col-md-7
+                select.form-control(name='shippings[#{index}][type]') 
+                  //- option(value='postoffice', selected=types == shipping.type) 郵局
+                  //- option(value='delivery') 宅配
+                  each type, index in types
+                    if(type=='delivery')
+                      option(value='#{type}', selected=type == shipping.type) 宅配 
+                    if(type=='postoffice')
+                      option(value='#{type}', selected=type == shipping.type) 郵局
+          
+            // /form-group
+          // /col-md-4
+          .col-md-3
+            .form-group
+              label.col-md-5.control-label 地區
+              .col-md-7
+                input.form-control(type='text', form='shippingForm', name='shippings[#{index}][region]', value='#{shipping.region}')
+            // /form-group
+          // /col-md-3
+          .col-md-3
+            .form-group
+              label.col-md-5.control-label 運費
+              .col-md-7
+                input.form-control(type='text', form='shippingForm', name='shippings[#{index}][fee]', value='#{shipping.fee}')
+            // /form-group
+          // /col-md-3
+          .col-md-2      
+            a.btn-remove(href='#')
+              span.glyphicon.glyphicon-remove
+            if(index == shippings.shippings.length-1)
+              a.btn-add(href='#')
+                span.glyphicon.glyphicon-plus
+        // /row
+      .text-center.m-bottom-6
+        input.btn.btn-green.btn-lg(type='submit', value='確認送出', form='shippingForm')
+    
+    
+block js
+  script(src='/javascripts/admin/shipping.js')
