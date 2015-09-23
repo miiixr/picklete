@@ -2,6 +2,13 @@ describe("ShippingService", () => {
 
   // before testing starts
   before(async (done) => {
+    // clean up model
+    let findAll = await db.Shipping.findAll();
+    let deleteAll = await* findAll.map((shipping) => {
+      return shipping.destroy();
+      // console.log('=== now this id is destroied ==>',shipping.id);
+    });
+
     // pre-built data
     let testDatas = [
     {
@@ -105,15 +112,15 @@ describe("ShippingService", () => {
       // part 1 - length check
       findAllFirst.shippings.length.should.be.equal(4);
       // below temporarily commented for weird await issue by Kuyen.
-      // findAllAgain.shippings.length.should.be.equal(5);
-      // // part 2 - first one's data
-      // findAllAgain.shippings[0].type.should.be.equal("postoffice");
-      // findAllAgain.shippings[0].region.should.be.equal("Taiwan island");
-      // findAllAgain.shippings[0].fee.should.be.equal(100);
-      // // part 3 - last one's data
-      // findAllAgain.shippings[4].type.should.be.equal("delivery");
-      // findAllAgain.shippings[4].region.should.be.equal("within 24H Taiwan");
-      // findAllAgain.shippings[4].fee.should.be.equal(300);
+      findAllAgain.shippings.length.should.be.equal(5);
+      // part 2 - first one's data
+      findAllAgain.shippings[0].type.should.be.equal("postoffice");
+      findAllAgain.shippings[0].region.should.be.equal("Taiwan island");
+      findAllAgain.shippings[0].fee.should.be.equal(100);
+      // part 3 - last one's data
+      findAllAgain.shippings[4].type.should.be.equal("delivery");
+      findAllAgain.shippings[4].region.should.be.equal("within 24H Taiwan");
+      findAllAgain.shippings[4].fee.should.be.equal(500);
       // above temporarily commented for weird await issue by Kuyen.
 
       done();
