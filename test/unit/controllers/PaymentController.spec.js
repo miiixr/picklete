@@ -9,6 +9,19 @@ describe('about Payment', () => {
       return true;
     });
 
+    var fakeUser = {
+      username: 'allpay測試帳號',
+      fullName:'allpay測試帳號',
+      birthDate: new Date(1983, 1, 1),
+      email: "user" + 1000 + "@picklete.local",
+      password: "0000",
+      RoleId: 1,
+      comment: "i'm a fake user",
+      orderSyncToken: '',
+      mobile: '0900000000'
+    };
+    var createFakeUser = await db.User.create(fakeUser);
+
     var newOrder2 = {
       serialNumber: '99999',
       paymentIsConfirmed: false,
@@ -43,6 +56,16 @@ describe('about Payment', () => {
       ProductId: 1
     }];
     let createOrderItems = await db.OrderItem.bulkCreate(orderItems2);
+
+    var shipment2 = {
+      username: createFakeUser.fullName,
+      mobile: createFakeUser.mobile,
+      taxId: '123456789',
+      email: createFakeUser.email,
+      address: '收件者的家',
+      OrderId: testdOrder.id
+    }
+    var createShipment = await db.Shipment.create(shipment2);
 
     done();
   });

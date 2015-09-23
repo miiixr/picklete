@@ -95,7 +95,7 @@ let PaymentController = {
       else{
         find = data.MerchantTradeNo.replace(sails.config.allpay.merchantID ,"");
       }
-
+      console.log('=== ===');
       let order = await db.Order.findOne({
         where:{
           id:find
@@ -109,6 +109,8 @@ let PaymentController = {
           }
         ]
       });
+
+      console.log(order.toJSON());
       if(!order)
         throw new Error(`${find} 找不到訂單!!`);
 
@@ -139,8 +141,10 @@ let PaymentController = {
 
       let result = await order.save();
 
-      result.bank.bankId = data.BankCode;
-      result.bank.accountId = data.vAccount;
+      result.bankId = data.BankCode;
+      result.bankAccountId = data.vAccount;
+      result.order = order;
+      console.log("????",result);
       let messageConfig = CustomMailerService.orderConfirm(result);
       let message = await db.Message.create(messageConfig);
       await CustomMailerService.sendMail(message);

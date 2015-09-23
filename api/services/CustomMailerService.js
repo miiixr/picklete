@@ -33,10 +33,9 @@ module.exports = {
   orderConfirm: (result) => {
 
     try {
-
       var orderConfirmTemplete = sails.config.mail.templete.orderConfirm;
       var mailSendConfig = {...orderConfirmTemplete, to: result.order.User.email};
-      var productsName = result.products.map((product) => product.name);
+      var productsName = result.OrderItems.map((item) => item.name);
       var DOMAIN_HOST = process.env.DOMAIN_HOST || 'localhost:1337';
       var orderConfirmLink = `http://${DOMAIN_HOST}/order/paymentConfirm?serial=${result.order.serialNumber}`
       var {bank} = sails.config;
@@ -46,10 +45,10 @@ module.exports = {
         username: result.order.User.username,
         orderSerialNumber: result.order.serialNumber,
         productName: productsName.join('、'),
-        bankId: bank.bankId,
-        bankName: bank.bankName,
-        accountId: bank.accountId,
-        accountName: bank.accountName,
+        bankId: result.order.bankId,
+        bankName: result.order.bankName,
+        accountId: result.order.bankAccountId,
+        accountName: result.order.bankAccountName,
         paymentTotalAmount: result.order.paymentTotalAmount,
         shipmentUsername: result.order.Shipment.username,
         shipmentAddress: result.order.Shipment.address,
