@@ -1,4 +1,4 @@
-describe.only("ShippingService", () => {
+describe("ShippingService", () => {
 
   // before testing starts
   before(async (done) => {
@@ -63,7 +63,7 @@ describe.only("ShippingService", () => {
   // end list all
 
   // save all
-  it('save SelectionActive', async (done) => {
+  it.only('save SelectionActive', async (done) => {
     // delete all datas before save them all.
     try {
       // this should get a length which should = 4
@@ -74,34 +74,36 @@ describe.only("ShippingService", () => {
       {
         type: 'postoffice',
         region: 'Taiwan island',
-        fee: '100'
+        fee: 100
       },{
         type: 'postoffice',
         region: 'Out of Taiwan island',
-        fee: '200'
+        fee: 200
       },{
         type: 'delivery',
         region: 'Taiwan island',
-        fee: '150'
+        fee: 150
       },{
         type: 'delivery',
         region: 'Out of Taiwan island',
-        fee: '300'
+        fee: 300
       },{
         type: 'delivery',
         region: 'within 24H Taiwan',
-        fee: '500'
+        fee: 500
       }];
-      await ShippingService.saveAll(testDatas);
+      let saved = await ShippingService.saveAll(testDatas);
 
       // this should get a length which should = 5
       let findAllAgain = await ShippingService.findAll();
 
-      console.log('=== findAllAgain ==>\n',findAllAgain);
+      console.log('=== 4 findAllAgain ==>\n',findAllAgain);
+      console.log('=== 5 saved ==>\n',saved);
 
+      saved.success.should.be.true;
       // part 1 - length check
-      findAllFirst.length.should.be.equal(4);
-      findAllAgain.length.should.be.equal(5);
+      findAllFirst.shippings.length.should.be.equal(4);
+      findAllAgain.shippings.length.should.be.equal(5);
       // part 2 - first one's data
       findAllAgain[0].type.should.be.equal("postoffice");
       findAllAgain[0].region.should.be.equal("Taiwan island");
