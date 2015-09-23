@@ -235,10 +235,10 @@ describe("about product service", () => {
 
   it('product query', async (done) => {
 
-    let queryLimit = 5;
+    let queryLimit = 100;
 
     try{
-      
+
       let queryObj = {};
       // get sourceData through db
       let srcData = await db.Product.findAndCountAll({ limit: queryLimit });
@@ -247,6 +247,8 @@ describe("about product service", () => {
 
       // test all srcData
       for (let srcProduct of srcProducts) {
+        let randomRowIndex = Math.floor((Math.random() * srcCount));
+        let srcProduct = srcProducts[randomRowIndex];
         // check product name exist
         if(srcProduct.name) {
           let srcName = srcProduct.name;
