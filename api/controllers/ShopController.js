@@ -38,8 +38,7 @@ let ShopController = {
           required:true,
           include: [
             includeDpt,
-            includeDptSub,
-            includeBrand
+            includeDptSub
           ],
         }],
         order: [['id', 'ASC']]
