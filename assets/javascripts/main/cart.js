@@ -8,11 +8,8 @@
   var totalPrice = 0;
   var shippingFee = 0;
 
-  var picklete_cart = Cookies.get('picklete_cart');
-  if (picklete_cart == undefined) picklete_cart = {orderItems: []};
-  else {
-    picklete_cart = JSON.parse(picklete_cart);
-  }
+  var picklete_cart = Cookies.getJSON('picklete_cart');
+  picklete_cart = picklete_cart ? picklete_cart : {orderItems: []};
 
   var cartViewerInit = function(){
 
@@ -73,6 +70,8 @@
   $(".container").on("change", "#shippingFeeSelect", function (e) {
     e.preventDefault();
 
+    Cookies.set('shippingFee', $('#shippingFeeSelect').val());
+
     shippingFee = parseInt($(this).val(), 10);
 
     var shippingFeeField = $('#shippingFeeField');
@@ -82,34 +81,29 @@
 
   });
 
-  var selectedDeleteOrderitem = {}
+  $(".container").on("change", "#paymentMethod", function (e) {
+    e.preventDefault();
+    Cookies.set('paymentMethod', $('#paymentMethod').val());
+  });
+
+  var selectedDeleteOrderitem = {};
   var selectedDeleteOrderitemIndex = -1;
 
   $(".container").on("click", "#remveOrderItem", function (e) {
     e.preventDefault();
-
     var productId = $(this).attr("data-productId");
     selectedDeleteOrderitemIndex = $(this).attr("data-index");
     console.log('=== remove productId ===', productId);
-
-
-
     selectedDeleteOrderitem = picklete_cart.orderItems[selectedDeleteOrderitemIndex];
-
     console.log('=== selectedDeleteOrderitem ===', selectedDeleteOrderitem);
-
     $('#deleteOrderItemName').text(selectedDeleteOrderitem.name);
-
   });
 
   $("#confirmedDeleteOrderItem").on("click", function (e) {
     console.log('=== confirmedDeleteOrderItem ===');
     e.preventDefault();
-
     removeOrderItem(selectedDeleteOrderitem, selectedDeleteOrderitemIndex);
     $('#cart-viewer #orderItem:has(a[data-index="'+selectedDeleteOrderitemIndex+'"])').remove()
-
-
   });
 
   var removeOrderItem = function (orderItem, index) {
@@ -119,19 +113,24 @@
 
      window.location.reload();
 
-
   }
 
 
 
   var calcTatalPrice = function () {
 
-    totalPrice = subtotal - shippingFee;
+    totalPrice = subtotal + shippingFee;
     console.log('=== calcTatalPrice ===', totalPrice);
 
     totalPriceDiv.text(totalPrice);
-
   }
+
+  $("#nextSetp").click(function () {
+    if($('#shippingFeeSelect').val() == 0 || $('#paymentMethod').val()==0)
+      alert("請確認運送、付款方式");
+    else
+      window.location.replace("/user/cart-step-2");
+  });
 
   cartViewerInit();
 
