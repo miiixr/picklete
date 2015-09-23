@@ -3,7 +3,7 @@ extends ../_layout_auth
 block body
   h2.m-bottom-6 選擇加價購商品
   .well.control-well.p-30.m-bottom-8
-    form.form-inline
+    form.form-inline(name="search", action="shop-buy-more-add-item", method="get")
       .form-group.m-right-4
         label 品牌名稱
         select.form-control
@@ -15,22 +15,23 @@ block body
       // /form-group
       .form-group.m-right-4
         label 關鍵字
-        input.form-control(type='text')
+        input#keyword.form-control(type='text',name="keyword",value = query.keyword)
+        input(type='hidden', name='page' value = page)
       // /form-group
-      button.btn.btn-default(type='button') 查詢
+      button.btn.btn-default(type='button', onClick='$("form[name=\'search\']").submit()') 查詢
   // /well
   .row
     .col-md-6
       form.form-inline
         .form-group
           label 顯示
-          select.form-control
-            option 10
-            option 20
-            option 30
-            option 40
-            option 50
-          label 筆資料（共 90 筆）
+          select#limit.form-control
+            option(selected=(limit==10)) 10
+            option(selected=(limit==20)) 20
+            option(selected=(limit==30)) 30
+            option(selected=(limit==40)) 40
+            option(selected=(limit==50)) 50
+          label 筆資料（共 #{additionalPurchase.count} 筆）
         // /form-group
     // /col-md-6
     .col-md-6.desktop-text-right
@@ -57,36 +58,17 @@ block body
           | 特價
           span.caret
     tbody
-      tr
-        td
-          input(type='checkbox')
-        td
-          img.width-6(src='images/demo/shop-item-1-1.jpg')
-        td {product_name}
-        td JC1129
-        td 590
-        td
-          span.text-danger 413
-      tr
-        td
-          input(type='checkbox')
-        td
-          img.width-6(src='images/demo/shop-item-2-1.jpg')
-        td {product_name}
-        td JC1129
-        td 590
-        td
-          span.text-danger 413
-      tr
-        td
-          input(type='checkbox')
-        td
-          img.width-6(src='images/demo/shop-item-3-1.jpg')
-        td {product_name}
-        td JC1129
-        td 590
-        td
-          span.text-danger 413
+      each purchase in additionalPurchase.rows
+        tr
+          td
+            input(type='checkbox')
+          td
+            img.width-6(src='images/demo/shop-item-1-1.jpg')
+          td #{purchase.name}
+          td #{purchase.id}
+          td 590
+          td
+            span.text-danger 490
   hr.dashed-line
   .text-center
     //
@@ -94,8 +76,30 @@ block body
       ==================================================
     ul.list-inline.m-bottom-0.m-top-1
       li.border-right-1.p-right-2
-        a(href='#') 上一頁
-      li.border-right-1.p-right-2 第 15 之 20
       li
-        a(href='#') 下一頁
+        a#bonusPrevious(href='#') 上一頁
+      li.border-right-1.p-right-2 #{page + 1} / #{Math.ceil(additionalPurchase.count / limit)}
+      li
+        a#bonusNext(href='#') 下一頁
   // /text-center
+  block js
+    script.
+      $(function() {
+        $('#limit').change(function() {
+          location.href='/shop-buy-more-add-item?limit='+$(this).val();
+        });
+
+        $('.form-control').change(function(){
+          $("input[name='page']").val(0);
+        });
+
+        $('#bonusNext').click(function(){
+          $("input[name='page']").val(parseInt($("input[name='page']").val())+1);
+          $("form[name='search']").submit();
+        });
+
+        $('#bonusPrevious').click(function(){
+          $("input[name='page']").val(parseInt($("input[name='page']").val())-1);
+          $("form[name='search']").submit();
+        });
+      });

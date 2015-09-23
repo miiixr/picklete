@@ -107,9 +107,39 @@ let PromotionController = {
       pageName: "shop-buy-more-detail"
     });
   },
-  controlShopBuyMoreAddItem: function(req, res) {
+  controlShopBuyMoreAddItem: async (req, res) => {
+    console.log('query',req.query);
+    let query = req.query;
+    let queryObj = {};
+
+    if(query.keyword)
+      queryObj.name = { 'like': '%'+query.keyword+'%'};
+    else
+      query.keyword = ''
+
+    let page = req.session.UserController_controlMembers_page =
+    parseInt(req.param('page',
+      req.session.UserController_controlMembers_page || 0
+    ));
+
+    let limit = req.session.UserController_controlMembers_limit =
+    parseInt(req.param('limit',
+      req.session.UserController_controlMembers_limit || 10
+    ));
+
+    let additionalPurchase = await db.AdditionalPurchase.findAndCountAll({
+      where: queryObj,
+      offset: page * limit,
+      limit: limit
+    });
+
+    // let additionalPurchase = await db.AdditionalPurchase.findAll();
     res.view('promotion/controlShopBuyMoreAddItem',{
-      pageName: "shop-buy-more-add-item"
+      pageName: "shop-buy-more-add-item",
+      additionalPurchase,
+      query,
+      page,
+      limit
     });
   },
   controlShopCode: function(req, res) {

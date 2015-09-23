@@ -9,7 +9,7 @@ let BonusController = {
         queryObj.email= { 'like': '%'+query.keyword+'%'};
       else
         query.keyword = ''
-
+      
       let page = req.session.UserController_controlMembers_page =
       parseInt(req.param('page',
         req.session.UserController_controlMembers_page || 0

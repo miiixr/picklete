@@ -22,7 +22,7 @@ block body
         .input-group
           input#keyword.form-control(type='text',name="keyword", placeholder='Search for...',value = query.keyword)
           span.input-group-btn
-            input(type='hidden', name='page' value = query.page)
+            input(type='hidden', name='page' value = page)
             button.btn.btn-default.p-left-2.p-right-2(type='button' onClick='$("#keyword").val("");$("form[name=\'searchBonus\']").submit()')
               span.glyphicon.glyphicon-remove
             button.btn.btn-default.p-left-2.p-right-2(type='button' onClick='$("form[name=\'searchBonus\']").submit()')
@@ -57,6 +57,7 @@ block body
   .text-center
     ul.list-inline.m-bottom-0.m-top-1
       li.border-right-1.p-right-2
+      li
         a(href='#' id='bonusPrevious') 上一頁
       li.border-right-1.p-right-2 #{page + 1} / #{Math.ceil(allBonus.count / limit)}
       li
@@ -73,13 +74,12 @@ block body
         });
 
         $('#bonusNext').click(function(){
-          console.log()
           $("input[name='page']").val(parseInt($("input[name='page']").val())+1);
           $("form[name='searchBonus']").submit();
         });
 
         $('#bonusPrevious').click(function(){
-          $("input[name='page']").val($(parseInt("input[name='page']").val())-1);
+          $("input[name='page']").val(parseInt($("input[name='page']").val())-1);
           $("form[name='searchBonus']").submit();
         });
       });
