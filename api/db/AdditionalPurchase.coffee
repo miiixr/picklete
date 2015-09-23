@@ -1,6 +1,10 @@
 
 module.exports = (sequelize, DataTypes) ->
   AdditionalPurchase = sequelize.define('AdditionalPurchase', {
+    limit: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0
+    }
     name: DataTypes.STRING
     discount: DataTypes.FLOAT
     startDate: DataTypes.DATE
