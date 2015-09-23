@@ -238,28 +238,37 @@ describe("about product service", () => {
     let queryLimit = 5;
 
     try{
+      
       let queryObj = {};
       // get sourceData through db
       let srcData = await db.Product.findAndCountAll({ limit: queryLimit });
-      console.log('sourceData:'+JSON.stringify(srcData, null, 4));
+      let srcCount = srcData.count,
+          srcProducts = srcData.rows;
 
-      // set target name
-      queryObj.name = srcData.name;
-      let queryResult = await ProductService.productQuery(queryObj);
-
-      console.log('sourceData:'+JSON.stringify(queryResult, null, 4));
-
-      let found = true;
-      // search queryResult product.name include target name
-      for (let product of queryResult) {
-        // if not found
-        if( product['name'].search(srcData.name).length < 0 ) {
-          found = false;
-          break;
+      // test all srcData
+      for (let srcProduct of srcProducts) {
+        // check product name exist
+        if(srcProduct.name) {
+          let srcName = srcProduct.name;
+          let len = srcName.length;
+          let randomIndex = Math.floor((Math.random() * len));
+          queryObj.name = srcName[randomIndex];
+          let queryResult = await ProductService.productQuery(queryObj);
+          let found = true;
+          // search queryResult product.name include target name
+          for (let product of queryResult) {
+            // if not found
+            if( product['name'].search(queryObj.name) < 0 ) {
+              found = false;
+              console.log('======================');
+              console.log('can not find correct result by search name as "' + queryObj.name + '"');
+              console.log(product);
+              break;
+            }
+          }
+          found.should.be.equal(true);
         }
       }
-
-      found.should.be.equal(true);
 
       done();
     } catch (e) {
