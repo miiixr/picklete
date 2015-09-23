@@ -54,13 +54,14 @@ module.exports.policies = {
   #   paymentConfirm: []
   #   paymentConfirmSave: []
     create: []
-  #   status: []
-  #   find: []
-  #   sync: []
+    status: []
+    find: []
+    sync: []
     bonus: []
     pay: []
   'PaymentController':
     paid: []
+    paymentinfo:[]
 
   # #'/api/search/*': []
   # SearchController:

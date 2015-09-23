@@ -183,6 +183,15 @@ module.exports.routes = {
     }
   }
 
+  'post /allpay/paymentinfo':{
+    controller: "PaymentController",
+    action: "paymentinfo"
+    cors: {
+      origin: "*",
+      credentials: false
+    }
+  }
+
   ###*
     ProductController
   ###
