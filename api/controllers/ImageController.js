@@ -76,25 +76,30 @@ module.exports = {
     //
     // Node defaults to 2 minutes.
     // res.setTimeout(30000);
+    try{
+      let files = await* req.file('upload').upload(async(err, files) => {
 
-    let files = await* req.file('upload').upload(async(err, files) => {
+          let file = files[0];
+          file.fd = domain + ImageService.processPath(file.fd);
+          let fileName = file.fd;
+          if (err) throw err;
+          else {
+            let html = "";
+            html += "<script type='text/javascript'>";
+            html += "    var funcNum = " + req.query.CKEditorFuncNum + ";";
+            html += "    var url     = \"" + fileName + "\";";
+            html += "    var message = \"Uploaded file successfully\";";
+            html += "";
+            html += "    window.parent.CKEDITOR.tools.callFunction(funcNum, url, message);";
+            html += "</script>";
 
-        let file = files[0];
-        file.fd = domain + ImageService.processPath(file.fd);
-        let fileName = file.fd;
-        if (err) return res.serverError(err);
-        else {
-          let html = "";
-          html += "<script type='text/javascript'>";
-          html += "    var funcNum = " + req.query.CKEditorFuncNum + ";";
-          html += "    var url     = \"" + fileName + "\";";
-          html += "    var message = \"Uploaded file successfully\";";
-          html += "";
-          html += "    window.parent.CKEDITOR.tools.callFunction(funcNum, url, message);";
-          html += "</script>";
-
-          res.send(html);
-        }
-      });
+            res.send(html);
+          }
+        });
+    } catch (error) {
+      console.error(error.stack);
+      let msg = error.message;
+      return res.serverError({msg});
+    }
   }
 };
