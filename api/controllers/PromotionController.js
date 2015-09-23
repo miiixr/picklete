@@ -38,6 +38,7 @@ let PromotionController = {
   update: async (req, res) => {
     let promotion = req.body;
     try {
+      console.log("!!!",promotion);
       await PromotionService.update(promotion);
       return res.redirect('promotion/controlShopDiscount');
     } catch (error) {
@@ -61,6 +62,41 @@ let PromotionController = {
     }
   },
   // end delete
+
+  addPurchaseUpdate: async (req, res) => {
+    let data = req.body;
+    try {
+      console.log("!!!",data);
+
+      let products = await* data.productIds.map(async (productId)=>{
+        let findProduct = await db.Product.findById(productId);
+        let additionalPurchase = {};
+        additionalPurchase.name = findProduct.name;
+        additionalPurchase.discount = data.discount;
+        additionalPurchase.reducePrice = data.reducePrice;
+        additionalPurchase.startDate = data.startDate;
+        additionalPurchase.endDates = data.endDates;
+        additionalPurchase.limit = data.limit;
+        additionalPurchase.type = data.type;
+        await db.AdditionalPurchase.create(additionalPurchase);
+        return findProduct;
+      });
+
+  //     limit: '0',
+  // type: 'reduce',
+  // startDate: '2015-09-24',
+  // endDates: '2015-09-30',
+  // reducePrice: '',
+  // discount: '',
+      // await PromotionService.update(promotion);
+      // return res.redirect('admin/shop-buy-more');
+      return res.ok();
+    } catch (error) {
+      console.error('=== update error stack ==>',error.stack);
+      let msg = error.message;
+      return res.serverError({msg});
+    }
+  },
 
   // not clean yet
   controlShopType: function (req, res) {

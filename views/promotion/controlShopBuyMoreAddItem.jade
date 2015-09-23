@@ -3,28 +3,30 @@ extends ../_layout_auth
 block body
   h2.m-bottom-6 加價購設定
   .well.control-well.p-30.m-bottom-8
-    form.form-horizontal
+    form.form-horizontal(name = 'updateForm')
       .form-group
         label.col-sm-3.col-md-2.control-label 是否限滿額
         .col-sm-9.col-md-10
           .btn-group.btn-group-switch(data-toggle='buttons')
             label.btn.btn-default
-              input#option1(type='radio', name='options', autocomplete='off', checked='')
+              input#option1(type='radio', autocomplete='off', checked='')
               span.btn-text 不限金額
             label.btn.btn-default.active
-              input#option2(type='radio', name='options', autocomplete='off')
+              input#option2(type='radio', autocomplete='off')
               span.btn-text 限滿 1,500 元
+              input#limit(type='hidden', name='limit')
+              input#type(type='hidden', name='type')
           // /btn-group-switch
         // /col-sm-10
       // /form-group
       .form-group
         label.col-sm-3.col-md-2.control-label 活動時間
         .col-sm-4.col-md-3
-          input.form-control(type='datetime-local')
+          input.form-control(type='date',name = 'startDate')
         .col-sm-1.col-md-1.p-left-0.p-right-0.text-center
           p.form-control-static 至
         .col-sm-4.col-md-3
-          input.form-control(type='datetime-local')
+          input.form-control(type='date',name = 'endDates')
         .col-sm-9.col-sm-offset-3.col-md-3.col-md-offset-0
           .checkbox
             label
@@ -36,21 +38,21 @@ block body
         .col-sm-4.col-md-3
           .radio
             label
-              input#optionsRadios1(type='radio', name='optionsRadios', value='option1', checked='')
-              input.form-control(type='text', placeholder='請輸入折扣金額')
+              input#optionsRadios1(type='radio', value='option1', checked='')
+              input.form-control(type='text', name='reducePrice' , placeholder='請輸入折扣金額')
         .col-sm-1.col-md-1
         .col-sm-4.col-md-3
           .radio
             label
-              input#optionsRadios2(type='radio', name='optionsRadios', value='option2')
+              input#optionsRadios2(type='radio', value='option2')
               .input-group.width-12
-                input.form-control(type='text')
+                input.form-control(type='text',name='discount')
                 span.input-group-addon 折
               // /input-group
       // /form-group
       .m-top-6.text-right
         a.btn.btn-link.delete-link.btn-lg(href='#', data-toggle='modal', data-target='#modal-delete') 刪除
-        a.btn.btn-green.btn-lg(href='#') 確定
+        a#add.btn.btn-green.btn-lg(href='#') 確定
       // /text-right
   // /well
   .row
@@ -132,33 +134,4 @@ block body
         a#bonusNext(href='#') 下一頁
   // /text-center
   block js
-    script.
-      $(function() {
-        $('#limit').change(function() {
-          location.href='/admin/shop-buy-more-add-item?limit='+$(this).val();
-        });
-
-        $('.form-control').change(function(){
-          $("input[name='page']").val(0);
-        });
-
-        $('#bonusNext').click(function(){
-          $("input[name='page']").val(parseInt($("input[name='page']").val())+1);
-          $("form[name='search']").submit();
-        });
-
-        $('#bonusPrevious').click(function(){
-          $("input[name='page']").val(parseInt($("input[name='page']").val())-1);
-          $("form[name='search']").submit();
-        });
-        
-        $('#add').click(function(){
-          var selsetItem=[];
-          $(".addSelect").each(function(index,dom){
-            if(dom.checked)
-              selsetItem.push(dom.value);
-          });
-          console.log(selsetItem);
-          
-        });
-      });
+    script(src="/javascripts/admin/addPurchase.js")
