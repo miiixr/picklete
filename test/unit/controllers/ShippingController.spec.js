@@ -2,7 +2,7 @@
 // simulate login
 var sinon = require('sinon');
 
-describe.only("about Shipping", () => {
+describe("about Shipping", () => {
 
   // before testing
   before(async (done) => {
@@ -78,11 +78,11 @@ describe.only("about Shipping", () => {
     {
       type: 'postoffice',
       region: 'Taiwan',
-      fee: '666'
+      fee: 666
     },{
       type: 'delivery',
       region: 'Japan',
-      fee: '888'
+      fee: 888
     }])
     .end((err, res) => {
       if (res.statusCode === 500) {
@@ -95,18 +95,18 @@ describe.only("about Shipping", () => {
       res.body.should.be.Object;
       res.body.savedShippings.length.should.be.equal(2);
       // below temporarily commented for weird await issue at ShippingService by Kuyen.
-      // res.body.forEach(shipping => {
-      //   shipping.type.should.be.String;
-      //   shipping.region.should.be.String;
-      //   shipping.fee.should.be.number;
-      // });
+      res.body.savedShippings.forEach(shipping => {
+        shipping.type.should.be.String;
+        shipping.region.should.be.String;
+        shipping.fee.should.be.number;
+      });
       // check values
-      // res.body.shippings[0].fee.should.be.equal(666);
-      // res.body.shippings[0].type.type.be.equal('postoffice');
-      // res.body.shippings[0].region.region.be.equal('Taiwan');
-      // res.body.shippings[1].fees.hould.be.equal(888);
-      // res.body.shippings[1].type.type.be.equal('postoffice');
-      // res.body.shippings[1].region.region.be.equal('Taiwan');
+      res.body.savedShippings[0].fee.should.be.equal(666);
+      res.body.savedShippings[0].type.should.be.equal('postoffice');
+      res.body.savedShippings[0].region.should.be.equal('Taiwan');
+      res.body.savedShippings[1].fee.should.be.equal(888);
+      res.body.savedShippings[1].type.should.be.equal('delivery');
+      res.body.savedShippings[1].region.should.be.equal('Japan');
       // above temporarily commented for weird await issue at ShippingService by Kuyen.
 
       done(err);
