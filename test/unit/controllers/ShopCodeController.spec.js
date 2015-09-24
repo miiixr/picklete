@@ -20,6 +20,28 @@ describe('ShopCode Spec', function() {
   });
 
 
+  it('Create a new ShopCode', function(done) {
+
+    request(sails.hooks.http.app)
+    .post('/admin/shop-code/create')
+    .field('code', '優惠代碼') // 優惠代碼
+    .field('title', '優惠名稱') // 優惠名稱
+    .field('type', 'price') // 優惠類型 price, discount
+    .field('description', '200') // 優惠內容
+    .field('restriction', '300') // 限滿額
+    .field('startDate', '2012/03/16 12:03:12') // 開始時間
+    .field('endDate', '2012/03/16 12:03:12') // 結束時間
+    .field('sent', 'false') // 自動發送
+    .field('content', '發送內容') // 活動網址
+    .end(function(err, res) {
+
+      res.statusCode.should.be.equal(302);
+      res.headers.location.should.be.equal('/admin/shop-code');
+
+      return done();
+    });
+  });
+
   it('List the all ShopCode', function(done) {
     request(sails.hooks.http.app)
     .get('/admin/shop-code')
@@ -30,7 +52,6 @@ describe('ShopCode Spec', function() {
 
     });
   });
-
 
 
   after( (done) => {
