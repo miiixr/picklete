@@ -17,6 +17,15 @@ $(function() {
     $("form[name='search']").submit();
   });
 
+  $("input[name='reducePrice']").change(function(){
+    $("input[name='discount']").val("");
+    $("#optionsRadios1")[0].checked=true;
+  });
+
+  $("input[name='discount']").change(function(){
+    $("input[name='reducePrice']").val("");
+    $("#optionsRadios2")[0].checked=true;
+  });
 
   $('#add').click(function(){
     var select =[];

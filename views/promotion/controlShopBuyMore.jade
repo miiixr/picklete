@@ -47,7 +47,7 @@ block body
             th 時間
             th
         tbody
-          each purchase in additionalPurchase
+          each purchase in noLimit
             tr
               td
                 img.width-6(src='images/demo/shop-item-1-1.jpg')
@@ -62,7 +62,7 @@ block body
                 br
                 | #{sails.moment(purchase.endDate).format('YYYY/MM/DD')}
               td.text-right
-                a.btn.btn-link(href='shop-buy-more-detail')
+                a.btn.btn-link(href='../admin/shop-buy-more-add-item?keyword='+ purchase.name)
                   span.glyphicon.glyphicon-pencil2
                 a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
                   span.glyphicon.glyphicon-remove
@@ -116,57 +116,25 @@ block body
             th 時間
             th
         tbody
-          tr
-            td
-              img.width-6(src='images/demo/shop-item-1-1.jpg')
-            td {product_name}
-            td {product_id}
-            td 590
-            td
-              span.text-danger 413
-            td 7 折
-            td
-              | 2015-10-03
-              br
-              | 2015-10-22
-            td.text-right
-              a.btn.btn-link(href='shop-buy-more-detail')
-                span.glyphicon.glyphicon-pencil2
-              a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
-                span.glyphicon.glyphicon-remove
-          tr
-            td
-              img.width-6(src='images/demo/shop-item-2-1.jpg')
-            td {product_name}
-            td {product_id}
-            td 590
-            td
-              span.text-danger 413
-            td 8 折
-            td 不限時
-            td.text-right
-              a.btn.btn-link(href='shop-buy-more-detail')
-                span.glyphicon.glyphicon-pencil2
-              a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
-                span.glyphicon.glyphicon-remove
-          tr
-            td
-              img.width-6(src='images/demo/shop-item-3-1.jpg')
-            td {product_name}
-            td {product_id}
-            td 590
-            td
-              span.text-danger 413
-            td 7 折
-            td
-              | 2015-10-03
-              br
-              | 2015-10-22
-            td.text-right
-              a.btn.btn-link(href='shop-buy-more-detail')
-                span.glyphicon.glyphicon-pencil2
-              a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
-                span.glyphicon.glyphicon-remove
+          each purchase in limit
+            tr
+              td
+                img.width-6(src='images/demo/shop-item-1-1.jpg')
+              td #{purchase.name}
+              td #{purchase.id}
+              td 590
+              td
+                span.text-danger 490
+              td #{purchase.discount}
+              td
+                | #{sails.moment(purchase.startDate).format('YYYY/MM/DD')}
+                br
+                | #{sails.moment(purchase.endDate).format('YYYY/MM/DD')}
+              td.text-right
+                a.btn.btn-link(href='../admin/shop-buy-more-add-item?keyword='+ purchase.name)
+                  span.glyphicon.glyphicon-pencil2
+                a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
+                  span.glyphicon.glyphicon-remove
       hr.dashed-line
       .text-center
         //
