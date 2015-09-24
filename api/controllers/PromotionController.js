@@ -72,10 +72,12 @@ let PromotionController = {
         let findProduct = await db.Product.findById(productId);
         let additionalPurchase = {};
         additionalPurchase.name = findProduct.name;
-        additionalPurchase.discount = data.discount;
-        additionalPurchase.reducePrice = data.reducePrice;
+        if(data.discount!='')
+          additionalPurchase.discount = data.discount;
+        if(data.reducePrice!='')
+          additionalPurchase.reducePrice = data.reducePrice;
         additionalPurchase.startDate = data.startDate;
-        additionalPurchase.endDates = data.endDates;
+        additionalPurchase.endDates = data.endDate;
         additionalPurchase.limit = data.limit;
         additionalPurchase.type = data.type;
         await db.AdditionalPurchase.create(additionalPurchase);
