@@ -1,9 +1,26 @@
 var sinon = require('sinon');
 
 describe('Add Purchase', () => {
+  let createdProduct
   before(async (done) => {
     sinon.stub(UserService, 'getLoginState', (req) => {
       return true;
+    });
+
+    createdProduct = await db.Product.create({
+      name: '超值組',
+      description: '讚讚讚',
+      stockQuantity: '100',
+      isPublish: 'true',
+      price: 999,
+      size: 'normal',
+      service: ["express"],
+      country: 'U.K',
+      madeby: 'TW',
+      color: 3,
+      productNumber: '1-USA-2-G',
+      spec: 'super-metal',
+      photos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg']
     });
     done();
   });
@@ -23,7 +40,7 @@ describe('Add Purchase', () => {
           endDates: '2015-09-30',
           reducePrice: '1000',
           discount: '',
-          productIds: [ '1', '3' ]
+          productIds: [createdProduct.id]
       })
       .end((err, res) => {
         console.log('res.body', res.body);
@@ -45,7 +62,7 @@ describe('Add Purchase', () => {
         reducePrice: '',
         type: 'discount',
         discount: '9',
-        productIds: [ '1', '3' ]
+        productIds: [createdProduct.id]
       })
       .end((err, res) => {
         console.log('res.body', res.body);
