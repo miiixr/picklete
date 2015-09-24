@@ -19,22 +19,24 @@ $(function() {
 
 
   $('#add').click(function(){
+    var select =[];
     $(".addSelect").each(function(index,dom){
       if(dom.checked){
+        select.push(dom);
         $("form[name='updateForm']").append(
           '<input type=\'hidden\' name=\'productIds[]\' value =\''+ dom.value +'\' >'
         );
       }
     });
 
-    //- /admin/buymoreUpdate
+    if($("input[name='reducePrice']").val()=="" && $("input[name='discount']").val()==""){
+      alert("記得輸入折扣喔");
+      return;
+    }
 
-    if($("#option1")[0].checked){
-      $("#limit").val(0);
-      $("#type").val('reduce');
-    }else{
-      $("#limit").val(1500);
-      $("#type").val('discount');
+    if(select.length==0){
+      alert("記得選取折扣項目喔");
+      return;
     }
 
     var postData = $("form[name='updateForm']").serializeArray();
