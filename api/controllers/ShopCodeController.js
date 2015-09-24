@@ -6,10 +6,6 @@ let ShopCodeController = {
     
     let ShopCodes = await db.ShopCode.findAll();
 
-    console.log('-------------');
-    console.log(ShopCodes[0].dataValues);
-    console.log('-------------');
-
     res.view('promotion/controlShopCode',{
       pageName: "shop-code",
       ShopCodes: ShopCodes
@@ -88,6 +84,11 @@ let ShopCodeController = {
 
   // DeleteAction 'post /admin/shop-code/delete'
   delete: async (req, res) => {
+
+    let id = req.params.id;
+    let shopCode = await db.ShopCode.findOne({ where: {id: id} });
+    await shopCode.destroy();
+    return res.ok(shopCode);
     
   }
 

@@ -136,8 +136,6 @@ module.exports.routes = {
   'post /admin/shop-code/create' : 'ShopCodeController.create' # createAction
   'get /admin/shop-code/update' : 'ShopCodeController.showUpdate' # updateView
   'post /admin/shop-code/update' : 'ShopCodeController.update' # updateAction
-  'post /admin/shop-code/delete' : 'ShopCodeController.delete' # deleteAction
-
 
   # end promotions
 
@@ -424,6 +422,15 @@ module.exports.routes = {
      credentials: false
     }
   }
+
+  'post /api/shop-code/delete/:id': {
+    controller: "ShopCodeController",
+    action: "delete",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  } 
 }
 
 ###*

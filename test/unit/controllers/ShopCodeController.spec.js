@@ -65,6 +65,18 @@ describe('ShopCode Spec', function() {
     });
   });
 
+  it('Delete an exist ShopCode using API', function(done) {
+
+    request(sails.hooks.http.app)
+    .post('/api/shop-code/delete/1')
+    .end(function(err, res) {
+
+      res.statusCode.should.be.equal(200);
+
+      return done();
+    });
+  });
+
   it('List the all ShopCode', function(done) {
     request(sails.hooks.http.app)
     .get('/admin/shop-code')
