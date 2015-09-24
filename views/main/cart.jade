@@ -79,6 +79,9 @@ block body
                     td.text-right
                       span.text-danger 0
                   tr
+                    th 加價購
+                    td#buymore.text-right 0
+                  tr
                     th 總計
                     td.text-right
                       h3#totalPrice.m-top-0 0
@@ -120,7 +123,7 @@ block body
                   h5.h5-two-hide.m-bottom-2.text-roboto.letter-spacing-1
                     a(href='/shop/product') #{additionalPurchaseProductGm.name}
                   select.form-control.m-bottom-2
-                    option 選擇規格
+                    option(value= 0) 選擇規格
                     each product in additionalPurchaseProductGm.Products
                       option(value=product.id) #{product.name}
                   h4.text-green
