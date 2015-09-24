@@ -25,6 +25,10 @@ let ShopCodeController = {
 
     params['sentTarget'] = [].concat( params['sentTarget'] )
 
+    if(params['autoRandomCode'] == 'true'){
+      params['code'] = Math.floor(Math.random()*10000000%10000000).toString();
+    }
+
     if(params['restrictionDate'] == 'true'){
       params['startDate'] = Date.parse(1);
       params['endDate'] = Date.parse(1);
@@ -73,6 +77,10 @@ let ShopCodeController = {
       let shopCode = await db.ShopCode.findOne({ where: {id: id} });
 
       params['sentTarget'] = [].concat( params['sentTarget'] )
+
+      if(params['autoRandomCode'] == 'true'){
+        params['code'] = Math.floor(Math.random()*10000000%10000000).toString();
+      }
 
       if(params['restrictionDate'] == 'true'){
         params['startDate'] = Date.parse(1);

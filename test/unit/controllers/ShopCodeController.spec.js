@@ -24,7 +24,7 @@ describe('ShopCode Spec', function() {
 
     request(sails.hooks.http.app)
     .post('/admin/shop-code/create')
-    .field('code', '優惠代碼') // 優惠代碼
+    .field('autoRandomCode', 'true') // 優惠代碼
     .field('title', '優惠名稱') // 優惠名稱
     .field('type', 'price') // 優惠類型 price, discount
     .field('description', '200') // 優惠內容
