@@ -1,7 +1,7 @@
 import moment from 'moment';
 describe("about product service", () => {
   let createdProduct, createdProduct2, createdProductGm;
-  let productGmA, productGmB, dptA, dptB, dptSubA, dptSubB;
+  let productGmA, productGmB, dptA, dptB, dptSubA, dptSubB ,dptC, dptSubC;
   before(async (done) => {
 
     try {
@@ -18,6 +18,12 @@ describe("about product service", () => {
         official: true,
       });
 
+      dptC = await db.Dpt.create({
+        name: 'test 大館 C',
+        weight: 999,
+        official: true,
+      });
+
       dptSubA = await db.DptSub.create({
         name: 'test 小館 A',
         weight: 100,
@@ -30,8 +36,15 @@ describe("about product service", () => {
         official: false
       })
 
+      dptSubC = await db.DptSub.create({
+        name: 'test 小館 C',
+        weight: 100,
+        official: false
+      })
+
       await dptA.setDptSubs(dptSubA);
       await dptB.setDptSubs(dptSubB);
+      await dptC.setDptSubs(dptSubC);
 
       createdProductGm = await db.ProductGm.create({
         brandId: 1,
@@ -66,53 +79,68 @@ describe("about product service", () => {
 
       // build test data for productQuery spec
 
-      let createdQueryProductGm = await db.ProductGm.bulkCreate([{
+      let createdQueryProductGmA = await db.ProductGm.create({
         brandId: 2,
         name: "ProductGroupA",
-        depId: dptA.id,
-        depSubId: dptSubA.id
-      },{
+        depId: dptC.id,
+        depSubId: dptSubC.id
+      });
+
+      let createdQueryProductGmB = await db.ProductGm.create({
         brandId: 3,
         name: "ProductGroupB",
-        depId: dptB.id,
-        depSubId: dptSubB.id
-      }]);
-
-      await createdQueryProductGm.setDpts([dptA]);
-      await createdQueryProductGm.setDptSubs([dptSubA]);
+        depId: dptC.id,
+        depSubId: dptSubC.id
+      });
+      console.log('--------------');
+      // console.log(JSON.stringify(createdQueryProductGms, null, 4));
+      await createdQueryProductGmA.setDpts([dptC]);
+      await createdQueryProductGmA.setDptSubs([dptSubC]);
+      await createdQueryProductGmB.setDpts([dptC]);
+      await createdQueryProductGmB.setDptSubs([dptSubC]);
+      console.log('==================================3234');
 
       let createdQueryProducts = await db.Product.bulkCreate([{
         name: '',
-        description: '讚讚讚',
         stockQuantity: '100',
         isPublish: 'true',
-        price: 999,
-        size: 'normal',
-        service: ["express"],
-        country: 'U.K',
-        madeby: 'TW',
-        color: 3,
+        price: 777,
         productNumber: '1-USA-2-G',
-        spec: 'super-metal',
+        photos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg'],
+      },{
+        name: '11234',
+        stockQuantity: '100',
+        isPublish: 'true',
+        price: 555,
+        productNumber: '1-USA-2-G',
         photos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg']
       },{
-        name: '超值組',
-        description: '讚讚讚',
+        name: '11235',
         stockQuantity: '100',
         isPublish: 'true',
-        price: 999,
-        size: 'normal',
-        service: ["express"],
-        country: 'U.K',
-        madeby: 'TW',
-        color: 3,
+        price: 555,
         productNumber: '1-USA-2-G',
-        spec: 'super-metal',
+        photos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg']
+      },{
+        name: '21235',
+        stockQuantity: '100',
+        isPublish: 'true',
+        price: 555,
+        productNumber: '2-USA-2-G',
+        photos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg']
+      },{
+        name: '21235',
+        stockQuantity: '100',
+        isPublish: 'true',
+        price: 555,
+        productNumber: '2-USA-2-G',
         photos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg']
       }]);
+      console.log('==================================32345');
 
-
-
+      let queryProductGroupA = await createdQueryProductGmA.setProducts([createdQueryProducts[0],createdQueryProducts[1],createdQueryProducts[2]]);
+      let queryProductGroupB = await createdQueryProductGmB.setProducts([createdQueryProducts[3],createdQueryProducts[4]]);
+      console.log('==================================323456');
 
 
       done();
