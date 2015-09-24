@@ -4,10 +4,11 @@ let ShopController = {
   list: async(req,res) => {
     let dptSubId = req.query.dptSubId || 1;
     let dptId = req.query.dptId || 1;
-    let brandId = req.query.brandId || 1;
+    let brandId = req.query.brand || 0;
 
     let products;
 
+    console.log(brandId);
 
     let includeDpt = {
       model: db.Dpt,
@@ -18,34 +19,35 @@ let ShopController = {
       model: db.DptSub,
       where: {}
     }
-
-    let includeBrand = {
-      model: db.Brand,
-      where: {}
-    }
-
     if(dptId >= 0) includeDpt.where.id = dptId;
     if(dptSubId >= 0) includeDptSub.where.id = dptSubId;
-    if(brandId >= 0 ) includeBrand.where.id =  brandId;
+
 
 
 
     try {
-      products = await db.Product.findAll({
-
-        include: [{
-          model: db.ProductGm,
-          required:true,
-          include: [
-            includeDpt,
-            includeDptSub
-          ],
-        }],
-        order: [['id', 'ASC']]
-      });
-
+      if(brandId == 0){
+        products = await db.Product.findAll({
+          include: [{
+            model: db.ProductGm,
+            required:true,
+            include: [
+              includeDpt,
+              includeDptSub
+            ],
+          }],
+          order: [['id', 'ASC']]
+        });
+      }
+      else{
+        console.log("bug",brandId);
+        products = await ShopService.findBrand(brandId);
+        
+      }
+      
       let brands = await db.Brand.findAll();
 
+      console.log('products.length', products.length);
 
       let dpts = await db.Dpt.findAll({
         include: [{
@@ -53,7 +55,6 @@ let ShopController = {
         }],
         order: ['Dpt.weight', 'DptSubs.weight']
       })
-
 
       res.view('main/shop', {
         dpts,
