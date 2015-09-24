@@ -602,6 +602,30 @@ module.exports = {
     };
 
     await db.Company.create(companyObj);
+
+    // creare shipping
+    let testDatas = [
+    {
+      type: 'postoffice',
+      region: '台灣本島',
+      fee: '100'
+    },{
+      type: 'postoffice',
+      region: '外島 ',
+      fee: '200'
+    },{
+      type: 'delivery',
+      region: '台灣本島',
+      fee: '150'
+    },{
+      type: 'delivery',
+      region: '外島',
+      fee: '300'
+    }];
+    await* testDatas.map((testData) => {
+      db.Shipping.create(testData);
+    });
+    // end creare shipping
   }
   // end testData
 }
