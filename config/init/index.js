@@ -460,8 +460,8 @@ module.exports = {
       var additionalPurchase = {
         name: '加價購測試商品'+i ,
         discount: 100 ,
-        startDate: randomDate(new Date(2015, 9, 8), new Date(2015, 9, 20)),
-        endDate: randomDate(new Date(2015, 9, 21), new Date(2015, 10, 31))
+        startDate: randomDate(new Date(2015, 8, 8), new Date(2015, 8, 11)),
+        endDate: randomDate(new Date(2015, 10, 21), new Date(2015, 10, 31))
       }
 
       var createAdditionalPurchase = await db.AdditionalPurchase.create(additionalPurchase);
