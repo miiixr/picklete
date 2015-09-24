@@ -31,8 +31,8 @@ let ShopCodeController = {
       type: params['type'],
       description: params['description'],
       restriction: params['restriction'] || '',
-      startDate: params['startDate'],
-      endDate: params['endDate'],
+      startDate: Date.parse(params['startDate']) || 1,
+      endDate: Date.parse(params['endDate']) || 1,
       sentTypte: params['sentTypte'],
       sentTarget: params['sentTarget'] || [],
       sentContent: params['sentContent'] || '',
@@ -74,8 +74,8 @@ let ShopCodeController = {
       shopCode.type = params['type'];
       shopCode.description = params['description'];
       shopCode.restriction = params['restriction'] || '';
-      shopCode.startDate = params['startDate'];
-      shopCode.endDate = params['endDate'];
+      shopCode.startDate = Date.parse(params['startDate']) || 1;
+      shopCode.endDate = Date.parse(params['endDate']) || 1,
       shopCode.sentType = params['sentType'];
       shopCode.sentTarget = params['sentTarget'] || [];
       shopCode.sentContent = params['sentContent'] || '';
