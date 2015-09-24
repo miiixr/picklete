@@ -39,10 +39,6 @@ let ShopCodeController = {
       content: params['content'] || '',
     };
 
-    console.log('-------------');
-    console.log(shopCode);
-    console.log('-------------');
-
     try {
        await db.ShopCode.create(shopCode);
        return res.redirect("/admin/shop-code");
@@ -54,10 +50,39 @@ let ShopCodeController = {
   // UpdateView 'get /admin/shop-code/update'
   showUpdate: async (req, res) => {
 
+    let id = req.query.id;
+    let shopCode = await db.ShopCode.findOne({ where: {id: id} });
+    
+    try {
+       return res.view("admin/promotion/controlShopCodeUpdate",{ shopCode: shopCode });
+    } catch (e) {
+       return res.serverError(e);
+    }
   },
 
   // UpdateAction 'post /admin/shop-code/update'
   update: async (req, res) => {
+
+    try {
+      var params = req.body;
+      let id = parseInt(req.body['id'] || req.query.id);
+      let shopCode = await db.ShopCode.findOne({ where: {id: id} });
+      
+      shopCode.code = req.body['code'];
+      shopCode.title = req.body['title'];
+      shopCode.type = req.body['type'];
+      shopCode.description = req.body['description'];
+      shopCode.restriction = req.body['restriction'] || '';
+      shopCode.startDate = req.body['startDate'];
+      shopCode.endDate = req.body['endDate'];
+      shopCode.sent = req.body['sent'];
+      shopCode.content = req.body['content'] || '';
+
+      await shopCode.save();
+      return res.redirect("/admin/shop-code");
+    } catch (e) {
+      return res.serverError(e);
+    }
 
   },
 

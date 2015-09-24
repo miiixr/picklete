@@ -32,7 +32,30 @@ describe('ShopCode Spec', function() {
     .field('startDate', '2012/03/16 12:03:12') // 開始時間
     .field('endDate', '2012/03/16 12:03:12') // 結束時間
     .field('sent', 'false') // 自動發送
-    .field('content', '發送內容') // 活動網址
+    .field('content', '發送內容') // 發送內容
+    .end(function(err, res) {
+
+      res.statusCode.should.be.equal(302);
+      res.headers.location.should.be.equal('/admin/shop-code');
+
+      return done();
+    });
+  });
+
+  it('Update an exist ShopCode', function(done) {
+
+    request(sails.hooks.http.app)
+    .post('/admin/shop-code/update')
+    .field('id', 1)
+    .field('code', '1優惠代碼') // 優惠代碼
+    .field('title', '1優惠名稱') // 優惠名稱
+    .field('type', 'price') // 優惠類型 price, discount
+    .field('description', '1200') // 優惠內容
+    .field('restriction', '1300') // 限滿額
+    .field('startDate', '2012/03/16 12:03:12') // 開始時間
+    .field('endDate', '2012/03/16 12:03:12') // 結束時間
+    .field('sent', 'false') // 自動發送
+    .field('content', '1發送內容') // 發送內容
     .end(function(err, res) {
 
       res.statusCode.should.be.equal(302);
