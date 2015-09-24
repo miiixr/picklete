@@ -68,9 +68,9 @@ let PromotionController = {
     try {
       console.log("data",data);
       let products = await* data.productIds.map(async (productId)=>{
-        let findProduct = await db.Product.findById(productId);
+        let findProductGm = await db.ProductGm.findById(productId);
         let additionalPurchase = {};
-        additionalPurchase.name = findProduct.name;
+        additionalPurchase.name = findProductGm.name;
         if(data.discount!='')
           additionalPurchase.discount = data.discount;
         if(data.reducePrice!='')
@@ -79,8 +79,9 @@ let PromotionController = {
         additionalPurchase.endDate = data.endDate;
         additionalPurchase.limit = data.limit;
         additionalPurchase.type = data.type;
-        await db.AdditionalPurchase.create(additionalPurchase);
-        return findProduct;
+        let addPurchase = await db.AdditionalPurchase.create(additionalPurchase);
+        await addPurchase.setProductGms([findProductGm]);
+        return findProductGm;
       });
       return res.ok();
     } catch (error) {
@@ -166,7 +167,7 @@ let PromotionController = {
       req.session.UserController_controlMembers_limit || 10
     ));
 
-    let additionalPurchase = await db.Product.findAndCountAll({
+    let additionalPurchase = await db.ProductGm.findAndCountAll({
       where: queryObj,
       offset: page * limit,
       limit: limit

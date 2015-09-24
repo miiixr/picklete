@@ -8,7 +8,7 @@ describe('Add Purchase', () => {
     });
 
     createdProduct = await db.Product.create({
-      name: '超值組',
+      name: 'Add Purchase 超值組',
       description: '讚讚讚',
       stockQuantity: '100',
       isPublish: 'true',
