@@ -31,6 +31,7 @@ describe('ShopCode Spec', function() {
     .field('restriction', '300') // 限滿額
     .field('startDate', 'null') // 開始時間
     .field('endDate', '2012/03/16 12:03:12') // 結束時間
+    .field('restrictionDate', 'true') // 時間限制
     .field('sentType', 'specific') // 自動發送
     .field('sentContent', '發送內容') // 發送內容
     .end(function(err, res) {

@@ -25,6 +25,11 @@ let ShopCodeController = {
 
     params['sentTarget'] = [].concat( params['sentTarget'] )
 
+    if(params['restrictionDate'] == 'true'){
+      params['startDate'] = Date.parse(1);
+      params['endDate'] = Date.parse(1);
+    }
+
     let shopCode = {
       code: params['code'],
       title: params['title'],
@@ -68,6 +73,11 @@ let ShopCodeController = {
       let shopCode = await db.ShopCode.findOne({ where: {id: id} });
 
       params['sentTarget'] = [].concat( params['sentTarget'] )
+
+      if(params['restrictionDate'] == 'true'){
+        params['startDate'] = Date.parse(1);
+        params['endDate'] = Date.parse(1);
+      }
       
       shopCode.code = params['code'];
       shopCode.title = params['title'];
