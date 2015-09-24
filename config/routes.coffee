@@ -131,8 +131,13 @@ module.exports.routes = {
   'get /admin/shop-report-form' : 'PromotionController.controlShopReportForm'
 
   # shopCode
-  'get /admin/shop-code' : 'ShopCodeController.controlShopCode'
-  'get /admin/shop-code-detail' : 'ShopCodeController.controlShopCodeDetail'
+  'get /admin/shop-code' : 'ShopCodeController.controlShopCode' # list 
+  'get /admin/shop-code/create': 'ShopCodeController.controlShopCodeDetail' # createView
+  'post /admin/shop-code/create' : 'ShopCodeController.create' # createAction
+  'get /admin/shop-code/update' : 'ShopCodeController.showUpdate' # updateView
+  'post /admin/shop-code/update' : 'ShopCodeController.update' # updateAction
+  'post /admin/shop-code/delete' : 'ShopCodeController.delete' # deleteAction
+
 
   # end promotions
 
