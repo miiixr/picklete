@@ -31,8 +31,8 @@ describe('ShopCode Spec', function() {
     .field('restriction', '300') // 限滿額
     .field('startDate', '2012/03/16 12:03:12') // 開始時間
     .field('endDate', '2012/03/16 12:03:12') // 結束時間
-    .field('sent', 'false') // 自動發送
-    .field('content', '發送內容') // 發送內容
+    .field('sentType', 'specific') // 自動發送
+    .field('sentContent', '發送內容') // 發送內容
     .end(function(err, res) {
 
       res.statusCode.should.be.equal(302);
@@ -54,8 +54,10 @@ describe('ShopCode Spec', function() {
     .field('restriction', '1300') // 限滿額
     .field('startDate', '2012/03/16 12:03:12') // 開始時間
     .field('endDate', '2012/03/16 12:03:12') // 結束時間
-    .field('sent', 'false') // 自動發送
-    .field('content', '1發送內容') // 發送內容
+    .field('sentType', 'specific') // 自動發送
+    .field('sentTarget', '2') // 自動發送
+    .field('sentTarget', '3') // 自動發送
+    .field('sentContent', '1發送內容') // 發送內容
     .end(function(err, res) {
 
       res.statusCode.should.be.equal(302);

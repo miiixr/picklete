@@ -6,7 +6,7 @@ module.exports = function(sequelize, DataTypes) {
     code: DataTypes.STRING,
     // 優惠名稱
     title: DataTypes.STRING,
-    // 優惠類型
+    // 優惠類型: price, discount
     type: DataTypes.ENUM(
       'price',
       'discount'
@@ -21,11 +21,32 @@ module.exports = function(sequelize, DataTypes) {
     startDate: DataTypes.DATE,
     endDate: DataTypes.DATE,
 
-    // 自動發送
-    sent: DataTypes.BOOLEAN,
+    // 自動發送: 0: all, 1: specific, 2: beginner
+    sentType: DataTypes.ENUM(
+      'all',
+      'specific',
+      'beginner'
+    ),
 
+    // 發送對象
+    sentTarget:  {
+      type: DataTypes.TEXT,
+      get: function() {
+
+        var value = this.getDataValue('sentTarget');
+
+        if(value) {
+          return JSON.parse(value);
+        }
+
+        return [];
+      },
+      set: function(value) {
+        return this.setDataValue('sentTarget', JSON.stringify(value));
+      }
+    },
     // 發送內容
-    content: DataTypes.TEXT
+    sentContent: DataTypes.TEXT
 
   });
 

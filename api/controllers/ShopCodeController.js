@@ -23,6 +23,8 @@ let ShopCodeController = {
     
     var params = req.body;
 
+    params['sentTarget'] = [].concat( params['sentTarget'] )
+
     let shopCode = {
       code: params['code'],
       title: params['title'],
@@ -31,8 +33,9 @@ let ShopCodeController = {
       restriction: params['restriction'] || '',
       startDate: params['startDate'],
       endDate: params['endDate'],
-      sent: params['sent'],
-      content: params['content'] || '',
+      sentTypte: params['sentTypte'],
+      sentTarget: params['sentTarget'] || [],
+      sentContent: params['sentContent'] || '',
     };
 
     try {
@@ -63,16 +66,19 @@ let ShopCodeController = {
       var params = req.body;
       let id = parseInt(req.body['id'] || req.query.id);
       let shopCode = await db.ShopCode.findOne({ where: {id: id} });
+
+      params['sentTarget'] = [].concat( params['sentTarget'] )
       
-      shopCode.code = req.body['code'];
-      shopCode.title = req.body['title'];
-      shopCode.type = req.body['type'];
-      shopCode.description = req.body['description'];
-      shopCode.restriction = req.body['restriction'] || '';
-      shopCode.startDate = req.body['startDate'];
-      shopCode.endDate = req.body['endDate'];
-      shopCode.sent = req.body['sent'];
-      shopCode.content = req.body['content'] || '';
+      shopCode.code = params['code'];
+      shopCode.title = params['title'];
+      shopCode.type = params['type'];
+      shopCode.description = params['description'];
+      shopCode.restriction = params['restriction'] || '';
+      shopCode.startDate = params['startDate'];
+      shopCode.endDate = params['endDate'];
+      shopCode.sentType = params['sentType'];
+      shopCode.sentTarget = params['sentTarget'] || [];
+      shopCode.sentContent = params['sentContent'] || '';
 
       await shopCode.save();
       return res.redirect("/admin/shop-code");
