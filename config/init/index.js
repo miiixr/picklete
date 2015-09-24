@@ -465,6 +465,7 @@ module.exports = {
       }
 
       var createAdditionalPurchase = await db.AdditionalPurchase.create(additionalPurchase);
+      createAdditionalPurchase.setProductGms(createdProductGmGood);
     }
 
     // selectionActive EXCLUSIVES
