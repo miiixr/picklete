@@ -19,6 +19,7 @@ describe('SliderActivities Spec', function() {
     return done();
   });
 
+
   it('Create a new SliderActivities', function(done) {
 
     request(sails.hooks.http.app)
@@ -114,7 +115,7 @@ describe('SliderActivities Spec', function() {
 
       res.statusCode.should.be.equal(302);
       res.headers.location.should.be.equal('/admin/index-slider');
-    
+
       return done();
     });
   });
@@ -127,7 +128,7 @@ describe('SliderActivities Spec', function() {
     .end(function(err, res) {
 
       res.statusCode.should.be.equal(200);
-    
+
       return done();
     });
   });

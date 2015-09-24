@@ -38,6 +38,7 @@ let PromotionController = {
   update: async (req, res) => {
     let promotion = req.body;
     try {
+      console.log("!!!",promotion);
       await PromotionService.update(promotion);
       return res.redirect('promotion/controlShopDiscount');
     } catch (error) {
@@ -61,6 +62,34 @@ let PromotionController = {
     }
   },
   // end delete
+
+  addPurchaseUpdate: async (req, res) => {
+    let data = req.body;
+    try {
+      console.log("data",data);
+      let products = await* data.productIds.map(async (productId)=>{
+        let findProductGm = await db.ProductGm.findById(productId);
+        let additionalPurchase = {};
+        additionalPurchase.name = findProductGm.name;
+        if(data.discount!='')
+          additionalPurchase.discount = data.discount;
+        if(data.reducePrice!='')
+          additionalPurchase.reducePrice = data.reducePrice;
+        additionalPurchase.startDate = data.startDate;
+        additionalPurchase.endDate = data.endDate;
+        additionalPurchase.limit = data.limit;
+        additionalPurchase.type = data.type;
+        let addPurchase = await db.AdditionalPurchase.create(additionalPurchase);
+        await addPurchase.setProductGms([findProductGm]);
+        return findProductGm;
+      });
+      return res.ok();
+    } catch (error) {
+      console.error('=== update error stack ==>',error.stack);
+      let msg = error.message;
+      return res.serverError({msg});
+    }
+  },
 
   // not clean yet
   controlShopType: function (req, res) {
@@ -90,10 +119,20 @@ let PromotionController = {
   },
   controlShopBuyMore: async (req, res) => {
     try {
-      let additionalPurchase = await db.AdditionalPurchase.findAll();
+      let noLimit = await db.AdditionalPurchase.findAll({
+        where:{
+          limit:0
+        }
+      });
+      let limit = await db.AdditionalPurchase.findAll({
+        where:{
+          limit:1500
+        }
+      });
       res.view('promotion/controlShopBuyMore',{
         pageName: "shop-buy-more",
-        additionalPurchase
+        noLimit,
+        limit
       });
     } catch (e) {
       console.error(e.stack);
@@ -103,13 +142,44 @@ let PromotionController = {
     }
   },
   controlShopBuyMoreDetail: function(req, res) {
+    console.log('req',req.query);
     res.view('promotion/controlShopBuyMoreDetail',{
       pageName: "shop-buy-more-detail"
     });
   },
-  controlShopBuyMoreAddItem: function(req, res) {
+  controlShopBuyMoreAddItem: async (req, res) => {
+    console.log('query',req.query);
+    let query = req.query;
+    let queryObj = {};
+
+    if(query.keyword)
+      queryObj.name = { 'like': '%'+query.keyword+'%'};
+    else
+      query.keyword = ''
+
+    let page = req.session.UserController_controlMembers_page =
+    parseInt(req.param('page',
+      req.session.UserController_controlMembers_page || 0
+    ));
+
+    let limit = req.session.UserController_controlMembers_limit =
+    parseInt(req.param('limit',
+      req.session.UserController_controlMembers_limit || 10
+    ));
+
+    let additionalPurchase = await db.ProductGm.findAndCountAll({
+      where: queryObj,
+      offset: page * limit,
+      limit: limit
+    });
+
+    // let additionalPurchase = await db.AdditionalPurchase.findAll();
     res.view('promotion/controlShopBuyMoreAddItem',{
-      pageName: "shop-buy-more-add-item"
+      pageName: "shop-buy-more-add-item",
+      additionalPurchase,
+      query,
+      page,
+      limit
     });
   },
   controlShopCode: function(req, res) {
