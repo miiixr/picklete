@@ -9,7 +9,11 @@
   var shippingFee = 0;
 
   var picklete_cart = Cookies.getJSON('picklete_cart');
-  picklete_cart = picklete_cart ? picklete_cart : {orderItems: []};
+  if(picklete_cart){
+    $("#nothing").remove();
+  }else{
+    picklete_cart : {orderItems: []};
+  }
 
   var cartViewerInit = function(){
 
