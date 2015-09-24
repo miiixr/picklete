@@ -64,6 +64,56 @@ describe("about product service", () => {
         ProductGmId: createdProductGm.id
       });
 
+      // build test data for productQuery spec
+
+      let createdQueryProductGm = await db.ProductGm.bulkCreate([{
+        brandId: 2,
+        name: "ProductGroupA",
+        depId: dptA.id,
+        depSubId: dptSubA.id
+      },{
+        brandId: 3,
+        name: "ProductGroupB",
+        depId: dptB.id,
+        depSubId: dptSubB.id
+      }]);
+
+      await createdQueryProductGm.setDpts([dptA]);
+      await createdQueryProductGm.setDptSubs([dptSubA]);
+
+      let createdQueryProducts = await db.Product.bulkCreate([{
+        name: '',
+        description: '讚讚讚',
+        stockQuantity: '100',
+        isPublish: 'true',
+        price: 999,
+        size: 'normal',
+        service: ["express"],
+        country: 'U.K',
+        madeby: 'TW',
+        color: 3,
+        productNumber: '1-USA-2-G',
+        spec: 'super-metal',
+        photos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg']
+      },{
+        name: '超值組',
+        description: '讚讚讚',
+        stockQuantity: '100',
+        isPublish: 'true',
+        price: 999,
+        size: 'normal',
+        service: ["express"],
+        country: 'U.K',
+        madeby: 'TW',
+        color: 3,
+        productNumber: '1-USA-2-G',
+        spec: 'super-metal',
+        photos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg']
+      }]);
+
+
+
+
 
       done();
 

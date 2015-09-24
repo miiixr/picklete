@@ -3,7 +3,7 @@ extends ../_layout_auth
 block body
   h2.m-bottom-6 商品列表
   .well.control-well.p-30.m-bottom-8
-    form.form-horizontal(name="searchProducts", action="/admin/goods", method="get")
+    form#goodQuery.form-horizontal(name="searchProducts", action="/admin/goods", method="get")
       .row.row-m
         .col-md-4
           .form-group
@@ -26,7 +26,7 @@ block body
           .form-group
             label.col-md-4.control-label 大館別
             .col-md-8
-              select.form-control(name='dptId', data-value=query.dptId, data-dpts=dpts)
+              select.form-control(name='dptId', data-value=query.dptId, data-dpts=dpts, form='goodQuery')
                 option(value=-1) 所有館別
                 each dpt, index in dpts
                   option(value='#{dpt.id}') #{dpt.name}

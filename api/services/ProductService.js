@@ -345,7 +345,7 @@ module.exports = {
         productJson.image = base64data;
       }
     } catch (error) {
-      console.log(`can\'t find product ${product.id} image`);
+      // console.log("can't find product " + product.id + " image");
       productJson.image = 'about:blank';
     }
 
@@ -353,6 +353,8 @@ module.exports = {
   },
 
   productQuery: async (query, offset = 0, limit = 2000) => {
+    console.log('========  query  =========');
+    console.log(query);
 
     let queryObj = {},
         queryGmObj = {};
@@ -407,10 +409,6 @@ module.exports = {
 
       if (query.brandId > 0)
         queryGmObj.brandId = query.brandId;
-      // if (query.dptId > 0)
-      //   queryGmObj.dptId = query.dptId;
-      // if (query.dptSubId > 0)
-        // queryGmObj.dptSubId = query.dptSubId;
       // tag keyword search
       if (query.keyword) {
         queryGmObj.tag = {
@@ -441,15 +439,22 @@ module.exports = {
       let dptPass = true, dptSubPass = true;
       if( query.dptId > 0 || query.dptSubId > 0) {
         if( query.dptId > 0 ) {
-          if( productGm.Dpts[0].id != query.dptId )
-            dptPass = false;
+          if( typeof productGm.Dpts.id !== 'undefined' ) {
+            if( productGm.Dpts[0].id != query.dptId )
+              dptPass = false;
+          }
         }
         if(query.dptSubId > 0) {
-          if(productGm.DptSubs[0].id != query.dptSubId)
-            dptSubPass = false;
+          if( typeof productGm.Dpts.id !== 'undefined' ) {
+            if(productGm.DptSubs[0].id != query.dptSubId)
+              dptSubPass = false;
+          }
         }
-        if(dptPass && dptSubPass){
+        if(dptPass && dptSubPass) {
           for (let gmProduct of productGm.Products) {
+            console.log('------------');
+            console.log(gmProduct);
+            console.log('gmProduct id : ' + gmProduct.id);
             gmResultId.push(gmProduct.id);
           }
         }
