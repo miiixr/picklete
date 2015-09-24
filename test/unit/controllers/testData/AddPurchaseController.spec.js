@@ -1,27 +1,23 @@
 var sinon = require('sinon');
 
 describe('Add Purchase', () => {
-  let createdProduct
+  let createdProductGmComplete
   before(async (done) => {
     sinon.stub(UserService, 'getLoginState', (req) => {
       return true;
     });
 
-    createdProduct = await db.Product.create({
-      name: 'Add Purchase 超值組',
-      description: '讚讚讚',
-      stockQuantity: '100',
-      isPublish: 'true',
-      price: 999,
-      size: 'normal',
-      service: ["express"],
-      country: 'U.K',
-      madeby: 'TW',
-      color: 3,
-      productNumber: '1-USA-2-G',
-      spec: 'super-metal',
-      photos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg']
+    createdProductGmComplete = await db.ProductGm.create({
+      brandId: 1,
+      name: "好東西商品",
+      explain: '好東西就是要買，買買買',
+      usage: '請安心服用',
+      notice: '18 歲以下請勿使用',
+      depId: 1,
+      depSubId: 1,
+      coverPhoto: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/JC1121-set-My-Mug-blue-2.jpg']
     });
+
     done();
   });
 
@@ -40,7 +36,7 @@ describe('Add Purchase', () => {
           endDates: '2015-09-30',
           reducePrice: '1000',
           discount: '',
-          productIds: [createdProduct.id]
+          productIds: [createdProductGmComplete.id]
       })
       .end((err, res) => {
         console.log('res.body', res.body);
@@ -62,7 +58,7 @@ describe('Add Purchase', () => {
         reducePrice: '',
         type: 'discount',
         discount: '9',
-        productIds: [createdProduct.id]
+        productIds: [createdProductGmComplete.id]
       })
       .end((err, res) => {
         console.log('res.body', res.body);
