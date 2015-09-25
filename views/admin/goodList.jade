@@ -3,7 +3,9 @@ extends ../_layout_auth
 block body
   h2.m-bottom-6 商品列表
   .well.control-well.p-30.m-bottom-8
-    form.form-horizontal(name="searchProducts", action="/admin/goods", method="get")
+    form.form-horizontal.with-pagination(name="searchProducts", action="/admin/goods", method="get")
+      input(type='hidden', name='page', value=query.page?query.page:0)
+      input(type='hidden', name='limit', value=limit)
       .row.row-m
         .col-md-4
           .form-group
@@ -109,18 +111,16 @@ block body
   // /well
   .row
     .col-md-6
-      //- form.form-inline
-      //-   .form-group
-      //-     label 顯示
-      //-     select.form-control
-      //-       option 10
-      //-       option 20
-      //-       option 30
-      //-       option 40
-      //-       option 50
-      //-     label 筆資料（共 90 筆）
-      //-   // /form-group
-    // /col-md-6
+      form.form-inline
+        .form-group
+          label 顯示
+          select#pagination-limit.form-control
+            option(selected=(limit==10)) 10
+            option(selected=(limit==20)) 20
+            option(selected=(limit==30)) 30
+            option(selected=(limit==40)) 40
+            option(selected=(limit==50)) 50
+          label 筆資料（共 #{totalRows} 筆）
     .col-md-6.desktop-text-right
       a.btn.btn-green(href='#', id='btnSave') 儲存變更
     // /col-md-6
@@ -189,6 +189,34 @@ block body
             a.btn.btn-link(href='/admin/goods/update?id=#{product.ProductGmId}')
               span.glyphicon.glyphicon-pencil2
   hr.dashed-line
+  .text-center
+    //- pagination-block
+    ul.list-inline.m-bottom-0.m-top-1
+      li.border-right-1.p-right-2
+        a(href='#' id='pagination-prev') 上一頁
+      li.border-right-1.p-right-2 #{page + 1} / #{totalPage}
+      li
+        a(href='#' id='pagination-next') 下一頁
+        
+  //- nav.text-center
+  //-   ul.pagination
+  //-     li.disabled
+  //-       a(href='#', aria-label='Previous')
+  //-         span(aria-hidden='true') &laquo;
+  //-     li.active
+  //-       a(href='#')
+  //-         | 1
+  //-         span.sr-only (current)
+  //-     li
+  //-       a(href='#') 2
+  //-     li
+  //-       a(href='#') 3
+  //-     li
+  //-       a(href='#') 4
+  //-     li
+  //-       a(href='#', aria-label='Next')
+  //-         span(aria-hidden='true') &raquo;
+        
   //- .text-center
   //-   //
   //-     pagination-block

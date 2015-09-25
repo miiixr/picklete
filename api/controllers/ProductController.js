@@ -62,8 +62,13 @@ let ProductController = {
         }],
         order: ['Dpt.weight', 'DptSubs.weight']
       });
-      
-      let products = await ProductService.productQuery(req);
+
+      let limit = await pagination.limit(req);
+      let page = await pagination.page(req);
+      let offset = await pagination.offset(req);
+
+      let productsWithCount = await ProductService.productQuery(req, offset, limit);
+      let products = productsWithCount.rows;
 
       let query = req.query;
 
@@ -72,8 +77,18 @@ let ProductController = {
         dpts,
         query,
         products,
-        pageName: "/admin/goods"
+        pageName: "/admin/goods",
+        limit: limit,
+        page: page,
+        totalPage: Math.ceil(productsWithCount.count / limit),
+        totalRows: productsWithCount.count
       };
+
+      console.log('========= Product Query Parameters =========');
+      console.log('limit = ' + limit);
+      console.log('page = ' + page);
+      console.log('offset = ' + offset);
+      console.log('count = ' + productsWithCount.count);
 
       if (query.responseType && query.responseType.toLowerCase() == 'json') {
         return res.ok(result);
