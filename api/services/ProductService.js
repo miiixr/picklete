@@ -359,16 +359,15 @@ module.exports = {
 
     try {
       if (Object.keys(query).length > 0) {
-
         // search condition
         if (query.price) {
           queryObj.price = query.price;
         }
-        if (query.name) {
-          queryObj.name = {
-            $like: `%${query.name}%`
-          };
-        }
+        // if (query.name) {
+        //   queryObj.name = {
+        //     $like: `%${query.name}%`
+        //   };
+        // }
         if (query.productNumber) {
           queryObj.productNumber = query.productNumber;
         }
@@ -405,6 +404,13 @@ module.exports = {
         // productGm 搜尋
         if (query.brandId > 0)
           queryGmObj.brandId = query.brandId;
+
+        // // productGm Name 搜尋
+        // if (query['name'].length > 0) {
+        //   queryGmObj.name = {
+        //     $like: `%${query.name}%`
+        //   };
+        // }
 
         // tag keyword search
         if (query.tag) {
@@ -469,13 +475,23 @@ module.exports = {
       }
 
       // productGm 搜尋結果 與 product 搜尋結果 mapping
-      let resultArray = [];
+      let mappingResult = [];
       for (let product of products) {
         if (gmResultId.indexOf(product.id) != -1) {
-          resultArray.push(product);
+          mappingResult.push(product);
         }
       }
-      products = resultArray;
+
+      products = mappingResult;
+
+      // name filter
+      if(query.name) {
+        products = [];
+        for (let product of mappingResult) {
+          if( (product['name'].search(query.name) > 0 ) || (product['ProductGm']['name'].search(query.name) > 0) )
+            products.push(product);
+        }
+      }
 
       // format datetime
       products = products.map(ProductService.withImage);
