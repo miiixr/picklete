@@ -49,11 +49,11 @@ block body
               .form-inline
                 .form-group.m-right-2
                   label.p-left-2.p-right-2 折抵金額
-                  input.form-control.width-12(type='text', id='price',name='description')
+                  input.form-control.width-12(type='text', id='price',name='price-description', value='')
                 // /form-group
                 .form-group
                   label.p-left-2.p-right-2 元，限滿
-                  input.form-control.width-12(type='text', id='price',name='restriction')
+                  input.form-control.width-12(type='text', id='price',name='price-restriction', value='')
                   label.p-left-2 元
                 // /form-group
           .radio
@@ -62,13 +62,13 @@ block body
               .form-inline
                 .form-group.m-right-2
                   .input-group.width-12.m-left-2
-                    input.form-control(type='text', id='discount', name='description')
+                    input.form-control(type='text', id='discount', name='discount-description', value='')
                     span.input-group-addon 折
                   // /input-group
                 // /form-group
                 .form-group
                   label.p-left-2.p-right-2 ，限滿
-                  input.form-control.width-12(type='text', id='discount',name='restriction')
+                  input.form-control.width-12(type='text', id='discount',name='discount-restriction', value='')
                   label.p-left-2 元
                 // /form-group
       // /form-group
@@ -104,7 +104,7 @@ block body
 block js
   script.
     $("input[value=#{shopCode.type}]").prop('checked', true);
-    $("input[id=#{shopCode.type}][name=description]").prop('value', #{shopCode.description});
-    $("input[id=#{shopCode.type}][name=restriction]").prop('value', #{shopCode.restriction});
+    $("input[id=#{shopCode.type}][name=#{shopCode.type}-description]").prop('value', #{shopCode.description});
+    $("input[id=#{shopCode.type}][name=#{shopCode.type}-restriction]").prop('value', #{shopCode.restriction});
     $("input[name=sentType][value=#{shopCode.sentType}]").prop('checked', true);
 

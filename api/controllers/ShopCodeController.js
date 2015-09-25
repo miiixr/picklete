@@ -35,20 +35,20 @@ let ShopCodeController = {
     }
 
     if(params['type']=='price'){
-      params['description'] = params['description'][0];
-      params['restriction'] = params['restriction'][0];
+      var description = params['price-description'];
+      var restriction = params['price-restriction'];
     }
     if(params['type']=='discount'){
-      params['description'] = params['description'];
-      params['restriction'] = params['restriction'];
+      var description = params['discount-description'];
+      var restriction = params['discount-restriction'];
     }
 
     let shopCode = {
       code: params['code'],
       title: params['title'],
       type: params['type'],
-      description: params['description'],
-      restriction: params['restriction'] || '',
+      description: description,
+      restriction: restriction,
       startDate: Date.parse(params['startDate']) || 1,
       endDate: Date.parse(params['endDate']) || 1,
       restrictionDate: params['restrictionDate'],
@@ -98,19 +98,19 @@ let ShopCodeController = {
       }
 
       if(params['type']=='price'){
-        params['description'] = params['description'][0];
-        params['restriction'] = params['restriction'][0];
+        var description = params['price-description'];
+        var restriction = params['price-restriction'];
       }
       if(params['type']=='discount'){
-        params['description'] = params['description'];
-        params['restriction'] = params['restriction'];
+        var description = params['discount-description'];
+        var restriction = params['discount-restriction'];
       }
       
       shopCode.code = params['code'];
       shopCode.title = params['title'];
       shopCode.type = params['type'];
-      shopCode.description = params['description'];
-      shopCode.restriction = params['restriction'] || '';
+      shopCode.description = description;
+      shopCode.restriction = restriction;
       shopCode.startDate = Date.parse(params['startDate']) || 1;
       shopCode.endDate = Date.parse(params['endDate']) || 1,
       shopCode.restrictionDate = params['restrictionDate'],

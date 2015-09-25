@@ -27,8 +27,8 @@ describe('ShopCode Spec', function() {
     .field('autoRandomCode', 'on') // 優惠代碼
     .field('title', '優惠名稱') // 優惠名稱
     .field('type', 'price') // 優惠類型 price, discount
-    .field('description', '200') // 優惠內容
-    .field('restriction', '300') // 限滿額
+    .field('price-description', '200') // 優惠內容
+    .field('price-restriction', '300') // 限滿額
     .field('startDate', 'null') // 開始時間
     .field('endDate', '2012/03/16 12:03:12') // 結束時間
     .field('restrictionDate', 'on') // 時間限制
@@ -50,9 +50,9 @@ describe('ShopCode Spec', function() {
     .field('id', 1)
     .field('code', '1優惠代碼') // 優惠代碼
     .field('title', '1優惠名稱') // 優惠名稱
-    .field('type', 'price') // 優惠類型 price, discount
-    .field('description', '1200') // 優惠內容
-    .field('restriction', '1300') // 限滿額
+    .field('type', 'discount') // 優惠類型 price, discount
+    .field('discount-description', '7') // 優惠內容
+    .field('discount-restriction', '1300') // 限滿額
     .field('startDate', '2012/03/16 12:03:13') // 開始時間
     .field('endDate', '2012/03/16 12:03:14') // 結束時間
     .field('sentType', 'specific') // 自動發送
