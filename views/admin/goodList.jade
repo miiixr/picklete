@@ -4,7 +4,7 @@ block body
   h2.m-bottom-6 商品列表
   .well.control-well.p-30.m-bottom-8
     form.form-horizontal.with-pagination(name="searchProducts", action="/admin/goods", method="get")
-      input(type='hidden', name='page', value=query.page?query.page:0)
+      input(type='hidden', name='page', value=page)
       input(type='hidden', name='limit', value=limit)
       .row.row-m
         .col-md-4
