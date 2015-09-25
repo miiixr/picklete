@@ -361,13 +361,8 @@ describe("about product service", () => {
       let queryObj = {}, queryResults;
       queryObj.dptId = dptC.id;
       queryResults = await ProductService.productQuery(queryObj);
-      // console.log('----------');
-      // console.log(queryResults);
-      // console.log(JSON.stringify(queryResults, null, 4));
       queryResults.map(async function (product) {
         let DptGm = await db.DptProductGm.findOne({where:{ProductGmId: product.productGmId}});
-        console.log('-------');
-        console.log(DptGm);
         DptGm['id'].should.be.equal(queryObj.dptId);
       });
       done();
@@ -376,16 +371,17 @@ describe("about product service", () => {
     }
   });
 
-  it.skip('product query by dptId & dptSubId', async (done) => {
+  it('product query by dptId & dptSubId', async (done) => {
     try{
       let queryObj = {}, queryResults;
-      // query by dptId & dptSubId
       queryObj.dptId = dptC.id;
       queryObj.dptSubId = dptSubC.id;
       queryResults = await ProductService.productQuery(queryObj);
-      queryResults.map((product) => {
-        product['Dpts']['id'].should.be.include(queryObj.dptId);
-        product['DptSubs']['id'].should.be.include(queryObj.dptSubId);
+      queryResults.map(async function (product) {
+        let DptGm = await db.DptProductGm.findOne({where:{ProductGmId: product.productGmId}});
+        DptGm['id'].should.be.include(queryObj.dptId);
+        let DptSubGm = await db.DptSubProductGm.findOne({where:{ProductGmId: product.productGmId}});
+        DptSubGm['id'].should.be.include(queryObj.dptSubId);
       });
       done();
     } catch (e) {
