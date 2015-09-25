@@ -1,7 +1,8 @@
 import moment from 'moment';
+
 describe("about product service", () => {
   let createdProduct, createdProduct2, createdProductGm;
-  let productGmA, productGmB, dptA, dptB, dptSubA, dptSubB ,dptC, dptSubC;
+  let productGmA, productGmB, dptA, dptB, dptSubA, dptSubB ,dptC, dptSubC, dptD, dptSubD;
   before(async (done) => {
 
     try {
@@ -24,6 +25,12 @@ describe("about product service", () => {
         official: true,
       });
 
+      dptD = await db.Dpt.create({
+        name: 'test 大館 D',
+        weight: 999,
+        official: true,
+      });
+
       dptSubA = await db.DptSub.create({
         name: 'test 小館 A',
         weight: 100,
@@ -42,9 +49,16 @@ describe("about product service", () => {
         official: false
       })
 
+      dptSubD = await db.DptSub.create({
+        name: 'test 小館 D',
+        weight: 100,
+        official: false
+      })
+
       await dptA.setDptSubs(dptSubA);
       await dptB.setDptSubs(dptSubB);
       await dptC.setDptSubs(dptSubC);
+      await dptD.setDptSubs(dptSubD);
 
       createdProductGm = await db.ProductGm.create({
         brandId: 1,
@@ -92,66 +106,61 @@ describe("about product service", () => {
         depId: dptC.id,
         depSubId: dptSubC.id
       });
-      console.log('--------------');
-      // console.log(JSON.stringify(createdQueryProductGms, null, 4));
+
       await createdQueryProductGmA.setDpts([dptC]);
       await createdQueryProductGmA.setDptSubs([dptSubC]);
       await createdQueryProductGmB.setDpts([dptC]);
       await createdQueryProductGmB.setDptSubs([dptSubC]);
-      console.log('==================================3234');
 
       let createdQueryProducts = await db.Product.bulkCreate([{
         name: '',
         stockQuantity: '100',
         isPublish: 'true',
         price: 777,
-        productNumber: '1-USA-2-G',
+        productNumber: 'QueryA',
         photos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg'],
+        ProductGmId: createdQueryProductGmA.id
       },{
-        name: '11234',
+        name: 'A1234',
         stockQuantity: '100',
         isPublish: 'true',
         price: 555,
-        productNumber: '1-USA-2-G',
-        photos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg']
+        productNumber: 'QueryA',
+        photos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg'],
+        ProductGmId: createdQueryProductGmA.id
       },{
-        name: '11235',
+        name: 'A1235',
         stockQuantity: '100',
         isPublish: 'true',
         price: 555,
-        productNumber: '1-USA-2-G',
-        photos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg']
+        productNumber: 'QueryA',
+        photos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg'],
+        ProductGmId: createdQueryProductGmA.id
       },{
-        name: '21235',
+        name: 'B1235',
         stockQuantity: '100',
         isPublish: 'true',
         price: 555,
-        productNumber: '2-USA-2-G',
-        photos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg']
+        productNumber: 'QueryB',
+        photos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg'],
+        ProductGmId: createdQueryProductGmB.id
       },{
-        name: '21235',
+        name: 'B1235',
         stockQuantity: '100',
         isPublish: 'true',
         price: 555,
-        productNumber: '2-USA-2-G',
-        photos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg']
+        productNumber: 'QueryB',
+        photos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg'],
+        ProductGmId: createdQueryProductGmB.id
       }]);
-      console.log('==================================32345');
-
-      let queryProductGroupA = await createdQueryProductGmA.setProducts([createdQueryProducts[0],createdQueryProducts[1],createdQueryProducts[2]]);
-      let queryProductGroupB = await createdQueryProductGmB.setProducts([createdQueryProducts[3],createdQueryProducts[4]]);
-      console.log('==================================323456');
-
 
       done();
-
     } catch (e) {
       console.log(e.stack);
       done(e);
-
     }
-  });
 
+  });
   it("product create", async (done) => {
     let newProduct = {
       brandType: 'origin',
@@ -311,48 +320,77 @@ describe("about product service", () => {
     }
   });
 
-  it('product query', async (done) => {
-
-    let queryLimit = 100;
-    let testingTimes = 5;
+  it('product query by name', async (done) => {
     try{
-
-      let queryObj = {};
-      // get sourceData through db
-      let srcData = await db.Product.findAndCountAll({ limit: queryLimit });
-      let srcCount = srcData.count,
-          srcProducts = srcData.rows;
-
-      // test all srcData
-      for (let i=1; i<=testingTimes; i++) {
-        let randomRowIndex = Math.floor((Math.random() * srcCount));
-        let srcProduct = srcProducts[randomRowIndex];
-        // check product name exist
-        if(srcProduct.name) {
-          let srcName = srcProduct.name;
-          let len = srcName.length;
-          let randomIndex = Math.floor((Math.random() * len));
-          queryObj.name = srcName[randomIndex];
-          let queryResult = await ProductService.productQuery(queryObj);
-          let found = true;
-          // search queryResult product.name include target name
-          for (let product of queryResult) {
-            // if not found
-            if( product['name'].search(queryObj.name) < 0 ) {
-              found = false;
-              console.log('======================');
-              console.log('can not find correct result by search name as "' + queryObj.name + '"');
-              console.log(product);
-              break;
-            }
-          }
-          found.should.be.equal(true);
-        }
-      }
-
+      let queryObj = {}, queryResults;
+      queryObj.name = 'A';
+      queryResults = await ProductService.productQuery(queryObj);
+      queryResults.map((product) => {
+        product['name'].should.be.include(queryObj.name);
+      });
+      queryObj.name = 'B123';
+      queryResults = await ProductService.productQuery(queryObj);
+      queryResults.map((product) => {
+        product['name'].should.be.include(queryObj.name);
+      });
       done();
     } catch (e) {
       done(e);
     }
   });
+
+  it('product query by productNumber', async (done) => {
+    try{
+      let queryObj = {}, queryResults;
+      queryObj.productNumber = 'QueryA';
+      queryResults = await ProductService.productQuery(queryObj);
+      queryResults.should.have.length(3);
+
+      queryObj.productNumber = 'QueryB';
+      queryResults = await ProductService.productQuery(queryObj);
+      queryResults.should.have.length(2);
+      done();
+    } catch (e) {
+      done(e);
+    }
+  });
+
+  it('product query by dptId', async (done) => {
+    try{
+      // query by dptId
+      let queryObj = {}, queryResults;
+      queryObj.dptId = dptC.id;
+      queryResults = await ProductService.productQuery(queryObj);
+      // console.log('----------');
+      // console.log(queryResults);
+      // console.log(JSON.stringify(queryResults, null, 4));
+      queryResults.map(async function (product) {
+        let DptGm = await db.DptProductGm.findOne({where:{ProductGmId: product.productGmId}});
+        console.log('-------');
+        console.log(DptGm);
+        DptGm['id'].should.be.equal(queryObj.dptId);
+      });
+      done();
+    } catch (e) {
+      done(e);
+    }
+  });
+
+  it.skip('product query by dptId & dptSubId', async (done) => {
+    try{
+      let queryObj = {}, queryResults;
+      // query by dptId & dptSubId
+      queryObj.dptId = dptC.id;
+      queryObj.dptSubId = dptSubC.id;
+      queryResults = await ProductService.productQuery(queryObj);
+      queryResults.map((product) => {
+        product['Dpts']['id'].should.be.include(queryObj.dptId);
+        product['DptSubs']['id'].should.be.include(queryObj.dptSubId);
+      });
+      done();
+    } catch (e) {
+      done(e);
+    }
+  });
+
 });
