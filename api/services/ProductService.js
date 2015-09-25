@@ -428,7 +428,12 @@ module.exports = {
         offset: offset,
       };
 
+// <<<<<<< HEAD
       let products = await db.Product.findAll(queryObj);
+// =======
+//     let productsWithCount = await db.Product.findAndCountAll(queryObj);
+//     let products = productsWithCount.rows;
+// >>>>>>> develop
 
       queryGmObj = {
         where: queryGmObj,
@@ -505,6 +510,11 @@ module.exports = {
       // let msg = error.message;
       // return res.serverError({msg});
     }
-    return resultProducts;
+// <<<<<<< HEAD
+//     return resultProducts;
+// =======
+//     return {rows: products, count: productsWithCount.count};
+// >>>>>>> develop
+    return {rows: resultProducts, count: resultProducts.length };
   }
 };

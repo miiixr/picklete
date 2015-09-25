@@ -326,6 +326,7 @@ describe("about product service", () => {
       let queryObj = {}, queryResults;
       queryObj.name = 'A';
       queryResults = await ProductService.productQuery(queryObj);
+      queryResults = queryResults.rows;
       queryResults.should.have.length(3);
       await* queryResults.map( async (product) => {
         let gmResult = await db.ProductGm.findById(product.ProductGmId);
@@ -334,8 +335,9 @@ describe("about product service", () => {
       });
       queryObj.name = 'B123';
       queryResults = await ProductService.productQuery(queryObj);
-      queryResults.map((product) => {
-        // product['name'].should.be.include(queryObj.name);
+      queryResults = queryResults.rows;
+      await* queryResults.map( async (product) => {
+        product['name'].should.be.include(queryObj.name);
       });
       done();
     } catch (e) {
@@ -348,10 +350,12 @@ describe("about product service", () => {
       let queryObj = {}, queryResults;
       queryObj.productNumber = 'QueryA';
       queryResults = await ProductService.productQuery(queryObj);
+      queryResults = queryResults.rows;
       queryResults.should.have.length(3);
 
       queryObj.productNumber = 'QueryB';
       queryResults = await ProductService.productQuery(queryObj);
+      queryResults = queryResults.rows;
       queryResults.should.have.length(2);
       done();
     } catch (e) {
@@ -364,7 +368,8 @@ describe("about product service", () => {
       let queryObj = {}, queryResults;
       queryObj.dptId = dptC.id;
       queryResults = await ProductService.productQuery(queryObj);
-      queryResults.map(async function (product) {
+      queryResults = queryResults.rows;
+      queryResults.map( async (product) => {
         let DptGm = await db.DptProductGm.findOne({where:{ProductGmId: product.productGmId}});
         DptGm['id'].should.be.equal(queryObj.dptId);
       });
@@ -380,8 +385,11 @@ describe("about product service", () => {
       queryObj.dptId = dptC.id;
       queryObj.dptSubId = dptSubC.id;
       queryResults = await ProductService.productQuery(queryObj);
-      queryResults.map(async function (product) {
-        let DptGm = await db.DptProductGm.findOne({where:{ProductGmId: product.productGmId}});
+      queryResults = queryResults.rows;
+      await* queryResults.map( async (product) => {
+        console.log('--------');
+        console.log(product);
+        let DptGm = await db.DptProductGm.findAll({where:{ProductGmId: product.productGmId}});
         DptGm['id'].should.be.include(queryObj.dptId);
         let DptSubGm = await db.DptSubProductGm.findOne({where:{ProductGmId: product.productGmId}});
         DptSubGm['id'].should.be.include(queryObj.dptSubId);
@@ -397,6 +405,7 @@ describe("about product service", () => {
       let queryObj = {}, queryResults;
       queryObj.price = 555;
       queryResults = await ProductService.productQuery(queryObj);
+      queryResults = queryResults.rows;
       queryResults.should.have.length(4);
       done();
     } catch (e) {
@@ -409,15 +418,17 @@ describe("about product service", () => {
       let queryObj = {}, queryResults;
       queryObj.tag = '手';
       queryResults = await ProductService.productQuery(queryObj);
+      queryResults = queryResults.rows;
       queryResults.should.have.length(5);
-      queryResults.map(async function (product) {
+      await* queryResults.map( async (product) => {
         let result = await db.ProductGm.findById(product.productGmId);
         result.should.be.include(queryObj.tag);
       });
       queryObj.tag = '遊戲';
       queryResults = await ProductService.productQuery(queryObj);
+      queryResults = queryResults.rows;
       queryResults.should.have.length(2);
-      queryResults.map(async function (product) {
+      await* queryResults.map(async (product) => {
         let result = await db.ProductGm.findById(product.productGmId);
         result.should.be.include(queryObj.tag);
       });
@@ -433,6 +444,7 @@ describe("about product service", () => {
       queryObj.stockQuantityStart = 400;
       queryObj.stockQuantityEnd = 800;
       queryResults = await ProductService.productQuery(queryObj);
+      queryResults = queryResults.rows;
       queryResults.should.have.length(3);
       await queryResults.map( async (product) => {
         product['stockQuantity'].should.be.within( queryObj.stockQuantityStart, queryObj.stockQuantityEnd);

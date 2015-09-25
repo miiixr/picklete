@@ -2,7 +2,7 @@ extends ./../_layout_single
 
 block body
   div.container 交易進行中，請勿關閉視窗....
-      form#form1(name='form1', method='post',action='http://payment-stage.allpay.com.tw/Cashier/AioCheckOut') 
+      form#form1(name='form1', method='post',action= AioCheckOut) 
         input(type='hidden', name='MerchantID' value= allPayData.MerchantID)
         input(type='hidden', name='MerchantTradeNo' value= allPayData.MerchantTradeNo)
         input(type='hidden', name='MerchantTradeDate' value= allPayData.MerchantTradeDate)
@@ -14,6 +14,7 @@ block body
         input(type='hidden', name='ChoosePayment' value= allPayData.ChoosePayment)
         input(type='hidden', name='ClientBackURL' value= allPayData.ClientBackURL)
         input(type='hidden', name='CheckMacValue' value= allPayData.CheckMacValue)
+        input(type='hidden', name='PaymentInfoURL' value= allPayData.PaymentInfoURL)
         //- a.btn.btn-primary(onClick='$("form[name=\'form1\']").submit()') 查詢
   block js
     script.

@@ -65,15 +65,30 @@ let ProductController = {
 
       let query = req.query;
 
-      let products = await ProductService.productQuery(query);
+      let limit = await pagination.limit(req);
+      let page = await pagination.page(req);
+      let offset = await pagination.offset(req);
+
+      let productsWithCount = await ProductService.productQuery(query, offset, limit);
+      let products = productsWithCount.rows;
 
       let result = {
         brands,
         dpts,
         query,
         products,
-        pageName: "/admin/goods"
+        pageName: "/admin/goods",
+        limit: limit,
+        page: page,
+        totalPages: Math.ceil(productsWithCount.count / limit),
+        totalRows: productsWithCount.count
       };
+
+      console.log('========= Product Query Parameters =========');
+      console.log('limit = ' + limit);
+      console.log('page = ' + page);
+      console.log('offset = ' + offset);
+      console.log('count = ' + productsWithCount.count);
 
       if (query.responseType && query.responseType.toLowerCase() == 'json') {
         return res.ok(result);

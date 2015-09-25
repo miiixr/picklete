@@ -120,12 +120,10 @@ module.exports = {
         TotalAmount: order.paymentTotalAmount,
         TradeDesc: 'Allpay push order test',
         ItemName: '',
-        // 這裏是要放當使用者付款後，allpay會post我們的api，通知使用者付款完成的，api spec詳見allpay文件29頁
         ReturnURL: `${domain}allpay/paid`,
         ChoosePayment: 'ATM',
-        ClientBackURL: `${domain}shop`
-        // ChooseSubPayment: '',
-        // Remark: '',
+        ClientBackURL: `${domain}shop`,
+        PaymentInfoURL: `${domain}allpay/paymentinfo`
       };
       var itemArray = [];
       order.OrderItems.forEach((orderItem) => {
@@ -142,6 +140,8 @@ module.exports = {
     	// 		done(res.body);
     	// 	})
       // });
+      // console.log("!!!",checkMacValue);
+
       var checkMacValue = allpay.genCheckMacValue(data);
       data.CheckMacValue = checkMacValue;
       return data;
@@ -265,12 +265,16 @@ module.exports = {
         result.order.User = buyer;
         result.order.Shipment = createdShipment;
 
-        let messageConfig = CustomMailerService.orderConfirm(result);
-        let message = await db.Message.create(messageConfig, {transaction});
+        let useAllPay = false;
+        if(sails.config.useAllPay !== undefined)
+          useAllPay = sails.config.useAllPay;
+        if(!useAllPay){
+          let messageConfig = CustomMailerService.orderConfirm(result);
+          let message = await db.Message.create(messageConfig, {transaction});
+          await CustomMailerService.sendMail(message);
+        }
+
         transaction.commit();
-
-        await CustomMailerService.sendMail(message);
-
 
       } catch (e) {
         console.error(e.stack);

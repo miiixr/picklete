@@ -29,12 +29,35 @@ let UserController = {
   },
 
   cart: async (req, res) => {
-    console.log('=== cart ===');
+    console.log('=== req.cookies ===', req.cookies.picklete_cart);
+
+    let picklete_cart = req.cookies.picklete_cart;
+    let paymentTotalAmount = 0;
+
+    if(picklete_cart != undefined){
+      picklete_cart = JSON.parse(picklete_cart);
+
+      picklete_cart.orderItems.forEach( (orderItem) => {
+        paymentTotalAmount += parseInt(orderItem.quantity, 10) * parseInt(orderItem.price, 10);
+      });
+    }
+
+
+
     let company = await db.Company.findOne();
     let brands = await db.Brand.findAll();
 
-    console.log('=== company ===', company);
-    return res.view('main/cart', {company, brands});
+    let date = new Date();
+    let query = {date, paymentTotalAmount};
+    let additionalPurchaseProductGms = await AdditionalPurchaseService.getProductGms(query);
+
+    console.log('=== additionalPurchaseProducts ===', additionalPurchaseProductGms);
+
+    return res.view('main/cart', {
+      company,
+      brands,
+      additionalPurchaseProductGms
+    });
   },
 
   edit: async (req, res) => {
@@ -237,19 +260,13 @@ let UserController = {
           lte : new Date(query.createdEnd)};
       }
 
-      let page = req.session.UserController_controlMembers_page =
-      parseInt(req.param('page',
-        req.session.UserController_controlMembers_page || 0
-      ));
-
-      let limit = req.session.UserController_controlMembers_limit =
-      parseInt(req.param('limit',
-        req.session.UserController_controlMembers_limit || 10
-      ));
+      let page = await pagination.page(req);
+      let offset = await pagination.offset(req);
+      let limit = await pagination.limit(req);
 
       let members = await db.User.findAndCountAll({
         where: queryObj,
-        offset: page * limit,
+        offset: offset,
         limit: limit
       });
 
@@ -265,6 +282,8 @@ let UserController = {
         members: members,
         page: page,
         limit: limit,
+        totalPages: Math.ceil(members.count / limit),
+        totalRows: members.count,
         query
       });
     }

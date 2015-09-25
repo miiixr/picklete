@@ -1,5 +1,5 @@
 
-module.exports = {
+var self = module.exports = {
   limit: async (req) => {
     return req.session.ProductService_productQuery_limit =
     parseInt(req.param('limit',
@@ -7,7 +7,7 @@ module.exports = {
     ));
   },
   offset: async (req) => {
-    return page(req) * limit(req);
+    return await self.page(req) * await self.limit(req);
   },
   page: async (req) => {
     return req.session.ProductService_productQuery_page =

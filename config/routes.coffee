@@ -127,10 +127,16 @@ module.exports.routes = {
   'get /admin/shop-buy-more' : 'PromotionController.controlShopBuyMore'
   'get /admin/shop-buy-more-detail' : 'PromotionController.controlShopBuyMoreDetail'
   'get /admin/shop-buy-more-add-item' : 'PromotionController.controlShopBuyMoreAddItem'
+  'put /admin/buymoreUpdate' : 'PromotionController.addPurchaseUpdate'
   'get /admin/shop-code' : 'PromotionController.controlShopCode'
   'get /admin/shop-code-detail' : 'PromotionController.controlShopCodeDetail'
   'get /admin/shop-report-form' : 'PromotionController.controlShopReportForm'
   # end promotions
+
+  # shipping
+  'get /admin/shipping' : 'ShippingController.list'
+  'post /admin/shipping' : 'ShippingController.save'
+  # end shipping
 
   # client side / Have to login
   # 'get /member/fav' : view: 'main/member-fav'
@@ -177,6 +183,15 @@ module.exports.routes = {
   'post /allpay/paid':{
     controller: "PaymentController",
     action: "paid"
+    cors: {
+      origin: "*",
+      credentials: false
+    }
+  }
+
+  'post /allpay/paymentinfo':{
+    controller: "PaymentController",
+    action: "paymentinfo"
     cors: {
       origin: "*",
       credentials: false

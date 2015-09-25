@@ -1,4 +1,4 @@
-$(window).load(function() {
+$(function() {
   var $selects = $('select.form-control');
   var $selectDptId = $('select[name=dptId]');
   var $selectDptSubId = $('select[name=dptSubId]');
