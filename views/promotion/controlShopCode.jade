@@ -54,5 +54,30 @@ block body
           td.text-right
             a.btn.btn-link(href='/admin/shop-code/update?id=#{shopCode.id}')
               span.glyphicon.glyphicon-pencil2
-            a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
+            input(type='hidden', value='#{shopCode.id}')
+            a.btn.btn-link.delete-link(href='', data-toggle='modal', data-target='#modal-delete')
               span.glyphicon.glyphicon-remove
+
+  #modal-delete.modal.fade
+    .modal-dialog(role='document')
+      .modal-content.font-size-slarge
+        .modal-header.p-30
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') ×
+          h2.modal-title 刪除
+        // /modal-header
+        .modal-body.p-30.p-top-0
+          p 您確定要將此 Section 刪除？
+        // /modal-body
+        .modal-footer
+          button.btn.btn-default(type='button', data-dismiss='modal') 取消
+          button.btn.btn-green(type='button', data-dismiss='modal') 確定
+        // /modal-footer
+      // /modal-content
+    // /modal-dialog
+
+
+block js
+  script(src="/javascripts/admin/shopCode.js")
+
+
