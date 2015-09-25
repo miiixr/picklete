@@ -1,4 +1,4 @@
-# 分頁功能實作說明
+# 分頁功能實作說明（後台限定）
 
 ## Controller
 
@@ -34,39 +34,36 @@ let result = {
 
 ## View (Jade)
 
-form 加上 with-pagination class
+最上面要 include mixins ...
+
+```
+include ../mixins/pagination
+```
+
+form 要加上 with-pagination class
+
+範例：
 
 ```
 form.form-horizontal.with-pagination(name="searchProducts", action="/admin/goods", method="get")
 ```
 
-form 增加 hidden fields
+然後在 form 增加 hidden fields
 
 ```
-input(type='hidden', name='page', value=page)
-input(type='hidden', name='limit', value=limit)
++pagination-fields(page, limit)
 ```
 
-查詢筆數限制下拉選單
+加入查詢筆數限制下拉選單
 
 ```
-select#pagination-limit.form-control
-  option(selected=(limit==10)) 10
-  option(selected=(limit==20)) 20
-  option(selected=(limit==30)) 30
-  option(selected=(limit==40)) 40
-  option(selected=(limit==50)) 50
++pagination-limit
 ```
 
 頁數顯示和上下頁按鈕範例（按鈕的重點是 id 必須是 pagination-prev 或 pagination-next）
 
 ```
-ul.list-inline.m-bottom-0.m-top-1
-  li.border-right-1.p-right-2
-    a(href='#' id='pagination-prev') 上一頁
-  li.border-right-1.p-right-2 #{page + 1} / #{totalPages}
-  li
-    a(href='#' id='pagination-next') 下一頁
++pagination-simple-pager(page, totalPages)
 ```
 
 最後記得引入 js

@@ -1,0 +1,22 @@
+mixin pagination-limit(limit)
+  select#pagination-limit.form-control
+    option(selected=(limit==10)) 10
+    option(selected=(limit==20)) 20
+    option(selected=(limit==30)) 30
+    option(selected=(limit==40)) 40
+    option(selected=(limit==50)) 50
+    option(selected=(limit==50)) 100
+
+
+mixin pagination-simple-pager(page, totalPages)
+  .text-center
+    ul.list-inline.m-bottom-0.m-top-1
+      li.border-right-1.p-right-2
+        a(href='#' id='pagination-prev') 上一頁
+      li.border-right-1.p-right-2 #{page + 1} / #{totalPages}
+      li
+        a(href='#' id='pagination-next') 下一頁
+
+mixin pagination-fields(page, limit)
+  input(type='hidden', name='page', value=page)
+  input(type='hidden', name='limit', value=limit)
