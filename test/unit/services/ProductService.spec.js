@@ -116,7 +116,7 @@ describe("about product service", () => {
 
       let createdQueryProducts = await db.Product.bulkCreate([{
         name: '',
-        stockQuantity: '100',
+        stockQuantity: 100,
         isPublish: 'true',
         price: 777,
         productNumber: 'QueryA',
@@ -124,7 +124,7 @@ describe("about product service", () => {
         ProductGmId: createdQueryProductGmA.id
       },{
         name: 'A1234',
-        stockQuantity: '100',
+        stockQuantity: 500,
         isPublish: 'true',
         price: 555,
         productNumber: 'QueryA',
@@ -132,7 +132,7 @@ describe("about product service", () => {
         ProductGmId: createdQueryProductGmA.id
       },{
         name: 'A1235',
-        stockQuantity: '100',
+        stockQuantity: 400,
         isPublish: 'true',
         price: 555,
         productNumber: 'QueryA',
@@ -140,7 +140,7 @@ describe("about product service", () => {
         ProductGmId: createdQueryProductGmA.id
       },{
         name: 'B1235',
-        stockQuantity: '100',
+        stockQuantity: 600,
         isPublish: 'true',
         price: 555,
         productNumber: 'QueryB',
@@ -148,7 +148,7 @@ describe("about product service", () => {
         ProductGmId: createdQueryProductGmB.id
       },{
         name: 'B1235',
-        stockQuantity: '100',
+        stockQuantity: 900,
         isPublish: 'true',
         price: 555,
         productNumber: 'QueryB',
@@ -426,4 +426,21 @@ describe("about product service", () => {
       done(e);
     }
   });
+
+  it('product query by stockQuantity', async (done) => {
+    try{
+      let queryObj = {}, queryResults;
+      queryObj.stockQuantityStart = 400;
+      queryObj.stockQuantityEnd = 800;
+      queryResults = await ProductService.productQuery(queryObj);
+      queryResults.should.have.length(3);
+      await queryResults.map( async (product) => {
+        product['stockQuantity'].should.be.within( queryObj.stockQuantityStart, queryObj.stockQuantityEnd);
+      });
+      done();
+    } catch (e) {
+      done(e);
+    }
+  });
+
 });
