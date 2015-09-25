@@ -496,7 +496,12 @@ module.exports = {
           }
         }
       }
-
+      let ttt = [];
+      for (let product of products) {
+        ttt.push(product.id);
+      }
+      console.log('product array');
+      console.log(ttt);
       console.log('++++++++++');
       console.log(gmResultId);
 
@@ -505,7 +510,7 @@ module.exports = {
       for (let product of products) {
         console.log('pppppppppppp');
         console.log(JSON.stringify(product,null,4));
-        if (gmResultId.indexOf(product.id) > 0) {
+        if (gmResultId.indexOf(product.id) != -1) {
           console.log('oooooooooooooooooooooooooo');
           mappingResult.push(product);
         }
@@ -513,7 +518,7 @@ module.exports = {
 
       products = mappingResult;
       console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxx');
-      console.log(products);
+      console.log(JSON.stringify(products,null,4));
 
       // name filter
       if(query.name) {

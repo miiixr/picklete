@@ -399,37 +399,19 @@ describe("about product service", () => {
       queryObj.dptSubId = dptSubC.id;
       queryResults = await ProductService.productQuery(queryObj);
       queryResults = queryResults.rows;
-      console.log('----------------------------------------------');
-      console.log(JSON.stringify(queryResults, null, 4));
       await* queryResults.map( async (product) => {
-        // let gmData = await db.ProductGm.findOne({where:{id: product.ProductGmId}, include: [db.Dpt, db.DptSub]});
-        // console.log('============');
-        // // console.log(product.ProductGmId);
-        // console.log(JSON.stringify(product, null, 4));
-        // console.log('------------');
-        // console.log(JSON.stringify(gmData, null, 4));
-        // gmData['Dpts'][0]['id'].should.be.equal(queryObj.dptId);
-        // // DptGm['id'].should.be.include(queryObj.dptId);
         let GmData = await db.ProductGm.findOne({where:{id: product.ProductGmId}, include: [db.DptSub] });
-        // console.log('--------');
-        // console.log(JSON.stringify(GmData, null, 4));
         let GmDptDatas = GmData.DptSubs;
-        // console.log('--------------------');
-        // console.log(JSON.stringify(GmDptDatas, null, 4));
         let dptIds = [],
             dptSubIds = [];
 
         for (let gmDptData of GmDptDatas) {
-          // console.log(JSON.stringify(gmDptData, null, 4));
           let dptId = gmDptData.DptId;
           let dptSubId = gmDptData.id;
           dptIds.push(dptId);
           dptSubIds.push(dptSubId);
         }
 
-        // console.log('================');
-        // console.log(dptIds);
-        // console.log(dptSubIds)
         dptIds.should.be.include(queryObj.dptId);
         dptSubIds.should.be.include(queryObj.dptSubId);
       });
@@ -445,7 +427,6 @@ describe("about product service", () => {
       queryObj.price = 555;
       queryResults = await ProductService.productQuery(queryObj);
       queryResults = queryResults.rows;
-      console.log(queryResults);
       queryResults.should.have.length(4);
       done();
     } catch (e) {
