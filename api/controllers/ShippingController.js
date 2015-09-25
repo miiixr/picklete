@@ -2,11 +2,12 @@ module.exports = {
 
   // get shipping fee and region
   type: async(req,res) => {
-    let type = req.body.type;
+    // let type = req.body.type;
+      let type = req.param("type");;
     console.log('=== ShopController : type ==>',type);
     try {
-      let shippings = await ShippingService.findOne(type);
-      return shippings;
+      let shippings = await ShippingService.findBy(type);
+      return res.ok({shippings});
     } catch (e) {
       console.error(e.stack);
       let {message} = e;
