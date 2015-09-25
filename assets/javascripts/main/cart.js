@@ -151,7 +151,7 @@
     buymore -= previous;
     buymore += price;
     buymoreDiv.text(buymore);
-    $(this).dropdown.blur();
+    $(this).blur();
     calcTatalPrice();
   });
 
