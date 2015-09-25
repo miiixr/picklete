@@ -137,57 +137,34 @@
   console.log('=== cartViewerInit ===');
 
 
+
+
   // shippings
   $("#shippingType").change(function(){
 
     $("#shippingFeeSelect").empty();
 
-    console.log('=== empty select ===');
+    var url, data, region, fee, shipping;
+    url = '/shipping/'+$("#shippingType").val();
+    data = $("#shippingType").val();
 
-    var url = '/shipping/type';
-    console.log('=== url ==>',url);
-
-    var data =  {
-      type: $("#shippingType").val()
-    };
-    console.log('=== data ==>',data);
-
-    $.ajax({
-        url : url ,
-        type: "post",
-        data : data ,
-        success:function(data, textStatus, jqXHR)
-        {
-          console.log('ok');
-          // console.log(data);
-          // $("#select").append($("<option></option>").attr("value", "值").text(data.region));
-
-        },
-        error: function (jqXHR, exception) {
-          console.log('err');
-          var msg = '';
-          if (jqXHR.status === 0) {
-              msg = 'Not connect.\n Verify Network.';
-          } else if (jqXHR.status == 404) {
-              msg = 'Requested page not found. [404]';
-          } else if (jqXHR.status == 500) {
-              msg = 'Internal Server Error [500].';
-          } else if (exception === 'parsererror') {
-              msg = 'Requested JSON parse failed.';
-          } else if (exception === 'timeout') {
-              msg = 'Time out error.';
-          } else if (exception === 'abort') {
-              msg = 'Ajax request aborted.';
-          } else {
-              msg = 'Uncaught Error.\n' + jqXHR.responseText;
+    // if( data == "0" ){
+      $("#shippingFeeSelect").append($("<option></option>").attr("value", "0").text("請選擇"));
+    // }else{
+      $.ajax({
+          url : url,
+          type: "get",
+          data : null,
+          success:function(data, textStatus, jqXHR)
+          {
+            console.log('=== data ==>',data.shippings);
+            for(i=0;i<data.shippings.length;i++){
+              shipping = data.shippings[i].region + ' ' + data.shippings[i].fee + ' 元';
+              $("#shippingFeeSelect").append($("<option></option>").attr("value", data.shippings[i].fee).text(shipping));
+            }
           }
-          console.log(msg);
-        }
-    });
-    console.log('=== end ===');
-
+      });
+    // } // end else
   });
   // end shippings
-
-
 }(jQuery));

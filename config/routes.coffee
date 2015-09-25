@@ -136,7 +136,7 @@ module.exports.routes = {
   # shipping
   'get /admin/shipping' : 'ShippingController.list'
   'post /admin/shipping' : 'ShippingController.save'
-  'post /shipping/type' : 'ShippingController.type'
+  'get /shipping/:type' : 'ShippingController.type'
   # end shipping
 
   # client side / Have to login
