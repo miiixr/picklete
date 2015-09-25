@@ -407,9 +407,9 @@ module.exports = {
           queryGmObj.brandId = query.brandId;
 
         // tag keyword search
-        if (query.keyword) {
+        if (query.tag) {
           queryGmObj.tag = {
-            $like: '%' + query.keyword + '%'
+            $like: '%' + query.tag + '%'
           };
         }
       }

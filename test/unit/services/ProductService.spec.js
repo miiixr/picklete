@@ -97,14 +97,16 @@ describe("about product service", () => {
         brandId: 2,
         name: "ProductGroupA",
         depId: dptC.id,
-        depSubId: dptSubC.id
+        depSubId: dptSubC.id,
+        tag: ['咖啡','手機','杯子']
       });
 
       let createdQueryProductGmB = await db.ProductGm.create({
         brandId: 3,
         name: "ProductGroupB",
         depId: dptC.id,
-        depSubId: dptSubC.id
+        depSubId: dptSubC.id,
+        tag: ['電腦','遊戲','手機']
       });
 
       await createdQueryProductGmA.setDpts([dptC]);
@@ -281,7 +283,6 @@ describe("about product service", () => {
 
   });
 
-
   it('product call gm', async (done) => {
     try {
       let productGm = await ProductService.findGmWithImages(createdProductGm.id);
@@ -389,15 +390,37 @@ describe("about product service", () => {
   });
 
   it('product query by price', async (done) => {
-  try{
-    let queryObj = {}, queryResults;
-    queryObj.price = 555;
-    queryResults = await ProductService.productQuery(queryObj);
-    queryResults.should.have.length(4);
-    done();
-  } catch (e) {
-    done(e);
-  }
-});
+    try{
+      let queryObj = {}, queryResults;
+      queryObj.price = 555;
+      queryResults = await ProductService.productQuery(queryObj);
+      queryResults.should.have.length(4);
+      done();
+    } catch (e) {
+      done(e);
+    }
+  });
 
+  it('product query by tags', async (done) => {
+    try{
+      let queryObj = {}, queryResults;
+      queryObj.tag = '手';
+      queryResults = await ProductService.productQuery(queryObj);
+      queryResults.should.have.length(5);
+      queryResults.map(async function (product) {
+        let result = await db.ProductGm.findOne({where:{id: product.productGmId}});
+        result.should.be.include(queryObj.tag);
+      });
+      queryObj.tag = '遊戲';
+      queryResults = await ProductService.productQuery(queryObj);
+      queryResults.should.have.length(2);
+      queryResults.map(async function (product) {
+        let result = await db.ProductGm.findOne({where:{id: product.productGmId}});
+        result.should.be.include(queryObj.tag);
+      });
+      done();
+    } catch (e) {
+      done(e);
+    }
+  });
 });
