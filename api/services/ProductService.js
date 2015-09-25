@@ -475,13 +475,14 @@ module.exports = {
           resultArray.push(product);
         }
       }
-      resultProducts = resultArray;
+      products = resultArray;
 
       // format datetime
       products = products.map(ProductService.withImage);
       for (let product of products) {
         product.createdAt = moment(product.createdAt).format("YYYY/MM/DD");
       }
+      resultProducts = products;
 
     } catch (error) {
       console.error(error.stack);
