@@ -66,7 +66,7 @@ describe("about Shop Service", function() {
     try {
 
 			let findProduct = await ShopService.findBrand();
-			product.should.be.an.Array;
+			findProduct.should.be.an.Array;
       done();
     
     } catch (e) {

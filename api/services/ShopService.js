@@ -10,7 +10,7 @@ module.exports = {
     
     let products;
 
-    let productGmId = await db.ProductGm.findAll({
+    let productGmIds = await db.ProductGm.findAll({
       where: {
         brandId : brandId
       }
@@ -26,11 +26,21 @@ module.exports = {
       model: db.DptSub,
       where: {}
     }
-    console.log(productGmId);
+    
+    var key;
+    let subQuery = { "$or": [] };
+    
+
+    for (key in productGmIds) {
+
+      subQuery["$or"].push({ProductGmId: productGmIds[key].id});
+    }
+    console.log(subQuery);
+    if (subQuery["$or"].length < 1)
+      return [];
+
     products = await db.Product.findAll({
-      where:{
-        ProductGmId :  //這裏不知道怎篩上一個找到得值 
-      },
+      where: subQuery,
       include: [{
         model: db.ProductGm,
         required:true,
