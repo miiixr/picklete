@@ -3,10 +3,12 @@
   var cartViewer = $('#cart-viewer');
   var subtotalDiv = $('#subtotal');
   var totalPriceDiv = $('#totalPrice');
+  var buymoreDiv = $("#buymore");
 
   var subtotal = 0;
   var totalPrice = 0;
   var shippingFee = 0;
+  var buymore = 0;
 
   var picklete_cart = Cookies.getJSON('picklete_cart');
   if(picklete_cart){
@@ -123,7 +125,7 @@
 
   var calcTatalPrice = function () {
 
-    totalPrice = subtotal + shippingFee;
+    totalPrice = subtotal + shippingFee + buymore;
     console.log('=== calcTatalPrice ===', totalPrice);
 
     totalPriceDiv.text(totalPrice);
@@ -139,6 +141,19 @@
   cartViewerInit();
 
   console.log('=== cartViewerInit ===');
+
+  var previous = 0;
+  $("select.form-control.m-bottom-2").on('focus', function(){
+    previous = parseInt($(this).find(":selected")[0].dataset.price);
+  }).change(function(){
+    var id = $(this).find(":selected")[0].value;
+    var price = parseInt($(this).find(":selected")[0].dataset.price);
+    buymore -= previous;
+    buymore += price;
+    buymoreDiv.text(buymore);
+    $(this).dropdown.blur();
+    calcTatalPrice();
+  });
 
 
 }(jQuery));

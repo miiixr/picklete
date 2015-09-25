@@ -123,9 +123,9 @@ block body
                   h5.h5-two-hide.m-bottom-2.text-roboto.letter-spacing-1
                     a(href='/shop/product') #{additionalPurchaseProductGm.name}
                   select.form-control.m-bottom-2
-                    option(value= 0) 選擇規格
+                    option(value= 0 ,data-price= 0) 選擇規格
                     each product in additionalPurchaseProductGm.Products
-                      option(value=product.id) #{product.name}
+                      option(value=product.id, data-price= product.price) #{product.name}
                   h4.text-green
                     | $ #{additionalPurchaseProductGm.price}
                     small.text-line-through.m-left-1 $ #{additionalPurchaseProductGm.originPrice}
