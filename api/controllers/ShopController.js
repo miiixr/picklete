@@ -4,6 +4,7 @@ let ShopController = {
   list: async(req,res) => {
     let dptSubId = req.query.dptSubId || 1;
     let dptId = req.query.dptId || 1;
+    let brandId = req.query.brand || 0;
 
     let products;
 
@@ -24,19 +25,25 @@ let ShopController = {
 
 
     try {
-      products = await db.Product.findAll({
+      if(brandId == 0){
+        products = await db.Product.findAll({
+          include: [{
+            model: db.ProductGm,
+            required:true,
+            include: [
+              includeDpt,
+              includeDptSub
+            ],
+          }],
+          order: [['id', 'ASC']]
+        });
+      }
+      else{
 
-        include: [{
-          model: db.ProductGm,
-          required:true,
-          include: [
-            includeDpt,
-            includeDptSub
-          ],
-        }],
-        order: [['id', 'ASC']]
-      });
-
+        products = await ShopService.findBrand(brandId);
+        
+      }
+      
       let brands = await db.Brand.findAll();
 
       console.log('products.length', products.length);
@@ -47,7 +54,6 @@ let ShopController = {
         }],
         order: ['Dpt.weight', 'DptSubs.weight']
       })
-
 
       res.view('main/shop', {
         dpts,

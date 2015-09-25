@@ -1,9 +1,13 @@
 extends ../_layout_auth
+include ../mixins/pagination
 
 block body
   h2.m-bottom-6 商品列表
   .well.control-well.p-30.m-bottom-8
-    form.form-horizontal(name="searchProducts", action="/admin/goods", method="get")
+    form.form-horizontal.with-pagination(name="searchProducts", action="/admin/goods", method="get")
+      
+      +pagination-fields(page, limit)
+    
       .row.row-m
         .col-md-4
           .form-group
@@ -109,18 +113,11 @@ block body
   // /well
   .row
     .col-md-6
-      //- form.form-inline
-      //-   .form-group
-      //-     label 顯示
-      //-     select.form-control
-      //-       option 10
-      //-       option 20
-      //-       option 30
-      //-       option 40
-      //-       option 50
-      //-     label 筆資料（共 90 筆）
-      //-   // /form-group
-    // /col-md-6
+      form.form-inline
+        .form-group
+          label 顯示
+          +pagination-limit
+          label 筆資料（共 #{totalRows} 筆）
     .col-md-6.desktop-text-right
       a.btn.btn-green(href='#', id='btnSave') 儲存變更
     // /col-md-6
@@ -189,6 +186,27 @@ block body
             a.btn.btn-link(href='/admin/goods/update?id=#{product.ProductGmId}')
               span.glyphicon.glyphicon-pencil2
   hr.dashed-line
+  +pagination-simple-pager(page, totalPages)
+        
+  //- nav.text-center
+  //-   ul.pagination
+  //-     li.disabled
+  //-       a(href='#', aria-label='Previous')
+  //-         span(aria-hidden='true') &laquo;
+  //-     li.active
+  //-       a(href='#')
+  //-         | 1
+  //-         span.sr-only (current)
+  //-     li
+  //-       a(href='#') 2
+  //-     li
+  //-       a(href='#') 3
+  //-     li
+  //-       a(href='#') 4
+  //-     li
+  //-       a(href='#', aria-label='Next')
+  //-         span(aria-hidden='true') &raquo;
+        
   //- .text-center
   //-   //
   //-     pagination-block
@@ -202,4 +220,5 @@ block body
   // /text-center
 
 block js
-  script(src="/javascripts/admin/goodList.js")
+  script(src='/javascripts/admin/goodList.js')
+  script(src='/javascripts/common/pagination.js')

@@ -428,7 +428,8 @@ module.exports = {
       offset: offset,
     };
 
-    let products = await db.Product.findAll(queryObj);
+    let productsWithCount = await db.Product.findAndCountAll(queryObj);
+    let products = productsWithCount.rows;
 
     queryGmObj = {
       where: queryGmObj,
@@ -478,6 +479,7 @@ module.exports = {
     for (let product of products) {
       product.createdAt = moment(product.createdAt).format("YYYY/MM/DD");
     }
-    return products;
+
+    return {rows: products, count: productsWithCount.count};
   }
 };

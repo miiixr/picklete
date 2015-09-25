@@ -1,6 +1,6 @@
 build:
   container_name: picklete_build
-  image: smlsunxie/picklete_env
+  image: miiixr/picklete_env
   extends:
     file: ./dockerConfig/development.yml
     service: build
@@ -11,7 +11,7 @@ build:
 
 test:
   container_name: picklete_test
-  image: smlsunxie/picklete_env
+  image: miiixr/picklete_env
   extends:
     file: ./dockerConfig/development.yml
     service: test
@@ -25,7 +25,7 @@ test:
 
 web:
   container_name: picklete
-  image: smlsunxie/picklete_env
+  image: miiixr/picklete_env
   extends:
     file: ./dockerConfig/development.yml
     service: web
