@@ -363,11 +363,7 @@ module.exports = {
         if (query.price) {
           queryObj.price = query.price;
         }
-        // if (query.name) {
-        //   queryObj.name = {
-        //     $like: `%${query.name}%`
-        //   };
-        // }
+
         if (query.productNumber) {
           queryObj.productNumber = query.productNumber;
         }
@@ -405,13 +401,6 @@ module.exports = {
         if (query.brandId > 0)
           queryGmObj.brandId = query.brandId;
 
-        // // productGm Name 搜尋
-        // if (query['name'].length > 0) {
-        //   queryGmObj.name = {
-        //     $like: `%${query.name}%`
-        //   };
-        // }
-
         // tag keyword search
         if (query.tag) {
           queryGmObj.tag = {
@@ -428,15 +417,7 @@ module.exports = {
         offset: offset,
       };
 
-// <<<<<<< HEAD
       let products = await db.Product.findAll(queryObj);
-      console.log('<<<<<<<');
-      // console.log(JSON.stringify(products,null,4));
-      console.log(products.length);
-// =======
-//     let productsWithCount = await db.Product.findAndCountAll(queryObj);
-//     let products = productsWithCount.rows;
-// >>>>>>> develop
 
       queryGmObj = {
         where: queryGmObj,
@@ -452,20 +433,13 @@ module.exports = {
         }
       }
       if (query.dptId > 0 || query.dptSubId > 0 ) {
-        // console.log('kkkkk');
         gmResultId = [];
         for (let productGm of productGms) {
           let dptPass = true, dptSubPass = true;
-          // console.log('==================================');
-          // console.log(JSON.stringify(productGm.DptSubs, null, 4));
           if( query.dptId > 0 ) {
-            // console.log('1');
             for (let dptSub of productGm.DptSubs) {
               let dptId = dptSub.DptId;
-              // console.log(dptId);
-              // console.log('2');
               if( typeof dptId !== 'undefined' ) {
-                // console.log('3');
                 if ( dptId != query.dptId ) {
                   dptPass = false;
                 }
@@ -489,8 +463,6 @@ module.exports = {
           }
           if(dptPass && dptSubPass) {
             for (let gmProduct of productGm.Products) {
-              // console.log('||||||||||||||||||');
-              // console.log(JSON.stringify(gmProduct,null,4));
               gmResultId.push(gmProduct.id);
             }
           }
@@ -500,25 +472,16 @@ module.exports = {
       for (let product of products) {
         ttt.push(product.id);
       }
-      console.log('product array');
-      console.log(ttt);
-      console.log('++++++++++');
-      console.log(gmResultId);
 
       // productGm 搜尋結果 與 product 搜尋結果 mapping
       let mappingResult = [];
       for (let product of products) {
-        console.log('pppppppppppp');
-        console.log(JSON.stringify(product,null,4));
         if (gmResultId.indexOf(product.id) != -1) {
-          console.log('oooooooooooooooooooooooooo');
           mappingResult.push(product);
         }
       }
 
       products = mappingResult;
-      console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxx');
-      console.log(JSON.stringify(products,null,4));
 
       // name filter
       if(query.name) {
@@ -541,11 +504,6 @@ module.exports = {
       // let msg = error.message;
       // return res.serverError({msg});
     }
-// <<<<<<< HEAD
-//     return resultProducts;
-// =======
-//     return {rows: products, count: productsWithCount.count};
-// >>>>>>> develop
     return {rows: resultProducts, count: resultProducts.length };
   }
 };

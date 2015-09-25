@@ -369,21 +369,15 @@ describe("about product service", () => {
       queryObj.dptId = dptC.id;
       queryResults = await ProductService.productQuery(queryObj);
       queryResults = queryResults.rows;
-      // console.log(JSON.stringify(queryResults, null, 4));
-      // console.log('--------------');
-      // console.log(queryResults.length);
       for (let product of queryResults) {
         let GmData = await db.ProductGm.findOne({where:{id: product.ProductGmId}, include: [db.DptSub] });
         let GmDptDatas = GmData.DptSubs;
         let dptIds = [];
 
         for (let gmDptData of GmDptDatas) {
-          // console.log(JSON.stringify(gmDptData, null, 4));
           let dptId = gmDptData.DptId;
           dptIds.push(dptId);
         }
-        // console.log('================');
-        // console.log(dptIds, queryObj.dptId);
         dptIds.should.be.include(queryObj.dptId);
       }
       done();
