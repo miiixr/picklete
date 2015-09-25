@@ -95,7 +95,7 @@ describe("about product service", () => {
 
       let createdQueryProductGmA = await db.ProductGm.create({
         brandId: 2,
-        name: "ProductGroupA",
+        name: "ProductGmNameGroupA",
         depId: dptC.id,
         depSubId: dptSubC.id,
         tag: ['咖啡','手機','杯子']
@@ -103,7 +103,7 @@ describe("about product service", () => {
 
       let createdQueryProductGmB = await db.ProductGm.create({
         brandId: 3,
-        name: "ProductGroupB",
+        name: "ProductGmNameGroupB",
         depId: dptC.id,
         depSubId: dptSubC.id,
         tag: ['電腦','遊戲','手機']
@@ -326,13 +326,16 @@ describe("about product service", () => {
       let queryObj = {}, queryResults;
       queryObj.name = 'A';
       queryResults = await ProductService.productQuery(queryObj);
-      queryResults.map((product) => {
-        product['name'].should.be.include(queryObj.name);
+      queryResults.should.have.length(3);
+      await* queryResults.map( async (product) => {
+        let gmResult = await db.ProductGm.findById(product.ProductGmId);
+        let name = product['name'] + gmResult.name;
+        name.should.be.include(queryObj.name);
       });
       queryObj.name = 'B123';
       queryResults = await ProductService.productQuery(queryObj);
       queryResults.map((product) => {
-        product['name'].should.be.include(queryObj.name);
+        // product['name'].should.be.include(queryObj.name);
       });
       done();
     } catch (e) {
@@ -408,14 +411,14 @@ describe("about product service", () => {
       queryResults = await ProductService.productQuery(queryObj);
       queryResults.should.have.length(5);
       queryResults.map(async function (product) {
-        let result = await db.ProductGm.findOne({where:{id: product.productGmId}});
+        let result = await db.ProductGm.findById(product.productGmId);
         result.should.be.include(queryObj.tag);
       });
       queryObj.tag = '遊戲';
       queryResults = await ProductService.productQuery(queryObj);
       queryResults.should.have.length(2);
       queryResults.map(async function (product) {
-        let result = await db.ProductGm.findOne({where:{id: product.productGmId}});
+        let result = await db.ProductGm.findById(product.productGmId);
         result.should.be.include(queryObj.tag);
       });
       done();
