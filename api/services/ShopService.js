@@ -10,21 +10,37 @@ module.exports = {
     
     let products;
 
-    let productGmId = await db.ProductGm.findOne({
+    let productGmId = await db.ProductGm.findAll({
       where: {
         brandId : brandId
       }
     });
 
 
-    if(productGmId != null){
-
-      products = await db.Product.findAll({
-        where:{
-          ProductGmId : productGmId.id
-        }
-      });
+    let includeDpt = {
+      model: db.Dpt,
+      where: {}
     }
+
+    let includeDptSub = {
+      model: db.DptSub,
+      where: {}
+    }
+    console.log(productGmId);
+    products = await db.Product.findAll({
+      where:{
+        ProductGmId :  //這裏不知道怎篩上一個找到得值 
+      },
+      include: [{
+        model: db.ProductGm,
+        required:true,
+        include: [
+          includeDpt,
+          includeDptSub
+        ],
+      }],
+      order: [['id', 'ASC']]
+    });
 
     return products;
   }

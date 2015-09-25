@@ -8,7 +8,6 @@ let ShopController = {
 
     let products;
 
-    console.log(brandId);
 
     let includeDpt = {
       model: db.Dpt,
@@ -40,7 +39,7 @@ let ShopController = {
         });
       }
       else{
-        console.log("bug",brandId);
+
         products = await ShopService.findBrand(brandId);
         
       }
