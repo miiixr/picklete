@@ -2,10 +2,10 @@
 module.exports = {
 
   // find one by giving type
-  findOne: async (type) => {
+  findBy: async (type) => {
     console.log('=== ShippingService : type ==>',type);
     try {
-        let shippings = await db.Shipping.findOne({
+        let shippings = await db.Shipping.findAll({
           where:{
             type: type
           }
