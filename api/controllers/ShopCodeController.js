@@ -8,7 +8,7 @@ let ShopCodeController = {
 
     res.view('promotion/controlShopCode',{
       pageName: "shop-code",
-      ShopCodes: ShopCodes
+      shopCodes: ShopCodes
     });
   },
 
@@ -20,18 +20,27 @@ let ShopCodeController = {
 
   // CreateAction 'post /admin/shop-code/create' 
   create: async (req, res) => {
-    
+
     var params = req.body;
 
     params['sentTarget'] = [].concat( params['sentTarget'] )
 
-    if(params['autoRandomCode'] == 'true'){
+    if(params['autoRandomCode'] == 'on'){
       params['code'] = Math.floor(Math.random()*10000000%10000000).toString();
     }
 
-    if(params['restrictionDate'] == 'true'){
+    if(params['restrictionDate'] == 'on'){
       params['startDate'] = Date.parse(1);
       params['endDate'] = Date.parse(1);
+    }
+
+    if(params['type']=='price'){
+      params['description'] = params['description'][0];
+      params['restriction'] = params['restriction'][0];
+    }
+    if(params['type']=='discount'){
+      params['description'] = params['description'];
+      params['restriction'] = params['restriction'];
     }
 
     let shopCode = {
@@ -42,7 +51,8 @@ let ShopCodeController = {
       restriction: params['restriction'] || '',
       startDate: Date.parse(params['startDate']) || 1,
       endDate: Date.parse(params['endDate']) || 1,
-      sentTypte: params['sentTypte'],
+      restrictionDate: params['restrictionDate'],
+      sentType: params['sentType'],
       sentTarget: params['sentTarget'] || [],
       sentContent: params['sentContent'] || '',
     };
@@ -62,7 +72,7 @@ let ShopCodeController = {
     let shopCode = await db.ShopCode.findOne({ where: {id: id} });
     
     try {
-       return res.view("admin/promotion/controlShopCodeUpdate",{ shopCode: shopCode });
+       return res.view("promotion/controlShopCodeUpdate",{ shopCode: shopCode });
     } catch (e) {
        return res.serverError(e);
     }
@@ -86,6 +96,15 @@ let ShopCodeController = {
         params['startDate'] = Date.parse(1);
         params['endDate'] = Date.parse(1);
       }
+
+      if(params['type']=='price'){
+        params['description'] = params['description'][0];
+        params['restriction'] = params['restriction'][0];
+      }
+      if(params['type']=='discount'){
+        params['description'] = params['description'];
+        params['restriction'] = params['restriction'];
+      }
       
       shopCode.code = params['code'];
       shopCode.title = params['title'];
@@ -94,6 +113,7 @@ let ShopCodeController = {
       shopCode.restriction = params['restriction'] || '';
       shopCode.startDate = Date.parse(params['startDate']) || 1;
       shopCode.endDate = Date.parse(params['endDate']) || 1,
+      shopCode.restrictionDate = params['restrictionDate'],
       shopCode.sentType = params['sentType'];
       shopCode.sentTarget = params['sentTarget'] || [];
       shopCode.sentContent = params['sentContent'] || '';

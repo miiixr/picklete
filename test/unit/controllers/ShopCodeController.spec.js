@@ -24,14 +24,14 @@ describe('ShopCode Spec', function() {
 
     request(sails.hooks.http.app)
     .post('/admin/shop-code/create')
-    .field('autoRandomCode', 'true') // 優惠代碼
+    .field('autoRandomCode', 'on') // 優惠代碼
     .field('title', '優惠名稱') // 優惠名稱
     .field('type', 'price') // 優惠類型 price, discount
     .field('description', '200') // 優惠內容
     .field('restriction', '300') // 限滿額
     .field('startDate', 'null') // 開始時間
     .field('endDate', '2012/03/16 12:03:12') // 結束時間
-    .field('restrictionDate', 'true') // 時間限制
+    .field('restrictionDate', 'on') // 時間限制
     .field('sentType', 'specific') // 自動發送
     .field('sentContent', '發送內容') // 發送內容
     .end(function(err, res) {

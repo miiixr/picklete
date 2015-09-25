@@ -20,6 +20,7 @@ module.exports = function(sequelize, DataTypes) {
     // 優惠起始/結束時間
     startDate: DataTypes.DATE,
     endDate: DataTypes.DATE,
+    restrictionDate: DataTypes.STRING,
 
     // 自動發送: 0: all, 1: specific, 2: beginner
     sentType: DataTypes.ENUM(
