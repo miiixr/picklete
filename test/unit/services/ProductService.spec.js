@@ -111,8 +111,8 @@ describe("about product service", () => {
 
       await createdQueryProductGmA.setDpts([dptC]);
       await createdQueryProductGmA.setDptSubs([dptSubC]);
-      await createdQueryProductGmB.setDpts([dptC]);
-      await createdQueryProductGmB.setDptSubs([dptSubC]);
+      await createdQueryProductGmB.setDpts([dptD]);
+      await createdQueryProductGmB.setDptSubs([dptSubD]);
 
       let createdQueryProducts = await db.Product.bulkCreate([{
         name: '',
@@ -369,10 +369,23 @@ describe("about product service", () => {
       queryObj.dptId = dptC.id;
       queryResults = await ProductService.productQuery(queryObj);
       queryResults = queryResults.rows;
-      queryResults.map( async (product) => {
-        let DptGm = await db.DptProductGm.findOne({where:{ProductGmId: product.productGmId}});
-        DptGm['id'].should.be.equal(queryObj.dptId);
-      });
+      // console.log(JSON.stringify(queryResults, null, 4));
+      // console.log('--------------');
+      // console.log(queryResults.length);
+      for (let product of queryResults) {
+        let GmData = await db.ProductGm.findOne({where:{id: product.ProductGmId}, include: [db.DptSub] });
+        let GmDptDatas = GmData.DptSubs;
+        let dptIds = [];
+
+        for (let gmDptData of GmDptDatas) {
+          // console.log(JSON.stringify(gmDptData, null, 4));
+          let dptId = gmDptData.DptId;
+          dptIds.push(dptId);
+        }
+        // console.log('================');
+        // console.log(dptIds, queryObj.dptId);
+        dptIds.should.be.include(queryObj.dptId);
+      }
       done();
     } catch (e) {
       done(e);
@@ -386,13 +399,39 @@ describe("about product service", () => {
       queryObj.dptSubId = dptSubC.id;
       queryResults = await ProductService.productQuery(queryObj);
       queryResults = queryResults.rows;
+      console.log('----------------------------------------------');
+      console.log(JSON.stringify(queryResults, null, 4));
       await* queryResults.map( async (product) => {
-        console.log('--------');
-        console.log(product);
-        let DptGm = await db.DptProductGm.findAll({where:{ProductGmId: product.productGmId}});
-        DptGm['id'].should.be.include(queryObj.dptId);
-        let DptSubGm = await db.DptSubProductGm.findOne({where:{ProductGmId: product.productGmId}});
-        DptSubGm['id'].should.be.include(queryObj.dptSubId);
+        // let gmData = await db.ProductGm.findOne({where:{id: product.ProductGmId}, include: [db.Dpt, db.DptSub]});
+        // console.log('============');
+        // // console.log(product.ProductGmId);
+        // console.log(JSON.stringify(product, null, 4));
+        // console.log('------------');
+        // console.log(JSON.stringify(gmData, null, 4));
+        // gmData['Dpts'][0]['id'].should.be.equal(queryObj.dptId);
+        // // DptGm['id'].should.be.include(queryObj.dptId);
+        let GmData = await db.ProductGm.findOne({where:{id: product.ProductGmId}, include: [db.DptSub] });
+        // console.log('--------');
+        // console.log(JSON.stringify(GmData, null, 4));
+        let GmDptDatas = GmData.DptSubs;
+        // console.log('--------------------');
+        // console.log(JSON.stringify(GmDptDatas, null, 4));
+        let dptIds = [],
+            dptSubIds = [];
+
+        for (let gmDptData of GmDptDatas) {
+          // console.log(JSON.stringify(gmDptData, null, 4));
+          let dptId = gmDptData.DptId;
+          let dptSubId = gmDptData.id;
+          dptIds.push(dptId);
+          dptSubIds.push(dptSubId);
+        }
+
+        // console.log('================');
+        // console.log(dptIds);
+        // console.log(dptSubIds)
+        dptIds.should.be.include(queryObj.dptId);
+        dptSubIds.should.be.include(queryObj.dptSubId);
       });
       done();
     } catch (e) {
@@ -406,6 +445,7 @@ describe("about product service", () => {
       queryObj.price = 555;
       queryResults = await ProductService.productQuery(queryObj);
       queryResults = queryResults.rows;
+      console.log(queryResults);
       queryResults.should.have.length(4);
       done();
     } catch (e) {
@@ -420,18 +460,28 @@ describe("about product service", () => {
       queryResults = await ProductService.productQuery(queryObj);
       queryResults = queryResults.rows;
       queryResults.should.have.length(5);
-      await* queryResults.map( async (product) => {
-        let result = await db.ProductGm.findById(product.productGmId);
-        result.should.be.include(queryObj.tag);
-      });
+
+      for (let product of queryResults) {
+        let result = await db.ProductGm.findById(product.ProductGmId);
+        let tagStr = '';
+        for (let str of result.tag) {
+          tagStr += str;
+        }
+        tagStr.should.be.include(queryObj.tag);
+      }
+
       queryObj.tag = '遊戲';
       queryResults = await ProductService.productQuery(queryObj);
       queryResults = queryResults.rows;
-      queryResults.should.have.length(2);
-      await* queryResults.map(async (product) => {
-        let result = await db.ProductGm.findById(product.productGmId);
-        result.should.be.include(queryObj.tag);
-      });
+
+      for (let product of queryResults) {
+        let result = await db.ProductGm.findById(product.ProductGmId);
+        let tagStr = '';
+        for (let str of result.tag) {
+          tagStr += str;
+        }
+        tagStr.should.be.include(queryObj.tag);
+      }
       done();
     } catch (e) {
       done(e);

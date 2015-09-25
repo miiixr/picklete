@@ -430,6 +430,9 @@ module.exports = {
 
 // <<<<<<< HEAD
       let products = await db.Product.findAll(queryObj);
+      console.log('<<<<<<<');
+      // console.log(JSON.stringify(products,null,4));
+      console.log(products.length);
 // =======
 //     let productsWithCount = await db.Product.findAndCountAll(queryObj);
 //     let products = productsWithCount.rows;
@@ -444,50 +447,73 @@ module.exports = {
       // 過濾館別，將productGm 搜尋結果的id取出
       let gmResultId = [];
       for (let productGm of productGms) {
-        let dptPass = true, dptSubPass = true;
-        if( query.dptId > 0 || query.dptSubId > 0) {
+        for (let product of productGm.Products) {
+          gmResultId.push(product.id);
+        }
+      }
+      if (query.dptId > 0 || query.dptSubId > 0 ) {
+        // console.log('kkkkk');
+        gmResultId = [];
+        for (let productGm of productGms) {
+          let dptPass = true, dptSubPass = true;
+          // console.log('==================================');
+          // console.log(JSON.stringify(productGm.DptSubs, null, 4));
           if( query.dptId > 0 ) {
-            if( typeof productGm.Dpts.id !== 'undefined' ) {
-              if( productGm.Dpts[0].id != query.dptId )
-                dptPass = false;
-            }
-            else {
-              console.log('ProductGmId: ' + productGm.id + ' has not set dpt yet ');
+            // console.log('1');
+            for (let dptSub of productGm.DptSubs) {
+              let dptId = dptSub.DptId;
+              // console.log(dptId);
+              // console.log('2');
+              if( typeof dptId !== 'undefined' ) {
+                // console.log('3');
+                if ( dptId != query.dptId ) {
+                  dptPass = false;
+                }
+              }
+              else {
+                console.log('ProductGmId: ' + productGm.id + ' has not set dpt yet ');
+              }
             }
           }
-          if(query.dptSubId > 0) {
-            if( typeof productGm.Dpts.id !== 'undefined' ) {
-              if(productGm.DptSubs[0].id != query.dptSubId)
-                dptSubPass = false;
-            }
-            else{
-              console.log('ProductGmId: ' + productGm.id + ' has not set dpt yet ');
+          if (query.dptSubId > 0) {
+            for (let dptSub of productGm.DptSubs) {
+              let dptSubId = dptSub.id;
+              if( typeof dptSubId !== 'undefined' ) {
+                if( dptSubId != query.dptSubId )
+                  dptSubPass = false;
+              }
+              else{
+                console.log('ProductGmId: ' + productGm.id + ' has not set dptSub yet ');
+              }
             }
           }
           if(dptPass && dptSubPass) {
             for (let gmProduct of productGm.Products) {
-              gmResultId.push(gmProduct.id);
-            }
-          }
-        }
-        else {
-          for (let productGm of productGms) {
-            for (let gmProduct of productGm.Products) {
+              // console.log('||||||||||||||||||');
+              // console.log(JSON.stringify(gmProduct,null,4));
               gmResultId.push(gmProduct.id);
             }
           }
         }
       }
 
+      console.log('++++++++++');
+      console.log(gmResultId);
+
       // productGm 搜尋結果 與 product 搜尋結果 mapping
       let mappingResult = [];
       for (let product of products) {
-        if (gmResultId.indexOf(product.id) != -1) {
+        console.log('pppppppppppp');
+        console.log(JSON.stringify(product,null,4));
+        if (gmResultId.indexOf(product.id) > 0) {
+          console.log('oooooooooooooooooooooooooo');
           mappingResult.push(product);
         }
       }
 
       products = mappingResult;
+      console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxx');
+      console.log(products);
 
       // name filter
       if(query.name) {
