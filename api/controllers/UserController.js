@@ -50,13 +50,17 @@ let UserController = {
     let date = new Date();
     let query = {date, paymentTotalAmount};
     let additionalPurchaseProductGms = await AdditionalPurchaseService.getProductGms(query);
-
     console.log('=== additionalPurchaseProducts ===', additionalPurchaseProductGms);
+
+    // add an item for Shippings(運費) by kuyen
+    let shippings = await ShippingService.findAll();
+    // console.log('=== shippings ==>',shippings);
 
     return res.view('main/cart', {
       company,
       brands,
-      additionalPurchaseProductGms
+      additionalPurchaseProductGms,
+      shippings
     });
   },
 

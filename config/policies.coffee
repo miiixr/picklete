@@ -63,6 +63,9 @@ module.exports.policies = {
     paid: []
     paymentinfo:[]
 
+  'ShippingController':
+    type: []
+
   # #'/api/search/*': []
   # SearchController:
   #   products: []

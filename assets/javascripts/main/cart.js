@@ -137,4 +137,57 @@
   console.log('=== cartViewerInit ===');
 
 
+  // shippings
+  $("#shippingType").change(function(){
+
+    $("#shippingFeeSelect").empty();
+
+    console.log('=== empty select ===');
+
+    var url = '/shipping/type';
+    console.log('=== url ==>',url);
+
+    var data =  {
+      type: $("#shippingType").val()
+    };
+    console.log('=== data ==>',data);
+
+    $.ajax({
+        url : url ,
+        type: "post",
+        data : data ,
+        success:function(data, textStatus, jqXHR)
+        {
+          console.log('ok');
+          // console.log(data);
+          // $("#select").append($("<option></option>").attr("value", "值").text(data.region));
+
+        },
+        error: function (jqXHR, exception) {
+          console.log('err');
+          var msg = '';
+          if (jqXHR.status === 0) {
+              msg = 'Not connect.\n Verify Network.';
+          } else if (jqXHR.status == 404) {
+              msg = 'Requested page not found. [404]';
+          } else if (jqXHR.status == 500) {
+              msg = 'Internal Server Error [500].';
+          } else if (exception === 'parsererror') {
+              msg = 'Requested JSON parse failed.';
+          } else if (exception === 'timeout') {
+              msg = 'Time out error.';
+          } else if (exception === 'abort') {
+              msg = 'Ajax request aborted.';
+          } else {
+              msg = 'Uncaught Error.\n' + jqXHR.responseText;
+          }
+          console.log(msg);
+        }
+    });
+    console.log('=== end ===');
+
+  });
+  // end shippings
+
+
 }(jQuery));
