@@ -10,6 +10,7 @@
   var shippingFee = 0;
   var buymore = 0;
 
+  Cookies.remove('buyMoreIds');
   var picklete_cart = Cookies.getJSON('picklete_cart');
   if(picklete_cart){
     $("#nothing").remove();
@@ -132,6 +133,16 @@
   }
 
   $("#nextSetp").click(function () {
+    var buymoreIds = [];
+    $("select.form-control.m-bottom-2").each(function(index,dom){
+      var id = parseInt($(this).find(":selected")[0].value);
+      var price = parseInt($(this).find(":selected")[0].dataset.price);
+      var object = { ProductId : id ,quantity: 1, price:price};
+      if(id != 0){
+        buymoreIds.push(object);
+      }
+    });
+    Cookies.set('buyMoreIds', buymoreIds);
     if($('#shippingFeeSelect').val() == 0 || $('#paymentMethod').val()==0)
       alert("請確認運送、付款方式");
     else

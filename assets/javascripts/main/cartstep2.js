@@ -2,16 +2,27 @@
   var picklete_cart = Cookies.getJSON('picklete_cart');
   picklete_cart = picklete_cart ? picklete_cart : window.location.replace("/shop/products");
 
+  var buyMoreObject = Cookies.getJSON('buyMoreIds');
+
   var subtotalDiv = $('#subtotal');
   var totalPriceDiv = $('#totalPrice');
+  var buymoreDiv = $('#buymore');
 
   var subtotal = 0;
   var totalPrice = 0;
+  var buymore = 0;
+  if(buyMoreObject){
+    buyMoreObject.forEach(function(item,index){
+      buymore += item.price;
+    });
+  }
+  buymoreDiv.text(buymore);
 
   picklete_cart.orderItems.forEach(function(orderItem, index){
     subtotal += parseInt(orderItem.price, 10);
     subtotalDiv.text(subtotal);
     totalPrice = subtotal;
+    totalPrice += buymore;
     totalPriceDiv.text(totalPrice);
   });
 
@@ -37,6 +48,7 @@
     }
 
     var postData = $("form[name='orderCreate']").serializeJSON();
+    picklete_cart.orderItems = buyMoreObject?picklete_cart.orderItems.concat(buyMoreObject):picklete_cart.orderItems;
     postData.order.orderItems = picklete_cart.orderItems;
     postData.order.shippingFee = Cookies.getJSON('shippingFee');
     postData.order.paymentMethod = Cookies.getJSON('paymentMethod');

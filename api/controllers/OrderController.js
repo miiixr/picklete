@@ -152,6 +152,7 @@ OrderController = {
   create: async (req, res) => {
     var newOrder = req.body.order;
     try {
+      console.log("!!!",newOrder);
       let useAllPay = false;
       if(sails.config.useAllPay !== undefined)
         useAllPay = sails.config.useAllPay;
