@@ -54,6 +54,8 @@ $(function  () {
 
   /* image container + icon click event */
   $(document).on("click", ".fileinput-square a", function (e) {
+    //e.preventDefault();
+    //$(this).blur();
 
     $imageContainer = $(this);
     imageContainerId = $imageContainer.data('id');
@@ -94,6 +96,7 @@ $(function  () {
     // $productUrl1.val('');
     $productUrl2.val($imageContainer.find('input[data-content="url"]').val());
 
+    //return false;
   });
 
   /* modal confirm button - click event */
@@ -109,41 +112,82 @@ $(function  () {
         productUrl2Value = $productUrl2.val(),
         fileInputPath = $fileInputPath.val();
 
-    if(modalRatioValue == 'option1'){
+    if (modalRatioValue == 'option1') {
       // 目前Task先不管選項一 這邊預設空值無法完成
       // to do
       path = '';
       url = '';
       // path = productUrl1Value;
       // url = productUrl1Value;
-    }
-    else{
-      path = fileInputPath;
-      url = productUrl2Value;
-    }
-    // check inputs isfilled
-    if( !url.length || !path.length ) {
-      alert('請上傳圖片，並填寫圖片連結');
-      // keep modal exist
-      $modalConfirmButton.attr('data-dismiss','');
-    }
-    else {
-      /* add image openWindow, path & url back to form hidden input */
-      $imageContainer.find('input[data-content="path"]').val(path);
-      $imageContainer.find('input[data-content="url"]').val(url);
-      if($openWindow.is(':checked')) {
-        $imageContainer.find('input[data-content="openWindow"]').val('true');
+
+      if (productUrl1Value.indexOf('/shop/products/') >= 0) {
+        $.ajax({
+          dataType: 'json',
+          url: '/admin/topicActivities/ajax',
+          data: {
+            action: 'getProductPhotoImageUrl',
+            productUrl: productUrl1Value
+          },
+          success: function(data) {
+            console.log(data);
+
+            /* add image openWindow, path & url back to form hidden input */
+            $imageContainer.find('input[data-content="path"]').val(data.imagePath);
+            $imageContainer.find('input[data-content="url"]').val(productUrl1Value);
+
+            if($openWindow.is(':checked')) {
+              $imageContainer.find('input[data-content="openWindow"]').val('true');
+            }
+            else {
+              $imageContainer.find('input[data-content="openWindow"]').val('false');
+            }
+
+            /* add image url to ime tag */
+            $imageContainer.find('img').attr('src', data.imagePath);
+            $imageContainer.parent().removeClass('dashed-block-2').addClass('image-exist');
+
+            // close modal
+            $modalConfirmButton.attr('data-dismiss', 'modal');
+          }
+        });
       }
       else {
-        $imageContainer.find('input[data-content="openWindow"]').val('false');
+        alert('網址格式不正確！（請使用商品頁面網址）');
+
+        // this will keep modal exist
+        $modalConfirmButton.attr('data-dismiss', '');
       }
 
-      /* add image url to ime tag */
-      $imageContainer.find('img').attr('src',path);
-      $imageContainer.parent().removeClass('dashed-block-2').addClass('image-exist');
 
-      // close modal
-      $modalConfirmButton.attr('data-dismiss','modal');
+    }
+    else if (modalRatioValue == 'option2') {
+      path = fileInputPath;
+      url = productUrl2Value;
+
+      // check inputs isfilled
+      if ( !url.length || !path.length ) {
+        alert('請上傳圖片，並填寫圖片連結');
+        // keep modal exist
+        $modalConfirmButton.attr('data-dismiss','');
+      }
+      else {
+        /* add image openWindow, path & url back to form hidden input */
+        $imageContainer.find('input[data-content="path"]').val(path);
+        $imageContainer.find('input[data-content="url"]').val(url);
+        if($openWindow.is(':checked')) {
+          $imageContainer.find('input[data-content="openWindow"]').val('true');
+        }
+        else {
+          $imageContainer.find('input[data-content="openWindow"]').val('false');
+        }
+
+        /* add image url to ime tag */
+        $imageContainer.find('img').attr('src', path);
+        $imageContainer.parent().removeClass('dashed-block-2').addClass('image-exist');
+
+        // close modal
+        $modalConfirmButton.attr('data-dismiss','modal');
+      }
     }
 
   });

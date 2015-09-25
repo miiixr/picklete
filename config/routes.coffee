@@ -51,6 +51,7 @@ module.exports.routes = {
 
   'get /admin/topicActivities' : 'TopicActiveController.list'
   'post /admin/topicActivities' : 'TopicActiveController.save'
+  'get /admin/topicActivities/ajax' : 'TopicActiveController.ajax'
 
   'get /admin/index-slider' : 'SliderActivitiesController.list'
 
