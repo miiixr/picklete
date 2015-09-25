@@ -61,6 +61,7 @@ module.exports = {
   },
 
   calcTotalBonusRemain: async (user) => {
+    /*
     let result = 0;
 
     let bonus = await db.BonusPoint.findAll({
@@ -74,8 +75,13 @@ module.exports = {
         result += bonus[i].remain;
       }
     }
+    */
 
-    return result;
+    return await db.BonusPoint.sum('remain', {
+      where: {
+        email: user.email
+      }
+    });
   }
 
   /*
