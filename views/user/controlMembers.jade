@@ -12,7 +12,7 @@ block body
   // /row
   #collapse-member.collapse.in
     .well.control-well.p-30.m-bottom-8
-      form.form-horizontal(name="searchUsers", action="members", method="get")
+      form.form-horizontal.with-pagination(name="searchUsers", action="members", method="get")
         input(type='hidden', name='page', value=query.page?query.page:0)
         input(type='hidden', name='limit', value=limit)
         .row.row-m
@@ -62,13 +62,13 @@ block body
       form.form-inline
         .form-group
           label 顯示
-          select#query-limit.form-control
+          select#pagination-limit.form-control
             option(selected=(limit==10)) 10
             option(selected=(limit==20)) 20
             option(selected=(limit==30)) 30
             option(selected=(limit==40)) 40
             option(selected=(limit==50)) 50
-          label 筆資料（共 #{members.count} 筆）
+          label 筆資料（共 #{totalRows} 筆）
         // /form-group
     // /col-md-6
     .col-md-6.desktop-text-right
@@ -117,33 +117,11 @@ block body
       ==================================================
     ul.list-inline.m-bottom-0.m-top-1
       li.border-right-1.p-right-2
-        a(href='#' id='previous') 上一頁
-      li.border-right-1.p-right-2 #{page + 1} / #{Math.ceil(members.count / limit)}
+        a(href='#' id='pagination-prev') 上一頁
+      li.border-right-1.p-right-2 #{page + 1} / #{totalPages}
       li
-        a(href='#' id='next') 下一頁
+        a(href='#' id='pagination-next') 下一頁
   // /text-center
   
   block js
-    script.
-      $(function() {
-        $('#query-limit').change(function() {
-          //location.href='/admin/members?limit='+$(this).val();
-          $('input[name=page]').val(0);
-          $('input[name=limit]').val($(this).val());
-          $('form[name=searchUsers]').submit();
-        });
-
-        $('.form-control').change(function() {
-          $("input[name='page']").val(0);
-        });
-
-        $('#next').click(function() {
-          $("input[name='page']").val(parseInt($("input[name='page']").val())+1);
-          $("form[name='searchUsers']").submit();
-        });
-
-        $('#previous').click(function() {
-          $("input[name='page']").val($(parseInt("input[name='page']").val())-1);
-          $("form[name='searchUsers']").submit();
-        });
-      });
+    script(src='/javascripts/common/pagination.js')

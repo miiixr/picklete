@@ -80,7 +80,7 @@ let ProductController = {
         pageName: "/admin/goods",
         limit: limit,
         page: page,
-        totalPage: Math.ceil(productsWithCount.count / limit),
+        totalPages: Math.ceil(productsWithCount.count / limit),
         totalRows: productsWithCount.count
       };
 

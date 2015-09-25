@@ -260,19 +260,13 @@ let UserController = {
           lte : new Date(query.createdEnd)};
       }
 
-      let page = req.session.UserController_controlMembers_page =
-      parseInt(req.param('page',
-        req.session.UserController_controlMembers_page || 0
-      ));
-
-      let limit = req.session.UserController_controlMembers_limit =
-      parseInt(req.param('limit',
-        req.session.UserController_controlMembers_limit || 10
-      ));
+      let page = await pagination.page(req);
+      let offset = await pagination.offset(req);
+      let limit = await pagination.limit(req);
 
       let members = await db.User.findAndCountAll({
         where: queryObj,
-        offset: page * limit,
+        offset: offset,
         limit: limit
       });
 
@@ -288,6 +282,8 @@ let UserController = {
         members: members,
         page: page,
         limit: limit,
+        totalPages: Math.ceil(members.count / limit),
+        totalRows: members.count,
         query
       });
     }
