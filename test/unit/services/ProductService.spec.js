@@ -357,7 +357,6 @@ describe("about product service", () => {
 
   it('product query by dptId', async (done) => {
     try{
-      // query by dptId
       let queryObj = {}, queryResults;
       queryObj.dptId = dptC.id;
       queryResults = await ProductService.productQuery(queryObj);
@@ -388,5 +387,17 @@ describe("about product service", () => {
       done(e);
     }
   });
+
+  it('product query by price', async (done) => {
+  try{
+    let queryObj = {}, queryResults;
+    queryObj.price = 555;
+    queryResults = await ProductService.productQuery(queryObj);
+    queryResults.should.have.length(4);
+    done();
+  } catch (e) {
+    done(e);
+  }
+});
 
 });
