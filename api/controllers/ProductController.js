@@ -63,14 +63,14 @@ let ProductController = {
         order: ['Dpt.weight', 'DptSubs.weight']
       });
 
+      let query = req.query;
+
       let limit = await pagination.limit(req);
       let page = await pagination.page(req);
       let offset = await pagination.offset(req);
 
-      let productsWithCount = await ProductService.productQuery(req, offset, limit);
+      let productsWithCount = await ProductService.productQuery(query, offset, limit);
       let products = productsWithCount.rows;
-
-      let query = req.query;
 
       let result = {
         brands,

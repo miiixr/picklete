@@ -1,7 +1,8 @@
 import moment from 'moment';
+
 describe("about product service", () => {
   let createdProduct, createdProduct2, createdProductGm;
-  let productGmA, productGmB, dptA, dptB, dptSubA, dptSubB;
+  let productGmA, productGmB, dptA, dptB, dptSubA, dptSubB ,dptC, dptSubC, dptD, dptSubD;
   before(async (done) => {
 
     try {
@@ -18,6 +19,18 @@ describe("about product service", () => {
         official: true,
       });
 
+      dptC = await db.Dpt.create({
+        name: 'test 大館 C',
+        weight: 999,
+        official: true,
+      });
+
+      dptD = await db.Dpt.create({
+        name: 'test 大館 D',
+        weight: 999,
+        official: true,
+      });
+
       dptSubA = await db.DptSub.create({
         name: 'test 小館 A',
         weight: 100,
@@ -30,8 +43,22 @@ describe("about product service", () => {
         official: false
       })
 
+      dptSubC = await db.DptSub.create({
+        name: 'test 小館 C',
+        weight: 100,
+        official: false
+      })
+
+      dptSubD = await db.DptSub.create({
+        name: 'test 小館 D',
+        weight: 100,
+        official: false
+      })
+
       await dptA.setDptSubs(dptSubA);
       await dptB.setDptSubs(dptSubB);
+      await dptC.setDptSubs(dptSubC);
+      await dptD.setDptSubs(dptSubD);
 
       createdProductGm = await db.ProductGm.create({
         brandId: 1,
@@ -64,16 +91,78 @@ describe("about product service", () => {
         ProductGmId: createdProductGm.id
       });
 
+      // build test data for productQuery spec
+
+      let createdQueryProductGmA = await db.ProductGm.create({
+        brandId: 2,
+        name: "ProductGmNameGroupA",
+        depId: dptC.id,
+        depSubId: dptSubC.id,
+        tag: ['咖啡','手機','杯子']
+      });
+
+      let createdQueryProductGmB = await db.ProductGm.create({
+        brandId: 3,
+        name: "ProductGmNameGroupB",
+        depId: dptC.id,
+        depSubId: dptSubC.id,
+        tag: ['電腦','遊戲','手機']
+      });
+
+      await createdQueryProductGmA.setDpts([dptC]);
+      await createdQueryProductGmA.setDptSubs([dptSubC]);
+      await createdQueryProductGmB.setDpts([dptD]);
+      await createdQueryProductGmB.setDptSubs([dptSubD]);
+
+      let createdQueryProducts = await db.Product.bulkCreate([{
+        name: '',
+        stockQuantity: 100,
+        isPublish: 'true',
+        price: 777,
+        productNumber: 'QueryA',
+        photos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg'],
+        ProductGmId: createdQueryProductGmA.id
+      },{
+        name: 'A1234',
+        stockQuantity: 500,
+        isPublish: 'true',
+        price: 555,
+        productNumber: 'QueryA',
+        photos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg'],
+        ProductGmId: createdQueryProductGmA.id
+      },{
+        name: 'A1235',
+        stockQuantity: 400,
+        isPublish: 'true',
+        price: 555,
+        productNumber: 'QueryA',
+        photos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg'],
+        ProductGmId: createdQueryProductGmA.id
+      },{
+        name: 'B1235',
+        stockQuantity: 600,
+        isPublish: 'true',
+        price: 555,
+        productNumber: 'QueryB',
+        photos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg'],
+        ProductGmId: createdQueryProductGmB.id
+      },{
+        name: 'B1235',
+        stockQuantity: 900,
+        isPublish: 'true',
+        price: 555,
+        productNumber: 'QueryB',
+        photos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg'],
+        ProductGmId: createdQueryProductGmB.id
+      }]);
 
       done();
-
     } catch (e) {
       console.log(e.stack);
       done(e);
-
     }
-  });
 
+  });
   it("product create", async (done) => {
     let newProduct = {
       brandType: 'origin',
@@ -194,7 +283,6 @@ describe("about product service", () => {
 
   });
 
-
   it('product call gm', async (done) => {
     try {
       let productGm = await ProductService.findGmWithImages(createdProductGm.id);
@@ -232,4 +320,164 @@ describe("about product service", () => {
       done(e);
     }
   });
+
+  it('product query by name', async (done) => {
+    try{
+      let queryObj = {}, queryResults;
+      queryObj.name = 'A';
+      queryResults = await ProductService.productQuery(queryObj);
+      queryResults = queryResults.rows;
+      queryResults.should.have.length(3);
+      await* queryResults.map( async (product) => {
+        let gmResult = await db.ProductGm.findById(product.ProductGmId);
+        let name = product['name'] + gmResult.name;
+        name.should.be.include(queryObj.name);
+      });
+      queryObj.name = 'B123';
+      queryResults = await ProductService.productQuery(queryObj);
+      queryResults = queryResults.rows;
+      await* queryResults.map( async (product) => {
+        product['name'].should.be.include(queryObj.name);
+      });
+      done();
+    } catch (e) {
+      done(e);
+    }
+  });
+
+  it('product query by productNumber', async (done) => {
+    try{
+      let queryObj = {}, queryResults;
+      queryObj.productNumber = 'QueryA';
+      queryResults = await ProductService.productQuery(queryObj);
+      queryResults = queryResults.rows;
+      queryResults.should.have.length(3);
+
+      queryObj.productNumber = 'QueryB';
+      queryResults = await ProductService.productQuery(queryObj);
+      queryResults = queryResults.rows;
+      queryResults.should.have.length(2);
+      done();
+    } catch (e) {
+      done(e);
+    }
+  });
+
+  it('product query by dptId', async (done) => {
+    try{
+      let queryObj = {}, queryResults;
+      queryObj.dptId = dptC.id;
+      queryResults = await ProductService.productQuery(queryObj);
+      queryResults = queryResults.rows;
+      for (let product of queryResults) {
+        let GmData = await db.ProductGm.findOne({where:{id: product.ProductGmId}, include: [db.DptSub] });
+        let GmDptDatas = GmData.DptSubs;
+        let dptIds = [];
+
+        for (let gmDptData of GmDptDatas) {
+          let dptId = gmDptData.DptId;
+          dptIds.push(dptId);
+        }
+        dptIds.should.be.include(queryObj.dptId);
+      }
+      done();
+    } catch (e) {
+      done(e);
+    }
+  });
+
+  it('product query by dptId & dptSubId', async (done) => {
+    try{
+      let queryObj = {}, queryResults;
+      queryObj.dptId = dptC.id;
+      queryObj.dptSubId = dptSubC.id;
+      queryResults = await ProductService.productQuery(queryObj);
+      queryResults = queryResults.rows;
+      await* queryResults.map( async (product) => {
+        let GmData = await db.ProductGm.findOne({where:{id: product.ProductGmId}, include: [db.DptSub] });
+        let GmDptDatas = GmData.DptSubs;
+        let dptIds = [],
+            dptSubIds = [];
+
+        for (let gmDptData of GmDptDatas) {
+          let dptId = gmDptData.DptId;
+          let dptSubId = gmDptData.id;
+          dptIds.push(dptId);
+          dptSubIds.push(dptSubId);
+        }
+
+        dptIds.should.be.include(queryObj.dptId);
+        dptSubIds.should.be.include(queryObj.dptSubId);
+      });
+      done();
+    } catch (e) {
+      done(e);
+    }
+  });
+
+  it('product query by price', async (done) => {
+    try{
+      let queryObj = {}, queryResults;
+      queryObj.price = 555;
+      queryResults = await ProductService.productQuery(queryObj);
+      queryResults = queryResults.rows;
+      queryResults.should.have.length(4);
+      done();
+    } catch (e) {
+      done(e);
+    }
+  });
+
+  it('product query by tags', async (done) => {
+    try{
+      let queryObj = {}, queryResults;
+      queryObj.tag = '手';
+      queryResults = await ProductService.productQuery(queryObj);
+      queryResults = queryResults.rows;
+      queryResults.should.have.length(5);
+
+      for (let product of queryResults) {
+        let result = await db.ProductGm.findById(product.ProductGmId);
+        let tagStr = '';
+        for (let str of result.tag) {
+          tagStr += str;
+        }
+        tagStr.should.be.include(queryObj.tag);
+      }
+
+      queryObj.tag = '遊戲';
+      queryResults = await ProductService.productQuery(queryObj);
+      queryResults = queryResults.rows;
+
+      for (let product of queryResults) {
+        let result = await db.ProductGm.findById(product.ProductGmId);
+        let tagStr = '';
+        for (let str of result.tag) {
+          tagStr += str;
+        }
+        tagStr.should.be.include(queryObj.tag);
+      }
+      done();
+    } catch (e) {
+      done(e);
+    }
+  });
+
+  it('product query by stockQuantity', async (done) => {
+    try{
+      let queryObj = {}, queryResults;
+      queryObj.stockQuantityStart = 400;
+      queryObj.stockQuantityEnd = 800;
+      queryResults = await ProductService.productQuery(queryObj);
+      queryResults = queryResults.rows;
+      queryResults.should.have.length(3);
+      await queryResults.map( async (product) => {
+        product['stockQuantity'].should.be.within( queryObj.stockQuantityStart, queryObj.stockQuantityEnd);
+      });
+      done();
+    } catch (e) {
+      done(e);
+    }
+  });
+
 });

@@ -345,141 +345,165 @@ module.exports = {
         productJson.image = base64data;
       }
     } catch (error) {
-      console.log(`can\'t find product ${product.id} image`);
+      // console.log("can't find product " + product.id + " image");
       productJson.image = 'about:blank';
     }
 
     return productJson;
   },
 
-  productQuery: async (req, offset = 0, limit = 2000) => {
+  productQuery: async (query, offset = 0, limit = 2000) => {
+    let queryObj = {},
+        queryGmObj = {},
+        resultProducts;
 
-    let query = req.query,
-        queryObj = {},
-        queryGmObj = {};
-
-    if (Object.keys(query).length > 0) {
-
-      // search condition
-      if (query.price) {
-        queryObj.price = query.price;
-      }
-      if (query.name) {
-        queryObj.name = {
-          $like: `%${query.name}%`
-        };
-      }
-      if (query.productNumber) {
-        queryObj.productNumber = query.productNumber;
-      }
-      // 存貨數量搜尋條件
-      if (query.stockQuantityStart && query.stockQuantityEnd) {
-        queryObj.stockQuantity = {
-          $between: [query.stockQuantityStart, query.stockQuantityEnd]
-        };
-      } else if (query.stockQuantityStart || query.stockQuantityEnd) {
-        queryObj.stockQuantity = query.stockQuantityStart ? {
-          $gte: query.stockQuantityStart
-        } : {
-          $lte: query.stockQuantityEnd
-        };
-      }
-      // 日期搜尋條件
-      if (query.dateFrom && query.dateEnd) {
-        queryObj.createdAt = {
-          $between: [new Date(query.dateFrom), new Date(query.dateEnd)]
-        };
-      } else if (query.dateFrom || query.dateEnd) {
-        queryObj.createdAt = query.dateFrom ? {
-          $gte: new Date(query.dateFrom)
-        } : {
-          $lte: new Date(query.dateEnd)
-        };
-      }
-
-      // 販售狀態 1:隱藏, 2:上架
-      if (query.isPublish != '') {
-        queryObj.isPublish = (query.isPublish == 'false') ? null : true;
-      }
-
-
-
-      // productGm 搜尋
-
-      if (query.brandId > 0)
-        queryGmObj.brandId = query.brandId;
-      // if (query.dptId > 0)
-      //   queryGmObj.dptId = query.dptId;
-      // if (query.dptSubId > 0)
-        // queryGmObj.dptSubId = query.dptSubId;
-      // tag keyword search
-      if (query.keyword) {
-        queryGmObj.tag = {
-          $like: '%' + query.keyword + '%'
-        };
-      }
-    }
-
-    // execute query
-    queryObj = {
-      where: queryObj,
-      include: [db.ProductGm],
-      limit: limit,
-      offset: offset,
-    };
-
-    let productsWithCount = await db.Product.findAndCountAll(queryObj);
-    let products = productsWithCount.rows;
-
-    queryGmObj = {
-      where: queryGmObj,
-      include: [db.Product, db.Dpt, db.DptSub]
-    };
-    let productGms = await db.ProductGm.findAll(queryGmObj);
-
-    // 過濾館別，將productGm 搜尋結果的id取出
-    let gmResultId = [];
-    for (let productGm of productGms) {
-      let dptPass = true, dptSubPass = true;
-      if( query.dptId > 0 || query.dptSubId > 0) {
-        if( query.dptId > 0 ) {
-          if( productGm.Dpts[0].id != query.dptId )
-            dptPass = false;
+    try {
+      if (Object.keys(query).length > 0) {
+        // search condition
+        if (query.price) {
+          queryObj.price = query.price;
         }
-        if(query.dptSubId > 0) {
-          if(productGm.DptSubs[0].id != query.dptSubId)
-            dptSubPass = false;
+
+        if (query.productNumber) {
+          queryObj.productNumber = query.productNumber;
         }
-        if(dptPass && dptSubPass){
-          for (let gmProduct of productGm.Products) {
-            gmResultId.push(gmProduct.id);
-          }
+        // 存貨數量搜尋條件
+        if (query.stockQuantityStart && query.stockQuantityEnd) {
+          queryObj.stockQuantity = {
+            $between: [query.stockQuantityStart, query.stockQuantityEnd]
+          };
+        } else if (query.stockQuantityStart || query.stockQuantityEnd) {
+          queryObj.stockQuantity = query.stockQuantityStart ? {
+            $gte: query.stockQuantityStart
+          } : {
+            $lte: query.stockQuantityEnd
+          };
+        }
+        // 日期搜尋條件
+        if (query.dateFrom && query.dateEnd) {
+          queryObj.createdAt = {
+            $between: [new Date(query.dateFrom), new Date(query.dateEnd)]
+          };
+        } else if (query.dateFrom || query.dateEnd) {
+          queryObj.createdAt = query.dateFrom ? {
+            $gte: new Date(query.dateFrom)
+          } : {
+            $lte: new Date(query.dateEnd)
+          };
+        }
+
+        // 販售狀態 1:隱藏, 2:上架
+        if (query.isPublish != '') {
+          queryObj.isPublish = (query.isPublish == 'false') ? null : true;
+        }
+
+        // productGm 搜尋
+        if (query.brandId > 0)
+          queryGmObj.brandId = query.brandId;
+
+        // tag keyword search
+        if (query.tag) {
+          queryGmObj.tag = {
+            $like: '%' + query.tag + '%'
+          };
         }
       }
-      else {
+
+      // execute query
+      queryObj = {
+        where: queryObj,
+        include: [db.ProductGm],
+        limit: limit,
+        offset: offset,
+      };
+
+      let products = await db.Product.findAll(queryObj);
+
+      queryGmObj = {
+        where: queryGmObj,
+        include: [db.Product, db.Dpt, db.DptSub]
+      };
+      let productGms = await db.ProductGm.findAll(queryGmObj);
+
+      // 過濾館別，將productGm 搜尋結果的id取出
+      let gmResultId = [];
+      for (let productGm of productGms) {
+        for (let product of productGm.Products) {
+          gmResultId.push(product.id);
+        }
+      }
+      if (query.dptId > 0 || query.dptSubId > 0 ) {
+        gmResultId = [];
         for (let productGm of productGms) {
-          for (let gmProduct of productGm.Products) {
-            gmResultId.push(gmProduct.id);
+          let dptPass = true, dptSubPass = true;
+          if( query.dptId > 0 ) {
+            for (let dptSub of productGm.DptSubs) {
+              let dptId = dptSub.DptId;
+              if( typeof dptId !== 'undefined' ) {
+                if ( dptId != query.dptId ) {
+                  dptPass = false;
+                }
+              }
+              else {
+                console.log('ProductGmId: ' + productGm.id + ' has not set dpt yet ');
+              }
+            }
+          }
+          if (query.dptSubId > 0) {
+            for (let dptSub of productGm.DptSubs) {
+              let dptSubId = dptSub.id;
+              if( typeof dptSubId !== 'undefined' ) {
+                if( dptSubId != query.dptSubId )
+                  dptSubPass = false;
+              }
+              else{
+                console.log('ProductGmId: ' + productGm.id + ' has not set dptSub yet ');
+              }
+            }
+          }
+          if(dptPass && dptSubPass) {
+            for (let gmProduct of productGm.Products) {
+              gmResultId.push(gmProduct.id);
+            }
           }
         }
       }
-    }
-
-    // productGm 搜尋結果 與 product 搜尋結果 mapping
-    let resultArray = [];
-    for (let product of products) {
-      if (gmResultId.indexOf(product.id) != -1) {
-        resultArray.push(product);
+      let ttt = [];
+      for (let product of products) {
+        ttt.push(product.id);
       }
-    }
-    products = resultArray;
 
-    // format datetime
-    products = products.map(ProductService.withImage);
-    for (let product of products) {
-      product.createdAt = moment(product.createdAt).format("YYYY/MM/DD");
-    }
+      // productGm 搜尋結果 與 product 搜尋結果 mapping
+      let mappingResult = [];
+      for (let product of products) {
+        if (gmResultId.indexOf(product.id) != -1) {
+          mappingResult.push(product);
+        }
+      }
 
-    return {rows: products, count: productsWithCount.count};
+      products = mappingResult;
+
+      // name filter
+      if(query.name) {
+        products = [];
+        for (let product of mappingResult) {
+          if( (product['name'].search(query.name) > 0 ) || (product['ProductGm']['name'].search(query.name) > 0) )
+            products.push(product);
+        }
+      }
+
+      // format datetime
+      products = products.map(ProductService.withImage);
+      for (let product of products) {
+        product.createdAt = moment(product.createdAt).format("YYYY/MM/DD");
+      }
+      resultProducts = products;
+
+    } catch (error) {
+      console.error(error.stack);
+      // let msg = error.message;
+      // return res.serverError({msg});
+    }
+    return {rows: resultProducts, count: resultProducts.length };
   }
 };
