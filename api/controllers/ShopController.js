@@ -2,8 +2,8 @@
 let ShopController = {
 
   list: async(req,res) => {
-    let dptSubId = req.query.dptSubId || 1;
-    let dptId = req.query.dptId || 1;
+    let dptSubId = req.query.dptSubId || 0;
+    let dptId = req.query.dptId || 0;
     let brandId = req.query.brand || 0;
 
     let products;
@@ -18,8 +18,8 @@ let ShopController = {
       model: db.DptSub,
       where: {}
     }
-    if(dptId >= 0) includeDpt.where.id = dptId;
-    if(dptSubId >= 0) includeDptSub.where.id = dptSubId;
+    if(dptId > 0) includeDpt.where.id = dptId;
+    if(dptSubId > 0) includeDptSub.where.id = dptSubId;
 
 
 
