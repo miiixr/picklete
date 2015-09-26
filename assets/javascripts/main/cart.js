@@ -167,4 +167,34 @@
   });
 
 
+
+
+  // shippings
+  $("#shippingType").change(function(){
+
+    $("#shippingFeeSelect").empty();
+
+    var url, data, region, fee, shipping;
+    url = '/shipping/'+$("#shippingType").val();
+    data = $("#shippingType").val();
+
+    // if( data == "0" ){
+      $("#shippingFeeSelect").append($("<option></option>").attr("value", "0").text("請選擇"));
+    // }else{
+      $.ajax({
+          url : url,
+          type: "get",
+          data : null,
+          success:function(data, textStatus, jqXHR)
+          {
+            console.log('=== data ==>',data.shippings);
+            for(i=0;i<data.shippings.length;i++){
+              shipping = data.shippings[i].region + ' ' + data.shippings[i].fee + ' 元';
+              $("#shippingFeeSelect").append($("<option></option>").attr("value", data.shippings[i].fee).text(shipping));
+            }
+          }
+      });
+    // } // end else
+  });
+  // end shippings
 }(jQuery));

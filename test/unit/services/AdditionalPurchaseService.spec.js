@@ -1,5 +1,5 @@
 
-describe.only("Additional Purchase", () => {
+describe("Additional Purchase", () => {
   var additionalPurchaseLimited = {};
   var additionalPurchase = {};
   before(async () => {

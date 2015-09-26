@@ -27,8 +27,12 @@ block body
                     label
                       | 運送方式
                       span.text-danger *
-                    select.form-control
-                      option 宅配 / 郵局
+                    select#shippingType.form-control     
+                      option(value='0') 請選擇
+                      option(value='delivery') 宅配 
+                      option(value='postoffice') 郵局
+                    //- select.form-control
+                    //-   option 宅配 / 郵局
                   // /form-group
                 // /col-sm-4
                 .col-sm-4
@@ -36,10 +40,13 @@ block body
                     label
                       | 運送區域
                       span.text-danger *
-                    select#shippingFeeSelect.form-control
-                      option(value='0') 請選擇
-                      option(value='70') 台灣 - 運費70元
-                      option(value='150') 離島 - 運費150元
+                    select#shippingFeeSelect.form-control     
+                     option(value='0') 請選擇
+                      //- each shipping,index in shippings.shippings
+                      //-   if(shippingType.selected == 'delivery')
+                      //-     option(value='#{shipping.fee}') #{shipping.region} - 運費 #{shipping.fee} 元
+                      //-   if(shippingType.selected == 'postoffice')
+                      //-     option(value='#{shipping.fee}') #{shipping.region} - 運費 #{shipping.fee} 元
                   // /form-group
                 // /col-sm-4
                 .col-sm-4

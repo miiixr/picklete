@@ -1,4 +1,9 @@
 (function ($) {
+  // display shipping fee
+  var shippingFeeDiv = $('#shippingFeeField');
+  var shippingFeePrice = parseInt(Cookies.getJSON('shippingFee'));
+  shippingFeeDiv.text(shippingFeePrice);
+
   var picklete_cart = Cookies.getJSON('picklete_cart');
   picklete_cart = picklete_cart ? picklete_cart : window.location.replace("/shop/products");
 
@@ -22,9 +27,13 @@
     subtotal += parseInt(orderItem.price, 10);
     subtotalDiv.text(subtotal);
     totalPrice = subtotal;
-    totalPrice += buymore;
-    totalPriceDiv.text(totalPrice);
   });
+
+  // count 加價購
+  totalPrice += buymore;
+
+  // count shipping fee and display
+  totalPriceDiv.text(totalPrice+shippingFeePrice);
 
   $("#orderCreate").click(function()
   {
