@@ -487,10 +487,19 @@ module.exports = {
       if(query.name) {
         products = [];
         for (let product of mappingResult) {
-          if( (product['name'].search(query.name) > 0 ) || (product['ProductGm']['name'].search(query.name) > 0) )
+          // initial name & gmName
+          if( typeof product.ProductGm.name === 'undefined' || product.ProductGm.name === null )
+            product.ProductGm.name = '';
+          if( typeof product.name === 'undefined' || product.name === null)
+            product.name = '';
+
+          // search in name & gmName
+          if( (product['name'].search(query.name) != -1 ) || (product['ProductGm']['name'].search(query.name) != -1 ) )
             products.push(product);
         }
       }
+      console.log('========== product array after name filter =========');
+      console.log(JSON.stringify(products, null, 4));
 
       // format datetime
       products = products.map(ProductService.withImage);

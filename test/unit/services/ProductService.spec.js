@@ -126,7 +126,7 @@ describe("about product service", () => {
         name: 'A1234',
         stockQuantity: 500,
         isPublish: 'true',
-        price: 555,
+        price: 557237,
         productNumber: 'QueryA',
         photos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg'],
         ProductGmId: createdQueryProductGmA.id
@@ -134,7 +134,7 @@ describe("about product service", () => {
         name: 'A1235',
         stockQuantity: 400,
         isPublish: 'true',
-        price: 555,
+        price: 557237,
         productNumber: 'QueryA',
         photos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg'],
         ProductGmId: createdQueryProductGmA.id
@@ -142,7 +142,7 @@ describe("about product service", () => {
         name: 'B1235',
         stockQuantity: 600,
         isPublish: 'true',
-        price: 555,
+        price: 557237,
         productNumber: 'QueryB',
         photos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg'],
         ProductGmId: createdQueryProductGmB.id
@@ -150,7 +150,7 @@ describe("about product service", () => {
         name: 'B1235',
         stockQuantity: 900,
         isPublish: 'true',
-        price: 555,
+        price: 557237,
         productNumber: 'QueryB',
         photos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg'],
         ProductGmId: createdQueryProductGmB.id
@@ -418,7 +418,7 @@ describe("about product service", () => {
   it('product query by price', async (done) => {
     try{
       let queryObj = {}, queryResults;
-      queryObj.price = 555;
+      queryObj.price = 557237;
       queryResults = await ProductService.productQuery(queryObj);
       queryResults = queryResults.rows;
       queryResults.should.have.length(4);
