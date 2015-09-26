@@ -498,8 +498,8 @@ module.exports = {
             products.push(product);
         }
       }
-      console.log('========== product array after name filter =========');
-      console.log(JSON.stringify(products, null, 4));
+      // console.log('========== product array after name filter =========');
+      // console.log(JSON.stringify(products, null, 4));
 
       // format datetime
       products = products.map(ProductService.withImage);
