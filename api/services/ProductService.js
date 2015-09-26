@@ -412,9 +412,7 @@ module.exports = {
       // execute query
       queryObj = {
         where: queryObj,
-        include: [db.ProductGm],
-        limit: limit,
-        offset: offset,
+        include: [db.ProductGm]
       };
 
       let products = await db.Product.findAll(queryObj);
@@ -468,10 +466,18 @@ module.exports = {
           }
         }
       }
+
+
       let ttt = [];
       for (let product of products) {
         ttt.push(product.id);
       }
+      console.log('========== product queryObj =========');
+      console.log(queryObj);
+      console.log('========== product id array =========');
+      console.log(ttt);
+      console.log('========== product gmId array =========');
+      console.log(gmResultId);
 
       // productGm 搜尋結果 與 product 搜尋結果 mapping
       let mappingResult = [];
