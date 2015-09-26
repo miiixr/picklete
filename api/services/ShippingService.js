@@ -1,6 +1,25 @@
 
 module.exports = {
 
+  // find one by giving type
+  findBy: async (type) => {
+    console.log('=== ShippingService : type ==>',type);
+    try {
+        let shippings = await db.Shipping.findAll({
+          where:{
+            type: type
+          }
+        });
+        console.log('=== shippings ==>',shippings);
+        return shippings;
+    } catch (error) {
+      //  throw error;
+      let msg = error.stack;
+      return { msg, success: false };
+    }
+  },
+  // end
+
   // find all
   findAll: async () => {
     try {

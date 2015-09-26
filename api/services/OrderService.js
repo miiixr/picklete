@@ -217,10 +217,28 @@ module.exports = {
         orderItems[index].spec = product.spec;
       });
 
-      if(thisOrder.quantity == 1)
-        thisOrder.paymentTotalAmount += 90;
-      else
-        thisOrder.paymentTotalAmount += (thisOrder.quantity * 60);
+      let useAllPay = false;
+      if(sails.config.useAllPay !== undefined)
+          useAllPay = sails.config.useAllPay;
+      if(useAllPay){
+        // 有用歐付寶的運費運算
+        let fee = parseInt(newOrder.shippingFee);
+        let shippingFee = await db.Shipping.findAll({
+          where:{
+            fee
+          }
+        });
+        console.log('=== shippingFee ==>',shippingFee);
+        if(shippingFee)
+          thisOrder.paymentTotalAmount += fee;
+        else
+          throw new error ("運費有錯誤！");
+      }else{
+        if(thisOrder.quantity == 1)
+          thisOrder.paymentTotalAmount += 90;
+        else
+          thisOrder.paymentTotalAmount += (thisOrder.quantity * 60);
+      }
 
       let bonusPoint = await db.BonusPoint.findOne({
         where: {email: user.email}

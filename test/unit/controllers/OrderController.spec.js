@@ -60,7 +60,8 @@ describe("about Order", () => {
            district: '竹南鎮',
            zipcode: '350',
            address: '測試用地址不用太在意' },
-        usedDiscountPoint: 'false' };
+        usedDiscountPoint: 'false',
+        shippingFee: 100 };
 
       request(sails.hooks.http.app).post("/api/order").send({
         order: newOrder
