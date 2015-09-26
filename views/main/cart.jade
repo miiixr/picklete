@@ -3,7 +3,7 @@ extends ../_layout_head
 block body
     .container
       h1.text-black.m-top-10.m-bottom-6 我的購物車
-      .border-block-3.m-bottom-10.text-center.p-top-10.p-bottom-10
+      #nothing.border-block-3.m-bottom-10.text-center.p-top-10.p-bottom-10
         span.glyphicon.glyphicon-shopping-cart.text-muted.font-size-xxxxlarge.m-bottom-4
         h1.m-bottom-4.text-muted 購物車空空呦！
         h4
@@ -79,6 +79,9 @@ block body
                     td.text-right
                       span.text-danger 0
                   tr
+                    th 加價購
+                    td#buymore.text-right 0
+                  tr
                     th 總計
                     td.text-right
                       h3#totalPrice.m-top-0 0
@@ -120,9 +123,9 @@ block body
                   h5.h5-two-hide.m-bottom-2.text-roboto.letter-spacing-1
                     a(href='/shop/product') #{additionalPurchaseProductGm.name}
                   select.form-control.m-bottom-2
-                    option 選擇規格
+                    option(value= 0 ,data-price= 0) 選擇規格
                     each product in additionalPurchaseProductGm.Products
-                      option(value=product.id) #{product.name}
+                      option(value=product.id, data-price= product.price) #{product.name}
                   h4.text-green
                     | $ #{additionalPurchaseProductGm.price}
                     small.text-line-through.m-left-1 $ #{additionalPurchaseProductGm.originPrice}

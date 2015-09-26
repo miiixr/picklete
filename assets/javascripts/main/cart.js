@@ -3,13 +3,20 @@
   var cartViewer = $('#cart-viewer');
   var subtotalDiv = $('#subtotal');
   var totalPriceDiv = $('#totalPrice');
+  var buymoreDiv = $("#buymore");
 
   var subtotal = 0;
   var totalPrice = 0;
   var shippingFee = 0;
+  var buymore = 0;
 
+  Cookies.remove('buyMoreIds');
   var picklete_cart = Cookies.getJSON('picklete_cart');
-  picklete_cart = picklete_cart ? picklete_cart : {orderItems: []};
+  if(picklete_cart){
+    $("#nothing").remove();
+  }else{
+    picklete_cart : {orderItems: []};
+  }
 
   var cartViewerInit = function(){
 
@@ -119,13 +126,23 @@
 
   var calcTatalPrice = function () {
 
-    totalPrice = subtotal + shippingFee;
+    totalPrice = subtotal + shippingFee + buymore;
     console.log('=== calcTatalPrice ===', totalPrice);
 
     totalPriceDiv.text(totalPrice);
   }
 
   $("#nextSetp").click(function () {
+    var buymoreIds = [];
+    $("select.form-control.m-bottom-2").each(function(index,dom){
+      var id = parseInt($(this).find(":selected")[0].value);
+      var price = parseInt($(this).find(":selected")[0].dataset.price);
+      var object = { ProductId : id ,quantity: 1, price:price};
+      if(id != 0){
+        buymoreIds.push(object);
+      }
+    });
+    Cookies.set('buyMoreIds', buymoreIds);
     if($('#shippingFeeSelect').val() == 0 || $('#paymentMethod').val()==0)
       alert("請確認運送、付款方式");
     else
@@ -135,6 +152,19 @@
   cartViewerInit();
 
   console.log('=== cartViewerInit ===');
+
+  var previous = 0;
+  $("select.form-control.m-bottom-2").on('focus', function(){
+    previous = parseInt($(this).find(":selected")[0].dataset.price);
+  }).change(function(){
+    var id = $(this).find(":selected")[0].value;
+    var price = parseInt($(this).find(":selected")[0].dataset.price);
+    buymore -= previous;
+    buymore += price;
+    buymoreDiv.text(buymore);
+    $(this).blur();
+    calcTatalPrice();
+  });
 
 
 }(jQuery));
