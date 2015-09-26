@@ -324,7 +324,7 @@ describe("about product service", () => {
   it('product query by name', async (done) => {
     try{
       let queryObj = {}, queryResults;
-      queryObj.name = 'A';
+      queryObj.name = 'GroupA';
       queryResults = await ProductService.productQuery(queryObj);
       queryResults = queryResults.rows;
       queryResults.should.have.length(3);
