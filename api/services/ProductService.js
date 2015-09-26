@@ -467,17 +467,18 @@ module.exports = {
         }
       }
 
-
-      let ttt = [];
-      for (let product of products) {
-        ttt.push(product.id);
-      }
-      console.log('========== product queryObj =========');
-      console.log(queryObj);
-      console.log('========== product id array =========');
-      console.log(ttt);
-      console.log('========== product gmId array =========');
-      console.log(gmResultId);
+      // ============== debug console.log block ==============
+      // let ttt = [];
+      // for (let product of products) {
+      //   ttt.push(product.id);
+      // }
+      // console.log('========== product queryObj =========');
+      // console.log(queryObj);
+      // console.log('========== product id array =========');
+      // console.log(ttt);
+      // console.log('========== product gmId array =========');
+      // console.log(gmResultId);
+      // =========== End of debug console.log block ===========
 
       // productGm 搜尋結果 與 product 搜尋結果 mapping
       let mappingResult = [];
@@ -512,6 +513,7 @@ module.exports = {
       for (let product of products) {
         product.createdAt = moment(product.createdAt).format("YYYY/MM/DD");
       }
+
       resultProducts = products;
 
     } catch (error) {
