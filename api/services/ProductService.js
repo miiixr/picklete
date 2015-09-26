@@ -422,6 +422,8 @@ module.exports = {
         include: [db.Product, db.Dpt, db.DptSub]
       };
       let productGms = await db.ProductGm.findAll(queryGmObj);
+      // console.log('=========== productGms ===========');
+      // console.log(JSON.stringify(productGms,null,4));
 
       // 過濾館別，將productGm 搜尋結果的id取出
       let gmResultId = [];
@@ -435,19 +437,26 @@ module.exports = {
         for (let productGm of productGms) {
           let dptPass = true, dptSubPass = true;
           if( query.dptId > 0 ) {
-            for (let dptSub of productGm.DptSubs) {
-              let dptId = dptSub.DptId;
+            if( productGm.Dpts.length == 0 ) {
+              continue;
+            }
+            for (let dpt of productGm.Dpts) {
+              let dptId = dpt.id;
               if( typeof dptId !== 'undefined' ) {
                 if ( dptId != query.dptId ) {
                   dptPass = false;
                 }
               }
               else {
+                dptPass = false;
                 console.log('ProductGmId: ' + productGm.id + ' has not set dpt yet ');
               }
             }
           }
           if (query.dptSubId > 0) {
+            if( productGm.DptSubs.length == 0) {
+              continue;
+            }
             for (let dptSub of productGm.DptSubs) {
               let dptSubId = dptSub.id;
               if( typeof dptSubId !== 'undefined' ) {
@@ -455,6 +464,7 @@ module.exports = {
                   dptSubPass = false;
               }
               else{
+                dptSubPass = false;
                 console.log('ProductGmId: ' + productGm.id + ' has not set dptSub yet ');
               }
             }
