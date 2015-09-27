@@ -353,27 +353,69 @@ module.exports = {
   },
 
   productQuery: async (query, offset = 0, limit = 2000) => {
-    let queryObj = {},
-        queryGmObj = {},
-        resultProducts;
+
+    let queryObjArray = [],
+        queryObj = {},
+        GmQueryObj = {},
+        DptQueryObj = {},
+        DptSubQueryObj = {},
+        ProductQueryObj = {},
+        resultProducts = [];
 
     try {
+
       if (Object.keys(query).length > 0) {
-        // search condition
+        // ================ ProductGm query condition ================
+        if (query.name) {
+          GmQueryObj = {
+            $or: {
+              name : {
+                $like: `%${query.name}%`
+              }
+            }
+          }
+        }
+
+        if (query.brandId > 0)
+          GmQueryObj.brandId = query.brandId;
+
+        if (query.tag) {
+          GmQueryObj.tag = {
+            $like: `%${query.tag}%`
+          };
+        }
+
+
+
+        // ================ Dpt query condition ================
+        if (query.dptId > 0 ) {
+          DptQueryObj.id = query.dptId;
+        }
+        // ================ DptSub query condition ================
+        if (query.dptSubId > 0 ) {
+          DptSubQueryObj.id = query.dptSubId;
+        }
+        // ================ Product query condition =============
+        if (query.name) {
+          ProductQueryObj.name = {
+              $like: `%${query.name}%`
+          }
+        }
+
         if (query.price) {
-          queryObj.price = query.price;
+          ProductQueryObj.price = query.price;
         }
 
         if (query.productNumber) {
-          queryObj.productNumber = query.productNumber;
+          ProductQueryObj.productNumber = query.productNumber;
         }
         // 存貨數量搜尋條件
         if (query.stockQuantityStart && query.stockQuantityEnd) {
-          queryObj.stockQuantity = {
+          ProductQueryObj.stockQuantity = {
             $between: [query.stockQuantityStart, query.stockQuantityEnd]
           };
         } else if (query.stockQuantityStart || query.stockQuantityEnd) {
-          queryObj.stockQuantity = query.stockQuantityStart ? {
+          ProductQueryObj.stockQuantity = query.stockQuantityStart ? {
             $gte: query.stockQuantityStart
           } : {
             $lte: query.stockQuantityEnd
@@ -381,11 +423,11 @@ module.exports = {
         }
         // 日期搜尋條件
         if (query.dateFrom && query.dateEnd) {
-          queryObj.createdAt = {
+          ProductQueryObj.createdAt = {
             $between: [new Date(query.dateFrom), new Date(query.dateEnd)]
           };
         } else if (query.dateFrom || query.dateEnd) {
-          queryObj.createdAt = query.dateFrom ? {
+          ProductQueryObj.createdAt = query.dateFrom ? {
             $gte: new Date(query.dateFrom)
           } : {
             $lte: new Date(query.dateEnd)
@@ -394,129 +436,29 @@ module.exports = {
 
         // 販售狀態 1:隱藏, 2:上架
         if (query.isPublish != '') {
-          queryObj.isPublish = (query.isPublish == 'false') ? null : true;
-        }
-
-        // productGm 搜尋
-        if (query.brandId > 0)
-          queryGmObj.brandId = query.brandId;
-
-        // tag keyword search
-        if (query.tag) {
-          queryGmObj.tag = {
-            $like: '%' + query.tag + '%'
-          };
+          ProductQueryObj.isPublish = (query.isPublish == 'false') ? null : true;
         }
       }
-
-      // execute query
+      // ================ merge queryObj ================
       queryObj = {
-        where: queryObj,
-        include: [db.ProductGm]
+        where: ProductQueryObj,
+        include: [{
+          model: db.ProductGm,
+          where: GmQueryObj,
+          include:[{
+            model: db.Dpt,
+            where: DptQueryObj
+          },{
+            model: db.DptSub,
+            where: DptSubQueryObj
+          }]
+        }]
       };
 
+      console.log(' ======== queryObj =========');
+      console.log(ProductQueryObj);
+      console.log(GmQueryObj);
       let products = await db.Product.findAll(queryObj);
-
-      queryGmObj = {
-        where: queryGmObj,
-        include: [db.Product, db.Dpt, db.DptSub]
-      };
-      let productGms = await db.ProductGm.findAll(queryGmObj);
-      // console.log('=========== productGms ===========');
-      // console.log(JSON.stringify(productGms,null,4));
-
-      // 過濾館別，將productGm 搜尋結果的id取出
-      let gmResultId = [];
-      for (let productGm of productGms) {
-        for (let product of productGm.Products) {
-          gmResultId.push(product.id);
-        }
-      }
-      if (query.dptId > 0 || query.dptSubId > 0 ) {
-        gmResultId = [];
-        for (let productGm of productGms) {
-          let dptPass = true, dptSubPass = true;
-          if( query.dptId > 0 ) {
-            if( productGm.Dpts.length == 0 ) {
-              continue;
-            }
-            for (let dpt of productGm.Dpts) {
-              let dptId = dpt.id;
-              if( typeof dptId !== 'undefined' ) {
-                if ( dptId != query.dptId ) {
-                  dptPass = false;
-                }
-              }
-              else {
-                dptPass = false;
-                console.log('ProductGmId: ' + productGm.id + ' has not set dpt yet ');
-              }
-            }
-          }
-          if (query.dptSubId > 0) {
-            if( productGm.DptSubs.length == 0) {
-              continue;
-            }
-            for (let dptSub of productGm.DptSubs) {
-              let dptSubId = dptSub.id;
-              if( typeof dptSubId !== 'undefined' ) {
-                if( dptSubId != query.dptSubId )
-                  dptSubPass = false;
-              }
-              else{
-                dptSubPass = false;
-                console.log('ProductGmId: ' + productGm.id + ' has not set dptSub yet ');
-              }
-            }
-          }
-          if(dptPass && dptSubPass) {
-            for (let gmProduct of productGm.Products) {
-              gmResultId.push(gmProduct.id);
-            }
-          }
-        }
-      }
-
-      // ============== debug console.log block ==============
-      // let ttt = [];
-      // for (let product of products) {
-      //   ttt.push(product.id);
-      // }
-      // console.log('========== product queryObj =========');
-      // console.log(queryObj);
-      // console.log('========== product id array =========');
-      // console.log(ttt);
-      // console.log('========== product gmId array =========');
-      // console.log(gmResultId);
-      // =========== End of debug console.log block ===========
-
-      // productGm 搜尋結果 與 product 搜尋結果 mapping
-      let mappingResult = [];
-      for (let product of products) {
-        if (gmResultId.indexOf(product.id) != -1) {
-          mappingResult.push(product);
-        }
-      }
-
-      products = mappingResult;
-
-      // name filter
-      if(query.name) {
-        products = [];
-        for (let product of mappingResult) {
-          // initial name & gmName
-          if( typeof product.ProductGm.name === 'undefined' || product.ProductGm.name === null )
-            product.ProductGm.name = '';
-          if( typeof product.name === 'undefined' || product.name === null)
-            product.name = '';
-
-          // search in name & gmName
-          if( (product['name'].search(query.name) != -1 ) || (product['ProductGm']['name'].search(query.name) != -1 ) )
-            products.push(product);
-        }
-      }
-      // console.log('========== product array after name filter =========');
-      // console.log(JSON.stringify(products, null, 4));
 
       // format datetime
       products = products.map(ProductService.withImage);
@@ -525,7 +467,7 @@ module.exports = {
       }
 
       resultProducts = products;
-
+      // console.log(JSON.stringify(resultProducts,null,4));
     } catch (error) {
       console.error(error.stack);
       // let msg = error.message;
