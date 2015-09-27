@@ -46,7 +46,7 @@ module.exports = /* SearchController */ {
   products: async function(req, res) {
     try {
 
-      let keywords = req.param('keywords');
+      let keywords = req.param('keywords') || req.param('q');
       let limit = parseInt(req.param('limit', 100));
 
       let conditions = {};

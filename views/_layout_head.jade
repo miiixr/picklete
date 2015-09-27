@@ -144,8 +144,8 @@ html
                 search
                 ==================================================
               #sb-search.sb-search
-                form
-                  input#search.sb-search-input.form-control(placeholder='Search for...', type='text', value='', name='search')
+                form(action='/search')
+                  input#search.sb-search-input.form-control(placeholder='Search for...', type='text', value='', name='q')
                   |     
                   input.sb-search-submit(type='submit', value='')
                   |     

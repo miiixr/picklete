@@ -132,7 +132,7 @@ module.exports.routes = {
   'get /admin/shop-report-form' : 'PromotionController.controlShopReportForm'
 
   # shopCode
-  'get /admin/shop-code' : 'ShopCodeController.controlShopCode' # list 
+  'get /admin/shop-code' : 'ShopCodeController.controlShopCode' # list
   'get /admin/shop-code/create': 'ShopCodeController.controlShopCodeDetail' # createView
   'post /admin/shop-code/create' : 'ShopCodeController.create' # createAction
   'get /admin/shop-code/update' : 'ShopCodeController.showUpdate' # updateView
@@ -185,6 +185,7 @@ module.exports.routes = {
   "get /admin/login": view: "admin/login"
 
   'get /api/search/:keywords': 'SearchController.productsJson'
+  'get /search': 'SearchController.products'
   'get /search/:keywords': 'SearchController.products'
 
   'post /allpay/paid':{
@@ -431,7 +432,7 @@ module.exports.routes = {
      origin: "http://localhost:1337, http://localhost:8080",
      credentials: false
     }
-  } 
+  }
 }
 
 ###*
