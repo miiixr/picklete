@@ -321,13 +321,24 @@ describe("about product service", () => {
     }
   });
 
+  it.only('simple product query by name', async (done) => {
+    let queryResults = await ProductService.simpleQuery('A');
+    // console.log(queryResults);
+    done();
+  })
+
   it('product query by name', async (done) => {
     try{
+      console.log("///////");
       let queryObj = {}, queryResults;
       queryObj.name = 'GroupA';
+      console.log("start ///////");
+      console.log(queryObj);
       queryResults = await ProductService.productQuery(queryObj);
+      console.log("///////");
       queryResults = queryResults.rows;
-      // queryResults.should.have.length(3);
+      queryResults.length.should.be.above(0);
+      console.log(queryResults);
       await* queryResults.map( async (product) => {
         let gmResult = await db.ProductGm.findById(product.ProductGmId);
         let name = product['name'] + gmResult.name;
@@ -336,6 +347,7 @@ describe("about product service", () => {
       queryObj.name = 'B123';
       queryResults = await ProductService.productQuery(queryObj);
       queryResults = queryResults.rows;
+      queryResults.length.should.be.above(0);
       await* queryResults.map( async (product) => {
         product['name'].should.be.include(queryObj.name);
       });
@@ -488,5 +500,6 @@ describe("about product service", () => {
       done(e);
     }
   });
+
 
 });
