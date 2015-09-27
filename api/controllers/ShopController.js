@@ -44,7 +44,7 @@ let ShopController = {
 
       }
 
-      let brands = await BrandService.list();
+      let brands = await db.Brand.findAll({order: 'weight ASC',});
 
       console.log('products.length', products.length);
 
