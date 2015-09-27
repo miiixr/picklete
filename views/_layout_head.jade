@@ -60,7 +60,7 @@ html
                     h4.text-gray-darker.m-bottom-4 代理品牌
                     |   
                     ul.list-inline.list-brand
-                      each brand, idx in brands
+                      each brand, idx in brands.brandsAgent
                         - if (brand.type === 'AGENT')
                           li
                             a(href='/brands/#{brand.id}')
@@ -72,7 +72,7 @@ html
                     |   
                     ul.list-inline.list-brand
 
-                      each brand, idx in brands
+                      each brand, idx in brands.brandsGood
                         - if (brand.type === 'PRIME_GOOD')
                           li
                             a(href='/brands/#{brand.id}')

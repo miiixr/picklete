@@ -41,10 +41,10 @@ let ShopController = {
       else{
 
         products = await ShopService.findBrand(brandId);
-        
+
       }
-      
-      let brands = await db.Brand.findAll();
+
+      let brands = await BrandService.list();
 
       console.log('products.length', products.length);
 

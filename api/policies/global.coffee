@@ -13,8 +13,9 @@ module.exports = (req, res, next) ->
   db.Company.findOne()
   .then (result) ->
     res.locals.company = result.dataValues;
+    next()
   .then () ->
-    db.Brand.findAll()
+    BrandService.list()
     .then (brands) ->
-      res.locals.brands = brands;
+      res.locals.brands = brands
       next()

@@ -37,30 +37,14 @@ let BrandController = {
 
   list: async (req, res) => {
 
-    let brandsGood = await db.Brand.findAll({
-      where: {
-        type: 'PRIME_GOOD'
-      }
-    });
-
-    let brandsAgent = await db.Brand.findAll({
-      where: {
-        type: 'AGENT'
-      }
-    });
-
-    let brandLock = await db.Brand.findAll({
-      where: {
-        type: 'OTHER'
-      }
-    });
+    let brands = await BrandService.list();
 
     // return res.ok(brands);
-    res.view("admin/brandList", {
-      pageName: "/admin/brands",
-      brands: brandsGood,
-      agents: brandsAgent,
-      brandLocks: brandLock
+    res.view('admin/brandList', {
+      pageName: '/admin/brands',
+      brands: brands.brandsGood,
+      agents: brands.brandsAgent,
+      brandLocks: brands.brandLock,
     });
   },
 
