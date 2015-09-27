@@ -108,7 +108,6 @@
     "istanbul": "^0.3.21",
     "jshint-stylish": "^2.0.1",
     "live-reload": "latest",
-    "mocha": "^2.3.3",
     "nock": "^1.4.0",
     "parallelshell": "^1.0.3",
     "sails-hook-autoreload": "^0.12.0",
