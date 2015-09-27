@@ -66,7 +66,12 @@ module.exports = /* SearchController */ {
 
       let products = await db.Product.findAndCountAll({
         where: conditions,
-        limit: limit
+        include: [{
+          model: db.ProductGm,
+          required: true
+        }],
+        limit: limit,
+        order: [['id', 'ASC']]
       });
 
       return res.view('main/search', {products: products});

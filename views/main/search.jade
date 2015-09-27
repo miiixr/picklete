@@ -52,13 +52,15 @@ block body
         // /btn-group
         // /m-top-8 m-bottom-8
       .row
+        if products.count==0
+          p 沒有發現任何有關商品，請重新搜尋一遍！
         each product,val in products.rows
           .col-md-3.col-sm-4.col-xs-6
             .item-block.m-bottom-4
               a.item-like.active(href='#')
                 span.glyphicon.glyphicon-heart
               // /item-like
-              a(href='/shop/product')
+              a(href='/shop/products/#{product.ProductGm.id}/#{product.id}')
                 img.img-full.item-show(src=product.photos[0])
                 img.img-full.item-hide(src=product.photos[0])
             // /item-block
