@@ -1,4 +1,4 @@
-$(window).load(function() {
+(function ($) {
 
   // click add a 閃購 button
   $(".btn.btn-green.btn-lg").click(function() {
@@ -13,4 +13,4 @@ $(window).load(function() {
   });
   // end click add a 閃購 button
 
-});
+}(jQuery))
