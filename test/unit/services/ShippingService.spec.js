@@ -28,9 +28,11 @@ describe("ShippingService", () => {
       region: 'Out of Taiwan island',
       fee: '300'
     }];
-    await* testDatas.map((testData) => {
-      db.Shipping.create(testData);
-    });
+    // temporarily replace with service
+    // await* testDatas.map((testData) => {
+    //   db.Shipping.create(testData);
+    // });
+    let saved = await ShippingService.saveAll(testDatas);
 
     done();
   });
