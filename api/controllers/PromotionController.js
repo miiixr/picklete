@@ -182,16 +182,6 @@ let PromotionController = {
       limit
     });
   },
-  controlShopCode: function(req, res) {
-    res.view('promotion/controlShopCode',{
-      pageName: "shop-code"
-    });
-  },
-  controlShopCodeDetail: function(req, res) {
-    res.view('promotion/controlShopCodeDetail',{
-      pageName: "shop-code-detail"
-    });
-  },
   controlShopReportForm: function(req, res) {
     res.view('promotion/controlShopReportForm',{
       pageName: "shop-report-form"
