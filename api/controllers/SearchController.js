@@ -46,7 +46,7 @@ module.exports = /* SearchController */ {
   products: async function(req, res) {
     try {
 
-      let keywords = req.param('keywords');
+      let keywords = req.param('keywords') || req.param('q');
       let limit = parseInt(req.param('limit', 100));
 
       let conditions = {};
@@ -66,7 +66,12 @@ module.exports = /* SearchController */ {
 
       let products = await db.Product.findAndCountAll({
         where: conditions,
-        limit: limit
+        include: [{
+          model: db.ProductGm,
+          required: true
+        }],
+        limit: limit,
+        order: [['id', 'ASC']]
       });
 
       return res.view('main/search', {products: products});

@@ -129,9 +129,15 @@ module.exports.routes = {
   'get /admin/shop-buy-more-detail' : 'PromotionController.controlShopBuyMoreDetail'
   'get /admin/shop-buy-more-add-item' : 'PromotionController.controlShopBuyMoreAddItem'
   'put /admin/buymoreUpdate' : 'PromotionController.addPurchaseUpdate'
-  'get /admin/shop-code' : 'PromotionController.controlShopCode'
-  'get /admin/shop-code-detail' : 'PromotionController.controlShopCodeDetail'
   'get /admin/shop-report-form' : 'PromotionController.controlShopReportForm'
+
+  # shopCode
+  'get /admin/shop-code' : 'ShopCodeController.controlShopCode' # list
+  'get /admin/shop-code/create': 'ShopCodeController.controlShopCodeDetail' # createView
+  'post /admin/shop-code/create' : 'ShopCodeController.create' # createAction
+  'get /admin/shop-code/update' : 'ShopCodeController.showUpdate' # updateView
+  'post /admin/shop-code/update' : 'ShopCodeController.update' # updateAction
+
   # end promotions
 
   # shipping
@@ -179,6 +185,7 @@ module.exports.routes = {
   "get /admin/login": view: "admin/login"
 
   'get /api/search/:keywords': 'SearchController.productsJson'
+  'get /search': 'SearchController.products'
   'get /search/:keywords': 'SearchController.products'
 
   'post /allpay/paid':{
@@ -412,6 +419,15 @@ module.exports.routes = {
   'post /api/slider/delete/:id': {
     controller: "SliderActivitiesController",
     action: "deleteSlider",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+
+  'post /api/shop-code/delete/:id': {
+    controller: "ShopCodeController",
+    action: "delete",
     cors: {
      origin: "http://localhost:1337, http://localhost:8080",
      credentials: false
