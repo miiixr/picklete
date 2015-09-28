@@ -95,9 +95,7 @@ let ShopController = {
       product = product.dataValues;
 
       let dptId = product.ProductGm.Dpts[0].id;
-      console.log('============');
-      console.log(dptId);
-      // console.log(JSON.stringify(product, null, 4));
+
       // recommend products
       let recommendProducts = await db.Product.findAll({
         include: [{
@@ -112,7 +110,6 @@ let ShopController = {
         }]
       });
       recommendProducts = recommendProducts.slice(0,6);
-      // recommend products
 
       let products = await productGm.Products;
       var coverPhotos = JSON.parse(productGm.coverPhoto);
