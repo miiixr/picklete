@@ -261,7 +261,7 @@ module.exports = {
     await dptB.setDptSubs(dptSubB);
 
     createdProductGmComplete = await db.ProductGm.create({
-      brandId: 1,
+      BrandId: 1,
       name: "好東西商品",
       explain: '好東西就是要買，買買買',
       usage: '請安心服用',
@@ -275,7 +275,7 @@ module.exports = {
     await createdProductGmComplete.setDptSubs([dptSubA]);
 
     createdProductGmGood = await db.ProductGm.create({
-      brandId: 1,
+      BrandId: 1,
       name: "威力棒棒",
       explain: '好棒棒，好棒棒',
       usage: '大口吸，潮爽的',

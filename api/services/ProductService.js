@@ -27,7 +27,7 @@ module.exports = {
     }
 
     let newProductGm = {
-      brandId: brandId,
+      BrandId: brandId,
       name: updateProduct.name,
       brandName: brandName,
       explain: updateProduct.explain || "",
@@ -209,7 +209,7 @@ module.exports = {
         } // end if
       } // end for
 
-      productGm.brandId = brand.id;
+      productGm.BrandId = brand.id;
       productGm.name = updateProduct.name;
       productGm.dptId = updateProduct.dptId;
       productGm.dptSubId = updateProduct.dptSubId;
@@ -399,7 +399,7 @@ module.exports = {
 
         // productGm 搜尋
         if (query.brandId > 0)
-          queryGmObj.brandId = query.brandId;
+          queryGmObj.BrandId = query.brandId;
 
         // tag keyword search
         if (query.tag) {
