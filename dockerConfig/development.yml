@@ -2,7 +2,7 @@ build:
   command: "/bin/bash -l -c 'npm i && node_modules/.bin/grunt buildDev'"
 
 test:
-  command: "/bin/bash -l -c 'node_modules/.bin/mocha test'"
+  command: "/bin/bash -l -c 'node_modules/.bin/mocha test && node_modules/.bin/grunt mocha_istanbul'"
   ports:
     - "1338:1338"
 
