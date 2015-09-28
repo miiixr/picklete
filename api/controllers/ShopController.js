@@ -41,9 +41,9 @@ let ShopController = {
       else{
 
         products = await ShopService.findBrand(brandId);
-        
+
       }
-      
+
       let brands = await db.Brand.findAll();
 
       console.log('products.length', products.length);
@@ -84,10 +84,35 @@ let ShopController = {
               { model: db.DptSub}
             ]
           });
-      let product = await db.Product.findOne({where: {id: productId}});
+      let product = await db.Product.findOne({
+            include:[{
+              model: db.ProductGm,
+              include: [ db.Dpt ]}],
+            where: {id: productId}
+          });
 
       productGm = productGm.dataValues;
       product = product.dataValues;
+
+      let dptId = product.ProductGm.Dpts[0].id;
+      console.log('============');
+      console.log(dptId);
+      // console.log(JSON.stringify(product, null, 4));
+      // recommend products
+      let recommendProducts = await db.Product.findAll({
+        include: [{
+          model: db.ProductGm,
+          required: true,
+          include: [{
+            model: db.Dpt,
+            where: {
+              id: dptId
+            }
+          }]
+        }]
+      });
+      recommendProducts = recommendProducts.slice(0,6);
+      // recommend products
 
       let products = await productGm.Products;
       var coverPhotos = JSON.parse(productGm.coverPhoto);
@@ -116,7 +141,8 @@ let ShopController = {
           product: product,
           photos: photos,
           services: services,
-          coverPhotos: coverPhotos
+          coverPhotos: coverPhotos,
+          recommendProducts
          };
 
         return res.view("main/shopProduct", resData);
