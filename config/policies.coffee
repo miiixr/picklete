@@ -45,6 +45,7 @@ module.exports.policies = {
 
   'BrandController':
     show: ['global']
+    resetWeight: []
   # 'admin/*': ['passport', 'loginRequired']
 
   # ProductController:

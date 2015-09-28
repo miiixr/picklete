@@ -7,7 +7,7 @@ block body
     h4.text-gray-darker.m-bottom-4 代理品牌
     ul.list-inline.list-brand
       each agent, index in agents
-        li
+        li(data-id='#{agent.id}')
           a(href='/admin/brands/update?id=#{agent.id}')
             img.border-block-1.img-full(src='#{agent.avatar}', title='#{agent.name}')
     // /list-barnd
@@ -18,7 +18,7 @@ block body
     h4.text-gray-darker.m-bottom-4 精選品牌
     ul.list-inline.list-brand
       each brand, index in brands
-        li
+        li(data-id='#{brand.id}')
           a(href='/admin/brands/update?id=#{brand.id}')
             img.border-block-1.img-full(src='#{brand.avatar}', title='#{brand.name}')
 

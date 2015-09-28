@@ -34,6 +34,11 @@ module.exports = function(sequelize, DataTypes) {
       set: function(value) {
         return this.setDataValue('photos', JSON.stringify(value));
       }
+    },
+
+    // 順序權重
+    weight: {
+      type: DataTypes.INTEGER,
     }
   });
 
