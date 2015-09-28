@@ -126,14 +126,17 @@ let BrandController = {
     try {
       let brandIdArray = req.body.data;
       let weight = 1;
-      await* brandIdArray.map(async(id) => {
+      for (let count = 0; count < brandIdArray.length; count++) {
+        await* brandIdArray[count].map(async(id) => {
 
-        let brand = await db.Brand.findById(id);
+          let brand = await db.Brand.findById(id);
 
-        brand.weight = weight;
-        weight += 1;
-        return await brand.save();
-      });
+          brand.weight = weight;
+          weight += 1;
+          return await brand.save();
+        });
+      }
+
       return res.ok();
     } catch (e) {
       let msg = e.message;
