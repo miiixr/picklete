@@ -92,4 +92,21 @@ describe('Brand API - 品牌', function() {
       });
 
   });
+
+  describe('Brand - 列表順序重設', function() {
+    it('should return brand list', function(done) {
+      var idArray = [3,4];
+      request(sails.hooks.http.app)
+        .post('/admin/brands/resetWeight')
+        .send({ data: idArray})
+        .end((err, res) => {
+          db.Brand.findById(3).then((brand) => {
+            brand.weight.should.be.equal(1);
+          });
+
+          return done();
+        });
+    });
+
+  });
 });
