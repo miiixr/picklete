@@ -127,9 +127,9 @@ let BrandController = {
       let brandIdArray = req.body.data;
       let weight = 1;
       for (let count = 0; count < brandIdArray.length; count++) {
-        await* brandIdArray[count].map(async(id) => {
+        await* brandIdArray[count].map(async(brandId) => {
 
-          let brand = await db.Brand.findById(id);
+          let brand = await db.Brand.findById(brandId.id);
 
           brand.weight = weight;
           weight += 1;

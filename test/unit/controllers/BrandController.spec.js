@@ -95,7 +95,7 @@ describe('Brand API - 品牌', function() {
 
   describe('Brand - 列表順序重設', function() {
     it('should return brand list', function(done) {
-      var idArray = [[3,4],[1,2]];
+      var idArray = [[{id:3},{id:4}],[{id:1},{id:2}]];
       request(sails.hooks.http.app)
         .put('/admin/brands/resetWeight')
         .send({ data: idArray})
