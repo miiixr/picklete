@@ -333,13 +333,6 @@ describe("about product service", () => {
         let name = product['name'] + gmResult.name;
         name.should.be.include(queryObj.name);
       });
-      queryObj.name = 'B123';
-      queryResults = await ProductService.productQuery(queryObj);
-      queryResults = queryResults.rows;
-      queryResults.length.should.be.above(0);
-      await* queryResults.map( async (product) => {
-        product['name'].should.be.include(queryObj.name);
-      });
       done();
     } catch (e) {
       done(e);

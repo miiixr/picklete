@@ -367,12 +367,8 @@ module.exports = {
       if (Object.keys(query).length > 0) {
         // ================ ProductGm query condition ================
         if (query.name) {
-          GmQueryObj = {
-            $or: {
-              name : {
-                $like: `%${query.name}%`
-              }
-            }
+          GmQueryObj.name = {
+              $like: `%${query.name}%`
           }
         }
 
@@ -385,8 +381,6 @@ module.exports = {
           };
         }
 
-
-
         // ================ Dpt query condition ================
         if (query.dptId > 0 ) {
           DptQueryObj.id = query.dptId;
@@ -396,11 +390,6 @@ module.exports = {
           DptSubQueryObj.id = query.dptSubId;
         }
         // ================ Product query condition =============
-        if (query.name) {
-          ProductQueryObj.name = {
-              $like: `%${query.name}%`
-          }
-        }
 
         if (query.price) {
           ProductQueryObj.price = query.price;
@@ -435,12 +424,13 @@ module.exports = {
         }
 
         // 販售狀態 1:隱藏, 2:上架
-        if (query.isPublish != '') {
+        if (typeof query.isPublish != 'undefined') {
           ProductQueryObj.isPublish = (query.isPublish == 'false') ? null : true;
         }
       }
       // ================ merge queryObj ================
       queryObj = {
+        model: db.Product,
         where: ProductQueryObj,
         include: [{
           model: db.ProductGm,
@@ -455,9 +445,10 @@ module.exports = {
         }]
       };
 
-      console.log(' ======== queryObj =========');
-      console.log(ProductQueryObj);
-      console.log(GmQueryObj);
+
+      // console.log(' ======== queryObj =========');
+      // console.log(ProductQueryObj);
+      // console.log(GmQueryObj);
       let products = await db.Product.findAll(queryObj);
 
       // format datetime
