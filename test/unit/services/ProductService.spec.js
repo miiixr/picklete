@@ -326,13 +326,12 @@ describe("about product service", () => {
       let queryObj = {}, queryResults;
       queryObj.name = 'GroupA';
       queryResults = await ProductService.productQuery(queryObj);
-      queryResults = queryResults.rows;
-      queryResults.length.should.be.above(0);
-      await* queryResults.map( async (product) => {
-        let gmResult = await db.ProductGm.findById(product.ProductGmId);
-        let name = product['name'] + gmResult.name;
+      console.log(queryResults);
+      queryResults.count.should.be.above(0);
+      for (let product of queryResults.rows) {
+        let name = product['ProductGm']['name'];
         name.should.be.include(queryObj.name);
-      });
+      }
       done();
     } catch (e) {
       done(e);
