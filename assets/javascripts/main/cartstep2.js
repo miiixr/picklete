@@ -1,4 +1,24 @@
 (function ($) {
+  // for twzipcode plugin
+  // pre-load data from controller
+  var userZipcode = $('input[name="userZipcode"]').val();
+  var userCity = $('input[name="userCity"]').val();
+  var userRegion = $('input[name="userRegion"]').val();
+  // load twzipcode plugin itself
+  $('#twzipcodeUser').twzipcode({
+    'countyName'   : 'city',
+    'districtName' : 'region',
+    'zipcodeName'  : 'zipcode',
+    'css': [
+      'form-control width-auto inline-block',
+      'form-control width-auto inline-block',
+      'form-control width-auto inline-block'],
+    'zipcodeSel' : userZipcode,
+    'countySel' : userCity,
+    'districtSel' : userRegion
+  });
+  // end twzipcode
+
   // display shipping fee
   var shippingFeeDiv = $('#shippingFeeField');
   var shippingFeePrice = parseInt(Cookies.getJSON('shippingFee'));
@@ -84,5 +104,6 @@
   $( "input[name='order[user][username]']" ).change(function() {
     $("input[name='order[shipment][username]']").val($( "input[name='order[user][username]']" ).val());
   });
+
 
 }(jQuery));
