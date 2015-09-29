@@ -101,7 +101,7 @@ module.exports = {
     return orders;
   },
 
-  allPayCreate: async (order) => {
+  allPayCreate: async (order,paymentMethod) => {
     try {
       var time = Date.now();
       let domain = sails.config.domain || process.env.domain || 'http://localhost:1337';
@@ -120,10 +120,10 @@ module.exports = {
         TotalAmount: order.paymentTotalAmount,
         TradeDesc: 'Allpay push order test',
         ItemName: '',
-        ReturnURL: `${domain}allpay/paid`,
-        ChoosePayment: 'ATM',
-        ClientBackURL: `${domain}shop`,
-        PaymentInfoURL: `${domain}allpay/paymentinfo`
+        ReturnURL: domain + sails.config.allpay.ReturnURL,
+        ChoosePayment: paymentMethod,
+        ClientBackURL:  domain + sails.config.allpay.ClientBackURL,
+        PaymentInfoURL:  domain + sails.config.allpay.PaymentInfoURL
       };
       var itemArray = [];
       order.OrderItems.forEach((orderItem) => {

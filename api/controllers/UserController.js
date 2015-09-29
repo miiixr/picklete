@@ -67,12 +67,13 @@ let UserController = {
     // add an item for Shippings(運費) by kuyen
     let shippings = await ShippingService.findAll();
     // console.log('=== shippings ==>',shippings);
-
+    let paymentMethod = sails.config.allpay.paymentMethod;
     return res.view('main/cart', {
       company,
       brands,
       additionalPurchaseProductGms,
-      shippings
+      shippings,
+      paymentMethod
     });
   },
 
