@@ -98,6 +98,7 @@ let ShopController = {
 
       // recommend products
       let recommendProducts = await db.Product.findAll({
+        subQuery: false,
         include: [{
           model: db.ProductGm,
           required: true,
@@ -107,9 +108,9 @@ let ShopController = {
               id: dptId
             }
           }]
-        }]
+        }],
+        limit: 6
       });
-      recommendProducts = recommendProducts.slice(0,6);
 
       let products = await productGm.Products;
       var coverPhotos = JSON.parse(productGm.coverPhoto);
