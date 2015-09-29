@@ -69,8 +69,8 @@ let ProductController = {
       let page = await pagination.page(req);
       let offset = await pagination.offset(req);
 
-      let productsWithCount = await ProductService.productQuery(query);
-      let products = productsWithCount.rows.slice(offset, offset + limit);
+      let productsWithCount = await ProductService.productQuery(query, offset, limit);
+      let products = productsWithCount.rows;
 
       let result = {
         brands,

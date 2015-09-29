@@ -442,18 +442,20 @@ module.exports = {
             model: db.DptSub,
             where: DptSubQueryObj
           }]
-        }]
+        }],
+        offset: offset,
+        limit: limit
       };
 
 
       // console.log(' ======== queryObj =========');
       // console.log(ProductQueryObj);
       // console.log(GmQueryObj);
-      let products = await db.Product.findAll(queryObj);
+      let products = await db.Product.findAndCountAll(queryObj);
 
       // format datetime
-      products = products.map(ProductService.withImage);
-      for (let product of products) {
+      products.rows = products.rows.map(ProductService.withImage);
+      for (let product of products.rows) {
         product.createdAt = moment(product.createdAt).format("YYYY/MM/DD");
       }
 
@@ -464,6 +466,6 @@ module.exports = {
       // let msg = error.message;
       // return res.serverError({msg});
     }
-    return {rows: resultProducts, count: resultProducts.length };
+    return {rows: resultProducts.rows, count: resultProducts.count };
   }
 };
