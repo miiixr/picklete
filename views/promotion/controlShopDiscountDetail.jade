@@ -78,21 +78,37 @@ block body
       // /text-right
   // /well
   .row
-    .col-md-6
+    .col-md-4
       form.form-inline
         .form-group
           label 顯示
-          select.form-control
-            option 10
-            option 20
-            option 30
-            option 40
-            option 50
-          label 筆資料（共 90 筆）
+          select#limit.form-control
+            option(selected=(limit==10)) 10
+            option(selected=(limit==20)) 20
+            option(selected=(limit==30)) 30
+            option(selected=(limit==40)) 40
+            option(selected=(limit==50)) 50
+          label 筆資料（共 50 筆）
         // /form-group
     // /col-md-6
-    .col-md-6.desktop-text-right
-      a.btn.btn-green(href='shop-discount-add-item') 加入折扣商品
+    .col-md-8.desktop-text-right
+      form.form-inline(name="search", action="shop-buy-more-add-item", method="get")
+        .form-group.m-right-2
+          label 品牌名稱
+          select.form-control
+            option 品牌名稱
+            option 2
+            option 3
+            option 4
+            option 5
+        // /form-group
+        .form-group.m-right-2
+          .input-group
+            input#keyword.form-control(type='text',name="keyword",placeholder='輸入關鍵字',value)
+            input(type='hidden', name='page',value = page)
+            span.input-group-btn
+              button.btn.btn-default.p-left-2.p-right-2(type='button', onClick='$("form[name=\'search\']").submit()')
+                span.glyphicon.glyphicon-search
     // /col-md-6
   // /row
   hr.dashed-line
@@ -100,8 +116,7 @@ block body
     thead
       tr
         th
-          | 類型
-          span.caret
+          input(type='checkbox')
         th 主圖
         th
           | 商品名稱
@@ -119,35 +134,9 @@ block body
     tbody
       tr
         td
-          span.label.label-default 閃購
+          input.addSelect(type='checkbox' value= 1)
         td
           img.width-6(src='images/demo/shop-item-1-1.jpg')
-        td {product_name}
-        td JC1129
-        td 590
-        td
-          span.text-danger 413
-        td.text-right
-          a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
-            span.glyphicon.glyphicon-remove
-      tr
-        td
-          span.label.label-default 閃購
-        td
-          img.width-6(src='images/demo/shop-item-2-1.jpg')
-        td {product_name}
-        td JC1129
-        td 590
-        td
-          span.text-danger 413
-        td.text-right
-          a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
-            span.glyphicon.glyphicon-remove
-      tr
-        td
-          span.label.label-default 閃購
-        td
-          img.width-6(src='images/demo/shop-item-3-1.jpg')
         td {product_name}
         td JC1129
         td 590

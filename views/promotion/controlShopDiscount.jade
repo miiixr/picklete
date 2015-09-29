@@ -21,6 +21,9 @@ block body
       tr
         th 主圖
         th
+          | 類型
+          span.caret
+        th
           | 折扣名稱
           span.caret
         th
@@ -38,6 +41,8 @@ block body
         tr
           td
             img.width-10(src='images/demo/shop-item-1-1.jpg')
+          td
+            span.label.label-default 閃購
           td #{promotion.title}
           td #{promotion.type}
           td 
