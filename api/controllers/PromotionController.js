@@ -102,10 +102,43 @@ let PromotionController = {
       pageName: "shop-item-add"
     });
   },
-  controlShopDiscountDetail: function(req, res) {
-    res.view('promotion/controlShopDiscountDetail',{
-      pageName: "shop-discount-detail"
-    });
+  controlShopDiscountDetail: async(req, res) => {
+    try {
+      console.log('query',req.query);
+      let query = req.query;
+      let queryObj = {};
+
+      if(query.keyword)
+        queryObj.name = { 'like': '%'+query.keyword+'%'};
+      else
+        query.keyword = ''
+
+      let limit = await pagination.limit(req);
+      let page = await pagination.page(req);
+      let offset = await pagination.offset(req);
+
+      let findProductGm = await db.ProductGm.findAndCountAll({
+        where: queryObj,
+        offset: offset,
+        limit: limit
+      });
+
+      console.log("!!!",findProductGm);
+
+      res.view('promotion/controlShopDiscountDetail',{
+        pageName: "shop-discount-detail",
+        query,
+        limit,
+        page,
+        totalPages: Math.ceil(findProductGm.count / limit),
+        totalRows: findProductGm.count
+      });
+    } catch (e) {
+      console.error(e.stack);
+      let {message} = e;
+      let success = false;
+      return res.serverError({message, success});
+    }
   },
   controlShopDiscountDetail2: function(req, res) {
     res.view('promotion/controlShopDiscountDetail2',{
