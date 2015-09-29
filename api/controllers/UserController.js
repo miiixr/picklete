@@ -28,6 +28,18 @@ let UserController = {
     });
   },
 
+  loginStatus: async(req, res) => {
+    try {
+        let loginStatus = UserService.getLoginState(req);
+        return res.ok({loginStatus});
+    } catch (e) {
+      console.error(e.stack);
+      let {message} = e;
+      let success = false;
+      return res.serverError({message, success});
+    }
+  },
+
   cart: async (req, res) => {
     console.log('=== req.cookies ===', req.cookies.picklete_cart);
 
