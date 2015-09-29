@@ -205,23 +205,9 @@ hr
       span.text-danger *
     .col-sm-9
       #twzipcode
-        div(data-role='city', data-name='city')
-        div(data-role='region', data-name='region')
-
-      //- select(name='city', required).form-control.width-auto.inline-block
-      //-   option 台北市
-      //-   option 2
-      //-   option 3
-      //-   option 4
-      //-   option 5
-      //- select(name='region', required).form-control.width-auto.inline-block
-      //-   option 大安區
-      //-   option 2
-      //-   option 3
-      //-   option 4
-      //-   option 5
-      //- input.form-control.width-12.inline-block(type='text', value=user.zipcode, name='zipcode', required)
-      
+        div(value=user.city, name='city')
+        div(value=user.region, name='region')
+        div(value=user.zipcode, name='zipcode')
     .col-sm-9.col-sm-offset-3.m-top-3
       input.form-control(type='text', value=user.address, name='address', required)
   // /form-group

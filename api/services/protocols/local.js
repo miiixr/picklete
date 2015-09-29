@@ -30,9 +30,9 @@ exports.register = async function(req, res, next) {
     });
 
     let newUser = {
-      username: username,
+      username: newUserParams.username || email,
       email: email,
-      fullName: username,
+      fullName: newUserParams.fullName,
       gender: newUserParams.gender || 'none',
       RoleId: role.id,
       mobile: newUserParams.mobile,
@@ -42,6 +42,7 @@ exports.register = async function(req, res, next) {
       birthDay: newUserParams.birthDay,
       city: newUserParams.city,
       region: newUserParams.region,
+      zipcode: newUserParams.zipcode,
       address: newUserParams.address,
       privacyTermsAgree: newUserParams.privacyTermsAgree || false,
     }
