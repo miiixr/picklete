@@ -430,7 +430,7 @@ module.exports = {
       }
       // ================ merge queryObj ================
       queryObj = {
-        model: db.Product,
+        subQuery: false,
         where: ProductQueryObj,
         include: [{
           model: db.ProductGm,

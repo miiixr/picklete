@@ -84,11 +84,12 @@ let ProductController = {
         totalRows: productsWithCount.count
       };
 
-      console.log('========= Product Query Parameters =========');
-      console.log('limit = ' + limit);
-      console.log('page = ' + page);
-      console.log('offset = ' + offset);
-      console.log('count = ' + productsWithCount.count);
+      // console.log('========= Product Query Parameters =========');
+      // console.log('limit = ' + limit);
+      // console.log('page = ' + page);
+      // console.log('offset = ' + offset);
+      // console.log('count = ' + productsWithCount.count);
+      // console.log(' products = ' + JSON.stringify(products,null,4));
 
       if (query.responseType && query.responseType.toLowerCase() == 'json') {
         return res.ok(result);
