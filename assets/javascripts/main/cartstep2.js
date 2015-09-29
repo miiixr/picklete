@@ -1,22 +1,41 @@
 (function ($) {
-  // for twzipcode plugin
+  // about twzipcode plugin
   // pre-load data from controller
   var userZipcode = $('input[name="userZipcode"]').val();
   var userCity = $('input[name="userCity"]').val();
   var userRegion = $('input[name="userRegion"]').val();
-  // load twzipcode plugin itself
-  $('#twzipcodeUser').twzipcode({
-    'countyName'   : 'city',
-    'districtName' : 'region',
-    'zipcodeName'  : 'zipcode',
-    'css': [
-      'form-control width-auto inline-block',
-      'form-control width-auto inline-block',
-      'form-control width-auto inline-block'],
-    'zipcodeSel' : userZipcode,
-    'countySel' : userCity,
-    'districtSel' : userRegion
-  });
+  // load twzipcode plugin itself - user side
+  var twzipcodeUser = function(){
+    $('#twzipcodeUser').twzipcode({
+      'countyName'   : 'order[user][city]',
+      'districtName' : 'order[user][region]',
+      'zipcodeName'  : 'order[user][zipcode]',
+      'css': [
+        'form-control width-auto inline-block',
+        'form-control width-auto inline-block',
+        'form-control width-auto inline-block'],
+      'zipcodeSel' : userZipcode,
+      'countySel' : userCity,
+      'districtSel' : userRegion
+    });
+  };
+  twzipcodeUser();
+  // load twzipcode plugin itself - shipment side
+  var twzipcodeShipment = function(){
+    $('#twzipcodeShipment').twzipcode({
+      'countyName'   : 'order[shipment][city]',
+      'districtName' : 'order[shipment][region]',
+      'zipcodeName'  : 'order[shipment][zipcode]',
+      'css': [
+        'form-control width-auto inline-block',
+        'form-control width-auto inline-block',
+        'form-control width-auto inline-block'],
+      'zipcodeSel' : userZipcode,
+      'countySel' : userCity,
+      'districtSel' : userRegion
+    });
+  };
+  twzipcodeShipment();
   // end twzipcode
 
   // display shipping fee
@@ -105,5 +124,20 @@
     $("input[name='order[shipment][username]']").val($( "input[name='order[user][username]']" ).val());
   });
 
+  // about giftly - show a new form and ship it as a gift.
+  $('input[name="giftly"]').change(function() {
+    if(this.checked){
+      $("#formShipment").show();
+      // $("#userAddress").hide();
+      // $('#twzipcodeUser').twzipcode('destroy');
+      // twzipcodeShipment();
+    }else{
+      $("#formShipment").hide();
+      // $("#userAddress").show();
+      // $('#twzipcodeShipment').twzipcode('destroy');
+      // twzipcodeUser();
+    }
+  });
+  // end giftly
 
 }(jQuery));
