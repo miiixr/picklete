@@ -23,6 +23,7 @@ module.exports.policies = {
   'UserController':
     controlLogin: ['global']
     cart: []
+    loginStatus:['global']
 
   'MainController': ['global']
 

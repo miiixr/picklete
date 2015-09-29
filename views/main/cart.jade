@@ -56,9 +56,8 @@ block body
                       span.text-danger *
                     select#paymentMethod.form-control
                       option(value='0') 請選擇
-                      option(value='credit') 信用卡
-                      option(value='atm') ATM
-                      option(value='cvs') 超商付款
+                      each method in paymentMethod
+                        option(value= method.code) #{method.name}
                   // /form-group
                 // /col-sm-4
               // /row

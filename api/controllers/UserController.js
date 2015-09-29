@@ -28,6 +28,18 @@ let UserController = {
     });
   },
 
+  loginStatus: async(req, res) => {
+    try {
+        let loginStatus = UserService.getLoginState(req);
+        return res.ok({loginStatus});
+    } catch (e) {
+      console.error(e.stack);
+      let {message} = e;
+      let success = false;
+      return res.serverError({message, success});
+    }
+  },
+
   cart: async (req, res) => {
     console.log('=== req.cookies ===', req.cookies.picklete_cart);
 
@@ -55,12 +67,13 @@ let UserController = {
     // add an item for Shippings(運費) by kuyen
     let shippings = await ShippingService.findAll();
     // console.log('=== shippings ==>',shippings);
-
+    let paymentMethod = sails.config.allpay.paymentMethod;
     return res.view('main/cart', {
       company,
       brands,
       additionalPurchaseProductGms,
-      shippings
+      shippings,
+      paymentMethod
     });
   },
 
