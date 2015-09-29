@@ -186,7 +186,9 @@ module.exports = {
 
       let {user} = newOrder;
 
-      user.address = `${user.zipcode} ${user.city}${user.district}${user.address}`;
+      user.address = `${user.zipcode} ${user.city}${user.region}${user.address}`;
+
+      console.log('\n\n=== user ===>\n',user);
 
       let userFindOrCreateResult = await db.User.findOrCreate({
         where: {
@@ -264,8 +266,8 @@ module.exports = {
         let createdOrderItemIds = createdOrderItems.map((orderItem) => orderItem.id);
 
         let {shipment} = newOrder;
-        shipment.address = `${shipment.zipcode} ${shipment.city}${shipment.district}${shipment.address}`;
-
+        shipment.address = `${shipment.zipcode} ${shipment.city}${shipment.region}${shipment.address}`;
+  
         let createdOrder = await db.Order.create(thisOrder, {transaction});
         let createdShipment = await db.Shipment.create(shipment, {transaction});
 

@@ -164,6 +164,7 @@ let ShopController = {
         });
       }
       else{
+        // console.log('\n\n=== userData ==>\n',userData);
         res.view("main/cart-step-2",{userData});
       }
     } catch (e) {
