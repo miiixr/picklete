@@ -14,7 +14,7 @@ block body
               li 收藏我的希望清單
           // /col-md-3
           .col-md-9
-            form.border-block-3.p-40(action='/auth/local/register', method='post')
+            form.border-block-3.p-40(action='/auth/local/register', method='post', id='registerForm')
               include ./_form
               .row
                 .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3.col-lg-4.col-lg-offset-4.text-center
@@ -23,7 +23,7 @@ block body
               
               .row.checkbox
                 label
-                  input(type='checkbox', name='privacyTermsAgree', value='true')
+                  input(type='checkbox', name='privacyTermsAgree', value='true', required)
                   |  我同意隱私權條款（
                   a(href='#') 願聞其詳
                     | ）
