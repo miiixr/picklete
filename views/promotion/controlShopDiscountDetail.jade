@@ -1,6 +1,13 @@
 extends ../_layout_auth
+include ../mixins/pagination
 
 block body
+  -console.log("productGms : " + productGms);
+  -console.log("query : " + query);
+  -console.log("limit : " + limit);
+  -console.log("page : " + page);
+  -console.log("totalPages : " + totalPages);
+  -console.log("totalRows : " + totalRows);
   h2.m-bottom-6 閃購活動設定
   .well.control-well.p-30.m-bottom-8
     form.form-horizontal
@@ -82,17 +89,11 @@ block body
       form.form-inline
         .form-group
           label 顯示
-          select#limit.form-control
-            option(selected=(limit==10)) 10
-            option(selected=(limit==20)) 20
-            option(selected=(limit==30)) 30
-            option(selected=(limit==40)) 40
-            option(selected=(limit==50)) 50
-          label 筆資料（共 50 筆）
+            +pagination-limit
         // /form-group
     // /col-md-6
     .col-md-8.desktop-text-right
-      form.form-inline(name="search", action="shop-buy-more-add-item", method="get")
+      form.form-inline.with-pagination(name="search", action="shop-discount-detail", method="get")
         .form-group.m-right-2
           label 品牌名稱
           select.form-control
@@ -105,7 +106,7 @@ block body
         .form-group.m-right-2
           .input-group
             input#keyword.form-control(type='text',name="keyword",placeholder='輸入關鍵字',value)
-            input(type='hidden', name='page',value = page)
+            pagination-fields(page, limit)
             span.input-group-btn
               button.btn.btn-default.p-left-2.p-right-2(type='button', onClick='$("form[name=\'search\']").submit()')
                 span.glyphicon.glyphicon-search
@@ -132,30 +133,27 @@ block body
           span.caret
         th
     tbody
-      tr
-        td
-          input.addSelect(type='checkbox' value= 1)
-        td
-          img.width-6(src='images/demo/shop-item-1-1.jpg')
-        td {product_name}
-        td JC1129
-        td 590
-        td
-          span.text-danger 413
-        td.text-right
-          a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
-            span.glyphicon.glyphicon-remove
+      each productGm in productGms.rows
+        tr
+          td
+            input.addSelect(type='checkbox' value= productGm.id)
+          td
+            img.width-6(src= productGm.coverPhoto)
+          td= productGm.name
+          td= productGm.id
+          td 590
+          td
+            span.text-danger 413
+          td.text-right
+            a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
+              span.glyphicon.glyphicon-remove
   hr.dashed-line
   .text-center
     //
       pagination-block
       ==================================================
     ul.list-inline.m-bottom-0.m-top-1
-      li.border-right-1.p-right-2
-        a(href='#') 上一頁
-      li.border-right-1.p-right-2 第 15 之 20
-      li
-        a(href='#') 下一頁
+      +pagination-simple-pager(page, totalPages)
   // /text-center
 block js
-  script(src="/javascripts/admin/discount.js")
+  script(src='/javascripts/common/pagination.js')

@@ -117,21 +117,22 @@ let PromotionController = {
       let page = await pagination.page(req);
       let offset = await pagination.offset(req);
 
-      let findProductGm = await db.ProductGm.findAndCountAll({
+      let productGms = await db.ProductGm.findAndCountAll({
         where: queryObj,
         offset: offset,
         limit: limit
       });
 
-      console.log("!!!",findProductGm);
-
+      console.log("!!!",productGms);
+      console.log("!!!",query);
       res.view('promotion/controlShopDiscountDetail',{
         pageName: "shop-discount-detail",
+        productGms,
         query,
         limit,
         page,
-        totalPages: Math.ceil(findProductGm.count / limit),
-        totalRows: findProductGm.count
+        totalPages: Math.ceil(productGms.count / limit),
+        totalRows: productGms.count
       });
     } catch (e) {
       console.error(e.stack);
