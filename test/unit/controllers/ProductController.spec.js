@@ -163,7 +163,6 @@ describe("about Product", () => {
         return done(body)
       }
       res.statusCode.should.equal(200);
-      res.body.pageName.should.be.equal("/admin/goods");
       res.body.query.responseType.should.be.equal("json");
       res.body.brands.forEach(brand => {
         brand.name.should.be.String;
