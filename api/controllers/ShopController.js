@@ -2,65 +2,37 @@
 let ShopController = {
 
   list: async(req,res) => {
-    let dptSubId = req.query.dptSubId || 0;
-    let dptId = req.query.dptId || 0;
-    let brandId = req.query.brand || 0;
 
-    let products;
+    let query = req.query
 
-
-    let includeDpt = {
-      model: db.Dpt,
-      where: {}
-    }
-
-    let includeDptSub = {
-      model: db.DptSub,
-      where: {}
-    }
-    if(dptId > 0) includeDpt.where.id = dptId;
-    if(dptSubId > 0) includeDptSub.where.id = dptSubId;
-
-
-
+    let limit = await pagination.limit(req);
+    let page = await pagination.page(req);
+    let offset = await pagination.offset(req);
 
     try {
-      if(brandId == 0){
-        products = await db.Product.findAll({
-          include: [{
-            model: db.ProductGm,
-            required:true,
-            include: [
-              includeDpt,
-              includeDptSub
-            ],
-          }],
-          order: [['id', 'ASC']]
-        });
-      }
-      else{
+      let productsWithCount = await ProductService.productQuery(query, offset, limit);
+      let products = productsWithCount.rows;
 
-        products = await ShopService.findBrand(brandId);
-
-      }
 
       let brands = await db.Brand.findAll({order: 'weight ASC',});
+      let dpts = await DptService.findAll();
 
-      console.log('products.length', products.length);
 
-      let dpts = await db.Dpt.findAll({
-        include: [{
-          model: db.DptSub
-        }],
-        order: ['Dpt.weight', 'DptSubs.weight']
-      })
-
-      res.view('main/shop', {
-        dpts,
+      let result = {
         brands,
-        products: products || {},
-        pageName: 'main/shop'
-      });
+        dpts,
+        query,
+        products,
+        limit: limit,
+        page: page,
+        totalPages: Math.ceil(productsWithCount.count / limit),
+        totalRows: productsWithCount.count
+      };
+
+      console.log('=== totalPages ===', result.totalPages);
+      console.log('=== totalRows ===', result.totalRows);
+
+      res.view('main/shop', result);
 
 
     } catch (e) {

@@ -54,20 +54,15 @@ let ProductController = {
   // list all goods result, include query items
   list: async (req, res) => {
     try {
-      let brands = await db.Brand.findAll();
-
-      let dpts = await db.Dpt.findAll({
-        include: [{
-          model: db.DptSub
-        }],
-        order: ['Dpt.weight', 'DptSubs.weight']
-      });
-
-      let query = req.query;
 
       let limit = await pagination.limit(req);
       let page = await pagination.page(req);
       let offset = await pagination.offset(req);
+
+      let brands = await db.Brand.findAll();
+      let dpts = await DptService.findAll();
+
+      let query = req.query;
 
       let productsWithCount = await ProductService.productQuery(query, offset, limit);
       let products = productsWithCount.rows;
@@ -77,7 +72,6 @@ let ProductController = {
         dpts,
         query,
         products,
-        pageName: "/admin/goods",
         limit: limit,
         page: page,
         totalPages: Math.ceil(productsWithCount.count / limit),
