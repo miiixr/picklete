@@ -69,8 +69,8 @@ let ProductController = {
       let page = await pagination.page(req);
       let offset = await pagination.offset(req);
 
-      let productsWithCount = await ProductService.productQuery(query);
-      let products = productsWithCount.rows.slice(offset, offset + limit);
+      let productsWithCount = await ProductService.productQuery(query, offset, limit);
+      let products = productsWithCount.rows;
 
       let result = {
         brands,
@@ -84,11 +84,12 @@ let ProductController = {
         totalRows: productsWithCount.count
       };
 
-      console.log('========= Product Query Parameters =========');
-      console.log('limit = ' + limit);
-      console.log('page = ' + page);
-      console.log('offset = ' + offset);
-      console.log('count = ' + productsWithCount.count);
+      // console.log('========= Product Query Parameters =========');
+      // console.log('limit = ' + limit);
+      // console.log('page = ' + page);
+      // console.log('offset = ' + offset);
+      // console.log('count = ' + productsWithCount.count);
+      // console.log(' products = ' + JSON.stringify(products,null,4));
 
       if (query.responseType && query.responseType.toLowerCase() == 'json') {
         return res.ok(result);
