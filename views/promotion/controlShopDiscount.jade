@@ -42,9 +42,12 @@ block body
           td
             img.width-10(src='images/demo/shop-item-1-1.jpg')
           td
-            span.label.label-default 閃購
+            -if(promotion.type == "flash")
+              span.label.label-default 閃購
+            -else
+              span.label.label-default 一般
           td #{promotion.title}
-          td #{promotion.type}
+          td #{promotion.discountType}
           td 
             span= sails.moment(promotion.startDate).format('YYYY/MM/DD hh:mm')
             span= " - "

@@ -24,8 +24,9 @@ let PromotionController = {
   create: async (req, res) => {
     let promotion = req.body;
     try {
+      console.log("!!!",promotion);
       await PromotionService.create(promotion);
-      return res.redirect('promotion/controlShopDiscount');
+      return res.redirect('admin/shop-discount');
     } catch (error) {
       console.error('=== create error stack ==>',error.stack);
       let msg = error.message;

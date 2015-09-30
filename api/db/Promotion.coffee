@@ -4,6 +4,10 @@ module.exports = (sequelize, DataTypes) ->
     title: DataTypes.STRING
     description: DataTypes.STRING
     type: DataTypes.ENUM(
+      'flash',
+      'general'
+    )
+    discountType: DataTypes.ENUM(
       'price',
       'discount'
     )

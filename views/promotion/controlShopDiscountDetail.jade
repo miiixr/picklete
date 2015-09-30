@@ -1,6 +1,13 @@
 extends ../_layout_auth
 include ../mixins/pagination
-
+//- var promotion = {
+//-   title : 'best price!',
+//-   description : 'this is a test promotion',
+//-   startDate : new Date(2015, 9, 8),
+//-   endDate : new Date(2015, 9, 20),
+//-   price : 2999.97,
+//-   type : 'price'
+//- }
 block body
   -console.log("productGms : " + productGms);
   -console.log("query : " + query);
@@ -10,11 +17,11 @@ block body
   -console.log("totalRows : " + totalRows);
   h2.m-bottom-6 閃購活動設定
   .well.control-well.p-30.m-bottom-8
-    form.form-horizontal
+    form#shopDiscount.form-horizontal(action="/admin/shopDiscount/create", method="post")
       .form-group
         label.col-sm-3.col-md-2.control-label 活動名稱
         .col-sm-9.col-md-10
-          input.form-control(type='text')
+          input.form-control(type='text',name='title',form='shopDiscount')
         // /col-sm-10
       // /form-group
       .form-group
@@ -33,7 +40,7 @@ block body
                 span.btn.btn-default.btn-sm.btn-file
                   span.fileinput-new Select image
                   span.fileinput-exists Change
-                  input(type='file', name='...')
+                  input(type='file', name='...',form='shopDiscount')
                 a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
               // /fileinput-btn
             // /fileinput
@@ -45,11 +52,11 @@ block body
       .form-group
         label.col-sm-3.col-md-2.control-label 活動時間
         .col-sm-4.col-md-3
-          input.form-control(type='datetime-local')
+          input.form-control(type='date',name='startDate',form='shopDiscount')
         .col-sm-1.col-md-1.p-left-0.p-right-0.text-center
           p.form-control-static 至
         .col-sm-4.col-md-3
-          input.form-control(type='datetime-local')
+          input.form-control(type='date',name='endDate',form='shopDiscount')
         .col-sm-9.col-sm-offset-3.col-md-3.col-md-offset-0
           .checkbox
             label
@@ -61,27 +68,41 @@ block body
         .col-sm-4.col-md-3
           .radio
             label
-              input#optionsRadios1(type='radio', name='optionsRadios', value='option1', checked='')
-              input.form-control(type='text', placeholder='請輸入折扣金額')
+              input#optionsRadios1(type='radio', name='discountType', value='price', checked='',form='shopDiscount')
+              input.form-control(type='text',name='price', placeholder='請輸入折扣金額',form='shopDiscount')
         .col-sm-1.col-md-1
         .col-sm-4.col-md-3
           .radio
             label
-              input#optionsRadios2(type='radio', name='optionsRadios', value='option2')
+              input#optionsRadios2(type='radio', name='discountType', value='discount',form='shopDiscount')
               .input-group.width-12
-                input.form-control(type='text')
+                input.form-control(type='text',name='discount',form='shopDiscount')
                 span.input-group-addon 折
               // /input-group
       // /form-group
       .form-group
+        label.col-sm-3.col-md-2.control-label 類型設定
+        .col-sm-4.col-md-3
+          .radio
+            label
+              input(type='radio', name='type', value='flash', checked='',form='shopDiscount')
+              | 閃購
+        .col-sm-1.col-md-1
+        .col-sm-4.col-md-3
+          .radio
+            label
+              input(type='radio', name='type', value='general',form='shopDiscount') 
+              | 一般
+      // /form-group
+      .form-group
         label.col-sm-3.col-md-2.control-label 活動文案
         .col-sm-9.col-md-10
-          textarea.form-control(rows='3')
+          textarea.form-control(rows='3',form='shopDiscount',name='description')
         // /col-sm-9
       // /form-group
       .m-top-6.text-right
         a.btn.btn-link.delete-link.btn-lg(href='#', data-toggle='modal', data-target='#modal-delete') 刪除
-        a.btn.btn-green.btn-lg(href='#') 確定
+        input.btn.btn-green.btn-lg(type='submit',form='shopDiscount',value='確認')
       // /text-right
   // /well
   .row
