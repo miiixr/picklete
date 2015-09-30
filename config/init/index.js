@@ -21,7 +21,6 @@ module.exports = {
     let roleUserOptions = {where: {authority: 'user'}, defaults: roleUser}
     var createRoleUser = (await db.Role.findOrCreate(roleUserOptions))[0];
 
-
     var roleAdmin = {
       authority: 'admin',
       comment: 'site admin'
@@ -50,22 +49,6 @@ module.exports = {
 
     await db.Passport.findOrCreate(passportOptions);
 
-    let like = [
-      {title: '我是文具控'},
-      {title: '沒有咖啡醒不來'},
-      {title: '流浪的迷途，是旅行的終點 喝午茶、聊是非'},
-      {title: '給孩子最好的一切'},
-      {title: '絕不錯過最新的科技產品！ 妝點居家生活'},
-      {title: '音樂是我的靈魂'},
-      {title: '享受美學是我的生活態度 寵物就是兒女'},
-      {title: '皮革的溫度無法取代'},
-      {title: '我總是不小心造成流行 空氣中香味瀰漫'},
-      {title: '我運動所以我存在'},
-      {title: '呼朋引伴、派對 all night 上班偷逛網購...！'},
-      {title: '微醺是種享受、宿醉好想請假'}
-    ];
-
-    await db.Like.bulkCreate(like);
     await createdAdmin.setLikes([1, 2, 3, 4, 5]);
 
     if(sails.config.initData === 'production' && production !== undefined)
@@ -82,6 +65,23 @@ module.exports = {
       if(sails.config.initData === 'exma')
         await exma.createTestData();
     }
+
+    let like = [
+      {title: '我是文具控'},
+      {title: '沒有咖啡醒不來'},
+      {title: '流浪的迷途，是旅行的終點 喝午茶、聊是非'},
+      {title: '給孩子最好的一切'},
+      {title: '絕不錯過最新的科技產品！ 妝點居家生活'},
+      {title: '音樂是我的靈魂'},
+      {title: '享受美學是我的生活態度 寵物就是兒女'},
+      {title: '皮革的溫度無法取代'},
+      {title: '我總是不小心造成流行 空氣中香味瀰漫'},
+      {title: '我運動所以我存在'},
+      {title: '呼朋引伴、派對 all night 上班偷逛網購...！'},
+      {title: '微醺是種享受、宿醉好想請假'}
+    ];
+
+    await db.Like.bulkCreate(like);
 
     var roleUser = {
       authority: 'user',
