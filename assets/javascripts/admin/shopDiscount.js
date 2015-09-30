@@ -17,7 +17,7 @@ $(function() {
       if(dom.checked){
         select.push(dom);
         $("#shopDiscount").append(
-          '<input type=\'hidden\' form=\'shopDiscount\' name=\'productGMIds[]\' value =\''+ dom.value +'\' >'
+          '<input type=\'hidden\' form=\'shopDiscount\' name=\'productGmIds[]\' value =\''+ dom.value +'\' >'
         );
       }
     });

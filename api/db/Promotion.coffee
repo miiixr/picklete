@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) ->
     discount: DataTypes.FLOAT
     price: DataTypes.FLOAT
   }, classMethods: associate: (models) ->
-    Promotion.hasMany models.Product
+    Promotion.belongsToMany models.ProductGm, through: 'PromotionProductGm'
     return
   )
   return Promotion

@@ -24,8 +24,12 @@ let PromotionController = {
   create: async (req, res) => {
     let promotion = req.body;
     try {
-      console.log("!!!",promotion);
-      await PromotionService.create(promotion);
+      let createdPromotion = await PromotionService.create(promotion);
+      let products = await* promotion.productGmIds.map(async (productGmId)=>{
+        let findProductGm = await db.ProductGm.findById(productGmId);
+        await createdPromotion.setProductGms([findProductGm]);
+        return createdPromotion;
+      });
       return res.redirect('admin/shop-discount');
     } catch (error) {
       console.error('=== create error stack ==>',error.stack);
