@@ -72,6 +72,7 @@ let ProductController = {
         dpts,
         query,
         products,
+        pageName: "/admin/goods",
         limit: limit,
         page: page,
         totalPages: Math.ceil(productsWithCount.count / limit),
