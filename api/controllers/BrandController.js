@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 let BrandController = {
 
   create: async (req, res) => {
@@ -37,30 +39,14 @@ let BrandController = {
 
   list: async (req, res) => {
 
-    let brandsGood = await db.Brand.findAll({
-      where: {
-        type: 'PRIME_GOOD'
-      }
-    });
-
-    let brandsAgent = await db.Brand.findAll({
-      where: {
-        type: 'AGENT'
-      }
-    });
-
-    let brandLock = await db.Brand.findAll({
-      where: {
-        type: 'OTHER'
-      }
-    });
+    let brands = await BrandService.list();
 
     // return res.ok(brands);
-    res.view("admin/brandList", {
-      pageName: "/admin/brands",
-      brands: brandsGood,
-      agents: brandsAgent,
-      brandLocks: brandLock
+    res.view('admin/brandList', {
+      pageName: '/admin/brands',
+      brands: brands.brandsGood,
+      agents: brands.brandsAgent,
+      brandLocks: brands.brandLock,
     });
   },
 
@@ -107,7 +93,7 @@ let BrandController = {
 
       if ( ! brandId)
         return res.redirect("/");
-    
+
       let brand = await db.Brand.findOne({ where: {id: brandId}});
 
       return res.view("main/brands", {
@@ -115,9 +101,9 @@ let BrandController = {
       });
     } catch (e) {
       let msg = e.message;
-      return res.serverError({msg});      
+      return res.serverError({msg});
     }
-    
+
   },
 
   delete: async (req, res) => {
@@ -132,9 +118,31 @@ let BrandController = {
       return res.redirect("/admin/brands");
     } catch(e){
       let msg = e.message;
-      return res.serverError({msg}); 
+      return res.serverError({msg});
     }
-  }
+  },
+
+  resetWeight: async (req, res) => {
+    try {
+      let brandIdArray = req.body.data;
+      let weight = 1;
+      for (let count = 0; count < brandIdArray.length; count++) {
+        await* brandIdArray[count].map(async(brandId) => {
+
+          let brand = await db.Brand.findById(brandId.id);
+
+          brand.weight = weight;
+          weight += 1;
+          return await brand.save();
+        });
+      }
+
+      return res.ok();
+    } catch (e) {
+      let msg = e.message;
+      return res.serverError({msg});
+    }
+  },
 
 };
 module.exports = BrandController;

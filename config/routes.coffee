@@ -46,6 +46,7 @@ module.exports.routes = {
   'post /admin/brands/update' : 'BrandController.update'
   'post /admin/brands/delete/' : 'BrandController.delete'
 
+
   'get /admin/exclusive' : 'SelectionActiveController.list'
   'post /admin/exclusive' : 'SelectionActiveController.update'
 
@@ -71,6 +72,7 @@ module.exports.routes = {
 
   'get /brands' : view: 'main/brands'
   'get /user/cart' : 'UserController.cart'
+  'get /user/loginStatus' : 'UserController.loginStatus'
   'get /user/cart-step-2' : 'ShopController.cartStep2'
   'get /user/cart-done' : view: 'main/cart-done'
 
@@ -428,6 +430,14 @@ module.exports.routes = {
   'post /api/shop-code/delete/:id': {
     controller: "ShopCodeController",
     action: "delete",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+  'put /admin/brands/resetWeight' : {
+    controller: "BrandController",
+    action: "resetWeight",
     cors: {
      origin: "http://localhost:1337, http://localhost:8080",
      credentials: false

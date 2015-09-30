@@ -14,7 +14,7 @@ module.exports = (req, res, next) ->
   .then (result) ->
     res.locals.company = result.dataValues;
   .then () ->
-    db.Brand.findAll()
+    db.Brand.findAll({order: 'weight ASC',})
     .then (brands) ->
       res.locals.brands = brands;
       next()

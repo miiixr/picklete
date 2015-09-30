@@ -145,8 +145,22 @@
     Cookies.set('buyMoreIds', buymoreIds);
     if($('#shippingFeeSelect').val() == 0 || $('#paymentMethod').val()==0)
       alert("請確認運送、付款方式");
-    else
-      window.location.replace("/user/cart-step-2");
+    else{
+      $.ajax({
+          url : '/user/loginStatus',
+          type: "get",
+          data : null,
+          success:function(data, textStatus, jqXHR)
+          {
+            console.log('=== data ==>',data.loginStatus);
+            if(data.loginStatus){
+              window.location.replace("/user/cart-step-2");
+            }else{
+              $('#modal-login').modal('show')
+            }
+          }
+      });
+    }
   });
 
   cartViewerInit();

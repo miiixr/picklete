@@ -41,10 +41,10 @@ let ShopController = {
       else{
 
         products = await ShopService.findBrand(brandId);
-        
+
       }
-      
-      let brands = await db.Brand.findAll();
+
+      let brands = await db.Brand.findAll({order: 'weight ASC',});
 
       console.log('products.length', products.length);
 
@@ -84,10 +84,33 @@ let ShopController = {
               { model: db.DptSub}
             ]
           });
-      let product = await db.Product.findOne({where: {id: productId}});
+      let product = await db.Product.findOne({
+            include:[{
+              model: db.ProductGm,
+              include: [ db.Dpt ]}],
+            where: {id: productId}
+          });
 
       productGm = productGm.dataValues;
       product = product.dataValues;
+
+      let dptId = product.ProductGm.Dpts[0].id;
+
+      // recommend products
+      let recommendProducts = await db.Product.findAll({
+        subQuery: false,
+        include: [{
+          model: db.ProductGm,
+          required: true,
+          include: [{
+            model: db.Dpt,
+            where: {
+              id: dptId
+            }
+          }]
+        }],
+        limit: 6
+      });
 
       let products = await productGm.Products;
       var coverPhotos = JSON.parse(productGm.coverPhoto);
@@ -116,7 +139,8 @@ let ShopController = {
           product: product,
           photos: photos,
           services: services,
-          coverPhotos: coverPhotos
+          coverPhotos: coverPhotos,
+          recommendProducts
          };
 
         return res.view("main/shopProduct", resData);
@@ -135,35 +159,10 @@ let ShopController = {
     try {
       let userData = UserService.getLoginUser(req);
       if(!userData){
-        let likes = await db.Like.findAll();
-        let defaultUser = {
-          username: '',
-          email: '',
-          fullName: '',
-          gender: '',
-          mobile: '',
-          birthYear: '1983',
-          birthMonth: '01',
-          birthDay: '01',
-          city: '',
-          region: '',
-          zipcode: '',
-          address: '',
-          privacyTermsAgree: false,
-          userLikes: []
-        }
-        let tempUser = req.flash('form');
-        let user = defaultUser;
-        if(tempUser.length)
-          user = tempUser[0];
-        if(user.userLikes == undefined) user.userLikes = []
-        res.view('user/register.jade', {
-          errors: req.flash('error'),
-          likes,
-          user
-        });
+        res.redirect('/register');
       }
       else{
+        // console.log('\n\n=== userData ==>\n',userData);
         res.view("main/cart-step-2",{userData});
       }
     } catch (e) {
