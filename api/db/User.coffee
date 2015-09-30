@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) ->
     address: DataTypes.STRING
     city: DataTypes.STRING
     region: DataTypes.STRING
-    zipcode: DataTypes.STRING
+    zipcode: DataTypes.INTEGER
     address: DataTypes.STRING
     comment: DataTypes.STRING
     orderSyncToken: DataTypes.STRING

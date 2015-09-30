@@ -21,7 +21,7 @@ block body
               select.form-control(name='brandId')
                 option(value='') 選擇品牌
                 each brand, index in brands
-                  option(value='#{brand.id}', selected=brand.id == good.ProductGm.brandId) #{brand.name}
+                  option(value='#{brand.id}', selected=brand.id == good.ProductGm.BrandId) #{brand.name}
             label.radio-inline
               input#brandType(type='radio', name='brandType', value='custom')
               input.form-control(type='text', name='customBrand', value='', placeholder='自訂品牌名稱')

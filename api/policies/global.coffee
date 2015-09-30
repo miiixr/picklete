@@ -1,5 +1,7 @@
 module.exports = (req, res, next) ->
 
+
+  req.setLocale(req.language);
   if res.locals and res.locals.company
     return next()
 

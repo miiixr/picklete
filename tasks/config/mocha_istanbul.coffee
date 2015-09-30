@@ -14,9 +14,9 @@ module.exports = (grunt) ->
     ]
     options:
       coverage: true
-      check:
-        lines: 45
-        statements: 45
+      # check:
+      #   lines: 45
+      #   statements: 45
       root: 'api/'
       reportFormats: [
         'cobertura'

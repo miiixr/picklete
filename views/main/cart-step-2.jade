@@ -9,14 +9,15 @@ block body
             .p-40
               h2 購買人
               hr
-              form.form-horizontal.m-bottom-10(name='orderCreate', method='post',action='/api/order')
+              form#formUser.form-horizontal.m-bottom-10(name='orderCreate', method='post',action='/api/order')
                 .form-group
                   label.col-sm-3.control-label
                     | 中文姓名
                     span.text-danger *
                   .col-sm-5
-                    input.form-control(name='order[user][username]',type='text', placeholder='請填寫本名',required='')
-                    input.form-control(name='order[shipment][username]',type='hidden')
+                    input.form-control(name='order[user][username]',type='text', placeholder='請填寫本名',required='', value=userData.fullName)
+                    input.form-control(name='order[user][email]',type='hidden', value=userData.email)
+                    //- input.form-control(name='order[shipment][username]',type='hidden')
                   .col-sm-4
                     label.checkbox-inline
                       input(type='checkbox', value='option1')
@@ -31,29 +32,20 @@ block body
                     span.text-danger *
                   .col-sm-9
                     input.form-control(name='order[user][mobile]',type='text', placeholder='請輸入正確號碼，以便出貨聯繫',required='',value= userData.mobile)
-                    input.form-control(name='order[shipment][mobile]',type='hidden' ,value= userData.mobile)
+                    //- input.form-control(name='order[shipment][mobile]',type='hidden' ,value= userData.mobile)
                 // /form-group
-                .form-group
+                #userAddress.form-group
                   label.col-sm-3.control-label
                     | 寄送地址
                     span.text-danger *
                   .col-sm-9
-                    select.form-control.width-auto.inline-block
-                      option 台北市
-                      option 2
-                      option 3
-                      option 4
-                      option 5
-                    select.form-control.width-auto.inline-block
-                      option 大安區
-                      option 2
-                      option 3
-                      option 4
-                      option 5
-                    input.form-control.width-12.inline-block(type='text')
+                    #twzipcodeUser
+                    input.userCity(name='userCity',type='hidden',value=userData.city)
+                    input.userRegion(name='userRegion',type='hidden',value=userData.region)
+                    input.userZipcode(name='userZipcode',type='hidden',value=userData.zipcode)
                   .col-sm-9.col-sm-offset-3.m-top-3
                     input.form-control(name='order[user][address]',type='text',required='' ,value= userData.address)
-                    input.form-control(name='order[shipment][address]',type='hidden',value= userData.address)
+                    //- input.form-control(name='order[shipment][address]',type='hidden',value= userData.address)
                 // /form-group
                 .form-group
                   .col-sm-12
@@ -63,15 +55,15 @@ block body
               label.checkbox-inline.m-top-2.m-left-0.p-left-0
                 h2
                   | 我要送人
-                  input.m-left-3.m-top-1(type='checkbox', value='showhide-sent')
+                  input#giftly.m-left-3.m-top-1(name='giftly', type='checkbox', value='showhide-sent')
               hr
-              form.form-horizontal.m-bottom-10.showhide-sent(style='display:none')
+              form#formShipment.form-horizontal.m-bottom-10.showhide-sent(style='display:none', name='orderCreate', method='post',action='/api/order')
                 .form-group
                   label.col-sm-3.control-label
                     | 中文姓名
                     span.text-danger *
                   .col-sm-5
-                    input.form-control(type='text', placeholder='請填寫本名')
+                    input.form-control(type='text', placeholder='請填寫本名', name='order[shipment][username]', required='', value=userData.fullName)
                   .col-sm-4
                     label.checkbox-inline
                       input(type='checkbox', value='option1')
@@ -85,28 +77,17 @@ block body
                     | 手機號碼
                     span.text-danger *
                   .col-sm-9
-                    input.form-control(type='text', placeholder='請輸入正確號碼，訂單完成將寄送簡訊')
+                    input.form-control(type='text', placeholder='請輸入正確號碼，訂單完成將寄送簡訊', name='order[shipment][mobile]', value= userData.mobile)
                 // /form-group
                 .form-group
                   label.col-sm-3.control-label
                     | 寄送地址
                     span.text-danger *
                   .col-sm-9
-                    select.form-control.width-auto.inline-block
-                      option 台北市
-                      option 2
-                      option 3
-                      option 4
-                      option 5
-                    select.form-control.width-auto.inline-block
-                      option 大安區
-                      option 2
-                      option 3
-                      option 4
-                      option 5
-                    input.form-control.width-12.inline-block(type='text')
+                    #twzipcodeShipment
+                    
                   .col-sm-9.col-sm-offset-3.m-top-3
-                    input.form-control(type='text')
+                    input.form-control(type='text', name='order[shipment][address]', value= userData.address)
                 // /form-group
               // /form-horizontal
               h2 發票資訊
@@ -193,4 +174,5 @@ block body
       // /border-block-3
     // /container
 block js
+  script(src="/javascripts/jquery.twzipcode.min.js")
   script(src="/javascripts/main/cartstep2.js")

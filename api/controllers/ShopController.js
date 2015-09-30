@@ -84,10 +84,33 @@ let ShopController = {
               { model: db.DptSub}
             ]
           });
-      let product = await db.Product.findOne({where: {id: productId}});
+      let product = await db.Product.findOne({
+            include:[{
+              model: db.ProductGm,
+              include: [ db.Dpt ]}],
+            where: {id: productId}
+          });
 
       productGm = productGm.dataValues;
       product = product.dataValues;
+
+      let dptId = product.ProductGm.Dpts[0].id;
+
+      // recommend products
+      let recommendProducts = await db.Product.findAll({
+        subQuery: false,
+        include: [{
+          model: db.ProductGm,
+          required: true,
+          include: [{
+            model: db.Dpt,
+            where: {
+              id: dptId
+            }
+          }]
+        }],
+        limit: 6
+      });
 
       let products = await productGm.Products;
       var coverPhotos = JSON.parse(productGm.coverPhoto);
@@ -116,7 +139,8 @@ let ShopController = {
           product: product,
           photos: photos,
           services: services,
-          coverPhotos: coverPhotos
+          coverPhotos: coverPhotos,
+          recommendProducts
          };
 
         return res.view("main/shopProduct", resData);
@@ -138,6 +162,7 @@ let ShopController = {
         res.redirect('/register');
       }
       else{
+        // console.log('\n\n=== userData ==>\n',userData);
         res.view("main/cart-step-2",{userData});
       }
     } catch (e) {

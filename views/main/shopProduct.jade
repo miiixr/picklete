@@ -238,42 +238,13 @@ block body
           .container
             h4.m-bottom-6.m-top-10 你可能會喜歡
             .row.m-bottom-10
-              .col-xs-4.col-sm-4.col-md-2
-                .item-block.m-bottom-4
-                  a(href='/shop/products')
-                    img.img-full(src='images/demo/shop-item-24-1.jpg')
-                // /item-block
-              // /col-xs-4
-              .col-xs-4.col-sm-4.col-md-2
-                .item-block.m-bottom-4
-                  a(href='/shop/products')
-                    img.img-full(src='images/demo/shop-item-23-1.jpg')
-                // /item-block
-              // /col-xs-4
-              .col-xs-4.col-sm-4.col-md-2
-                .item-block.m-bottom-4
-                  a(href='/shop/products')
-                    img.img-full(src='images/demo/shop-item-22-1.jpg')
-                // /item-block
-              // /col-xs-4
-              .col-xs-4.col-sm-4.col-md-2
-                .item-block.m-bottom-4
-                  a(href='/shop/products')
-                    img.img-full(src='images/demo/shop-item-21-1.jpg')
-                // /item-block
-              // /col-xs-4
-              .col-xs-4.col-sm-4.col-md-2
-                .item-block.m-bottom-4
-                  a(href='/shop/products')
-                    img.img-full(src='images/demo/shop-item-20-1.jpg')
-                // /item-block
-              // /col-xs-4
-              .col-xs-4.col-sm-4.col-md-2
-                .item-block.m-bottom-4
-                  a(href='/shop/products')
-                    img.img-full(src='images/demo/shop-item-19-1.jpg')
-                // /item-block
-              // /col-xs-4
+              each product in recommendProducts
+                .col-xs-4.col-sm-4.col-md-2
+                  .item-block.m-bottom-4
+                    a(href='/shop/products/#{product.ProductGmId}/#{product.id}')
+                      img.img-full(src='#{product.photos[0]}')
+                  // /item-block
+                // /col-xs-4
             // /row
           // /container
         // /cbp-so-side

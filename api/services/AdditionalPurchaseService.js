@@ -20,8 +20,7 @@ module.exports = {
         },
         include: [{
           model: db.ProductGm,
-          include: [db.Product]
-
+          include: [db.Product, db.Brand]
         }]
 
       });
