@@ -437,7 +437,8 @@ module.exports = {
           queryGmObj.tag = {
             $like: '%' + query.tag + '%'
           };
-          
+        }
+
         if (typeof query.isPublish != 'undefined') {
           ProductQueryObj.isPublish = (query.isPublish == 'false') ? null : true;
         }
