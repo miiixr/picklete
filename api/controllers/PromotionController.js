@@ -127,9 +127,7 @@ let PromotionController = {
         offset: offset,
         limit: limit
       });
-
-      console.log("!!!",productGms);
-      console.log("!!!",query);
+      
       res.view('promotion/controlShopDiscountDetail',{
         pageName: "shop-discount-detail",
         productGms,

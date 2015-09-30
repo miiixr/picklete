@@ -120,7 +120,7 @@ module.exports.routes = {
   #'get /admin/qa-type' : 'UserController.controlQaType'
   #'get /admin/qa-add' : 'UserController.controlQaAdd'
   'get /admin/members' : 'UserController.controlMembers'
-  'get /admin/member-detail/:id' : 'UserControlle r.controlMemberDetail'
+  'get /admin/member-detail/:id' : 'UserController.controlMemberDetail'
 
   # promotions
   'get /admin/shop-discount' : 'PromotionController.list'

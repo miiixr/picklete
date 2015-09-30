@@ -17,7 +17,7 @@ module.exports = {
   // end findAll
 
   // create
-  create: async (promotion,productGmId) => {
+  create: async (promotion) => {
     try {
       console.log('=== raw promotion ==>',promotion);
       if(promotion.discount =='')
