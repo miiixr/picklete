@@ -49,27 +49,32 @@ module.exports = /* SearchController */ {
       let keywords = req.param('keywords') || req.param('q');
       let limit = parseInt(req.param('limit', 100));
 
-      let conditions = {};
+      let conditions = {  }, conditionsGm = {};
 
       conditions.$or = [];
+      conditionsGm.$or = [];
 
       let eachKeywords = keywords.split('+');
 
       for (var i=0; i<eachKeywords.length; i++) {
         let keyword = eachKeywords[i];
 
-        conditions.$or.push({ name: { $like: '%'+keyword+'%' }});
-        conditions.$or.push({ description: { $like: '%'+keyword+'%' }});
+        conditions.$or.push({ name: { $like: '%'+keyword+'%' } });
+        conditions.$or.push({ description: { $like: '%'+keyword+'%' } });
+        //conditions.$or.push({ '$ProductGm.name': { $like: '%'+keyword+'%' } });
+
+        conditionsGm.$or.push({ name: { $like: '%'+keyword+'%' } });
+        conditionsGm.$or.push({ explain: { $like: '%'+keyword+'%' } });
       }
 
-      console.log('abcde');
-
       let products = await db.Product.findAndCountAll({
-        where: conditions,
+        subQuery: false,
         include: [{
-          model: db.ProductGm,
-          required: true
+          model: db.ProductGm
+          //,
+          //where: conditionsGm
         }],
+        where: conditions,
         limit: limit,
         order: [['id', 'ASC']]
       });

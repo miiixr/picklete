@@ -66,13 +66,14 @@ block body
             // /item-block
             .item-text-block.m-bottom-8
               h6.text-muted
-                a(href='brands.html')
-                | #{product.madeby}
-              h4.m-bottom-2.h4-max-two-hide
-                a(href='/shop/product')
-                | #{product.name}
-              h5
-                | $ #{product.price}
+                a(href='/brands/#{product.ProductGm.BrandId}') #{_.find(brands, {id: product.ProductGm.BrandId}).name }
+                h4.m-bottom-2.h4-max-two-hide
+                  - var name = product.name ? "(" + product.name + ")" : "";
+                  //- a(href='/shop/product?pid=#{product.id}') #{product.ProductGm.name} #{name}
+
+                  a(href='/shop/products/#{product.ProductGm.id}/#{product.id}') #{product.ProductGm.name} #{name}
+                h5
+                  | $ #{product.price}
             // /item-text-block
           // /col-md-3
         // /row
