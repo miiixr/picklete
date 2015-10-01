@@ -9,6 +9,10 @@ let ShopController = {
     let page = await pagination.page(req);
     let offset = await pagination.offset(req);
 
+    query.brandId = query.brand
+
+    console.log('=== query ===', query);
+
     try {
       let productsWithCount = await ProductService.productQuery(query, offset, limit);
       let products = productsWithCount.rows;
