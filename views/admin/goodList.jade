@@ -96,11 +96,11 @@ block body
         // /col-md-4
         .col-md-8
           .form-group
-            label.col-md-2.control-label 建檔日期
+            label.col-md-2.control-label #{i18n('filing-date')}
             .col-md-4
               input.form-control(type='date', name='dateFrom', value=query.dateFrom?query.dateFrom:null)
             .col-md-2.text-center
-              p.form-control-static 至
+              p.form-control-static #{i18n('to')}
             .col-md-4
               input.form-control(type='date', name='dateEnd', value=query.dateEnd?query.dateEnd:null)
           // /form-group
