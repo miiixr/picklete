@@ -8,5 +8,6 @@
 	"product-number": "商品貨號",
 	"commodity-prices": "商品售價",
 	"current-inventory": "目前庫存",
-	"to": "至"
+	"to": "至",
+	"trafficking-in-state": "販售狀態"
 }
