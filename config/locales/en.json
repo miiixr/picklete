@@ -4,5 +4,6 @@
 	"shop": "Shop",
 	"brand-name": "BrandName",
 	"categories": "Categories",
-	"product-name": "Product Name"
+	"product-name": "Product Name",
+	"product-number": "Product Number"
 }
