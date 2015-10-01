@@ -31,9 +31,12 @@ module.exports = {
     let admin = {
       username: "admin",
       email: "admin@gmail.com",
-      mobile: "",
-      address: "",
+      mobile: "0900000000",
+      address: "admin",
       comment: "",
+      city: "基隆市",
+      region: "仁愛區",
+      zipcode: 200,
       RoleId: createRoleAdmin.id
     };
     let userOptions = {where: {username: "admin"}, defaults: admin}
