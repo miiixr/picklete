@@ -1,4 +1,4 @@
-describe.only('search function', () => {
+describe('search function', () => {
 
   it('search "好" should has data', async (done) => {
     try {
