@@ -3,5 +3,6 @@
 	"brands": "Brands",
 	"shop": "Shop",
 	"brand-name": "BrandName",
-	"categories": "Categories"
+	"categories": "Categories",
+	"product-name": "Product Name"
 }
