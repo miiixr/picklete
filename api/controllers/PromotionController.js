@@ -25,6 +25,7 @@ let PromotionController = {
     let promotion = req.body;
     try {
       let createdPromotion = await PromotionService.create(promotion);
+      let setPrice = await PromotionService.pricing(createdPromotion);
       return res.redirect('admin/shop-discount');
     } catch (error) {
       console.error('=== create error stack ==>',error.stack);
