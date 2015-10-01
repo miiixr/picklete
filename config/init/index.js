@@ -558,7 +558,8 @@ module.exports = {
       startDate : randomDate(new Date(2015, 9, 8), new Date(2015, 9, 20)),
       endDate : randomDate(new Date(2015, 9, 8), new Date(2016, 9, 20)),
       price : 2999.97,
-      type : 'price'
+      type : 'flash',
+      discountType:'price'
     }
     var promotion2 = {
       title : '50% sale!',
@@ -566,7 +567,8 @@ module.exports = {
       startDate : randomDate(new Date(2015, 9, 8), new Date(2015, 9, 20)),
       endDate : randomDate(new Date(2015, 9, 8), new Date(2016, 9, 20)),
       discount : 0.5,
-      type : 'discount'
+      type : 'general',
+      discountType:'discount'
     }
     var createPromotion1 = await db.Promotion.create(promotion1);
     var createPromotion2 = await db.Promotion.create(promotion2);
