@@ -5,5 +5,6 @@
 	"brand-name": "BrandName",
 	"categories": "Categories",
 	"product-name": "Product Name",
-	"product-number": "Product Number"
+	"product-number": "Product Number",
+	"commodity-prices": "Commodity Prices"
 }
