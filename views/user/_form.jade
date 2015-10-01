@@ -14,14 +14,14 @@ hr
       | 密碼
       span.text-danger *
     .col-sm-9
-      input.form-control(type='password', value=user.password, name='password', placeholder='最少六位數字 + 英文', required)
+      input.form-control(type='password', value=user.password, name='password', placeholder='最少六位數字 + 英文', id="password",required)
   // /form-group
   .form-group
     label.col-sm-3.control-label
       | 確認密碼
       span.text-danger *
     .col-sm-9
-      input.form-control(type='password', value=user.passwordAgain, name='passwordAgain', placeholder='請再次輸入密碼', required)
+      input.form-control(type='password', value=user.passwordAgain, name='passwordAgain', placeholder='請再次輸入密碼', id="passwordCheck",required)
   // /form-group
 // /form-horizontal
 h2 基本資料
@@ -46,7 +46,7 @@ hr
       | 手機號碼
       span.text-danger *
     .col-sm-9
-      input.form-control(type='text', value=user.mobile, name='mobile', placeholder='請輸入正確號碼，以便出貨聯繫', required)
+      input.form-control(type='number', value=user.mobile, name='mobile', placeholder='請輸入正確號碼，以便出貨聯繫', required)
   // /form-group
   .form-group
     label.col-sm-3.control-label 生日
@@ -220,6 +220,6 @@ hr
       each like in likes
         label.checkbox-inline
           
-          input(type='checkbox', name='userLikes[]', value=like.id, checked=(user.userLikes.indexOf(''+like.id)>=0))
+          input(type='checkbox', name='userLikes[]', value=like.id,checked=(user.userLikes.indexOf(''+like.id)>=0))
           |  #{like.title}      
         
