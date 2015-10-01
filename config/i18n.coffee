@@ -18,6 +18,7 @@ module.exports.i18n = {
   localesDirectory: 'views/_layout_head.jade'
   localesDirectory: 'views/_layout_head.jade'
   localesDirectory: 'views/admin/goodList.jade'
+  localesDirectory: 'views/admin/goodList.jade'
   locales: ['en', 'zh']
 }
 

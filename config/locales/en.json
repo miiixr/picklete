@@ -1,6 +1,7 @@
 {
 	"selection-active": "Selection Active",
 	"brands": "Brands",
-	"shop": "shop",
-	"brand-name": "BrandName"
+	"shop": "Shop",
+	"brand-name": "BrandName",
+	"categories": "Categories"
 }
