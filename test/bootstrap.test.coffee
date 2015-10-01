@@ -1,7 +1,7 @@
 Sails = require('sails')
 sails = undefined
 
-global.request = require("supertest")
+global.request = require("supertest-as-promised");
 global.should = require("chai").should()
 
 options = {
