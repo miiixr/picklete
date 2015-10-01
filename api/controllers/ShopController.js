@@ -21,6 +21,26 @@ let ShopController = {
       let brands = await db.Brand.findAll({order: 'weight ASC',});
       let dpts = await DptService.findAll();
 
+      var promotions = [];
+      let promotion = await db.Promotion.findAll({
+        include: [{
+          model: db.ProductGm
+        }]
+      });
+      for(var i in promotion){
+        promotions += promotion[i].ProductGms;
+      }
+
+      for(var i in products){
+        var Today = new Date();
+        var date = new Date(products[i].createdAt);
+        if(products[i].stockQuantity <= 0)
+          products[i].status = 'soldout';
+        else if(promotions.includes(products[i].ProductGmId))
+          products[i].status = 'sale';
+        else if((Today - date)/86400000 <= 10)
+          products[i].status = 'new';
+      }
 
       let result = {
         brands,
@@ -30,7 +50,7 @@ let ShopController = {
         limit: limit,
         page: page,
         totalPages: Math.ceil(productsWithCount.count / limit),
-        totalRows: productsWithCount.count
+        totalRows: productsWithCount.count,
       };
 
       console.log('=== totalPages ===', result.totalPages);
