@@ -70,6 +70,7 @@ module.exports = /* SearchController */ {
       let products = await db.Product.findAndCountAll({
         subQuery: false,
         include: [{
+          required: true,
           model: db.ProductGm
           //,
           //where: conditionsGm
