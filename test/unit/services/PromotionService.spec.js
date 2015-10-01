@@ -1,11 +1,13 @@
 describe("about Shop Discount", function() {
-  let createdProductGm,createdProductGm2;
+  let createdProductGm1,createdProductGm2,createdProductGm3;
+  let createdProduct1,createdProduct2,createdProduct3,createdProduct4;
+  let commonPrice = 1000;
 	before(async (done) => {
 		try{
-      createdProductGm = await db.ProductGm.create({
+      createdProductGm1 = await db.ProductGm.create({
         brandId: 1,
-        name: "好東西商品",
-        explain: '好東西就是要買，買買買',
+        name: "spec-promotion-serivce-test-productGm-1",
+        explain: "spec-promotion-serivce-test-productGm-1",
         usage: '請安心服用',
         notice: '18 歲以下請勿使用',
         depId: 1,
@@ -15,13 +17,68 @@ describe("about Shop Discount", function() {
 
       createdProductGm2 = await db.ProductGm.create({
         brandId: 1,
-        name: "好東西商品2",
-        explain: '好東西就是要買，買買買',
+        name: "spec-promotion-serivce-test-productGm-2",
+        explain: "spec-promotion-serivce-test-productGm-2",
         usage: '請安心服用',
         notice: '18 歲以下請勿使用',
         depId: 1,
         depSubId: 1,
         coverPhoto: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/JC1121-set-My-Mug-blue-2.jpg']
+      });
+
+      createdProductGm3 = await db.ProductGm.create({
+        brandId: 1,
+        name: "spec-promotion-serivce-test-productGm-3",
+        explain: "spec-promotion-serivce-test-productGm-3",
+        usage: '請安心服用',
+        notice: '18 歲以下請勿使用',
+        depId: 1,
+        depSubId: 1,
+        coverPhoto: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/JC1121-set-My-Mug-blue-2.jpg']
+      });
+
+      createdProduct1 = await db.Product.create({
+        color: '1',
+        name: 'spec-test-product-1',
+        description: 'spec-test-product-1',
+        productNumber: '11',
+        stockQuantity: '999',
+        isPublish: 'true',
+        price: 1000,
+        ProductGmId: createdProductGm1.id
+      });
+
+      createdProduct2 = await db.Product.create({
+        color: '1',
+        name: 'spec-test-product-2',
+        description: 'spec-test-product-2',
+        productNumber: '11',
+        stockQuantity: '999',
+        isPublish: 'true',
+        price: commonPrice,
+        ProductGmId: createdProductGm2.id
+      });
+
+      createdProduct3 = await db.Product.create({
+        color: '1',
+        name: 'spec-test-product-3',
+        description: 'spec-test-product-3',
+        productNumber: '11',
+        stockQuantity: '999',
+        isPublish: 'true',
+        price: 1000,
+        ProductGmId: createdProductGm3.id
+      });
+
+      createdProduct4 = await db.Product.create({
+        color: '1',
+        name: 'spec-test-product-4',
+        description: 'spec-test-product-4',
+        productNumber: '11',
+        stockQuantity: '999',
+        isPublish: 'true',
+        price: commonPrice,
+        ProductGmId: createdProductGm2.id
       });
 
 			done();
@@ -35,57 +92,75 @@ describe("about Shop Discount", function() {
 	  done();
   });
 
+  // create
   it('Promotion create', async (done) => {
     try {
       var promotion = {
-        title : 'best price!',
+        title : 'spec-promotion-service-create',
         description : 'this is a test promotion',
-        startDate : new Date(2015, 9, 8),
-        endDate : new Date(2015, 9, 20),
-        price : 2999.97,
+        startDate : new Date(2015, 1, 1),
+        endDate : new Date(2016, 12, 30),
         type : 'flash',
-        discountType:'discount',
-        discount: '',
-        productGmIds: [ createdProductGm.id, createdProductGm2.id]
+        discountType:'price',
+        price: 2999,
+        productGmIds: [ createdProductGm1.id ]
       }
       let createPromotion = await PromotionService.create(promotion);
-			createPromotion.title.should.be.equal("best price!");
+			createPromotion.title.should.be.equal("spec-promotion-service-create");
       createPromotion.description.should.be.equal("this is a test promotion");
-      createPromotion.price.should.be.equal(2999.97);
+      createPromotion.price.should.be.equal(2999);
       createPromotion.type.should.be.equal('flash');
-      createPromotion.discountType.should.be.equal('discount');
+      createPromotion.discountType.should.be.equal('price');
       done();
     } catch (e) {
       console.log(e);
       done(e);
     }
   });
+  // end create
+
+  // delete
+  it('Delete: delete a promotion', async (done) => {
+    done();
+  });
+  // end delete
 
   // pricing
-  it.only('Pricing: Set product price fron promotions', async (done) => {
+  it('Pricing: Set product price fron promotions', async (done) => {
     try {
+      // create a test promotion
       var promotion = {
-        title : 'spec-test-discount',
+        title : 'spec-promotion-service-pricing',
         description : 'this is a test promotion',
         startDate : new Date(2015, 1, 1),
         endDate : new Date(2016, 12, 30),
         type : 'general',
         discountType:'discount',
-        discount: '0.5',
-        productGmIds: [ createdProductGm.id ]
+        discount: 0.5,
+        productGmIds: [ createdProductGm2.id ]
       }
-      let createdPromotion = await PromotionService.create(promotion);
-      // let setPrice = await PromotionService.pricing(createdPromotion);
+      let createdPromotion = await db.Promotion.create(promotion);
+      await createdPromotion.setProductGms([createdProductGm2]);
 
-      console.log('=== createdPromotion ==>',createdPromotion);
-      console.log('=== createdProductGm.id ==>',createdProductGm.id);
-      console.log('=== createdProductGm2 ==>',createdProductGm2.id);
+      // set price from setting of promotion
+      let setPrice = await PromotionService.pricing(createdPromotion);
 
-			// createPromotion.title.should.be.equal("best price!");
-      // createPromotion.description.should.be.equal("this is a test promotion");
-      // createPromotion.price.should.be.equal(2999.97);
-      // createPromotion.type.should.be.equal('flash');
-      // createPromotion.discountType.should.be.equal('discount');
+      // find product by given ProductGmId
+      let findProducts = await db.Product.findAll({
+        where:{
+          ProductGmId: createdProductGm2.id
+        }
+      });
+      console.log('=== findProducts[0] ==>\n',findProducts[0].toJSON());
+
+      // check status
+      findProducts.should.be.Object;
+      findProducts.forEach(product => {
+        console.log('=== product.id ==>',product.id);
+        console.log('=== product.price ==>',product.price);
+        product.price.should.be.equal(commonPrice*promotion.discount);
+      });
+
       done();
     } catch (e) {
       console.log(e);
