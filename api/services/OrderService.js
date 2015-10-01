@@ -154,7 +154,7 @@ module.exports = {
     }
   },
 
-  create: async (newOrder,paymentMethod) => {
+  create: async (newOrder) => {
     let result = {};
 
     try {
