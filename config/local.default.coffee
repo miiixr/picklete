@@ -35,6 +35,9 @@ module.exports = {
       {
         code: 'ATM',
         name: 'ATM'
+      },{
+        code: 'Credit',
+        name: '信用卡'
       }
     ]
   }
