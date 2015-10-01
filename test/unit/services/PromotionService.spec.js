@@ -60,4 +60,38 @@ describe("about Shop Discount", function() {
       done(e);
     }
   });
+
+  // pricing
+  it.only('Pricing: Set product price fron promotions', async (done) => {
+    try {
+      var promotion = {
+        title : 'spec-test-discount',
+        description : 'this is a test promotion',
+        startDate : new Date(2015, 1, 1),
+        endDate : new Date(2016, 12, 30),
+        type : 'general',
+        discountType:'discount',
+        discount: '0.5',
+        productGmIds: [ createdProductGm.id ]
+      }
+      let createdPromotion = await PromotionService.create(promotion);
+      // let setPrice = await PromotionService.pricing(createdPromotion);
+
+      console.log('=== createdPromotion ==>',createdPromotion);
+      console.log('=== createdProductGm.id ==>',createdProductGm.id);
+      console.log('=== createdProductGm2 ==>',createdProductGm2.id);
+
+			// createPromotion.title.should.be.equal("best price!");
+      // createPromotion.description.should.be.equal("this is a test promotion");
+      // createPromotion.price.should.be.equal(2999.97);
+      // createPromotion.type.should.be.equal('flash');
+      // createPromotion.discountType.should.be.equal('discount');
+      done();
+    } catch (e) {
+      console.log(e);
+      done(e);
+    }
+  });
+  // end pricing
+
 });

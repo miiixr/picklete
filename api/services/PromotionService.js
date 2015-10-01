@@ -63,7 +63,7 @@ module.exports = {
   delete: async (promotion) => {
     try {
       console.log('=== raw promotion ==>',promotion);
-      let findProduct = await db.Product.findById(promotion.id);
+        let findProduct = await db.Product.findById(promotion.id);
       if (!findPromotion) {
         throw new Error('cant find this promotion! id is ==>',promotion.id);
       }
@@ -73,7 +73,19 @@ module.exports = {
       console.log('=== delete err ==>',e);
       return false;
     }
-  }
+  },
   // end delete
+
+  // pricing
+  pricing: async(promotion) => {
+    // let promotion;
+    try {
+      console.log('=== promotion is ==>',promotion);
+    } catch (e) {
+      console.log('=== delete err ==>',e);
+      return false;
+    }
+  }
+  // end pricing
 
 };
