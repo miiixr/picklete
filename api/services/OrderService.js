@@ -288,7 +288,7 @@ module.exports = {
         let useAllPay = false;
         if(sails.config.useAllPay !== undefined)
           useAllPay = sails.config.useAllPay;
-        if(!useAllPay || paymentMethod == 'Credit'){
+        if(!useAllPay){
           let messageConfig = CustomMailerService.orderConfirm(result);
           let message = await db.Message.create(messageConfig, {transaction});
           await CustomMailerService.sendMail(message);
