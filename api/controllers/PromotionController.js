@@ -25,11 +25,6 @@ let PromotionController = {
     let promotion = req.body;
     try {
       let createdPromotion = await PromotionService.create(promotion);
-      let products = await* promotion.productGmIds.map(async (productGmId)=>{
-        let findProductGm = await db.ProductGm.findById(productGmId);
-        await createdPromotion.setProductGms([findProductGm]);
-        return createdPromotion;
-      });
       return res.redirect('admin/shop-discount');
     } catch (error) {
       console.error('=== create error stack ==>',error.stack);
@@ -127,7 +122,7 @@ let PromotionController = {
         offset: offset,
         limit: limit
       });
-      
+
       res.view('promotion/controlShopDiscountDetail',{
         pageName: "shop-discount-detail",
         productGms,
