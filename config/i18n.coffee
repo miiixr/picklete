@@ -12,7 +12,13 @@ http://sailsjs.org/#/documentation/concepts/Internationalization
 For a complete list of i18n options, see:
 https://github.com/mashpie/i18n-node#list-of-configuration-options
 ###
-module.exports.i18n = {}
+module.exports.i18n = {
+  updateFiles: true
+  localesDirectory: '/config/locales'
+  localesDirectory: 'views/_layout_head.jade'
+  localesDirectory: 'views/_layout_head.jade'
+  locales: ['en', 'zh']
+}
 
 ###*
 Which locales are supported?                                             *

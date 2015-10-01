@@ -119,12 +119,13 @@ block body
 
                 a(href='/shop/products/#{product.ProductGm.id}/#{product.id}')
 
+
                   img.img-full.item-show(src=product.photos && product.photos[0]? product.photos[0] : "http://www.culpwrit.com/wp-content/uploads/2012/09/no11.jpg")
                   img.img-full.item-hide(src=product.photos && product.photos[1]? product.photos[1] : "http://www.culpwrit.com/wp-content/uploads/2012/09/no11.jpg")
               // /item-block
               .item-text-block.m-bottom-8
                 h6.text-muted
-                  a(href='/brands/#{product.ProductGm.brandId}') #{_.find(brands, {id: product.ProductGm.brandId}).name }
+                  a(href='/brands/#{product.ProductGm.BrandId}') #{_.find(brands, {id: product.ProductGm.BrandId}).name }
                 h4.m-bottom-2.h4-max-two-hide
                   - var name = product.name ? "(" + product.name + ")" : "";
                   //- a(href='/shop/product?pid=#{product.id}') #{product.ProductGm.name} #{name}

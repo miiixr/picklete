@@ -27,7 +27,7 @@ module.exports = {
     }
 
     let newProductGm = {
-      brandId: brandId,
+      BrandId: brandId,
       name: updateProduct.name,
       brandName: brandName,
       explain: updateProduct.explain || "",
@@ -209,7 +209,7 @@ module.exports = {
         } // end if
       } // end for
 
-      productGm.brandId = brand.id;
+      productGm.BrandId = brand.id;
       productGm.name = updateProduct.name;
       productGm.dptId = updateProduct.dptId;
       productGm.dptSubId = updateProduct.dptSubId;
@@ -424,6 +424,21 @@ module.exports = {
         }
 
         // 販售狀態 1:隱藏, 2:上架
+        if (query.isPublish != '') {
+          queryObj.isPublish = (query.isPublish == 'false') ? null : true;
+        }
+
+        // productGm 搜尋
+        if (query.brandId > 0)
+          queryGmObj.BrandId = query.brandId;
+
+        // tag keyword search
+        if (query.tag) {
+          queryGmObj.tag = {
+            $like: '%' + query.tag + '%'
+          };
+        }
+
         if (typeof query.isPublish != 'undefined') {
           ProductQueryObj.isPublish = (query.isPublish == 'false') ? null : true;
         }

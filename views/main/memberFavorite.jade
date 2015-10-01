@@ -61,7 +61,7 @@ block body
                   img.img-full(src=product.photos && product.photos[0]? product.photos[0] : "http://www.culpwrit.com/wp-content/uploads/2012/09/no11.jpg")
                 .item-text-block.m-top-2.m-bottom-6
                   h6.text-muted
-                    a(href='/brands/#{product.ProductGm.brandId}') #{_.find(brands, {id: product.ProductGm.brandId}).name }
+                    a(href='/brands/#{product.ProductGm.BrandId}') #{_.find(brands, {id: product.ProductGm.BrandId}).name }
                   h4.m-bottom-2.h4-max-two-hide
                     - var name = product.name ? "(" + product.name + ")" : "";
                     a(href='/shop/products/#{product.ProductGm.id}/#{product.id}') #{product.ProductGm.name} #{name}

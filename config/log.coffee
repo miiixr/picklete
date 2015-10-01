@@ -9,7 +9,9 @@ allows for some pretty neat custom transports/adapters for log messages)
 For more information on the Sails logger, check out:
 http://sailsjs.org/#/documentation/concepts/Logging
 ###
-module.exports.log = {}
+module.exports.log = {
+  level: 'warn'
+}
 
 ###*
 Valid `level` configs: i.e. the minimum log level to capture with        *
