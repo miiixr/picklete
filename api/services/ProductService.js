@@ -430,11 +430,11 @@ module.exports = {
 
         // productGm 搜尋
         if (query.brandId > 0)
-          queryGmObj.BrandId = query.brandId;
+          queryObj.BrandId = query.brandId;
 
         // tag keyword search
         if (query.tag) {
-          queryGmObj.tag = {
+          queryObj.tag = {
             $like: '%' + query.tag + '%'
           };
         }
