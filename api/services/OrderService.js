@@ -154,7 +154,7 @@ module.exports = {
     }
   },
 
-  create: async (newOrder) => {
+  create: async (newOrder,paymentMethod) => {
     let result = {};
 
     try {
@@ -267,7 +267,7 @@ module.exports = {
 
         let {shipment} = newOrder;
         shipment.address = `${shipment.zipcode} ${shipment.city}${shipment.region}${shipment.address}`;
-  
+
         let createdOrder = await db.Order.create(thisOrder, {transaction});
         let createdShipment = await db.Shipment.create(shipment, {transaction});
 
@@ -288,7 +288,7 @@ module.exports = {
         let useAllPay = false;
         if(sails.config.useAllPay !== undefined)
           useAllPay = sails.config.useAllPay;
-        if(!useAllPay){
+        if(!useAllPay || paymentMethod == 'Credit'){
           let messageConfig = CustomMailerService.orderConfirm(result);
           let message = await db.Message.create(messageConfig, {transaction});
           await CustomMailerService.sendMail(message);

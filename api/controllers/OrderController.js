@@ -155,7 +155,7 @@ OrderController = {
       let useAllPay = false;
       if(sails.config.useAllPay !== undefined)
         useAllPay = sails.config.useAllPay;
-      let result = await OrderService.create(newOrder);
+      let result = await OrderService.create(newOrder,newOrder.paymentMethod);
       if(useAllPay){
         var allPayData = await OrderService.allPayCreate(result.order,newOrder.paymentMethod);
         console.log("!!!",allPayData);
