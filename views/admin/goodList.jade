@@ -73,11 +73,11 @@ block body
         // /col-md-4
         .col-md-4
           .form-group
-            label.col-md-4.control-label 目前庫存
+            label.col-md-4.control-label #{i18n('current-inventory')}
             .col-md-3.p-right-0
               input.form-control(type='number', name='stockQuantityStart', value = query.stockQuantityStart?query.stockQuantityStart: '')
             .col-md-2.p-left-0.p-right-0.text-center
-              p.form-control-static 至
+              p.form-control-static #{i18n('to')}
             .col-md-3.p-left-0
               input.form-control(type='number', name='stockQuantityEnd', value = query.stockQuantityEnd?query.stockQuantityEnd: '')
           // /form-group

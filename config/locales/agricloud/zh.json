@@ -6,5 +6,7 @@
 	"categories": "關鍵字",
 	"product-name": "商品名稱",
 	"product-number": "商品貨號",
-	"commodity-prices": "商品售價"
+	"commodity-prices": "商品售價",
+	"current-inventory": "目前庫存",
+	"to": "至"
 }
