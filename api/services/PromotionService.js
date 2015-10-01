@@ -130,7 +130,7 @@ module.exports = {
                 // depends on discountType
                 if(discountType == 'discount'){
                   // console.log('=== findPromotionProductGm.discount ==>',findPromotionProductGm.discount);
-                  product.price = product.price * findPromotionProductGm.discount;
+                  product.price = parseInt(product.price * findPromotionProductGm.discount);
                 }else if(discountType == 'price'){
                   // console.log('=== findPromotionProductGm.price ==>',findPromotionProductGm.price);
                   product.price = findPromotionProductGm.price;
