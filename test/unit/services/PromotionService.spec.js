@@ -72,14 +72,16 @@ describe("about Shop Discount", function() {
 
 describe("about productPriceTransPromotionPrice", function() {
 
-  let createdProductGm1;
-  let createdProduct1, createdProduct2;
-  let createdPromotion;
+  let createdProductGm1, createdProductGm2;
+  let createdProduct1, createdProduct2, createdProduct3;
+  let createdPromotion1, createdPromotion2;
   let commonPrice = 1000;
+  let date1 = new Date();
+  let date2 = new Date(2017,1,2);
 
 	before(async (done) => {
     try{
-      // create a productGm
+      // create productGms
       createdProductGm1 = await db.ProductGm.create({
         brandId: 1,
         name: "spec-promotion-serivce-test-productGm-3",
@@ -90,8 +92,18 @@ describe("about productPriceTransPromotionPrice", function() {
         depSubId: 1,
         coverPhoto: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/JC1121-set-My-Mug-blue-2.jpg']
       });
+      createdProductGm2 = await db.ProductGm.create({
+        brandId: 1,
+        name: "spec-promotion-serivce-test-productGm-4",
+        explain: "spec-promotion-serivce-test-productGm-4",
+        usage: '請安心服用',
+        notice: '18 歲以下請勿使用',
+        depId: 1,
+        depSubId: 1,
+        coverPhoto: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/JC1121-set-My-Mug-blue-2.jpg']
+      });
 
-      // create 2 products
+      // create products
       createdProduct1 = await db.Product.create({
         color: '1',
         name: 'spec-test-product-1',
@@ -100,7 +112,7 @@ describe("about productPriceTransPromotionPrice", function() {
         stockQuantity: '999',
         isPublish: 'true',
         price: commonPrice,
-        ProductGmId: createdProductGm.id
+        ProductGmId: createdProductGm1.id
       });
       createdProduct2 = await db.Product.create({
         color: '2',
@@ -110,21 +122,45 @@ describe("about productPriceTransPromotionPrice", function() {
         stockQuantity: '999',
         isPublish: 'true',
         price: commonPrice,
-        ProductGmId: createdProductGm.id
+        ProductGmId: createdProductGm1.id
+      });
+      createdProduct3 = await db.Product.create({
+        color: '3',
+        name: 'spec-test-product-3',
+        description: 'spec-test-product-3',
+        productNumber: '11',
+        stockQuantity: '999',
+        isPublish: 'true',
+        price: commonPrice,
+        ProductGmId: createdProductGm2.id
       });
 
-      // create a test promotion
-      createdPromotion = await db.Promotion.create({
-        title : 'spec-promotion-service-pricing',
+      // create promotion 1
+      createdPromotion1 = await db.Promotion.create({
+        title : 'spec-promotion-service-pricing-1',
         description : 'this is a test promotion',
         startDate : new Date(2015, 1, 1),
         endDate : new Date(2016, 12, 30),
         type : 'general',
         discountType:'discount',
         discount: 0.5,
-        productGmIds: [ createdProductGm1.id ]
+        productGmIds: [ createdProductGm1.id, createdProductGm2.id ]
       });
-      await createdPromotion.setProductGms([createdProductGm1]);
+      await createdPromotion1.setProductGms([createdProductGm1,createdProductGm2]);
+
+      // create promotion 2
+      createdPromotion2 = await db.Promotion.create({
+        title : 'spec-promotion-service-pricing-2',
+        description : 'this is a test promotion',
+        startDate : new Date(2017, 1, 1),
+        endDate : new Date(2017, 12, 30),
+        type : 'general',
+        discountType:'price',
+        price: 300,
+        productGmIds: [ createdProductGm1.id, createdProductGm2.id ]
+      });
+      await createdPromotion2.setProductGms([createdProductGm1,createdProductGm2]);
+
       done();
     } catch (e) {
       console.log(e.stack);
@@ -132,27 +168,64 @@ describe("about productPriceTransPromotionPrice", function() {
     }
   });
 
-  // productPriceTransPromotionPrice
+  // productPriceTransPromotionPrice - date1
+  it('Set product price fron promotions - date 1', async (done) => {
+    try {
+      // find product by given ProductGmId
+      let findProducts = await db.Product.findAll({
+        where:{
+          $or: [
+            {ProductGmId: createdProductGm1.id},
+            {ProductGmId: createdProductGm2.id}
+          ]
+        }
+      });
+
+      // processing with productPriceTransPromotionPrice
+      let discountedProducts = await PromotionService.productPriceTransPromotionPrice(date1,findProducts);
+
+      console.log('=== commonPrice ==>',commonPrice);
+      console.log('=== discountType is discount ==>',createdPromotion2.discount);
+
+      // check status
+      discountedProducts.should.be.Object;
+      discountedProducts.forEach(product => {
+        console.log('=== product.id ==>',product.id);
+        console.log('=== product.price ==>',product.price);
+        product.price.should.be.equal(commonPrice * createdPromotion1.discount);
+      });
+
+      done();
+    } catch (e) {
+      console.log(e.stack);
+      done(e);
+    }
+  });
+  // end
+
+  // productPriceTransPromotionPrice - date2
   it('Pricing: Set product price fron promotions', async (done) => {
     try {
       // find product by given ProductGmId
       let findProducts = await db.Product.findAll({
         where:{
-          ProductGmId: createdProductGm1.id
+          $or: [
+            {ProductGmId: createdProductGm1.id},
+            {ProductGmId: createdProductGm2.id}
+          ]
         }
       });
-      console.log('=== raw findProducts[0] ==>\n',findProducts[0].toJSON());
+
+      console.log('=== commonPrice ==>',commonPrice);
+      console.log('=== discountType is price ==>',createdPromotion2.price);
 
       // processing with productPriceTransPromotionPrice
-      let pricedProducts = await PromotionService.productPriceTransPromotionPrice(findProducts);
-      console.log('=== pricedProducts[0] ==>\n',pricedProducts[0].toJSON());
-
-      // check status
+      let pricedProducts = await PromotionService.productPriceTransPromotionPrice(date2,findProducts);
       pricedProducts.should.be.Object;
       pricedProducts.forEach(product => {
         console.log('=== product.id ==>',product.id);
         console.log('=== product.price ==>',product.price);
-        product.price.should.be.equal(commonPrice*createdPromotion.discount);
+        product.price.should.be.equal(commonPrice - createdPromotion2.price);
       });
 
       done();
@@ -161,5 +234,6 @@ describe("about productPriceTransPromotionPrice", function() {
       done(e);
     }
   });
-  // end productPriceTransPromotionPrice
+  // end
+
 });

@@ -85,72 +85,53 @@ module.exports = {
   },
   // end delete
 
-  // pricing
-  pricing: async(promotion) => {
+  // productPriceTransPromotionPrice
+  productPriceTransPromotionPrice: async(date, products) => {
+    let targetDate = date;
     try {
-      // console.log('=== raw promotion is ==>',promotion);
-      var now = new Date();
+      if(date == undefined || date == null) targetDate=new Date();
 
-      // find promotion and productGms,products
-      let findPromotionProductGms = await db.Promotion.findAll({
-        where:{
-          startDate: {
-            lt: now
-          },
-          endDate: {
-            gte: now
-          }
-        },
-        include: [{
-          model: db.ProductGm,
-          include: [db.Product]
-        }]
-      });
+      // check each prduct
+      await* products.map(async (product) => {
 
-      // set price from promotion settings
-      await* findPromotionProductGms.map(async (findPromotionProductGm) => {
-        // console.log('=== findPromotionProductGm.discountType ==>',findPromotionProductGm.discountType);
-        // console.log('=== findPromotionProductGm ==>',findPromotionProductGm);
-        // console.log('=== findPromotionProductGm.ProductGms ==>',findPromotionProductGm.ProductGms);
-        let productGms = findPromotionProductGm.ProductGms;
-        let discountType = findPromotionProductGm.discountType;
-
-        if(productGms.length != 0){
-          // check productGms for each
-          await* productGms.map(async (productGm) => {
-            // console.log('=== productGm.id ==>',productGm.id);
-            // console.log('=== productGm.Products.length ==>',productGm.Products.length);
-            // get origin price
-            productGm.originPrice = productGm.Products[0].price;
-
-            if(productGm.Products.length != 0){
-              // set new price from promotion for each one
-              await* productGm.Products.map(async (product) => {
-                // console.log('=== product.id ==>',product.id);
-                // depends on discountType
-                if(discountType == 'discount'){
-                  // console.log('=== findPromotionProductGm.discount ==>',findPromotionProductGm.discount);
-                  product.price = parseInt(product.price * findPromotionProductGm.discount);
-                }else if(discountType == 'price'){
-                  // console.log('=== findPromotionProductGm.price ==>',findPromotionProductGm.price);
-                  product.price = findPromotionProductGm.price;
-                }
-                return await product.save();
-              });
+        // find promotion
+        let findPromotions = await db.Promotion.findAll({
+          where:{
+            startDate: {
+              lt: targetDate
+            },
+            endDate: {
+              gte: targetDate
             }
-            return await productGm.save();
-          });
-        }
-        return findPromotionProductGm;
+          },
+          include:[{
+            model: db.ProductGm,
+            where:{
+              id: product.ProductGmId
+            }
+          }]
+        });
+
+        // set new price
+        findPromotions.forEach((promotion) => {
+          if(promotion.discountType == 'discount'){
+            // console.log('=== promotion.discount ==>',promotion.discount);
+            product.price = product.price * promotion.discount;
+          }else if(promotion.discountType == 'price'){
+            // console.log('=== promotion.price ==>',promotion.price);
+            product.price = product.price - promotion.price;
+          }
+        });
+        // console.log('=== product.price ==>',product.price);
       });
 
-      return findPromotionProductGms;
+      return products;
     } catch (e) {
       console.log('=== pricing err ==>',e.stack);
       throw e;
       return false;
     }
   }
-  // end pricing
+  // end productPriceTransPromotionPrice
 
 };
