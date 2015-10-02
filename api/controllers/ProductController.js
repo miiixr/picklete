@@ -65,6 +65,10 @@ let ProductController = {
       let query = req.query;
 
       let productsWithCount = await ProductService.productQuery(query, offset, limit);
+
+      // processing prices with productPriceTransPromotionPrice
+      productsWithCount = await PromotionService.productPriceTransPromotionPrice(productsWithCount);
+
       let products = productsWithCount.rows;
 
       let result = {
