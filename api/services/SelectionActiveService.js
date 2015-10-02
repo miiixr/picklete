@@ -22,16 +22,16 @@ module.exports = {
       let deleteAll = await* oldDatas.map((oldOne) => oldOne.destroy());
 
       // take out images from input raw selectionActives.
-      let newImages = await* selectionActives.map(async (selectionActive) => {
-        return await selectionActive.Images;
+      let newImages = [];
+      selectionActives.forEach((selectionActive) => {
+        newImages.push(selectionActive.Images);
       });
 
       // sperate selectionActives.
       let newSelectionActives = [];
-      await* selectionActives.map((selectionActive) => {
+      selectionActives.forEach((selectionActive) => {
         delete selectionActive.Images;
         newSelectionActives.push(selectionActive);
-        return selectionActive;
       });
 
       // save SelectionActives.
