@@ -42,14 +42,14 @@ module.exports = {
         return { msg:'運費資料有誤！', success: false };
       // clean up
       let findAll = await db.Shipping.findAll();
-      let deleteAll = await* findAll.map((shipping) => {
-        return shipping.destroy();
+      let deleteAll = await* findAll.map(async (shipping) => {
+        return await shipping.destroy();
         // console.log('=== now this id is destroied ==>',shipping.id);
       });
       // save them all!
       let newShippings = shippings;
-      let savedShippings = await* newShippings.map((shipping) => {
-        return db.Shipping.create(shipping)
+      let savedShippings = await* newShippings.map(async (shipping) => {
+        return await db.Shipping.create(shipping)
         // console.log('=== now this should created ==>\n',shipping);
       });
       // console.log('=== 2 now savedShippings length ==>', savedShippings.length);

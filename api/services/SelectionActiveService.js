@@ -19,32 +19,33 @@ module.exports = {
     try {
       // delete old one.
       let oldDatas = await db.SelectionActive.findAll();
-      let deleteAll = await* oldDatas.map((oldOne) => {
+      let deleteAll = await* oldDatas.map(async (oldOne) => {
         console.log('=== now destroying oldOne id ==>',oldOne.id);
-        oldOne.destroy();
+        await oldOne.destroy();
       });
 
       // take out images from input raw selectionActives.
-      let newImages = await* selectionActives.map((selectionActive) => {
-        return selectionActive.Images;
+      let newImages = await* selectionActives.map(async (selectionActive) => {
+        return await selectionActive.Images;
       });
 
       // sperate selectionActives.
       let newSelectionActives = [];
-      await* selectionActives.map((selectionActive) => {
+      await* selectionActives.map(async (selectionActive) => {
         delete selectionActive.Images;
         newSelectionActives.push(selectionActive);
+        return selectionActive;
       });
 
       // save SelectionActives.
-      let saveSelectionActive = await* newSelectionActives.map((selectionActive) =>
-        db.SelectionActive.create(selectionActive)
+      let saveSelectionActive = await* newSelectionActives.map(async (selectionActive) =>
+        await db.SelectionActive.create(selectionActive)
       );
 
       // save images
       let saveImages = [];
       for( var i=0;i<newImages.length;i++ ){
-        saveImages.push(await* newImages[i].map((image) => db.Image.create(image)));
+        saveImages.push(await* newImages[i].map(async (image) => await db.Image.create(image)));
         await saveSelectionActive[i].setImages(saveImages[i]);
       }
 
