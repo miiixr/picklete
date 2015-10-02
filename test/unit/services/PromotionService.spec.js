@@ -35,6 +35,7 @@ describe("about Shop Discount", function() {
 	  done();
   });
 
+  let createPromotion;
   it('Promotion create', async (done) => {
     try {
       var promotion = {
@@ -48,11 +49,38 @@ describe("about Shop Discount", function() {
         discount: '',
         productGmIds: [ createdProductGm.id, createdProductGm2.id]
       }
-      let createPromotion = await PromotionService.create(promotion);
+      createPromotion = await PromotionService.create(promotion);
 			createPromotion.title.should.be.equal("best price!");
       createPromotion.description.should.be.equal("this is a test promotion");
       createPromotion.price.should.be.equal(2999.97);
       createPromotion.type.should.be.equal('flash');
+      createPromotion.discountType.should.be.equal('discount');
+      done();
+    } catch (e) {
+      console.log(e);
+      done(e);
+    }
+  });
+
+  it('Promotion updtae', async (done) => {
+    try {
+      var promotion = {
+        id: '3',
+        title: 'AAAAAA',
+        type: 'general',
+        startDate: '2015-10-08',
+        endDate: '2015-10-07',
+        discountType: 'discount',
+        price: '0',
+        discount: '95',
+        description: 'BBBBBBB',
+        productGmIds: [ createdProductGm.id]
+      }
+      let createPromotion = await PromotionService.update(promotion);
+			createPromotion.title.should.be.equal("AAAAAA");
+      createPromotion.description.should.be.equal("BBBBBBB");
+      createPromotion.price.should.be.equal(0);
+      createPromotion.type.should.be.equal('general');
       createPromotion.discountType.should.be.equal('discount');
       done();
     } catch (e) {
