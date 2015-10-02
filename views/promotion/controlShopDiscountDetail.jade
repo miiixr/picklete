@@ -157,7 +157,10 @@ block body
       each productGm in productGms.rows
         tr
           td
-            input.addSelect(type='checkbox' value= productGm.id)
+            -if( promotion.id )
+              input.addSelect(type='checkbox' , checked='',value= productGm.id)
+            -else
+              input.addSelect(type='checkbox' ,value= productGm.id)
           td
             img.width-6(src= productGm.coverPhoto)
           td= productGm.name
