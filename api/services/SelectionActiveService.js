@@ -19,10 +19,7 @@ module.exports = {
     try {
       // delete old one.
       let oldDatas = await db.SelectionActive.findAll();
-      let deleteAll = await* oldDatas.map(async (oldOne) => {
-        console.log('=== now destroying oldOne id ==>',oldOne.id);
-        await oldOne.destroy();
-      });
+      let deleteAll = await* oldDatas.map((oldOne) => oldOne.destroy());
 
       // take out images from input raw selectionActives.
       let newImages = await* selectionActives.map(async (selectionActive) => {
