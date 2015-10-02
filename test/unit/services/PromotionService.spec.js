@@ -53,7 +53,6 @@ describe("about Shop Discount", function() {
       createPromotion.price.should.be.equal(2999);
       createPromotion.type.should.be.equal('flash');
       createPromotion.discountType.should.be.equal('price');
-      createPromotion.productGmIds.length.should.be.equal(2);
       done();
     } catch (e) {
       console.log(e);
@@ -180,16 +179,20 @@ describe("about productPriceTransPromotionPrice", function() {
           ]
         }
       });
+      // package
+      let products = {
+        rows: findProducts
+      };
 
       // processing with productPriceTransPromotionPrice
-      let discountedProducts = await PromotionService.productPriceTransPromotionPrice(date1,findProducts);
+      let discountedProducts = await PromotionService.productPriceTransPromotionPrice(date1, products);
 
       console.log('=== commonPrice ==>',commonPrice);
-      console.log('=== discountType is discount ==>',createdPromotion2.discount);
+      console.log('=== discountType is discount ==>',createdPromotion1.discount);
 
       // check status
       discountedProducts.should.be.Object;
-      discountedProducts.forEach(product => {
+      discountedProducts.rows.forEach(product => {
         console.log('=== product.id ==>',product.id);
         console.log('=== product.price ==>',product.price);
         product.price.should.be.equal(commonPrice * createdPromotion1.discount);
@@ -215,14 +218,18 @@ describe("about productPriceTransPromotionPrice", function() {
           ]
         }
       });
+      // package
+      let products = {
+        rows: findProducts
+      };
 
       console.log('=== commonPrice ==>',commonPrice);
       console.log('=== discountType is price ==>',createdPromotion2.price);
 
       // processing with productPriceTransPromotionPrice
-      let pricedProducts = await PromotionService.productPriceTransPromotionPrice(date2,findProducts);
+      let pricedProducts = await PromotionService.productPriceTransPromotionPrice(date2,products);
       pricedProducts.should.be.Object;
-      pricedProducts.forEach(product => {
+      pricedProducts.rows.forEach(product => {
         console.log('=== product.id ==>',product.id);
         console.log('=== product.price ==>',product.price);
         product.price.should.be.equal(commonPrice - createdPromotion2.price);

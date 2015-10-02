@@ -162,6 +162,7 @@ describe("about Product", () => {
       if (res.statusCode === 500) {
         return done(body)
       }
+      console.log('=== res.body.products ==>', res.body.products);
       res.statusCode.should.equal(200);
       res.body.pageName.should.be.equal("/admin/goods");
       res.body.query.responseType.should.be.equal("json");

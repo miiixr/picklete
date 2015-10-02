@@ -67,7 +67,8 @@ let ProductController = {
       let productsWithCount = await ProductService.productQuery(query, offset, limit);
 
       // processing prices with productPriceTransPromotionPrice
-      productsWithCount = await PromotionService.productPriceTransPromotionPrice(productsWithCount);
+      let now = new Date();
+      productsWithCount = await PromotionService.productPriceTransPromotionPrice(now,productsWithCount);
 
       let products = productsWithCount.rows;
 

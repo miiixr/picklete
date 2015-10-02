@@ -86,22 +86,19 @@ module.exports = {
   // end delete
 
   // productPriceTransPromotionPrice
-  productPriceTransPromotionPrice: async(date, products) => {
-    let targetDate = date;
+  productPriceTransPromotionPrice: async(date, objProducts) => {
+    let products = objProducts.rows;
     try {
-      if(date == undefined || date == null) targetDate=new Date();
-
       // check each prduct
       await* products.map(async (product) => {
-
         // find promotion
         let findPromotions = await db.Promotion.findAll({
           where:{
             startDate: {
-              lt: targetDate
+              lt: date
             },
             endDate: {
-              gte: targetDate
+              gte: date
             }
           },
           include:[{
@@ -111,23 +108,26 @@ module.exports = {
             }
           }]
         });
-
+        console.log('=== origin product.price ==>',product.price);
         // set new price
         findPromotions.forEach((promotion) => {
           if(promotion.discountType == 'discount'){
-            // console.log('=== promotion.discount ==>',promotion.discount);
-            product.price = product.price * promotion.discount;
+            console.log('=== promotion.discount ==>',promotion.discount);
+            product.price = parseInt(product.price * promotion.discount);
           }else if(promotion.discountType == 'price'){
-            // console.log('=== promotion.price ==>',promotion.price);
-            product.price = product.price - promotion.price;
+            console.log('=== promotion.price ==>',promotion.price);
+            product.price = parseInt(product.price - promotion.price);
           }
         });
-        // console.log('=== product.price ==>',product.price);
+        console.log('=== new product.price ==>',product.price);
+        return product;
       });
+      // replace
+      objProducts["rows"] = products;
 
-      return products;
+      return objProducts;
     } catch (e) {
-      console.log('=== pricing err ==>',e.stack);
+      console.log('=== productPriceTransPromotionPrice err ==>',e.stack);
       throw e;
       return false;
     }
