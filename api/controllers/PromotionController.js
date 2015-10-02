@@ -122,15 +122,33 @@ let PromotionController = {
       let page = await pagination.page(req);
       let offset = await pagination.offset(req);
 
-      let productGms = await db.ProductGm.findAndCountAll({
-        where: queryObj,
-        offset: offset,
-        limit: limit
-      });
-      
+      let promotion = await db.Promotion.findById(query.id);
+      let productGms;
+      if(promotion){
+        productGms = await promotion.getProductGms();
+        productGms.rows = productGms;
+      }else{
+        promotion = {
+          title: '',
+          description: '',
+          type: 'flash',
+          discountType: 'price',
+          startDate: null,
+          endDate: null,
+          discount: '',
+          price: ''
+        }
+        productGms = await db.ProductGm.findAndCountAll({
+          where: queryObj,
+          offset: offset,
+          limit: limit
+        });
+      }
+
       res.view('promotion/controlShopDiscountDetail',{
         pageName: "shop-discount-detail",
         productGms,
+        promotion,
         query,
         limit,
         page,

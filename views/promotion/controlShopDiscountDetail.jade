@@ -5,10 +5,11 @@ block body
   h2.m-bottom-6 活動設定
   .well.control-well.p-30.m-bottom-8
     form#shopDiscount.form-horizontal(action="/admin/shopDiscount/create", method="post")
+      input.form-control(type='hidden',name='id',form='shopDiscount' value= query.id)
       .form-group
         label.col-sm-3.col-md-2.control-label 活動名稱
         .col-sm-9.col-md-10
-          input.form-control(type='text',name='title',form='shopDiscount')
+          input.form-control(type='text',name='title',form='shopDiscount' value= promotion.title)
         // /col-sm-10
       // /form-group
       .form-group
@@ -16,13 +17,19 @@ block body
         .col-sm-4.col-md-3
           .radio
             label
-              input(type='radio', name='type', value='flash', checked='',form='shopDiscount')
+              -if( promotion.type=='flash' )
+                input(type='radio', name='type', value='flash', checked='',form='shopDiscount')
+              -else
+                input(type='radio', name='type', value='flash',form='shopDiscount')
               | 閃購
         .col-sm-1.col-md-1
         .col-sm-4.col-md-3
           .radio
             label
-              input(type='radio', name='type', value='general',form='shopDiscount') 
+              -if( promotion.type=='general' )
+                input(type='radio', name='type', value='general', checked='',form='shopDiscount') 
+              -else
+                input(type='radio', name='type', value='general',form='shopDiscount') 
               | 一般
       // /form-group
       .form-group
@@ -53,11 +60,11 @@ block body
       .form-group
         label.col-sm-3.col-md-2.control-label 活動時間
         .col-sm-4.col-md-3
-          input.form-control(type='date',name='startDate',form='shopDiscount')
+          input.form-control(type='date',name='startDate',form='shopDiscount',value= sails.moment(promotion.startDate).format('YYYY-MM-DD'))
         .col-sm-1.col-md-1.p-left-0.p-right-0.text-center
           p.form-control-static 至
         .col-sm-4.col-md-3
-          input.form-control(type='date',name='endDate',form='shopDiscount')
+          input.form-control(type='date',name='endDate',form='shopDiscount',value= sails.moment(promotion.endDate).format('YYYY-MM-DD'))
         .col-sm-9.col-sm-offset-3.col-md-3.col-md-offset-0
           .checkbox
             label
@@ -69,22 +76,28 @@ block body
         .col-sm-4.col-md-3
           .radio
             label
-              input#optionsRadios1(type='radio', name='discountType', value='price', checked='',form='shopDiscount')
-              input.form-control(type='text',name='price', placeholder='請輸入折扣金額',form='shopDiscount')
+              -if( promotion.discountType=='price' )
+                input#optionsRadios1(type='radio', name='discountType', value='price', checked='',form='shopDiscount')
+              -else
+                input#optionsRadios1(type='radio', name='discountType', value='price',form='shopDiscount')
+              input.form-control(type='text',name='price', placeholder='請輸入折扣金額',form='shopDiscount',value= promotion.price)
         .col-sm-1.col-md-1
         .col-sm-4.col-md-3
           .radio
             label
-              input#optionsRadios2(type='radio', name='discountType', value='discount',form='shopDiscount')
+              -if( promotion.discountType=='discount' )
+                input#optionsRadios2(type='radio', name='discountType', value='discount', checked='',form='shopDiscount')
+              -else
+                input#optionsRadios2(type='radio', name='discountType', value='discount',form='shopDiscount')
               .input-group.width-12
-                input.form-control(type='text',name='discount',form='shopDiscount')
+                input.form-control(type='text',name='discount',form='shopDiscount',value= promotion.discount)
                 span.input-group-addon 折
               // /input-group
       // /form-group
       .form-group
         label.col-sm-3.col-md-2.control-label 活動文案
         .col-sm-9.col-md-10
-          textarea.form-control(rows='3',form='shopDiscount',name='description')
+          textarea.form-control(rows='3',form='shopDiscount',name='description') #{promotion.description}
         // /col-sm-9
       // /form-group
       .m-top-6.text-right
