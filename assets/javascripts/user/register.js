@@ -17,6 +17,9 @@ $(window).load(function() {
     if($("#password").val() != $("#passwordCheck").val()){
       return alert('前後密碼請一致');
     }
+    else if($("#password").val().length <6){
+      return alert('密碼太短');
+    }
     else{
       $(this).off('submit');
       $(this).submit();

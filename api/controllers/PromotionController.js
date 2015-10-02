@@ -24,8 +24,13 @@ let PromotionController = {
   create: async (req, res) => {
     let promotion = req.body;
     try {
-      await PromotionService.create(promotion);
-      return res.redirect('promotion/controlShopDiscount');
+      let createdPromotion = await PromotionService.create(promotion);
+      let products = await* promotion.productGmIds.map(async (productGmId)=>{
+        let findProductGm = await db.ProductGm.findById(productGmId);
+        await createdPromotion.setProductGms([findProductGm]);
+        return createdPromotion;
+      });
+      return res.redirect('admin/shop-discount');
     } catch (error) {
       console.error('=== create error stack ==>',error.stack);
       let msg = error.message;
@@ -102,10 +107,42 @@ let PromotionController = {
       pageName: "shop-item-add"
     });
   },
-  controlShopDiscountDetail: function(req, res) {
-    res.view('promotion/controlShopDiscountDetail',{
-      pageName: "shop-discount-detail"
-    });
+  controlShopDiscountDetail: async(req, res) => {
+    try {
+      console.log('query',req.query);
+      let query = req.query;
+      let queryObj = {};
+
+      if(query.keyword)
+        queryObj.name = { 'like': '%'+query.keyword+'%'};
+      else
+        query.keyword = ''
+
+      let limit = await pagination.limit(req);
+      let page = await pagination.page(req);
+      let offset = await pagination.offset(req);
+
+      let productGms = await db.ProductGm.findAndCountAll({
+        where: queryObj,
+        offset: offset,
+        limit: limit
+      });
+      
+      res.view('promotion/controlShopDiscountDetail',{
+        pageName: "shop-discount-detail",
+        productGms,
+        query,
+        limit,
+        page,
+        totalPages: Math.ceil(productGms.count / limit),
+        totalRows: productGms.count
+      });
+    } catch (e) {
+      console.error(e.stack);
+      let {message} = e;
+      let success = false;
+      return res.serverError({message, success});
+    }
   },
   controlShopDiscountDetail2: function(req, res) {
     res.view('promotion/controlShopDiscountDetail2',{

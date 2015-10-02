@@ -59,6 +59,7 @@
     "smtpapi": "^1.2.0",
     "sprintf-js": "^1.0.3",
     "sqlite3": "^3.0.10",
+    "supertest-as-promised": "^2.0.2",
     "validator": "^3.37.0"
   },
   "scripts": {

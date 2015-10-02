@@ -1,5 +1,14 @@
 {
 	"selection-active": "Selection Active",
 	"brands": "Brands",
-	"shop": "shop"
+	"shop": "Shop",
+	"brand-name": "BrandName",
+	"categories": "Categories",
+	"product-name": "Product Name",
+	"product-number": "Product Number",
+	"commodity-prices": "Commodity Prices",
+	"current-inventory": "Current Inventory",
+	"to": "To",
+	"trafficking-in-state": "Trafficking In State",
+	"filing-date": "Filing Date"
 }

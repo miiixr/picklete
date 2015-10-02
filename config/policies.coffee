@@ -68,6 +68,9 @@ module.exports.policies = {
   'ShippingController':
     type: []
 
+  'PromotionController':
+    create: []
+
   # #'/api/search/*': []
   # SearchController:
   #   products: []

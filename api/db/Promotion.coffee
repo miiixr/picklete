@@ -4,6 +4,10 @@ module.exports = (sequelize, DataTypes) ->
     title: DataTypes.STRING
     description: DataTypes.STRING
     type: DataTypes.ENUM(
+      'flash',
+      'general'
+    )
+    discountType: DataTypes.ENUM(
       'price',
       'discount'
     )
@@ -12,7 +16,7 @@ module.exports = (sequelize, DataTypes) ->
     discount: DataTypes.FLOAT
     price: DataTypes.FLOAT
   }, classMethods: associate: (models) ->
-    Promotion.hasMany models.Product
+    Promotion.belongsToMany models.ProductGm, through: 'PromotionProductGm'
     return
   )
   return Promotion

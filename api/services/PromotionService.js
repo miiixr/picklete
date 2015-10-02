@@ -20,6 +20,10 @@ module.exports = {
   create: async (promotion) => {
     try {
       console.log('=== raw promotion ==>',promotion);
+      if(promotion.discount =='')
+        delete promotion.discount;
+      if(promotion.price=='')
+        delete promotion.price;
       let createdPromotion = await db.Promotion.create(promotion);
       console.log('=== createdPromotion ==>',createdPromotion);
       return createdPromotion;

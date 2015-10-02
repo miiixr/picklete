@@ -61,7 +61,8 @@ describe("about Order", () => {
            zipcode: '350',
            address: '測試用地址不用太在意' },
         usedDiscountPoint: 'false',
-        shippingFee: 100 };
+        shippingFee: 100 ,
+        paymentMethod: 'ATM'};
 
       request(sails.hooks.http.app).post("/api/order").send({
         order: newOrder

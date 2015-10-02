@@ -29,12 +29,15 @@ module.exports = {
     hashIV: 'v77hoKGq4kWxNNIS',
     debug: false,
     ReturnURL:'allpay/paid',
-    ClientBackURL:'shop',
+    ClientBackURL:'shop/products',
     PaymentInfoURL:'allpay/paymentinfo',
     paymentMethod:[
       {
         code: 'ATM',
         name: 'ATM'
+      },{
+        code: 'Credit',
+        name: '信用卡'
       }
     ]
   }
