@@ -40,8 +40,8 @@ describe("about Shop Discount", function() {
       var promotion = {
         title : 'spec-promotion-service-create',
         description : 'this is a test promotion',
-        startDate : new Date(2015, 1, 1),
-        endDate : new Date(2016, 12, 30),
+        startDate : new Date(2014, 1, 1),
+        endDate : new Date(2014, 12, 30),
         type : 'flash',
         discountType:'price',
         price: 2999,
@@ -69,7 +69,7 @@ describe("about Shop Discount", function() {
 });
 
 
-describe.only("about productPriceTransPromotionPrice", function() {
+describe("about productPriceTransPromotionPrice", function() {
 
   let createdProductGm1, createdProductGm2;
   let createdProduct1, createdProduct2, createdProduct3;
@@ -186,7 +186,6 @@ describe.only("about productPriceTransPromotionPrice", function() {
 
       // processing with productPriceTransPromotionPrice
       let discountedProducts = await PromotionService.productPriceTransPromotionPrice(date1, products);
-
 
       // check status
       discountedProducts.should.be.Object;
