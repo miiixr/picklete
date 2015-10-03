@@ -89,35 +89,45 @@ module.exports = {
   productPriceTransPromotionPrice: async(date, objProducts) => {
     let products = objProducts.rows;
     try {
+      // find all promotions within a specific date
+      let findPromotions = await db.Promotion.findAll({
+        where:{
+          startDate: {
+            lt: date
+          },
+          endDate: {
+            gte: date
+          }
+        },
+        include:[{
+          model: db.ProductGm
+        }]
+      });
+      console.log('=== date ==>',date);
+
       // check each prduct
       await* products.map(async (product) => {
-        // find promotion
-        let findPromotions = await db.Promotion.findAll({
-          where:{
-            startDate: {
-              lt: date
-            },
-            endDate: {
-              gte: date
-            }
-          },
-          include:[{
-            model: db.ProductGm,
-            where:{
-              id: product.ProductGmId
-            }
-          }]
-        });
-        console.log('=== origin product.price ==>',product.price);
+        console.log('\n=== product.id ==>',product.id);
+        console.log('=== old product.price ==>',product.price);
         // set new price
         findPromotions.forEach((promotion) => {
-          if(promotion.discountType == 'discount'){
-            console.log('=== promotion.discount ==>',promotion.discount);
-            product.price = parseInt(product.price * promotion.discount);
-          }else if(promotion.discountType == 'price'){
-            console.log('=== promotion.price ==>',promotion.price);
-            product.price = parseInt(product.price - promotion.price);
-          }
+          // check each promotion
+          for(var i=0;i<findPromotions.length;i++){
+            // check each ProductGmId
+            for(var j=0;j<findPromotions[i].ProductGms.length;j++){
+              let thisProductGmId = findPromotions[i].ProductGms[j].id;
+              // console.log('=== thisProductGmId ==>',thisProductGmId);
+              if(thisProductGmId == product.ProductGmId){
+                if(promotion.discountType == 'discount'){
+                  // console.log('=== promotion.discount ==>',promotion.discount);
+                  product.price = parseInt(product.price * promotion.discount);
+                }else if(promotion.discountType == 'price'){
+                  // console.log('=== promotion.price ==>',promotion.price);
+                  product.price = parseInt(product.price - promotion.price);
+                }
+              } // end if
+            } // end for j
+          } // end for i
         });
         console.log('=== new product.price ==>',product.price);
         return product;

@@ -69,7 +69,7 @@ describe("about Shop Discount", function() {
 });
 
 
-describe("about productPriceTransPromotionPrice", function() {
+describe.only("about productPriceTransPromotionPrice", function() {
 
   let createdProductGm1, createdProductGm2;
   let createdProduct1, createdProduct2, createdProduct3;
@@ -187,14 +187,10 @@ describe("about productPriceTransPromotionPrice", function() {
       // processing with productPriceTransPromotionPrice
       let discountedProducts = await PromotionService.productPriceTransPromotionPrice(date1, products);
 
-      console.log('=== commonPrice ==>',commonPrice);
-      console.log('=== discountType is discount ==>',createdPromotion1.discount);
 
       // check status
       discountedProducts.should.be.Object;
       discountedProducts.rows.forEach(product => {
-        console.log('=== product.id ==>',product.id);
-        console.log('=== product.price ==>',product.price);
         product.price.should.be.equal(commonPrice * createdPromotion1.discount);
       });
 
@@ -223,15 +219,10 @@ describe("about productPriceTransPromotionPrice", function() {
         rows: findProducts
       };
 
-      console.log('=== commonPrice ==>',commonPrice);
-      console.log('=== discountType is price ==>',createdPromotion2.price);
-
       // processing with productPriceTransPromotionPrice
       let pricedProducts = await PromotionService.productPriceTransPromotionPrice(date2,products);
       pricedProducts.should.be.Object;
       pricedProducts.rows.forEach(product => {
-        console.log('=== product.id ==>',product.id);
-        console.log('=== product.price ==>',product.price);
         product.price.should.be.equal(commonPrice - createdPromotion2.price);
       });
 
