@@ -627,8 +627,8 @@ module.exports = {
       region: '外島',
       fee: '300'
     }];
-    await* testDatas.map((testData) => {
-      db.Shipping.create(testData);
+    await* testDatas.map(async (testData) => {
+      return await db.Shipping.create(testData);
     });
     // end creare shipping
   }
