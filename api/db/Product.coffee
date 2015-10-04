@@ -62,6 +62,9 @@ module.exports = (sequelize, DataTypes) ->
     originPrice: {
       type: DataTypes.VIRTUAL
     }
+    promotionCountDown: {
+      type: DataTypes.VIRTUAL
+    }
   },
   paranoid: true,
   classMethods: associate: (models) ->

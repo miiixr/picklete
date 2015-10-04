@@ -558,7 +558,7 @@ module.exports = {
     var promotion1 = {
       title : 'best price!',
       description : 'this is a test promotion',
-      startDate : randomDate(new Date(2015, 9, 8), new Date(2015, 9, 20)),
+      startDate : randomDate(new Date(2015, 5, 8), new Date(2015, 5, 20)),
       endDate : randomDate(new Date(2015, 9, 8), new Date(2016, 9, 20)),
       price : 2999.97,
       type : 'flash',
@@ -567,7 +567,7 @@ module.exports = {
     var promotion2 = {
       title : '50% sale!',
       description : 'this is a test promotion',
-      startDate : randomDate(new Date(2015, 9, 8), new Date(2015, 9, 20)),
+      startDate : randomDate(new Date(2015, 5, 8), new Date(2015, 5, 20)),
       endDate : randomDate(new Date(2015, 9, 8), new Date(2016, 9, 20)),
       discount : 0.5,
       type : 'general',
@@ -575,6 +575,8 @@ module.exports = {
     }
     var createPromotion1 = await db.Promotion.create(promotion1);
     var createPromotion2 = await db.Promotion.create(promotion2);
+
+    await createPromotion1.setProductGms([createdProductGmComplete]);
     // end promotions
 
     // slide active

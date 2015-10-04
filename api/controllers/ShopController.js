@@ -77,7 +77,12 @@ let ShopController = {
           });
 
       productGm = productGm.dataValues;
+
+      product = (await PromotionService.productPriceTransPromotionPrice(new Date(), [product]))[0];
+
       product = product.dataValues;
+
+      console.log('=== product ===', product);
 
       let dptId = product.ProductGm.Dpts[0].id;
 
@@ -97,7 +102,7 @@ let ShopController = {
         limit: 6
       });
 
-      let products = await productGm.Products;
+      let products = productGm.Products;
       var coverPhotos = JSON.parse(productGm.coverPhoto);
       var photos = JSON.parse(product.photos);
       var service = JSON.parse(product.service);

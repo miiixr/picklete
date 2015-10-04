@@ -73,8 +73,17 @@ block body
                   h5.text-muted.letter-spacing-3.text-roboto.m-bottom-2
                     a(href='brands.html') #{productGm.name}
                   h2.text-black.m-bottom-6.text-roboto #{productGm.name} #{name}
-                  .h3.text-black.m-bottom-4 $ 
-                    span#price #{product.price}
+                  
+                  if(product.originPrice == undefined || product.originPrice <= 0)
+                    h3
+                      span#price #{product.price}
+                  else 
+                    h3.text-black.m-bottom-4
+                      span.text-danger#price #{product.price}
+                      small.text-line-through.m-left-1 #{product.originPrice}
+                    h4.text-danger 活動倒數 #{product.promotionCountDown}
+                  
+
                 // /col-sm-10
                 .col-sm-2.col-xs-3
                   //

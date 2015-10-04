@@ -126,6 +126,13 @@ module.exports = {
                 // console.log('=== thisProductGmId ==>',thisProductGmId);
                 if((date>startDate) && (date<endDate)){
                   product.originPrice = product.price;
+
+                  let duration = moment.duration(moment(endDate).diff(moment(date)));
+
+                  product.promotionCountDown =
+                    `${duration.get("days")} 天 ${duration.get("hours") +":"+ duration.get("minutes") +":"+ duration.get("seconds")}`
+
+
                   if(promotion.discountType == 'discount'){
                     // console.log('=== promotion.discount ==>',promotion.discount);
                     product.price = parseInt(product.price * promotion.discount);
