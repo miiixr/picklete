@@ -19,19 +19,17 @@ module.exports = {
     try {
       // delete old one.
       let oldDatas = await db.SelectionActive.findAll();
-      let deleteAll = await* oldDatas.map((oldOne) => {
-        console.log('=== now destroying oldOne id ==>',oldOne.id);
-        oldOne.destroy();
-      });
+      let deleteAll = await* oldDatas.map((oldOne) => oldOne.destroy());
 
       // take out images from input raw selectionActives.
-      let newImages = await* selectionActives.map((selectionActive) => {
-        return selectionActive.Images;
+      let newImages = [];
+      selectionActives.forEach((selectionActive) => {
+        newImages.push(selectionActive.Images);
       });
 
       // sperate selectionActives.
       let newSelectionActives = [];
-      await* selectionActives.map((selectionActive) => {
+      selectionActives.forEach((selectionActive) => {
         delete selectionActive.Images;
         newSelectionActives.push(selectionActive);
       });
