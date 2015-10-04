@@ -202,7 +202,7 @@ describe("about productPriceTransPromotionPrice", function() {
   // end
 
   // productPriceTransPromotionPrice - date2
-  it('Pricing: Set product price fron promotions', async (done) => {
+  it.only('Pricing: Set product price fron promotions', async (done) => {
     try {
       // find product by given ProductGmId
       let findProducts = await db.Product.findAll({
@@ -213,15 +213,11 @@ describe("about productPriceTransPromotionPrice", function() {
           ]
         }
       });
-      // package
-      let products = {
-        rows: findProducts
-      };
 
       // processing with productPriceTransPromotionPrice
-      let pricedProducts = await PromotionService.productPriceTransPromotionPrice(date2,products);
-      pricedProducts.should.be.Object;
-      pricedProducts.rows.forEach(product => {
+      let pricedProducts = await PromotionService.productPriceTransPromotionPrice(date2, findProducts);
+      pricedProducts.should.be.Array;
+      pricedProducts.forEach(product => {
         product.price.should.be.equal(commonPrice - createdPromotion2.price);
       });
 

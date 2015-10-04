@@ -16,29 +16,19 @@ let ShopController = {
     try {
       let productsWithCount = await ProductService.productQuery(query, offset, limit);
       let products = productsWithCount.rows;
+      products = PromotionService.productPriceTransPromotionPrice(new Date(), products);;
 
 
       let brands = await db.Brand.findAll({order: 'weight ASC',});
       let dpts = await DptService.findAll();
 
-      var promotions = [];
-      let promotion = await db.Promotion.findAll({
-        include: [{
-          model: db.ProductGm
-        }]
-      });
-      for(var i in promotion){
-        promotions += promotion[i].ProductGms;
-      }
 
       for(var i in products){
         var Today = new Date();
         var date = new Date(products[i].createdAt);
         if(products[i].stockQuantity <= 0)
           products[i].status = 'soldout';
-        else if(promotions.includes(products[i].ProductGmId))
-          products[i].status = 'sale';
-        else if((Today - date)/86400000 <= 10)
+        else if(products[i].status != 'sale' && (Today - date)/86400000 <= 10)
           products[i].status = 'new';
       }
 

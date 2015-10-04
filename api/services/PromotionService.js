@@ -86,8 +86,7 @@ module.exports = {
   // end delete
 
   // productPriceTransPromotionPrice
-  productPriceTransPromotionPrice: async(date, objProducts) => {
-    let products = objProducts.rows;
+  productPriceTransPromotionPrice: async(date, products) => {
     try {
       // find all promotions within a specific date
       let findPromotions = await db.Promotion.findAll({
@@ -130,6 +129,8 @@ module.exports = {
                     // console.log('=== promotion.price ==>',promotion.price);
                     product.price = parseInt(product.price - promotion.price);
                   }
+
+                  product.status = 'sale';
                 }
               } // end if
             } // end for j
@@ -138,14 +139,11 @@ module.exports = {
         // console.log('=== new product.price ==>',product.price);
         return product;
       });
-      // replace
-      objProducts["rows"] = products;
 
-      return objProducts;
+      return products;
     } catch (e) {
       console.log('=== productPriceTransPromotionPrice err ==>',e.stack);
       throw e;
-      return false;
     }
   }
   // end productPriceTransPromotionPrice
