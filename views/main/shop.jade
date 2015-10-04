@@ -117,6 +117,20 @@ block body
                   span.glyphicon.glyphicon-heart
                 // /item-like
 
+                if product.status == 'soldout'
+                  // label: sold out
+                  span.label.label-default
+                    | SOLD
+                    br
+                    | OUT
+                else if product.status == 'sale'
+                  // label: sale
+                  span.label.label-danger SALE
+                else
+                  // label: new
+                  span.label.label-success NEW
+
+
                 a(href='/shop/products/#{product.ProductGm.id}/#{product.id}')
 
 
