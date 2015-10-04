@@ -1,5 +1,5 @@
 
-describe.only("about Shop Discount", function() {
+describe("about Shop Discount", function() {
 
   let createdProductGm1, createdProductGm2;
 
