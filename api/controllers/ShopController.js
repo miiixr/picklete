@@ -16,8 +16,7 @@ let ShopController = {
     try {
       let productsWithCount = await ProductService.productQuery(query, offset, limit);
       let products = productsWithCount.rows;
-      products = PromotionService.productPriceTransPromotionPrice(new Date(), products);;
-
+      products = await PromotionService.productPriceTransPromotionPrice(new Date(), products);;
 
       let brands = await db.Brand.findAll({order: 'weight ASC',});
       let dpts = await DptService.findAll();

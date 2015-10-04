@@ -57,6 +57,10 @@ module.exports = (sequelize, DataTypes) ->
     weight: {
       type: DataTypes.INTEGER,
       defaultValue: 0
+    },
+
+    originPrice: {
+      type: DataTypes.VIRTUAL
     }
   },
   paranoid: true,

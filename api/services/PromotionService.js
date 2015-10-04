@@ -106,8 +106,10 @@ module.exports = {
       // console.log('=== date ==>',date);
 
       // check each prduct
-      products = await* products.map(async (product) => {
-        product = product.toJSON()
+      if(!findPromotions.length) return products;
+      if(!products.length) return products;
+
+      products = products.map((product) => {
         // console.log('\n=== product.id ==>',product.id);
         // console.log('=== old product.price ==>',product.price);
         // set new price
@@ -139,6 +141,7 @@ module.exports = {
           } // end for i
         });
         // console.log('=== new product.price ==>',product.price);
+
         return product;
       });
       return products;
