@@ -106,7 +106,8 @@ module.exports = {
       // console.log('=== date ==>',date);
 
       // check each prduct
-      await* products.map(async (product) => {
+      products = await* products.map(async (product) => {
+        product = product.toJSON()
         // console.log('\n=== product.id ==>',product.id);
         // console.log('=== old product.price ==>',product.price);
         // set new price
@@ -122,6 +123,7 @@ module.exports = {
               if(thisProductGmId == product.ProductGmId){
                 // console.log('=== thisProductGmId ==>',thisProductGmId);
                 if((date>startDate) && (date<endDate)){
+                  product.originPrice = product.price;
                   if(promotion.discountType == 'discount'){
                     // console.log('=== promotion.discount ==>',promotion.discount);
                     product.price = parseInt(product.price * promotion.discount);
@@ -139,7 +141,6 @@ module.exports = {
         // console.log('=== new product.price ==>',product.price);
         return product;
       });
-
       return products;
     } catch (e) {
       console.log('=== productPriceTransPromotionPrice err ==>',e.stack);

@@ -179,6 +179,7 @@ describe.only("about Shop Discount", function() {
         discountedProducts.should.be.Object;
         discountedProducts.forEach(product => {
           product.price.should.be.equal(commonPrice * createdPromotion1.discount);
+          product.originPrice.should.be.equal(commonPrice);
         });
 
         done();
@@ -207,6 +208,7 @@ describe.only("about Shop Discount", function() {
         pricedProducts.should.be.Array;
         pricedProducts.forEach(product => {
           product.price.should.be.equal(commonPrice - createdPromotion2.price);
+          product.originPrice.should.be.equal(commonPrice);
         });
 
         done();
