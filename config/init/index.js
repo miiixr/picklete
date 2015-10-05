@@ -508,13 +508,17 @@ module.exports = {
 
     let selectionActives = [
       {
-        type: 'oneLong'
+        type: 'oneLong',
+        weight: 70
       },{
-        type: 'oneBig'
+        type: 'oneBig',
+        weight: 80
       },{
-        type: 'two'
+        type: 'two',
+        weight: 90
       },{
-        type: 'three'
+        type: 'three',
+        weight: 100
       }
     ]
     let createdSelectionActive = await* selectionActives.map((selectionActive) =>
