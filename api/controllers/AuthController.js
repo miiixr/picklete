@@ -61,12 +61,20 @@ AuthController = {
 
       if(user.userLikes == undefined) user.userLikes = []
 
+      if(user.email!='' && user.password == user.passwordAgain && user.fullName != '' && user.mobile != '' && user.city != '' && user.region != '' && user.zipcode != ''){
+        
+        let userCreate = db.User.create(user);
+        return res.redirect('/');
 
-      res.view('user/register.jade', {
-        errors: req.flash('error'),
-        likes,
-        user
-      });
+      } else{
+        
+        res.view('user/register.jade', {
+          errors: req.flash('error'),
+          likes,
+          user
+        });
+
+      }
     } catch (e) {
       console.error(e.stack);
     }
