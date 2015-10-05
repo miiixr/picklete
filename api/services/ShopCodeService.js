@@ -16,7 +16,7 @@ module.exports = {
     } catch (e) {
       let msg = e.message;
       result = data;
-      throw new Error ({ msg , result);
+      throw new Error ({ msg , result });
     }
   }
 }
