@@ -6,11 +6,23 @@ let ShopCodeController = {
   // List 'get /admin/shop-code'
   controlShopCode: async (req, res) => {
 
-    let ShopCodes = await db.ShopCode.findAll();
+    let limit = await pagination.limit(req);
+    let page = await pagination.page(req);
+    let offset = await pagination.offset(req);
+
+    let ShopCodes = await db.ShopCode.findAndCountAll({
+      offset: offset,
+      limit: limit
+    });
+    console.log("!!!",ShopCodes);
 
     res.view('promotion/controlShopCode',{
       pageName: "shop-code",
-      shopCodes: ShopCodes
+      shopCodes: ShopCodes,
+      limit: limit,
+      page: page,
+      totalPages: Math.ceil(ShopCodes.count / limit),
+      totalRows: ShopCodes.count
     });
   },
 
@@ -24,7 +36,7 @@ let ShopCodeController = {
   create: async (req, res) => {
 
     var params = req.body;
-    
+
     params['sentTarget'] = [].concat( params['sentTarget'] )
 
     if(params['autoRandomCode'] == 'on'){

@@ -1,20 +1,16 @@
 extends ../_layout_auth
+include ../mixins/pagination
 
 block body
   h2.m-bottom-6 優惠代碼
   a.btn.btn-danger.btn-lg.m-bottom-6(href='shop-code/create') 建立代碼
   .row
     .col-sm-6.col-md-8
-      form.form-inline
+      form.form-inline.with-pagination
+        +pagination-fields(page, limit)
         .form-group
           label 顯示
-          select.form-control
-            option 10
-            option 20
-            option 30
-            option 40
-            option 50
-          label 筆資料（共 90 筆）
+            +pagination-limit
         // /form-group
     // /col-sm-6
     .col-sm-6.col-md-4
@@ -37,7 +33,7 @@ block body
         th 時間
         th
     tbody
-      each shopCode in shopCodes
+      each shopCode in shopCodes.rows
         tr
           td
             span.text-info #{shopCode.code}
@@ -75,7 +71,15 @@ block body
         // /modal-footer
       // /modal-content
     // /modal-dialog
+  hr.dashed-line
+  .text-center
+    //
+      pagination-block
+      ==================================================
+    ul.list-inline.m-bottom-0.m-top-1
+      +pagination-simple-pager(page, totalPages)
 
 
 block js
   script(src="/javascripts/admin/shopCode.js")
+  script(src='/javascripts/common/pagination.js')
