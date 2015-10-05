@@ -68,6 +68,13 @@ module.exports = {
         updatePromoiton.price = promotion.price;
       }
       updatePromoiton.discountType = promotion.discountType;
+
+      let products = await* promotion.productGmIds.map(async (productGmId)=>{
+        let findProductGm = await db.ProductGm.findById(productGmId);
+        await updatePromoiton.setProductGms([findProductGm]);
+        return updatePromoiton;
+      });
+
       await updatePromoiton.save();
       return updatePromoiton;
     } catch (e) {
