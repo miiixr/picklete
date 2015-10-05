@@ -1,5 +1,29 @@
 $(function() {
 
+  $("input[name='price-description']").change(function(){
+    $("input[name='discount-description']").val("");
+    $("input[name='discount-restriction']").val("");
+    $("#optionsRadios1")[0].checked=true;
+  });
+
+  $("input[name='price-restriction']").change(function(){
+    $("input[name='discount-description']").val("");
+    $("input[name='discount-restriction']").val("");
+    $("#optionsRadios1")[0].checked=true;
+  });
+
+  $("input[name='discount-description']").change(function(){
+    $("input[name='price-description']").val("");
+    $("input[name='price-restriction']").val("");
+    $("#optionsRadios2")[0].checked=true;
+  });
+
+  $("input[name='discount-restriction']").change(function(){
+    $("input[name='price-description']").val("");
+    $("input[name='price-restriction']").val("");
+    $("#optionsRadios2")[0].checked=true;
+  });
+
   $("#create").click(function () {
 
     if($("input[name='startDate']").val()=="" || $("input[name='endDate']").val()==""){

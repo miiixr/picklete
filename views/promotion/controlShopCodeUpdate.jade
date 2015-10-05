@@ -101,6 +101,7 @@ block body
   // /well
 
 block js
+  script(src="/javascripts/admin/shopCodeCreate.js")
   script.
     $("input[value=#{shopCode.type}]").prop('checked', true);
     $("input[id=#{shopCode.type}][name=#{shopCode.type}-description]").prop('value', #{shopCode.description});
