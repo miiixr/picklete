@@ -2,23 +2,21 @@
 module.exports = {
   checkCode : async (code) => {
     try {
-      return false;
+      return result;
     } catch (e) {
-      console.error(e.stack);
-      let {message} = e;
-      let success = false;
-      return res.serverError({message, success});
+      let msg = e.message;
+      throw new Error (msg);
     }
   },
 
   use: async (data) => {
+    let result;
     try {
-      return false;
+      return result;
     } catch (e) {
-      console.error(e.stack);
-      let {message} = e;
-      let success = false;
-      return res.serverError({message, success});
+      let msg = e.message;
+      result = data;
+      throw new Error ({ msg , result);
     }
   }
 }

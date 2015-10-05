@@ -49,7 +49,7 @@ describe("about shopcode service", () => {
   it('check', async (done) => {
     try {
       let check = await ShopCodeService.checkCode(testShopCode.code);
-      check.id.should.be.equal(testShopCode.id);
+      check.result.id.should.be.equal(testShopCode.id);
       done();
     } catch (e) {
       console.log(e);
@@ -64,7 +64,7 @@ describe("about shopcode service", () => {
         price: 999,
       }
       let check = await ShopCodeService.use(testShopCode.code);
-      check.price.should.be.equal(900);
+      check.result.price.should.be.equal(900);
       done();
     } catch (e) {
       console.log(e);
@@ -79,10 +79,10 @@ describe("about shopcode service", () => {
         price: 899,
       }
       let check = await ShopCodeService.use(testShopCode.code);
-      check.price.should.be.equal(899);
       done();
     } catch (e) {
-      console.log(e);
+      e.result.price.should.be.equal(899);
+      console.log(e.msg);
       done(e);
     }
   });
@@ -94,10 +94,10 @@ describe("about shopcode service", () => {
         price: 999,
       }
       let check = await ShopCodeService.use(testTimeOutShopCode.code);
-      check.price.should.be.equal(999);
       done();
     } catch (e) {
-      console.log(e);
+      e.result.price.should.be.equal(999);
+      console.log(e.msg);
       done(e);
     }
   });
