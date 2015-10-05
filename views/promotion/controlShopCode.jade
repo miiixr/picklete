@@ -1,27 +1,23 @@
 extends ../_layout_auth
+include ../mixins/pagination
 
 block body
   h2.m-bottom-6 優惠代碼
   a.btn.btn-danger.btn-lg.m-bottom-6(href='shop-code/create') 建立代碼
   .row
     .col-sm-6.col-md-8
-      form.form-inline
+      form#search.form-inline.with-pagination(name="search", action="shop-code", method="get")
+        +pagination-fields(page, limit)
         .form-group
           label 顯示
-          select.form-control
-            option 10
-            option 20
-            option 30
-            option 40
-            option 50
-          label 筆資料（共 90 筆）
+            +pagination-limit
         // /form-group
     // /col-sm-6
     .col-sm-6.col-md-4
       .input-group
-        input.form-control(type='text', placeholder='Search for...')
+        input.form-control(type='text',name="keyword",form='search', placeholder='Search for...',value= query.keyword)
         span.input-group-btn
-          button.btn.btn-default.p-left-2.p-right-2(type='button')
+          button.btn.btn-default.p-left-2.p-right-2(type='button', onClick='$("form[name=\'search\']").submit()')
             span.glyphicon.glyphicon-search
       // /input-group
     // /col-sm-6
@@ -37,7 +33,7 @@ block body
         th 時間
         th
     tbody
-      each shopCode in shopCodes
+      each shopCode in shopCodes.rows
         tr
           td
             span.text-info #{shopCode.code}
@@ -48,9 +44,9 @@ block body
             if shopCode.restrictionDate
               | 不限時
             else
-              | #{shopCode.startDate}
+              | #{sails.moment(shopCode.startDate).format('YYYY/MM/DD hh:mm')}
               br
-              | #{shopCode.endDate}
+              | #{sails.moment(shopCode.endDate).format('YYYY/MM/DD hh:mm')}
           td.text-right
             a.btn.btn-link(href='/admin/shop-code/update?id=#{shopCode.id}')
               span.glyphicon.glyphicon-pencil2
@@ -75,9 +71,15 @@ block body
         // /modal-footer
       // /modal-content
     // /modal-dialog
+  hr.dashed-line
+  .text-center
+    //
+      pagination-block
+      ==================================================
+    ul.list-inline.m-bottom-0.m-top-1
+      +pagination-simple-pager(page, totalPages)
 
 
 block js
   script(src="/javascripts/admin/shopCode.js")
-
-
+  script(src='/javascripts/common/pagination.js')

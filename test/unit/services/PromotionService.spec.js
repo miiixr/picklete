@@ -34,6 +34,11 @@ describe("about Shop Discount", function() {
     }
 	});
 
+	after((done) => {
+	  done();
+  });
+
+  let createPromotion;
   // create
   it('Promotion create', async (done) => {
     try {
@@ -53,6 +58,33 @@ describe("about Shop Discount", function() {
       createPromotion.price.should.be.equal(2999);
       createPromotion.type.should.be.equal('flash');
       createPromotion.discountType.should.be.equal('price');
+      done();
+    } catch (e) {
+      console.log(e);
+      done(e);
+    }
+  });
+
+  it('Promotion updtae', async (done) => {
+    try {
+      var promotion = {
+        id: '3',
+        title: 'AAAAAA',
+        type: 'general',
+        startDate: '2015-10-08',
+        endDate: '2015-10-07',
+        discountType: 'discount',
+        price: '0',
+        discount: '95',
+        description: 'BBBBBBB',
+        productGmIds: [ createdProductGm1.id]
+      }
+      let createPromotion = await PromotionService.update(promotion);
+			createPromotion.title.should.be.equal("AAAAAA");
+      createPromotion.description.should.be.equal("BBBBBBB");
+      createPromotion.price.should.be.equal(0);
+      createPromotion.type.should.be.equal('general');
+      createPromotion.discountType.should.be.equal('discount');
       done();
     } catch (e) {
       console.log(e);

@@ -27,6 +27,11 @@ module.exports = {
         delete promotion.price;
 
       let createdPromotion = await db.Promotion.create(promotion);
+      let products = await* promotion.productGmIds.map(async (productGmId)=>{
+        let findProductGm = await db.ProductGm.findById(productGmId);
+        await createdPromotion.setProductGms([findProductGm]);
+        return createdPromotion;
+      });
       console.log('=== createdPromotion ==>',createdPromotion);
 
       let promotedProducts = await* promotion.productGmIds.map(async (productGmId)=>{
@@ -54,11 +59,31 @@ module.exports = {
       });
       console.log('=== updatePromoiton ==>',updatePromoiton);
       updatePromoiton.title = promotion.title;
-      updatePromoitondescription = promotion.description;
+      updatePromoiton.description = promotion.description;
       updatePromoiton.type = promotion.type;
       updatePromoiton.startDate = promotion.startDate;
       updatePromoiton.endDate = promotion.endDate;
-      updatePromoiton.discount = promotion.discount;
+      if(promotion.discount == '' || promotion.discount==100){
+        updatePromoiton.discount = 100;
+      }
+      else{
+        updatePromoiton.discount = promotion.discount;
+      }
+
+      if(promotion.price == '' || promotion.price == 0){
+        updatePromoiton.price = 0;
+      }
+      else{
+        updatePromoiton.price = promotion.price;
+      }
+      updatePromoiton.discountType = promotion.discountType;
+
+      let products = await* promotion.productGmIds.map(async (productGmId)=>{
+        let findProductGm = await db.ProductGm.findById(productGmId);
+        await updatePromoiton.setProductGms([findProductGm]);
+        return updatePromoiton;
+      });
+
       await updatePromoiton.save();
       return updatePromoiton;
     } catch (e) {
