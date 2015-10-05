@@ -392,6 +392,20 @@ module.exports = {
     };
 
     for (var i=0; i<50; i++) {
+      var shopcode = {
+          title: '測試'+i,
+          code: '12345678901234567890',
+          autoRandomCode: 'on',
+          startDate: '2015-10-01',
+          endDate: '2015-10-14',
+          type: 'price',
+          description: 99,
+          restriction: 999,
+          sentType: 'all',
+          sentContent: '測試'+i
+        };
+      await db.ShopCode.create(shopcode);
+
       var fakeUser = {
         username: "user" + i,
         fullName: commonLastNames[randomInt(0, commonLastNames.length)] + commonFirstNames[randomInt(0, commonFirstNames.length)],

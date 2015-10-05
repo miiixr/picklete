@@ -24,7 +24,7 @@ let ShopCodeController = {
   create: async (req, res) => {
 
     var params = req.body;
-
+    
     params['sentTarget'] = [].concat( params['sentTarget'] )
 
     if(params['autoRandomCode'] == 'on'){
