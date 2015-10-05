@@ -5,20 +5,28 @@ let ShopCodeController = {
 
   // List 'get /admin/shop-code'
   controlShopCode: async (req, res) => {
+    console.log('query',req.query);
+    let query = req.query;
+    let queryObj = {};
+
+    if(query.keyword)
+      queryObj.title = { 'like': '%'+query.keyword+'%'};
+    else
+      query.keyword = ''
 
     let limit = await pagination.limit(req);
     let page = await pagination.page(req);
     let offset = await pagination.offset(req);
 
     let ShopCodes = await db.ShopCode.findAndCountAll({
+      where: queryObj,
       offset: offset,
-      limit: limit
+      limit: limit,
     });
-    console.log("!!!",ShopCodes);
-
     res.view('promotion/controlShopCode',{
       pageName: "shop-code",
       shopCodes: ShopCodes,
+      query: query,
       limit: limit,
       page: page,
       totalPages: Math.ceil(ShopCodes.count / limit),

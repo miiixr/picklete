@@ -114,7 +114,7 @@ block body
         // /form-group
     // /col-md-6
     .col-md-8.desktop-text-right
-      form.form-inline.with-pagination(name="search", action="shop-discount-detail", method="get")
+      form#search.form-inline.with-pagination(name="search", action="shop-discount-detail", method="get")
         .form-group.m-right-2
           label 品牌名稱
           select.form-control
@@ -126,8 +126,8 @@ block body
         // /form-group
         .form-group.m-right-2
           .input-group
-            input#keyword.form-control(type='text',name="keyword",placeholder='輸入關鍵字',value= query.keyword)
-            pagination-fields(page, limit)
+            input#keyword.form-control(type='text',name="keyword",form='search',placeholder='輸入關鍵字',value= query.keyword)
+            +pagination-fields(page, limit)
             span.input-group-btn
               button.btn.btn-default.p-left-2.p-right-2(type='button', onClick='$("form[name=\'search\']").submit()')
                 span.glyphicon.glyphicon-search

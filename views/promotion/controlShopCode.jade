@@ -6,7 +6,7 @@ block body
   a.btn.btn-danger.btn-lg.m-bottom-6(href='shop-code/create') 建立代碼
   .row
     .col-sm-6.col-md-8
-      form.form-inline.with-pagination
+      form#search.form-inline.with-pagination(name="search", action="shop-code", method="get")
         +pagination-fields(page, limit)
         .form-group
           label 顯示
@@ -15,9 +15,9 @@ block body
     // /col-sm-6
     .col-sm-6.col-md-4
       .input-group
-        input.form-control(type='text', placeholder='Search for...')
+        input.form-control(type='text',name="keyword",form='search', placeholder='Search for...',value= query.keyword)
         span.input-group-btn
-          button.btn.btn-default.p-left-2.p-right-2(type='button')
+          button.btn.btn-default.p-left-2.p-right-2(type='button', onClick='$("form[name=\'search\']").submit()')
             span.glyphicon.glyphicon-search
       // /input-group
     // /col-sm-6
