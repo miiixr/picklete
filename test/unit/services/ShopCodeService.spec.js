@@ -81,8 +81,7 @@ describe("about shopcode service", () => {
       let check = await ShopCodeService.use(testShopCode.code);
       done();
     } catch (e) {
-      e.result.price.should.be.equal(899);
-      console.log(e.msg);
+      e.message.should.be.equal('金額不足');
       done(e);
     }
   });
@@ -96,8 +95,7 @@ describe("about shopcode service", () => {
       let check = await ShopCodeService.use(testTimeOutShopCode.code);
       done();
     } catch (e) {
-      e.result.price.should.be.equal(999);
-      console.log(e.msg);
+      e.message.should.be.equal('超出活動時間');
       done(e);
     }
   });

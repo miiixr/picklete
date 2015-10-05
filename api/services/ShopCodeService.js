@@ -4,8 +4,7 @@ module.exports = {
     try {
       return result;
     } catch (e) {
-      let msg = e.message;
-      throw new Error (msg);
+      throw e;
     }
   },
 
@@ -14,9 +13,7 @@ module.exports = {
     try {
       return result;
     } catch (e) {
-      let msg = e.message;
-      result = data;
-      throw new Error ({ msg , result });
+      throw e;
     }
   }
 }
