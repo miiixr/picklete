@@ -267,7 +267,7 @@ module.exports = {
 
         let {shipment} = newOrder;
         shipment.address = `${shipment.zipcode} ${shipment.city}${shipment.region}${shipment.address}`;
-  
+
         let createdOrder = await db.Order.create(thisOrder, {transaction});
         let createdShipment = await db.Shipment.create(shipment, {transaction});
 

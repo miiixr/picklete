@@ -16,7 +16,7 @@ module.exports.i18n = {
   updateFiles: true
   localesDirectory: '/config/locales'
   localesDirectory: 'views/_layout_head.jade'
-  localesDirectory: 'views/_layout_head.jade'
+  localesDirectory: 'views/admin/goodList.jade'
   locales: ['en', 'zh']
 }
 

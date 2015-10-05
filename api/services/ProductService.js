@@ -245,8 +245,8 @@ module.exports = {
       });
       // lets delete all of them.
       if(findProducts.length>0){
-        let deleteProducts = await* findProducts.map((product) => {
-          product.destroy();
+        let deleteProducts = await* findProducts.map(async (product) => {
+          return await product.destroy();
         });
       }
       // delete productGm

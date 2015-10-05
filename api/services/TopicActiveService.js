@@ -30,17 +30,17 @@ module.exports = {
 
       // clear old topicActive data
       let oldDatas = await db.TopicActive.findAll();
-      let deleteAll = await* oldDatas.map((oldOne) => {
+      let deleteAll = await* oldDatas.map(async (oldOne) => {
         console.log('=== now destroying oldOne id ==>',oldOne.id);
-        oldOne.destroy();
+        return await oldOne.destroy();
       });
 
       let imageNames = ['ImageA','ImageA1','ImageA2','ImageB','ImageB1','ImageB2','ImageC','ImageC1','ImageC2'];
       let topicActivesData = [];
 
       // create images then return topicActive with image id
-      topicActivesData = await* topicActives.map(async function(topicActive) {
-        topicActive = await* imageNames.map(async function(imageName) {
+      topicActivesData = await* topicActives.map(async (topicActive) => {
+        topicActive = await* imageNames.map(async (imageName) => {
           let createdImageData = await db.Image.create(topicActive[imageName]);
           delete topicActive[imageName];
           topicActive[imageName+'Id'] = createdImageData.id;
@@ -50,9 +50,9 @@ module.exports = {
       });
 
       // save TopicActives
-      let savedTopicActive = await* topicActivesData.map((topicActive) =>
-        db.TopicActive.create(topicActive)
-      );
+      let savedTopicActive = await* topicActivesData.map(async (topicActive) => {
+        return await db.TopicActive.create(topicActive);
+      });
 
       return {savedTopicActive, success: true};
       // return {saveSelectionActive, success};

@@ -31,9 +31,12 @@ module.exports = {
     let admin = {
       username: "admin",
       email: "admin@gmail.com",
-      mobile: "",
-      address: "",
+      mobile: "0900000000",
+      address: "admin",
       comment: "",
+      city: "基隆市",
+      region: "仁愛區",
+      zipcode: 200,
       RoleId: createRoleAdmin.id
     };
     let userOptions = {where: {username: "admin"}, defaults: admin}
@@ -505,13 +508,17 @@ module.exports = {
 
     let selectionActives = [
       {
-        type: 'oneLong'
+        type: 'oneLong',
+        weight: 70
       },{
-        type: 'oneBig'
+        type: 'oneBig',
+        weight: 80
       },{
-        type: 'two'
+        type: 'two',
+        weight: 90
       },{
-        type: 'three'
+        type: 'three',
+        weight: 100
       }
     ]
     let createdSelectionActive = await* selectionActives.map((selectionActive) =>
@@ -624,8 +631,8 @@ module.exports = {
       region: '外島',
       fee: '300'
     }];
-    await* testDatas.map((testData) => {
-      db.Shipping.create(testData);
+    await* testDatas.map(async (testData) => {
+      return await db.Shipping.create(testData);
     });
     // end creare shipping
   }

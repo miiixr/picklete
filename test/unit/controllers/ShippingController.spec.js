@@ -26,8 +26,8 @@ describe("about Shipping", () => {
       region: 'Out of Taiwan island',
       fee: '300'
     }];
-    await* testDatas.map((testData) => {
-      db.Shipping.create(testData);
+    await* testDatas.map(async (testData) => {
+      return await db.Shipping.create(testData);
     });
 
     // simulate login
