@@ -18,19 +18,18 @@ block body
         .col-sm-9.col-sm-offset-3.col-md-3.col-md-offset-0
           .checkbox
             label
-              input(type='checkbox', name='autoRandomCode')
-              |  自動產生亂數
+              input(type='hidden', name='autoRandomCode')
         .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2
           p.help-block.font-size-base 您可以自由設定 20 個字元以內的英文字母和數字，不分大小寫
       // /form-group
       .form-group
         label.col-sm-3.col-md-2.control-label 優惠時間
         .col-sm-4.col-md-3
-          input.form-control(type='datetime-local', name='startDate', value='#{shopCode.startDate}')
+          input.form-control(type='date', name='startDate', value= sails.moment(shopCode.startDate).format('YYYY-MM-DD'))
         .col-sm-1.col-md-1.p-left-0.p-right-0.text-center
           p.form-control-static 至
         .col-sm-4.col-md-3
-          input.form-control(type='datetime-local', name='endDate', value='#{shopCode.endDate}')
+          input.form-control(type='date', name='endDate', value= sails.moment(shopCode.endDate).format('YYYY-MM-DD'))
         .col-sm-9.col-sm-offset-3.col-md-3.col-md-offset-0
           .checkbox
             label
@@ -95,16 +94,16 @@ block body
             | 給會員的問候（300字，不需填入優惠券相關資訊），系統會將您的問候及該優惠券寄給客人，您可以在不同優惠券下設定自動通知。
       // /form-group
       .m-top-6.text-right
-        //- a.btn.btn-link.delete-link.btn-lg(href='#', data-toggle='modal', data-target='#modal-delete') 刪除
+        a.btn.btn-link.delete-link.btn-lg(href='../shop-code') 取消
         input(type='hidden', name='id', value='#{shopCode.id}')
         input.btn.btn-green.btn-lg(type='submit' value='確定')
       // /text-right
   // /well
 
 block js
+  script(src="/javascripts/admin/shopCodeCreate.js")
   script.
     $("input[value=#{shopCode.type}]").prop('checked', true);
     $("input[id=#{shopCode.type}][name=#{shopCode.type}-description]").prop('value', #{shopCode.description});
     $("input[id=#{shopCode.type}][name=#{shopCode.type}-restriction]").prop('value', #{shopCode.restriction});
     $("input[name=sentType][value=#{shopCode.sentType}]").prop('checked', true);
-

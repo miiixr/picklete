@@ -1,5 +1,5 @@
 $(function  () {
-  
+
   $('.row').on('click','.delete-link',function(e){
     e.preventDefault();
     var that = $(this);
