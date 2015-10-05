@@ -136,8 +136,7 @@ block body
         th 運送方式
         th 付款
         th 訂單日期
-        th 確認匯款通知
-        th 出貨通知
+        th 物品狀態
         th
           span.glyphicon.glyphicon-plus
     tbody
@@ -165,10 +164,10 @@ block body
 
           td= sails.moment(order.createdAt.format).format('YYYY/MM/DD hh:mm')
           td
-            a.btn.btn-green(href='/order/statusUpdate/#{order.id}?status=paymentConfirm') 通知匯款成功
-          td
-            a.btn.btn-green(href='/order/statusUpdate/#{order.id}?status=deliveryConfirm') 通知已出貨
-
+            select.form-control(class="status")
+              option(value=0) 選擇狀態
+              option(value=1 data-value = '#{order.id}' selected = order.status=="paymentConfirm" ? 'true' : undefined) 通知匯款成功
+              option(value=2 data-value = '#{order.id}' selected = order.status=="deliveryConfirm" ? 'true' : undefined) 通知已出貨
           td
             a(data-toggle='collapse', data-parent='#collapse-purchase', href='##{order.serialNumber}')
               span.glyphicon.glyphicon-plus
@@ -279,5 +278,18 @@ block body
         $('#previous').click(function(){
           $("input[name='page']").val($(parseInt("input[name='page']").val())-1);
           $("form[name='searchOrders']").submit();
+        });
+
+        $(".status").change(function(){
+          switch(parseInt($(this).val())){
+            case 1:
+              var orderId = $(this).children('option:selected').attr('data-value');
+              document.location.href="/order/statusUpdate/"+orderId+"?status=paymentConfirm";
+              break;
+            case 2:
+              var orderId = $(this).children('option:selected').attr('data-value');
+              document.location.href="/order/statusUpdate/"+orderId+"?status=deliveryConfirm";
+              break;
+          }
         });
       });
