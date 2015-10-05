@@ -37,7 +37,7 @@ $(function() {
       return false;
     }
 
-    if($("input[name='startDate']").val()=="" || $("input[name='startDate']").val()=="endDate"){
+    if($("input[name='startDate']").val()=="" || $("input[name='endDate']").val()==""){
       alert("記得輸入活動時間喔");
       return false;
     }
