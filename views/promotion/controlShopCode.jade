@@ -48,9 +48,9 @@ block body
             if shopCode.restrictionDate
               | 不限時
             else
-              | #{shopCode.startDate}
+              | #{sails.moment(shopCode.startDate).format('YYYY/MM/DD hh:mm')}
               br
-              | #{shopCode.endDate}
+              | #{sails.moment(shopCode.endDate).format('YYYY/MM/DD hh:mm')}
           td.text-right
             a.btn.btn-link(href='/admin/shop-code/update?id=#{shopCode.id}')
               span.glyphicon.glyphicon-pencil2
@@ -79,5 +79,3 @@ block body
 
 block js
   script(src="/javascripts/admin/shopCode.js")
-
-

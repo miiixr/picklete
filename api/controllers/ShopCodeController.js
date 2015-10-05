@@ -1,9 +1,11 @@
+import crypto from 'crypto';
+
 let ShopCodeController = {
-    
-  
+
+
   // List 'get /admin/shop-code'
-  controlShopCode: async (req, res) => { 
-    
+  controlShopCode: async (req, res) => {
+
     let ShopCodes = await db.ShopCode.findAll();
 
     res.view('promotion/controlShopCode',{
@@ -18,7 +20,7 @@ let ShopCodeController = {
     });
   },
 
-  // CreateAction 'post /admin/shop-code/create' 
+  // CreateAction 'post /admin/shop-code/create'
   create: async (req, res) => {
 
     var params = req.body;
@@ -26,7 +28,7 @@ let ShopCodeController = {
     params['sentTarget'] = [].concat( params['sentTarget'] )
 
     if(params['autoRandomCode'] == 'on'){
-      params['code'] = Math.floor(Math.random()*10000000%10000000).toString();
+      params.code = crypto.randomBytes(32).toString('hex').substr(0, 20);
     }
 
     if(params['restrictionDate'] == 'on'){
@@ -64,13 +66,12 @@ let ShopCodeController = {
        return res.serverError(e);
     }
   },
-  
+
   // UpdateView 'get /admin/shop-code/update'
   showUpdate: async (req, res) => {
 
     let id = req.query.id;
     let shopCode = await db.ShopCode.findOne({ where: {id: id} });
-    
     try {
        return res.view("promotion/controlShopCodeUpdate",{ shopCode: shopCode });
     } catch (e) {
@@ -89,7 +90,7 @@ let ShopCodeController = {
       params['sentTarget'] = [].concat( params['sentTarget'] )
 
       if(params['autoRandomCode'] == 'true'){
-        params['code'] = Math.floor(Math.random()*10000000%10000000).toString();
+        params.code = crypto.randomBytes(32).toString('hex').substr(0, 20);
       }
 
       if(params['restrictionDate'] == 'true'){
@@ -105,7 +106,7 @@ let ShopCodeController = {
         var description = params['discount-description'];
         var restriction = params['discount-restriction'];
       }
-      
+
       shopCode.code = params['code'];
       shopCode.title = params['title'];
       shopCode.type = params['type'];
@@ -133,7 +134,7 @@ let ShopCodeController = {
     let shopCode = await db.ShopCode.findOne({ where: {id: id} });
     await shopCode.destroy();
     return res.ok(shopCode);
-    
+
   }
 
 
