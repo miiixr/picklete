@@ -47,7 +47,7 @@
   picklete_cart = picklete_cart ? picklete_cart : window.location.replace("/shop/products");
 
   var buyMoreObject = Cookies.getJSON('buyMoreIds');
-  var discountCodesObject =Cookies.getJSON('discountCodes');
+  var shopCodeObject =Cookies.getJSON('shopCode');
 
   var subtotalDiv = $('#subtotal');
   var totalPriceDiv = $('#totalPrice');
@@ -74,8 +74,8 @@
 
   var discountAmountDiv = $("#discountAmount");
   var discountAmount = 0;
-  if(discountCodesObject){
-    discountAmount = discountCodesObject.discountAmount;
+  if(shopCodeObject){
+    discountAmount = shopCodeObject.discountAmount;
     discountAmountDiv.text(discountAmount);
     totalPrice -= discountAmount;
   }
@@ -109,8 +109,8 @@
     postData.order.orderItems = picklete_cart.orderItems;
     postData.order.shippingFee = Cookies.getJSON('shippingFee');
     postData.order.paymentMethod = Cookies.getJSON('paymentMethod');
-    if(discountCodesObject){
-      postData.order.discountCode = discountCodesObject.code;
+    if(shopCodeObject){
+      postData.order.shopCode = shopCodeObject.code;
     }
     $.ajax(
     {

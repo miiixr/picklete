@@ -13,7 +13,7 @@
   var discountAmount = 0;
 
   Cookies.remove('buyMoreIds');
-  Cookies.remove('discountCodes');
+  Cookies.remove('shopCode');
   var picklete_cart = Cookies.getJSON('picklete_cart');
   if(picklete_cart){
     $("#nothing").remove();
@@ -230,7 +230,7 @@ var checkCode = function(){
         discountAmountDiv.text(data.discountAmount);
         calcTatalPrice();
         alert("確認使用此折扣!!");
-        Cookies.set('discountCodes', data);
+        Cookies.set('shopCode', data);
       },
       error: function(data, textStatus, jqXHR){
         discountAmount = 0;
@@ -238,11 +238,11 @@ var checkCode = function(){
         calcTatalPrice();
         alert(JSON.parse(data.responseText).message);
         $("#code").val("");
-        Cookies.remove('discountCodes');
+        Cookies.remove('shopCode');
       }
   });
 };
-  $("#shopCode").click(function(){
+  $("#shopCodeCheck").click(function(){
     checkCode();
   });
 
