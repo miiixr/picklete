@@ -190,6 +190,7 @@ module.exports.routes = {
   'get /api/search/:keywords': 'SearchController.productsJson'
   'get /search': 'SearchController.products'
   'get /search/:keywords': 'SearchController.products'
+  'get /checkCode' : 'ShopCodeController.checkCode'
 
   'post /allpay/paid':{
     controller: "PaymentController",

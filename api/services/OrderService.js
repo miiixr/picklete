@@ -218,6 +218,15 @@ module.exports = {
         orderItems[index].comment = product.comment;
         orderItems[index].spec = product.spec;
       });
+      
+      if(newOrder.shopCode){
+        var shopCodeData = {
+          code: newOrder.shopCode,
+          price: thisOrder.paymentTotalAmount
+        }
+        let shopCodeDiscount = await ShopCodeService.use(shopCodeData);
+        thisOrder.paymentTotalAmount = shopCodeDiscount.price;
+      }
 
       let useAllPay = false;
       if(sails.config.useAllPay !== undefined)
