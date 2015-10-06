@@ -13,11 +13,11 @@ module.exports = {
     }
   },
 
-  use: async (data) => {
+  use: async ({code, price}) => {
     try {
       let result = await db.ShopCode.findOne({
         where:{
-          code: data.code,
+          code: code,
           $or:[{
             restrictionDate: 'on'
           },{
@@ -29,22 +29,23 @@ module.exports = {
             },
           }],
           restriction:{
-            $lte: data.price
+            $lte: price
           }
         }
       });
+      let discountAmount;
       if(result){
-        let originPrice = data.price;
+        let originPrice = price;
         if(result.type == 'price')
-          data.price -= result.description;
+          price -= result.description;
         else
-          data.price *= (result.description*0.01);
-        data.discountAmount = originPrice - data.price;
+          price *= (result.description*0.01);
+        discountAmount = originPrice - price;
       }
       else{
         throw new Error("請再次確認折扣碼活動時間、活動金額");
       }
-      return data;
+      return {code, price, discountAmount};
     } catch (e) {
       throw e;
     }
