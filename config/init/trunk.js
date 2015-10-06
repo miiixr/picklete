@@ -186,4 +186,83 @@ module.exports.createTestData = async () => {
   });
 
 
+  // slide active
+  let slideObj = [{
+    cover: 'http://cdn1.editmysite.com/uploads/2/5/7/0/25701590/background-images/743698345.jpg',
+    title: '柳橙香',
+    description: '好香的大柳橙',
+    location: 'caption-right caption-top',
+    color: '#fff',
+    link: 'http://tw.tw'
+  }, {
+    cover: 'http://dev.agricloud.cc:3000/img/cover1.jpg',
+    title: '團員大香柚',
+    description: '香甜又好吃',
+    location: 'caption-center caption-middle',
+    color: '#fff',
+    link: 'http://tw.com'
+  }]
+
+  await db.Slider.bulkCreate(slideObj);
+
+
+  // selectionActive EXCLUSIVES
+  let images = [
+    {
+      path: 'https://cldup.com/ajrNdux7HG.jpg',
+      url: 'http://fakeimg.pl/1100x160'
+    },{
+      path: 'https://cldup.com/aDqu4Jae_3.jpg',
+      url: 'http://fakeimg.pl/1100x350'
+    },{
+      path: 'https://d15ds55abggjxg.cloudfront.net/project_content/7c62f1656e452f08b7e83ab5a5ab10e5.png',
+      url: 'http://fakeimg.pl/545x350'
+    },{
+      path: 'http://agricloud.cc/uploads/2/5/7/0/25701590/8468962.jpg',
+      url: 'http://fakeimg.pl/545x350'
+    },{
+      path: 'http://agricloud.cc/uploads/2/5/7/0/25701590/5144971.png',
+      url: 'http://fakeimg.pl/360x240'
+    },{
+      path: 'http://agricloud.cc/uploads/2/5/7/0/25701590/6318005.jpg',
+      url: 'http://fakeimg.pl/360x240'
+    },{
+      path: 'http://agricloud.cc/uploads/2/5/7/0/25701590/8760446.jpg',
+      url: 'http://fakeimg.pl/360x240'
+    },
+    // image 7, 8 for top active
+    {
+      path: 'http://agricloud.cc/uploads/2/5/7/0/25701590/6278972.jpg',
+      url: 'http://fakeimg.pl/500x500'
+    },{
+      path: 'http://agricloud.cc/uploads/2/5/7/0/25701590/1721895.jpg',
+      url: 'http://fakeimg.pl/500x500'
+    }
+  ]
+  let createdImages = await* images.map((image) => db.Image.create(image));
+
+  let selectionActives = [
+    {
+      type: 'oneLong',
+      weight: 70
+    },{
+      type: 'oneBig',
+      weight: 80
+    },{
+      type: 'two',
+      weight: 90
+    },{
+      type: 'three',
+      weight: 100
+    }
+  ]
+  let createdSelectionActive = await* selectionActives.map((selectionActive) =>
+    db.SelectionActive.create(selectionActive)
+  );
+
+  await createdSelectionActive[0].setImages([createdImages[0]]);
+  await createdSelectionActive[1].setImages([createdImages[1]]);
+  await createdSelectionActive[2].setImages([createdImages[2], createdImages[3]]);
+  await createdSelectionActive[3].setImages([createdImages[4], createdImages[5], createdImages[6]]);
+
 }
