@@ -61,6 +61,7 @@ let ProductController = {
 
       let brands = await db.Brand.findAll();
       let dpts = await DptService.findAll();
+      let dptSubs = await db.DptSub.findAll();
 
       let query = req.query;
 
@@ -75,6 +76,7 @@ let ProductController = {
       let result = {
         brands,
         dpts,
+        dptSubs,
         query,
         products,
         pageName: "/admin/goods",

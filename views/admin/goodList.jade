@@ -58,7 +58,7 @@ block body
             .col-md-8
               select.form-control(name='dptSubId', data-value=query.dptSubId)
                 option(value=-1) 所有館別
-                each dptSub, index in dpts[query.dptId>1?query.dptId-1:1].DptSubs
+                each dptSub, index in dptSubs
                   option(value='#{dptSub.id}') #{dptSub.name}
           // /form-group
         // /col-md-4
