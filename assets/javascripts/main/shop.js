@@ -102,6 +102,7 @@
     var photos = JSON.parse($(this).attr("data-photos"));
     var brand = $(this).attr("data-brand");
     var name = $(this).attr("data-name") || "";
+    var originPrice = $('#originPrice').text();
 
 
 
@@ -116,7 +117,8 @@
       price: price,
       brand: brand,
       name: name,
-      photos: photos
+      photos: photos,
+      originPrice: originPrice
     }
 
     picklete_cart.orderItems.push(addProduct);

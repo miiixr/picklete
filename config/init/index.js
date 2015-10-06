@@ -111,8 +111,6 @@ module.exports = {
     }
     else
       await defaults.createTestData(params);
-
-
   }
   // end testData
 }
