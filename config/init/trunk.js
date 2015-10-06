@@ -61,8 +61,10 @@ module.exports.createTestData = async () => {
     explain: '好吃食品就是要吃，吃吃吃',
     usage: '請安心食用',
     notice: '6 歲以上請多食用',
-
-    coverPhoto: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/JC1121-set-My-Mug-blue-2.jpg']
+    coverPhoto: [
+      'http://dev.agricloud.cc:3000/img/cover2.jpg',
+      'http://dev.agricloud.cc:3000/img/cover1.jpg'
+    ]
   });
 
   await createdProductGmComplete.setDpts([dpt]);
@@ -74,35 +76,50 @@ module.exports.createTestData = async () => {
     stockQuantity: 100,
     price: 500,
     ProductGmId: createdProductGmComplete.id,
-    photos:['http://dev.agricloud.cc:3000/img/cover2.jpg', 'http://dev.agricloud.cc:3000/img/cover1.jpg']
+    photos: [
+      'http://dev.agricloud.cc:3000/img/cover2.jpg',
+      'http://dev.agricloud.cc:3000/img/cover1.jpg'
+    ]
   },{
     name: '團圓柚',
     description: '每箱六台斤 甜度 ★★★★',
     stockQuantity: 100,
     price: 625,
     ProductGmId: createdProductGmComplete.id,
-    photos:['http://dev.agricloud.cc:3000/img/cover2.jpg', 'http://dev.agricloud.cc:3000/img/cover1.jpg']
+    photos: [
+      'http://dev.agricloud.cc:3000/img/cover2.jpg',
+      'http://dev.agricloud.cc:3000/img/cover1.jpg'
+    ]
   },{
     name: '平安柚',
     description: '每箱六台斤 甜度 ★★★★',
     stockQuantity: 100,
     price: 750,
     ProductGmId: createdProductGmComplete.id,
-    photos:['http://dev.agricloud.cc:3000/img/cover2.jpg', 'http://dev.agricloud.cc:3000/img/cover1.jpg']
+    photos: [
+      'http://dev.agricloud.cc:3000/img/cover2.jpg',
+      'http://dev.agricloud.cc:3000/img/cover1.jpg'
+    ]
   },{
     name: '【特級】團圓柚',
     description: '每箱六台斤 甜度 ★★★★★',
     stockQuantity: 100,
     price: 950,
     ProductGmId: createdProductGmComplete.id,
-    photos:['http://dev.agricloud.cc:3000/img/cover2.jpg', 'http://dev.agricloud.cc:3000/img/cover1.jpg']
+    photos: [
+      'http://dev.agricloud.cc:3000/img/cover2.jpg',
+      'http://dev.agricloud.cc:3000/img/cover1.jpg'
+    ]
   },{
     name: '【特級】平安柚',
     description: '每箱六台斤 甜度 ★★★★★',
     stockQuantity: 100,
     price: 1200,
     ProductGmId: createdProductGmComplete.id,
-    photos:['http://dev.agricloud.cc:3000/img/cover2.jpg', 'http://dev.agricloud.cc:3000/img/cover1.jpg']
+    photos: [
+      'http://dev.agricloud.cc:3000/img/cover2.jpg',
+      'http://dev.agricloud.cc:3000/img/cover1.jpg'
+    ]
   }];
   await db.Product.bulkCreate(createdProduct);
 
