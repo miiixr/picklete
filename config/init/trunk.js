@@ -1,5 +1,16 @@
 module.exports.createTestData = async () => {
 
+  let like = [
+    {title: '最愛不需要麻煩的水果'},
+    {title: '注重健康有機'},
+    {title: '新鮮最重要'},
+    {title: '產地直送最好'},
+    {title: '在地合時宜的水果讚'},
+    {title: '新鮮果汁與果醬'}
+  ];
+
+  await db.Like.bulkCreate(like);
+
   var cloud = {
     name: '雲端農場',
     avatar: 'https://lh3.googleusercontent.com/trLzZYhuCnQz6gl_QM0XIPRWp9ty0ZMGe59vFnAF_iHp=s0',
