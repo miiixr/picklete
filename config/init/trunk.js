@@ -144,5 +144,46 @@ module.exports.createTestData = async () => {
 
   await db.Company.create(companyObj);
 
+  let shopcode = {
+      title: '滿 500 折 100',
+      code: '1234ABCD',
+      autoRandomCode: 'on',
+      startDate: '1970-01-01',
+      endDate: '1970-01-01',
+      type: 'price',
+      description: 100,
+      restriction: 500,
+      sentType: 'all',
+      sentContent: '滿 500 折 100 !!',
+      restrictionDate: 'on'
+    };
+  await db.ShopCode.create(shopcode);
+
+  var promotion = {
+    title : '全商品打 5 折!',
+    description : '',
+    startDate : new Date(2014, 1, 1),
+    endDate : new Date(2020, 1, 1),
+    discount : 0.5,
+    type : 'general',
+    discountType:'discount'
+  }
+  var createPromotion = await db.Promotion.create(promotion);
+  await createPromotion.setProductGms(createdProductGmComplete.id);
+
+  let testDatas = [
+  {
+    type: 'postoffice',
+    region: '台灣本島',
+    fee: '100'
+  },{
+    type: 'delivery',
+    region: '台灣本島',
+    fee: '150'
+  }];
+  await* testDatas.map(async (testData) => {
+    return await db.Shipping.create(testData);
+  });
+
 
 }
