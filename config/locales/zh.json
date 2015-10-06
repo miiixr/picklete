@@ -10,5 +10,14 @@
 	"current-inventory": "目前庫存",
 	"to": "至",
 	"trafficking-in-state": "販售狀態",
-	"filing-date": "建檔日期"
+	"filing-date": "建檔日期",
+	"brand-list": "品牌列表",
+	"prime-brand": "代理品牌",
+	"other-brand": "其他品牌",
+	"create-brand": "建立品牌",
+	"brand-classification": "品牌分類",
+	"brand-manager": "品牌管理",
+	"dpt-manager": "館別管理",
+	"dpt": "大館別",
+	"dpt-sub": "小館別"
 }

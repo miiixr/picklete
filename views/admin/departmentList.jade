@@ -1,9 +1,9 @@
 extends ../_layout_auth
 block body
-  h2.m-bottom-6 館別管理
+  h2.m-bottom-6 #{i18n('brand-classification')}
   .row
     #dpt-big.col-md-3.border-right-1.m-bottom-6
-      h4.m-bottom-4.text-gray 大館別
+      h4.m-bottom-4.text-gray #{i18n('dpt')}
       ul.list-group.list-group-edit.list-group-lg
         each dpt, index in dpts
           li.list-group-item.edit-link
@@ -17,7 +17,7 @@ block body
     // /col-md-3
     #small-dpt.col-md-3.border-right-1.m-bottom-6
       h4.m-bottom-4.text-gray
-        | 小館別
+        | #{i18n('dpt-sub')}
         a.btn.btn-sm-circle.btn-green.m-left-1(id="plus", href='#', data-toggle='modal', data-target='#modal-control-shop-type-sm')
           span.glyphicon.glyphicon-plus
       .list-group.list-group-edit()

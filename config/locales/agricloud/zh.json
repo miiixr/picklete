@@ -14,5 +14,10 @@
 	"brand-list": "農場列表",
 	"prime-brand": "主打農場",
 	"other-brand": "其他農場",
-	"create-brand": "建立農場"
+	"create-brand": "建立農場",
+	"brand-classification": "農產分類",
+	"brand-manager": "農場管理",
+	"dpt-manager": "分類管理",
+	"dpt": "大分類",
+	"dpt-sub": "產品別"
 }

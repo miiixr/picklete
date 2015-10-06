@@ -10,5 +10,7 @@
 	"current-inventory": "Current Inventory",
 	"to": "To",
 	"trafficking-in-state": "Trafficking In State",
-	"filing-date": "Filing Date"
+	"filing-date": "Filing Date",
+	"brand-classification": "brand-classification",
+	"brand-manager": "brand-manager"
 }
