@@ -75,4 +75,29 @@ module.exports.createTestData = async () => {
 
 
   await db.BonusPoint.create(bonusPoint);
+
+
+  var brandExample = [{
+    name: '許順利先生',
+    avatar: 'http://dev.agricloud.cc:3000/img/portrait3.jpg',
+    type: 'PRIME_GOOD',
+    desc: '希望社會更加重視食安問題',
+    banner: 'https://cldup.com/u4aO1VQKny.jpg',
+    photos: [
+      'http://goo.gl/IRT1EM',
+      'http://goo.gl/p9Y2BF'
+    ]
+  },{
+    name: '朱清輝先生',
+    avatar: 'http://dev.agricloud.cc:3000/img/portrait1.jpg',
+    type: 'PRIME_GOOD',
+    desc: '把最安全的水果給好朋友與消費者',
+    banner: 'https://cldup.com/u4aO1VQKny.jpg',
+    photos: [
+    'http://goo.gl/IRT1EM',
+    'http://goo.gl/p9Y2BF'
+    ]
+  }];
+
+  var brand = await db.Brand.bulkCreate(brandExample);
 }
