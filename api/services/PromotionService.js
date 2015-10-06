@@ -111,8 +111,7 @@ module.exports = {
   // end delete
 
   // productPriceTransPromotionPrice
-  productPriceTransPromotionPrice: async(date, objProducts) => {
-    let products = objProducts.rows;
+  productPriceTransPromotionPrice: async(date, products) => {
     try {
       // find all promotions within a specific date
       let findPromotions = await db.Promotion.findAll({
@@ -132,7 +131,10 @@ module.exports = {
       // console.log('=== date ==>',date);
 
       // check each prduct
-      await* products.map(async (product) => {
+      if(!findPromotions.length) return products;
+      if(!products.length) return products;
+
+      products = products.map((product) => {
         // console.log('\n=== product.id ==>',product.id);
         // console.log('=== old product.price ==>',product.price);
         // set new price
@@ -148,6 +150,14 @@ module.exports = {
               if(thisProductGmId == product.ProductGmId){
                 // console.log('=== thisProductGmId ==>',thisProductGmId);
                 if((date>startDate) && (date<endDate)){
+                  product.originPrice = product.price;
+
+                  let duration = moment.duration(moment(endDate).diff(moment(date)));
+
+                  product.promotionCountDown =
+                    `${duration.get("days")} 天 ${duration.get("hours") +":"+ duration.get("minutes") +":"+ duration.get("seconds")}`
+
+
                   if(promotion.discountType == 'discount'){
                     // console.log('=== promotion.discount ==>',promotion.discount);
                     product.price = parseInt(product.price * promotion.discount);
@@ -155,22 +165,21 @@ module.exports = {
                     // console.log('=== promotion.price ==>',promotion.price);
                     product.price = parseInt(product.price - promotion.price);
                   }
+
+                  product.status = 'sale';
                 }
               } // end if
             } // end for j
           } // end for i
         });
         // console.log('=== new product.price ==>',product.price);
+
         return product;
       });
-      // replace
-      objProducts["rows"] = products;
-
-      return objProducts;
+      return products;
     } catch (e) {
       console.log('=== productPriceTransPromotionPrice err ==>',e.stack);
       throw e;
-      return false;
     }
   }
   // end productPriceTransPromotionPrice

@@ -25,6 +25,10 @@
 
     picklete_cart.orderItems.forEach(function(orderItem, index){
 
+      if(orderItem.originPrice == undefined) orderItem.originPrice ='';
+
+      console.log('orderItem', orderItem);
+
       var liOrderItem =
         '<div id="orderItem" class="p-20 border-bottom-1">' +
         '  <div class="row row-m">' +
@@ -57,7 +61,7 @@
         '    </div>' +
 
         '    <div class="col-xs-6 col-sm-2 col-md-2 desktop-text-center desktop-m-top-5 m-bottom-1">' +
-        '      <h4 class="m-top-0">$ '+orderItem.price+'<br><small class="text-line-through"></small></h4>' +
+        '      <h4 class="m-top-0">$ '+orderItem.price+'<br><small class="text-line-through">'+orderItem.originPrice+'</small></h4>' +
         '    </div>' +
 
         '    <div class="col-xs-6 col-sm-1 col-md-1 text-right desktop-m-top-5">' +
