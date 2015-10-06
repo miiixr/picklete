@@ -2,7 +2,7 @@ import sinon from 'sinon';
 
 describe("about shopcode service", () => {
 
-  let testShopCode,testTimeOutShopCode;
+  let testShopCode,testTimeOutShopCode,testTimeNolimitShopCode,testTypeDiscountShopCode;
 
   before(async (done) => {
     sinon.stub(UserService, 'getLoginState', (req) => {
@@ -11,7 +11,7 @@ describe("about shopcode service", () => {
 
     var shopcode = {
         title: '測試',
-        code: '12345678901234567890',
+        code: 'YYYYYYYYYYZZZZZZZZZZ',
         autoRandomCode: 'on',
         startDate: '2015-10-01',
         endDate: '2015-10-14',
@@ -37,6 +37,36 @@ describe("about shopcode service", () => {
       };
     testTimeOutShopCode = await db.ShopCode.create(shopcode2);
 
+    var shopcode3 = {
+        title: '測試',
+        code: 'CCCCCCCCCCDDDDDDDDDD',
+        autoRandomCode: 'on',
+        startDate: '1970-01-01',
+        endDate: '1970-01-01',
+        type: 'price',
+        description: 99,
+        restriction: 999,
+        sentType: 'all',
+        sentContent: '測試',
+        restrictionDate: 'on'
+      };
+    testTimeNolimitShopCode = await db.ShopCode.create(shopcode3);
+
+    var shopcode4 = {
+        title: '測試',
+        code: 'EEEEEEEEEEFFFFFFFFFF',
+        autoRandomCode: 'on',
+        startDate: '1970-01-01',
+        endDate: '1970-01-01',
+        type: 'discount',
+        description: 80,
+        restriction: 999,
+        sentType: 'all',
+        sentContent: '測試',
+        restrictionDate: 'on'
+      };
+    testTypeDiscountShopCode = await db.ShopCode.create(shopcode4);
+
     done();
   });
 
@@ -49,7 +79,7 @@ describe("about shopcode service", () => {
   it('check', async (done) => {
     try {
       let check = await ShopCodeService.checkCode(testShopCode.code);
-      check.result.id.should.be.equal(testShopCode.id);
+      check.id.should.be.equal(testShopCode.id);
       done();
     } catch (e) {
       console.log(e);
@@ -63,8 +93,38 @@ describe("about shopcode service", () => {
         code: testShopCode.code,
         price: 999,
       }
-      let check = await ShopCodeService.use(testShopCode.code);
-      check.result.price.should.be.equal(900);
+      let check = await ShopCodeService.use(data);
+      check.price.should.be.equal(900);
+      done();
+    } catch (e) {
+      console.log(e);
+      done(e);
+    }
+  });
+
+  it('use ShopCode time no limit', async (done) => {
+    try {
+      var data ={
+        code: testTimeNolimitShopCode.code,
+        price: 999,
+      }
+      let check = await ShopCodeService.use(data);
+      check.price.should.be.equal(900);
+      done();
+    } catch (e) {
+      console.log(e);
+      done(e);
+    }
+  });
+
+  it('use ShopCode type discount', async (done) => {
+    try {
+      var data ={
+        code: testTypeDiscountShopCode.code,
+        price: 1000,
+      }
+      let check = await ShopCodeService.use(data);
+      check.price.should.be.equal(800);
       done();
     } catch (e) {
       console.log(e);
@@ -78,10 +138,10 @@ describe("about shopcode service", () => {
         code: testShopCode.code,
         price: 899,
       }
-      let check = await ShopCodeService.use(testShopCode.code);
+      let check = await ShopCodeService.use(data);
       done(new Error('should not pass!'));
     } catch (e) {
-      e.message.should.be.equal('金額不足');
+      e.message.should.be.equal('請再次確認折扣碼活動時間、活動金額');
       done();
     }
   });
@@ -89,13 +149,13 @@ describe("about shopcode service", () => {
   it('use ShopCode but time out', async (done) => {
     try {
       var data ={
-        code: testShopCode.code,
+        code: testTimeOutShopCode.code,
         price: 999,
       }
-      let check = await ShopCodeService.use(testTimeOutShopCode.code);
+      let check = await ShopCodeService.use(data);
       done(new Error('should not pass!'));
     } catch (e) {
-      e.message.should.be.equal('超出活動時間');
+      e.message.should.be.equal('請再次確認折扣碼活動時間、活動金額');
       done();
     }
   });
