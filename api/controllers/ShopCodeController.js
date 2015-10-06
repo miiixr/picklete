@@ -155,6 +155,19 @@ let ShopCodeController = {
     await shopCode.destroy();
     return res.ok(shopCode);
 
+  },
+
+  checkCode: async (req, res )=>{
+    try {
+      let data = req.query;
+      let check = await ShopCodeService.use(data);
+      return res.ok(check);
+    } catch (e) {
+      console.error(e.stack);
+      let {message} = e;
+      let success = false;
+      return res.json(500,{message, success});
+    }
   }
 
 

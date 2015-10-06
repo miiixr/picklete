@@ -47,6 +47,7 @@
   picklete_cart = picklete_cart ? picklete_cart : window.location.replace("/shop/products");
 
   var buyMoreObject = Cookies.getJSON('buyMoreIds');
+  var discountCodesObject =Cookies.getJSON('discountCodes');
 
   var subtotalDiv = $('#subtotal');
   var totalPriceDiv = $('#totalPrice');
@@ -70,6 +71,14 @@
 
   // count 加價購
   totalPrice += buymore;
+
+  var discountAmountDiv = $("#discountAmount");
+  var discountAmount = 0;
+  if(discountCodesObject){
+    discountAmount = discountCodesObject.discountAmount;
+    discountAmountDiv.text(discountAmount);
+    totalPrice -= discountAmount;
+  }
 
   // count shipping fee and display
   totalPriceDiv.text(totalPrice+shippingFeePrice);
@@ -100,6 +109,9 @@
     postData.order.orderItems = picklete_cart.orderItems;
     postData.order.shippingFee = Cookies.getJSON('shippingFee');
     postData.order.paymentMethod = Cookies.getJSON('paymentMethod');
+    if(discountCodesObject){
+      postData.order.discountCode = discountCodesObject.code;
+    }
     $.ajax(
     {
         url : '/api/order',
@@ -139,5 +151,6 @@
     }
   });
   // end giftly
+
 
 }(jQuery));

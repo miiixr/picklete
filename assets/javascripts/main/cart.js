@@ -4,13 +4,16 @@
   var subtotalDiv = $('#subtotal');
   var totalPriceDiv = $('#totalPrice');
   var buymoreDiv = $("#buymore");
+  var discountAmountDiv = $("#discountAmount");
 
   var subtotal = 0;
   var totalPrice = 0;
   var shippingFee = 0;
   var buymore = 0;
+  var discountAmount = 0;
 
   Cookies.remove('buyMoreIds');
+  Cookies.remove('discountCodes');
   var picklete_cart = Cookies.getJSON('picklete_cart');
   if(picklete_cart){
     $("#nothing").remove();
@@ -126,7 +129,7 @@
 
   var calcTatalPrice = function () {
 
-    totalPrice = subtotal + shippingFee + buymore;
+    totalPrice = subtotal + shippingFee + buymore - discountAmount;
     console.log('=== calcTatalPrice ===', totalPrice);
 
     totalPriceDiv.text(totalPrice);
@@ -211,4 +214,36 @@
     // } // end else
   });
   // end shippings
+
+var checkCode = function(){
+  var check ={
+    code: $("#code").val(),
+    price: subtotal
+  }
+  $.ajax({
+      url : '/checkCode',
+      type: "get",
+      data : check,
+      success:function(data, textStatus, jqXHR){
+        console.log('=== data ==>',data);
+        discountAmount = data.discountAmount;
+        discountAmountDiv.text(data.discountAmount);
+        calcTatalPrice();
+        alert("確認使用此折扣!!");
+        Cookies.set('discountCodes', data);
+      },
+      error: function(data, textStatus, jqXHR){
+        discountAmount = 0;
+        discountAmountDiv.text("0");
+        calcTatalPrice();
+        alert(JSON.parse(data.responseText).message);
+        $("#code").val("");
+        Cookies.remove('discountCodes');
+      }
+  });
+};
+  $("#shopCode").click(function(){
+    checkCode();
+  });
+
 }(jQuery));

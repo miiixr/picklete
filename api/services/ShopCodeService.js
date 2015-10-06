@@ -34,10 +34,12 @@ module.exports = {
         }
       });
       if(result){
+        let originPrice = data.price;
         if(result.type == 'price')
           data.price -= result.description;
         else
           data.price *= (result.description*0.01);
+        data.discountAmount = originPrice - data.price;
       }
       else{
         throw new Error("請再次確認折扣碼活動時間、活動金額");

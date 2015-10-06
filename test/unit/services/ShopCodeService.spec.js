@@ -24,7 +24,7 @@ describe("about shopcode service", () => {
     testShopCode = await db.ShopCode.create(shopcode);
 
     var shopcode2 = {
-        title: '測試',
+        title: '測試折扣碼逾時',
         code: 'AAAAAAAAAABBBBBBBBBB',
         autoRandomCode: 'on',
         startDate: '2015-9-01',
@@ -38,7 +38,7 @@ describe("about shopcode service", () => {
     testTimeOutShopCode = await db.ShopCode.create(shopcode2);
 
     var shopcode3 = {
-        title: '測試',
+        title: '測試不限時的折扣碼',
         code: 'CCCCCCCCCCDDDDDDDDDD',
         autoRandomCode: 'on',
         startDate: '1970-01-01',
@@ -53,7 +53,7 @@ describe("about shopcode service", () => {
     testTimeNolimitShopCode = await db.ShopCode.create(shopcode3);
 
     var shopcode4 = {
-        title: '測試',
+        title: '測試打折的折扣碼',
         code: 'EEEEEEEEEEFFFFFFFFFF',
         autoRandomCode: 'on',
         startDate: '1970-01-01',
@@ -95,6 +95,7 @@ describe("about shopcode service", () => {
       }
       let check = await ShopCodeService.use(data);
       check.price.should.be.equal(900);
+      check.discountAmount.should.be.equal(99);
       done();
     } catch (e) {
       console.log(e);
@@ -110,6 +111,7 @@ describe("about shopcode service", () => {
       }
       let check = await ShopCodeService.use(data);
       check.price.should.be.equal(900);
+      check.discountAmount.should.be.equal(99);
       done();
     } catch (e) {
       console.log(e);
@@ -125,6 +127,7 @@ describe("about shopcode service", () => {
       }
       let check = await ShopCodeService.use(data);
       check.price.should.be.equal(800);
+      check.discountAmount.should.be.equal(200);
       done();
     } catch (e) {
       console.log(e);
