@@ -79,10 +79,10 @@ describe("about shopcode service", () => {
         price: 899,
       }
       let check = await ShopCodeService.use(testShopCode.code);
-      done();
+      done(new Error('should not pass!'));
     } catch (e) {
       e.message.should.be.equal('金額不足');
-      done(e);
+      done();
     }
   });
 
@@ -93,10 +93,10 @@ describe("about shopcode service", () => {
         price: 999,
       }
       let check = await ShopCodeService.use(testTimeOutShopCode.code);
-      done();
+      done(new Error('should not pass!'));
     } catch (e) {
       e.message.should.be.equal('超出活動時間');
-      done(e);
+      done();
     }
   });
 });
