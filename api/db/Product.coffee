@@ -28,6 +28,7 @@ module.exports = (sequelize, DataTypes) ->
         return []
       set: (value) ->
         return this.setDataValue('service', JSON.stringify(value))
+      defaultValue: '["快遞宅配"]'
     }
     # 品牌國別, 日本，大陸，美國
     country: DataTypes.STRING

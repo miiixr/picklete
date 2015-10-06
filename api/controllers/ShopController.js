@@ -72,7 +72,8 @@ let ShopController = {
       let product = await db.Product.findOne({
             include:[{
               model: db.ProductGm,
-              include: [ db.Dpt ]}],
+              include: [ db.Dpt ]
+            }],
             where: {id: productId}
           });
 
