@@ -1,7 +1,7 @@
 import sinon from 'sinon';
 
 describe("about forgot password", () => {
-  let testUser ,passport;
+  let testUser ,passport,testUser2,passport2,createdTest2;
   before(async (done) => {
     sinon.stub(UserService, 'getLoginState', (req) => {
       return true;
@@ -35,6 +35,29 @@ describe("about forgot password", () => {
     };
     let passportOptions = {where: {UserId: createdTest.id}, defaults: passport}
     await db.Passport.findOrCreate(passportOptions);
+
+    testUser2 = {
+      username: "testForgot2",
+      email: "bb@gmail.com",
+      mobile: "0900000000",
+      address: "admin",
+      comment: "",
+      city: "基隆市",
+      region: "仁愛區",
+      zipcode: 200,
+      forgotToken: '12345678901234567890',
+      RoleId: createRoleUser.id
+    };
+    let userOptions2 = {where: {username: testUser2.username}, defaults: testUser2}
+    createdTest2 = (await db.User.findOrCreate(userOptions2))[0];
+
+    passport2 = {
+      protocol: 'local',
+      password: "test",
+      UserId: createdTest2.id
+    };
+    let passportOptions2 = {where: {UserId: createdTest2.id}, defaults: passport2}
+    await db.Passport.findOrCreate(passportOptions2);
 
     done();
   });
@@ -70,12 +93,12 @@ describe("about forgot password", () => {
   it('check Token & change radon password & return ', async (done) => {
     try {
       var data={
-        email: testUser.email,
+        email: testUser2.email,
         forgotToken: '12345678901234567890'
       }
       let result = await AuthService.changeForgotPassword(data);
-      result.id.should.be.equal(createdTest.id);
-      result.password.should.be.not.equal(passport.password);
+      result.user.id.should.be.equal(createdTest2.id);
+      result.passport.password.should.be.not.equal(passport2.password);
       done();
     } catch (e) {
       console.log(e);
