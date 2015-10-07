@@ -160,22 +160,19 @@ module.exports = {
     }
   },
 
-  checkForgotPasswordMail: async(user) => {
+  checkForgotPasswordMail: async({user, link}) => {
     try {
       var checkForgotTpl = sails.config.mail.templete.checkForgot;
       var email = user.email;
-      var forgotToken = user.forgotToken;
       var mailSendConfig = {...checkForgotTpl, from: sails.config.mail.config.from, to: email};
       mailSendConfig.subject = sprintf(mailSendConfig.subject, {
         storeName: sails.config.store.name
       });
 
-      let domain = sails.config.domain || process.env.domain || 'http://localhost:1337';
-
       mailSendConfig.html = sprintf(mailSendConfig.html, {
         storeName: sails.config.store.name,
         username: user.username,
-        link: `${domain}?email=${email}&forgotToken=${forgotToken}`
+        link: link
       });
 
       mailSendConfig.type = 'checkForgotPassword';

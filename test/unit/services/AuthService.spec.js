@@ -99,6 +99,7 @@ describe("about forgot password", () => {
       }
       let result = await AuthService.changeForgotPassword(data);
       result.user.id.should.be.equal(createdTest2.id);
+      result.user.forgotToken.should.be.not.equal(data.forgotToken);
       result.passport.password.should.be.not.equal(passport2.password);
       result.message.to.should.be.equal(data.email);
       done();

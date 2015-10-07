@@ -1,5 +1,5 @@
 (function ($) {
-  
+
   $("#login-form").on("submit", function (e) {
     e.preventDefault();
 
@@ -26,5 +26,24 @@
       }
     });
   });
+
+  $('#forgotPassword').submit(function() {
+    $.ajax({
+        type: 'get',
+        url: $(this).attr('action'),
+        data: $(this).serialize(),
+        success:function(data, textStatus, jqXHR){
+          console.log('=== data ==>',data);
+          alert(data);
+          window.location.reload();
+        },
+        error: function(data, textStatus, jqXHR){
+          console.log('=== data ==>',data);
+          alert("請再次確認信箱!");
+        }
+    })
+    return false;
+  });
+
 
 }(jQuery));
