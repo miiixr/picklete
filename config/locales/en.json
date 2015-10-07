@@ -18,5 +18,6 @@
 	"brand-classification": "brand-classification",
 	"brand-manager": "brand-manager",
 	"dpt-manager": "dpt-manager",
-	"product-category": "Product Category"
+	"dpt": "Major Categories",
+	"dpt-sub": "Product category"
 }

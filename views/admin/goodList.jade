@@ -28,7 +28,7 @@ block body
         // /col-md-4
         .col-md-4
           .form-group
-            label.col-md-4.control-label #{i18n('major-categories')}
+            label.col-md-4.control-label #{i18n('dpt')}
             .col-md-8
               select.form-control(name='dptId', data-value=query.dptId, data-dpts=dpts, form='goodQuery')
                 option(value=-1) 所有館別
@@ -54,7 +54,7 @@ block body
         // /col-md-4
         .col-md-4
           .form-group
-            label.col-md-4.control-label #{i18n('product-category')}
+            label.col-md-4.control-label #{i18n('dpt-sub')}
             .col-md-8
               select.form-control(name='dptSubId', data-value=query.dptSubId)
                 option(value=-1) 所有館別
