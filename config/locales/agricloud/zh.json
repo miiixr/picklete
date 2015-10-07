@@ -20,5 +20,6 @@
 	"dpt-manager": "分類管理",
 	"dpt": "大分類",
 	"dpt-sub": "產品別",
-	"major-categories": "大分類"
+	"major-categories": "大分類",
+	"product-category": "產品別"
 }
