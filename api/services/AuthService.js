@@ -11,7 +11,7 @@ module.exports = {
       let message = await db.Message.create(messageConfig);
       await CustomMailerService.sendMail(message);
 
-      return user;
+      return {user, message};
     } catch (e) {
       throw e;
     }
@@ -19,7 +19,7 @@ module.exports = {
 
   changeForgotPassword: async ({email, forgotToken}) => {
     try {
-      //查詢 user，隨機更換user密碼
+      
       let user = await db.User.findOne({
         where:{
           email,
@@ -33,12 +33,12 @@ module.exports = {
       });
       passport.password = crypto.randomBytes(32).toString('hex').substr(0, 8);
       await passport.save();
-      //再次寄送mail
+
       let messageConfig = await CustomMailerService.newPasswordMail({user, passport});
       let message = await db.Message.create(messageConfig);
       await CustomMailerService.sendMail(message);
 
-      return {user, passport};
+      return {user, passport, message};
     } catch (e) {
       throw e;
     }

@@ -71,7 +71,8 @@ describe("about forgot password", () => {
   it('forgot', async (done) => {
     try {
       let result = await AuthService.sendForgotMail(testUser.email);
-      result.forgotToken.should.be.String;
+      result.user.forgotToken.should.be.String;
+      result.message.to.should.be.equal(testUser.email);
       done();
     } catch (e) {
       console.log(e);
@@ -99,6 +100,7 @@ describe("about forgot password", () => {
       let result = await AuthService.changeForgotPassword(data);
       result.user.id.should.be.equal(createdTest2.id);
       result.passport.password.should.be.not.equal(passport2.password);
+      result.message.to.should.be.equal(data.email);
       done();
     } catch (e) {
       console.log(e);
