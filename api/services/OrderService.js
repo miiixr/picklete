@@ -218,7 +218,7 @@ module.exports = {
         orderItems[index].comment = product.comment;
         orderItems[index].spec = product.spec;
       });
-      
+
       if(newOrder.shopCode){
         var shopCodeData = {
           code: newOrder.shopCode,
@@ -298,7 +298,7 @@ module.exports = {
         if(sails.config.useAllPay !== undefined)
           useAllPay = sails.config.useAllPay;
         if(!useAllPay){
-          let messageConfig = CustomMailerService.orderConfirm(result);
+          let messageConfig = await CustomMailerService.orderConfirm(result);
           let message = await db.Message.create(messageConfig, {transaction});
           await CustomMailerService.sendMail(message);
         }

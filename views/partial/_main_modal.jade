@@ -85,11 +85,11 @@
         h1.modal-title.text-center &#x5FD8;&#x8A18;&#x5BC6;&#x78BC;
       // /modal-header
       .modal-body.text-center.p-30
-        form.m-bottom-4
+        form#forgotPassword.m-bottom-4(method='get',action='/forgotPassword')
           .form-group
-            input.form-control(type='email', placeholder='Email')
+            input.form-control(type='email',name='email',form='forgotPassword', placeholder='Email')
           // /form-group
-          button.btn.btn-black.border-radius-circle.btn-block.m-bottom-2(type='button', data-dismiss='modal') &#x767C;&#x9001;&#x4FE1;&#x7BB1;
+          button#forgotPasswordBtm.btn.btn-black.border-radius-circle.btn-block.m-bottom-2(type='submit',form='forgotPassword') 發送信箱
         | &#x9;&#x9;&#x9;&#x9;
         a(href='#', data-toggle='modal', data-target='#modal-login', data-dismiss='modal') &#x53D6;&#x6D88;
         | &#x9;&#x9;&#x9;&#x9;

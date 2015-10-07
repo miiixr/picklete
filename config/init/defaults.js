@@ -270,10 +270,10 @@ module.exports.createTestData = async ({createRoleUser, createNewBuyer}) => {
   //let transaction = await db.sequelize.transaction({isolationLevel});
 
   // Greeting Message to New Buyer
-  var mail = CustomMailerService.greeting(createNewBuyer);
+  var mail = await CustomMailerService.greeting(createNewBuyer);
   let msg = await db.Message.create(mail/*, {transaction}*/);
   //transaction.commit();
-  CustomMailerService.sendMail(msg);
+  await CustomMailerService.sendMail(msg);
 
   //transaction = await db.sequelize.transaction({isolationLevel});
 

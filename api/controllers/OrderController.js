@@ -260,7 +260,7 @@ OrderController = {
       user.orderSyncToken = token;
       await user.save();
 
-      let messageConfig = CustomMailerService.orderSync(user, host);
+      let messageConfig = await CustomMailerService.orderSync(user, host);
 
       let message = await db.Message.create(messageConfig);
       await CustomMailerService.sendMail(message);

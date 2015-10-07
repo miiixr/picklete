@@ -144,7 +144,7 @@ let PaymentController = {
       result.bankAccountId = data.vAccount;
       result.order = order;
 
-      let messageConfig = CustomMailerService.orderConfirm(result);
+      let messageConfig = await CustomMailerService.orderConfirm(result);
       let message = await db.Message.create(messageConfig);
       await CustomMailerService.sendMail(message);
 
