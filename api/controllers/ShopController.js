@@ -40,6 +40,7 @@ let ShopController = {
         page: page,
         totalPages: Math.ceil(productsWithCount.count / limit),
         totalRows: productsWithCount.count,
+        verification: query.verification
       };
 
       console.log('=== totalPages ===', result.totalPages);

@@ -182,7 +182,7 @@ AuthController = {
   verification: async(req, res) => {
     let data = req.query;
     await AuthService.verificationFinish(data.email);
-    return res.redirect("/shop/products");
+    return res.redirect("/shop/products?verification=true");
   }
 };
 
