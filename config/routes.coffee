@@ -35,6 +35,7 @@ module.exports.routes = {
   'get /forgotPassword' :'AuthController.forgotPassword'
   'get /newPassword' : 'AuthController.newPassword'
   'get /verification': 'AuthController.verification'
+  'get /verification/send': 'AuthController.sedVerificationMailAgain'
 
   'get /admin/' : 'AuthController.admin'
   'get /admin/login' : 'UserController.controlLogin'

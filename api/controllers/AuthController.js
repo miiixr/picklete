@@ -143,7 +143,9 @@ AuthController = {
         if (req.xhr)
           return res.ok({
             status: "ok",
-            message: "login success"
+            message: "login success",
+            isVerification: user.verification,
+            email: user.email
           });
 
         return res.redirect('/');
@@ -183,7 +185,29 @@ AuthController = {
     let data = req.query;
     await AuthService.verificationFinish(data.email);
     return res.redirect("/shop/products?verification=true");
-  }
+  },
+  sedVerificationMailAgain: async(req, res) => {
+    try {
+      let data = req.query;
+      let user = await db.User.findOne({where:{email:data.email}});
+
+      let domain = sails.config.domain || process.env.domain || 'http://localhost:1337';
+      let link = `${domain}/verification?email=${user.email}`;
+      console.log("verificationLink : ",link);
+
+      let messageConfig = await CustomMailerService.verificationMail(user, link);
+      let message = await db.Message.create(messageConfig);
+      await CustomMailerService.sendMail(message);
+
+      return res.ok();
+    } catch (e) {
+      console.error(e.stack);
+      let {message} = e;
+      let success = false;
+      return res.json(500,{message, success});
+    }
+
+  },
 };
 
 module.exports = AuthController;

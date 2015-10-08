@@ -31,7 +31,14 @@ $(window).load(function() {
           success:function(data, textStatus, jqXHR){
             console.log(data);
             if (data.status == "ok") {
-              alert("記得去收驗證信喔");
+              $(this).notifyMe(
+                'top',
+                'cart',
+                '<span class="glyphicon glyphicon-ok-circle m-right-2"></span>記得去收驗證信喔!!',
+                '',
+                300,
+                1500
+              );
               window.location.replace("/shop/products");
             }else{
               $(this).notifyMe(
