@@ -27,7 +27,7 @@ module.exports = {
     merchantID: '2000132',
     hashKey: '5294y06JbISpM5x9',
     hashIV: 'v77hoKGq4kWxNNIS',
-    debug: false,
+    debug: true,
     ReturnURL:'allpay/paid',
     ClientBackURL:'shop/products',
     PaymentInfoURL:'allpay/paymentinfo',

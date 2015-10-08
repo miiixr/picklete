@@ -35,12 +35,12 @@ $(window).load(function() {
               window.location.replace("/shop/products");
             }else{
               $(this).notifyMe(
-                'top', // Position
-                'error', // Type
-                'Lorem Ipsum Text', // Title
-                'Lorem Ipsum is simply dummy text of the printing', // Description
-                200, // Velocity of notification
-                2000 // (optional) Time of delay to close automatically
+                'top',
+                'cart',
+                '<span class="glyphicon glyphicon-remove-circle m-right-2"></span>表單送出填寫有誤，請確認填入資料',
+                '',
+                200,
+                2000
               );
             }
           }
