@@ -62,14 +62,11 @@ AuthController = {
       if(user.userLikes == undefined) user.userLikes = []
 
       if(user.email!='' && user.password == user.passwordAgain && user.fullName != '' && user.mobile != '' && user.city != '' && user.region != '' && user.zipcode != ''){
-
-        // 寄送認證信
         
         let userCreate = db.User.create(user);
         return res.redirect('/');
 
       } else{
-
         res.view('user/register.jade', {
           errors: req.flash('error'),
           likes,

@@ -53,6 +53,9 @@ module.exports = {
 
   verificationFinish: async(email)=>{
     try {
+      let user = await db.User.findOne({where:{email}});
+      user.verification = true;
+      await user.save();
       return user
     } catch (e) {
       throw e;

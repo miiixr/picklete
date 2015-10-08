@@ -9,8 +9,9 @@ describe("about Mailer service", () => {
   }
 
   let user = {
-      username: 'testUser',
-      email: 'xyz@gmail.com'
+      fullName: 'testUser',
+      email: 'xyz@gmail.com',
+      link: 'google.com.tw'
   }
 
   it('send paymentConfirm', async (done) => {
@@ -38,7 +39,8 @@ describe("about Mailer service", () => {
   it('send verification Mail', async (done) => {
 
     try {
-      let result = await CustomMailerService.verificationMail(user);
+      let result = await CustomMailerService.verificationMail(user,user.link);
+      console.log("!!",result);
       result.to.should.be.equal(user.email);
       result.type.should.be.equal('verification');
       done();

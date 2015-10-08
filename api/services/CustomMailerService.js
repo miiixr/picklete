@@ -207,10 +207,24 @@ module.exports = {
     }
   },
 
-  verificationMail: async(user) => {
+  verificationMail: async(user,link) => {
     try {
-      // set Tpl
+
+      var verificationTpl = sails.config.mail.templete.verification;
+      var email = user.email;
+      var mailSendConfig = {...verificationTpl, from: sails.config.mail.config.from, to: email};
+      mailSendConfig.subject = sprintf(mailSendConfig.subject, {
+        username: user.fullName
+      });
+
+      mailSendConfig.html = sprintf(mailSendConfig.html, {
+        storeName: sails.config.store.name,
+        username: user.fullName,
+        link: link
+      });
+
       mailSendConfig.type = 'verification';
+
       return mailSendConfig;
     } catch (e) {
       throw e;
