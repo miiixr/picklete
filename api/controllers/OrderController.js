@@ -160,7 +160,7 @@ OrderController = {
         var allPayData = await OrderService.allPayCreate(result.order,newOrder.paymentMethod);
         console.log("allPayData",allPayData);
         let AioCheckOut = 'https://payment.allpay.com.tw/Cashier/AioCheckOut';
-        if(sails.config.environment === 'development' || sails.config.environment === 'test'){
+        if(sails.config.environment === 'development' || sails.config.environment === 'test' || sails.config.allpay.debug){
           AioCheckOut = 'https://payment-stage.allpay.com.tw/Cashier/AioCheckOut';
         }
         res.view('order/allPay',{

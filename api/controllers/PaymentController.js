@@ -49,7 +49,7 @@ let PaymentController = {
       let data = req.body;
       let checkMacValue = allpay.genCheckMacValue(data);
       let find;
-      if(sails.config.environment === 'development' || sails.config.environment === 'test'){
+      if(sails.config.environment === 'development' || sails.config.environment === 'test' || sails.config.allpay.debug){
         find = data.MerchantTradeNo.replace(sails.config.allpay.merchantID,"");
         find = find.replace(/\w{8}/,"");
       }
@@ -62,7 +62,7 @@ let PaymentController = {
       if(!order)
         throw new Error(`${find} 嚴重錯誤!!付款後找不到訂單!!`);
 
-      if (!(sails.config.environment === 'development' || sails.config.environment === 'test')) {
+      if (!(sails.config.environment === 'development' || sails.config.environment === 'test'|| sails.config.allpay.debug)) {
         if(checkMacValue != data.CheckMacValue)
           throw new Error(`CheckMacError!!`);
       }
@@ -88,7 +88,7 @@ let PaymentController = {
       let data = req.body;
       console.log("req",req.body);
       let find;
-      if(sails.config.environment === 'development' || sails.config.environment === 'test'){
+      if(sails.config.environment === 'development' || sails.config.environment === 'test' || sails.config.allpay.debug){
         find = data.MerchantTradeNo.replace(sails.config.allpay.merchantID,"");
         find = find.replace(/\w{8}/,"");
       }
@@ -113,7 +113,7 @@ let PaymentController = {
       if(!order)
         throw new Error(`${find} 找不到訂單!!`);
 
-      if (!(sails.config.environment === 'development' || sails.config.environment === 'test')) {
+      if (!(sails.config.environment === 'development' || sails.config.environment === 'test' || sails.config.allpay.debug)) {
         if(checkMacValue != data.CheckMacValue)
           throw new Error(`CheckMacError!!`);
       }
