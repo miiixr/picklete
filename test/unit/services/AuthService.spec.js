@@ -1,7 +1,7 @@
 import sinon from 'sinon';
 
 describe("about forgot password", () => {
-  let testUser ,passport,testUser2,passport2,createdTest2,testUser3,passport3;
+  let testUser, passport, testUser2, passport2, createdTest2, testUser3, passport3;
   before(async (done) => {
     sinon.stub(UserService, 'getLoginState', (req) => {
       return true;

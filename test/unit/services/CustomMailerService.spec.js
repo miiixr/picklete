@@ -8,6 +8,11 @@ describe("about Mailer service", () => {
     }
   }
 
+  let user = {
+      username: 'testUser',
+      email: 'xyz@gmail.com'
+  }
+
   it('send paymentConfirm', async (done) => {
 
     try {
@@ -33,8 +38,8 @@ describe("about Mailer service", () => {
   it('send verification Mail', async (done) => {
 
     try {
-      let result = await CustomMailerService.verificationMail(order);
-      result.to.should.be.equal(order.email);
+      let result = await CustomMailerService.verificationMail(user);
+      result.to.should.be.equal(user.email);
       result.type.should.be.equal('verification');
       done();
     } catch (e) {
