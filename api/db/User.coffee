@@ -21,7 +21,6 @@ module.exports = (sequelize, DataTypes) ->
     orderSyncToken: DataTypes.STRING
     forgotToken: DataTypes.STRING
     verification:
-      admin:
         type: DataTypes.BOOLEAN
         defaultValue: false
     admin:
