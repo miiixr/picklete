@@ -62,7 +62,7 @@ AuthController = {
       if(user.userLikes == undefined) user.userLikes = []
 
       if(user.email!='' && user.password == user.passwordAgain && user.fullName != '' && user.mobile != '' && user.city != '' && user.region != '' && user.zipcode != ''){
-        
+
         let userCreate = db.User.create(user);
         return res.redirect('/');
 
@@ -179,6 +179,11 @@ AuthController = {
       return res.redirect("/shop/products");
     }
   },
+  verification: async(req, res) => {
+    let data = req.query;
+    await AuthService.verificationFinish(data.email);
+    return res.redirect("/shop/products");
+  }
 };
 
 module.exports = AuthController;
