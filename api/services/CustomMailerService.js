@@ -205,6 +205,18 @@ module.exports = {
     } catch (e) {
       throw e;
     }
+  },
+
+  verificationMail: async(user) => {
+    try {
+      // set Tpl
+      mailSendConfig.type = 'verification';
+      return mailSendConfig;
+    } catch (e) {
+      throw e;
+    }
   }
+
+
 
 };

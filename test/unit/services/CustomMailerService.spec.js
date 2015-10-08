@@ -30,4 +30,17 @@ describe("about Mailer service", () => {
 
   });
 
+  it('send verification Mail', async (done) => {
+
+    try {
+      let result = await CustomMailerService.verificationMail(order);
+      result.to.should.be.equal(order.email);
+      result.type.should.be.equal('verification');
+      done();
+    } catch (e) {
+      done(e);
+    }
+
+  });
+
 });

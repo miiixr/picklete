@@ -63,6 +63,8 @@ AuthController = {
 
       if(user.email!='' && user.password == user.passwordAgain && user.fullName != '' && user.mobile != '' && user.city != '' && user.region != '' && user.zipcode != ''){
 
+        // 寄送認證信
+        
         let userCreate = db.User.create(user);
         return res.redirect('/');
 

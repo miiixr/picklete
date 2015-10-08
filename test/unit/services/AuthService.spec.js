@@ -1,7 +1,7 @@
 import sinon from 'sinon';
 
 describe("about forgot password", () => {
-  let testUser ,passport,testUser2,passport2,createdTest2;
+  let testUser ,passport,testUser2,passport2,createdTest2,testUser3,passport3;
   before(async (done) => {
     sinon.stub(UserService, 'getLoginState', (req) => {
       return true;
@@ -59,6 +59,29 @@ describe("about forgot password", () => {
     let passportOptions2 = {where: {UserId: createdTest2.id}, defaults: passport2}
     await db.Passport.findOrCreate(passportOptions2);
 
+    testUser3 = {
+      username: "testForgot3",
+      email: "cc@gmail.com",
+      mobile: "0900000000",
+      address: "admin",
+      comment: "",
+      city: "基隆市",
+      region: "仁愛區",
+      zipcode: 200,
+      forgotToken: '12345678901234567890',
+      RoleId: createRoleUser.id
+    };
+    let userOptions3 = {where: {username: testUser3.username}, defaults: testUser3}
+    let createdTest3 = (await db.User.findOrCreate(userOptions3))[0];
+
+    passport3 = {
+      protocol: 'local',
+      password: "test",
+      UserId: createdTest3.id
+    };
+    let passportOptions3 = {where: {UserId: createdTest3.id}, defaults: passport3}
+    await db.Passport.findOrCreate(passportOptions3);
+
     done();
   });
 
@@ -102,6 +125,17 @@ describe("about forgot password", () => {
       result.user.forgotToken.should.be.not.equal(data.forgotToken);
       result.passport.password.should.be.not.equal(passport2.password);
       result.message.to.should.be.equal(data.email);
+      done();
+    } catch (e) {
+      console.log(e);
+      done(e);
+    }
+  });
+
+  it('mail verification finish', async (done) => {
+    try {
+      let result = await AuthService.verificationFinish(testUser3.email);
+      result.verification.should.be.true;
       done();
     } catch (e) {
       console.log(e);
