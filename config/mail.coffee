@@ -112,5 +112,19 @@ module.exports.mail = {
       </blockquote>
       """
     },
+    verification:{
+      sendBy: 'email',
+      subject: '%(username)s - 新帳號註冊通知',
+      html: """
+      Dear %(username)s , 您好！<br>
+      <blockquote>
+        感謝您註冊我們的服務，請點選以下連結開通帳號<br>
+        <a href='%(link)s'>Click Me</a><br><br>
+        若不是您，您可以選擇忽略此封郵件。<br><br>
+        謝謝！<br>
+        %(storeName)s
+      </blockquote>
+      """
+    }
   }
 }

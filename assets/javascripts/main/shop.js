@@ -193,6 +193,16 @@
   dropdownCartInit();
 
 
+  if($("#verification").attr("data-verification")){
+    $(this).notifyMe(
+      'top',
+      'cart',
+      '<span class="glyphicon glyphicon-ok-circle m-right-2"></span>帳號已開通',
+      '',
+      500,
+      3000
+    );
+  }
 
 
 

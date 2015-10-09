@@ -32,7 +32,7 @@ module.exports = {
       });
       user.forgotToken = crypto.randomBytes(32).toString('hex').substr(0, 20);
       await user.save();
-      
+
       let passport = await db.Passport.findOne({
         where:{
           UserId: user.id
@@ -49,5 +49,17 @@ module.exports = {
     } catch (e) {
       throw e;
     }
+  },
+
+  verificationFinish: async(email)=>{
+    try {
+      let user = await db.User.findOne({where:{email}});
+      user.verification = true;
+      await user.save();
+      return user
+    } catch (e) {
+      throw e;
+    }
   }
+
 }

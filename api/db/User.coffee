@@ -20,6 +20,9 @@ module.exports = (sequelize, DataTypes) ->
     comment: DataTypes.STRING
     orderSyncToken: DataTypes.STRING
     forgotToken: DataTypes.STRING
+    verification:
+      type: DataTypes.BOOLEAN
+      defaultValue: false
     admin:
       type: DataTypes.BOOLEAN
       defaultValue: false

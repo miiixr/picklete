@@ -102,3 +102,26 @@
     // /modal-content
   // /modal-dialog
 // /modal
+#modal-verification.modal.fade
+  -console.log(user);
+  .modal-dialog.modal-sm(role='document')
+    .modal-content
+      .modal-header.p-30
+        button.close(type='button', data-dismiss='modal', aria-label='Close')
+          span(aria-hidden='true') &times;
+        | &#x9;&#x9;&#x9;&#x9;
+        h1.modal-title.text-center 帳號尚未驗證
+          h3 我們發現你的帳號尚未驗證喔，要在發一次驗證信嗎？
+      // /modal-header
+      .modal-body.text-center.p-30
+        form#verificationMailAgain.m-bottom-4(method='get',action='/verification/send')
+          .form-group
+            input#verificationMailEmail.form-control(type='email',name='email',form='verificationMailAgain', value= user?user.email:'')
+          // /form-group
+          button.btn.btn-black.border-radius-circle.btn-block.m-bottom-2(type='submit',form='verificationMailAgain') 發送
+        | &#x9;&#x9;&#x9;&#x9;
+        a(type='button', data-dismiss='modal', aria-label='Close') 取消
+      // /modal-body
+    // /modal-content
+  // /modal-dialog
+// /modal

@@ -14,7 +14,6 @@
     );
   });
 
-
   new UISearch( document.getElementById( 'sb-search' ) );
 
   function sticky_relocate() {
@@ -30,7 +29,7 @@
   $(window).scroll(sticky_relocate);
   sticky_relocate();
 
-  
+
 
   $('[data-toggle="tooltip"]').tooltip();
 
