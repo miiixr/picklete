@@ -28,12 +28,12 @@ block body
           label.col-md-2.control-label #{i18n('brand-classification')}
           .col-md-4
             select.form-control(name='dptId[]')
-              option 選擇大館別
+              option #{i18n('dpt')}
               each dpt, index in dpts
                 option(value='#{dpt.id}') #{dpt.name}
           .col-md-4
             select.form-control(name='dptSubId[]')
-              option(value='') 選擇小館別
+              option(value='') #{i18n('dpt-sub')}
               each dptSub, index in dpts[0].DptSubs
                 option(value='#{dptSub.id}') #{dptSub.name}
           .col-md-2
