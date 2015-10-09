@@ -106,7 +106,7 @@ module.exports = {
       var time = Date.now();
       let domain = sails.config.domain || process.env.domain || 'http://localhost:1337';
       let orderNo;
-      if(sails.config.environment === 'development' || sails.config.environment === 'test'){
+      if(sails.config.environment === 'development' || sails.config.environment === 'test'|| sails.config.allpay.debug){
         var randomString = crypto.randomBytes(32).toString('hex').substr(0, 8);
         orderNo = sails.config.allpay.merchantID + randomString + order.id;
       }else {
@@ -218,7 +218,7 @@ module.exports = {
         orderItems[index].comment = product.comment;
         orderItems[index].spec = product.spec;
       });
-      
+
       if(newOrder.shopCode){
         var shopCodeData = {
           code: newOrder.shopCode,
@@ -298,7 +298,7 @@ module.exports = {
         if(sails.config.useAllPay !== undefined)
           useAllPay = sails.config.useAllPay;
         if(!useAllPay){
-          let messageConfig = CustomMailerService.orderConfirm(result);
+          let messageConfig = await CustomMailerService.orderConfirm(result);
           let message = await db.Message.create(messageConfig, {transaction});
           await CustomMailerService.sendMail(message);
         }

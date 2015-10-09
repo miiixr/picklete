@@ -41,7 +41,7 @@
     var newTypeInput = $("li.control-well")[maxType-1].getElementsByTagName("input");
     $.each( newTypeInput, function( key, dom ) {
       console.log( key + ": " + dom.name);
-      dom.name = dom.name.replace(/actives\[\w\]/,`actives[${maxType-1}]`);
+      dom.name = dom.name.replace(/actives\[\w\]/,'actives['+(maxType-1)+']');
     });
 
     var newTypeUrl = $("li.control-well")[maxType-1].getElementsByClassName('urlInput');

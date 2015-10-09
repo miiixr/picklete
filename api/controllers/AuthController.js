@@ -62,12 +62,12 @@ AuthController = {
       if(user.userLikes == undefined) user.userLikes = []
 
       if(user.email!='' && user.password == user.passwordAgain && user.fullName != '' && user.mobile != '' && user.city != '' && user.region != '' && user.zipcode != ''){
-        
+
         let userCreate = db.User.create(user);
         return res.redirect('/');
 
       } else{
-        
+
         res.view('user/register.jade', {
           errors: req.flash('error'),
           likes,
@@ -105,7 +105,7 @@ AuthController = {
         default:
           var reference;
           try {
-            reference = url.parse(req.headers.referer);  
+            reference = url.parse(req.headers.referer);
           } catch (e) {
             reference = { path : "" };
           }
@@ -115,7 +115,7 @@ AuthController = {
               status: "fail",
               message: "login fail"
             });
-          
+
           if (reference.path === '/admin/login') {
             res.redirect('/admin/login');
           }else {
@@ -153,7 +153,33 @@ AuthController = {
   },
   disconnect: function(req, res) {
     passport.disconnect(req, res);
-  }
+  },
+
+  forgotPassword: async (req, res )=>{
+    try {
+      let data = req.query;
+      let check = await AuthService.sendForgotMail(data.email);
+      let message = '已寄出mail，請至信箱確認';
+      return res.ok(message);
+    } catch (e) {
+      console.error(e.stack);
+      let {message} = e;
+      let success = false;
+      return res.json(500,{message, success});
+    }
+  },
+  newPassword: async (req, res )=>{
+    try {
+      let data = req.query;
+      await AuthService.changeForgotPassword(data);
+      return res.redirect("/shop/products");
+    } catch (e) {
+      console.error(e.stack);
+      let {message} = e;
+      let success = false;
+      return res.redirect("/shop/products");
+    }
+  },
 };
 
 module.exports = AuthController;

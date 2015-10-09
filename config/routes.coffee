@@ -32,6 +32,8 @@ module.exports.routes = {
   'get /login': 'AuthController.login'
   'get /logout': 'AuthController.logout'
   'get /register' : 'AuthController.register'
+  'get /forgotPassword' :'AuthController.forgotPassword'
+  'get /newPassword' : 'AuthController.newPassword'
 
   'get /admin/' : 'AuthController.admin'
   'get /admin/login' : 'UserController.controlLogin'
