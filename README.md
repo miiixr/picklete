@@ -4,7 +4,7 @@ Picklete - E-Commerce Platform
 prerequisite
 ------------
 
--	nvm(https://github.com/creationix/nvm\)
+-	nvm(https://github.com/creationix/nvm/)
 -	iojs ≧ 1.8.1
 -	mysql
 -	Ruby(RVM)
