@@ -46,7 +46,7 @@ hr
       | 手機號碼
       span.text-danger *
     .col-sm-9
-      input.form-control(type='number', value=user.mobile, name='mobile', placeholder='請輸入正確號碼，以便出貨聯繫', required)
+      input.form-control(type='tel', value=user.mobile, name='mobile', placeholder='請輸入正確號碼，以便出貨聯繫', pattern="09[0-9]{8}|0[0-9]{8,9}",required)
   // /form-group
   .form-group
     label.col-sm-3.control-label 生日
