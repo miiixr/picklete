@@ -18,10 +18,11 @@
     beforeSubmit:  function (formData, jqForm, options) {
       var queryString = $.param(formData);
       that.find('input[name="' + inputName + '"]').val('').data('uploadStatus','uploading');
+      console.log('iN:'+inputName);
     },
     success: function (responseText, statusText, xhr, $form)  {
       if(statusText == 'success') {
-        // that.find('input[name="' + inputName + '"]').val('').data('uploadStatus','uploaded');
+        that.find('input[name="' + inputName + '"]').val('').data('uploadStatus','uploaded');
         that.find('input[name="' + responseText.filename + '"]').val(responseText[0].fd);
       }
     }
