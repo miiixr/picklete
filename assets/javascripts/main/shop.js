@@ -99,7 +99,7 @@
 
     var productId = $(this).attr("data-productId");
     var quantity = $('input[name="quant[1]"]').val() || 1;
-    var price = $('#price').text();
+    var price = $(this).attr("data-price");
     var photos = JSON.parse($(this).attr("data-photos"));
     var brand = $(this).attr("data-brand");
     var brandname = $(this).attr("data-brandname") || "";

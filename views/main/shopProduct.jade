@@ -79,7 +79,7 @@ block body
                       span#price #{product.price}
                   else 
                     h3.text-black.m-bottom-4
-                      span.text-danger#price #{product.price}
+                      span.text-danger #{product.price}
                       small.text-line-through.m-left-1#originPrice #{product.originPrice}
                     h4.text-danger 活動倒數 #{product.promotionCountDown}
                   
@@ -121,7 +121,8 @@ block body
                 .col-sm-8
                   a.btn.btn-black.border-radius-circle.btn-block.btn-lg.add-to-cart(
                   data-productId=product.id, data-photos=product.photos, 
-                  data-brand=productGm.name, data-name=product.name ,data-brandname=_.find(brands, {id: product.ProductGm.BrandId}).name) 加入購物車 
+                  data-brand=productGm.name, data-name=product.name , data-brandname=_.find(brands, {id: product.ProductGm.BrandId}).name,
+                  data-price=product.price) 加入購物車 
                 // /col-sm-8
               // /row
               
