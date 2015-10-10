@@ -305,7 +305,7 @@ block body
         });
 
         $('#previous').click(function(){
-          $("input[name='page']").val($(parseInt("input[name='page']").val())-1);
+          $("input[name='page']").val(parseInt($("input[name='page']").val())-1);
           $("form[name='searchOrders']").submit();
         });
 
