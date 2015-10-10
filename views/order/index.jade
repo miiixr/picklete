@@ -171,7 +171,7 @@ block body
             .col-sm-1.col-sm-1-lg 運送方式
             // /col-sm-1
             .col-sm-1
-              if order.status == "paymentConfirm"
+              if order.status != "new"
                 span.glyphicon.glyphicon-ok-circle
               else
                 span.glyphicon.glyphicon-remove-circle.text-danger
@@ -179,11 +179,13 @@ block body
             .col-sm-2 #{sails.moment(order.createdAt.format).format('YYYY/MM/DD hh:mm')}
             // /col-sm-2
             .col-sm-1.col-sm-1-lg
-              if order.status == "deliveryConfirm"
+              if order.status == "new"
+                a.btn.btn-default.btn-sm(href='/order/statusUpdate/#{order.id}?status=paymentConfirm') 收到付款
+              else if order.status == "paymentConfirm"
+                a.btn.btn-default.btn-sm(href='/order/statusUpdate/#{order.id}?status=deliveryConfirm') 通知出貨
+              else if order.status == "deliveryConfirm"
                 button.btn.btn-default.btn-sm.active(type='button') 已出貨
               else
-                button.btn.btn-default.btn-sm(type='button') 通知出貨
-              if order.status == "cancel"
                 span.text-danger 已取消
             // /col-sm-1
           // /row
