@@ -121,7 +121,7 @@ block body
                 .col-sm-8
                   a.btn.btn-black.border-radius-circle.btn-block.btn-lg.add-to-cart(
                   data-productId=product.id, data-photos=product.photos, 
-                  data-brand=productGm.name, data-name=product.name) 加入購物車 
+                  data-brand=productGm.name, data-name=product.name ,data-brandname=_.find(brands, {id: product.ProductGm.BrandId}).name) 加入購物車 
                 // /col-sm-8
               // /row
               

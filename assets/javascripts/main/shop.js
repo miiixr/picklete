@@ -102,6 +102,7 @@
     var price = $('#price').text();
     var photos = JSON.parse($(this).attr("data-photos"));
     var brand = $(this).attr("data-brand");
+    var brandname = $(this).attr("data-brandname") || "";
     var name = $(this).attr("data-name") || "";
     var originPrice = $('#originPrice').text();
 
@@ -115,6 +116,7 @@
     var addProduct = {
       ProductId: productId,
       quantity: quantity,
+      brandname: brandname,
       price: price,
       brand: brand,
       name: name,
@@ -156,8 +158,8 @@
         '    </div>' +
 
         '    <div class="col-xs-8 p-left-0">' +
-        '      <h6 class="text-muted"><a href="/brands">'+orderItem.brand+'</a></h6>' +
-        '      <h5><a href="shop-product">'+orderItem.name+'</a></h5>' +
+        '      <h6 class="text-muted"><a href="/brands">'+orderItem.brandname+'</a></h6>' +
+        '      <h5><a href="shop-product">'+orderItem.brand+"-"+orderItem.name+'</a></h5>' +
         '      <h5>$ '+orderItem.price+'</h5>' +
         '    </div>' +
         '  </div>' +
