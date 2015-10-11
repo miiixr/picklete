@@ -2,8 +2,8 @@ $(function  () {
 
 	var sliderlocation = $('#myscript').attr("slider-location");
 	var id = $('#myscript').attr("slider-id");
-	
-  $("input[value='"+sliderlocation+"']").prop('checked', true);  
+
+  $("input[value='"+sliderlocation+"']").prop('checked', true);
 
   $('.row').on('click','.delete-link',function(e){
     e.preventDefault();
@@ -14,8 +14,24 @@ $(function  () {
         location.href = '/admin/index-slider';
       });
     });
-  });  
+  });
 
+	$('form#activeCreateForm').submit(function(event) {
+		/* Act on the event */
+		var pass = true;
+		// check image is uploading or not
+		$('input').map(function(index) {
+			if( $(this).data('uploadStatus') == 'uploading') {
+				alert('尚有圖片在上傳中');
+				pass = false;
+			}
+		});
+		return pass;
+	});
+	
+	// Uncaught Error: Syntax error, unrecognized expression: input[value=#{slider.location}]
   $("input[value=#{slider.location}]").prop('checked', true);
+
+
 
 });
