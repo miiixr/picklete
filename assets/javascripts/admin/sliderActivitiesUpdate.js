@@ -29,9 +29,4 @@ $(function  () {
 		return pass;
 	});
 	
-	// Uncaught Error: Syntax error, unrecognized expression: input[value=#{slider.location}]
-  $("input[value=#{slider.location}]").prop('checked', true);
-
-
-
 });
