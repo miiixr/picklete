@@ -44,4 +44,7 @@ module.exports = {
   i18n: {
     localesDirectory: '/config/locales'
   }
+  googleAnalytics: {
+    trackingID: ''
+  }
 }
