@@ -217,7 +217,7 @@ module.exports.createTestData = async ({createRoleUser, createNewBuyer}) => {
   // await createdProductGmComplete.setProducts(createdProduct);
 
   noneNameProduct = await db.Product.create({
-    stockQuantity: '999',
+    stockQuantity: 0,
     isPublish: 'true',
     price: 888,
     size: 'normal',
