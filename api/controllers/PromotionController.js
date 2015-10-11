@@ -111,7 +111,6 @@ let PromotionController = {
       console.log('query',req.query);
       let query = req.query;
       let queryObj = {};
-
       if(query.keyword)
         queryObj.name = { 'like': '%'+query.keyword+'%'};
       else

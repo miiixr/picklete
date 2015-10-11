@@ -55,14 +55,12 @@ AuthController = {
       }
       let tempUser = req.flash('form');
       let user = defaultUser;
-
       if(tempUser.length)
         user = tempUser[0];
 
       if(user.userLikes == undefined) user.userLikes = []
 
       if(user.email!='' && user.password == user.passwordAgain && user.fullName != '' && user.mobile != '' && user.city != '' && user.region != '' && user.zipcode != ''){
-
         let userCreate = db.User.create(user);
         return res.redirect('/');
 

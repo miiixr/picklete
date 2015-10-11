@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) ->
       'price',
       'discount'
     )
-    startDate: DataTypes.DATE
-    endDate: DataTypes.DATE
+    startDate: DataTypes.DATEONLY
+    endDate: DataTypes.DATEONLY
     discount: DataTypes.FLOAT
     price: DataTypes.FLOAT
   }, classMethods: associate: (models) ->
