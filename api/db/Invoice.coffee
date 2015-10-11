@@ -3,7 +3,6 @@ module.exports = (sequelize, DataTypes) ->
   Invoice = sequelize.define('Invoice', {
     invoiceType: DataTypes.ENUM('duplex', 'triplex', 'charity')
     taxId: DataTypes.STRING
-    addressee: DataTypes.ENUM('buyer', 'charity')
     charityName: DataTypes.STRING
     title: DataTypes.STRING
   }, classMethods: associate: (models) ->
