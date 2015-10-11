@@ -163,12 +163,22 @@ $(function  () {
     else if (modalRatioValue == 'option2') {
       path = fileInputPath;
       url = productUrl2Value;
+      var filesUploaded = true;
+      // check image is uploading or not
+      $('input').map(function(index) {
+        if( $(this).data('uploadStatus') == 'uploading') {
+          filesUploaded = false;
+        }
+      });
 
       // check inputs isfilled
       if ( !url.length || !path.length ) {
         alert('請上傳圖片，並填寫圖片連結');
         // keep modal exist
         $modalConfirmButton.attr('data-dismiss','');
+      }
+      else if ( !filesUploaded ) {
+        alert('尚有圖片在上傳中');
       }
       else {
         /* add image openWindow, path & url back to form hidden input */
@@ -194,6 +204,7 @@ $(function  () {
 
   $topicActiveForm.submit(function() {
     var result = true;
+
     // sort imageSection weight
     $('li.imageSection').map(function(index) {
       $(this).find('.weight').val(index);
