@@ -163,5 +163,51 @@
   });
   // end giftly
 
+  $('#invoiceType').change(function(){
+    console.log('#invoiceType change');
+
+    var invoiceType = $('#invoiceType').val();
+    var invoiceDetail = $('.showhide-invoice');
+
+
+    var charityNameField =
+      '<div class="form-group">' +
+      '  <label class="col-sm-3 control-label">慈善機構<span class="text-danger">*</span></label>' +
+      '  <div class="col-sm-9">' +
+      '    <input type="text" name="order[invoice][charityName]" placeholder="請選擇慈善機構" class="form-control" required />' +
+      '  </div>' +
+      '</div>';
+
+    var titleField =
+      '<div class="form-group">' +
+      '  <label class="col-sm-3 control-label">公司抬頭<span class="text-danger">*</span></label>' +
+      '  <div class="col-sm-9">' +
+      '    <input type="text" name="order[invoice][title]" placeholder="請輸入公司抬頭" class="form-control" required />' +
+      '  </div>' +
+      '</div>';
+
+    var taxIdField =
+      '<div class="form-group">' +
+      '  <label class="col-sm-3 control-label">統一編號<span class="text-danger">*</span></label>' +
+      '  <div class="col-sm-9">' +
+      '    <input type="text" name="order[invoice][taxId]" placeholder="請輸入統一編號" class="form-control" required />' +
+      '  </div>' +
+      '</div>';
+
+    invoiceDetail.html('');
+
+    if(invoiceType == 'duplex')
+      invoiceDetail.html(taxIdField);
+
+    else if(invoiceType == 'triplex')
+      invoiceDetail.html(titleField+taxIdField);
+
+    else if(invoiceType == 'charity')
+      invoiceDetail.html(charityNameField);
+
+  });
+
+  cartstep2
+
 
 }(jQuery));
