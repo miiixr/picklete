@@ -36,6 +36,7 @@ module.exports = (sequelize, DataTypes) ->
     Order.belongsTo models.User
     Order.hasMany models.OrderItem
     Order.hasOne models.Shipment
+    Order.belongsTo models.Invoice
     return
   )
   return Order
