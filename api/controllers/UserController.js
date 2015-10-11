@@ -54,8 +54,6 @@ let UserController = {
       });
     }
 
-
-
     let company = await db.Company.findOne();
     let brands = await db.Brand.findAll();
 
