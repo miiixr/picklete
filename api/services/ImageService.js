@@ -33,7 +33,7 @@ module.exports = {
         height: imageResizeConfig.height || 100
       }
       await fse.ensureDirSync(path.join(home, `./.tmp/images`));
-      let result = await gm(resizeConfig.src).resize(resizeConfig.width, resizeConfig.height, "!").quality(95).writeAsync(resizeConfig.dst);
+      let result = await gm(resizeConfig.src).resize(resizeConfig.width, resizeConfig.height, "!").quality(92).writeAsync(resizeConfig.dst);
       return resizeConfig;
 
     } catch (e) {
