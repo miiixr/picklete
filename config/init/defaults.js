@@ -22,7 +22,7 @@ module.exports.createTestData = async ({createRoleUser, createNewBuyer}) => {
     productPhotos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/about.jpg','https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/about.jpg','https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/about.jpg'],
     aboutCompany: '請輸入公司簡介',
     dealerPhotos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/logo-dealers-1.jpg','https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/logo-dealers-1.jpg'],
-    dealerNames: ['商店一', '商店二']
+    dealerNames: ['好棒棒商店', '好讚讚商店']
   };
   var createAbout = await db.About.create(initAbout);
 
