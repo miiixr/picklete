@@ -40,7 +40,7 @@ describe("about Order", () => {
     });
 
 
-    it.only("create order should be success", async (done) => {
+    it("create order should be success", async (done) => {
       try {
         let newOrder ={
           orderItems: [
