@@ -88,7 +88,8 @@ OrderController = {
             }
           }, {
             model: db.OrderItem
-          }
+          },
+          db.Invoice
         ]
       };
 

@@ -49,7 +49,7 @@ block body
                 // /form-group
                 .form-group
                   .col-sm-12
-                    textarea.form-control(rows='6', placeholder='備註...')
+                    textarea.form-control(rows='6', name="order[description]", placeholder='備註...')
                 // /form-group
               // /form-horizontal
               label.checkbox-inline.m-top-2.m-left-0.p-left-0
@@ -92,47 +92,20 @@ block body
               // /form-horizontal
               h2 發票資訊
               hr
-              form.form-horizontal.m-bottom-10
-                .form-group
-                  label.col-sm-3.control-label
-                    | 發票收件人
-                    span.text-danger *
-                  .col-sm-9
-                    label.checkbox-inline
-                      input(type='checkbox', value='option1')
-                      |  寄給購買人
-                    label.checkbox-inline
-                      input(type='checkbox', value='option2')
-                      |  捐贈慈善機構
-                      a(href='#', data-toggle='tooltip', title='發票將每月隨機捐給各慈善機構如：家扶基金會、中華社會福利聯合勸募協會等。')
-                        span.glyphicon.glyphicon-info.m-left-1
-                // /form-group
+              form#formInvoice.form-horizontal.m-bottom-10(name='orderCreate', method='post',action='/api/order')
                 .form-group
                   label.col-sm-3.control-label
                     | 發票類型
                     span.text-danger *
                   .col-sm-9
-                    label.checkbox-inline
-                      input(type='checkbox', value='option1')
-                      |  二聯式發票
-                    label.checkbox-inline
-                      input(type='checkbox', value='showhide-invoice')
-                      |  三聯式發票
+                    select#invoiceType.form-control(name="order[invoice][type]", required)
+                      option(value='') 請選擇
+                      option(value='duplex') 二聯式發票
+                      option(value='triplex') 三聯式發票
+                      option(value='charity') 捐贈慈善機構
+
                 // /form-group
-                .showhide-invoice(style='display: none')
-                  .form-group
-                    label.col-sm-3.control-label
-                      | 公司抬頭
-                      span.text-danger *
-                    .col-sm-9
-                      input.form-control(type='text', placeholder='請輸入公司抬頭')
-                  // /form-group
-                  .form-group
-                    label.col-sm-3.control-label
-                      | 統一編號
-                      span.text-danger *
-                    .col-sm-9
-                      input.form-control(type='text', placeholder='請輸入統一編號')
+                .showhide-invoice
                   // /form-group
                 // /dvinvoice
               // /form-horizontal
