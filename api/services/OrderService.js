@@ -13,7 +13,7 @@ var allpay = new Allpay({
   debug: sails.config.allpay.debug,
 });
 
-module.exports = {
+var self = module.exports = {  
   generateOrderSerialNumber: async () => {
     let dateString = OrderService._dateFormat(moment());
     let startDate = moment().startOf('day').toDate();
@@ -106,25 +106,18 @@ module.exports = {
       var time = Date.now();
       let domain = sails.config.domain || process.env.domain || 'http://localhost:1337';
       let orderNo;
-      if(sails.config.environment === 'development' || sails.config.environment === 'test'|| sails.config.allpay.debug){
+
+      if (sails.config.environment === 'development' || sails.config.environment === 'test'|| sails.config.allpay.debug){
         var randomString = crypto.randomBytes(32).toString('hex').substr(0, 8);
         orderNo = sails.config.allpay.merchantID + randomString + order.id;
-      }else {
+      }
+      else {
         orderNo = sails.config.allpay.merchantID + order.id ;
       }
-      let data = {
-        MerchantID: sails.config.allpay.merchantID,
-        MerchantTradeNo: orderNo,
-        MerchantTradeDate: sails.moment(time).format('YYYY/MM/DD HH:mm:ss'),
-        PaymentType: 'aio',
-        TotalAmount: order.paymentTotalAmount,
-        TradeDesc: 'Allpay push order test',
-        ItemName: '',
-        ReturnURL: domain + sails.config.allpay.ReturnURL,
-        ChoosePayment: paymentMethod,
-        ClientBackURL:  domain + sails.config.allpay.ClientBackURL,
-        PaymentInfoURL:  domain + sails.config.allpay.PaymentInfoURL
-      };
+
+      let data = await self.getAllpayConfig(
+        orderNo, time, order.paymentTotalAmount, paymentMethod);
+
       var itemArray = [];
       order.OrderItems.forEach((orderItem) => {
         itemArray.push(orderItem.name);
@@ -318,6 +311,22 @@ module.exports = {
     }
 
 
+  },
+
+  getAllpayConfig: async (tradeNo, tradeDate, totalAmount, paymentMethod) => {
+  	return {
+  		MerchantID: sails.config.allpay.merchantID,
+  		MerchantTradeNo: tradeNo,
+  		MerchantTradeDate: sails.moment(tradeDate).format('YYYY/MM/DD HH:mm:ss'),
+  		PaymentType: 'aio',
+  		TotalAmount: totalAmount,
+  		TradeDesc: 'Allpay push order test',
+  		ItemName: '',
+  		ReturnURL: await UrlHelper.resolve(sails.config.allpay.ReturnURL, true),
+  		ChoosePayment: paymentMethod,
+  		ClientBackURL: await UrlHelper.resolve(sails.config.allpay.ClientBackURL, true),
+  		PaymentInfoURL: await UrlHelper.resolve(sails.config.allpay.PaymentInfoURL, true)
+  	};
   },
 
   _dateFormat: (nowDate) => {

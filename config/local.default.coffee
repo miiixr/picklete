@@ -28,9 +28,9 @@ module.exports = {
     hashKey: '5294y06JbISpM5x9',
     hashIV: 'v77hoKGq4kWxNNIS',
     debug: true,
-    ReturnURL:'allpay/paid',
-    ClientBackURL:'shop/products',
-    PaymentInfoURL:'allpay/paymentinfo',
+    ReturnURL:'/allpay/paid',
+    ClientBackURL:'/shop/products',
+    PaymentInfoURL:'/allpay/paymentinfo',
     paymentMethod:[
       {
         code: 'ATM',

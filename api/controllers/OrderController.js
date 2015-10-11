@@ -7,11 +7,7 @@ var OrderController;
 OrderController = {
   debug: async (req, res) => {
     try {
-      let count = await db.Order.count();
-
-      res.ok({
-        count: count
-      });
+      res.ok(await db.Order.findAll({limit: 3, order: 'id DESC'}));
     }
     catch (error) {
       return res.serverError(error);
@@ -151,12 +147,21 @@ OrderController = {
   },
   create: async (req, res) => {
     var newOrder = req.body.order;
+
     try {
+
       let useAllPay = false;
-      if(sails.config.useAllPay !== undefined)
+
+      if (sails.config.useAllPay !== undefined) {
         useAllPay = sails.config.useAllPay;
+      }
+
       let result = await OrderService.create(newOrder);
-      if(useAllPay){
+
+console.log('***************');
+      console.log(result);
+
+      if (useAllPay) {
         var allPayData = await OrderService.allPayCreate(result.order,newOrder.paymentMethod);
         console.log("allPayData",allPayData);
         let AioCheckOut = 'https://payment.allpay.com.tw/Cashier/AioCheckOut';
@@ -167,7 +172,8 @@ OrderController = {
           allPayData,
           AioCheckOut
         });
-      }else{
+      }
+      else{
         return res.ok(result);
       }
     } catch (e) {
