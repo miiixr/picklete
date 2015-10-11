@@ -64,7 +64,11 @@ describe("about Order", () => {
             city: '苗栗縣',
             district: '竹南鎮',
             zipcode: '350',
-            address: '測試用地址不用太在意'
+            address: '測試用地址不用太在意',
+            shippingType: 'delivery',
+            shippingRegion: '外島',
+            shippingFee: '100'
+
           },
           invoice: {
             type: 'duplex',
@@ -95,6 +99,8 @@ describe("about Order", () => {
         });
 
         createdOrder.Shipment.should.be.Object;
+        createdOrder.Shipment.should.have.property('shippingType', 'delivery');
+        createdOrder.Shipment.should.have.property('shippingFee', 100);
         createdOrder.User.should.be.Object;
         createdOrder.Invoice.should.be.Object;
 
