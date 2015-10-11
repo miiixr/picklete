@@ -62,7 +62,6 @@ AuthController = {
 
       if(user.email!='' && user.password == user.passwordAgain && user.fullName != '' && user.mobile != '' && user.city != '' && user.region != '' && user.zipcode != ''){
         let userCreate = db.User.create(user);
-        await userCreate.setLikes([1, 2, 3, 4, 5]);
         return res.redirect('/');
 
       } else{
