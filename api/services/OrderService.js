@@ -274,13 +274,15 @@ module.exports = {
 
         let createdOrderItemIds = createdOrderItems.map((orderItem) => orderItem.id);
 
-        let {shipment} = newOrder;
+        let {shipment, invoice} = newOrder;
         shipment.address = `${shipment.zipcode} ${shipment.city}${shipment.region}${shipment.address}`;
 
         let createdOrder = await db.Order.create(thisOrder, {transaction});
         let createdShipment = await db.Shipment.create(shipment, {transaction});
+        let createdInvoice = await db.Invoice.create(invoice, {transaction});
 
         let associatedShipment = await createdOrder.setShipment(createdShipment, {transaction});
+        let associatedInvoice = await createdOrder.setInvoice(createdInvoice, {transaction});
         let associatedProduct = await createdOrder.setOrderItems(createdOrderItems, {transaction});
         let associatedUser = await createdOrder.setUser(buyer, {transaction});
 

@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) ->
     name: DataTypes.STRING
     description: DataTypes.STRING
     quantity: DataTypes.INTEGER
-    price: DataTypes.INTEGER
+    price: DataTypes.FLOAT
     comment: DataTypes.STRING
     spec: DataTypes.STRING
   }, classMethods: associate: (models) ->
