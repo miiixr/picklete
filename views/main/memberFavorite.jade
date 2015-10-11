@@ -55,7 +55,7 @@ block body
               .fav-item-block.m-bottom-4
                 a.fav-item-move(data-productId=product.id)
                   span.glyphicon.glyphicon-remove-circle
-                a.fav-item-cart.add-to-cart(data-productId=product.id, data-photos=product.photos, data-brand=product.ProductGm.name, data-name=product.name)
+                a.fav-item-cart.add-to-cart(data-productId=product.id, data-photos=product.photos, data-brand=product.ProductGm.name, data-name=product.name, data-price=product.price, data-brandname=_.find(brands, {id: product.ProductGm.BrandId}).name)
                   span.glyphicon.glyphicon-shopping-cart
                 a(href='/shop/products/#{product.ProductGm.id}/#{product.id}')
                   img.img-full(src=product.photos && product.photos[0]? product.photos[0] : "http://www.culpwrit.com/wp-content/uploads/2012/09/no11.jpg")
