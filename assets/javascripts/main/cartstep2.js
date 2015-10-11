@@ -109,9 +109,20 @@
     postData.order.orderItems = picklete_cart.orderItems;
     postData.order.shippingFee = Cookies.getJSON('shippingFee');
     postData.order.paymentMethod = Cookies.getJSON('paymentMethod');
+
+
+
     if(shopCodeObject){
       postData.order.shopCode = shopCodeObject.code;
     }
+
+    var shipping = Cookies.getJSON('shipping');
+    postData.order.shipment.shippingFee = shipping.shippingFee;
+    postData.order.shipment.shippingType = shipping.shippingType;
+    postData.order.shipment.shippingRegion = shipping.shippingRegion;
+
+    console.log('=== postData ===', postData);
+
     $.ajax(
     {
         url : '/api/order',
