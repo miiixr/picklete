@@ -71,14 +71,24 @@ module.exports = {
 
     var newBuyer = {
       username: "buyer",
-      email: "smlsun@gmail.com",
+      email: "buyer@gmail.com",
       password: "buyer",
       RoleId: createRoleUser.id,
       comment: "this is a newBuyer",
       orderSyncToken:'11111',
-      mobile: '0937397377'
+      mobile: '0937397377',
+      verification: true
     };
     var createNewBuyer = await db.User.create(newBuyer);
+
+    let passport = {
+      protocol: 'local',
+      password: "buyer",
+      UserId: createNewBuyer.id
+    };
+
+    await db.Passport.create(passport);
+
 
     let params = {createRoleUser, createNewBuyer}
 
