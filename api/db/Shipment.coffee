@@ -5,7 +5,11 @@ module.exports = (sequelize, DataTypes) ->
     taxId: DataTypes.STRING
     email: DataTypes.STRING
     address: DataTypes.STRING
-    shippingType: DataTypes.ENUM('postoffice', 'delivery')
+    shippingType: {
+      type: DataTypes.ENUM('postoffice', 'delivery'),
+      defaultValue: 'postoffice'
+
+    }
     shippingRegion: DataTypes.STRING
     shippingFee: DataTypes.FLOAT
     shippingId: DataTypes.STRING
