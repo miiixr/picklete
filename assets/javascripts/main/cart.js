@@ -219,10 +219,11 @@
           data : null,
           success:function(data, textStatus, jqXHR)
           {
-            console.log('=== data ==>',data.shippings);
+
+            var shippingFeeSelect = $("#shippingFeeSelect");
             for(i=0;i<data.shippings.length;i++){
               shipping = data.shippings[i].region + ' ' + data.shippings[i].fee + ' 元';
-              $("#shippingFeeSelect").append($("<option data-region='"+data.shippings[i].region+"'></option>").attr("value", data.shippings[i].fee).text(shipping));
+              shippingFeeSelect.append($("<option data-region='"+data.shippings[i].region+"'></option>").attr("value", data.shippings[i].fee).text(shipping));
             }
           }
       });
