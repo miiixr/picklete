@@ -38,47 +38,76 @@ describe("about Order", () => {
       let createOrderItems = await db.OrderItem.bulkCreate(orderItems2);
       done();
     });
-    it("order", (done) => {
-      let newOrder ={
-        orderItems:
-         [ { ProductId: '1', price: '475', quantity: '1' },
-           { ProductId: '1', price: '590', quantity: '2' }],
-        paymentTotalAmount: '565',
-        user:
-         { username: 'AAAd',
-           email: 'user1@picklete.localhost',
-           mobile: '0912345678',
-           city: '苗栗縣',
-           district: '竹南鎮',
-           zipcode: '350',
-           address: '測試用地址不用太在意' },
-        shipment:
-         { username: 'AAAd',
-           email: 'user1@picklete.localhost',
-           mobile: '0912345678',
-           city: '苗栗縣',
-           district: '竹南鎮',
-           zipcode: '350',
-           address: '測試用地址不用太在意' },
-        usedDiscountPoint: 'false',
-        shippingFee: 100 ,
-        paymentMethod: 'ATM'};
 
-      request(sails.hooks.http.app).post("/api/order").send({
-        order: newOrder
-      }).end((err, res) => {
-        if (res.statusCode === 500) {
-          return done(err);
-        }
-        // console.log("!!!",res.body);
-        // res.body.success.should.be["true"];
-        // res.body.order.Shipment.id.should.be.number;
-        // res.body.order.User.id.should.be.number;
-        // res.body.products.forEach((product) => product.id.should.be.number);
-        // res.body.order.OrderItems.forEach((orderItem) => orderItem.id.should.be.number);
-        res.statusCode.should.equal(200);
-        return done();
-      });
+
+    it.only("create order should be success", async (done) => {
+      try {
+        let newOrder ={
+          orderItems: [
+            { ProductId: '1', price: '475', quantity: '1' },
+            { ProductId: '1', price: '590', quantity: '2' }
+          ],
+          paymentTotalAmount: '565',
+          user: {
+            username: 'AAAd',
+            email: 'user1@picklete.localhost',
+            mobile: '0912345678',
+            city: '苗栗縣',
+            district: '竹南鎮',
+            zipcode: '350',
+            address: '測試用地址不用太在意'
+          },
+          shipment: {
+            username: 'AAAd',
+            email: 'user1@picklete.localhost',
+            mobile: '0912345678',
+            city: '苗栗縣',
+            district: '竹南鎮',
+            zipcode: '350',
+            address: '測試用地址不用太在意'
+          },
+          invoice: {
+            type: 'duplex',
+            taxId: '1122334455',
+            charityName: '',
+            title: 'miiixr'
+          },
+          usedDiscountPoint: 'false',
+          shippingFee: 100 ,
+          paymentMethod: 'ATM'};
+
+        let result = await request(sails.hooks.http.app).post("/api/order").send({
+          order: newOrder
+        });
+
+        let createdOrder = await db.Order.find({
+          include:[
+            db.Shipment,
+            db.Invoice,
+            {
+              model: db.User,
+              where: {
+                email: 'user1@picklete.localhost'
+              }
+            },
+
+          ]
+        });
+
+        createdOrder.Shipment.should.be.Object;
+        createdOrder.User.should.be.Object;
+        createdOrder.Invoice.should.be.Object;
+
+
+        done();
+
+
+      } catch (e) {
+        done(e);
+
+      }
+
+
     });
 
     it("find and pay", (done) => {
