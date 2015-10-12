@@ -114,6 +114,9 @@ module.exports = {
     try {
       // find all promotions within a specific date
 
+      // check each prduct
+      if(!products.length) return products;
+
       let productIds = products.map((product) => product.id)
 
       let findPromotions = await db.Promotion.findAll({
@@ -134,10 +137,8 @@ module.exports = {
         }]
       });
       console.log('=== findPromotions ==>',findPromotions);
-
-      // check each prduct
+      
       if(!findPromotions.length) return products;
-      if(!products.length) return products;
 
       products.forEach((product) => {
         console.log('=== findPromotions ==>',findPromotions);
