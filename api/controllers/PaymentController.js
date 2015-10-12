@@ -73,6 +73,7 @@ let PaymentController = {
       order.paymentIsConfirmed = true
       order.paymentConfirmDate = data.PaymentDate;
       order.paymentConfirmAmount = data.TradeAmt;
+      order.status = 'paymentConfirm';
       await order.save();
 
       let messageConfig = await CustomMailerService.paymentConfirm(order);
