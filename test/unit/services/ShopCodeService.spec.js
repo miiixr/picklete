@@ -162,4 +162,28 @@ describe("about shopcode service", () => {
       done();
     }
   });
+
+  it('send ShopCode to all users', async (done) => {
+    try {
+      let shopCode = testShopCode;
+      await ShopCodeService.sendAllUsers({shopCode});
+      done();
+    } catch (e) {
+      console.log(e.stack);
+      done(e);
+    }
+  });
+
+  it('send ShopCode to all users', async (done) => {
+    try {
+      let shopCode = testShopCode;
+      let users = await db.User.findAll({ limit: 5 });
+
+      await ShopCodeService.sendTargetUsers({shopCode, users});
+      done();
+    } catch (e) {
+      console.log(e.stack);
+      done(e);
+    }
+  });
 });

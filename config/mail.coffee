@@ -141,14 +141,14 @@ module.exports.mail = {
       </blockquote>
       """
     },
-    offerCode: {
+    shopCode: {
       sendBy: 'email',
       subject: '您的優惠碼',
       html: """
       Dear %(username)s , 您好！<br>
       <blockquote>
         下面是這期的優惠碼：<br>
-        %(offerCodeToken)s <br>
+        %(shopCodeToken)s <br>
         可在 %(startDate)s 開始使用 <br>
         並且在 %(endDate)s 前使用完畢 <br>
         %(storeName)s

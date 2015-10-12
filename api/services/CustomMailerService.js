@@ -231,13 +231,13 @@ module.exports = {
       throw e;
     }
   },
-  offerCodeMail: ({user, offerCode}) => {
+  shopCodeMail: ({user, shopCode}) => {
     try {
 
-      var offerCodeTpl = sails.config.mail.templete.offerCode;
+      var shopCodeTpl = sails.config.mail.templete.shopCode;
 
       var email = user.email;
-      var mailSendConfig = {...offerCodeTpl, from: sails.config.mail.config.from, to: email};
+      var mailSendConfig = {...shopCodeTpl, from: sails.config.mail.config.from, to: email};
       mailSendConfig.subject = sprintf(mailSendConfig.subject, {
         username: user.fullName
       });
@@ -245,12 +245,12 @@ module.exports = {
       mailSendConfig.html = sprintf(mailSendConfig.html, {
         storeName: sails.config.store.name,
         username: user.fullName,
-        offerCodeToken: offerCode.token,
-        startDate: moment(offerCode.startDate).format('YYYY/mm/DD hh:mm'),
-        endDate: moment(offerCode.endDate).format('YYYY/mm/DD hh:mm')
+        shopCodeToken: shopCode.token,
+        startDate: moment(shopCode.startDate).format('YYYY/mm/DD hh:mm'),
+        endDate: moment(shopCode.endDate).format('YYYY/mm/DD hh:mm')
       });
 
-      mailSendConfig.type = 'offerCode';
+      mailSendConfig.type = 'shopCode';
 
       return mailSendConfig;
     } catch (e) {
