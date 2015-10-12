@@ -121,6 +121,9 @@ let UserController = {
       if(updateUser.userLikes != undefined)
         await user.setLikes(updateUser.userLikes);
 
+      let messageConfig = await CustomMailerService.userUpdateMail(user);
+      let message = await db.Message.create(messageConfig);
+      await CustomMailerService.sendMail(message);
 
 
       return res.redirect('/member/setting');

@@ -266,6 +266,35 @@ module.exports = {
     } catch (e) {
       throw e;
     }
+  },
+
+  userUpdateMail: async(user) => {
+
+    try {
+      var userUpdateTpl = sails.config.mail.templete.userUpdate;
+      var email = user.email;
+      var mailSendConfig = {...userUpdateTpl, from: sails.config.mail.config.from, to: email};
+      mailSendConfig.subject = sprintf(mailSendConfig.subject, {
+        username: user.fullName
+      });
+
+      mailSendConfig.html = sprintf(mailSendConfig.html, {
+        username: user.username,
+        createdAt: sails.moment(new Date()).format('YYYY/MM/DD HH:mm:ss'),
+        userId: user.email,
+        storeName: sails.config.store.name,
+        storeName2: sails.config.store.name2,
+        storeName3: sails.config.store.name3,
+        serviceMail: sails.config.store.serviceMail,
+      });
+
+      mailSendConfig.type = 'verification';
+
+      return mailSendConfig;
+    } catch (e) {
+      throw e;
+    }
+
   }
 
 

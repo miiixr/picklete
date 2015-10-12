@@ -83,7 +83,6 @@ let PaymentController = {
       order.status = 'paymentConfirm';
       await order.save();
 
-      console.log("!!!",order);
       let messageConfig = await CustomMailerService.paymentConfirm(order);
       let message = await db.Message.create(messageConfig);
       await CustomMailerService.sendMail(message);

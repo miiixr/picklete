@@ -151,7 +151,7 @@ module.exports.mail = {
       html: """"<html><body>
       <br />親愛的 %(username)s 您好：
       <br />
-      <br />您在%(createdAt)s於i+DEAL會員中心詢問用戶密碼，請確認下方用戶密碼並妥保存，謝謝。
+      <br />您在%(createdAt)s於%(storeName2)s會員中心詢問用戶密碼，請確認下方用戶密碼並妥保存，謝謝。
       <br />我們已經幫你重置好密碼
       <br />請妥善保管下列密碼並儘速更換。
       <br />會員帳號：%(userId)s
@@ -196,6 +196,29 @@ module.exports.mail = {
       <br />
       <br />上班時間：週一至週五，10.00AM - 5.00PM，比照國定休假日
       </body></html>"""
-    }
+    },
+    userUpdate:{
+      sendBy: 'email',
+      subject: '%(username)s - 會員資料修改通知信',
+      html: """<html><body>
+      <br />親愛的 %(username)s 您好：
+      <br />
+      <br />您在 %(createdAt)s 於 %(storeName2)s 會員中心修改會員資料。
+      <br />如您最近沒有修改任何會員資料，請聯絡我們並更換密碼。
+      <br />
+      <br />會員帳號：%(userId)s
+      <br />
+      <br />此為系統信件，請勿直接回覆此信件
+      <br />
+      <br />---
+      <br />
+      <br />%(storeName)s | 好物慢慢選
+      <br />
+      <br />客服信箱：%(serviceMail)s
+      <br />
+      <br />上班時間：週一至週五，10.00AM - 5.00PM，比照國定休假日
+      </body></html>"""
+    },
+
   }
 }
