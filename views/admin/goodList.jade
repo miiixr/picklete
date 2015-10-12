@@ -14,7 +14,7 @@ block body
             label.col-md-4.control-label #{i18n('brand-name')}
             .col-md-8
               select.form-control(name = "brandId", data-value=query.brandId)
-                option(value=-1) 所有品牌
+                option(value=-1) #{i18n('all-brand')}
                 each brand, index in brands
                   option(value='#{brand.id}') #{brand.name}
           // /form-group
