@@ -37,6 +37,11 @@ $(function() {
       return false;
     }
 
+    if($("input[name='startDate']").val()=="" || $("input[name='endDate']").val()==""){
+      alert("記得輸入活動時間喔");
+      return false;
+    }
+
     if($("input[name='price']").val()=="" && $("input[name='discount']").val()==""){
       alert("記得輸入折扣喔");
       return false;

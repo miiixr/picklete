@@ -17,13 +17,13 @@
   .panel
     a.control-menu-top.collapsed(data-toggle='collapse', data-parent='#control-menu', href='#collapseTwo')
       span.glyphicon.glyphicon-list.m-right-2
-      | 品牌分類
+      | #{i18n('brand-classification')}
     #collapseTwo.panel-collapse.collapse
       ul.list-unstyled
         li
-          a(href='/admin/brands') 品牌管理
+          a(href='/admin/brands') #{i18n('brand-manager')}
         li
-          a(href='/admin/department') 館別管理
+          a(href='/admin/department') #{i18n('dpt-manager')}
     // /panel-collapse
   // /panel
   .panel

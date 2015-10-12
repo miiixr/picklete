@@ -32,6 +32,10 @@ module.exports.routes = {
   'get /login': 'AuthController.login'
   'get /logout': 'AuthController.logout'
   'get /register' : 'AuthController.register'
+  'get /forgotPassword' :'AuthController.forgotPassword'
+  'get /newPassword' : 'AuthController.newPassword'
+  'get /verification': 'AuthController.verification'
+  'get /verification/send': 'AuthController.sedVerificationMailAgain'
 
   'get /admin/' : 'AuthController.admin'
   'get /admin/login' : 'UserController.controlLogin'
@@ -66,9 +70,6 @@ module.exports.routes = {
 
   'get /index' : 'SelectionActiveController.index'
   'get /FAQ' : 'FAQController.show'
-  'get /member/purchase' : view: 'main/member-purchase'
-  'get /member/setting' : 'UserController.edit'
-  'post /member/update' : 'UserController.update'
 
   'get /brands' : view: 'main/brands'
   'get /user/cart' : 'UserController.cart'
@@ -190,6 +191,7 @@ module.exports.routes = {
   'get /api/search/:keywords': 'SearchController.productsJson'
   'get /search': 'SearchController.products'
   'get /search/:keywords': 'SearchController.products'
+  'get /checkCode' : 'ShopCodeController.checkCode'
 
   'post /allpay/paid':{
     controller: "PaymentController",

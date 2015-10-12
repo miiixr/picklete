@@ -27,18 +27,24 @@ module.exports = {
     merchantID: '2000132',
     hashKey: '5294y06JbISpM5x9',
     hashIV: 'v77hoKGq4kWxNNIS',
-    debug: false,
-    ReturnURL:'allpay/paid',
-    ClientBackURL:'shop',
-    PaymentInfoURL:'allpay/paymentinfo',
+    debug: true,
+    ReturnURL:'/allpay/paid',
+    ClientBackURL:'/shop/products',
+    PaymentInfoURL:'/allpay/paymentinfo',
     paymentMethod:[
       {
         code: 'ATM',
         name: 'ATM'
+      },{
+        code: 'Credit',
+        name: '信用卡'
       }
     ]
   }
   i18n: {
     localesDirectory: '/config/locales'
+  }
+  googleAnalytics: {
+    trackingID: ''
   }
 }

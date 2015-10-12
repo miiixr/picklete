@@ -10,7 +10,10 @@ module.exports = (sequelize, DataTypes) ->
       'orderConfirm',
       'paymentConfirm',
       'deliveryConfirm',
-      'orderSync'
+      'orderSync',
+      'checkForgotPassword',
+      'newPassword',
+      'verification'
     )
     from: DataTypes.STRING
     to: DataTypes.STRING

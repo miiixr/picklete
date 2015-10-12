@@ -6,7 +6,8 @@
     var e = $(event.currentTarget);
     //正式上線後要依據大館別固定數量更改
     for(i=1; i<=9; i++) {
-      document.getElementById('subDpt' + i).className="tab-pane fade";
+      if(document.getElementById('subDpt' + i))
+        document.getElementById('subDpt' + i).className="tab-pane fade";
     }
     document.getElementById('subDpt' + e.data('id')).className="tab-pane fade in active";
     $('.tab-pane.fade.in.active').css("display","none");
@@ -98,10 +99,12 @@
 
     var productId = $(this).attr("data-productId");
     var quantity = $('input[name="quant[1]"]').val() || 1;
-    var price = $('#price').text();
+    var price = $(this).attr("data-price");
     var photos = JSON.parse($(this).attr("data-photos"));
     var brand = $(this).attr("data-brand");
+    var brandname = $(this).attr("data-brandname") || "";
     var name = $(this).attr("data-name") || "";
+    var originPrice = $('#originPrice').text();
 
 
 
@@ -113,10 +116,12 @@
     var addProduct = {
       ProductId: productId,
       quantity: quantity,
+      brandname: brandname,
       price: price,
       brand: brand,
       name: name,
-      photos: photos
+      photos: photos,
+      originPrice: originPrice
     }
 
     picklete_cart.orderItems.push(addProduct);
@@ -153,8 +158,8 @@
         '    </div>' +
 
         '    <div class="col-xs-8 p-left-0">' +
-        '      <h6 class="text-muted"><a href="/brands">'+orderItem.brand+'</a></h6>' +
-        '      <h5><a href="shop-product">'+orderItem.name+'</a></h5>' +
+        '      <h6 class="text-muted"><a href="/brands">'+orderItem.brandname+'</a></h6>' +
+        '      <h5><a href="shop-product">'+orderItem.brand+"-"+orderItem.name+'</a></h5>' +
         '      <h5>$ '+orderItem.price+'</h5>' +
         '    </div>' +
         '  </div>' +
@@ -190,6 +195,16 @@
   dropdownCartInit();
 
 
+  if($("#verification").attr("data-verification")){
+    $(this).notifyMe(
+      'top',
+      'cart',
+      '<span class="glyphicon glyphicon-ok-circle m-right-2"></span>帳號已開通',
+      '',
+      500,
+      3000
+    );
+  }
 
 
 

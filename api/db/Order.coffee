@@ -29,6 +29,7 @@ module.exports = (sequelize, DataTypes) ->
     useBunusPoint: DataTypes.INTEGER
     CheckMacValue: DataTypes.STRING
     MerchantTradeDate: DataTypes.DATE
+    description: DataTypes.DATE
     status:
       type: DataTypes.ENUM('new', 'paymentConfirm', 'deliveryConfirm')
       defaultValue: 'new'
@@ -36,6 +37,7 @@ module.exports = (sequelize, DataTypes) ->
     Order.belongsTo models.User
     Order.hasMany models.OrderItem
     Order.hasOne models.Shipment
+    Order.belongsTo models.Invoice
     return
   )
   return Order

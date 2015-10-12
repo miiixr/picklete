@@ -28,6 +28,7 @@ module.exports = (sequelize, DataTypes) ->
         return []
       set: (value) ->
         return this.setDataValue('service', JSON.stringify(value))
+      defaultValue: '["快遞宅配"]'
     }
     # 品牌國別, 日本，大陸，美國
     country: DataTypes.STRING
@@ -57,6 +58,13 @@ module.exports = (sequelize, DataTypes) ->
     weight: {
       type: DataTypes.INTEGER,
       defaultValue: 0
+    },
+
+    originPrice: {
+      type: DataTypes.VIRTUAL
+    }
+    promotionCountDown: {
+      type: DataTypes.VIRTUAL
     }
   },
   paranoid: true,

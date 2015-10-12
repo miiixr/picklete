@@ -7,11 +7,7 @@ var OrderController;
 OrderController = {
   debug: async (req, res) => {
     try {
-      let count = await db.Order.count();
-
-      res.ok({
-        count: count
-      });
+      res.ok(await db.Order.findAll({limit: 3, order: 'id DESC'}));
     }
     catch (error) {
       return res.serverError(error);
@@ -92,7 +88,8 @@ OrderController = {
             }
           }, {
             model: db.OrderItem
-          }
+          },
+          db.Invoice
         ]
       };
 
@@ -151,22 +148,39 @@ OrderController = {
   },
   create: async (req, res) => {
     var newOrder = req.body.order;
+
     try {
+
       let useAllPay = false;
-      if(sails.config.useAllPay !== undefined)
+
+      if (sails.config.useAllPay !== undefined) {
         useAllPay = sails.config.useAllPay;
+      }
+
       let result = await OrderService.create(newOrder);
-      if(useAllPay){
+
+      //console.log('***************');
+      //console.log(result);
+
+      if (useAllPay) {
         var allPayData = await OrderService.allPayCreate(result.order,newOrder.paymentMethod);
+
+        console.log("allPayData", allPayData);
+
         let AioCheckOut = 'https://payment.allpay.com.tw/Cashier/AioCheckOut';
-        if(sails.config.environment === 'development' || sails.config.environment === 'test'){
+        if(sails.config.environment === 'development' || sails.config.environment === 'test' || sails.config.allpay.debug){
           AioCheckOut = 'https://payment-stage.allpay.com.tw/Cashier/AioCheckOut';
         }
+
+        // todo: 清空購物車
+        res.clearCookie('picklete_cart');
+
         res.view('order/allPay',{
           allPayData,
           AioCheckOut
         });
-      }else{
+      }
+      else{
         return res.ok(result);
       }
     } catch (e) {
@@ -259,7 +273,7 @@ OrderController = {
       user.orderSyncToken = token;
       await user.save();
 
-      let messageConfig = CustomMailerService.orderSync(user, host);
+      let messageConfig = await CustomMailerService.orderSync(user, host);
 
       let message = await db.Message.create(messageConfig);
       await CustomMailerService.sendMail(message);

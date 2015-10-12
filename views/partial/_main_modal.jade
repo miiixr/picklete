@@ -85,11 +85,11 @@
         h1.modal-title.text-center &#x5FD8;&#x8A18;&#x5BC6;&#x78BC;
       // /modal-header
       .modal-body.text-center.p-30
-        form.m-bottom-4
+        form#forgotPassword.m-bottom-4(method='get',action='/forgotPassword')
           .form-group
-            input.form-control(type='email', placeholder='Email')
+            input.form-control(type='email',name='email',form='forgotPassword', placeholder='Email')
           // /form-group
-          button.btn.btn-black.border-radius-circle.btn-block.m-bottom-2(type='button', data-dismiss='modal') &#x767C;&#x9001;&#x4FE1;&#x7BB1;
+          button#forgotPasswordBtm.btn.btn-black.border-radius-circle.btn-block.m-bottom-2(type='submit',form='forgotPassword') 發送信箱
         | &#x9;&#x9;&#x9;&#x9;
         a(href='#', data-toggle='modal', data-target='#modal-login', data-dismiss='modal') &#x53D6;&#x6D88;
         | &#x9;&#x9;&#x9;&#x9;
@@ -98,6 +98,29 @@
         h5.m-bottom-4 &#x9084;&#x6C92;&#x6709;&#x5E33;&#x865F;&#xFF1F;
         | &#x9;&#x9;&#x9;&#x9;
         a.btn.btn-line.border-radius-circle.btn-block(href='/user/signup') &#x7533;&#x8ACB;&#x6703;&#x54E1;
+      // /modal-body
+    // /modal-content
+  // /modal-dialog
+// /modal
+#modal-verification.modal.fade
+  -console.log(user);
+  .modal-dialog.modal-sm(role='document')
+    .modal-content
+      .modal-header.p-30
+        button.close(type='button', data-dismiss='modal', aria-label='Close')
+          span(aria-hidden='true') &times;
+        | &#x9;&#x9;&#x9;&#x9;
+        h1.modal-title.text-center 帳號尚未驗證
+          h3 我們發現你的帳號尚未驗證喔，要在發一次驗證信嗎？
+      // /modal-header
+      .modal-body.text-center.p-30
+        form#verificationMailAgain.m-bottom-4(method='get',action='/verification/send')
+          .form-group
+            input#verificationMailEmail.form-control(type='email',name='email',form='verificationMailAgain', value= user?user.email:'')
+          // /form-group
+          button.btn.btn-black.border-radius-circle.btn-block.m-bottom-2(type='submit',form='verificationMailAgain') 發送
+        | &#x9;&#x9;&#x9;&#x9;
+        a(type='button', data-dismiss='modal', aria-label='Close') 取消
       // /modal-body
     // /modal-content
   // /modal-dialog

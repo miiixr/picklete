@@ -16,11 +16,20 @@ let ShopController = {
     try {
       let productsWithCount = await ProductService.productQuery(query, offset, limit);
       let products = productsWithCount.rows;
-
+      products = await PromotionService.productPriceTransPromotionPrice(new Date(), products);;
 
       let brands = await db.Brand.findAll({order: 'weight ASC',});
       let dpts = await DptService.findAll();
 
+
+      for(var i in products){
+        var Today = new Date();
+        var date = new Date(products[i].createdAt);
+        if(products[i].stockQuantity <= 0)
+          products[i].status = 'soldout';
+        else if(products[i].status != 'sale' && (Today - date)/86400000 <= 10)
+          products[i].status = 'new';
+      }
 
       let result = {
         brands,
@@ -30,7 +39,8 @@ let ShopController = {
         limit: limit,
         page: page,
         totalPages: Math.ceil(productsWithCount.count / limit),
-        totalRows: productsWithCount.count
+        totalRows: productsWithCount.count,
+        verification: query.verification
       };
 
       console.log('=== totalPages ===', result.totalPages);
@@ -63,12 +73,18 @@ let ShopController = {
       let product = await db.Product.findOne({
             include:[{
               model: db.ProductGm,
-              include: [ db.Dpt ]}],
+              include: [ db.Dpt ]
+            }],
             where: {id: productId}
           });
 
       productGm = productGm.dataValues;
+
+      product = (await PromotionService.productPriceTransPromotionPrice(new Date(), [product]))[0];
+
       product = product.dataValues;
+
+      console.log('=== product ===', product);
 
       let dptId = product.ProductGm.Dpts[0].id;
 
@@ -88,7 +104,7 @@ let ShopController = {
         limit: 6
       });
 
-      let products = await productGm.Products;
+      let products = productGm.Products;
       var coverPhotos = JSON.parse(productGm.coverPhoto);
       var photos = JSON.parse(product.photos);
       var service = JSON.parse(product.service);

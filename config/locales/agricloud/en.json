@@ -1,5 +1,25 @@
 {
 	"selection-active": "Agricloud Selection Active",
 	"brands": "Brands",
-	"shop": "Shop"
+	"shop": "Shop",
+	"brand-name": "BrandName",
+	"categories": "Categories",
+	"product-name": "Product Name",
+	"product-number": "Product Number",
+	"commodity-prices": "Commodity Prices",
+	"current-inventory": "Current Inventory",
+	"to": "To",
+	"trafficking-in-state": "Trafficking In State",
+	"filing-date": "Filing Date",
+	"brand-classification": "brand-classification",
+	"brand-manager": "brand-manager",
+	"dpt": "Major Categories",
+	"dpt-sub": "Product category",
+	"postoffice": "郵寄",
+	"delivery": "快遞",
+	"duplex": "二聯式發票",
+	"triplex": "三聯式發票",
+	"charity": "捐贈慈善機構"
+
+
 }

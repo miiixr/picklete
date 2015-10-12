@@ -4,13 +4,16 @@
   var subtotalDiv = $('#subtotal');
   var totalPriceDiv = $('#totalPrice');
   var buymoreDiv = $("#buymore");
+  var discountAmountDiv = $("#discountAmount");
 
   var subtotal = 0;
   var totalPrice = 0;
   var shippingFee = 0;
   var buymore = 0;
+  var discountAmount = 0;
 
   Cookies.remove('buyMoreIds');
+  Cookies.remove('shopCode');
   var picklete_cart = Cookies.getJSON('picklete_cart');
   if(picklete_cart){
     $("#nothing").remove();
@@ -21,6 +24,10 @@
   var cartViewerInit = function(){
 
     picklete_cart.orderItems.forEach(function(orderItem, index){
+
+      if(orderItem.originPrice == undefined) orderItem.originPrice ='';
+
+      console.log('orderItem', orderItem);
 
       var liOrderItem =
         '<div id="orderItem" class="p-20 border-bottom-1">' +
@@ -54,7 +61,7 @@
         '    </div>' +
 
         '    <div class="col-xs-6 col-sm-2 col-md-2 desktop-text-center desktop-m-top-5 m-bottom-1">' +
-        '      <h4 class="m-top-0">$ '+orderItem.price+'<br><small class="text-line-through"></small></h4>' +
+        '      <h4 class="m-top-0">$ '+orderItem.price+'<br><small class="text-line-through">'+orderItem.originPrice+'</small></h4>' +
         '    </div>' +
 
         '    <div class="col-xs-6 col-sm-1 col-md-1 text-right desktop-m-top-5">' +
@@ -126,7 +133,7 @@
 
   var calcTatalPrice = function () {
 
-    totalPrice = subtotal + shippingFee + buymore;
+    totalPrice = subtotal + shippingFee + buymore - discountAmount;
     console.log('=== calcTatalPrice ===', totalPrice);
 
     totalPriceDiv.text(totalPrice);
@@ -143,6 +150,17 @@
       }
     });
     Cookies.set('buyMoreIds', buymoreIds);
+
+
+    var shippingType = $("#shippingType").val();
+    var shippingFee = $("#shippingFeeSelect").val();
+    var shippingRegion = $('#shippingFeeSelect').find(":selected").attr("data-region")
+
+
+    var shipping = { shippingType : shippingType ,shippingFee: shippingFee, shippingRegion: shippingRegion};
+
+    Cookies.set('shipping', shipping);
+
     if($('#shippingFeeSelect').val() == 0 || $('#paymentMethod').val()==0)
       alert("請確認運送、付款方式");
     else{
@@ -201,14 +219,47 @@
           data : null,
           success:function(data, textStatus, jqXHR)
           {
-            console.log('=== data ==>',data.shippings);
+
+            var shippingFeeSelect = $("#shippingFeeSelect");
             for(i=0;i<data.shippings.length;i++){
               shipping = data.shippings[i].region + ' ' + data.shippings[i].fee + ' 元';
-              $("#shippingFeeSelect").append($("<option></option>").attr("value", data.shippings[i].fee).text(shipping));
+              shippingFeeSelect.append($("<option data-region='"+data.shippings[i].region+"'></option>").attr("value", data.shippings[i].fee).text(shipping));
             }
           }
       });
     // } // end else
   });
   // end shippings
+
+var checkCode = function(){
+  var check ={
+    code: $("#code").val(),
+    price: subtotal
+  }
+  $.ajax({
+      url : '/checkCode',
+      type: "get",
+      data : check,
+      success:function(data, textStatus, jqXHR){
+        console.log('=== data ==>',data);
+        discountAmount = data.discountAmount;
+        discountAmountDiv.text(data.discountAmount);
+        calcTatalPrice();
+        alert("確認使用此折扣!!");
+        Cookies.set('shopCode', data);
+      },
+      error: function(data, textStatus, jqXHR){
+        discountAmount = 0;
+        discountAmountDiv.text("0");
+        calcTatalPrice();
+        alert(JSON.parse(data.responseText).message);
+        $("#code").val("");
+        Cookies.remove('shopCode');
+      }
+  });
+};
+  $("#shopCodeCheck").click(function(){
+    checkCode();
+  });
+
 }(jQuery));

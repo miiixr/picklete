@@ -52,7 +52,7 @@ block body
             span= " - "
             span= sails.moment(promotion.endDate).format('YYYY/MM/DD hh:mm')
           td.text-right
-            a.btn.btn-link(href='shop-discount-detail')
+            a.btn.btn-link(href='shop-discount-detail?id='+ promotion.id)
               span.glyphicon.glyphicon-pencil2
       //- tr
       //-   td

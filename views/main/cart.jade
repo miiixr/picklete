@@ -82,8 +82,8 @@ block body
                     td.text-right 0
                   tr
                     th 折扣碼
-                    td.text-right
-                      span.text-danger 0
+                    td.text-right 
+                      span#discountAmount.text-danger 0
                   tr
                     th 加價購
                     td#buymore.text-right 0
@@ -99,9 +99,9 @@ block body
                     | 我有折扣代碼
                     span.glyphicon.glyphicon-info.m-left-1
                 .input-group
-                  input.form-control(type='text')
+                  input.form-control#code(type='text')
                   span.input-group-btn
-                    button.btn.btn-black.p-left-2.p-right-2(type='button') OK
+                    button.btn.btn-black.p-left-2.p-right-2#shopCodeCheck(type='button') OK
                 // /input-group
               // /form-group
             // /p-20

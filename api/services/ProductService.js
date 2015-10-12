@@ -456,6 +456,8 @@ module.exports = {
           },{
             model: db.DptSub,
             where: DptSubQueryObj
+          },{
+            model: db.Brand
           }]
         }],
         offset: offset,

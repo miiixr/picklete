@@ -11,12 +11,16 @@ module.exports = (req, res, next) ->
   res.locals.user = UserService.getLoginUser(req)
   console.log(res.locals.user);
 
-  # get company data and brand list
-  db.Company.findOne()
-  .then (result) ->
-    res.locals.company = result.dataValues;
-  .then () ->
-    db.Brand.findAll({order: 'weight ASC',})
-    .then (brands) ->
-      res.locals.brands = brands;
-      next()
+  try
+    res.locals.gaTrackingID = sails.config.googleAnalytics.trackingID;
+    # get company data and brand list
+    db.Company.findOne()
+    .then (result) ->
+      res.locals.company = result.dataValues;
+    .then () ->
+      db.Brand.findAll({order: 'weight ASC',})
+      .then (brands) ->
+        res.locals.brands = brands;
+        next()
+  catch error
+    console.error "==== without Company Data!! ===="

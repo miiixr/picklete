@@ -15,12 +15,12 @@ block body
       // /container
       #dropdown-menu-brands-3.dropdown-menu-full.collapse
         .container.p-top-4.p-bottom-4
-          h2.text-center.text-gray-darker 品牌列表
+          h2.text-center.text-gray-darker #{i18n("brand-list")}
           //
             dropdown-menu-brands-shop
             ==================================================
           .clearfix.m-bottom-2.text-left
-            h4.text-gray-darker.m-bottom-4 代理品牌
+            h4.text-gray-darker.m-bottom-4 #{i18n('other-brand')}
             ul.list-inline.list-brand
               each brand, idx in brands
                 - if (brand.type === 'AGENT')
@@ -29,7 +29,7 @@ block body
                       img.border-block-1.img-full(src=brand.avatar)
           // /clearfix
           .clearfix.m-bottom-2
-            h4.text-gray-darker.m-bottom-4 精選品牌
+            h4.text-gray-darker.m-bottom-4 #{i18n('prime-brand')}
             ul.list-inline.list-brand
               each brand, idx in brands
                 - if (brand.type === 'PRIME_GOOD')
@@ -117,6 +117,20 @@ block body
                   span.glyphicon.glyphicon-heart
                 // /item-like
 
+                if product.status == 'soldout'
+                  // label: sold out
+                  span.label.label-default
+                    | SOLD
+                    br
+                    | OUT
+                else if product.status == 'sale'
+                  // label: sale
+                  span.label.label-danger SALE
+                else
+                  // label: new
+                  span.label.label-success NEW
+
+
                 a(href='/shop/products/#{product.ProductGm.id}/#{product.id}')
 
 
@@ -132,7 +146,13 @@ block body
 
                   a(href='/shop/products/#{product.ProductGm.id}/#{product.id}') #{product.ProductGm.name} #{name}
                 h5
-                  | $ #{product.price}
+                  if(product.originPrice == undefined || product.originPrice <= 0)
+                    | $ #{product.price}
+                  else 
+                    span.text-danger
+                      | $ #{product.price} 
+                    small.text-line-through.m-left-1
+                      | $ #{product.originPrice} 
               // /item-text-block
             // /col-md-3
           // /row
@@ -143,6 +163,8 @@ block body
           +pagination-simple-pager(page, totalPages)
         // /text-center
       // /container
+      if verification
+        input#verification(type='hidden', data-verification= verification)
 block js
   script(src="/javascripts/main/shop.js")
   script(src='/javascripts/common/pagination.js')

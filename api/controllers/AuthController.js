@@ -55,18 +55,23 @@ AuthController = {
       }
       let tempUser = req.flash('form');
       let user = defaultUser;
-
       if(tempUser.length)
         user = tempUser[0];
 
       if(user.userLikes == undefined) user.userLikes = []
 
+      if(user.email!='' && user.password == user.passwordAgain && user.fullName != '' && user.mobile != '' && user.city != '' && user.region != '' && user.zipcode != ''){
+        let userCreate = db.User.create(user);
+        return res.redirect('/');
 
-      res.view('user/register.jade', {
-        errors: req.flash('error'),
-        likes,
-        user
-      });
+      } else{
+        res.view('user/register.jade', {
+          errors: req.flash('error'),
+          likes,
+          user
+        });
+
+      }
     } catch (e) {
       console.error(e.stack);
     }
@@ -97,7 +102,7 @@ AuthController = {
         default:
           var reference;
           try {
-            reference = url.parse(req.headers.referer);  
+            reference = url.parse(req.headers.referer);
           } catch (e) {
             reference = { path : "" };
           }
@@ -107,7 +112,7 @@ AuthController = {
               status: "fail",
               message: "login fail"
             });
-          
+
           if (reference.path === '/admin/login') {
             res.redirect('/admin/login');
           }else {
@@ -136,7 +141,9 @@ AuthController = {
         if (req.xhr)
           return res.ok({
             status: "ok",
-            message: "login success"
+            message: "login success",
+            isVerification: user.verification,
+            email: user.email
           });
 
         return res.redirect('/');
@@ -145,7 +152,60 @@ AuthController = {
   },
   disconnect: function(req, res) {
     passport.disconnect(req, res);
-  }
+  },
+
+  forgotPassword: async (req, res )=>{
+    try {
+      let data = req.query;
+      let check = await AuthService.sendForgotMail(data.email);
+      let message = '已寄出mail，請至信箱確認';
+      return res.ok(message);
+    } catch (e) {
+      console.error(e.stack);
+      let {message} = e;
+      let success = false;
+      return res.json(500,{message, success});
+    }
+  },
+  newPassword: async (req, res )=>{
+    try {
+      let data = req.query;
+      await AuthService.changeForgotPassword(data);
+      return res.redirect("/shop/products");
+    } catch (e) {
+      console.error(e.stack);
+      let {message} = e;
+      let success = false;
+      return res.redirect("/shop/products");
+    }
+  },
+  verification: async(req, res) => {
+    let data = req.query;
+    await AuthService.verificationFinish(data.email);
+    return res.redirect("/shop/products?verification=true");
+  },
+  sedVerificationMailAgain: async(req, res) => {
+    try {
+      let data = req.query;
+      let user = await db.User.findOne({where:{email:data.email}});
+
+      let domain = sails.config.domain || process.env.domain || 'http://localhost:1337';
+      let link = `${domain}/verification?email=${user.email}`;
+      console.log("verificationLink : ",link);
+
+      let messageConfig = await CustomMailerService.verificationMail(user, link);
+      let message = await db.Message.create(messageConfig);
+      await CustomMailerService.sendMail(message);
+
+      return res.ok();
+    } catch (e) {
+      console.error(e.stack);
+      let {message} = e;
+      let success = false;
+      return res.json(500,{message, success});
+    }
+
+  },
 };
 
 module.exports = AuthController;

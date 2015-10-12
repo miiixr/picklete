@@ -82,6 +82,49 @@ module.exports.mail = {
       html: """
       <p>歡迎 %(username)s 註冊 %(storeName)s ！</p>
       """
+    },
+    checkForgot:{
+      sendBy: 'email',
+      subject: '%(storeName)s - 忘記密碼通知信',
+      html: """
+      Dear %(username)s , 您好！<br>
+      <blockquote>
+        是您在我們的系統中忘記密碼了嗎！？<br>
+        若是您忘記了密碼，點選以下連結會幫您重置密碼，並寄到您的信箱<br>
+        <a href='%(link)s'>Click Me</a><br><br>
+        若不是您，您可以選擇忽略此封郵件。<br><br>
+        感謝您！<br>
+        %(storeName)s
+      </blockquote>
+      """
+    },
+    newPassword:{
+      sendBy: 'email',
+      subject: '%(username)s - 新密碼通知信',
+      html: """
+      Dear %(username)s , 您好！<br>
+      <blockquote>
+        我們已經幫你重置好密碼摟！！<br>
+        請妥善保管下列密碼並儘速更換。<br><br>
+        新密碼為：<p style="color:red">%(password)s</p><br><br>
+        感謝您！<br>
+        %(storeName)s
+      </blockquote>
+      """
+    },
+    verification:{
+      sendBy: 'email',
+      subject: '%(username)s - 新帳號註冊通知',
+      html: """
+      Dear %(username)s , 您好！<br>
+      <blockquote>
+        感謝您註冊我們的服務，請點選以下連結開通帳號<br>
+        <a href='%(link)s'>Click Me</a><br><br>
+        若不是您，您可以選擇忽略此封郵件。<br><br>
+        謝謝！<br>
+        %(storeName)s
+      </blockquote>
+      """
     }
   }
 }

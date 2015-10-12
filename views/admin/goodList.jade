@@ -11,7 +11,7 @@ block body
       .row.row-m
         .col-md-4
           .form-group
-            label.col-md-4.control-label 品牌名稱
+            label.col-md-4.control-label #{i18n('brand-name')}
             .col-md-8
               select.form-control(name = "brandId", data-value=query.brandId)
                 option(value=-1) 所有品牌
@@ -21,14 +21,14 @@ block body
         // /col-md-4
         .col-md-4
           .form-group
-            label.col-md-4.control-label 關鍵字
+            label.col-md-4.control-label #{i18n('categories')}
             .col-md-8
               input.form-control(type='text', name='tag', value=query.tag? query.tag: '')
           // /form-group
         // /col-md-4
         .col-md-4
           .form-group
-            label.col-md-4.control-label 大館別
+            label.col-md-4.control-label #{i18n('dpt')}
             .col-md-8
               select.form-control(name='dptId', data-value=query.dptId, data-dpts=dpts, form='goodQuery')
                 option(value=-1) 所有館別
@@ -40,25 +40,25 @@ block body
       .row.row-m
         .col-md-4
           .form-group
-            label.col-md-4.control-label 商品名稱
+            label.col-md-4.control-label #{i18n('product-name')}
             .col-md-8
               input.form-control(type='text', name='name', value = query.name?query.name: '')
           // /form-group
         // /col-md-4
         .col-md-4
           .form-group
-            label.col-md-4.control-label 商品貨號
+            label.col-md-4.control-label #{i18n('product-number')}
             .col-md-8
               input.form-control(type='text', name='productNumber', value = query.productNumber?query.productNumber: '')
           // /form-group
         // /col-md-4
         .col-md-4
           .form-group
-            label.col-md-4.control-label 小館別
+            label.col-md-4.control-label #{i18n('dpt-sub')}
             .col-md-8
               select.form-control(name='dptSubId', data-value=query.dptSubId)
                 option(value=-1) 所有館別
-                each dptSub, index in dpts[query.dptId>1?query.dptId-1:1].DptSubs
+                each dptSub, index in dptSubs
                   option(value='#{dptSub.id}') #{dptSub.name}
           // /form-group
         // /col-md-4
@@ -66,18 +66,18 @@ block body
       .row.row-m
         .col-md-4
           .form-group
-            label.col-md-4.control-label 商品售價
+            label.col-md-4.control-label #{i18n('commodity-prices')}
             .col-md-8
               input.form-control(type='text', name='price', value = query.price?query.price: '')
           // /form-group
         // /col-md-4
         .col-md-4
           .form-group
-            label.col-md-4.control-label 目前庫存
+            label.col-md-4.control-label #{i18n('current-inventory')}
             .col-md-3.p-right-0
               input.form-control(type='number', name='stockQuantityStart', value = query.stockQuantityStart?query.stockQuantityStart: '')
             .col-md-2.p-left-0.p-right-0.text-center
-              p.form-control-static 至
+              p.form-control-static #{i18n('to')}
             .col-md-3.p-left-0
               input.form-control(type='number', name='stockQuantityEnd', value = query.stockQuantityEnd?query.stockQuantityEnd: '')
           // /form-group
@@ -86,7 +86,7 @@ block body
       .row.row-m
         .col-md-4
           .form-group
-            label.col-md-4.control-label 販售狀態
+            label.col-md-4.control-label #{i18n('trafficking-in-state')}
             .col-md-8
               select.form-control(name="isPublish", data-value=(query.isPublish!='')?query.isPublish: '')
                 option(value='') 所有狀態
@@ -96,11 +96,11 @@ block body
         // /col-md-4
         .col-md-8
           .form-group
-            label.col-md-2.control-label 建檔日期
+            label.col-md-2.control-label #{i18n('filing-date')}
             .col-md-4
               input.form-control(type='date', name='dateFrom', value=query.dateFrom?query.dateFrom:null)
             .col-md-2.text-center
-              p.form-control-static 至
+              p.form-control-static #{i18n('to')}
             .col-md-4
               input.form-control(type='date', name='dateEnd', value=query.dateEnd?query.dateEnd:null)
           // /form-group

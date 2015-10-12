@@ -5,7 +5,7 @@ html
     | &#x9;
     title Platform - #{company.name}
     // Mobile device set
-    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0', data-gatracking-id="#{locals.gaTrackingID}")
     // Fav and touch icons
     link(rel='shortcut icon', href='#{company.avatar}')
     // Style
@@ -68,7 +68,7 @@ html
                           |     
                   // /clearfix
                   .clearfix.m-bottom-2
-                    h4.text-gray-darker.m-bottom-4 精選品牌
+                    h4.text-gray-darker.m-bottom-4 #{i18n('prime-brand')}
                     |   
                     ul.list-inline.list-brand
 
@@ -201,7 +201,7 @@ html
               a(href='shop/products') 特別企劃
             |         
             li
-              a.btn.btn-default(href='brands-list-shop') 品牌列表
+              a.btn.btn-default(href='brands-list-shop') #{i18n("brand-list")}
         |     
         li
           a(href='login')
@@ -263,6 +263,7 @@ html
         .alert.alert-danger(role='alert')
           p 表單送出填寫有誤，請確認填入資料
           p(style="display:none;")= flash
+    
     
     block body
 

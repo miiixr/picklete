@@ -71,6 +71,9 @@ module.exports.policies = {
   'PromotionController':
     create: []
 
+  'ShopCodeController':
+    checkCode: []
+
   # #'/api/search/*': []
   # SearchController:
   #   products: []
