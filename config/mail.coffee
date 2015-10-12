@@ -13,7 +13,7 @@ module.exports.mail = {
   config:{
     from: 'dan82625@gmail.com',
     transporter: {
-        port: 25,
+        port: 465,
         host: 'smtp.gmail.com',
         secure: true,
         auth: {
