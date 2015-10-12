@@ -166,9 +166,10 @@ OrderController = {
         var allPayData = await OrderService.allPayCreate(result.order,newOrder.paymentMethod);
 
         console.log("allPayData", allPayData);
-        
+
         let order = await db.Order.findById(result.order.id);
         order.merchantTradeNo = allPayData.MerchantTradeNo;
+        order.allPayPaymentType = newOrder.paymentMethod;
         await order.save();
 
         let AioCheckOut = 'https://payment.allpay.com.tw/Cashier/AioCheckOut';
