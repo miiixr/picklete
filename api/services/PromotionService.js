@@ -26,17 +26,16 @@ module.exports = {
       if(promotion.price=='')
         delete promotion.price;
 
+      // create promotion
       let createdPromotion = await db.Promotion.create(promotion);
-      let products = await* promotion.productGmIds.map(async (productGmId)=>{
-        let findProductGm = await db.ProductGm.findById(productGmId);
-        await createdPromotion.setProductGms([findProductGm]);
-        return createdPromotion;
-      });
       console.log('=== createdPromotion ==>',createdPromotion);
 
-      let promotedProducts = await* promotion.productGmIds.map(async (productGmId)=>{
-        let findProductGm = await db.ProductGm.findById(productGmId);
-        await createdPromotion.setProductGms([findProductGm]);
+      // set products to promotion
+      let products = await* promotion.productIds.map(async (productId)=>{
+        // find product
+        let findProduct = await db.Product.findById(productId);
+        // set products
+        await createdPromotion.setProducts([findProduct]);
         return createdPromotion;
       });
 
@@ -78,9 +77,9 @@ module.exports = {
       }
       updatePromoiton.discountType = promotion.discountType;
 
-      let products = await* promotion.productGmIds.map(async (productGmId)=>{
-        let findProductGm = await db.ProductGm.findById(productGmId);
-        await updatePromoiton.setProductGms([findProductGm]);
+      let products = await* promotion.productIds.map(async (productId)=>{
+        let findProduct = await db.Product.findById(productId);
+        await updatePromoiton.setProducts([findProduct]);
         return updatePromoiton;
       });
 
@@ -114,6 +113,12 @@ module.exports = {
   productPriceTransPromotionPrice: async(date, products) => {
     try {
       // find all promotions within a specific date
+
+      // check each prduct
+      if(!products.length) return products;
+
+      let productIds = products.map((product) => product.id)
+
       let findPromotions = await db.Promotion.findAll({
         where:{
           startDate: {
@@ -124,58 +129,54 @@ module.exports = {
           }
         },
         include:[{
-          model: db.ProductGm,
+          model: db.Product,
+          where: {
+            id: productIds
+          },
           required: true
         }]
       });
-      // console.log('=== date ==>',date);
-
-      // check each prduct
+      console.log('=== findPromotions ==>',findPromotions);
+      
       if(!findPromotions.length) return products;
-      if(!products.length) return products;
 
-      products = products.map((product) => {
-        // console.log('\n=== product.id ==>',product.id);
-        // console.log('=== old product.price ==>',product.price);
-        // set new price
+      products.forEach((product) => {
+        console.log('=== findPromotions ==>',findPromotions);
+        //
         findPromotions.forEach((promotion) => {
-          // console.log('=== promotion.id ==>',promotion.id);
-          // check each promotion
-          for(var i=0;i<findPromotions.length;i++){
-            // check each ProductGmId
-            for(var j=0;j<findPromotions[i].ProductGms.length;j++){
-              let thisProductGmId = findPromotions[i].ProductGms[j].id;
-              let startDate = findPromotions[i].startDate;
-              let endDate = findPromotions[i].endDate;
-              if(thisProductGmId == product.ProductGmId){
-                // console.log('=== thisProductGmId ==>',thisProductGmId);
-                if((date>startDate) && (date<endDate)){
-                  product.originPrice = product.price;
-
-                  let duration = moment.duration(moment(endDate).diff(moment(date)));
-
-                  product.promotionCountDown =
-                    `${duration.get("days")} 天 ${duration.get("hours") +":"+ duration.get("minutes") +":"+ duration.get("seconds")}`
-
-
-                  if(promotion.discountType == 'discount'){
-                    // console.log('=== promotion.discount ==>',promotion.discount);
-                    product.price = parseInt(product.price * promotion.discount);
-                  }else if(promotion.discountType == 'price'){
-                    // console.log('=== promotion.price ==>',promotion.price);
-                    product.price = parseInt(product.price - promotion.price);
-                  }
-
-                  product.status = 'sale';
-                }
-              } // end if
-            } // end for j
-          } // end for i
-        });
-        // console.log('=== new product.price ==>',product.price);
-
-        return product;
-      });
+          //
+          promotion.Products.forEach((promotedProduct) => {
+            let startDate = promotion.startDate;
+            let endDate = promotion.endDate;
+            //
+            if(product.id == promotedProduct.id){
+              console.log('=== promotedProduct ==>',promotedProduct);
+              console.log('=== promotedProduct.price ==>',promotedProduct.price);
+              //
+              product.originPrice = promotedProduct.price;
+              let duration = moment.duration(moment(endDate).diff(moment(date)));
+              //
+              product.promotionCountDown =
+                `${duration.get("days")} 天 ${duration.get("hours")
+                + ":"
+                + duration.get("minutes")
+                + ":"
+                + duration.get("seconds")}`;
+              //
+              product.status = 'discount';
+              //
+              if(promotion.discountType == 'discount'){
+                console.log('=== promotion.discount ==>',promotion.discount);
+                product.price = parseInt(product.price * promotion.discount);
+              }else if(promotion.discountType == 'price'){
+                console.log('=== promotion.price ==>',promotion.price);
+                product.price = parseInt(product.price - promotion.price);
+              }
+            } // end if
+          }); // end forEach
+        }); // end forEach
+        // return product;
+      }); // end map
       return products;
     } catch (e) {
       console.log('=== productPriceTransPromotionPrice err ==>',e.stack);

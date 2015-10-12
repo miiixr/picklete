@@ -13,7 +13,7 @@ var allpay = new Allpay({
   debug: sails.config.allpay.debug,
 });
 
-var self = module.exports = {  
+var self = module.exports = {
   generateOrderSerialNumber: async () => {
     let dateString = OrderService._dateFormat(moment());
     let startDate = moment().startOf('day').toDate();
@@ -115,6 +115,9 @@ var self = module.exports = {
         orderNo = sails.config.allpay.merchantID + order.id ;
       }
 
+      //remember: keep TradeNo always sync in order object
+      await self.update(order.id, {TradeNo: orderNo});
+
       let data = await self.getAllpayConfig(
         orderNo, time, order.paymentTotalAmount, paymentMethod);
 
@@ -143,7 +146,8 @@ var self = module.exports = {
       console.error(e.stack);
       let {message} = e;
       let success = false;
-      return res.serverError({message, success});
+      //return res.serverError({message, success});
+      return null;
     }
   },
 
@@ -326,9 +330,17 @@ var self = module.exports = {
   		ItemName: '',
   		ReturnURL: await UrlHelper.resolve(sails.config.allpay.ReturnURL, true),
   		ChoosePayment: paymentMethod,
-  		ClientBackURL: await UrlHelper.resolve(sails.config.allpay.ClientBackURL, true),
+  		ClientBackURL: await UrlHelper.resolve(sails.config.allpay.ClientBackURL, true) + '?t=' + tradeNo,
   		PaymentInfoURL: await UrlHelper.resolve(sails.config.allpay.PaymentInfoURL, true)
   	};
+  },
+
+  update: async (orderId, data) => {
+    let order = await db.Order.findById(orderId);
+    //todo: apply all fields
+    order.TradeNo = data.TradeNo;
+    await order.save();
+    return order;
   },
 
   _dateFormat: (nowDate) => {

@@ -8,6 +8,24 @@ module.exports = (sequelize, DataTypes) ->
     # 訂單編號，提供給平台使用
     serialNumber: DataTypes.STRING
     quantity: DataTypes.INTEGER
+
+    # 結帳時系統自動算的金額
+    paymentTotalAmount: DataTypes.FLOAT
+    # 付款確認資訊
+    paymentIsConfirmed: DataTypes.BOOLEAN
+    # 訂單確認日期
+    paymentConfirmDate: DataTypes.DATE
+    # 訂單名稱
+    paymentConfirmName: DataTypes.STRING
+    # 匯款後五碼 
+    paymentConfirmPostfix: DataTypes.STRING
+    # 傳統ATM轉帳由user轉帳完自行填寫確認的金額
+    paymentConfirmAmount: DataTypes.FLOAT
+    # ？？？
+    paymentCreateConfirmAmount: DataTypes.FLOAT
+    
+    # 歐付寶
+    # todo: 不適合放這裡應該要搬到關聯表
     # 訂單編號，提供給 allpay 使用
     TradeNo: DataTypes.STRING
     # allpay 回傳資訊
@@ -16,20 +34,6 @@ module.exports = (sequelize, DataTypes) ->
     allPayRtnMsg: DataTypes.STRING
     # allpay 採用金流方式
     allPayPaymentType: DataTypes.STRING
-    # 結帳時系統自動算的金額
-    paymentTotalAmount: DataTypes.FLOAT
-    # 訂單已經付款成功
-    paymentIsConfirmed: DataTypes.BOOLEAN
-    # 訂單確認日期
-    paymentConfirmDate: DataTypes.DATE
-    # 訂單名稱
-    paymentConfirmName: DataTypes.STRING
-
-    paymentConfirmPostfix: DataTypes.STRING
-    # 傳統ATM轉帳由user轉帳完自行填寫確認的金額
-    paymentConfirmAmount: DataTypes.FLOAT
-    # 
-    paymentCreateConfirmAmount: DataTypes.FLOAT
     # allpay 交易日期
     allPayTradeDate: DataTypes.DATE
     # allpay bankcode
@@ -50,6 +54,7 @@ module.exports = (sequelize, DataTypes) ->
     CheckMacValue: DataTypes.STRING
     # 訂單產生的時候的交易時間
     MerchantTradeDate: DataTypes.DATE
+    # ？？？
     description: DataTypes.DATE
     # 訂單狀態
     status:
