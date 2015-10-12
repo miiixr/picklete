@@ -61,9 +61,16 @@ module.exports = (sequelize, DataTypes) ->
       type: DataTypes.ENUM('new', 'paymentConfirm', 'deliveryConfirm')
       defaultValue: 'new'
   }, classMethods: associate: (models) ->
+    # user information / buyer
     Order.belongsTo models.User
+    # order items, list detail of purcharse items in Order.
+    # so orderItem save detail information of Order
+    # Order 為大表，詳細到底買了哪些東西，就是 orderItem 裡面描述
     Order.hasMany models.OrderItem
+
+    # shipping information, 本島，離島運送，運費多少
     Order.hasOne models.Shipment
+    # invoice type, 二聯，三聯，以及發票格式會有不同
     Order.belongsTo models.Invoice
     return
   )
