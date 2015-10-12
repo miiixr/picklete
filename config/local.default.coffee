@@ -77,4 +77,7 @@ module.exports = {
     name3:'創而有意',
     serviceMail:'service@wevo.com.tw'
   }
+  googleAnalytics: {
+    trackingID: ''
+  }
 }

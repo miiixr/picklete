@@ -168,7 +168,7 @@ block body
             // /col-sm-2
             .col-sm-1.col-sm-1-sm #{order.quantity}
             // /col-sm-1
-            .col-sm-1.col-sm-1-lg 運送方式
+            .col-sm-1.col-sm-1-lg #{order.Shipment.dataValues.shippingType}
             // /col-sm-1
             .col-sm-1
               if order.status != "new"
@@ -204,16 +204,14 @@ block body
                   .col-sm-6
                     form.form-horizontal
                       .form-group.form-group-sm
-                        label.col-sm-4.control-label &#x904B;&#x9001;&#x65B9;&#x5F0F;
-                        | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
+                        label.col-sm-4.control-label 運送方式
                         .col-sm-8
-                          input.form-control.input-sm(type='text')
+                          input.form-control.input-sm(type='text', value='#{order.Shipment.dataValues.shippingType}') 
                       // /form-group
                       .form-group.form-group-sm
-                        label.col-sm-4.control-label &#x7DE8;&#x865F;
-                        | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
+                        label.col-sm-4.control-label 訂單編號
                         .col-sm-8
-                          input.form-control.input-sm(type='text')
+                          input.form-control.input-sm(type='text', value='#{order.Shipment.dataValues.shippingId}') 
                       // /form-group
                   // /col-sm-6
                 // /row
@@ -255,9 +253,10 @@ block body
                 .m-left-1
                   p 付款方式：7-11 ibon 代碼繳費，繳費代碼：251563222267
                   ul.list-inline
-                    li 發票類型：三聯式發票
-                    li 抬頭：{company_name}
-                    li 統編：{tax_id}
+                    if order.InvoiceId
+                      li 發票類型：#{order.Invoice.dataValues.type}
+                      li 抬頭：#{order.Invoice.dataValues.title}
+                      li 統編：#{order.Invoice.dataValues.taxId}
                   p.text-danger 賣家備註：1.管理員代收 2.禮品的包裝盒請去除價格標籤
                 // /m-left-1
               // /well
