@@ -30,8 +30,9 @@ let UserController = {
   purchase:async (req, res) => {
     let loginUser = UserService.getLoginUser(req);
     let orders = await db.Order.findAll({
-      where: {UserId: 51}//方便測試 測試完要改回loginUser.id
+      where: {UserId: loginUser.id}
     });
+    // console.log(orders);
     res.view("main/memberPurchase",{
       orders
     });
