@@ -33,7 +33,7 @@ block body
                 option(value='#{dpt.id}') #{dpt.name}
           .col-md-4
             select.form-control(name='dptSubId[]')
-              option(value='') #{i18n('dpt-sub')}
+              option(value='') #{i18n('select-dpt-sub')}
               each dptSub, index in dpts[0].DptSubs
                 option(value='#{dptSub.id}') #{dptSub.name}
           .col-md-2
