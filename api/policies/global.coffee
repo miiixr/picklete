@@ -12,6 +12,7 @@ module.exports = (req, res, next) ->
   console.log(res.locals.user);
 
   try
+    res.locals.gaTrackingID = sails.config.googleAnalytics.trackingID;
     # get company data and brand list
     db.Company.findOne()
     .then (result) ->
