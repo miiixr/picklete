@@ -42,18 +42,28 @@ module.exports = {
 
       mailSendConfig.subject = sprintf(mailSendConfig.subject, {orderSerialNumber: result.order.serialNumber});
       mailSendConfig.html = sprintf(mailSendConfig.html, {
-        username: result.order.User.username,
-        orderSerialNumber: result.order.serialNumber,
-        productName: productsName.join('、'),
-        bankId: result.order.bankId,
-        bankName: result.order.bankName,
-        accountId: result.order.bankAccountId,
-        accountName: result.order.bankAccountName,
-        paymentTotalAmount: result.order.paymentTotalAmount,
-        shipmentUsername: result.order.Shipment.username,
-        shipmentAddress: result.order.Shipment.address,
         storeName: sails.config.store.name,
-        orderConfirmLink
+        storeName2: sails.config.store.name2,
+        storeName3:sails.config.store.name3,
+        orderTime: result.order.createdAt,
+        shipmentUsername: result.order.User.username,
+        shipmentId: result.order.User.email,
+        orderSerialNumber: result.order.serialNumber,
+        deadLine:  moment(result.order.createdAt).add('days', 3),
+        productName: productsName.join('、'),
+        serviceMail: sails.config.store.serviceMail,
+        // username: result.order.User.username,
+        // orderSerialNumber: result.order.serialNumber,
+        // productName: productsName.join('、'),
+        // bankId: result.order.bankId,
+        // bankName: result.order.bankName,
+        // accountId: result.order.bankAccountId,
+        // accountName: result.order.bankAccountName,
+        // paymentTotalAmount: result.order.paymentTotalAmount,
+        // shipmentUsername: result.order.Shipment.username,
+        // shipmentAddress: result.order.Shipment.address,
+        // storeName: sails.config.store.name,
+        // orderConfirmLink
       });
 
       mailSendConfig.type = 'orderConfirm';
@@ -140,7 +150,7 @@ module.exports = {
   sendMail: async (message) => {
 
     try {
-      if(sails.config.environment === 'production'){
+      if(sails.config.environment === 'production' || sails.mail.active){
         await sails.config.mail.mailer.send(message.toJSON());
         message.error = '';
       }

@@ -11,30 +11,32 @@ module.exports.mail = {
   templete: {
     orderConfirm: {
       sendBy: 'email',
-      subject: '訂單 %(orderSerialNumber)s 建立完成',
+      subject: '訂單 %(orderSerialNumber)s 成立通知信',
       html: """<html><body>
-      <br />Hi %(username)s:
-
-      <br />感謝你的訂購，你所購買的產品 %(productName)s 已訂購完成
-      <br />訂單編號為： %(orderSerialNumber)s
-      <br />收件者為： %(shipmentUsername)s
-      <br />收件地址為： %(shipmentAddress)s
-
-      <br />如果上述資料正確，請將款項 $ %(paymentTotalAmount)s 匯款至以下帳號：
-
-      <br />銀行名稱： %(bankName)s
-      <br />銀行代碼： %(bankId)s
-      <br />帳號： %(accountId)s
-      <br />戶名： %(accountName)s
-      <br />匯款金額： $ %(paymentTotalAmount)s
-
-      <br />匯款後請按至以下連結確認:
-
-      <br /><a href='%(orderConfirmLink)s'>匯款確認</a>
-
-      <br />煩請你確認。
-
-      <br />From %(storeName)s
+      <br />親愛的%(storeName2)s顧客您好!
+      <br />
+      <br />誠摯感謝您選購%(storeName3)s平台精心揀選的優質商品!
+      <br />網站成立的宗旨是希望能與更多懂生活的人一同分享及找回生活中的理想樂園，
+      <br />創而有意團隊在此預祝您擁有愉悅且舒適的每一天!
+      <br />
+      <br />以下為您於%(orderTime)s的訂購記錄，
+      <br />
+      <br />訂購人：%(shipmentUsername)s
+      <br />訂購帳號：%(shipmentId)s
+      <br />訂單編號：%(orderSerialNumber)s
+      <br />付款方式：
+      <br />付款方式備注：為避免取消訂單，請於%(deadLine)s前繳款完畢
+      <br />
+      <br />訂購項目：
+      <br />%(productName)s
+      <br />
+      <br />為了保障您的資料安全，請登入會員中心查詢90天內所有訂單詳細資訊。
+      <br />祝您購物愉快
+      <br />此為系統信件，請勿直接回覆此信件
+      <br />---
+      <br />%(storeName)s | 好物慢慢選
+      <br />客服信箱：%(serviceMail)s
+      <br />上班時間：週一至週五，10.00AM - 5.00PM，比照國定休假日
       </body></html>"""
     },
     paymentConfirm: {

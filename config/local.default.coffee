@@ -6,6 +6,7 @@ module.exports = {
   domain: 'http://localhost:1337'
   mail: {
     type: 'ses'
+    active: false
     config: {
       from: '',
       transporter: {
@@ -43,5 +44,11 @@ module.exports = {
   }
   i18n: {
     localesDirectory: '/config/locales'
+  }
+  store:{
+    name:'i+DEAL創而有意',
+    name2:'i+DEAL',
+    name3:'創而有意',
+    serviceMail:'service@wevo.com.tw'
   }
 }
