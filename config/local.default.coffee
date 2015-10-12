@@ -19,7 +19,7 @@ module.exports = {
     type: 'smtp'
     active: true
     config:{
-      from: 'dan82625@gmail.com',
+      from: 'XXXXXXX@gmail.com',
       transporter: {
           port: 465,
           host: 'smtp.gmail.com',
