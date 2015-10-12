@@ -166,7 +166,8 @@ module.exports = {
 
     try {
       if(sails.config.environment === 'production' || sails.config.mail.active){
-        await sails.config.mail.mailer.send(message.toJSON());
+        let send = await sails.config.mail.mailer.send(message.toJSON());
+        console.log("send!!!",send);
         message.error = '';
       }
       else {

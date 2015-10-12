@@ -4,7 +4,7 @@ describe("about Mailer service", () => {
     serialNumber: 'test',
     User: {
       username: 'testUser',
-      email: 'smlsun@gmail.com'
+      email: 'dan82625@gmail.com'
     }
   }
 

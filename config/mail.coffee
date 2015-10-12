@@ -1,11 +1,35 @@
 
 module.exports.mail = {
-  type: 'ses'
-  config: {
-    from: '',
+  # type: 'ses'
+  # config: {
+  #   from: '',
+  #   transporter: {
+  #     accessKeyId: '',
+  #     secretAccessKey: '',
+  #   }
+  # }
+  type: 'smtp'
+  active: true
+  config:{
+    from: 'dan82625@gmail.com',
     transporter: {
-      accessKeyId: '',
-      secretAccessKey: '',
+        port: 25,
+        host: 'smtp.gmail.com',
+        secure: true,
+        auth: {
+          user: '',
+          pass: '',
+          xoauth2: ''
+        },
+        ignoreTLS: false,
+        name: '',
+        localAddress: '',
+        connectionTimeout: 2000,
+        greetingTimeout: 2000,
+        socketTimeout: 2000,
+        debug: false,
+        authMethod: 'PLAIN',
+        tls: {}
     }
   }
   templete: {
