@@ -7,8 +7,7 @@ module.exports = {
       user.forgotToken = crypto.randomBytes(32).toString('hex').substr(0, 20);
       await user.save();
 
-      let domain = sails.config.domain || process.env.domain || 'http://localhost:1337';
-      let link = `${domain}/newPassword?email=${email}&forgotToken=${user.forgotToken}`;
+      let link = await UrlHelper.resolve(`newPassword?email=${email}&forgotToken=${user.forgotToken}`,true);
       console.log("newPasswordLink : ",link);
 
       let messageConfig = await CustomMailerService.checkForgotPasswordMail({user, link});

@@ -1,6 +1,21 @@
 
 let ShopController = {
 
+  done: async( req, res ) => {
+
+    let order = await db.Order.findOne({
+      where: {
+        TradeNo: req.query.t
+      }
+    });
+
+    //console.log("======");
+    //console.log("req.query.t=" + req.query.t);
+    //console.log(order);
+    //console.log("======");
+
+    res.view('main/cart-done', {order: order});
+  },
   list: async(req,res) => {
 
     let query = req.query
@@ -9,7 +24,7 @@ let ShopController = {
     let page = await pagination.page(req);
     let offset = await pagination.offset(req);
 
-    query.brandId = query.brand
+    query.brandId = query.brand;
 
     console.log('=== query ===', query);
 
