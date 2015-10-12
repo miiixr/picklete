@@ -50,7 +50,7 @@ module.exports = {
         shipmentUsername: result.order.User.username,
         shipmentId: result.order.User.email,
         orderSerialNumber: result.order.serialNumber,
-        deadLine:  moment(result.order.createdAt).add(3, 'days'),
+        deadLine:  sails.moment(result.order.createdAt).add(3, 'days'),
         productName: productsName.join('、'),
         serviceMail: sails.config.store.serviceMail,
         // username: result.order.User.username,
