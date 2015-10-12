@@ -30,6 +30,7 @@ module.exports.policies = {
   'ShopController':
     show: ['global']
     list: ['global']
+    done: ['global']
     cartStep2: ['global']
 
   'AboutController':

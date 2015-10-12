@@ -29,7 +29,7 @@ module.exports = {
     hashIV: 'v77hoKGq4kWxNNIS',
     debug: true,
     ReturnURL:'/allpay/paid',
-    ClientBackURL:'/shop/products',
+    ClientBackURL:'/shop/done',
     PaymentInfoURL:'/allpay/paymentinfo',
     paymentMethod:[
       {

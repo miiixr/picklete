@@ -159,8 +159,8 @@ OrderController = {
 
       let result = await OrderService.create(newOrder);
 
-      //console.log('***************');
-      //console.log(result);
+      console.log('***************');
+      console.log(result);
 
       if (useAllPay) {
         var allPayData = await OrderService.allPayCreate(result.order,newOrder.paymentMethod);
