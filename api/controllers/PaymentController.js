@@ -57,7 +57,14 @@ let PaymentController = {
         find = data.MerchantTradeNo.replace(sails.config.allpay.merchantID ,"");
       }
 
-      let order = await db.Order.findById(find);
+      let order = await db.Order.findOne({
+        where:{
+          id: find
+        },
+        include:{
+          model: db.User
+        }
+      });
 
       if(!order)
         throw new Error(`${find} 嚴重錯誤!!付款後找不到訂單!!`);
@@ -76,6 +83,7 @@ let PaymentController = {
       order.status = 'paymentConfirm';
       await order.save();
 
+      console.log("!!!",order);
       let messageConfig = await CustomMailerService.paymentConfirm(order);
       let message = await db.Message.create(messageConfig);
       await CustomMailerService.sendMail(message);
