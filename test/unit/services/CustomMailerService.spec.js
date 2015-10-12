@@ -50,4 +50,16 @@ describe("about Mailer service", () => {
 
   });
 
+  it('offer code send', () => {
+    let offerCode = {
+      token: '11223344',
+      startDate: new Date(),
+      endDate: new Date()
+    }
+
+    let result = CustomMailerService.offerCodeMail({offerCode, user});
+    result.type.should.be.equal('offerCode');
+
+  });
+
 });

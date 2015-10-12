@@ -1,4 +1,5 @@
 import {sprintf} from 'sprintf-js';
+import moment from 'moment';
 
 module.exports = {
 
@@ -224,6 +225,32 @@ module.exports = {
       });
 
       mailSendConfig.type = 'verification';
+
+      return mailSendConfig;
+    } catch (e) {
+      throw e;
+    }
+  },
+  offerCodeMail: ({user, offerCode}) => {
+    try {
+
+      var offerCodeTpl = sails.config.mail.templete.offerCode;
+
+      var email = user.email;
+      var mailSendConfig = {...offerCodeTpl, from: sails.config.mail.config.from, to: email};
+      mailSendConfig.subject = sprintf(mailSendConfig.subject, {
+        username: user.fullName
+      });
+
+      mailSendConfig.html = sprintf(mailSendConfig.html, {
+        storeName: sails.config.store.name,
+        username: user.fullName,
+        offerCodeToken: offerCode.token,
+        startDate: moment(offerCode.startDate).format('YYYY/mm/DD hh:mm'),
+        endDate: moment(offerCode.endDate).format('YYYY/mm/DD hh:mm')
+      });
+
+      mailSendConfig.type = 'offerCode';
 
       return mailSendConfig;
     } catch (e) {
