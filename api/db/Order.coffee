@@ -7,17 +7,24 @@ module.exports = (sequelize, DataTypes) ->
     #   defaultValue: DataTypes.UUIDV4
     serialNumber: DataTypes.STRING
     quantity: DataTypes.INTEGER
-    TradeNo: DataTypes.STRING
-    allPayRtnCode: DataTypes.INTEGER
-    allPayRtnMsg: DataTypes.STRING
-    allPayPaymentType: DataTypes.STRING
+
+    # 付款資訊
     paymentTotalAmount: DataTypes.FLOAT
+
+    # 付款確認資訊
     paymentIsConfirmed: DataTypes.BOOLEAN
     paymentConfirmDate: DataTypes.DATE
     paymentConfirmName: DataTypes.STRING
     paymentConfirmPostfix: DataTypes.STRING
     paymentConfirmAmount: DataTypes.FLOAT
     paymentCreateConfirmAmount: DataTypes.FLOAT
+
+    # 歐付寶
+    # todo: 不適合放這裡應該要搬到關聯表
+    TradeNo: DataTypes.STRING
+    allPayRtnCode: DataTypes.INTEGER
+    allPayRtnMsg: DataTypes.STRING
+    allPayPaymentType: DataTypes.STRING
     allPayTradeDate: DataTypes.DATE
     BankCode: DataTypes.STRING
     vAccount: DataTypes.STRING
@@ -30,6 +37,8 @@ module.exports = (sequelize, DataTypes) ->
     CheckMacValue: DataTypes.STRING
     MerchantTradeDate: DataTypes.DATE
     description: DataTypes.DATE
+
+    # 狀態記錄
     status:
       type: DataTypes.ENUM('new', 'paymentConfirm', 'deliveryConfirm')
       defaultValue: 'new'
