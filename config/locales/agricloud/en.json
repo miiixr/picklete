@@ -14,8 +14,9 @@
 	"brand-classification": "Brand Classification",
 	"brand-manager": "brand-manager",
 	"dpt": "Major Categories",
-	"dpt-sub": "Product category",
+	"dpt-sub": "Product Category",
 	"choice-brand": "Choice Brand",
 	"all-brand": "All Brand",
-	"all-categories": "All Categories"
+	"all-categories": "All Categories",
+	"all-product": "All Product"
 }
