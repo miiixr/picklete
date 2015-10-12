@@ -43,12 +43,24 @@ module.exports.mail = {
       sendBy: 'email',
       subject: '訂單 %(orderSerialNumber)s 已確認付款完成',
       text: """
-      Hi %(username)s:
+      親愛的%(storeName2)s顧客您好!
 
-      您的付款已經確認，
-      我們會盡快為您安排出貨事宜。
+      您於創而有意平台消費%(paymentTotalAmount)s元，已使用(信用卡/ATM/超商繳款)完成付款。
 
-      From %(storeName)s
+      訂單編號：%(orderSerialNumber)s ，我們將於確認定單後盡快為您出貨，謝謝您的惠顧。
+
+      為了保障您的資料安全，請登入會員中心查詢90天內所有訂單詳細資訊。
+
+      此為系統信件，請勿直接回覆此信件
+
+      ---
+
+      %(storeName)s | 好物慢慢選
+
+      客服信箱：%(serviceMail)s
+
+      上班時間：週一至週五，10.00AM - 5.00PM，比照國定休假日
+
       """
     },
     deliveryConfirm: {

@@ -46,11 +46,11 @@ module.exports = {
         storeName: sails.config.store.name,
         storeName2: sails.config.store.name2,
         storeName3:sails.config.store.name3,
-        orderTime: result.order.createdAt,
+        orderTime: sails.moment(result.order.createdAt).format('YYYY/MM/DD HH:mm:ss'),
         shipmentUsername: result.order.User.username,
         shipmentId: result.order.User.email,
         orderSerialNumber: result.order.serialNumber,
-        deadLine:  sails.moment(result.order.createdAt).add(3, 'days'),
+        deadLine:  sails.moment(result.order.createdAt).add(3, 'days').format('YYYY/MM/DD HH:mm:ss'),
         productName: productsName.join('、'),
         serviceMail: sails.config.store.serviceMail,
         // username: result.order.User.username,
@@ -109,14 +109,19 @@ module.exports = {
   },
   paymentConfirm: (order) => {
     try {
-
+      console.log("order",order);
       var paymentConfirmTemplete = sails.config.mail.templete.paymentConfirm;
       var mailSendConfig = {...paymentConfirmTemplete, to: order.User.email};
 
       mailSendConfig.subject = sprintf(mailSendConfig.subject, {orderSerialNumber: order.serialNumber});
       mailSendConfig.text = sprintf(mailSendConfig.text, {
+
         storeName: sails.config.store.name,
-        username: order.User.username
+        storeName2: sails.config.store.name2,
+        storeName3:sails.config.store.name3,
+        paymentTotalAmount: order.paymentTotalAmount,
+        orderSerialNumber: order.serialNumber,
+        serviceMail: sails.config.store.serviceMail,
       });
 
       mailSendConfig.type = 'paymentConfirm';
