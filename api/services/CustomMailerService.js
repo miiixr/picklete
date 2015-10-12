@@ -33,7 +33,7 @@ module.exports = {
   orderConfirm: (result) => {
 
     try {
-      console.log("!!!",result);
+      console.log("result",result);
       var orderConfirmTemplete = sails.config.mail.templete.orderConfirm;
       var mailSendConfig = {...orderConfirmTemplete, to: result.order.User.email};
       var productsName = result.OrderItems.map((item) => item.name);
