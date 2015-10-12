@@ -33,6 +33,7 @@ module.exports = {
   orderConfirm: (result) => {
 
     try {
+      console.log("!!!",result);
       var orderConfirmTemplete = sails.config.mail.templete.orderConfirm;
       var mailSendConfig = {...orderConfirmTemplete, to: result.order.User.email};
       var productsName = result.OrderItems.map((item) => item.name);
@@ -49,7 +50,7 @@ module.exports = {
         shipmentUsername: result.order.User.username,
         shipmentId: result.order.User.email,
         orderSerialNumber: result.order.serialNumber,
-        deadLine:  moment(result.order.createdAt).add('days', 3),
+        deadLine:  moment(result.order.createdAt).add(3, 'days'),
         productName: productsName.join('、'),
         serviceMail: sails.config.store.serviceMail,
         // username: result.order.User.username,
