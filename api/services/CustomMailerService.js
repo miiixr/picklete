@@ -17,8 +17,11 @@ module.exports = {
       });
 
       mailSendConfig.html = sprintf(mailSendConfig.html, {
+        username: user.username,
         storeName: sails.config.store.name,
-        username: user.username
+        storeName2: sails.config.store.name2,
+        storeName3:sails.config.store.name3,
+        serviceMail: sails.config.store.serviceMail,
       });
 
       mailSendConfig.type = 'greeting';
@@ -192,7 +195,6 @@ module.exports = {
       });
 
       mailSendConfig.html = sprintf(mailSendConfig.html, {
-        storeName: sails.config.store.name,
         username: user.username,
         link: link,
         storeName: sails.config.store.name,
@@ -220,14 +222,13 @@ module.exports = {
       });
 
       mailSendConfig.html = sprintf(mailSendConfig.html, {
-        storeName: sails.config.store.name,
         username: user.username,
         createdAt: sails.moment(passport.updatedAt).format('YYYY/MM/DD HH:mm:ss'),
         userId: user.email,
         password: password,
         storeName: sails.config.store.name,
         storeName2: sails.config.store.name2,
-        storeName3:sails.config.store.name3,
+        storeName3: sails.config.store.name3,
         serviceMail: sails.config.store.serviceMail,
       });
 
