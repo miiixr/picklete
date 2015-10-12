@@ -2,7 +2,7 @@
 describe.only("about Shop Discount", function() {
 
   let createdProductGm1;
-  let tesetProducts = [];
+  let createdProducts = [];
 
 	before(async (done) => {
 		try{
@@ -22,8 +22,7 @@ describe.only("about Shop Discount", function() {
       let productNames = [
         'promotion-creatre',
         'promotion-update',
-        'promotion-delete',
-        'promotion-price-trans-to-product-price'
+        'promotion-delete'
       ];
       for (var i=0; i < productNames.length; i++) {
         var x = await db.Product.create({
@@ -43,7 +42,7 @@ describe.only("about Shop Discount", function() {
           photos: ["https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg",
             "https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/JC1121-set-My-Mug-blue-22.jpg"]
         });
-        tesetProducts.push(x);
+        createdProducts.push(x);
       }
 
 			done();
@@ -69,7 +68,7 @@ describe.only("about Shop Discount", function() {
         type : 'flash',
         discountType:'price',
         price: 2999,
-        productIds: [ tesetProducts[0].id, tesetProducts[1].id ]
+        productIds: [ createdProducts[0].id ]
       }
       let createPromotion = await PromotionService.create(promotion);
 			createPromotion.title.should.be.equal("spec-promotion-service-create");
@@ -96,7 +95,7 @@ describe.only("about Shop Discount", function() {
         price: '0',
         discount: '95',
         description: 'BBBBBBB',
-        productGmIds: [ createdProductGm1.id]
+        productIds: [ createdProducts[1].id ]
       }
       let createPromotion = await PromotionService.update(promotion);
 			createPromotion.title.should.be.equal("AAAAAA");
@@ -111,6 +110,8 @@ describe.only("about Shop Discount", function() {
     }
   });
   // end create
+
+
 
   describe("about productPriceTransPromotionPrice", function() {
 
