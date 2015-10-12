@@ -1,11 +1,12 @@
 
-describe("about Shop Discount", function() {
+describe.only("about Shop Discount", function() {
 
-  let createdProductGm1, createdProductGm2;
+  let createdProductGm1;
+  let tesetProducts = [];
 
 	before(async (done) => {
 		try{
-      // create 2 productGm
+      // create productGm
       createdProductGm1 = await db.ProductGm.create({
         brandId: 1,
         name: "spec-promotion-serivce-test-productGm-1",
@@ -16,16 +17,34 @@ describe("about Shop Discount", function() {
         depSubId: 1,
         coverPhoto: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/JC1121-set-My-Mug-blue-2.jpg']
       });
-      createdProductGm2 = await db.ProductGm.create({
-        brandId: 1,
-        name: "spec-promotion-serivce-test-productGm-2",
-        explain: "spec-promotion-serivce-test-productGm-2",
-        usage: '請安心服用',
-        notice: '18 歲以下請勿使用',
-        depId: 1,
-        depSubId: 1,
-        coverPhoto: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/JC1121-set-My-Mug-blue-2.jpg']
-      });
+
+      // create products
+      let productNames = [
+        'promotion-creatre',
+        'promotion-update',
+        'promotion-delete',
+        'promotion-price-trans-to-product-price'
+      ];
+      for (var i=0; i < productNames.length; i++) {
+        var x = await db.Product.create({
+          weight: [i],
+          name: productNames[i],
+          description: 'spec-test-' + i + '-' + productNames[i] ,
+          stockQuantity: 1111,
+          isPublish: true,
+          price: 1399 + i,
+          size: 'normal',
+          service: ["express"],
+          country: 'U.K',
+          madeby: 'TW',
+          color: 3,
+          productNumber: '2-USA-3-G-' + i,
+          spec: 'super-metal',
+          photos: ["https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg",
+            "https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/JC1121-set-My-Mug-blue-22.jpg"]
+        });
+        tesetProducts.push(x);
+      }
 
 			done();
 		} catch (e) {
@@ -50,7 +69,7 @@ describe("about Shop Discount", function() {
         type : 'flash',
         discountType:'price',
         price: 2999,
-        productGmIds: [ createdProductGm1.id, createdProductGm2.id ]
+        productIds: [ tesetProducts[0].id, tesetProducts[1].id ]
       }
       let createPromotion = await PromotionService.create(promotion);
 			createPromotion.title.should.be.equal("spec-promotion-service-create");
