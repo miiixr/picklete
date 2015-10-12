@@ -167,6 +167,11 @@ OrderController = {
 
         console.log("allPayData", allPayData);
 
+        let order = await db.Order.findById(result.order.id);
+        order.merchantTradeNo = allPayData.MerchantTradeNo;
+        order.allPayPaymentType = newOrder.paymentMethod;
+        await order.save();
+
         let AioCheckOut = 'https://payment.allpay.com.tw/Cashier/AioCheckOut';
         if(sails.config.environment === 'development' || sails.config.environment === 'test' || sails.config.allpay.debug){
           AioCheckOut = 'https://payment-stage.allpay.com.tw/Cashier/AioCheckOut';
