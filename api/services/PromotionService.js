@@ -114,6 +114,9 @@ module.exports = {
   productPriceTransPromotionPrice: async(date, products) => {
     try {
       // find all promotions within a specific date
+
+      let productIds = products.map((product) => product.id)
+
       let findPromotions = await db.Promotion.findAll({
         where:{
           startDate: {
@@ -124,53 +127,46 @@ module.exports = {
           }
         },
         include:[{
-          model: db.ProductGm,
+          model: db.Product,
+          where: {
+            id: productIds
+          },
           required: true
         }]
       });
-      // console.log('=== date ==>',date);
-
       // check each prduct
       if(!findPromotions.length) return products;
       if(!products.length) return products;
 
       products = products.map((product) => {
-        // console.log('\n=== product.id ==>',product.id);
-        // console.log('=== old product.price ==>',product.price);
-        // set new price
+
         findPromotions.forEach((promotion) => {
-          // console.log('=== promotion.id ==>',promotion.id);
-          // check each promotion
-          for(var i=0;i<findPromotions.length;i++){
-            // check each ProductGmId
-            for(var j=0;j<findPromotions[i].ProductGms.length;j++){
-              let thisProductGmId = findPromotions[i].ProductGms[j].id;
-              let startDate = findPromotions[i].startDate;
-              let endDate = findPromotions[i].endDate;
-              if(thisProductGmId == product.ProductGmId){
-                // console.log('=== thisProductGmId ==>',thisProductGmId);
-                if((date>startDate) && (date<endDate)){
-                  product.originPrice = product.price;
+          promotion.Products.forEach((promotionProduct) => {
 
-                  let duration = moment.duration(moment(endDate).diff(moment(date)));
-
-                  product.promotionCountDown =
-                    `${duration.get("days")} 天 ${duration.get("hours") +":"+ duration.get("minutes") +":"+ duration.get("seconds")}`
+            let startDate = promotion.startDate;
+            let endDate = promotion.endDate;
 
 
-                  if(promotion.discountType == 'discount'){
-                    // console.log('=== promotion.discount ==>',promotion.discount);
-                    product.price = parseInt(product.price * promotion.discount);
-                  }else if(promotion.discountType == 'price'){
-                    // console.log('=== promotion.price ==>',promotion.price);
-                    product.price = parseInt(product.price - promotion.price);
-                  }
+            if(product.id == promotionProduct.id){
 
-                  product.status = 'sale';
-                }
-              } // end if
-            } // end for j
-          } // end for i
+              product.originPrice = product.price;
+              let duration = moment.duration(moment(endDate).diff(moment(date)));
+
+              product.promotionCountDown =
+                `${duration.get("days")} 天 ${duration.get("hours") +":"+ duration.get("minutes") +":"+ duration.get("seconds")}`
+
+
+              if(promotion.discountType == 'discount'){
+                // console.log('=== promotion.discount ==>',promotion.discount);
+                product.price = parseInt(product.price * promotion.discount);
+              }else if(promotion.discountType == 'price'){
+                // console.log('=== promotion.price ==>',promotion.price);
+                product.price = parseInt(product.price - promotion.price);
+              }
+
+              product.status = 'discount';
+            }
+          }) // end for j
         });
         // console.log('=== new product.price ==>',product.price);
 
