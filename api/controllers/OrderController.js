@@ -164,6 +164,8 @@ OrderController = {
 
       if (useAllPay) {
         var allPayData = await OrderService.allPayCreate(result.order,newOrder.paymentMethod);
+        result.merchantTradeNo = allPayData.MerchantTradeNo;
+        await result.save();
 
         console.log("allPayData", allPayData);
 

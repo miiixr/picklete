@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) ->
     #   defaultValue: DataTypes.UUIDV4
     serialNumber: DataTypes.STRING
     quantity: DataTypes.INTEGER
+    merchantTradeNo: DataTypes.STRING
     TradeNo: DataTypes.STRING
     allPayRtnCode: DataTypes.INTEGER
     allPayRtnMsg: DataTypes.STRING
