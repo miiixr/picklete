@@ -189,8 +189,7 @@ AuthController = {
       let data = req.query;
       let user = await db.User.findOne({where:{email:data.email}});
 
-      let domain = sails.config.domain || process.env.domain || 'http://localhost:1337';
-      let link = `${domain}/verification?email=${user.email}`;
+      let link = await UrlHelper.resolve(`/verification?email=${user.email}`,true);
       console.log("verificationLink : ",link);
 
       let messageConfig = await CustomMailerService.verificationMail(user, link);

@@ -17,8 +17,11 @@ module.exports = {
       });
 
       mailSendConfig.html = sprintf(mailSendConfig.html, {
+        username: user.username,
         storeName: sails.config.store.name,
-        username: user.username
+        storeName2: sails.config.store.name2,
+        storeName3:sails.config.store.name3,
+        serviceMail: sails.config.store.serviceMail,
       });
 
       mailSendConfig.type = 'greeting';
@@ -33,6 +36,7 @@ module.exports = {
   orderConfirm: (result) => {
 
     try {
+      console.log("result",result);
       var orderConfirmTemplete = sails.config.mail.templete.orderConfirm;
       var mailSendConfig = {...orderConfirmTemplete, to: result.order.User.email};
       var productsName = result.OrderItems.map((item) => item.name);
@@ -42,18 +46,28 @@ module.exports = {
 
       mailSendConfig.subject = sprintf(mailSendConfig.subject, {orderSerialNumber: result.order.serialNumber});
       mailSendConfig.html = sprintf(mailSendConfig.html, {
-        username: result.order.User.username,
-        orderSerialNumber: result.order.serialNumber,
-        productName: productsName.join('、'),
-        bankId: result.order.bankId,
-        bankName: result.order.bankName,
-        accountId: result.order.bankAccountId,
-        accountName: result.order.bankAccountName,
-        paymentTotalAmount: result.order.paymentTotalAmount,
-        shipmentUsername: result.order.Shipment.username,
-        shipmentAddress: result.order.Shipment.address,
         storeName: sails.config.store.name,
-        orderConfirmLink
+        storeName2: sails.config.store.name2,
+        storeName3:sails.config.store.name3,
+        orderTime: sails.moment(result.order.createdAt).format('YYYY/MM/DD HH:mm:ss'),
+        shipmentUsername: result.order.User.username,
+        shipmentId: result.order.User.email,
+        orderSerialNumber: result.order.serialNumber,
+        deadLine:  sails.moment(result.order.createdAt).add(3, 'days').format('YYYY/MM/DD HH:mm:ss'),
+        productName: productsName.join('、'),
+        serviceMail: sails.config.store.serviceMail,
+        // username: result.order.User.username,
+        // orderSerialNumber: result.order.serialNumber,
+        // productName: productsName.join('、'),
+        // bankId: result.order.bankId,
+        // bankName: result.order.bankName,
+        // accountId: result.order.bankAccountId,
+        // accountName: result.order.bankAccountName,
+        // paymentTotalAmount: result.order.paymentTotalAmount,
+        // shipmentUsername: result.order.Shipment.username,
+        // shipmentAddress: result.order.Shipment.address,
+        // storeName: sails.config.store.name,
+        // orderConfirmLink
       });
 
       mailSendConfig.type = 'orderConfirm';
@@ -98,14 +112,19 @@ module.exports = {
   },
   paymentConfirm: (order) => {
     try {
-
+      console.log("order",order);
       var paymentConfirmTemplete = sails.config.mail.templete.paymentConfirm;
       var mailSendConfig = {...paymentConfirmTemplete, to: order.User.email};
 
       mailSendConfig.subject = sprintf(mailSendConfig.subject, {orderSerialNumber: order.serialNumber});
       mailSendConfig.text = sprintf(mailSendConfig.text, {
+
         storeName: sails.config.store.name,
-        username: order.User.username
+        storeName2: sails.config.store.name2,
+        storeName3:sails.config.store.name3,
+        paymentTotalAmount: order.paymentTotalAmount,
+        orderSerialNumber: order.serialNumber,
+        serviceMail: sails.config.store.serviceMail,
       });
 
       mailSendConfig.type = 'paymentConfirm';
@@ -126,8 +145,14 @@ module.exports = {
 
       mailSendConfig.subject = sprintf(mailSendConfig.subject, {orderSerialNumber: order.serialNumber});
       mailSendConfig.text = sprintf(mailSendConfig.text, {
+
         storeName: sails.config.store.name,
-        username: order.User.username
+        storeName2: sails.config.store.name2,
+        storeName3:sails.config.store.name3,
+        paymentTotalAmount: order.paymentTotalAmount,
+        orderSerialNumber: order.serialNumber,
+        serviceMail: sails.config.store.serviceMail,
+
       });
 
       mailSendConfig.type = 'deliveryConfirm';
@@ -140,8 +165,9 @@ module.exports = {
   sendMail: async (message) => {
 
     try {
-      if(sails.config.environment === 'production'){
-        await sails.config.mail.mailer.send(message.toJSON());
+      if(sails.config.environment === 'production' || sails.config.mail.active){
+        let send = await sails.config.mail.mailer.send(message.toJSON());
+        console.log("send!!!",send);
         message.error = '';
       }
       else {
@@ -170,9 +196,12 @@ module.exports = {
       });
 
       mailSendConfig.html = sprintf(mailSendConfig.html, {
-        storeName: sails.config.store.name,
         username: user.username,
-        link: link
+        link: link,
+        storeName: sails.config.store.name,
+        storeName2: sails.config.store.name2,
+        storeName3:sails.config.store.name3,
+        serviceMail: sails.config.store.serviceMail,
       });
 
       mailSendConfig.type = 'checkForgotPassword';
@@ -194,9 +223,14 @@ module.exports = {
       });
 
       mailSendConfig.html = sprintf(mailSendConfig.html, {
-        storeName: sails.config.store.name,
         username: user.username,
+        createdAt: sails.moment(passport.updatedAt).format('YYYY/MM/DD HH:mm:ss'),
+        userId: user.email,
         password: password,
+        storeName: sails.config.store.name,
+        storeName2: sails.config.store.name2,
+        storeName3: sails.config.store.name3,
+        serviceMail: sails.config.store.serviceMail,
       });
 
       mailSendConfig.type = 'newPassword';
@@ -218,9 +252,12 @@ module.exports = {
       });
 
       mailSendConfig.html = sprintf(mailSendConfig.html, {
-        storeName: sails.config.store.name,
         username: user.fullName,
-        link: link
+        link: link,
+        storeName: sails.config.store.name,
+        storeName2: sails.config.store.name2,
+        storeName3:sails.config.store.name3,
+        serviceMail: sails.config.store.serviceMail,
       });
 
       mailSendConfig.type = 'verification';
@@ -229,6 +266,35 @@ module.exports = {
     } catch (e) {
       throw e;
     }
+  },
+
+  userUpdateMail: async(user) => {
+
+    try {
+      var userUpdateTpl = sails.config.mail.templete.userUpdate;
+      var email = user.email;
+      var mailSendConfig = {...userUpdateTpl, from: sails.config.mail.config.from, to: email};
+      mailSendConfig.subject = sprintf(mailSendConfig.subject, {
+        username: user.fullName
+      });
+
+      mailSendConfig.html = sprintf(mailSendConfig.html, {
+        username: user.username,
+        createdAt: sails.moment(new Date()).format('YYYY/MM/DD HH:mm:ss'),
+        userId: user.email,
+        storeName: sails.config.store.name,
+        storeName2: sails.config.store.name2,
+        storeName3: sails.config.store.name3,
+        serviceMail: sails.config.store.serviceMail,
+      });
+
+      mailSendConfig.type = 'verification';
+
+      return mailSendConfig;
+    } catch (e) {
+      throw e;
+    }
+
   }
 
 
