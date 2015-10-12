@@ -75,6 +75,10 @@ let PaymentController = {
       order.paymentConfirmAmount = data.TradeAmt;
       await order.save();
 
+      let messageConfig = await CustomMailerService.paymentConfirm(order);
+      let message = await db.Message.create(messageConfig);
+      await CustomMailerService.sendMail(message);
+
       return res.ok('1|OK');
     } catch (e) {
       console.error(e.stack);
