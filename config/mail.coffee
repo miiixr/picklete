@@ -67,13 +67,21 @@ module.exports.mail = {
       sendBy: 'email',
       subject: '訂單 %(orderSerialNumber)s 已完成出貨',
       text: """
-      Hi %(username)s:
+      親愛的%(storeName2)s顧客您好!
 
-      商品已出貨完成
+      您的i+DEAL訂單今日已為您出貨，訂單編號：%(orderSerialNumber)s ，約2~3個工作天(不含例假日及國定假日)內抵達，煩請留意收件。
 
-      感謝你的訂購
+      為了保障您的資料安全，請登入會員中心查詢90天內所有訂單詳細資訊。
 
-      From %(storeName)s
+      此為系統信件，請勿直接回覆此信件
+
+      ---
+
+      %(storeName)s | 好物慢慢選
+
+      客服信箱：%(serviceMail)s
+
+      上班時間：週一至週五，10.00AM - 5.00PM，比照國定休假日
       """
     },
     orderSync: {
@@ -93,52 +101,101 @@ module.exports.mail = {
     greeting: {
       sendBy: 'email',
       subject: '歡迎 %(username)s 加入ＯＯＯ會員',
-      html: """
-      <p>歡迎 %(username)s 註冊 %(storeName)s ！</p>
-      """
+      html: """<html><body>
+      <br /><p>歡迎 %(username)s 註冊 %(storeName)s ！</p>
+      <br />
+      <br />誠摯感謝您註冊%(storeName3)s平台精心揀選的優質商品!
+      <br />網站成立的宗旨是希望能與更多懂生活的人一同分享及找回生活中的理想樂園，
+      <br />創而有意團隊在此預祝您擁有愉悅且舒適的每一天!
+      <br />
+      <br />1.當您忘記帳號密碼時，請直接於會員登入頁面點選忘記密碼，系統將立即為您服務。
+      <br />2.如有任何購買及會員問題請於網頁最下方的【 聯絡我們 】留言詢問。
+      <br />3.請於購物前詳閱站內FAQ購物流程說明及使用條款、隱私權政策、免責聲明，感謝您的配合!
+      <br />
+      <br />此為系統信件，請勿直接回覆此信件
+      <br />
+      <br />---
+      <br />
+      <br />%(storeName)s | 好物慢慢選
+      <br />
+      <br />客服信箱：%(serviceMail)s
+      <br />
+      <br />上班時間：週一至週五，10.00AM - 5.00PM，比照國定休假日
+      </body></html>"""
     },
     checkForgot:{
       sendBy: 'email',
       subject: '%(storeName)s - 忘記密碼通知信',
-      html: """
-      Dear %(username)s , 您好！<br>
-      <blockquote>
-        是您在我們的系統中忘記密碼了嗎！？<br>
-        若是您忘記了密碼，點選以下連結會幫您重置密碼，並寄到您的信箱<br>
-        <a href='%(link)s'>Click Me</a><br><br>
-        若不是您，您可以選擇忽略此封郵件。<br><br>
-        感謝您！<br>
-        %(storeName)s
-      </blockquote>
-      """
+      html: """<html><body>
+      <br />親愛的 %(username)s 您好：
+      <br />
+      <br />是您在我們的系統中忘記密碼了嗎??
+      <br />若是您忘記了密碼，點選以下連結會幫您重置密碼，並寄到您的信箱
+      <br /><a href='%(link)s'>Click Me</a>
+      <br />若不是您，您可以選擇忽略此封郵件。
+      <br />
+      <br />此為系統信件，請勿直接回覆此信件
+      <br />
+      <br />---
+      <br />
+      <br />%(storeName)s | 好物慢慢選
+      <br />
+      <br />客服信箱：%(serviceMail)s
+      <br />
+      <br />上班時間：週一至週五，10.00AM - 5.00PM，比照國定休假日
+      </body></html>"""
     },
     newPassword:{
       sendBy: 'email',
-      subject: '%(username)s - 新密碼通知信',
-      html: """
-      Dear %(username)s , 您好！<br>
-      <blockquote>
-        我們已經幫你重置好密碼摟！！<br>
-        請妥善保管下列密碼並儘速更換。<br><br>
-        新密碼為：<p style="color:red">%(password)s</p><br><br>
-        感謝您！<br>
-        %(storeName)s
-      </blockquote>
-      """
+      subject: '%(username)s - 忘記密碼回覆信',
+      html: """"<html><body>
+      <br />親愛的 %(username)s 您好：
+      <br />
+      <br />您在%(createdAt)s於i+DEAL會員中心詢問用戶密碼，請確認下方用戶密碼並妥保存，謝謝。
+      <br />我們已經幫你重置好密碼
+      <br />請妥善保管下列密碼並儘速更換。
+      <br />會員帳號：%(userId)s
+      <br />新密碼為：<p style="color:red">%(password)s</p><br><br>
+      <br />
+      <br />此為系統信件，請勿直接回覆此信件
+      <br />
+      <br />---
+      <br />
+      <br />%(storeName)s | 好物慢慢選
+      <br />
+      <br />客服信箱：%(serviceMail)s
+      <br />
+      <br />上班時間：週一至週五，10.00AM - 5.00PM，比照國定休假日
+      </body></html>"""
     },
     verification:{
       sendBy: 'email',
-      subject: '%(username)s - 新帳號註冊通知',
-      html: """
-      Dear %(username)s , 您好！<br>
-      <blockquote>
-        感謝您註冊我們的服務，請點選以下連結開通帳號<br>
-        <a href='%(link)s'>Click Me</a><br><br>
-        若不是您，您可以選擇忽略此封郵件。<br><br>
-        謝謝！<br>
-        %(storeName)s
-      </blockquote>
-      """
+      subject: '%(username)s - 註冊驗證信',
+      html: """<html><body>
+      <br />親愛的 %(username)s 您好：
+      <br />
+      <br />誠摯感謝您註冊%(storeName3)s平台精心揀選的優質商品!
+      <br />網站成立的宗旨是希望能與更多懂生活的人一同分享及找回生活中的理想樂園，
+      <br />創而有意團隊在此預祝您擁有愉悅且舒適的每一天!
+      <br />
+      <br />感謝您註冊我們的服務，請點選以下連結開通帳號
+      <br /><a href='%(link)s'>Click Me</a>
+      <br />若不是您，您可以選擇忽略此封郵件。<br>
+      <br />
+      <br />1.當您忘記帳號密碼時，請直接於會員登入頁面點選忘記密碼，系統將立即為您服務。
+      <br />2.如有任何購買及會員問題請於網頁最下方的【 聯絡我們 】留言詢問。
+      <br />3.請於購物前詳閱站內FAQ購物流程說明及使用條款、隱私權政策、免責聲明，感謝您的配合!
+      <br />
+      <br />此為系統信件，請勿直接回覆此信件
+      <br />
+      <br />---
+      <br />
+      <br />%(storeName)s | 好物慢慢選
+      <br />
+      <br />客服信箱：%(serviceMail)s
+      <br />
+      <br />上班時間：週一至週五，10.00AM - 5.00PM，比照國定休假日
+      </body></html>"""
     }
   }
 }

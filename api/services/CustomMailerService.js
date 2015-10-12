@@ -142,8 +142,14 @@ module.exports = {
 
       mailSendConfig.subject = sprintf(mailSendConfig.subject, {orderSerialNumber: order.serialNumber});
       mailSendConfig.text = sprintf(mailSendConfig.text, {
+
         storeName: sails.config.store.name,
-        username: order.User.username
+        storeName2: sails.config.store.name2,
+        storeName3:sails.config.store.name3,
+        paymentTotalAmount: order.paymentTotalAmount,
+        orderSerialNumber: order.serialNumber,
+        serviceMail: sails.config.store.serviceMail,
+
       });
 
       mailSendConfig.type = 'deliveryConfirm';
@@ -156,7 +162,7 @@ module.exports = {
   sendMail: async (message) => {
 
     try {
-      if(sails.config.environment === 'production' || sails.mail.active){
+      if(sails.config.environment === 'production' || sails.config.mail.active){
         await sails.config.mail.mailer.send(message.toJSON());
         message.error = '';
       }
@@ -188,7 +194,11 @@ module.exports = {
       mailSendConfig.html = sprintf(mailSendConfig.html, {
         storeName: sails.config.store.name,
         username: user.username,
-        link: link
+        link: link,
+        storeName: sails.config.store.name,
+        storeName2: sails.config.store.name2,
+        storeName3:sails.config.store.name3,
+        serviceMail: sails.config.store.serviceMail,
       });
 
       mailSendConfig.type = 'checkForgotPassword';
@@ -212,7 +222,13 @@ module.exports = {
       mailSendConfig.html = sprintf(mailSendConfig.html, {
         storeName: sails.config.store.name,
         username: user.username,
+        createdAt: sails.moment(passport.updatedAt).format('YYYY/MM/DD HH:mm:ss'),
+        userId: user.email,
         password: password,
+        storeName: sails.config.store.name,
+        storeName2: sails.config.store.name2,
+        storeName3:sails.config.store.name3,
+        serviceMail: sails.config.store.serviceMail,
       });
 
       mailSendConfig.type = 'newPassword';
@@ -234,9 +250,12 @@ module.exports = {
       });
 
       mailSendConfig.html = sprintf(mailSendConfig.html, {
-        storeName: sails.config.store.name,
         username: user.fullName,
-        link: link
+        link: link,
+        storeName: sails.config.store.name,
+        storeName2: sails.config.store.name2,
+        storeName3:sails.config.store.name3,
+        serviceMail: sails.config.store.serviceMail,
       });
 
       mailSendConfig.type = 'verification';
