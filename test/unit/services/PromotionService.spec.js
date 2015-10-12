@@ -1,11 +1,12 @@
 
 describe("about Shop Discount", function() {
 
-  let createdProductGm1, createdProductGm2;
+  let createdProductGm1;
+  let createdProducts = [];
 
 	before(async (done) => {
 		try{
-      // create 2 productGm
+      // create productGm
       createdProductGm1 = await db.ProductGm.create({
         brandId: 1,
         name: "spec-promotion-serivce-test-productGm-1",
@@ -16,16 +17,33 @@ describe("about Shop Discount", function() {
         depSubId: 1,
         coverPhoto: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/JC1121-set-My-Mug-blue-2.jpg']
       });
-      createdProductGm2 = await db.ProductGm.create({
-        brandId: 1,
-        name: "spec-promotion-serivce-test-productGm-2",
-        explain: "spec-promotion-serivce-test-productGm-2",
-        usage: '請安心服用',
-        notice: '18 歲以下請勿使用',
-        depId: 1,
-        depSubId: 1,
-        coverPhoto: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/JC1121-set-My-Mug-blue-2.jpg']
-      });
+
+      // create products
+      let productNames = [
+        'promotion-creatre',
+        'promotion-update',
+        'promotion-delete'
+      ];
+      for (var i=0; i < productNames.length; i++) {
+        var x = await db.Product.create({
+          weight: [i],
+          name: productNames[i],
+          description: 'spec-test-' + i + '-' + productNames[i] ,
+          stockQuantity: 1111,
+          isPublish: true,
+          price: 1399 + i,
+          size: 'normal',
+          service: ["express"],
+          country: 'U.K',
+          madeby: 'TW',
+          color: 3,
+          productNumber: '2-USA-3-G-' + i,
+          spec: 'super-metal',
+          photos: ["https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg",
+            "https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/JC1121-set-My-Mug-blue-22.jpg"]
+        });
+        createdProducts.push(x);
+      }
 
 			done();
 		} catch (e) {
@@ -50,7 +68,7 @@ describe("about Shop Discount", function() {
         type : 'flash',
         discountType:'price',
         price: 2999,
-        productGmIds: [ createdProductGm1.id, createdProductGm2.id ]
+        productIds: [ createdProducts[0].id ]
       }
       let createPromotion = await PromotionService.create(promotion);
 			createPromotion.title.should.be.equal("spec-promotion-service-create");
@@ -77,7 +95,7 @@ describe("about Shop Discount", function() {
         price: '0',
         discount: '95',
         description: 'BBBBBBB',
-        productGmIds: [ createdProductGm1.id]
+        productIds: [ createdProducts[1].id ]
       }
       let createPromotion = await PromotionService.update(promotion);
 			createPromotion.title.should.be.equal("AAAAAA");
@@ -93,6 +111,8 @@ describe("about Shop Discount", function() {
   });
   // end create
 
+
+
   describe("about productPriceTransPromotionPrice", function() {
 
     let createdProductGm1, createdProductGm2;
@@ -104,7 +124,7 @@ describe("about Shop Discount", function() {
 
   	before(async (done) => {
       try{
-        // create productGms
+
         createdProductGm1 = await db.ProductGm.create({
           brandId: 1,
           name: "spec-promotion-serivce-test-productGm-3",
@@ -125,7 +145,6 @@ describe("about Shop Discount", function() {
           depSubId: 1,
           coverPhoto: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/JC1121-set-My-Mug-blue-2.jpg']
         });
-
         // create products
         createdProduct1 = await db.Product.create({
           color: '1',
@@ -167,9 +186,8 @@ describe("about Shop Discount", function() {
           type : 'general',
           discountType:'discount',
           discount: 0.5,
-          productGmIds: [ createdProductGm1.id, createdProductGm2.id ]
         });
-        await createdPromotion1.setProductGms([createdProductGm1,createdProductGm2]);
+        await createdPromotion1.setProducts([createdProduct1, createdProduct2]);
 
         // create promotion 2
         createdPromotion2 = await db.Promotion.create({
@@ -180,9 +198,8 @@ describe("about Shop Discount", function() {
           type : 'general',
           discountType:'price',
           price: 300,
-          productGmIds: [ createdProductGm1.id, createdProductGm2.id ]
         });
-        await createdPromotion2.setProductGms([createdProductGm1,createdProductGm2]);
+        await createdPromotion2.setProducts([createdProduct3]);
 
         done();
       } catch (e) {
@@ -195,14 +212,7 @@ describe("about Shop Discount", function() {
     it('Set product price fron promotions - date 1', async (done) => {
       try {
         // find product by given ProductGmId
-        let findProducts = await db.Product.findAll({
-          where:{
-            $or: [
-              {ProductGmId: createdProductGm1.id},
-              {ProductGmId: createdProductGm2.id}
-            ]
-          }
-        });
+        let findProducts = [createdProduct1, createdProduct2];
 
         // processing with productPriceTransPromotionPrice
         let discountedProducts = await PromotionService.productPriceTransPromotionPrice(date1, findProducts);
@@ -226,14 +236,7 @@ describe("about Shop Discount", function() {
     it('Pricing: Set product price fron promotions', async (done) => {
       try {
         // find product by given ProductGmId
-        let findProducts = await db.Product.findAll({
-          where:{
-            $or: [
-              {ProductGmId: createdProductGm1.id},
-              {ProductGmId: createdProductGm2.id}
-            ]
-          }
-        });
+        let findProducts = [createdProduct3];
 
         // processing with productPriceTransPromotionPrice
         let pricedProducts = await PromotionService.productPriceTransPromotionPrice(date2, findProducts);

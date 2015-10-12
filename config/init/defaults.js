@@ -500,7 +500,7 @@ module.exports.createTestData = async ({createRoleUser, createNewBuyer}) => {
   var createPromotion1 = await db.Promotion.create(promotion1);
   var createPromotion2 = await db.Promotion.create(promotion2);
 
-  await createPromotion1.setProductGms([createdProductGmComplete]);
+  await createPromotion1.setProducts([noneNameProduct, createdProduct]);
   // end promotions
 
   // slide active
