@@ -160,5 +160,18 @@ describe.skip("about User", () => {
     });
   });
 
+  //還缺登入 登入後才能測試..
+  it('purchase test', (done) => {  
+    request(sails.hooks.http.app)
+    .get('/member/purchase')
+    .end((err,res) => {
+      if(res.statusCode === 500){
+        return done(err);
+      }
+      res.statusCode.should.equal(200);
+      res.body.should.be.Object;
+      done(err);
+    });
+  });
   // end
 });

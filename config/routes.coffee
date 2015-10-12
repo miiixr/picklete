@@ -153,7 +153,7 @@ module.exports.routes = {
   # client side / Have to login
   # 'get /member/fav' : view: 'main/member-fav'
   'get /member/favorite' : 'UserController.favorite'
-  'get /member/purchase' : view: 'main/member-purchase'
+  'get /member/purchase' : 'UserController.purchase'
   'get /member/setting' : 'UserController.edit'
   'post /member/update' : 'UserController.update'
 
