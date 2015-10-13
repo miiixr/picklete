@@ -64,7 +64,7 @@
   buymoreDiv.text(buymore);
 
   picklete_cart.orderItems.forEach(function(orderItem, index){
-    subtotal += parseInt(orderItem.price, 10);
+    subtotal += parseInt(orderItem.price*orderItem.quantity, 10);
     subtotalDiv.text(subtotal);
     totalPrice = subtotal;
   });
@@ -83,9 +83,9 @@
   // count shipping fee and display
   totalPriceDiv.text(totalPrice+shippingFeePrice);
 
-  $("#orderCreate").click(function()
+  $("#btnOrderCreate").click(function()
   {
-    if($("input[name='order[user][username]']").val()==""){
+    if($("input[name='order[user][fullName]']").val()==""){
       alert("請輸入姓名");
       return;
     }
@@ -96,6 +96,17 @@
     if($("input[name='order[user][address]']").val()==""){
       alert("請輸入住址");
       return;
+    }
+    if($("select[name='order[invoice][type]']").val()==""){
+      alert("選擇發票類型");
+      return;
+    }
+    // ensure title
+    if($("select[name='order[invoice][type]']").val()=="triplex"){
+      if( $("input[name='order[invoice][title]']").val() == "" ){
+        alert("請輸入公司抬頭");
+        return;
+      }
     }
 
     re = /^[09]{2}[0-9]{8}$/;
@@ -131,6 +142,19 @@
         success:function(data, textStatus, jqXHR)
         {
             $(document.body).html(data);
+        },
+        error: function (jqXHR, exception) {
+          var err = jQuery.parseJSON(jqXHR.responseText);
+
+          $(this).notifyMe(
+            'top',
+            'cart',
+            '<span style="color:red" class="glyphicon glyphicon-warning m-right-2"></span>'+ err.message,
+            '',
+            300,
+            3000
+          );
+
         }
     });
   });
@@ -188,7 +212,7 @@
 
     var taxIdField =
       '<div class="form-group">' +
-      '  <label class="col-sm-3 control-label">統一編號<span class="text-danger">*</span></label>' +
+      '  <label class="col-sm-3 control-label">統一編號</label>' +
       '  <div class="col-sm-9">' +
       '    <input type="text" name="order[invoice][taxId]" placeholder="請輸入統一編號" class="form-control" required />' +
       '  </div>' +
@@ -206,8 +230,6 @@
       invoiceDetail.html(charityNameField);
 
   });
-
-  cartstep2
 
 
 }(jQuery));

@@ -141,9 +141,11 @@ let UserController = {
       let message = await db.Message.create(messageConfig);
       await CustomMailerService.sendMail(message);
 
+      req.login(user, function(err) {
+          if (err) return res.serverError(err);
 
-      return res.redirect('/member/setting');
-
+          return res.redirect('/member/setting');
+      })
 
     } catch (e) {
       console.error(e.stack);

@@ -15,7 +15,7 @@ block body
                     | 中文姓名
                     span.text-danger *
                   .col-sm-5
-                    input.form-control(name='order[user][username]',type='text', placeholder='請填寫本名',required='', value=userData.fullName)
+                    input.form-control(name='order[user][fullName]',type='text', placeholder='請填寫本名',required='', value=userData.fullName)
                     input.form-control(name='order[user][email]',type='hidden', value=userData.email)
                     //- input.form-control(name='order[shipment][username]',type='hidden')
                   .col-sm-4
@@ -63,7 +63,7 @@ block body
                     | 中文姓名
                     span.text-danger *
                   .col-sm-5
-                    input.form-control(type='text', placeholder='請填寫本名', name='order[shipment][username]', required='', value=userData.fullName)
+                    input.form-control(type='text', placeholder='請填寫本名', name='order[shipment][username]', required, value=userData.fullName)
                   .col-sm-4
                     label.checkbox-inline
                       input(type='checkbox', value='option1')
@@ -139,7 +139,7 @@ block body
                     th 總計
                     td.text-right
                       h3#totalPrice.m-top-0 0
-              a.btn.btn-black.border-radius-circle.btn-block.m-bottom-2#orderCreate 送出訂單
+              a.btn.btn-black.border-radius-circle.btn-block.m-bottom-2#btnOrderCreate(type="submmit", form="orderCreate") 送出訂單
               a.btn.btn-default.border-radius-circle.btn-block(href='/user/cart') 回上一頁
             // /p-20
           // /col-md-3

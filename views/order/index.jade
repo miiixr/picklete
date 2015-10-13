@@ -168,7 +168,7 @@ block body
             // /col-sm-2
             .col-sm-1.col-sm-1-sm #{order.quantity}
             // /col-sm-1
-            .col-sm-1.col-sm-1-lg #{order.Shipment.dataValues.shippingType}
+            .col-sm-1.col-sm-1-lg #{i18n(order.Shipment.shippingType)} #{order.Shipment.shippingRegion}
             // /col-sm-1
             .col-sm-1
               if order.status != "new"
@@ -206,12 +206,12 @@ block body
                       .form-group.form-group-sm
                         label.col-sm-4.control-label 運送方式
                         .col-sm-8
-                          input.form-control.input-sm(type='text', value='#{order.Shipment.dataValues.shippingType}') 
+                          input.form-control.input-sm(type='text', value='#{i18n(order.Shipment.shippingType)} #{order.Shipment.shippingRegion}') 
                       // /form-group
                       .form-group.form-group-sm
                         label.col-sm-4.control-label 訂單編號
                         .col-sm-8
-                          input.form-control.input-sm(type='text', value='#{order.Shipment.dataValues.shippingId}') 
+                          input.form-control.input-sm(type='text', value='#{order.Shipment.dataValues.shippingId || ""}') 
                       // /form-group
                   // /col-sm-6
                 // /row
@@ -241,28 +241,29 @@ block body
                     tr
                       td(colspan='2')
                         ul.list-inline
-                          li 運費 0
-                          li 包裝 60
-                          li 折扣碼 -30
+                          li 運費 #{order.Shipment.shippingFee}
+                          li 包裝 0
+                          li 折扣碼 
                       td.text-center.text-danger #{sum}
                       td.text-right(colspan='2')
                         h3
                           small 總計
-                          span.m-left-2 NT$ #{sumPrice+60-30}
+                          span.m-left-2 NT$ #{sumPrice + order.Shipment.shippingFee}
                       
                 .m-left-1
-                  p 付款方式：7-11 ibon 代碼繳費，繳費代碼：251563222267
+                  p 付款方式：#{order.allPayPaymentType} 代碼繳費，繳費代碼：#{order.vAccount || order.PaymentNo || ''}
                   ul.list-inline
                     if order.InvoiceId
-                      li 發票類型：#{order.Invoice.dataValues.type}
-                      li 抬頭：#{order.Invoice.dataValues.title}
-                      li 統編：#{order.Invoice.dataValues.taxId}
-                  p.text-danger 賣家備註：1.管理員代收 2.禮品的包裝盒請去除價格標籤
+                      li 發票類型：#{order.Invoice ? i18n(order.Invoice.type) : ''}
+                      li 抬頭：#{order.Invoice ? order.Invoice.title : ''}
+                      li 統編：#{order.Invoice ? order.Invoice.taxId : ''}
+                  p.text-danger #{order.description}
                 // /m-left-1
               // /well
               .row
                 .col-sm-8
-                  p.text-danger ※ 會員備註：瑕疵退貨2次、換色1次、無人收件1次
+                  p.text-danger 
+                  //- | ※ 會員備註：#{order.description}
                 // /col-sm-8
                 .col-sm-4.text-right
                   button.btn.btn-gray.btn-sm(type='button') 取消整筆訂單

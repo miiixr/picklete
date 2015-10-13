@@ -171,11 +171,22 @@ var self = module.exports = {
         if (!product)
           throw new Error('找不到商品！ 請確認商品ID！');
 
-        if (product.stockQuantity === 0)
-          throw new Error('商品售鑿！');
+        if (product.stockQuantity === 0){
+          // mix productGm and product name
+          let productGm = await db.ProductGm.findById(product.ProductGmId);
+          let productName = product.name;
+          if(product.name == null || product.name == '') productName = '(無型號)'
+          throw new Error('此商品「'+productGm.name+productName+'」已經售鑿！');
+        }
 
-        if (product.stockQuantity < orderItem.quantity)
-          throw new Error('商品數量不足！');
+        if (product.stockQuantity < orderItem.quantity){
+          // mix productGm and product name
+          let productGm = await db.ProductGm.findById(product.ProductGmId);
+          let productName = product.name;
+          if(product.name == null || product.name == '') productName = '(無型號)'
+          throw new Error('此商品「'+productGm.name+productName+'」已經不足！');
+        }
+
         product.stockQuantity = product.stockQuantity - orderItem.quantity;
 
         return product;
