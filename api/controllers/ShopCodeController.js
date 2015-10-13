@@ -36,7 +36,9 @@ let ShopCodeController = {
 
   // CreateView get /admin/shop-code/create'
   controlShopCodeDetail: async (req, res) => {
+    let users = await db.User.findAll();
     res.view('promotion/controlShopCodeDetail',{
+      users
     });
   },
 

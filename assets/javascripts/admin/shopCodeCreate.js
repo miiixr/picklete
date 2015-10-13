@@ -53,8 +53,8 @@ $(function() {
   });
 
   $('#custom-headers').multiSelect({
-    selectableHeader: "<input type='text' class='search-input' autocomplete='off' placeholder=''> 選擇會員",
-    selectionHeader: "<input type='text' class='search-input' autocomplete='off' placeholder=''> 指定會員",
+    selectableHeader: "<input type='text' class='search-input' autocomplete='off' placeholder='搜尋會員'> 選擇會員",
+    selectionHeader: "<input type='text' class='search-input' autocomplete='off' placeholder='搜尋指定會員'> 指定會員",
     afterInit: function(ms){
       var that = this,
           $selectableSearch = that.$selectableUl.prev(),

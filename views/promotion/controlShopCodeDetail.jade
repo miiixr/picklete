@@ -82,16 +82,8 @@ block body
               input#optionsRadios2(type='radio', name='sentType', value='specific')
               | 									自動發送指定會員
           select#custom-headers.searchable(multiple='multiple')
-            option(value='elem_1', selected='') elem 1
-              |   
-              option(value='elem_2') elem 2
-              |   
-              option(value='elem_3') elem 3
-              |   
-              option(value='elem_4', selected='') elem 4
-              |   
-              option(value='elem_100') elem 100
-              //- a.btn.btn-default.btn-sm(href='#', data-toggle='modal', data-target='#modal-add-member') 點我選擇會員
+            each  user in users
+              option(value= user.id) ID#{user.id} #{user.fullName} 
           .radio.disabled
             label
               input#optionsRadios3(type='radio', name='sentType', value='beginner', disabled='')
