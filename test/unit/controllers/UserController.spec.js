@@ -148,7 +148,7 @@ describe.skip("about User", () => {
     });
   });
 
-  it.only('setRole', (done) => {
+  it('setRole', (done) => {
     request(sails.hooks.http.app)
     .put(`/api/user/${testUser.id}/${roleAdmin.id}`)
     .end((err,res) => {
