@@ -246,6 +246,7 @@ module.exports = {
         storeName: sails.config.store.name,
         username: user.fullName,
         shopCodeToken: shopCode.token,
+        shopCodeSentContent: shopCode.sentContent,
         startDate: moment(shopCode.startDate).format('YYYY/mm/DD hh:mm'),
         endDate: moment(shopCode.endDate).format('YYYY/mm/DD hh:mm')
       });

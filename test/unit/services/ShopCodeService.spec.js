@@ -1,73 +1,81 @@
 import sinon from 'sinon';
+import moment from 'moment';
 
 describe("about shopcode service", () => {
 
   let testShopCode,testTimeOutShopCode,testTimeNolimitShopCode,testTypeDiscountShopCode;
 
   before(async (done) => {
-    sinon.stub(UserService, 'getLoginState', (req) => {
-      return true;
-    });
+    try {
+      sinon.stub(UserService, 'getLoginState', (req) => {
+        return true;
+      });
 
-    var shopcode = {
-        title: '測試',
-        code: 'YYYYYYYYYYZZZZZZZZZZ',
-        autoRandomCode: 'on',
-        startDate: '2015-10-01',
-        endDate: '2015-10-14',
-        type: 'price',
-        description: 99,
-        restriction: 999,
-        sentType: 'all',
-        sentContent: '測試'
-      };
-    testShopCode = await db.ShopCode.create(shopcode);
+      var shopcode = {
+          title: '測試',
+          code: 'YYYYYYYYYYZZZZZZZZZZ',
+          autoRandomCode: 'on',
+          startDate: '2015-10-01',
+          endDate: '2015-10-14',
+          type: 'price',
+          description: 99,
+          restriction: 999,
+          sentType: 'all',
+          sentContent: '測試'
+        };
+      testShopCode = await db.ShopCode.create(shopcode);
 
-    var shopcode2 = {
-        title: '測試折扣碼逾時',
-        code: 'AAAAAAAAAABBBBBBBBBB',
-        autoRandomCode: 'on',
-        startDate: '2015-9-01',
-        endDate: '2015-9-30',
-        type: 'price',
-        description: 99,
-        restriction: 999,
-        sentType: 'all',
-        sentContent: '測試'
-      };
-    testTimeOutShopCode = await db.ShopCode.create(shopcode2);
+      var shopcode2 = {
+          title: '測試折扣碼逾時',
+          code: 'AAAAAAAAAABBBBBBBBBB',
+          autoRandomCode: 'on',
+          startDate: '2015-9-01',
+          endDate: '2015-9-30',
+          type: 'price',
+          description: 99,
+          restriction: 999,
+          sentType: 'all',
+          sentContent: '測試'
+        };
+      testTimeOutShopCode = await db.ShopCode.create(shopcode2);
 
-    var shopcode3 = {
-        title: '測試不限時的折扣碼',
-        code: 'CCCCCCCCCCDDDDDDDDDD',
-        autoRandomCode: 'on',
-        startDate: '1970-01-01',
-        endDate: '1970-01-01',
-        type: 'price',
-        description: 99,
-        restriction: 999,
-        sentType: 'all',
-        sentContent: '測試',
-        restrictionDate: 'on'
-      };
-    testTimeNolimitShopCode = await db.ShopCode.create(shopcode3);
+      var shopcode3 = {
+          title: '測試不限時的折扣碼',
+          code: 'CCCCCCCCCCDDDDDDDDDD',
+          autoRandomCode: 'on',
+          startDate: '1970-01-01',
+          endDate: '1970-01-01',
+          type: 'price',
+          description: 99,
+          restriction: 999,
+          sentType: 'all',
+          sentContent: '測試',
+          restrictionDate: 'on'
+        };
+      testTimeNolimitShopCode = await db.ShopCode.create(shopcode3);
 
-    var shopcode4 = {
-        title: '測試打折的折扣碼',
-        code: 'EEEEEEEEEEFFFFFFFFFF',
-        autoRandomCode: 'on',
-        startDate: '1970-01-01',
-        endDate: '1970-01-01',
-        type: 'discount',
-        description: 80,
-        restriction: 999,
-        sentType: 'all',
-        sentContent: '測試',
-        restrictionDate: 'on'
-      };
-    testTypeDiscountShopCode = await db.ShopCode.create(shopcode4);
+      var shopcode4 = {
+          title: '測試打折的折扣碼',
+          code: 'EEEEEEEEEEFFFFFFFFFF',
+          autoRandomCode: 'on',
+          startDate: '1970-01-01',
+          endDate: '1970-01-01',
+          type: 'discount',
+          description: 80,
+          restriction: 999,
+          sentType: 'all',
+          sentContent: '測試',
+          restrictionDate: 'on'
+        };
+      testTypeDiscountShopCode = await db.ShopCode.create(shopcode4);
 
-    done();
+      done();
+
+
+    } catch (e) {
+      done(e);
+
+    }
   });
 
   after((done) => {
@@ -174,16 +182,59 @@ describe("about shopcode service", () => {
     }
   });
 
-  it('send ShopCode to all users', async (done) => {
+  it('send ShopCode to target users', async (done) => {
     try {
       let shopCode = testShopCode;
       let users = await db.User.findAll({ limit: 5 });
+      await shopCode.setUsers(users);
 
-      await ShopCodeService.sendTargetUsers({shopCode, users});
+      shopCode = await db.ShopCode.find({
+        where: {
+          id: shopCode.id
+        },
+        include: [db.User]
+      });
+
+      await ShopCodeService.sendTargetUsers({shopCode});
       done();
     } catch (e) {
       console.log(e.stack);
       done(e);
     }
   });
+
+  describe('send ShopCode when user Register', (done) => {
+    let createdRegisterShopCode;
+    before( async (done) => {
+      var registerShopCode = {
+          title: '測試',
+          code: 'YYYYYYYYYYZZZZZZZZZZ',
+          autoRandomCode: 'on',
+          startDate: moment().add(-1, 'days').toDate(),
+          endDate: moment().add(1, 'days').toDate(),
+          type: 'price',
+          description: 99,
+          restriction: 999,
+          sentType: 'beginner',
+          sentContent: '測試'
+        };
+      createdRegisterShopCode = await db.ShopCode.create(registerShopCode);
+      done();
+    });
+
+    it('should be success', async (done) => {
+      try {
+        let shopCode = testShopCode;
+        let user = await db.User.find({ limit: 1 });
+
+        await ShopCodeService.sendWhenRegister({shopCode, user});
+        done();
+      } catch (e) {
+        console.log(e.stack);
+        done(e);
+      }
+
+    });
+  });
+
 });
