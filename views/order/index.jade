@@ -211,7 +211,7 @@ block body
                       .form-group.form-group-sm
                         label.col-sm-4.control-label 訂單編號
                         .col-sm-8
-                          input.form-control.input-sm(type='text', value='#{order.Shipment.dataValues.shippingId || ""}') 
+                          input.form-control.input-sm(type='text', value='#{order.shippingId || ""}') 
                       // /form-group
                   // /col-sm-6
                 // /row
@@ -251,7 +251,13 @@ block body
                           span.m-left-2 NT$ #{sumPrice + order.Shipment.shippingFee}
                       
                 .m-left-1
-                  p 付款方式：#{order.allPayPaymentType} 代碼繳費，繳費代碼：#{order.vAccount || order.PaymentNo || ''}
+                  if order.allPayPaymentType == "ATM"
+                    p 付款方式：#{order.allPayPaymentType} 繳費代碼：#{order.BankCode || ''} #{order.vAccount || ''}
+                  else if order.allPayPaymentType == "CVS" || order.allPayPaymentType == "BARCODE"
+                    p 付款方式：#{order.allPayPaymentType} 繳費代碼：#{order.PaymentNo || ''}
+                  else if order.allPayPaymentType == "Credit"
+                    p 付款方式：#{order.allPayPaymentType}
+                    
                   ul.list-inline
                     if order.InvoiceId
                       li 發票類型：#{order.Invoice ? i18n(order.Invoice.type) : ''}
