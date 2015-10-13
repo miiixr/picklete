@@ -117,10 +117,10 @@ block body
                                 p 付款方式：#{order.allPayPaymentType} 繳費帳戶：#{order.PaymentNo}
                               else if order.allPayPaymentType == "Credit"
                                 p 付款方式：#{order.allPayPaymentType}
-                                p.text-danger 賣家備註：
-                                ol.text-danger
-                                  li 管理員代收
-                                  li 禮品的包裝盒請去除價格標籤
+                                //- p.text-danger 賣家備註：
+                                //- ol.text-danger
+                                //-   li 管理員代收
+                                //-   li 禮品的包裝盒請去除價格標籤
                               td
                               td(colspan='2')
                                 .row.m-bottom-1
@@ -131,13 +131,13 @@ block body
                                   .col-xs-6 運費
                                   .col-xs-6.text-right #{order.Shipment.shippingFee}
                                 // /row
-                                .row.m-bottom-1
-                                  .col-xs-6 包裝
-                                  .col-xs-6.text-right 120
+                                //- .row.m-bottom-1
+                                //-   .col-xs-6 包裝
+                                //-   .col-xs-6.text-right 120
                                 // /row
-                                .row.m-bottom-1
-                                  .col-xs-6 折扣碼
-                                  .col-xs-6.text-right -30
+                                //- .row.m-bottom-1
+                                //-   .col-xs-6 折扣碼
+                                //-   .col-xs-6.text-right -30
                                 // /row
                                 hr
                                 h2
@@ -149,7 +149,7 @@ block body
                   td #{order.Shipment.shippingId}
                   td #{order.allPayPaymentType}
                   td 訂單取消
-                  td 2015-5-22
+                  //- td 2015-5-22
                   td $#{order.paymentTotalAmount}
                   td #{order.Invoice ? i18n(order.Invoice.type) : ''}
                   td
