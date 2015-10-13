@@ -54,11 +54,6 @@ let ShopCodeController = {
       params.code = crypto.randomBytes(32).toString('hex').substr(0, 20);
     }
 
-    if(params['restrictionDate'] == 'on'){
-      params['startDate'] = Date.parse(1);
-      params['endDate'] = Date.parse(1);
-    }
-
     if(params['type']=='price'){
       var description = params['price-description'];
       var restriction = params['price-restriction'];
@@ -74,13 +69,18 @@ let ShopCodeController = {
       type: params['type'],
       description: description,
       restriction: restriction,
-      startDate: Date.parse(params['startDate']) || 1,
-      endDate: Date.parse(params['endDate']) || 1,
+      startDate: params['startDate'] || 1,
+      endDate: params['endDate'] || 1,
       restrictionDate: params['restrictionDate'],
       sentType: params['sentType'],
       sentTarget: params['sentTarget'] || [],
       sentContent: params['sentContent'] || '',
     };
+
+    if(params['restrictionDate'] == 'on'){
+      delete shopCode['startDate'];
+      delete shopCode['endDate'];
+    }
 
     try {
        await db.ShopCode.create(shopCode);
@@ -116,11 +116,6 @@ let ShopCodeController = {
         params.code = crypto.randomBytes(32).toString('hex').substr(0, 20);
       }
 
-      if(params['restrictionDate'] == 'true'){
-        params['startDate'] = Date.parse(1);
-        params['endDate'] = Date.parse(1);
-      }
-
       if(params['type']=='price'){
         var description = params['price-description'];
         var restriction = params['price-restriction'];
@@ -135,8 +130,10 @@ let ShopCodeController = {
       shopCode.type = params['type'];
       shopCode.description = description;
       shopCode.restriction = restriction;
-      shopCode.startDate = Date.parse(params['startDate']) || 1;
-      shopCode.endDate = Date.parse(params['endDate']) || 1,
+      if(params['restrictionDate'] == 'on'){
+        shopCode.startDate = params['startDate'] || 1;
+        shopCode.endDate = params['endDate'] || 1;
+      }
       shopCode.restrictionDate = params['restrictionDate'],
       shopCode.sentType = params['sentType'];
       shopCode.sentTarget = params['sentTarget'] || [];

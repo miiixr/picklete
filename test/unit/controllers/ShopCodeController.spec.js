@@ -1,4 +1,5 @@
 import path from 'path';
+import moment from 'moment';
 
 describe('ShopCode Spec', function() {
 
@@ -22,6 +23,7 @@ describe('ShopCode Spec', function() {
 
   it('Create a new ShopCode', function(done) {
 
+
     request(sails.hooks.http.app)
     .post('/admin/shop-code/create')
     .field('autoRandomCode', 'on') // 優惠代碼
@@ -29,8 +31,8 @@ describe('ShopCode Spec', function() {
     .field('type', 'price') // 優惠類型 price, discount
     .field('price-description', '200') // 優惠內容
     .field('price-restriction', '300') // 限滿額
-    .field('startDate', 'null') // 開始時間
-    .field('endDate', '2012/03/16 12:03:12') // 結束時間
+    .field('startDate', '2015/10/10') // 開始時間
+    .field('endDate', '2015/10/10') // 結束時間
     .field('restrictionDate', 'on') // 時間限制
     .field('sentType', 'specific') // 自動發送
     .field('sentContent', '發送內容') // 發送內容
@@ -53,8 +55,8 @@ describe('ShopCode Spec', function() {
     .field('type', 'discount') // 優惠類型 price, discount
     .field('discount-description', '7') // 優惠內容
     .field('discount-restriction', '1300') // 限滿額
-    .field('startDate', '2012/03/16 12:03:13') // 開始時間
-    .field('endDate', '2012/03/16 12:03:14') // 結束時間
+    .field('startDate','2015/10/10') // 開始時間
+    .field('endDate', '2015/10/11') // 結束時間
     .field('sentType', 'specific') // 自動發送
     .field('sentTarget', '2') // 自動發送
     .field('sentTarget', '3') // 自動發送
