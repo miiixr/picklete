@@ -19,5 +19,13 @@
 	"all-brand": "All Brand",
 	"all-categories": "All Categories",
 	"all-product": "All Product",
-	"select-dpt-sub": "Select Product Category"
+	"select-dpt-sub": "Select Product Category",
+	"dpt-sub": "Product category",
+	"postoffice": "郵寄",
+	"delivery": "快遞",
+	"duplex": "二聯式發票",
+	"triplex": "三聯式發票",
+	"charity": "捐贈慈善機構",
+	"prime-brand": "prime-brand",
+	"dpt-manager": "dpt-manager"
 }

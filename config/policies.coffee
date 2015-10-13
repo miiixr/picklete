@@ -24,12 +24,14 @@ module.exports.policies = {
     controlLogin: ['global']
     cart: []
     loginStatus:['global']
+    update:['passport']
 
   'MainController': ['global']
 
   'ShopController':
     show: ['global']
     list: ['global']
+    done: ['global']
     cartStep2: ['global']
 
   'AboutController':

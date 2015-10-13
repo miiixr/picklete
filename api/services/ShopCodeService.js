@@ -49,5 +49,27 @@ module.exports = {
     } catch (e) {
       throw e;
     }
+  },
+
+  sendAllUsers: async ({shopCode}) => {
+    let users = await db.User.findAll();
+    await ShopCodeService.sendCode({shopCode, users});
+
+  },
+
+  sendTargetUsers: async ({shopCode, users}) => {
+    await ShopCodeService.sendCode({shopCode, users});
+  },
+
+  sendCode: async ({shopCode, users}) => {
+
+    let messages = await* users.map((user) => {
+      let messageConfig = CustomMailerService.shopCodeMail({shopCode, user});
+      let message = db.Message.create(messageConfig);
+      return message
+    })
+
+    await* messages.map((message) => CustomMailerService.sendMail(message))
+
   }
 }

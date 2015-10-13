@@ -624,7 +624,6 @@ function log(message) {
   }
 }
 
-
 /**
  * 模組匯出
  */

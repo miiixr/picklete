@@ -27,7 +27,16 @@ let UserController = {
       products
     });
   },
-
+  purchase:async (req, res) => {
+    let loginUser = UserService.getLoginUser(req);
+    let orders = await db.Order.findAll({
+      where: {UserId: loginUser.id}
+    });
+    // console.log(orders);
+    res.view("main/memberPurchase",{
+      orders
+    });
+  },
   loginStatus: async(req, res) => {
     try {
         let loginStatus = UserService.getLoginState(req);
@@ -53,8 +62,6 @@ let UserController = {
         paymentTotalAmount += parseInt(orderItem.quantity, 10) * parseInt(orderItem.price, 10);
       });
     }
-
-
 
     let company = await db.Company.findOne();
     let brands = await db.Brand.findAll();
@@ -123,10 +130,15 @@ let UserController = {
       if(updateUser.userLikes != undefined)
         await user.setLikes(updateUser.userLikes);
 
+      let messageConfig = await CustomMailerService.userUpdateMail(user);
+      let message = await db.Message.create(messageConfig);
+      await CustomMailerService.sendMail(message);
 
+      req.login(user, function(err) {
+          if (err) return res.serverError(err);
 
-      return res.redirect('/member/setting');
-
+          return res.redirect('/member/setting');
+      })
 
     } catch (e) {
       console.error(e.stack);

@@ -5,6 +5,15 @@ module.exports = (sequelize, DataTypes) ->
     taxId: DataTypes.STRING
     email: DataTypes.STRING
     address: DataTypes.STRING
+    shippingType: {
+      type: DataTypes.ENUM('postoffice', 'delivery'),
+      defaultValue: 'postoffice'
+
+    }
+    shippingRegion: DataTypes.STRING
+    shippingFee: DataTypes.FLOAT
+    shippingId: DataTypes.STRING
+
   }, classMethods: associate: (models) ->
     Shipment.belongsTo models.Order
     return

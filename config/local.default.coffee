@@ -4,13 +4,44 @@ module.exports = {
   environment: ''
   initData: ''
   domain: 'http://localhost:1337'
+  # mail: {
+  #   type: 'ses'
+  #   active: false
+  #   config: {
+  #     from: '',
+  #     transporter: {
+  #       accessKeyId: '',
+  #       secretAccessKey: '',
+  #     }
+  #   }
+  # }
   mail: {
-    type: 'ses'
-    config: {
-      from: '',
+    type: 'smtp'
+    active: true
+    config:{
+      from: 'GMAIL_USER@gmail.com',
       transporter: {
-        accessKeyId: '',
-        secretAccessKey: '',
+          port: 465,
+          host: 'smtp.gmail.com',
+          domains: [
+            "gmail.com",
+            "googlemail.com"
+          ],
+          secure: true,
+          auth: {
+            user: 'GMAIL_USER_ACCOUNT',
+            pass: 'GMAIL_USER_PASSWORD',
+            # xoauth2: ''
+          },
+          # ignoreTLS: false,
+          # name: '',
+          # localAddress: '',
+          # connectionTimeout: 2000,
+          # greetingTimeout: 2000,
+          # socketTimeout: 2000,
+          debug: true,
+          authMethod: 'PLAIN',
+          # tls: {}
       }
     }
   }
@@ -28,9 +59,9 @@ module.exports = {
     hashKey: '5294y06JbISpM5x9',
     hashIV: 'v77hoKGq4kWxNNIS',
     debug: true,
-    ReturnURL:'allpay/paid',
-    ClientBackURL:'shop/products',
-    PaymentInfoURL:'allpay/paymentinfo',
+    ReturnURL:'/allpay/paid',
+    ClientBackURL:'/shop/done',
+    PaymentInfoURL:'/allpay/paymentinfo',
     paymentMethod:[
       {
         code: 'ATM',
@@ -43,5 +74,14 @@ module.exports = {
   }
   i18n: {
     localesDirectory: '/config/locales'
+  }
+  store:{
+    name:'i+DEAL創而有意',
+    name2:'i+DEAL',
+    name3:'創而有意',
+    serviceMail:'service@wevo.com.tw'
+  }
+  googleAnalytics: {
+    trackingID: ''
   }
 }

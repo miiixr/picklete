@@ -24,5 +24,10 @@
 	"all-brand": "所有農場",
 	"all-categories": "所有分類",
 	"all-product": "所有產品",
-	"select-dpt-sub": "選擇產品別"
+	"select-dpt-sub": "選擇產品別",
+	"postoffice": "郵寄",
+	"delivery": "快遞",
+	"duplex": "二聯式發票",
+	"triplex": "三聯式發票",
+	"charity": "捐贈慈善機構"
 }

@@ -11,12 +11,12 @@ module.exports = (sequelize, DataTypes) ->
       'price',
       'discount'
     )
-    startDate: DataTypes.DATE
-    endDate: DataTypes.DATE
+    startDate: DataTypes.DATEONLY
+    endDate: DataTypes.DATEONLY
     discount: DataTypes.FLOAT
     price: DataTypes.FLOAT
   }, classMethods: associate: (models) ->
-    Promotion.belongsToMany models.ProductGm, through: 'PromotionProductGm'
+    Promotion.belongsToMany models.Product, through: 'PromotionProduct'
     return
   )
   return Promotion

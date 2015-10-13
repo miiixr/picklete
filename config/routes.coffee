@@ -70,9 +70,6 @@ module.exports.routes = {
 
   'get /index' : 'SelectionActiveController.index'
   'get /FAQ' : 'FAQController.show'
-  'get /member/purchase' : view: 'main/member-purchase'
-  'get /member/setting' : 'UserController.edit'
-  'post /member/update' : 'UserController.update'
 
   'get /brands' : view: 'main/brands'
   'get /user/cart' : 'UserController.cart'
@@ -156,7 +153,7 @@ module.exports.routes = {
   # client side / Have to login
   # 'get /member/fav' : view: 'main/member-fav'
   'get /member/favorite' : 'UserController.favorite'
-  'get /member/purchase' : view: 'main/member-purchase'
+  'get /member/purchase' : 'UserController.purchase'
   'get /member/setting' : 'UserController.edit'
   'post /member/update' : 'UserController.update'
 
@@ -167,6 +164,8 @@ module.exports.routes = {
   'get /shop/products' : 'ShopController.list'
 
   'get /shop/products/:productGmid/:productId' : 'ShopController.show'
+
+  'get /shop/done'  : 'ShopController.done'
 
   'get /brands/:id' : 'BrandController.show'
 

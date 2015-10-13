@@ -55,14 +55,12 @@ AuthController = {
       }
       let tempUser = req.flash('form');
       let user = defaultUser;
-
       if(tempUser.length)
         user = tempUser[0];
 
       if(user.userLikes == undefined) user.userLikes = []
 
       if(user.email!='' && user.password == user.passwordAgain && user.fullName != '' && user.mobile != '' && user.city != '' && user.region != '' && user.zipcode != ''){
-
         let userCreate = db.User.create(user);
         return res.redirect('/');
 
@@ -191,8 +189,7 @@ AuthController = {
       let data = req.query;
       let user = await db.User.findOne({where:{email:data.email}});
 
-      let domain = sails.config.domain || process.env.domain || 'http://localhost:1337';
-      let link = `${domain}/verification?email=${user.email}`;
+      let link = await UrlHelper.resolve(`/verification?email=${user.email}`,true);
       console.log("verificationLink : ",link);
 
       let messageConfig = await CustomMailerService.verificationMail(user, link);

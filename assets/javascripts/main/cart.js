@@ -27,7 +27,8 @@
 
       if(orderItem.originPrice == undefined) orderItem.originPrice ='';
 
-      console.log('orderItem', orderItem);
+            console.log('orderItem', orderItem);
+            console.log('=== orderItem.quantity ===>', orderItem.quantity);
 
       var liOrderItem =
         '<div id="orderItem" class="p-20 border-bottom-1">' +
@@ -70,12 +71,14 @@
         '  </div>' +
         '</div>';
 
-      subtotal += parseInt(orderItem.price, 10);
+      subtotal += parseInt(orderItem.price*orderItem.quantity, 10);
       subtotalDiv.text(subtotal);
       totalPrice = subtotal;
       totalPriceDiv.text(totalPrice);
 
       cartViewer.append(liOrderItem);
+
+      cartViewer.inputNumber();
 
 
     });
@@ -150,6 +153,17 @@
       }
     });
     Cookies.set('buyMoreIds', buymoreIds);
+
+
+    var shippingType = $("#shippingType").val();
+    var shippingFee = $("#shippingFeeSelect").val();
+    var shippingRegion = $('#shippingFeeSelect').find(":selected").attr("data-region")
+
+
+    var shipping = { shippingType : shippingType ,shippingFee: shippingFee, shippingRegion: shippingRegion};
+
+    Cookies.set('shipping', shipping);
+
     if($('#shippingFeeSelect').val() == 0 || $('#paymentMethod').val()==0)
       alert("請確認運送、付款方式");
     else{
@@ -208,10 +222,11 @@
           data : null,
           success:function(data, textStatus, jqXHR)
           {
-            console.log('=== data ==>',data.shippings);
+
+            var shippingFeeSelect = $("#shippingFeeSelect");
             for(i=0;i<data.shippings.length;i++){
               shipping = data.shippings[i].region + ' ' + data.shippings[i].fee + ' 元';
-              $("#shippingFeeSelect").append($("<option></option>").attr("value", data.shippings[i].fee).text(shipping));
+              shippingFeeSelect.append($("<option data-region='"+data.shippings[i].region+"'></option>").attr("value", data.shippings[i].fee).text(shipping));
             }
           }
       });
