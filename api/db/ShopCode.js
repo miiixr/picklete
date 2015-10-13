@@ -29,7 +29,8 @@ module.exports = function(sequelize, DataTypes) {
     sentType: DataTypes.ENUM(
       'all',
       'specific',
-      'beginner'
+      'beginner',
+      'none'
     ),
 
     // 發送內容

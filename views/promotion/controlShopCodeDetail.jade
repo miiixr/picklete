@@ -85,6 +85,10 @@ block body
           select#custom-headers.searchable(multiple='multiple' style="display: none;")
             each  user in users
               option(value= user.id) ID#{user.id} #{user.fullName} 
+          .radio
+            label
+              input#optionsRadios1(type='radio', name='sentType', value='none')
+              |									 不自動發送
           .radio.disabled
             label
               input#optionsRadios3(type='radio', name='sentType', value='beginner', disabled='')
