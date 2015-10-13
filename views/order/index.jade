@@ -251,7 +251,7 @@ block body
                           span.m-left-2 NT$ #{sumPrice + order.Shipment.shippingFee}
                       
                 .m-left-1
-                  p 付款方式：#{order.allPayPaymentType} 代碼繳費，繳費代碼：#{order.vAccount || ''}
+                  p 付款方式：#{order.allPayPaymentType} 代碼繳費，繳費代碼：#{order.vAccount || order.PaymentNo || ''}
                   ul.list-inline
                     if order.InvoiceId
                       li 發票類型：#{order.Invoice ? i18n(order.Invoice.type) : ''}
