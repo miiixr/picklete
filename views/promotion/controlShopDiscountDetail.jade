@@ -154,17 +154,17 @@ block body
           span.caret
         th
     tbody
-      each productGm in productGms.rows
+      each product in products.rows
         tr
           td
             -if( promotion.id )
-              input.addSelect(type='checkbox' , checked='',value= productGm.id)
+              input.addSelect(type='checkbox' , checked='',value= product.id)
             -else
-              input.addSelect(type='checkbox' ,value= productGm.id)
+              input.addSelect(type='checkbox' ,value= product.id)
           td
-            img.width-6(src= productGm.coverPhoto)
-          td= productGm.name
-          td= productGm.id
+            img.width-6(src= product.coverPhoto)
+          td= product.name
+          td= product.id
           td 590
           td
             span.text-danger 413
