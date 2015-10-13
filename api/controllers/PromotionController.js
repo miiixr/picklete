@@ -122,7 +122,7 @@ let PromotionController = {
 
       let promotion = await db.Promotion.findById(query.id);
       // let productGms;
-      let product;
+      let products;
       if(promotion){
         // productGms = await promotion.getProductGms();
         // productGms.rows = productGms;
