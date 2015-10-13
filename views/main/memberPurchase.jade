@@ -65,16 +65,16 @@ block body
                 tr
                   td #{sails.moment(order.createdAt.format).format('YYYY/MM/DD hh:mm')}
                   td #{order.Shipment.dataValues.shippingId}
-                  td 信用卡
+                  td #{order.allPayPaymentType}
                   if order.status == "new"
                     td 訂單確認中
-                  else if order.status == "new"
+                  else if order.status == "paymentConfirm"
                     td 訂單完成
-                  else if order.status == "new"
+                  else if order.status == "deliveryConfirm"
                     td 已出貨
                   td 2015-5-22
                   td $#{order.paymentTotalAmount}
-                  td 已捐贈
+                  td #{order.Invoice.type}
                   td
                     a(data-toggle='collapse', data-parent='#collapse-purchase', href='#collapse-purchase-One')
                       span.glyphicon.glyphicon-plus
@@ -87,10 +87,10 @@ block body
                       .p-10
                         .m-top-2.m-bottom-2
                           ul.p-left-3
-                            li 收件人姓名：#{order.Shipment.dataValues.username} 小姐
+                            li 收件人姓名：#{order.Shipment.dataValues.username} 先生/小姐
                             li 收件人電話：#{order.Shipment.dataValues.shippingType}
                             li 收件人地址：#{order.Shipment.dataValues.address}
-                            li 運送方式：#{order.Shipment.dataValues.shippingType} / 編號：156465132264
+                            li 運送方式：#{order.Shipment.dataValues.shippingType} / 編號：#{order.Shipment.dataValues.shippingId}
                         // /m-top-2 m-bottom-2
                         table.table
                           thead
@@ -111,7 +111,10 @@ block body
                                 - sumPrice += item.price*item.quantity
                             tr
                               td
-                                p 付款方式：7-11 ibon 代碼繳費，繳費代碼：251563222267
+                              if order.allPayPaymentType == "ATM"
+                                p 付款方式：#{order.allPayPaymentType} 繳費帳戶：#{order.BankCode} #{order.vAccount}
+                              else if order.allPayPaymentType == "CVS" || order.allPayPaymentType == "BARCODE"
+                                p 付款方式：#{order.allPayPaymentType} 繳費帳戶：#{order.PaymentNo}
                                 p.text-danger 賣家備註：
                                 ol.text-danger
                                   li 管理員代收
@@ -124,7 +127,7 @@ block body
                                 // /row
                                 .row.m-bottom-1
                                   .col-xs-6 運費
-                                  .col-xs-6.text-right 免運
+                                  .col-xs-6.text-right #{order.Shipment.dataValues.shippingFee}
                                 // /row
                                 .row.m-bottom-1
                                   .col-xs-6 包裝
@@ -137,16 +140,16 @@ block body
                                 hr
                                 h2
                                   small 總計
-                                  span.text-danger.pull-right NT$ #{sumPrice+60-30}
+                                  span.text-danger.pull-right NT$ #{sumPrice+order.Shipment.dataValues.shippingFee}
               else
                 tr.disabled
                   td #{sails.moment(order.createdAt.format).format('YYYY/MM/DD hh:mm')}
                   td #{order.Shipment.dataValues.shippingId}
-                  td 信用卡
+                  td #{order.allPayPaymentType}
                   td 訂單取消
                   td 2015-5-22
                   td $#{order.paymentTotalAmount}
-                  td 已捐贈
+                  td #{order.Invoice.dataValues.type}
                   td
                     a(data-toggle='collapse', data-parent='#collapse-purchase', href='#collapse-purchase-One')
                       span.glyphicon.glyphicon-plus
