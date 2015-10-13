@@ -192,7 +192,8 @@ OrderController = {
       console.error(e.stack);
       let {message} = e;
       let success = false;
-      return res.serverError({message, success});
+      return res.json(500,{message, success});
+      // return res.serverError({message, success});
     }
   },
   pay: async (req, res)=> {

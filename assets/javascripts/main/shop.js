@@ -165,7 +165,7 @@
         '  </div>' +
         '</li>';
 
-      totalPrice += parseInt(orderItem.price, 10);
+      totalPrice += parseInt(orderItem.price*orderItem.quantity, 10);
 
       dropdownCart.append(liOrderItem);
 
