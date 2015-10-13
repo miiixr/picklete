@@ -18,13 +18,13 @@ module.exports = (sequelize, DataTypes) ->
     paymentConfirmDate: DataTypes.DATE
     # 訂單名稱
     paymentConfirmName: DataTypes.STRING
-    # 匯款後五碼 
+    # 匯款後五碼
     paymentConfirmPostfix: DataTypes.STRING
     # 傳統ATM轉帳由user轉帳完自行填寫確認的金額
     paymentConfirmAmount: DataTypes.FLOAT
     # ？？？
     paymentCreateConfirmAmount: DataTypes.FLOAT
-    
+
     # 歐付寶
     # todo: 不適合放這裡應該要搬到關聯表
     # 訂單編號，提供給 allpay 使用
@@ -55,8 +55,8 @@ module.exports = (sequelize, DataTypes) ->
     CheckMacValue: DataTypes.STRING
     # 訂單產生的時候的交易時間
     MerchantTradeDate: DataTypes.DATE
-    # ？？？
-    description: DataTypes.DATE
+    # 訂單備註
+    description: DataTypes.STRING
     # 訂單狀態
     status:
       type: DataTypes.ENUM('new', 'paymentConfirm', 'deliveryConfirm')
