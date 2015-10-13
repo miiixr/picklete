@@ -27,7 +27,8 @@
 
       if(orderItem.originPrice == undefined) orderItem.originPrice ='';
 
-      console.log('orderItem', orderItem);
+            console.log('orderItem', orderItem);
+            console.log('=== orderItem.quantity ===>', orderItem.quantity);
 
       var liOrderItem =
         '<div id="orderItem" class="p-20 border-bottom-1">' +
@@ -70,7 +71,7 @@
         '  </div>' +
         '</div>';
 
-      subtotal += parseInt(orderItem.price, 10);
+      subtotal += parseInt(orderItem.price*orderItem.quantity, 10);
       subtotalDiv.text(subtotal);
       totalPrice = subtotal;
       totalPriceDiv.text(totalPrice);
