@@ -83,6 +83,7 @@ module.exports = {
   },
 
   sendAllUsers: async ({shopCode}) => {
+    console.log('=== shopCode ===', shopCode);
     let users = await db.User.findAll();
     await ShopCodeService.sendCode({shopCode, users});
 

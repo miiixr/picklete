@@ -34,8 +34,37 @@ describe('ShopCode Spec', function() {
     .field('startDate', '2015/10/10') // 開始時間
     .field('endDate', '2015/10/10') // 結束時間
     .field('restrictionDate', 'on') // 時間限制
-    .field('sentType', 'specific') // 自動發送
+    .field('sentType', 'all') // 自動發送
     .field('sentContent', '發送內容') // 發送內容
+    .end(function(err, res) {
+
+      res.statusCode.should.be.equal(302);
+      res.headers.location.should.be.equal('/admin/shop-code');
+
+      return done();
+    });
+  });
+
+  it('Create a new target User ShopCode', function(done) {
+
+    var data = { title: '1231231',
+        code: '',
+        autoRandomCode: 'on',
+        startDate: '',
+        endDate: '',
+        restrictionDate: 'on',
+        type: 'price',
+        'price-description': '100',
+        'price-restriction': '1000',
+        'discount-description': '',
+        'discount-restriction': '',
+        sentType: 'specific',
+        sentContent: '',
+        users: [ '2', '3', '4' ] };
+
+    request(sails.hooks.http.app)
+    .post('/admin/shop-code/create')
+    .send(data)
     .end(function(err, res) {
 
       res.statusCode.should.be.equal(302);
@@ -57,7 +86,7 @@ describe('ShopCode Spec', function() {
     .field('discount-restriction', '1300') // 限滿額
     .field('startDate','2015/10/10') // 開始時間
     .field('endDate', '2015/10/11') // 結束時間
-    .field('sentType', 'specific') // 自動發送
+    .field('sentType', 'all') // 自動發送
     .field('sentTarget', '2') // 自動發送
     .field('sentTarget', '3') // 自動發送
     .field('sentContent', '1發送內容') // 發送內容
