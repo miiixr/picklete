@@ -103,9 +103,10 @@
     }
     // ensure title
     if($("select[name='order[invoice][type]']").val()=="triplex"){
-      if( $("input[name='order[invoice][title]']").val() == "" )
+      if( $("input[name='order[invoice][title]']").val() == "" ){
         alert("請輸入公司抬頭");
-      return;
+        return;
+      }
     }
 
     re = /^[09]{2}[0-9]{8}$/;
