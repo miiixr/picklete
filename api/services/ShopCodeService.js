@@ -13,6 +13,37 @@ module.exports = {
     }
   },
 
+
+
+  sendWhenRegister: async ({user}) => {
+    let shopCodes = await db.ShopCode.findAll({
+      where:{
+        sentType: 'beginner',
+        $or:[{
+          restrictionDate: 'on'
+        },{
+          startDate:{
+            $lte: new Date()
+          },
+          endDate:{
+            $gte: new Date()
+          },
+        }]
+      }
+    });
+
+    let users = [user];
+
+    let messageResults = await* shopCodes.map((shopCode) => {
+      return ShopCodeService.sendCode({shopCode, users});
+    });
+
+    return messageResults;
+
+
+
+  },
+
   use: async ({code, price}) => {
     try {
       let result = await db.ShopCode.findOne({
@@ -57,7 +88,10 @@ module.exports = {
 
   },
 
-  sendTargetUsers: async ({shopCode, users}) => {
+  sendTargetUsers: async ({shopCode}) => {
+    console.log('=== shopCode ===', shopCode);
+    let users = shopCode.Users;
+
     await ShopCodeService.sendCode({shopCode, users});
   },
 
@@ -65,8 +99,7 @@ module.exports = {
 
     let messages = await* users.map((user) => {
       let messageConfig = CustomMailerService.shopCodeMail({shopCode, user});
-      let message = db.Message.create(messageConfig);
-      return message
+      return db.Message.create(messageConfig);
     })
 
     await* messages.map((message) => CustomMailerService.sendMail(message))

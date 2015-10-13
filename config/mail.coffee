@@ -175,6 +175,8 @@ module.exports.mail = {
       html: """
       Dear %(username)s , 您好！<br>
       <blockquote>
+        %(shopCodeSentContent)s <br>
+        <br>
         下面是這期的優惠碼：<br>
         %(shopCodeToken)s <br>
         可在 %(startDate)s 開始使用 <br>
