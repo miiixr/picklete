@@ -46,6 +46,7 @@ let ShopCodeController = {
   create: async (req, res) => {
 
     var params = req.body;
+    console.log("!!!",params);
 
     params['sentTarget'] = [].concat( params['sentTarget'] )
 

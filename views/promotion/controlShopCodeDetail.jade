@@ -81,7 +81,8 @@ block body
             label
               input#optionsRadios2(type='radio', name='sentType', value='specific')
               | 									自動發送指定會員
-          select#custom-headers.searchable(multiple='multiple')
+              a.btn.btn-default.btn-sm#showUserSelect 點我選擇會員
+          select#custom-headers.searchable(multiple='multiple' style="display: none;")
             each  user in users
               option(value= user.id) ID#{user.id} #{user.fullName} 
           .radio.disabled
