@@ -30,7 +30,7 @@ let UserController = {
   purchase:async (req, res) => {
     let loginUser = UserService.getLoginUser(req);
     let orders = await db.Order.findAll({
-      where: {UserId: 51},
+      where: {UserId: loginUser.id},
       include: [{
         model: db.OrderItem
       },{
