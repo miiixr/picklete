@@ -138,12 +138,12 @@ let PaymentController = {
       order.paymentCreateConfirmAmount = data.TradeAmt;
       order.ExpireDate = data.ExpireDate;
 
-      if(!data.BankCode){
+      if(data.BankCode){
         order.BankCode = data.BankCode;
         order.vAccount = data.vAccount;
       }
 
-      if(!data.PaymentNo){
+      if(data.PaymentNo){
         order.PaymentNo = data.PaymentNo;
         order.Barcode1 = data.Barcode1;
         order.Barcode2 = data.Barcode2;
