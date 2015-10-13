@@ -24,6 +24,7 @@ module.exports.policies = {
     controlLogin: ['global']
     cart: []
     loginStatus:['global']
+    update:['passport']
 
   'MainController': ['global']
 

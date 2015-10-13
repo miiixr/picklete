@@ -122,7 +122,7 @@ let PromotionController = {
 
       let promotion = await db.Promotion.findById(query.id);
       // let productGms;
-      let product;
+      let products;
       if(promotion){
         // productGms = await promotion.getProductGms();
         // productGms.rows = productGms;
@@ -159,8 +159,8 @@ let PromotionController = {
         query,
         limit,
         page,
-        totalPages: Math.ceil(productGms.count / limit),
-        totalRows: productGms.count
+        totalPages: Math.ceil(products.count / limit),
+        totalRows: products.count
       });
     } catch (e) {
       console.error(e.stack);
