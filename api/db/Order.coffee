@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) ->
     paymentConfirmPostfix: DataTypes.STRING
     # 傳統ATM轉帳由user轉帳完自行填寫確認的金額
     paymentConfirmAmount: DataTypes.FLOAT
-    # ？？？
+    # 匯款完成後，要請使用者填寫她匯款的金額，以便後續對帳確認，使用於無 allpay 的情形
     paymentCreateConfirmAmount: DataTypes.FLOAT
 
     # 歐付寶
