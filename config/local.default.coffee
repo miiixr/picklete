@@ -15,29 +15,33 @@ module.exports = {
   #     }
   #   }
   # }
-  mail:{
+  mail: {
     type: 'smtp'
     active: true
     config:{
-      from: 'XXXXXXX@gmail.com',
+      from: 'GMAIL_USER@gmail.com',
       transporter: {
           port: 465,
           host: 'smtp.gmail.com',
+          domains: [
+            "gmail.com",
+            "googlemail.com"
+          ],
           secure: true,
           auth: {
-            user: '',
-            pass: '',
-            xoauth2: ''
+            user: 'GMAIL_USER_ACCOUNT',
+            pass: 'GMAIL_USER_PASSWORD',
+            # xoauth2: ''
           },
-          ignoreTLS: false,
-          name: '',
-          localAddress: '',
-          connectionTimeout: 2000,
-          greetingTimeout: 2000,
-          socketTimeout: 2000,
-          debug: false,
+          # ignoreTLS: false,
+          # name: '',
+          # localAddress: '',
+          # connectionTimeout: 2000,
+          # greetingTimeout: 2000,
+          # socketTimeout: 2000,
+          debug: true,
           authMethod: 'PLAIN',
-          tls: {}
+          # tls: {}
       }
     }
   }
