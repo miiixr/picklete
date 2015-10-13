@@ -180,7 +180,7 @@ module.exports.createTestData = async () => {
     discountType:'discount'
   }
   var createPromotion = await db.Promotion.create(promotion);
-  await createPromotion.setProductGms(createdProductGmComplete.id);
+  await createPromotion.setProducts([1, 2, 3, 4]);
 
   let testDatas = [
   {

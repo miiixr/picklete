@@ -135,17 +135,17 @@ block body
                         a(href='/shop/products/#{thisProduct.ProductGmId}/#{thisProduct.id}')
                           img.img-full(src='#{thisProduct.photos[0]}')
                           // /item-block
-                    else if thisProduct.isPublish == 'false'
+                    else if thisProduct.stockQuantity == 0
                       .item-block.border-block-img.m-bottom-4.item-soldout
                         .item-soldout-text
                           h6
                             | SOLD
                             br
                             | OUT
-                          a(href='/shop/products/#{thisProduct.ProductGmId}/#{thisProduct.id}')
+                        a(href='/shop/products/#{thisProduct.ProductGmId}/#{thisProduct.id}')
                           img.img-full(src='#{thisProduct.photos[0]}')
-                          // /item-block
-                    else
+                        // /item-block
+                    else if thisProduct.isPublish == true
                       .item-block.border-block-img.m-bottom-4
                         a(href='/shop/products/#{thisProduct.ProductGmId}/#{thisProduct.id}')
                           img.img-full(src='#{thisProduct.photos[0]}')

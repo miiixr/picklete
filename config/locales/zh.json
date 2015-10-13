@@ -2,7 +2,7 @@
 	"selection-active": "精選活動",
 	"brands": "品牌介紹",
 	"shop": "線上購物",
-	"brand-name": "品牌名稱",
+	"brand-name": "農場名稱",
 	"categories": "關鍵字",
 	"product-name": "商品名稱",
 	"product-number": "商品貨號",
@@ -15,9 +15,14 @@
 	"prime-brand": "代理品牌",
 	"other-brand": "其他品牌",
 	"create-brand": "建立品牌",
-	"brand-classification": "品牌分類",
+	"brand-classification": "農產分類",
 	"brand-manager": "品牌管理",
 	"dpt-manager": "館別管理",
 	"dpt": "大分類",
-	"dpt-sub": "產品別"
+	"dpt-sub": "產品別",
+	"postoffice": "郵寄",
+	"delivery": "快遞",
+	"duplex": "二聯式發票",
+	"triplex": "三聯式發票",
+	"charity": "捐贈慈善機構"
 }

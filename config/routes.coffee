@@ -165,6 +165,8 @@ module.exports.routes = {
 
   'get /shop/products/:productGmid/:productId' : 'ShopController.show'
 
+  'get /shop/done'  : 'ShopController.done'
+
   'get /brands/:id' : 'BrandController.show'
 
   # 'get /admin/brand' : 'BrandController.list'

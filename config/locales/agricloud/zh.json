@@ -2,7 +2,7 @@
 	"selection-active": "Agricloud 精選活動",
 	"brands": "農場介紹",
 	"shop": "線上購物",
-	"brand-name": "品牌名稱",
+	"brand-name": "農場名稱",
 	"categories": "關鍵字",
 	"product-name": "商品名稱",
 	"product-number": "商品貨號",
@@ -19,5 +19,11 @@
 	"brand-manager": "農場管理",
 	"dpt-manager": "分類管理",
 	"dpt": "大分類",
-	"dpt-sub": "產品別"
+	"dpt-sub": "產品別",
+	"postoffice": "postoffice",
+	"delivery": "快遞",
+	"duplex": "二聯式發票",
+	"triplex": "三聯式發票",
+	"charity": "捐贈慈善機構",
+	"delivery": "delivery"
 }

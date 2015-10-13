@@ -30,8 +30,16 @@ let UserController = {
   purchase:async (req, res) => {
     let loginUser = UserService.getLoginUser(req);
     let orders = await db.Order.findAll({
-      where: {UserId: 51}//方便測試 測試完要改回loginUser.id
+      where: {UserId: 51},
+      include: [{
+        model: db.OrderItem
+      },{
+        model: db.Shipment
+      },{
+        model: db.Invoice
+      }]
     });
+    console.log(orders);
     res.view("main/memberPurchase",{
       orders
     });
@@ -61,8 +69,6 @@ let UserController = {
         paymentTotalAmount += parseInt(orderItem.quantity, 10) * parseInt(orderItem.price, 10);
       });
     }
-
-
 
     let company = await db.Company.findOne();
     let brands = await db.Brand.findAll();
@@ -131,6 +137,9 @@ let UserController = {
       if(updateUser.userLikes != undefined)
         await user.setLikes(updateUser.userLikes);
 
+      let messageConfig = await CustomMailerService.userUpdateMail(user);
+      let message = await db.Message.create(messageConfig);
+      await CustomMailerService.sendMail(message);
 
 
       return res.redirect('/member/setting');
