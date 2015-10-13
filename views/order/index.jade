@@ -168,7 +168,7 @@ block body
             // /col-sm-2
             .col-sm-1.col-sm-1-sm #{order.quantity}
             // /col-sm-1
-            .col-sm-1.col-sm-1-lg #{order.Shipment.dataValues.shippingType}
+            .col-sm-1.col-sm-1-lg #{i18n(order.Shipment.shippingType)} #{order.Shipment.shippingRegion}
             // /col-sm-1
             .col-sm-1
               if order.status != "new"
