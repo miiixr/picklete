@@ -30,12 +30,12 @@
 	"duplex": "二聯式發票",
 	"triplex": "三聯式發票",
 	"charity": "捐贈慈善機構",
-	"until": "至",
 	"home-management": "首頁管理",
 	"slide-active": "燈箱活動",
 	"select-dpt": "選擇分類",
 	"theme-active": "主題活動",
 	"good-management": "商品管理",
 	"good-publish": "商品上架",
-	"good-list": "商品列表"
+	"good-list": "商品列表",
+	"marketing-strategy": "行銷策略"
 }
