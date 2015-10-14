@@ -78,6 +78,8 @@
 
       cartViewer.append(liOrderItem);
 
+      cartViewer.inputNumber();
+
 
     });
   };

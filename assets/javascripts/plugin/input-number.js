@@ -1,8 +1,12 @@
-(function ($) {
+$.fn.inputNumber = function() {
 
-		//plugin bootstrap minus and plus
+	var ___scope = this;
+
+	//plugin bootstrap minus and plus
 	//http://jsfiddle.net/laelitenetwork/puJ6G/
-	$('.btn-number').on("click", function(e){
+	//re-package as jQuery plugin with lyhcode 2015/10/13
+
+	$('.btn-number', ___scope).on("click", function(e){
 		e.preventDefault();
 
 		var that = $(this);
@@ -35,10 +39,11 @@
 			input.val(0);
 		}
 	});
-	$('.input-number').on("focusin", function(){
+	$('.input-number', ___scope)
+	.on("focusin", function(){
 		$(this).data('oldValue', $(this).val());
-	});
-	$('.input-number').on("change", function() {
+	})
+	.on("change", function() {
 
 		minValue =  parseInt($(this).attr('min'));
 		maxValue =  parseInt($(this).attr('max'));
@@ -46,21 +51,19 @@
 
 		name = $(this).attr('name');
 		if(valueCurrent >= minValue) {
-			$(".btn-number[data-type='minus'][data-field='"+name+"']").removeAttr('disabled')
+			$(".btn-number[data-type='minus'][data-field='"+name+"']", ___scope).removeAttr('disabled')
 		} else {
 			alert('Sorry, the minimum value was reached');
 			$(this).val($(this).data('oldValue'));
 		}
 		if(valueCurrent <= maxValue) {
-			$(".btn-number[data-type='plus'][data-field='"+name+"']").removeAttr('disabled')
+			$(".btn-number[data-type='plus'][data-field='"+name+"']", ___scope).removeAttr('disabled')
 		} else {
 			alert('Sorry, the maximum value was reached');
 			$(this).val($(this).data('oldValue'));
 		}
-
-
-	});
-	$(".input-number").on("keydown", function (e) {
+	})
+	.on("keydown", function (e) {
 			// Allow: backspace, delete, tab, escape, enter and .
 			if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
 				 // Allow: Ctrl+A
@@ -76,5 +79,11 @@
 			}
 	});
 
-}(jQuery));
+  return this;
+};
 
+(function ($) {
+
+	$(document).inputNumber();
+
+}(jQuery));
