@@ -12,8 +12,7 @@
   var shippingFee = 0;
   var buymore = 0;
   var discountAmount = 0;
-  var quantities = [];
-  var prices = [];
+  var shippingFeeFreeThreshold = 390;
 
   Cookies.remove('buyMoreIds');
   Cookies.remove('shopCode');
@@ -25,13 +24,15 @@
   }
 
   var calcTatalPrice = function () {
-
-    totalPrice = (subtotal + shippingFee + buymore - discountAmount);
+    var price = (subtotal + buymore - discountAmount);
+    // // 399免運
+    // if( price > shippingFeeFreeThreshold )
+    //   totalPrice = price;
+    // else
+      totalPrice = price + shippingFee;
     console.log('=== calcTatalPrice ===', totalPrice);
-
     totalPriceDiv.text(totalPrice);
   }
-
 
   var reCalTotalPriceAndSaveCookie = function(){
 
@@ -122,19 +123,30 @@
 
   };
 
+  // shippingfee select
   $(".container").on("change", "#shippingFeeSelect", function (e) {
     e.preventDefault();
 
-    Cookies.set('shippingFee', $('#shippingFeeSelect').val());
-
-    shippingFee = parseInt($(this).val(), 10);
-
-    var shippingFeeField = $('#shippingFeeField');
-    shippingFeeField.text(shippingFee)
-
     calcTatalPrice();
 
+    $("#feeFreeNoticer").text('');
+
+    // judge threshold
+    if((subtotal + buymore - discountAmount) > shippingFeeFreeThreshold){
+      // fee-free!
+      Cookies.set('shippingFee', 0);
+      $("#feeFreeNoticer").text('**您符合免運資格:)**');
+    }else{
+      // Normalization
+      shippingFee = parseInt($(this).val(), 10);
+      // set cookie
+      Cookies.set('shippingFee', shippingFee);
+      // show shippingFee to viewfield
+      var shippingFeeField = $('#shippingFeeField');
+      shippingFeeField.text(shippingFee)
+    }
   });
+  // end
 
   $(".container").on("change", "#paymentMethod", function (e) {
     e.preventDefault();
@@ -231,7 +243,7 @@
     calcTatalPrice();
   });
 
-  // recaculate price when btnPlus/bntMinus pressed
+  // recalculate price when btnPlus/bntMinus pressed
   $(".input-group").delegate("input","change", function(){
     calcTatalPrice();
     reCalTotalPriceAndSaveCookie();
@@ -255,7 +267,6 @@
           data : null,
           success:function(data, textStatus, jqXHR)
           {
-
             var shippingFeeSelect = $("#shippingFeeSelect");
             for(i=0;i<data.shippings.length;i++){
               shipping = data.shippings[i].region + ' ' + data.shippings[i].fee + ' 元';
