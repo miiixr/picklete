@@ -36,5 +36,6 @@
 	"select-dpt": "Select Category",
 	"theme-active": "Theme Active",
 	"good-management": "Commodity Management",
-	"good-publish": "Commodity Publish"
+	"good-publish": "Commodity Publish",
+	"good-list": "Commodity List"
 }
