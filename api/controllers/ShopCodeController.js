@@ -36,7 +36,9 @@ let ShopCodeController = {
 
   // CreateView get /admin/shop-code/create'
   controlShopCodeDetail: async (req, res) => {
+    let users = await db.User.findAll();
     res.view('promotion/controlShopCodeDetail',{
+      users
     });
   },
 
@@ -49,11 +51,6 @@ let ShopCodeController = {
 
     if(params['autoRandomCode'] == 'on'){
       params.code = crypto.randomBytes(32).toString('hex').substr(0, 20);
-    }
-
-    if(params['restrictionDate'] == 'on'){
-      params['startDate'] = Date.parse(1);
-      params['endDate'] = Date.parse(1);
     }
 
     if(params['type']=='price'){
@@ -71,16 +68,40 @@ let ShopCodeController = {
       type: params['type'],
       description: description,
       restriction: restriction,
-      startDate: Date.parse(params['startDate']) || 1,
-      endDate: Date.parse(params['endDate']) || 1,
+      startDate: params['startDate'] || 1,
+      endDate: params['endDate'] || 1,
       restrictionDate: params['restrictionDate'],
       sentType: params['sentType'],
       sentTarget: params['sentTarget'] || [],
       sentContent: params['sentContent'] || '',
     };
 
+    if(params['restrictionDate'] == 'on'){
+      delete shopCode['startDate'];
+      delete shopCode['endDate'];
+    }
+
     try {
-       await db.ShopCode.create(shopCode);
+       let createShopCode = await db.ShopCode.create(shopCode);
+       if(params.sentType == 'all'){
+         let shopCode = createShopCode;
+         await ShopCodeService.sendAllUsers({shopCode});
+       }else if(params.sentType == 'specific' && params.users.length!=0){
+         await* params.users.map( async (userId) => {
+           let find = await db.User.findById(userId);
+           find.ShopCodeId = createShopCode.id;
+           await find.save();
+         });
+         let shopCode = await db.ShopCode.findOne({
+           where:{
+             id:createShopCode.id
+           },
+           include:{
+             model: db.User
+           }
+         });
+         await ShopCodeService.sendTargetUsers({shopCode});
+       }
        return res.redirect("/admin/shop-code");
     } catch (e) {
        return res.serverError(e);
@@ -104,6 +125,7 @@ let ShopCodeController = {
 
     try {
       var params = req.body;
+
       let id = parseInt(req.body['id'] || req.query.id);
       let shopCode = await db.ShopCode.findOne({ where: {id: id} });
 
@@ -111,11 +133,6 @@ let ShopCodeController = {
 
       if(params['autoRandomCode'] == 'true'){
         params.code = crypto.randomBytes(32).toString('hex').substr(0, 20);
-      }
-
-      if(params['restrictionDate'] == 'true'){
-        params['startDate'] = Date.parse(1);
-        params['endDate'] = Date.parse(1);
       }
 
       if(params['type']=='price'){
@@ -127,13 +144,17 @@ let ShopCodeController = {
         var restriction = params['discount-restriction'];
       }
 
+
+
       shopCode.code = params['code'];
       shopCode.title = params['title'];
       shopCode.type = params['type'];
       shopCode.description = description;
       shopCode.restriction = restriction;
-      shopCode.startDate = Date.parse(params['startDate']) || 1;
-      shopCode.endDate = Date.parse(params['endDate']) || 1,
+      if(params['restrictionDate'] != 'on'){
+        shopCode.startDate = params['startDate'] || 1;
+        shopCode.endDate = params['endDate'] || 1;
+      }
       shopCode.restrictionDate = params['restrictionDate'],
       shopCode.sentType = params['sentType'];
       shopCode.sentTarget = params['sentTarget'] || [];

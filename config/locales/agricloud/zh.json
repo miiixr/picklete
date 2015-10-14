@@ -8,7 +8,7 @@
 	"product-number": "商品貨號",
 	"commodity-prices": "商品售價",
 	"current-inventory": "目前庫存",
-	"to": "至",
+	"until": "至",
 	"trafficking-in-state": "販售狀態",
 	"filing-date": "建檔日期",
 	"brand-list": "農場列表",
@@ -20,15 +20,16 @@
 	"dpt-manager": "分類管理",
 	"dpt": "大分類",
 	"dpt-sub": "產品別",
-	"choice-brand": "選擇農場",
+	"select-brand": "選擇農場",
 	"all-brand": "所有農場",
 	"all-categories": "所有分類",
 	"all-product": "所有產品",
 	"select-dpt-sub": "選擇產品別",
-	"postoffice": "postoffice",
+	"postoffice": "郵寄",
 	"delivery": "快遞",
 	"duplex": "二聯式發票",
 	"triplex": "三聯式發票",
 	"charity": "捐贈慈善機構",
-	"delivery": "delivery"
+	"home-management": "首頁管理",
+	"slide-active": "燈箱活動"
 }
