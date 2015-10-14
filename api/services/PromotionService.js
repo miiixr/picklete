@@ -15,6 +15,22 @@ module.exports = {
     return promotions;
   },
   // end findAll
+  
+  // getModel
+  getModel: async () => {
+    let promotions = await db.Promotion.find({
+        where: {
+          type: 'flash'
+        },
+        include:[{
+          model: db.Product,
+          required: true
+        }]
+      });
+    console.log('=== find flash promotion ==>',promotions);
+    return promotions;
+  },
+  // end getModel
 
   // create
   create: async (promotion) => {

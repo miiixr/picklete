@@ -61,84 +61,101 @@ block body
                 span.glyphicon.glyphicon-plus
           tbody
             each order, index in orders
-              tr
-                td #{order.paymentConfirmDate}
-                td #{order.serialNumber}
-                td 信用卡
-                td 訂單完成
-                td 2015-5-22
-                td 5,790
-                td 已捐贈
-                td
-                  a(data-toggle='collapse', data-parent='#collapse-purchase', href='#collapse-purchase-One')
-                    span.glyphicon.glyphicon-plus
-              tr.tr-hide
-                td(colspan='8')
-                  #collapse-purchase-One.panel-collapse.collapse
-                    //
-                      purchase-detail
-                      ==================================================
-                    .p-10
-                      .m-top-2.m-bottom-2
-                        ul.p-left-3
-                          li 收件人姓名：李飽琪 小姐
-                          li 收件人電話：09123456**
-                          li 收件人地址：407 台中市南區****街三段379號
-                          li 運送方式：超峰快遞 / 編號：156465132264
-                      // /m-top-2 m-bottom-2
-                      table.table
-                        thead
-                          tr
-                            th 商品名稱
-                            th.text-center 數量
-                            th 單價
-                            th.text-right 小計
-                        tbody
-                          tr
-                            td
-                              a(href='shop-product.html') QUALY 貓頭鷹鑰匙圈架-咖啡+包裝2
-                            td.text-center 3
-                            td 1,440
-                            td.text-right 3,450
-                          tr
-                            td
-                              a(href='shop-product.html') labrador softcase A5 麂皮文件袋（贈品：He was born ABC 樂彩杯）
-                            td.text-center 3
-                            td
-                              | 1,440
-                              small.text-line-through.m-left-1 1,700
-                            td.text-right 3,450
-                          tr
-                            td
-                              p 付款方式：7-11 ibon 代碼繳費，繳費代碼：251563222267
-                              p.text-danger 賣家備註：
-                              ol.text-danger
-                                li 管理員代收
-                                li 禮品的包裝盒請去除價格標籤
-                            td
-                            td(colspan='2')
-                              .row.m-bottom-1
-                                .col-xs-6 小計
-                                .col-xs-6.text-right 3,240
-                              // /row
-                              .row.m-bottom-1
-                                .col-xs-6 運費
-                                .col-xs-6.text-right 免運
-                              // /row
-                              .row.m-bottom-1
-                                .col-xs-6 包裝
-                                .col-xs-6.text-right 120
-                              // /row
-                              .row.m-bottom-1
-                                .col-xs-6 折扣碼
-                                .col-xs-6.text-right -30
-                              // /row
-                              hr
-                              h2
-                                small 總計
-                                span.text-danger.pull-right NT$2,390
-                  // /p-10
-                // /panel-collapse
+              if order.status == "new" || order.status == "paymentConfirm" || order.status == "deliveryConfirm"
+                tr
+                  td #{sails.moment(order.createdAt.format).format('YYYY/MM/DD hh:mm')}
+                  td #{order.serialNumber}
+                  td #{order.allPayPaymentType}
+                  if order.status == "new"
+                    td 訂單確認中
+                  else if order.status == "paymentConfirm"
+                    td 訂單完成
+                  else if order.status == "deliveryConfirm"
+                    td 已出貨
+                  td 2015-5-22
+                  td $#{order.paymentTotalAmount}
+                  td #{order.Invoice ? i18n(order.Invoice.type) : ''}
+                  td
+                    a(data-toggle='collapse', data-parent='#collapse-purchase', href='#collapse-purchase-#{order.serialNumber}')
+                      span.glyphicon.glyphicon-plus
+                tr.tr-hide
+                  td(colspan='8')
+                    .panel-collapse.collapse(id="collapse-purchase-#{order.serialNumber}")
+                      //
+                        purchase-detail
+                        ==================================================
+                      .p-10
+                        .m-top-2.m-bottom-2
+                          ul.p-left-3
+                            li 收件人姓名：#{order.Shipment.username} 先生/小姐
+                            li 收件人電話：#{order.Shipment.shippingType}
+                            li 收件人地址：#{order.Shipment.address}
+                            li 運送方式：#{order.Shipment.shippingType} / 編號：#{order.Shipment.shippingId}
+                        // /m-top-2 m-bottom-2
+                        table.table
+                          thead
+                            tr
+                              th 商品名稱
+                              th.text-center 數量
+                              th 單價
+                              th.text-right 小計
+                          tbody
+                            - sumPrice = 0
+                            each item in order.OrderItems
+                              tr
+                                td
+                                  a(href='shop-product.html') #{item.name}
+                                td.text-center #{item.quantity}
+                                td $#{item.price}
+                                td.text-right $#{item.quantity * item.price}
+                                - sumPrice += item.price*item.quantity
+                            tr
+                              td
+                              if order.allPayPaymentType == "ATM"
+                                p 付款方式：#{order.allPayPaymentType} 繳費帳戶：#{order.BankCode} #{order.vAccount}
+                              else if order.allPayPaymentType == "CVS" || order.allPayPaymentType == "BARCODE"
+                                p 付款方式：#{order.allPayPaymentType} 繳費帳戶：#{order.PaymentNo}
+                              else if order.allPayPaymentType == "Credit"
+                                p 付款方式：#{order.allPayPaymentType}
+                                //- p.text-danger 賣家備註：
+                                //- ol.text-danger
+                                //-   li 管理員代收
+                                //-   li 禮品的包裝盒請去除價格標籤
+                              td
+                              td(colspan='2')
+                                .row.m-bottom-1
+                                  .col-xs-6 小計
+                                  .col-xs-6.text-right #{sumPrice}
+                                // /row
+                                .row.m-bottom-1
+                                  .col-xs-6 運費
+                                  .col-xs-6.text-right #{order.Shipment.shippingFee}
+                                // /row
+                                //- .row.m-bottom-1
+                                //-   .col-xs-6 包裝
+                                //-   .col-xs-6.text-right 120
+                                // /row
+                                //- .row.m-bottom-1
+                                //-   .col-xs-6 折扣碼
+                                //-   .col-xs-6.text-right -30
+                                // /row
+                                hr
+                                h2
+                                  small 總計
+                                  span.text-danger.pull-right NT$ #{sumPrice+order.Shipment.shippingFee}
+              else
+                tr.disabled
+                  td #{sails.moment(order.createdAt.format).format('YYYY/MM/DD hh:mm')}
+                  td #{order.Shipment.shippingId}
+                  td #{order.allPayPaymentType}
+                  td 訂單取消
+                  //- td 2015-5-22
+                  td $#{order.paymentTotalAmount}
+                  td #{order.Invoice ? i18n(order.Invoice.type) : ''}
+                  td
+                    a(data-toggle='collapse', data-parent='#collapse-purchase', href='#collapse-purchase-One')
+                      span.glyphicon.glyphicon-plus
+
       // /m-top-6 m-bottom-10
     // /container
     //

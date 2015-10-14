@@ -161,7 +161,6 @@ describe.skip("about User", () => {
       done(err);
     });
   });
-
   // end
 });
 
@@ -190,7 +189,6 @@ describe("login user data", () => {
   });
 
   it('user purchase test', (done) => {
-
     request(sails.hooks.http.app)
     .get('/member/purchase')
     .end((err,res) => {

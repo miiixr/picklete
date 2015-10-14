@@ -74,16 +74,16 @@ block body
         .col-sm-9.col-md-10
           .radio
             label
-              input#optionsRadios1(type='radio', name='sentType', value='all', checked='')
+              input#optionsRadios1.m-bottom-2(type='radio', name='sentType', value='all', checked='')
               | 									自動發送全館會員
           .radio
             label
-              input#optionsRadios2(type='radio', name='sentType', value='specific')
+              input#optionsRadios2.m-bottom-2(type='radio', name='sentType', value='specific')
               | 									自動發送指定會員
               a.btn.btn-default.btn-sm(href='#', data-toggle='modal', data-target='#modal-add-member') 點我選擇會員
           .radio.disabled
             label
-              input#optionsRadios3(type='radio', name='sentType', value='beginner', disabled='')
+              input#optionsRadios3.m-bottom-2(type='radio', name='sentType', value='beginner', disabled='')
               | 									首次註冊，自動發送會員
           textarea.form-control.m-top-3(rows='5', placeholder='請輸入問候...', name= 'sentContent')
         // /col-sm-9
