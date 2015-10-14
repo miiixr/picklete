@@ -28,7 +28,7 @@ block body
           label.col-md-2.control-label #{i18n('brand-classification')}
           .col-md-4
             select.form-control(name='dptId[]')
-              option #{i18n('dpt')}
+              option #{i18n('select-dpt')}
               each dpt, index in dpts
                 option(value='#{dpt.id}') #{dpt.name}
           .col-md-4
