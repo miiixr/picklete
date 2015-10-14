@@ -71,11 +71,11 @@
   .panel
     a.control-menu-top.collapsed(data-toggle='collapse', data-parent='#control-menu', href='#collapseSix')
       span.glyphicon.glyphicon-truck2.m-right-2
-      | 付款運費
+      | #{i18n('payment')}
     #collapseSix.panel-collapse.collapse
       ul.list-unstyled
         li
-          a(href='/admin/shipping') 運費設定
+          a(href='/admin/shipping') #{i18n('shipping-fee-setting')}
     // /panel-collapse
   // /panel
   .panel
