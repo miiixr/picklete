@@ -16,7 +16,7 @@ describe("about shopcode service", () => {
           code: 'YYYYYYYYYYZZZZZZZZZZ',
           autoRandomCode: 'on',
           startDate: '2015-10-01',
-          endDate: '2015-10-14',
+          endDate: '2120-10-10',
           type: 'price',
           description: 99,
           restriction: 999,

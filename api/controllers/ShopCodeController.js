@@ -46,7 +46,6 @@ let ShopCodeController = {
   create: async (req, res) => {
 
     var params = req.body;
-    console.log("!!!",params);
 
     params['sentTarget'] = [].concat( params['sentTarget'] )
 
@@ -85,7 +84,7 @@ let ShopCodeController = {
     try {
        let createShopCode = await db.ShopCode.create(shopCode);
        if(params.sentType == 'all'){
-         let shopCode = {createShopCode}
+         let shopCode = createShopCode;
          await ShopCodeService.sendAllUsers({shopCode});
        }else if(params.sentType == 'specific' && params.users.length!=0){
          await* params.users.map( async (userId) => {
