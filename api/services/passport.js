@@ -104,9 +104,10 @@ passport.connect = async function(req, query, profile, next) {
 
     if (!req.user) {
       if (!passport) {
-        let creatUser = await db.User.create(user);
+        user = await db.User.create(user);
         query.user = creatUser.id;
         passport = await db.Passport.create(query);
+        next(null, user);
       } else {
         if (query.hasOwnProperty('tokens') && query.tokens !== passport.tokens) {
           passport.tokens = query.tokens;
@@ -124,7 +125,7 @@ passport.connect = async function(req, query, profile, next) {
       if (!passport) {
         query.user = req.user.id;
         passport = Passport.create(query);
-        next(err, req.user);
+        next(null, req.user);
       } else {
         next(null, req.user);
       }
