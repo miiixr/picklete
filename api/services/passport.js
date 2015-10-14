@@ -70,10 +70,10 @@ passport.protocols = require('./protocols');
 
 passport.connect = async function(req, query, profile, next) {
   console.log('=== do login ===',query);
-  console.log('=== do login ===',profile);
+  console.log('=== do login profile ===',profile);
   var provider, user;
   user = {};
-  provider = void 0;
+  provider = undefined;
   query.provider = req.param('provider');
   provider = profile.provider || query.provider;
   if (!provider) {
@@ -123,9 +123,7 @@ passport.connect = async function(req, query, profile, next) {
           passport.tokens = query.tokens;
         }
         passport = await passport.save();
-        user = await db.User.findOne({
-          where: passport.UserId
-        });
+        user = await db.User.findById(passport.UserId);
         if(user)
           next(null, user)
         else
