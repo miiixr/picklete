@@ -1,3 +1,4 @@
+import moment from 'moment';
 
 module.exports = {
   checkCode : async (code) => {
@@ -23,10 +24,10 @@ module.exports = {
           restrictionDate: 'on'
         },{
           startDate:{
-            $lte: new Date()
+            $lte: moment(new Date()).format('YYYY/MM/DD')
           },
           endDate:{
-            $gte: new Date()
+            $gte: moment(new Date()).format('YYYY/MM/DD')
           },
         }]
       }
@@ -53,10 +54,10 @@ module.exports = {
             restrictionDate: 'on'
           },{
             startDate:{
-              $lte: new Date()
+              $lte: moment(new Date()).format('YYYY/MM/DD')
             },
             endDate:{
-              $gte: new Date()
+              $gte: moment(new Date()).format('YYYY/MM/DD')
             },
           }],
           restriction:{
