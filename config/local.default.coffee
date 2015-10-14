@@ -84,4 +84,8 @@ module.exports = {
   googleAnalytics: {
     trackingID: ''
   }
+  facebook:{
+    appid:'',
+    clientSecret: ''
+  }
 }

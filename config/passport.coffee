@@ -46,10 +46,10 @@ module.exports.passport =
     protocol: 'oauth2'
     strategy: require('passport-facebook').Strategy
     options:
-      clientID: '1598226980388780'
-      clientSecret: '71ae89eba342ce5a48a30a870d6bd473'
+      clientID: sails.config.facebook.appid
+      clientSecret: sails.config.facebook.clientSecret
       scope: [ 'email' ]
-      # callbackURL: "http://localhost:3000/auth/facebook/callback"
+      callbackURL: "http://localhost:3000/auth/facebook/callback"
   # google:
   #   name: 'Google'
   #   protocol: 'oauth2'
