@@ -15,7 +15,7 @@ block body
               input#brandType(type='radio', name='brandType', value='origin', checked=true)
 
               select.form-control#brandSelect(name='brandId')
-                option(value='') #{i18n('choice-brand')}
+                option(value='') #{i18n('select-brand')}
                 each brand, index in brands
                   option(value='#{brand.id}') #{brand.name}
             label.radio-inline
