@@ -85,7 +85,7 @@ passport.connect = async function(req, query, profile, next) {
     user.email = profile.email;
   }
   if (profile.hasOwnProperty('username')) {
-    user.username = profile.email;
+    user.username = profile.email || profile.username || profile.displayName;
   } else if (profile.hasOwnProperty('family_name')) {
     user.username = profile.family_name;
   } else {
@@ -95,7 +95,7 @@ passport.connect = async function(req, query, profile, next) {
   if(profile.hasOwnProperty('displayName')){
     user.fullName = profile.displayName;
   }
-  
+
   if (!user.username && !user.email) {
     return next(new Error('Neither a username nor email was available'));
   }
@@ -110,6 +110,10 @@ passport.connect = async function(req, query, profile, next) {
 
     if (!req.user) {
       if (!passport) {
+        let role = await db.Role.find({
+          where: {authority: 'user'}
+        });
+        user.RoleId = role.id;
         user = await db.User.create(user);
         query.UserId = user.id;
         let passport = await db.Passport.create(query);
