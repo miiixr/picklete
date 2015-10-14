@@ -18,7 +18,8 @@ block body
           img.img-full(src='#{slider.cover}', alt='#{slider.title}')
           div(class="carousel-caption #{slider.location}", style="color: #{slider.color}")
             h1 #{slider.title}
-            p #{slider.description}
+            - if slider.description
+              p !{slider.description.replace(/\n/g, "<br>")}
           // /carousel-caption
     // /carousel-inner
     a.left.carousel-control(href='#carousel-index', role='button', data-slide='prev')

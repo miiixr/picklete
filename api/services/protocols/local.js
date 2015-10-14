@@ -63,12 +63,15 @@ exports.register = async function(req, res, next) {
     });
 
     let domain = sails.config.domain || process.env.domain || 'http://localhost:1337';
-    let link = `${domain}/verification?email=${user.email}`;
+    // let link = `${domain}/verification?email=${user.email}`;
+    let link = await UrlHelper.resolve(`verification?email=${user.email}`, true)
     console.log("verificationLink : ",link);
 
     let messageConfig = await CustomMailerService.verificationMail(user, link);
     let message = await db.Message.create(messageConfig);
     await CustomMailerService.sendMail(message);
+
+    await ShopCodeService.sendWhenRegister({user});
 
     return next(null, user);
 

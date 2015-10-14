@@ -5,12 +5,14 @@
   var totalPriceDiv = $('#totalPrice');
   var buymoreDiv = $("#buymore");
   var discountAmountDiv = $("#discountAmount");
+  var quantityVal;
 
   var subtotal = 0;
   var totalPrice = 0;
   var shippingFee = 0;
   var buymore = 0;
   var discountAmount = 0;
+  var shippingFeeFreeThreshold = 390;
 
   Cookies.remove('buyMoreIds');
   Cookies.remove('shopCode');
@@ -21,14 +23,50 @@
     picklete_cart : {orderItems: []};
   }
 
+  var calcTatalPrice = function () {
+    var price = (subtotal + buymore - discountAmount);
+    // // 399免運
+    // if( price > shippingFeeFreeThreshold )
+    //   totalPrice = price;
+    // else
+      totalPrice = price + shippingFee;
+    console.log('=== calcTatalPrice ===', totalPrice);
+    totalPriceDiv.text(totalPrice);
+  }
+
+  var reCalTotalPriceAndSaveCookie = function(){
+
+    subtotal = 0;
+
+    picklete_cart.orderItems.forEach(function(orderItem, index){
+      // console.log('==== orderItem ==>',orderItem);
+
+      quantityVal =  $("input[name='quant["+index+"]']").val();
+      // console.log('=== quantityVal ',index,' ===>',quantityVal);
+
+      orderItem.quantity = quantityVal;
+      // console.log('=== orderItem.quantity ===>',orderItem.quantity);
+
+      if(orderItem.originPrice == undefined) orderItem.originPrice ='';
+      subtotal += parseInt(orderItem.price*orderItem.quantity, 10);
+      subtotalDiv.text(subtotal);
+      totalPrice = subtotal;
+      totalPriceDiv.text(totalPrice);
+    });
+    // save new quantities
+    Cookies.set('picklete_cart', picklete_cart);
+  };
+
+
   var cartViewerInit = function() {
 
     picklete_cart.orderItems.forEach(function(orderItem, index){
 
+      // console.log('==== orderItem ==>',orderItem);
+
       if(orderItem.originPrice == undefined) orderItem.originPrice ='';
 
-            console.log('orderItem', orderItem);
-            console.log('=== orderItem.quantity ===>', orderItem.quantity);
+      quantity = orderItem.quantity;
 
       var liOrderItem =
         '<div id="orderItem" class="p-20 border-bottom-1">' +
@@ -78,25 +116,37 @@
 
       cartViewer.append(liOrderItem);
 
+
     });
 
     cartViewer.inputNumber();
 
   };
 
+  // shippingfee select
   $(".container").on("change", "#shippingFeeSelect", function (e) {
     e.preventDefault();
 
-    Cookies.set('shippingFee', $('#shippingFeeSelect').val());
-
-    shippingFee = parseInt($(this).val(), 10);
-
-    var shippingFeeField = $('#shippingFeeField');
-    shippingFeeField.text(shippingFee)
-
     calcTatalPrice();
 
+    $("#feeFreeNoticer").text('');
+
+    // judge threshold
+    if((subtotal + buymore - discountAmount) > shippingFeeFreeThreshold){
+      // fee-free!
+      Cookies.set('shippingFee', 0);
+      $("#feeFreeNoticer").text('**您符合免運資格:)**');
+    }else{
+      // Normalization
+      shippingFee = parseInt($(this).val(), 10);
+      // set cookie
+      Cookies.set('shippingFee', shippingFee);
+      // show shippingFee to viewfield
+      var shippingFeeField = $('#shippingFeeField');
+      shippingFeeField.text(shippingFee)
+    }
   });
+  // end
 
   $(".container").on("change", "#paymentMethod", function (e) {
     e.preventDefault();
@@ -133,14 +183,6 @@
   }
 
 
-
-  var calcTatalPrice = function () {
-
-    totalPrice = subtotal + shippingFee + buymore - discountAmount;
-    console.log('=== calcTatalPrice ===', totalPrice);
-
-    totalPriceDiv.text(totalPrice);
-  }
 
   $("#nextSetp").click(function () {
     var buymoreIds = [];
@@ -201,8 +243,11 @@
     calcTatalPrice();
   });
 
-
-
+  // recalculate price when btnPlus/bntMinus pressed
+  $(".input-group").delegate("input","change", function(){
+    calcTatalPrice();
+    reCalTotalPriceAndSaveCookie();
+  });
 
   // shippings
   $("#shippingType").change(function(){
@@ -222,7 +267,6 @@
           data : null,
           success:function(data, textStatus, jqXHR)
           {
-
             var shippingFeeSelect = $("#shippingFeeSelect");
             for(i=0;i<data.shippings.length;i++){
               shipping = data.shippings[i].region + ' ' + data.shippings[i].fee + ' 元';

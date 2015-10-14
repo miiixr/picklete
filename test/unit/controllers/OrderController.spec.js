@@ -1,6 +1,6 @@
 describe("about Order", () => {
   describe("pay Order", () => {
-    let testdOrder;
+    let testdOrder, shopCode;
     before( async (done) => {
       var newOrder2 = {
         serialNumber: '99999',
@@ -12,6 +12,20 @@ describe("about Order", () => {
         UserId: 2,
       };
       testdOrder = await db.Order.create(newOrder2);
+
+      let shopcode = {
+          title: '滿 500 折 100',
+          code: '1234ABCD',
+          startDate: '1970-01-01',
+          endDate: '1970-01-01',
+          type: 'price',
+          description: 100,
+          restriction: 500,
+          sentType: 'all',
+          sentContent: '滿 500 折 100 !!',
+          restrictionDate: 'on'
+        };
+      shopCode = await db.ShopCode.create(shopcode);
 
       var orderItems2 =[{
         name: '好物三選1',
@@ -39,6 +53,84 @@ describe("about Order", () => {
       done();
     });
 
+
+    it("create order use shopcode should be success", async (done) => {
+      try {
+        let newOrder ={
+          orderItems: [
+            { ProductId: '1', price: '475', quantity: '1' },
+            { ProductId: '1', price: '590', quantity: '2' }
+          ],
+          paymentTotalAmount: '565',
+          user: {
+            username: 'AAAd',
+            email: 'user1@picklete.localhost',
+            mobile: '0912345678',
+            city: '苗栗縣',
+            district: '竹南鎮',
+            zipcode: '350',
+            address: '測試用地址不用太在意'
+          },
+          shipment: {
+            username: 'AAAd',
+            email: 'user1@picklete.localhost',
+            mobile: '0912345678',
+            city: '苗栗縣',
+            district: '竹南鎮',
+            zipcode: '350',
+            address: '測試用地址不用太在意',
+            shippingType: 'delivery',
+            shippingRegion: '外島',
+            shippingFee: '100'
+
+          },
+          invoice: {
+            type: 'duplex',
+            taxId: '1122334455',
+            charityName: '',
+            title: 'miiixr'
+          },
+          usedDiscountPoint: 'false',
+          shippingFee: 100 ,
+          paymentMethod: 'ATM',
+          shopCode: shopCode.code
+        };
+
+        let result = await request(sails.hooks.http.app).post("/api/order").send({
+          order: newOrder
+        });
+
+        let createdOrder = await db.Order.find({
+          include:[
+            db.Shipment,
+            db.Invoice,
+            {
+              model: db.User,
+              where: {
+                email: 'user1@picklete.localhost'
+              }
+            },
+
+          ]
+        });
+
+        createdOrder.Shipment.should.be.Object;
+        createdOrder.Shipment.should.have.property('shippingType', 'delivery');
+        createdOrder.Shipment.should.have.property('shippingFee', 100);
+        createdOrder.User.should.be.Object;
+        createdOrder.Invoice.should.be.Object;
+
+
+        done();
+
+
+      } catch (e) {
+        done(e);
+
+      }
+
+
+    });
 
     it("create order should be success", async (done) => {
       try {
@@ -115,6 +207,7 @@ describe("about Order", () => {
 
 
     });
+
 
     it("find and pay", (done) => {
       request(sails.hooks.http.app)

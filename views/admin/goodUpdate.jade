@@ -10,16 +10,16 @@ block body
     // 館別分類
     .well.control-well.p-30.m-left-2.m-bottom-8
       h3
-        span.label.label-default.p-10-15 館別分類
+        span.label.label-default.p-10-15 #{i18n('brand-classification')}
       .form-horizontal.selectDpt
         .form-group
-          label.col-md-2.control-label 品牌名稱
+          label.col-md-2.control-label #{i18n('brand-name')}
           .col-md-10
             label.radio-inline
               input#brandType(type='radio', name='brandType', value='origin', checked=true)
 
               select.form-control(name='brandId')
-                option(value='') 選擇品牌
+                option(value='') #{i18n('select-brand')}
                 each brand, index in brands
                   option(value='#{brand.id}', selected=brand.id == good.ProductGm.BrandId) #{brand.name}
             label.radio-inline
@@ -30,15 +30,15 @@ block body
         // /form-group
         each productGmDpt, i in good.ProductGm.Dpts
           .form-group
-            label.col-md-2.control-label 館別分類
+            label.col-md-2.control-label #{i18n('brand-classification')}
             .col-md-4
               select.form-control(name='dptId[]')
-                option 選擇大館別
+                option #{i18n('select-dpt')}
                 each dpt in dpts
                   option(value='#{dpt.id}', selected=dpt.selected == productGmDpt.id) #{dpt.name}
             .col-md-4
               select.form-control(name='dptSubId[]')
-                option(value='') 選擇小館別
+                option(value='') #{i18n('select-dpt-sub')}
                 each dpt in dpts
                   if dpt.selected == productGmDpt.id
                     each dptSub in dpt.DptSubs

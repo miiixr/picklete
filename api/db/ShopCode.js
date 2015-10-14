@@ -18,39 +18,32 @@ module.exports = function(sequelize, DataTypes) {
     restriction: DataTypes.INTEGER,
 
     // 優惠起始/結束時間
-    startDate: DataTypes.DATE,
-    endDate: DataTypes.DATE,
-    restrictionDate: DataTypes.STRING,
+    startDate: DataTypes.DATEONLY,
+    endDate: DataTypes.DATEONLY,
+    restrictionDate: {
+      type: DataTypes.STRING,
+      defaultValue: 'off'
+    },
 
     // 自動發送: 0: all, 1: specific, 2: beginner
     sentType: DataTypes.ENUM(
       'all',
       'specific',
-      'beginner'
+      'beginner',
+      'none'
     ),
 
-    // 發送對象
-    sentTarget:  {
-      type: DataTypes.TEXT,
-      get: function() {
-
-        var value = this.getDataValue('sentTarget');
-
-        if(value) {
-          return JSON.parse(value);
-        }
-
-        return [];
-      },
-      set: function(value) {
-        return this.setDataValue('sentTarget', JSON.stringify(value));
-      }
-    },
     // 發送內容
     sentContent: DataTypes.TEXT
 
+  }, {
+    classMethods: {
+      associate: (models) => {
+        ShopCode.hasMany(models.User);
+        ShopCode.hasMany(models.Order);
+      }
+    }
   });
 
   return ShopCode;
 };
-
