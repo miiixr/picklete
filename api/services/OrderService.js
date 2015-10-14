@@ -232,8 +232,12 @@ var self = module.exports = {
           code: newOrder.shopCode,
           price: thisOrder.paymentTotalAmount
         }
-        let shopCodeDiscount = await ShopCodeService.use(shopCodeData);
-        thisOrder.paymentTotalAmount = shopCodeDiscount.price;
+        let shopCode = await ShopCodeService.checkCode(shopCodeData.code);
+        if(shopCode){
+          let shopCodeDiscount = await ShopCodeService.use(shopCodeData);
+          thisOrder.paymentTotalAmount = shopCodeDiscount.price;
+          thisOrder.ShopCodeId = shopCode.id;
+        }
       }
 
       let useAllPay = false;

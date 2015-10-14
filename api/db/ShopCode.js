@@ -40,6 +40,7 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: (models) => {
         ShopCode.hasMany(models.User);
+        ShopCode.hasMany(models.Order);
       }
     }
   });
