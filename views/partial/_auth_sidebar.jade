@@ -81,13 +81,13 @@
   .panel
     a.control-menu-top.collapsed(data-toggle='collapse', data-parent='#control-menu', href='#collapseSeven')
       span.glyphicon.glyphicon-comment.m-right-2
-      | 頁尾資訊
+      | #{i18n('footer-information')}
     #collapseSeven.panel-collapse.collapse
       ul.list-unstyled.p-left-6
         li
-          a(href='/admin/about') 關於我們
+          a(href='/admin/about') #{i18n('about-us')}
         li
-          a(href='/admin/FAQ') 常見問題
+          a(href='/admin/FAQ') #{i18n('faq')}
     // /panel-collapse
   // /panel
   .panel
