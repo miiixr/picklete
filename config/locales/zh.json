@@ -24,5 +24,6 @@
 	"delivery": "快遞",
 	"duplex": "二聯式發票",
 	"triplex": "三聯式發票",
-	"charity": "捐贈慈善機構"
+	"charity": "捐贈慈善機構",
+	"until": "至"
 }

@@ -3,9 +3,8 @@ extends ../_layout_auth
 block body
   - var flash = req.flash('message')
   if flash.length != 0
-    .row.col-xs-10
-      .alert.alert-danger(role='alert')
-        p= flash
+    .alert.alert-danger(role='alert')
+      p= flash
   .row
     .col-xs-10
       h2.m-bottom-6 訂單管理
@@ -86,17 +85,22 @@ block body
                 input.form-control(type='text', name='addressee', value = query.addressee)
             // /form-group
           // /col-md-4
-          .col-md-8
+
+          .col-md-4
             .form-group
-              label.col-md-2.control-label 訂單日期
-              .col-md-4
+              label.col-md-4.control-label 訂單日期
+              .col-md-8
                 input.form-control(type='date', name='createdStart', value = query.createdStart?query.createdStart: null)
-              .col-md-2.text-center
-                p.form-control-static 至
-              .col-md-4
+            // /form-group
+          // /col-md-4
+          .col-md-4
+            .form-group
+              label.col-md-4.control-label.text-center #{i18n('until')}
+              .col-md-8
                 input.form-control(type='date', name='createdEnd', value = query.createdEnd?query.createdEnd: null)
                 input(type='hidden', name='page' value = query.page?query.page: 0)
             // /form-group
+          // /col-md-4
           // /col-md-8
           .col-md-12.text-right
             a.btn.btn-primary(onClick='$("form[name=\'searchOrders\']").submit()') 查詢
@@ -121,7 +125,7 @@ block body
     // /col-md-6
     .col-md-6.desktop-text-right
       a.btn.btn-gray(href='#') 列印撿貨單
-      a.btn.btn-gray(href='#') 列印清單
+      //- a.btn.btn-gray(href='#') 列印清單
     // /col-md-6
   // /row
 
