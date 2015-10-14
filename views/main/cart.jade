@@ -20,12 +20,12 @@ block body
             #cart-viewer
             
             .p-20
-              h2.m-bottom-4 運送付款
+              h2.m-bottom-4 #{i18n('delivery-payment')}
               .row
                 .col-sm-4
                   .form-group
                     label
-                      | 運送方式
+                      | #{i18n('delivery-way')}
                       span.text-danger *
                     select#shippingType.form-control     
                       option(value='0') 請選擇

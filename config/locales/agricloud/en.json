@@ -49,5 +49,7 @@
 	"member-list": "Member List",
 	"payment": "Payment",
 	"shipping-fee-setting": "Shipping Fee Setting",
-	"shopping-cart": "Shopping Cart"
+	"shopping-cart": "Shopping Cart",
+	"delivery-payment": "Delivery Payment",
+	"delivery-way": "Delivery Way"
 }
