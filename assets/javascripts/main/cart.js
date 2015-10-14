@@ -33,18 +33,18 @@
   }
 
 
-  var reCaculatePrice = function(){
+  var reCalTotalPriceAndSaveCookie = function(){
 
     subtotal = 0;
 
     picklete_cart.orderItems.forEach(function(orderItem, index){
-      console.log('==== orderItem ==>',orderItem);
+      // console.log('==== orderItem ==>',orderItem);
 
       quantityVal =  $("input[name='quant["+index+"]']").val();
-      console.log('=== quantityVal ',index,' ===>',quantityVal);
+      // console.log('=== quantityVal ',index,' ===>',quantityVal);
 
       orderItem.quantity = quantityVal;
-      console.log('=== orderItem.quantity ===>',orderItem.quantity);
+      // console.log('=== orderItem.quantity ===>',orderItem.quantity);
 
       if(orderItem.originPrice == undefined) orderItem.originPrice ='';
       subtotal += parseInt(orderItem.price*orderItem.quantity, 10);
@@ -234,7 +234,7 @@
   // recaculate price when btnPlus/bntMinus pressed
   $(".input-group").delegate("input","change", function(){
     calcTatalPrice();
-    reCaculatePrice();
+    reCalTotalPriceAndSaveCookie();
   });
 
   // shippings
