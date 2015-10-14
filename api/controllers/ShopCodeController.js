@@ -125,7 +125,7 @@ let ShopCodeController = {
 
     try {
       var params = req.body;
-      console.log("!!!",params);
+
       let id = parseInt(req.body['id'] || req.query.id);
       let shopCode = await db.ShopCode.findOne({ where: {id: id} });
 
