@@ -175,12 +175,12 @@ module.exports.mail = {
       html: """
       <br />親愛的 %(username)s 您好：
       <br />
-      <br />%(shopCodeSentContent)s <br>
+      <br />%(shopCodeSentContent)s
       <br />
-      <br />下面是這期的優惠碼：<br>
-      <br />%(shopCodeToken)s <br>
-      <br />可在 %(startDate)s 開始使用 <br>
-      <br />並且在 %(endDate)s 前使用完畢 <br>
+      <br />下面是這期的優惠碼：
+      <br />%(shopCodeToken)s
+      <br />可在 %(startDate)s 開始使用
+      <br />並且在 %(endDate)s 前使用完畢 
       <br />
       <br />此為系統信件，請勿直接回覆此信件
       <br />

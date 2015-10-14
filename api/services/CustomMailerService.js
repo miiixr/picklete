@@ -312,9 +312,9 @@ module.exports = {
       mailSendConfig.html = sprintf(mailSendConfig.html, {
         username: user.fullName,
         shopCodeToken: shopCode.code,
-        shopCodeSentContent: shopCode.sentContent,
-        startDate: moment(shopCode.startDate).format('YYYY/mm/DD hh:mm'),
-        endDate: moment(shopCode.endDate).format('YYYY/mm/DD hh:mm'),
+        shopCodeSentContent: shopCode.sentContent || '',
+        startDate: moment(shopCode.startDate).format('YYYY/mm/DD'),
+        endDate: moment(shopCode.endDate).format('YYYY/mm/DD'),
         storeName: sails.config.store.name,
         storeName2: sails.config.store.name2,
         storeName3: sails.config.store.name3,
