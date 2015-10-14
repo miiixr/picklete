@@ -70,6 +70,7 @@ passport.protocols = require('./protocols');
 
 passport.connect = async function(req, query, profile, next) {
   console.log('=== do login ===',query);
+  console.log('=== do login ===',profile);
   var provider, user;
   user = {};
   provider = void 0;
@@ -84,12 +85,17 @@ passport.connect = async function(req, query, profile, next) {
     user.email = profile.email;
   }
   if (profile.hasOwnProperty('username')) {
-    user.username = profile.username;
+    user.username = profile.email;
   } else if (profile.hasOwnProperty('family_name')) {
     user.username = profile.family_name;
   } else {
     user.username = user.email;
   }
+
+  if(profile.hasOwnProperty('displayName')){
+    user.fullName = profile.displayName;
+  }
+  
   if (!user.username && !user.email) {
     return next(new Error('Neither a username nor email was available'));
   }
