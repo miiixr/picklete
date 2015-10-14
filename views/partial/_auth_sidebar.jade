@@ -9,9 +9,9 @@
         li
           a(href='/admin/index-slider') #{i18n('slide-active')}
         li
-          a(href='/admin/exclusive') 精選活動
+          a(href='/admin/exclusive') #{i18n('selection-active')}
         li
-          a(href='/admin/topicActivities') 主題活動
+          a(href='/admin/topicActivities') #{i18n('theme-active')}
     // /panel-collapse
   // /panel
   .panel
@@ -29,75 +29,75 @@
   .panel
     a.control-menu-top.collapsed(data-toggle='collapse', data-parent='#control-menu', href='#collapseThree')
       span.glyphicon.glyphicon-window.m-right-2
-      | 商品管理
+      | #{i18n('good-management')}
     #collapseThree.panel-collapse.collapse
       ul.list-unstyled
         li
-          a(href='/admin/goods/create') 商品上架
+          a(href='/admin/goods/create') #{i18n('good-publish')}
         li
-          a(href='/admin/goods') 商品列表
+          a(href='/admin/goods') #{i18n('good-list')}
     // /panel-collapse
   // /panel
   .panel
     a.control-menu-top.collapsed(data-toggle='collapse', data-parent='#control-menu', href='#collapseFour')
       span.glyphicon.glyphicon-gift.m-right-2
-      | 行銷工具
+      | #{i18n('marketing-strategy')}
     #collapseFour.panel-collapse.collapse
       ul.list-unstyled
         li
-          a(href='/admin/shop-discount') 商品折扣
+          a(href='/admin/shop-discount') #{i18n('good-discounts')}
         //- li
         //-   a(href='/admin/bonus') 紅利點數
         li
-          a(href='/admin/shop-buy-more') 加價購
+          a(href='/admin/shop-buy-more') #{i18n('increase-purchase')}
         li
-          a(href='/admin/shop-code') 優惠代碼
+          a(href='/admin/shop-code') #{i18n('coupon-code')}
         li
-          a(href='/admin/shop-report-form') 營收報表
+          a(href='/admin/shop-report-form') #{i18n('revenue-report')}
     // /panel-collapse
   // /panel
   .panel
     a.control-menu-top.collapsed(data-toggle='collapse', data-parent='#control-menu', href='#collapseFive')
       span.glyphicon.glyphicon-orderform.m-right-2
-      | 訂單管理
+      | #{i18n('order-management')}
     #collapseFive.panel-collapse.collapse
       ul.list-unstyled
         li
-          a(href='/admin/order') 訂單管理
+          a(href='/admin/order') #{i18n('order-management')}
         li
-          a(href='#') 建立新訂單
+          a(href='#') #{i18n('create-order')}
     // /panel-collapse
   // /panel
   .panel
     a.control-menu-top.collapsed(data-toggle='collapse', data-parent='#control-menu', href='#collapseSix')
       span.glyphicon.glyphicon-truck2.m-right-2
-      | 付款運費
+      | #{i18n('payment')}
     #collapseSix.panel-collapse.collapse
       ul.list-unstyled
         li
-          a(href='/admin/shipping') 運費設定
+          a(href='/admin/shipping') #{i18n('shipping-fee-setting')}
     // /panel-collapse
   // /panel
   .panel
     a.control-menu-top.collapsed(data-toggle='collapse', data-parent='#control-menu', href='#collapseSeven')
       span.glyphicon.glyphicon-comment.m-right-2
-      | 頁尾資訊
+      | #{i18n('footer-information')}
     #collapseSeven.panel-collapse.collapse
       ul.list-unstyled.p-left-6
         li
-          a(href='/admin/about') 關於我們
+          a(href='/admin/about') #{i18n('about-us')}
         li
-          a(href='/admin/FAQ') 常見問題
+          a(href='/admin/FAQ') #{i18n('faq')}
     // /panel-collapse
   // /panel
   .panel
     a.control-menu-top.collapsed(data-toggle='collapse', data-parent='#control-menu', href='#collapseEight')
       span.glyphicon.glyphicon-user.m-right-2
-      | 會員專區
+      | #{i18n('member-area')}
     #collapseEight.panel-collapse.collapse
       ul.list-unstyled.p-left-6
         li
-          a(href='/admin/members') 會員列表
+          a(href='/admin/members') #{i18n('member-list')}
     // /panel-collapse
   // /panel
 // /panel-group
