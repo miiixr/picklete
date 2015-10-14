@@ -15,7 +15,7 @@ block body
               input#brandType(type='radio', name='brandType', value='origin', checked=true)
 
               select.form-control#brandSelect(name='brandId')
-                option(value='') 選擇品牌
+                option(value='') #{i18n('choice-brand')}
                 each brand, index in brands
                   option(value='#{brand.id}') #{brand.name}
             label.radio-inline
@@ -33,7 +33,7 @@ block body
                 option(value='#{dpt.id}') #{dpt.name}
           .col-md-4
             select.form-control(name='dptSubId[]')
-              option(value='') #{i18n('dpt-sub')}
+              option(value='') #{i18n('select-dpt-sub')}
               each dptSub, index in dpts[0].DptSubs
                 option(value='#{dptSub.id}') #{dptSub.name}
           .col-md-2
@@ -43,7 +43,6 @@ block body
               span.glyphicon.glyphicon-plus
         // /form-group
     // /well
-
     // 基本資訊
     .well.control-well.p-30.m-left-2.m-bottom-8
       h3
