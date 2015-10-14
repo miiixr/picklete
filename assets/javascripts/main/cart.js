@@ -4,15 +4,23 @@
   var subtotalDiv = $('#subtotal');
   var totalPriceDiv = $('#totalPrice');
   var buymoreDiv = $("#buymore");
+  var packingFeeTD = $("#packingFeeField");
   var discountAmountDiv = $("#discountAmount");
   var quantityVal;
 
   var subtotal = 0;
   var totalPrice = 0;
-  var shippingFee = 0;
   var buymore = 0;
   var discountAmount = 0;
+
+  var shippingFee = 0;
   var shippingFeeFreeThreshold = 390;
+
+  var packingFee = 60;
+  var packingFeeTotal = 0;
+  var packingQuant = 0;
+
+  /* ======================================== */
 
   Cookies.remove('buyMoreIds');
   Cookies.remove('shopCode');
@@ -23,18 +31,18 @@
     picklete_cart : {orderItems: []};
   }
 
+
+  // calculate total price
   var calcTatalPrice = function () {
-    var price = (subtotal + buymore - discountAmount);
-    // // 399免運
-    // if( price > shippingFeeFreeThreshold )
-    //   totalPrice = price;
-    // else
-      totalPrice = price + shippingFee;
+    packingFeeTotal = packingFee * packingQuant;
+    totalPrice = (subtotal + buymore - discountAmount) + shippingFee + packingFeeTotal;
     console.log('=== calcTatalPrice ===', totalPrice);
     totalPriceDiv.text(totalPrice);
   }
+  // end
 
-  var reCalTotalPriceAndSaveCookie = function(){
+  // re-calculate subtotal price and save quant to cookie in case.
+  var reCalSubtotalPriceAndSaveCookie = function(){
 
     subtotal = 0;
 
@@ -49,14 +57,26 @@
 
       if(orderItem.originPrice == undefined) orderItem.originPrice ='';
       subtotal += parseInt(orderItem.price*orderItem.quantity, 10);
-      subtotalDiv.text(subtotal);
-      totalPrice = subtotal;
-      totalPriceDiv.text(totalPrice);
+    });
+    subtotalDiv.text(subtotal);
+    calcTatalPrice();
+    // save new quantities
+    Cookies.set('picklete_cart', picklete_cart);
+  };
+  // end
+
+  // save packing fee/quant to cookie.
+  var reCalPackingFeeAndSaveCookie = function(){
+
+    picklete_cart.orderItems.forEach(function(orderItem, index){
+      packVal =  $("input[name='pack["+index+"]']").val();
+      orderItem.packingFee = packingFee;
+      orderItem.packingQuant = packingQuant;
     });
     // save new quantities
     Cookies.set('picklete_cart', picklete_cart);
   };
-
+  // end
 
   var cartViewerInit = function() {
     // console.log('==== picklete_cart ==>',picklete_cart);
@@ -88,8 +108,8 @@
         '      </h5>' +
         '    </div>' +
 
-        '    <div class="col-xs-6 col-sm-3 col-md-2 desktop-p-left-0 desktop-m-top-5 m-bottom-2">' +
-        '      <div class="input-group input-group-count max-width-150"><span class="input-group-btn">' +
+        '    <div class="col-xs-6 col-sm-3 col-md-2 desktop-p-right-0 desktop-text-center desktop-m-top-5 m-bottom-2">商品數量' +
+        '      <div class="productQuantities input-group input-group-count max-width-150"><span class="input-group-btn">' +
         '          <button type="button" disabled="disabled" data-type="minus" data-field="quant['+index+']" class="btn btn-default btn-number p-left-2 p-right-2"><span class="glyphicon glyphicon-minus"></span></button></span>' +
         '        <input type="text" name="quant['+index+']" value="'+orderItem.quantity+'" min="1" max="10" class="form-control input-number text-center font-size-slarge"><span class="input-group-btn">' +
         '          <button type="button" data-type="plus" data-field="quant['+index+']" class="btn btn-default btn-number p-left-2 p-right-2"><span class="glyphicon glyphicon-plus"></span></button></span>' +
@@ -103,10 +123,12 @@
           '    </div>';
         }else{
           var liPackageService =
-            '    <div class="col-xs-6 col-sm-3 col-md-2 desktop-p-right-0 desktop-text-center desktop-m-top-5 m-bottom-2">' +
-            '       <button type="button" disabled="disabled" data-type="minus" data-field="pack['+index+']" class="btn btn-default btn-number p-left-2 p-right-2"> <span class="glyphicon glyphicon-minus"></span></button></span>' +
+            '    <div class="col-xs-6 col-sm-3 col-md-2 desktop-p-right-0 desktop-text-center desktop-m-top-5 m-bottom-2">禮品包裝' +
+            '      <div class="packQuantities input-group input-group-count max-width-150"><span class="input-group-btn">' +
+            '       <button type="button" disabled="disabled" data-type="minus" data-field="pack['+index+']" class="btn btn-default btn-number p-left-2 p-right-2"><span class="glyphicon glyphicon-minus"></span></button></span>' +
             '       <input type="text" name="pack['+index+']" value=0 min="0" max="'+orderItem.quantity+'" class="form-control input-number text-center font-size-slarge"><span class="input-group-btn">' +
             '       <button type="button" data-type="plus" data-field="pack['+index+']" class="btn btn-default btn-number p-left-2 p-right-2"><span class="glyphicon glyphicon-plus"></span></button></span>' +
+            '      </div>' +
             '    </div>';
         }
 
@@ -139,7 +161,7 @@
   // packing fee
   $(".input-group").delegate("input","change", function(){
 
-    
+
   });
   // end
 
@@ -211,13 +233,16 @@
     });
     Cookies.set('buyMoreIds', buymoreIds);
 
-
+    // shipping
     var shippingType = $("#shippingType").val();
-    var shippingFee = $("#shippingFeeSelect").val();
+    var shippingFeeTotal = shippingFee;
     var shippingRegion = $('#shippingFeeSelect').find(":selected").attr("data-region")
-    var shipping = { shippingType : shippingType ,shippingFee: shippingFee, shippingRegion: shippingRegion};
-
+    var shipping = { shippingType : shippingType ,shippingFee: shippingFeeTotal, shippingRegion: shippingRegion};
     Cookies.set('shipping', shipping);
+
+    // packingFee
+    var packing = { packingQuant: packingQuant, packingFee: packingFeeTotal};
+    Cookies.set('packing', packing);
 
     if($('#shippingFeeSelect').val() == 0 || $('#paymentMethod').val()==0)
       alert("請確認運送、付款方式");
@@ -256,19 +281,49 @@
     calcTatalPrice();
   });
 
-  // recalculate price when btnPlus/bntMinus pressed
-  $(".input-group").delegate("input","change", function(){
-    // calculate price and save cookie,
+
+  // recalculate price when btnPlus/bntMinus is pressed or clicked.
+  $(".productQuantities").delegate("input","change", function(){
+    // calculate price and save cookie before do anything.
+    reCalSubtotalPriceAndSaveCookie();
     calcTatalPrice();
-    reCalTotalPriceAndSaveCookie();
+
     // get target prudoct quantity value and its field id.
-    var thisid = $(this).attr('name');
-    var targetProductQuantityInputFieldId = thisid.charAt(6);
-    var targetProductQuantityVal = $(this).val();
+    var thisName = $(this).attr('name');
+    console.log('=== thisName ===>',thisName);
+    var itemQuantId = thisName.charAt(6);
+    console.log('=== itemQuantId ===>',itemQuantId);
+    var itemQuantVal = $(this).val();
+    console.log('=== itemQuantVal ===>',itemQuantVal);
+
     // set new maximum value
-    var targetPackedCount = $("input[name='pack["+theId+"]']");
-    targetPackedCount.attr('max',targetProductQuantityVal);
+    var targetPackedCount = $("input[name='pack["+itemQuantId+"]']");
+    targetPackedCount.attr('max',itemQuantVal);
   });
+  // end
+
+
+  // recalculate price when btnPlus/bntMinus is pressed.
+  $(".packQuantities").delegate("input","change", function(){
+    packingQuant = 0;
+    console.log('=== picklete_cart.orderItems.length ===>',picklete_cart.orderItems.length);
+    for(var i=0;i<picklete_cart.orderItems.length;i++){
+       var count = parseInt($("input[name='pack["+i+"]']").val());
+       packingQuant += count;
+    }
+    console.log('=== packingQuant ===>',packingQuant);
+
+    //
+    packingFeeTotal = packingQuant * packingFee;
+
+    // set value to TD field
+    packingFeeTD.text(packingFeeTotal);
+
+    // calculate price and save cookie after finish.
+    calcTatalPrice();
+  });
+  //end
+
 
   // shippings
   $("#shippingType").change(function(){

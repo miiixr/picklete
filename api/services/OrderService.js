@@ -157,7 +157,7 @@ var self = module.exports = {
     try {
       if (! newOrder.orderItems)
         throw new Error('無購買任何商品，請跳轉商品頁');
-      
+
       let orderItems = newOrder.orderItems.reduce((result, orderItem) => {
         if(parseInt(orderItem.quantity) === 0) return result;
 
@@ -214,7 +214,9 @@ var self = module.exports = {
         UserId: buyer.id,
         paymentTotalAmount:0,
         serialNumber: await OrderService.generateOrderSerialNumber(),
-        useBunusPoint: 0
+        useBunusPoint: 0,
+        packingFee: newOrder.packingFee,
+        packingQuant: newOrder.packingQuant
       };
 
       products.forEach((product, index) => {

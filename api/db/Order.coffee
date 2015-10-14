@@ -61,6 +61,10 @@ module.exports = (sequelize, DataTypes) ->
     status:
       type: DataTypes.ENUM('new', 'paymentConfirm', 'deliveryConfirm')
       defaultValue: 'new'
+    # packing fee
+    packingFee:DataTypes.FLOAT
+    # packing quantity
+    packingQuant: DataTypes.INTEGER
   }, classMethods: associate: (models) ->
     # user information / buyer
     Order.belongsTo models.User

@@ -40,7 +40,7 @@
 
   // display shipping fee
   var shippingFeeDiv = $('#shippingFeeField');
-  var shippingFeePrice = parseInt(Cookies.getJSON('shippingFee'));
+  var shippingFeePrice = parseInt(Cookies.getJSON('shipping').shippingFee);
   shippingFeeDiv.text(shippingFeePrice);
 
   var picklete_cart = Cookies.getJSON('picklete_cart');
@@ -52,6 +52,7 @@
   var subtotalDiv = $('#subtotal');
   var totalPriceDiv = $('#totalPrice');
   var buymoreDiv = $('#buymore');
+  var packingFeeTD = $("#packingFeeField");
 
   var subtotal = 0;
   var totalPrice = 0;
@@ -72,6 +73,11 @@
   // count 加價購
   totalPrice += buymore;
 
+  // count packing fee
+  var packingFee = parseInt(Cookies.getJSON('packing').packingFee);
+  packingFeeTD.text(packingFee);
+  totalPrice += packingFee;
+
   var discountAmountDiv = $("#discountAmount");
   var discountAmount = 0;
   if(shopCodeObject){
@@ -81,7 +87,9 @@
   }
 
   // count shipping fee and display
-  totalPriceDiv.text(totalPrice+shippingFeePrice);
+  totalPriceDiv.text(totalPrice);
+
+
 
   $("#btnOrderCreate").click(function()
   {
@@ -131,6 +139,11 @@
     postData.order.shipment.shippingFee = shipping.shippingFee;
     postData.order.shipment.shippingType = shipping.shippingType;
     postData.order.shipment.shippingRegion = shipping.shippingRegion;
+
+    // packing things
+    var packing = Cookies.getJSON('packing');
+    postData.order.packingFee = packing.packingFee;
+    postData.order.packingQuant = packing.packingQuant;
 
     console.log('=== postData ===', postData);
 
