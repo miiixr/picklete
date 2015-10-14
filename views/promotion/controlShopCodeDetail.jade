@@ -75,11 +75,11 @@ block body
         .col-sm-9.col-md-10
           .radio
             label
-              input#optionsRadios1(type='radio', name='sentType', value='all', checked='')
+              input#optionsRadios1.m-bottom-2(type='radio', name='sentType', value='all', checked='')
               | 									自動發送全館會員
           .radio
             label
-              input#optionsRadios2(type='radio', name='sentType', value='specific')
+              input#optionsRadios2.m-bottom-2(type='radio', name='sentType', value='specific')
               | 									自動發送指定會員
               a.btn.btn-default.btn-sm#showUserSelect 點我選擇會員
           select#custom-headers.searchable(multiple='multiple' style="display: none;")

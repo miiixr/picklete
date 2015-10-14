@@ -155,7 +155,9 @@ var self = module.exports = {
     let result = {};
 
     try {
-
+      if (! newOrder.orderItems)
+        throw new Error('無購買任何商品，請跳轉商品頁');
+      
       let orderItems = newOrder.orderItems.reduce((result, orderItem) => {
         if(parseInt(orderItem.quantity) === 0) return result;
 

@@ -14,7 +14,7 @@ block body
             label.col-md-4.control-label #{i18n('brand-name')}
             .col-md-8
               select.form-control(name = "brandId", data-value=query.brandId)
-                option(value=-1) 所有品牌
+                option(value=-1) #{i18n('all-brand')}
                 each brand, index in brands
                   option(value='#{brand.id}') #{brand.name}
           // /form-group
@@ -31,7 +31,7 @@ block body
             label.col-md-4.control-label #{i18n('dpt')}
             .col-md-8
               select.form-control(name='dptId', data-value=query.dptId, data-dpts=dpts, form='goodQuery')
-                option(value=-1) 所有館別
+                option(value=-1) #{i18n('all-categories')}
                 each dpt, index in dpts
                   option(value='#{dpt.id}') #{dpt.name}
           // /form-group
@@ -57,7 +57,7 @@ block body
             label.col-md-4.control-label #{i18n('dpt-sub')}
             .col-md-8
               select.form-control(name='dptSubId', data-value=query.dptSubId)
-                option(value=-1) 所有館別
+                option(value=-1) #{i18n('all-product')}
                 each dptSub, index in dptSubs
                   option(value='#{dptSub.id}') #{dptSub.name}
           // /form-group
@@ -94,16 +94,21 @@ block body
                 option(value='true') 上架
           // /form-group
         // /col-md-4
-        .col-md-8
+
+        .col-md-4
           .form-group
-            label.col-md-2.control-label #{i18n('filing-date')}
-            .col-md-4
+            label.col-md-4.control-label #{i18n('filing-date')}
+            .col-md-8
               input.form-control(type='date', name='dateFrom', value=query.dateFrom?query.dateFrom:null)
-            .col-md-2.text-center
-              p.form-control-static #{i18n('to')}
-            .col-md-4
+          // /form-group
+        // /col-md-4
+        .col-md-4
+          .form-group
+            label.col-md-4.control-label.text-center #{i18n('until')}
+            .col-md-8
               input.form-control(type='date', name='dateEnd', value=query.dateEnd?query.dateEnd:null)
           // /form-group
+        // /col-md-4
         // /col-md-7
         .col-md-12.text-right
           a.btn.btn-primary(onClick='$("form[name=\'searchProducts\']").submit()') 查詢

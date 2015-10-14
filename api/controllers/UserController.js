@@ -30,9 +30,16 @@ let UserController = {
   purchase:async (req, res) => {
     let loginUser = UserService.getLoginUser(req);
     let orders = await db.Order.findAll({
-      where: {UserId: loginUser.id}
+      where: {UserId: loginUser.id},
+      include: [{
+        model: db.OrderItem
+      },{
+        model: db.Shipment
+      },{
+        model: db.Invoice
+      }]
     });
-    // console.log(orders);
+    console.log(orders);
     res.view("main/memberPurchase",{
       orders
     });
