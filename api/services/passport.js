@@ -124,7 +124,7 @@ passport.connect = async function(req, query, profile, next) {
         }
         passport = await passport.save();
         user = await db.User.findOne({
-          where: passport.user.id
+          where: passport.UserId
         });
         if(user)
           next(null, user)
