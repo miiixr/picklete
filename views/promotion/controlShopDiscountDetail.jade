@@ -36,11 +36,10 @@ block body
         label.col-sm-3.col-md-2.control-label 活動主圖
         .col-sm-9.col-md-10
           .max-width-150
-            //
-              fileinput-img-square
-              ==================================================
+
             .fileinput.fileinput-new(data-provides='fileinput')
-              .fileinput-new.dashed-block-2.fileinput-square
+              .fileinput-new.fileinput-square
+                img.img-full(src='http://fakeimg.pl/150x150/dddddd/FFF/?text=cover')
               // /fileinput-new
               .fileinput-preview.fileinput-exists.border-block-1
               // /fileinput-preview
@@ -48,7 +47,22 @@ block body
                 span.btn.btn-default.btn-sm.btn-file
                   span.fileinput-new Select image
                   span.fileinput-exists Change
-                  input(type='file', name='...',form='shopDiscount')
+                  input.fileInput(type='file', name="uploadfile", data-name='coverPhoto[]')
+                  input(type='hidden', name="filename", value='coverPhoto[]')
+                  input(type='hidden', name="width", value='150')
+                  input(type='hidden', name="height", value='150')
+                  input(type='hidden', name='coverPhoto[]', form='goodForm', value='')
+                a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
+
+            //
+              fileinput-img-square
+              ==================================================
+            //      
+              .fileinput-btn
+                span.btn.btn-default.btn-sm.btn-file
+                  span.fileinput-new Select image
+                  span.fileinput-exists Change
+                  input(type='file', name='...', form='shopDiscount')
                 a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
               // /fileinput-btn
             // /fileinput
