@@ -68,7 +68,7 @@ passport.protocols = require('./protocols');
  * @param {Function} next
  */
 
-passport.connect = function(req, query, profile, next) {
+passport.connect = async function(req, query, profile, next) {
   console.log('=== do login ===');
   var provider, user;
   user = {};
@@ -93,63 +93,111 @@ passport.connect = function(req, query, profile, next) {
   if (!user.username && !user.email) {
     return next(new Error('Neither a username nor email was available'));
   }
-  db.Passport.findOne({
-    where: {
-      provider: provider,
-      identifier: query.identifier.toString()
-    }
-  }, function(err, passport) {
-    if (err) {
-      return next(err);
-    }
+
+  try {
+    let passport = await db.Passport.findOne({
+      where: {
+        provider: provider,
+        identifier: query.identifier.toString()
+      }
+    });
+
     if (!req.user) {
       if (!passport) {
-        User.create(user, function(err, user) {
-          if (err) {
-            if (err.code === 'E_VALIDATION') {
-              if (err.invalidAttributes.email) {
-                req.flash('error', 'Error.Passport.Email.Exists');
-              } else {
-                req.flash('error', 'Error.Passport.User.Exists');
-              }
-            }
-            return next(err);
-          }
-          query.user = user.id;
-          Passport.create(query, function(err, passport) {
-            if (err) {
-              return next(err);
-            }
-            next(err, user);
-          });
-        });
+        let creatUser = await db.User.create(user);
+        query.user = creatUser.id;
+        passport = await db.Passport.create(query);
       } else {
         if (query.hasOwnProperty('tokens') && query.tokens !== passport.tokens) {
           passport.tokens = query.tokens;
         }
-        passport.save(function(err, passport) {
-          if (err) {
-            return next(err);
-          }
-          db.User.findOne({
-            where: passport.user.id
-          }, next);
+        passport = await passport.save();
+        user = await db.User.findOne({
+          where: passport.user.id
         });
+        if(user)
+          next(null, user)
+        else
+          next(new Error())
       }
-    } else {
+    }else{
       if (!passport) {
         query.user = req.user.id;
-        Passport.create(query, function(err, passport) {
-          if (err) {
-            return next(err);
-          }
-          next(err, req.user);
-        });
+        passport = Passport.create(query);
+        next(err, req.user);
       } else {
         next(null, req.user);
       }
     }
-  });
+  } catch (err) {
+    if(err.code === 'E_VALIDATION') {
+      if (err.invalidAttributes.email) {
+        req.flash('error', 'Error.Passport.Email.Exists');
+      } else {
+        req.flash('error', 'Error.Passport.User.Exists');
+      }
+    }
+    return next(err);
+  }
+  //
+  // let passport = await db.Passport.findOne({
+  //   where: {
+  //     provider: provider,
+  //     identifier: query.identifier.toString()
+  //   }
+  // }, function(err, passport) {
+  //   if (err) {
+  //     return next(err);
+  //   }
+  //
+  //   if (!req.user) {
+  //     if (!passport) {
+  //       User.create(user, function(err, user) {
+  //         if (err) {
+  //           if (err.code === 'E_VALIDATION') {
+  //             if (err.invalidAttributes.email) {
+  //               req.flash('error', 'Error.Passport.Email.Exists');
+  //             } else {
+  //               req.flash('error', 'Error.Passport.User.Exists');
+  //             }
+  //           }
+  //           return next(err);
+  //         }
+  //         query.user = user.id;
+  //         Passport.create(query, function(err, passport) {
+  //           if (err) {
+  //             return next(err);
+  //           }
+  //           next(err, user);
+  //         });
+  //       });
+  //     } else {
+  //       if (query.hasOwnProperty('tokens') && query.tokens !== passport.tokens) {
+  //         passport.tokens = query.tokens;
+  //       }
+  //       passport.save(function(err, passport) {
+  //         if (err) {
+  //           return next(err);
+  //         }
+  //         db.User.findOne({
+  //           where: passport.user.id
+  //         }, next);
+  //       });
+  //     }
+  //   } else {
+  //     if (!passport) {
+  //       query.user = req.user.id;
+  //       Passport.create(query, function(err, passport) {
+  //         if (err) {
+  //           return next(err);
+  //         }
+  //         next(err, req.user);
+  //       });
+  //     } else {
+  //       next(null, req.user);
+  //     }
+  //   }
+  // });
 };
 
 

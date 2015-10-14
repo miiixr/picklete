@@ -93,7 +93,7 @@ module.exports = {
       options:{
         clientID: ''
         clientSecret: ''
-        scope: [ 'email' ]
+        scope: [ 'email', 'public_profile' ]
         callbackURL: "http://localhost:1337/auth/facebook/callback"
       }
     }
