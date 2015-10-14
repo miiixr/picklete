@@ -17,6 +17,8 @@
     "jquery-twzipcode": "~1.6.7",
     "moment": "~2.10.6",
     "js-cookie": "~2.0.3",
-    "jquery.serializeJSON": "~2.5.0"
+    "jquery.serializeJSON": "~2.5.0",
+    "multi-select": "~0.9.12",
+    "quicksearch": "~2.0.5"
   }
 }

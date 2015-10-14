@@ -151,6 +151,8 @@ OrderController = {
 
     try {
 
+      console.log("Order",newOrder);
+
       let useAllPay = false;
 
       if (sails.config.useAllPay !== undefined) {

@@ -1,3 +1,4 @@
+import moment from 'moment';
 
 module.exports = {
   checkCode : async (code) => {
@@ -13,6 +14,37 @@ module.exports = {
     }
   },
 
+
+
+  sendWhenRegister: async ({user}) => {
+    let shopCodes = await db.ShopCode.findAll({
+      where:{
+        sentType: 'beginner',
+        $or:[{
+          restrictionDate: 'on'
+        },{
+          startDate:{
+            $lte: moment(new Date()).format('YYYY/MM/DD')
+          },
+          endDate:{
+            $gte: moment(new Date()).format('YYYY/MM/DD')
+          },
+        }]
+      }
+    });
+
+    let users = [user];
+
+    let messageResults = await* shopCodes.map((shopCode) => {
+      return ShopCodeService.sendCode({shopCode, users});
+    });
+
+    return messageResults;
+
+
+
+  },
+
   use: async ({code, price}) => {
     try {
       let result = await db.ShopCode.findOne({
@@ -22,10 +54,10 @@ module.exports = {
             restrictionDate: 'on'
           },{
             startDate:{
-              $lte: new Date()
+              $lte: moment(new Date()).format('YYYY/MM/DD')
             },
             endDate:{
-              $gte: new Date()
+              $gte: moment(new Date()).format('YYYY/MM/DD')
             },
           }],
           restriction:{
@@ -52,12 +84,16 @@ module.exports = {
   },
 
   sendAllUsers: async ({shopCode}) => {
+    console.log('=== shopCode ===', shopCode);
     let users = await db.User.findAll();
     await ShopCodeService.sendCode({shopCode, users});
 
   },
 
-  sendTargetUsers: async ({shopCode, users}) => {
+  sendTargetUsers: async ({shopCode}) => {
+    console.log('=== shopCode ===', shopCode);
+    let users = shopCode.Users;
+
     await ShopCodeService.sendCode({shopCode, users});
   },
 
@@ -65,8 +101,7 @@ module.exports = {
 
     let messages = await* users.map((user) => {
       let messageConfig = CustomMailerService.shopCodeMail({shopCode, user});
-      let message = db.Message.create(messageConfig);
-      return message
+      return db.Message.create(messageConfig);
     })
 
     await* messages.map((message) => CustomMailerService.sendMail(message))
