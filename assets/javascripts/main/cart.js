@@ -5,12 +5,15 @@
   var totalPriceDiv = $('#totalPrice');
   var buymoreDiv = $("#buymore");
   var discountAmountDiv = $("#discountAmount");
+  var quantityVal;
 
   var subtotal = 0;
   var totalPrice = 0;
   var shippingFee = 0;
   var buymore = 0;
   var discountAmount = 0;
+  var quantities = [];
+  var prices = [];
 
   Cookies.remove('buyMoreIds');
   Cookies.remove('shopCode');
@@ -21,14 +24,48 @@
     picklete_cart : {orderItems: []};
   }
 
+  var calcTatalPrice = function () {
+
+    totalPrice = (subtotal + shippingFee + buymore - discountAmount);
+    console.log('=== calcTatalPrice ===', totalPrice);
+
+    totalPriceDiv.text(totalPrice);
+  }
+
+
+  var reCalTotalPriceAndSaveCookie = function(){
+
+    subtotal = 0;
+
+    picklete_cart.orderItems.forEach(function(orderItem, index){
+      // console.log('==== orderItem ==>',orderItem);
+
+      quantityVal =  $("input[name='quant["+index+"]']").val();
+      // console.log('=== quantityVal ',index,' ===>',quantityVal);
+
+      orderItem.quantity = quantityVal;
+      // console.log('=== orderItem.quantity ===>',orderItem.quantity);
+
+      if(orderItem.originPrice == undefined) orderItem.originPrice ='';
+      subtotal += parseInt(orderItem.price*orderItem.quantity, 10);
+      subtotalDiv.text(subtotal);
+      totalPrice = subtotal;
+      totalPriceDiv.text(totalPrice);
+    });
+    // save new quantities
+    Cookies.set('picklete_cart', picklete_cart);
+  };
+
+
   var cartViewerInit = function() {
 
     picklete_cart.orderItems.forEach(function(orderItem, index){
 
+      // console.log('==== orderItem ==>',orderItem);
+
       if(orderItem.originPrice == undefined) orderItem.originPrice ='';
 
-            console.log('orderItem', orderItem);
-            console.log('=== orderItem.quantity ===>', orderItem.quantity);
+      quantity = orderItem.quantity;
 
       var liOrderItem =
         '<div id="orderItem" class="p-20 border-bottom-1">' +
@@ -77,6 +114,7 @@
       totalPriceDiv.text(totalPrice);
 
       cartViewer.append(liOrderItem);
+
 
     });
 
@@ -133,14 +171,6 @@
   }
 
 
-
-  var calcTatalPrice = function () {
-
-    totalPrice = subtotal + shippingFee + buymore - discountAmount;
-    console.log('=== calcTatalPrice ===', totalPrice);
-
-    totalPriceDiv.text(totalPrice);
-  }
 
   $("#nextSetp").click(function () {
     var buymoreIds = [];
@@ -201,8 +231,11 @@
     calcTatalPrice();
   });
 
-
-
+  // recaculate price when btnPlus/bntMinus pressed
+  $(".input-group").delegate("input","change", function(){
+    calcTatalPrice();
+    reCalTotalPriceAndSaveCookie();
+  });
 
   // shippings
   $("#shippingType").change(function(){
