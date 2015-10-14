@@ -59,13 +59,13 @@
   .panel
     a.control-menu-top.collapsed(data-toggle='collapse', data-parent='#control-menu', href='#collapseFive')
       span.glyphicon.glyphicon-orderform.m-right-2
-      | 訂單管理
+      | #{i18n('order-management')}
     #collapseFive.panel-collapse.collapse
       ul.list-unstyled
         li
-          a(href='/admin/order') 訂單管理
+          a(href='/admin/order') #{i18n('order-management')}
         li
-          a(href='#') 建立新訂單
+          a(href='#') #{i18n('create-order')}
     // /panel-collapse
   // /panel
   .panel
