@@ -14,7 +14,7 @@ block body
             label.col-md-4.control-label #{i18n('brand-name')}
             .col-md-8
               select.form-control(name = "brandId", data-value=query.brandId)
-                option(value=-1) 所有品牌
+                option(value=-1) #{i18n('all-brand')}
                 each brand, index in brands
                   option(value='#{brand.id}') #{brand.name}
           // /form-group
@@ -31,7 +31,7 @@ block body
             label.col-md-4.control-label #{i18n('dpt')}
             .col-md-8
               select.form-control(name='dptId', data-value=query.dptId, data-dpts=dpts, form='goodQuery')
-                option(value=-1) 所有館別
+                option(value=-1) #{i18n('all-categories')}
                 each dpt, index in dpts
                   option(value='#{dpt.id}') #{dpt.name}
           // /form-group
@@ -57,7 +57,7 @@ block body
             label.col-md-4.control-label #{i18n('dpt-sub')}
             .col-md-8
               select.form-control(name='dptSubId', data-value=query.dptSubId)
-                option(value=-1) 所有館別
+                option(value=-1) #{i18n('all-product')}
                 each dptSub, index in dptSubs
                   option(value='#{dptSub.id}') #{dptSub.name}
           // /form-group
