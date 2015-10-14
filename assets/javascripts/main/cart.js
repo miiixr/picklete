@@ -59,6 +59,7 @@
 
 
   var cartViewerInit = function() {
+    // console.log('==== picklete_cart ==>',picklete_cart);
 
     picklete_cart.orderItems.forEach(function(orderItem, index){
 
@@ -83,7 +84,7 @@
         '        <a href="brands">'+ orderItem.brand +'</a>' +
         '      </h6>' +
         '      <h5 class="text-roboto letter-spacing-1 m-top-1-min">' +
-        '        <a href="shop-product">'+ orderItem.name +'</a>' +
+        '        <a href="/shop/products/'+orderItem.productGmId+'/'+orderItem.ProductId+'">'+ orderItem.name +'</a>' +
         '      </h5>' +
         '    </div>' +
 
@@ -93,21 +94,35 @@
         '        <input type="text" name="quant['+index+']" value="'+orderItem.quantity+'" min="1" max="10" class="form-control input-number text-center font-size-slarge"><span class="input-group-btn">' +
         '          <button type="button" data-type="plus" data-field="quant['+index+']" class="btn btn-default btn-number p-left-2 p-right-2"><span class="glyphicon glyphicon-plus"></span></button></span>' +
         '      </div>' +
-        '    </div>' +
+        '    </div>' ;
 
-        '    <div class="col-xs-6 col-sm-3 col-md-2 desktop-p-right-0 desktop-text-center desktop-m-top-5 m-bottom-2">' +
-        '      此商品不提供<br>包裝服務' +
-        '    </div>' +
+      if(!orderItem.packable){
+        var liPackageService =
+          '    <div class="col-xs-6 col-sm-3 col-md-2 desktop-p-right-0 desktop-text-center desktop-m-top-5 m-bottom-2">' +
+          '      此商品不提供<br>包裝服務' +
+          '    </div>';
+        }else{
+          var liPackageService =
+            '    <div class="col-xs-6 col-sm-3 col-md-2 desktop-p-right-0 desktop-text-center desktop-m-top-5 m-bottom-2">' +
+            '       <button type="button" disabled="disabled" data-type="minus" data-field="pack['+index+']" class="btn btn-default btn-number p-left-2 p-right-2"> <span class="glyphicon glyphicon-minus"></span></button></span>' +
+            '       <input type="text" name="pack['+index+']" value=0 min="0" max="'+orderItem.quantity+'" class="form-control input-number text-center font-size-slarge"><span class="input-group-btn">' +
+            '       <button type="button" data-type="plus" data-field="pack['+index+']" class="btn btn-default btn-number p-left-2 p-right-2"><span class="glyphicon glyphicon-plus"></span></button></span>' +
+            '    </div>';
+        }
 
+      var liPrice =
         '    <div class="col-xs-6 col-sm-2 col-md-2 desktop-text-center desktop-m-top-5 m-bottom-1">' +
         '      <h4 class="m-top-0">$ '+orderItem.price+'<br><small class="text-line-through">'+orderItem.originPrice+'</small></h4>' +
-        '    </div>' +
+        '    </div>';
 
+      var liRemoveItem =
         '    <div class="col-xs-6 col-sm-1 col-md-1 text-right desktop-m-top-5">' +
         '      <a id="remveOrderItem" data-index="'+index+'" data-productId="'+orderItem.id+'" href="#" data-toggle="modal" data-target="#modal-delete" class="btn btn-link delete-link"><span class="glyphicon glyphicon-remove"></span></a>' +
         '    </div>' +
         '  </div>' +
         '</div>';
+
+      liOrderItem = liOrderItem + liPackageService + liPrice + liRemoveItem;
 
       subtotal += parseInt(orderItem.price*orderItem.quantity, 10);
       subtotalDiv.text(subtotal);
@@ -115,20 +130,23 @@
       totalPriceDiv.text(totalPrice);
 
       cartViewer.append(liOrderItem);
-
-
     });
 
     cartViewer.inputNumber();
 
   };
 
+  // packing fee
+  $(".input-group").delegate("input","change", function(){
+
+    
+  });
+  // end
+
   // shippingfee select
   $(".container").on("change", "#shippingFeeSelect", function (e) {
     e.preventDefault();
-
     calcTatalPrice();
-
     $("#feeFreeNoticer").text('');
 
     // judge threshold
@@ -179,10 +197,7 @@
      Cookies.set('picklete_cart', picklete_cart);
 
      window.location.reload();
-
   }
-
-
 
   $("#nextSetp").click(function () {
     var buymoreIds = [];
@@ -200,8 +215,6 @@
     var shippingType = $("#shippingType").val();
     var shippingFee = $("#shippingFeeSelect").val();
     var shippingRegion = $('#shippingFeeSelect').find(":selected").attr("data-region")
-
-
     var shipping = { shippingType : shippingType ,shippingFee: shippingFee, shippingRegion: shippingRegion};
 
     Cookies.set('shipping', shipping);
@@ -245,8 +258,16 @@
 
   // recalculate price when btnPlus/bntMinus pressed
   $(".input-group").delegate("input","change", function(){
+    // calculate price and save cookie,
     calcTatalPrice();
     reCalTotalPriceAndSaveCookie();
+    // get target prudoct quantity value and its field id.
+    var thisid = $(this).attr('name');
+    var targetProductQuantityInputFieldId = thisid.charAt(6);
+    var targetProductQuantityVal = $(this).val();
+    // set new maximum value
+    var targetPackedCount = $("input[name='pack["+theId+"]']");
+    targetPackedCount.attr('max',targetProductQuantityVal);
   });
 
   // shippings
