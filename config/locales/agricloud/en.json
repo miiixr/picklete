@@ -8,7 +8,7 @@
 	"product-number": "Product Number",
 	"commodity-prices": "Commodity Prices",
 	"current-inventory": "Current Inventory",
-	"to": "To",
+	"until": "until",
 	"trafficking-in-state": "Trafficking In State",
 	"filing-date": "Filing Date",
 	"brand-classification": "Brand Classification",
@@ -27,5 +27,7 @@
 	"triplex": "三聯式發票",
 	"charity": "捐贈慈善機構",
 	"prime-brand": "prime-brand",
-	"dpt-manager": "dpt-manager"
+	"dpt-manager": "dpt-manager",
+	"home-management": "Home Management",
+	"slide-active": "Slide Active"
 }
