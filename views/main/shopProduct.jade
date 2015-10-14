@@ -120,7 +120,7 @@ block body
                 // /col-sm-4
                 .col-sm-8
                   a.btn.btn-black.border-radius-circle.btn-block.btn-lg.add-to-cart(
-                  data-productId=product.id, data-photos=product.photos, 
+                  data-productGmId=productGm.id,, data-productId=product.id, data-photos=product.photos, 
                   data-brand=productGm.name, data-name=product.name , data-brandname=_.find(brands, {id: product.ProductGm.BrandId}).name,
                   data-price=product.price) 加入購物車 
                 // /col-sm-8
@@ -199,14 +199,14 @@ block body
                 h4.m-bottom-4 服務項目 #{product.services}
                 .row.row-s.m-bottom-10
                   each service, index in ['快遞宅配', '超商取貨', '國際運送', '禮品包裝']
-                    .col-sm-6
+                    .col-sm-6 #{services[index]}
                       if services[index]
-                        .border-block-2.text-center.p-10.m-bottom-2
+                        .border-block-2.text-center.p-10.m-bottom-2(id='service-#{index}')
                           h4
                             span.glyphicon.glyphicon-truck.m-right-2.font-size-xlarge
                             | #{service}
                       else
-                        .border-block-2.text-center.p-10.m-bottom-2.disabled
+                        .border-block-2.text-center.p-10.m-bottom-2.disabled(id='service-#{index}')
                           h4
                             span.glyphicon.glyphicon-truck.m-right-2.font-size-xlarge
                             | #{service}
