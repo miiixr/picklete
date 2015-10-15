@@ -38,7 +38,7 @@ block body
                 .col-sm-4
                   .form-group
                     label
-                      | 運送區域
+                      | #{i18n('delivery-area')}
                       span.text-danger *
                     select#shippingFeeSelect.form-control     
                      option(value='0') #{i18n('select')}
@@ -52,7 +52,7 @@ block body
                 .col-sm-4
                   .form-group
                     label
-                      | 付款方式
+                      | #{i18n('payment-terms')}
                       span.text-danger *
                     select#paymentMethod.form-control
                       option(value='0') #{i18n('select')}
