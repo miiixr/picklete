@@ -91,8 +91,8 @@ module.exports = {
       protocol: 'oauth2'
       strategy: require('passport-facebook').Strategy
       options:{
-        clientID: ''
-        clientSecret: ''
+        clientID: '1598226980388780'
+        clientSecret: '71ae89eba342ce5a48a30a870d6bd473'
         scope: [ 'email', 'public_profile' ]
         callbackURL: "http://localhost:1337/auth/facebook/callback"
       }
