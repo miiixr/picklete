@@ -26,14 +26,13 @@ OrderController = {
       else
         query.serialNumber =''
 
+      queryShipmentObj.shippingMethod = '';
       if(query.shippingMethod != '0' && query.shippingMethod){
         if(query.shippingMethod == 1){
           queryShipmentObj.shippingMethod = 'postoffice';
         }else if(query.shippingMethod == 2){
           queryShipmentObj.shippingMethod = 'delivery';
         }
-      }else{
-        queryShipmentObj.shippingMethod = '';
       }
 
       // if(query.keyword)
