@@ -13,10 +13,14 @@ module.exports = async function(req, res, next) {
     let role = await db.Role.find({
       where: {authority: 'admin'}
     });
-    if (userInfo.RoleId === role.id) {
+    if(referer['1'] === 'admin'){
+      if (userInfo.RoleId === role.id) {
+        return next();
+      } else {
+        return res.redirect('/');
+      }
+    }else{
       return next();
-    } else {
-      return res.redirect('/');
     }
   }
   if (referer['1'] === 'admin') {
