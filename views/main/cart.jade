@@ -2,7 +2,7 @@ extends ../_layout_head
 
 block body
     .container
-      h1.text-black.m-top-10.m-bottom-6 我的購物車
+      h1.text-black.m-top-10.m-bottom-6 #{i18n('shopping-cart')}
       #nothing.border-block-3.m-bottom-10.text-center.p-top-10.p-bottom-10
         span.glyphicon.glyphicon-shopping-cart.text-muted.font-size-xxxxlarge.m-bottom-4
         h1.m-bottom-4.text-muted 購物車空空呦！
@@ -20,17 +20,17 @@ block body
             #cart-viewer
             
             .p-20
-              h2.m-bottom-4 運送付款
+              h2.m-bottom-4 #{i18n('delivery-payment')}
               .row
                 .col-sm-4
                   .form-group
                     label
-                      | 運送方式
+                      | #{i18n('delivery-way')}
                       span.text-danger *
                     select#shippingType.form-control     
                       option(value='0') 請選擇
-                      option(value='delivery') 宅配 
-                      option(value='postoffice') 郵局
+                      option(value='delivery') #{i18n('delivery')}
+                      option(value='postoffice') #{i18n('postoffice')}
                     //- select.form-control
                     //-   option 宅配 / 郵局
                   // /form-group
@@ -60,6 +60,10 @@ block body
                         option(value= method.code) #{method.name}
                   // /form-group
                 // /col-sm-4
+              // /row
+              .row
+              span *購物滿390即可享有免運費優惠！
+                span#feeFreeNoticer
               // /row
             // /p-20
           // /col-md-9

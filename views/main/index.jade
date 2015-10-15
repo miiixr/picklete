@@ -18,7 +18,8 @@ block body
           img.img-full(src='#{slider.cover}', alt='#{slider.title}')
           div(class="carousel-caption #{slider.location}", style="color: #{slider.color}")
             h1 #{slider.title}
-            p #{slider.description}
+            - if (slider.description)
+              p !{slider.description.replace(/\n/g, "<br>")}
           // /carousel-caption
     // /carousel-inner
     a.left.carousel-control(href='#carousel-index', role='button', data-slide='prev')
@@ -316,16 +317,16 @@ block body
           .col-sm-4
             .row.row-m
               .col-xs-6
+                a.link-border.m-bottom-4(href='#{activity.ImageB.url}')
+                  img.img-full(src='#{activity.ImageB.path}')
+              // /col-xs-6
+              .col-xs-6
                 a.link-border.m-bottom-4(href='#{activity.ImageB1.url}')
                   img.img-full(src='#{activity.ImageB1.path}')
               // /col-xs-6
-              .col-xs-6
+              .col-xs-12
                 a.link-border.m-bottom-4(href='#{activity.ImageB2.url}')
                   img.img-full(src='#{activity.ImageB2.path}')
-              // /col-xs-6
-              .col-xs-12
-                a.link-border.m-bottom-4(href='#{activity.ImageB.url}')
-                  img.img-full(src='#{activity.ImageB.path}')
               // /col-xs-12
             // /row
           // /col-sm-4
@@ -336,7 +337,7 @@ block body
                   img.img-full(src='#{activity.ImageC.path}')
               // /col-xs-12
               .col-xs-6
-                a.link-border.m-bottom-4(href='#{activity.ImageC1.url}')
+                a.link-border.m-bottom-4(href='#{activity.ImageC.url}')
                   img.img-full(src='#{activity.ImageC1.path}')
               // /col-xs-6
               .col-xs-6

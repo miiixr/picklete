@@ -18,6 +18,8 @@ module.exports.i18n = {
   localesDirectory: 'views/_layout_head.jade'
   localesDirectory: 'views/admin/goodList.jade'
   localesDirectory: 'views/admin/goodCreate.jade'
+  localesDirectory: 'views/partial/_auth_sidebar'
+  localesDirectory: 'views/main/cart.jade'
   locales: ['en', 'zh']
 }
 
