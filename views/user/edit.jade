@@ -25,3 +25,18 @@ block body
               .col-sm-4.col-sm-offset-4
                 button.btn.btn-black.border-radius-circle.btn-block(type='submit') 確認修改
             
+block js
+  script(src="/javascripts/jquery.twzipcode.min.js")  
+  
+  script.
+    $('#twzipcode').twzipcode({
+    // 'zipcodeIntoDistrict': true,
+    'countyName'   : 'city',
+    'districtName' : 'region',
+    'zipcodeName'  : 'zipcode',
+    'zipcodeSel'  : '#{user.zipcode}',
+    'css': [
+      'form-control width-auto inline-block',
+      'form-control width-auto inline-block',
+      'form-control width-auto inline-block']
+    }); 
