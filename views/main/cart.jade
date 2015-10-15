@@ -41,7 +41,7 @@ block body
                       | 運送區域
                       span.text-danger *
                     select#shippingFeeSelect.form-control     
-                     option(value='0') 請選擇
+                     option(value='0') #{i18n('select')}
                       //- each shipping,index in shippings.shippings
                       //-   if(shippingType.selected == 'delivery')
                       //-     option(value='#{shipping.fee}') #{shipping.region} - 運費 #{shipping.fee} 元
@@ -55,7 +55,7 @@ block body
                       | 付款方式
                       span.text-danger *
                     select#paymentMethod.form-control
-                      option(value='0') 請選擇
+                      option(value='0') #{i18n('select')}
                       each method in paymentMethod
                         option(value= method.code) #{method.name}
                   // /form-group
