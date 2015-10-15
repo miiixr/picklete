@@ -108,7 +108,7 @@ let PromotionController = {
   },
   controlShopDiscountDetail: async(req, res) => {
     try {
-      console.log('query',req.query);
+      console.log('=== controlShopDiscountDetail query ==>',req.query);
       let query = req.query;
       let queryObj = {};
       if(query.keyword)
@@ -124,10 +124,36 @@ let PromotionController = {
       // let productGms;
       let products;
       if(promotion){
-        // productGms = await promotion.getProductGms();
-        // productGms.rows = productGms;
-        products = await promotion.getProducts();
-        products.rows = products;
+
+        products = await db.Product.findAndCountAll({
+          where: queryObj,
+          offset: offset,
+          limit: limit
+        });
+
+        promotion = await db.Promotion.find({
+          where:{
+            id: promotion.id
+          },
+          include:{
+            model: db.Product
+          }
+        });
+
+        promotion.Products.forEach((promotedProduct) => {
+          products.rows.forEach((product) => {
+            console.log('=== product.id ==>', product.id, '===  promotedProduct.id ==>', promotedProduct.id);
+            if(product.id == promotedProduct.id){
+              console.log('=== true ==');
+              product.promoted = true;
+            }
+          });
+        });
+
+        products.rows.forEach((product) => {
+          console.log('=== product.id ==>', product.id, '===  product.promoted ==>',product.promoted);
+        });
+
       }else{
         promotion = {
           title: '',
@@ -138,12 +164,7 @@ let PromotionController = {
           endDate: null,
           discount: '',
           price: ''
-        }
-        // productGms = await db.ProductGm.findAndCountAll({
-        //   where: queryObj,
-        //   offset: offset,
-        //   limit: limit
-        // });
+        };
         products = await db.Product.findAndCountAll({
           where: queryObj,
           offset: offset,
@@ -153,7 +174,6 @@ let PromotionController = {
 
       res.view('promotion/controlShopDiscountDetail',{
         pageName: "shop-discount-detail",
-        // productGms,
         products,
         promotion,
         query,
