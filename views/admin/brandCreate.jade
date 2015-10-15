@@ -49,7 +49,7 @@ block body
               input#inlineRadio1(type='radio', name='type', value='AGENT' checked=(brand&&brand.type=="AGENT")?"":undefined)
               |  #{i18n('agent-brand')}
             label.radio-inline
-              input#inlineRadio2(type='radio', name='type', value='PRIME_GOOD' checked=(brand&&brand.type=="PRIME_GOOD")?"":undefined)
+              input#inlineRadio2(required,type='radio', name='type', value='PRIME_GOOD' checked=(brand&&brand.type=="PRIME_GOOD")?"":undefined)
               |  #{i18n('prime-brand')}
         // /form-group
         .form-group

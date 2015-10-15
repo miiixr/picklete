@@ -51,7 +51,14 @@
 	"member-list": "會員列表",
 	"payment": "付款運費",
 	"shipping-fee-setting": "運費設定",
+<<<<<<< HEAD
 	"shopping-cart": "我的購物車",
 	"delivery-payment": "運送付款",
 	"delivery-way": "運送方式"
 }
+=======
+	"all-brand": "all-brand",
+	"all-categories": "all-categories",
+	"all-product": "all-product"
+}
+>>>>>>> upstream/develop
