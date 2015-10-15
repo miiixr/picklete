@@ -323,8 +323,9 @@ module.exports.createTestData = async ({createRoleUser, createNewBuyer}) => {
       orderSyncToken: '',
       mobile: '0900'+randomInt(100000, 999999)
     };
-    var createFakeUser = await db.User.create(fakeUser);
-
+    var createFakeUser = await db.User.create(fakeUser);  
+    await createFakeUser.setLikes([1]);
+    
     var newOrder2 = {
       serialNumber: '00000'+i+1,
       paymentIsConfirmed: true,

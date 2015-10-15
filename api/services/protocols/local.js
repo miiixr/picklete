@@ -51,7 +51,7 @@ exports.register = async function(req, res, next) {
 
     let user = await db.User.create(newUser);
 
-    if(newUserParams.like && newUserParams.like.length)
+    if(newUserParams.userLikes && newUserParams.userLikes.length)
       await user.setLikes(newUserParams.userLikes);
 
     var token = crypto.randomBytes(48).toString('base64');
