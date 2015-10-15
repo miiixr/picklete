@@ -199,7 +199,7 @@ block body
                 h4.m-bottom-4 服務項目 #{product.services}
                 .row.row-s.m-bottom-10
                   each service, index in ['快遞宅配', '超商取貨', '國際運送', '禮品包裝']
-                    .col-sm-6 #{services[index]}
+                    .col-sm-6
                       if services[index]
                         .border-block-2.text-center.p-10.m-bottom-2(id='service-#{index}')
                           h4

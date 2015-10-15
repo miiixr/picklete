@@ -216,7 +216,7 @@ var self = module.exports = {
         serialNumber: await OrderService.generateOrderSerialNumber(),
         useBunusPoint: 0,
         packingFee: newOrder.packingFee,
-        packingQuant: newOrder.packingQuant
+        packingQuantity: newOrder.packingQuantity
       };
 
       products.forEach((product, index) => {

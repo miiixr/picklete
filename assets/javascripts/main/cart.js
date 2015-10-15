@@ -18,7 +18,7 @@
 
   var packingFee = 60;
   var packingFeeTotal = 0;
-  var packingQuant = 0;
+  var packingQuantity = 0;
 
   /* ======================================== */
 
@@ -34,7 +34,7 @@
 
   // calculate total price
   var calcTatalPrice = function () {
-    packingFeeTotal = packingFee * packingQuant;
+    packingFeeTotal = packingFee * packingQuantity;
     totalPrice = (subtotal + buymore - discountAmount) + shippingFee + packingFeeTotal;
     console.log('=== calcTatalPrice ===', totalPrice);
     totalPriceDiv.text(totalPrice);
@@ -71,7 +71,7 @@
     picklete_cart.orderItems.forEach(function(orderItem, index){
       packVal =  $("input[name='pack["+index+"]']").val();
       orderItem.packingFee = packingFee;
-      orderItem.packingQuant = packingQuant;
+      orderItem.packingQuantity = packingQuantity;
     });
     // save new quantities
     Cookies.set('picklete_cart', picklete_cart);
@@ -241,7 +241,7 @@
     Cookies.set('shipping', shipping);
 
     // packingFee
-    var packing = { packingQuant: packingQuant, packingFee: packingFeeTotal};
+    var packing = { packingQuantity: packingQuantity, packingFee: packingFeeTotal};
     Cookies.set('packing', packing);
 
     if($('#shippingFeeSelect').val() == 0 || $('#paymentMethod').val()==0)
@@ -305,16 +305,16 @@
 
   // recalculate price when btnPlus/bntMinus is pressed.
   $(".packQuantities").delegate("input","change", function(){
-    packingQuant = 0;
+    packingQuantity = 0;
     console.log('=== picklete_cart.orderItems.length ===>',picklete_cart.orderItems.length);
     for(var i=0;i<picklete_cart.orderItems.length;i++){
        var count = parseInt($("input[name='pack["+i+"]']").val());
-       packingQuant += count;
+       packingQuantity += count;
     }
-    console.log('=== packingQuant ===>',packingQuant);
+    console.log('=== packingQuantity ===>',packingQuantity);
 
     //
-    packingFeeTotal = packingQuant * packingFee;
+    packingFeeTotal = packingQuantity * packingFee;
 
     // set value to TD field
     packingFeeTD.text(packingFeeTotal);

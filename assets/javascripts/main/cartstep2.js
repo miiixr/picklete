@@ -143,7 +143,7 @@
     // packing things
     var packing = Cookies.getJSON('packing');
     postData.order.packingFee = packing.packingFee;
-    postData.order.packingQuant = packing.packingQuant;
+    postData.order.packingQuantity = packing.packingQuantity;
 
     console.log('=== postData ===', postData);
 

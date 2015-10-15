@@ -64,7 +64,7 @@ module.exports = (sequelize, DataTypes) ->
     # packing fee
     packingFee:DataTypes.FLOAT
     # packing quantity
-    packingQuant: DataTypes.INTEGER
+    packingQuantity: DataTypes.INTEGER
   }, classMethods: associate: (models) ->
     # user information / buyer
     Order.belongsTo models.User

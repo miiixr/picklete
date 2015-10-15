@@ -125,7 +125,7 @@ let ShopController = {
       var service = JSON.parse(product.service);
 
       var services = [];
-      var servicesTerm = ['快遞宅配', '超商取貨', '國際運送', '禮品包裝'];
+      var servicesTerm = ['express', 'store', 'international', 'package'];
       for (var i in servicesTerm){
         if(service.indexOf(servicesTerm[i]) >= 0){
           services.push(true);
