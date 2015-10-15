@@ -2,9 +2,15 @@ let SliderActivitiesController = {
     
   create: async (req, res) => {
     var params = req.body;
-
+    var checkOpenWindow = req.body['openWindow'];
+    if(checkOpenWindow == undefined){
+      checkOpenWindow = false;
+    } else if(checkOpenWindow == 'on'){
+      checkOpenWindow = true;
+    }
     let slider = {
       cover: params['cover'],
+      openWindow: checkOpenWindow,
       title: params['title'],
       description: params['description'] || '',
       location: params['location'],
@@ -61,6 +67,14 @@ let SliderActivitiesController = {
       let updateSlider = await db.Slider.findOne({ where: {id: id} });
       
       updateSlider.cover = req.body['cover'];
+      
+      let checkOpenWindow = req.body['openWindow'];
+      if(checkOpenWindow == undefined){
+        updateSlider.openWindow = false;
+      } else if(checkOpenWindow == 'on'){
+        updateSlider.openWindow = true;
+      }
+      
       updateSlider.title = req.body['title'];
       updateSlider.description = req.body['description'];
       updateSlider.location = req.body['location'];
