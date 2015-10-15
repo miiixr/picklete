@@ -29,7 +29,8 @@ block body
         .col-md-7.col-lg-6.desktop-p-left-6
           h1.text-gray-darker.m-bottom-6.mobile-text-center.text-roboto.letter-spacing-3 #{brand.name}
           .m-bottom-10
-            p #{brand.desc}
+            if (brand.desc)
+              p !{brand.desc.replace(/\n/g, "<br>")}
           // /font-size-small
         // /col-md-7
       // /row
