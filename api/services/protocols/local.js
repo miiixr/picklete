@@ -136,7 +136,6 @@ exports.login = function(req, identifier, password, next) {
     console.log('== user ==', user);
     db.Passport.findOne({
       where: {
-        protocol: 'local',
         UserId: user.id
       }
     }).then(function(passport) {

@@ -26,7 +26,7 @@ module.exports.policies = {
     loginStatus:['global']
     update:['passport']
 
-  'MainController': ['global']
+  'MainController': ['global', 'mailRequired']
 
   'ShopController':
     show: ['global']
