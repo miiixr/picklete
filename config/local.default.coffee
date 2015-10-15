@@ -84,4 +84,18 @@ module.exports = {
   googleAnalytics: {
     trackingID: ''
   }
+  passport:{
+    local: strategy: require('passport-local').Strategy
+    facebook:{
+      name: 'Facebook'
+      protocol: 'oauth2'
+      strategy: require('passport-facebook').Strategy
+      options:{
+        clientID: ''
+        clientSecret: ''
+        scope: [ 'email', 'public_profile' ]
+        callbackURL: "http://localhost:1337/auth/facebook/callback"
+      }
+    }
+  }
 }
