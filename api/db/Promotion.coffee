@@ -15,6 +15,18 @@ module.exports = (sequelize, DataTypes) ->
     endDate: DataTypes.DATEONLY
     discount: DataTypes.FLOAT
     price: DataTypes.FLOAT
+    # 照片
+    coverPhoto:
+      type: DataTypes.TEXT
+      get: () ->
+        value = this.getDataValue('coverPhoto');
+
+        if value
+          return JSON.parse(value)
+        return []
+
+      set: (value) ->
+        return this.setDataValue('coverPhoto', JSON.stringify(value))
   }, classMethods: associate: (models) ->
     Promotion.belongsToMany models.Product, through: 'PromotionProduct'
     return
