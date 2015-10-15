@@ -24,7 +24,6 @@
 
 module.exports = (req, res, next) ->
   # Initialize Passport
-  console.log '????'
   passport.initialize() req, res, ->
     # Use the built-in sessions
     passport.session() req, res, ->
