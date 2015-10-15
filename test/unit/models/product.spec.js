@@ -15,7 +15,8 @@ describe.only("about prodcut model operation.", () => {
 
   it('read all product', async (done) => {
     try {
-      let allProducts = null;
+      let allProducts = await db.Product.findAll();
+
 
       // find all product
 
@@ -31,7 +32,7 @@ describe.only("about prodcut model operation.", () => {
   it('find product id = 1', async (done) => {
 
     try {
-      let theProduct = null;
+      let theProduct = await db.Product.findById(1);
 
       // find product id = 1
 
@@ -49,13 +50,16 @@ describe.only("about prodcut model operation.", () => {
   it('update product', async (done) => {
 
     try {
-      let theProduct = null
+      let theProduct =await db.Product.findById(1);
 
       // find product id = 1
 
       let updateParams = {
         name: 'product name change'
       }
+
+      theProduct.name=updateParams.name
+      await theProduct.save();
 
       // update product
 
@@ -71,8 +75,9 @@ describe.only("about prodcut model operation.", () => {
 
   it('destroy product', async (done) => {
     try {
-      let theProduct = null
-      let afterDestroyProductFindAgain = null
+      let theProduct =await db.Product.findById(1);
+      await theProduct.destroy();
+      let afterDestroyProductFindAgain = await db.Product.findById(1);
 
       // find product id = 1
 
