@@ -12,7 +12,8 @@
 	"trafficking-in-state": "販售狀態",
 	"filing-date": "建檔日期",
 	"brand-list": "品牌列表",
-	"prime-brand": "代理品牌",
+	"agent-brand": "代理品牌",
+	"prime-brand": "精選品牌",
 	"other-brand": "其他品牌",
 	"create-brand": "建立品牌",
 	"brand-classification": "農產分類",
@@ -45,6 +46,8 @@
 	"member-area": "會員專區",
 	"member-list": "會員列表",
 	"payment": "付款運費",
-	"shipping-fee-setting": "運費設定"
+	"shipping-fee-setting": "運費設定",
+	"all-brand": "all-brand",
+	"all-categories": "all-categories",
+	"all-product": "all-product"
 }
->>>>>>> upstream/develop
