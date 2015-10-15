@@ -58,15 +58,6 @@
       $(this).val(index)
     });
     var finished = true;
-    $('input[form="activesData"]').map(function(index, input){
-      var value = $(input).val();
-      if(value.length<1) {
-        finished = false;
-      }
-    });
-    if(!finished) {
-      alert('請完整填寫圖片及連結欄位');
-    }
     return finished;
   });
 
