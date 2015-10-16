@@ -4,6 +4,7 @@ module.exports = {
   environment: ''
   initData: ''
   domain: 'http://localhost:1337'
+  cookieVersion:'0.1'
   # mail: {
   #   type: 'ses'
   #   active: false

@@ -9,13 +9,10 @@ module.exports = (req, res, next) ->
 
   # User is allowed, proceed to the next policy,
   # or if this is the last policy, the controller
-  referer = req.path.split('/')
-  if UserService.getLoginState(req)
-    userInfo = UserService.getLoginUser(req)
-    console.log '=== userInfo ===',userInfo
-    if userInfo.hasOwnProperty('email')
-      return next()
-    else
-      return res.redirect('/member/setting')
-  else
-    return next()
+  cookie = req.cookies
+  
+  if !cookie.version or cookie.version < sails.config.cookieVersion
+    res.clearCookie('picklete_cart')
+    res.cookie('version', sails.config.cookieVersion)
+
+  return next()

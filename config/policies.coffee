@@ -17,22 +17,22 @@ http://sailsjs.org/#/documentation/reference/sails.config/sails.config.policies.
 ###
 module.exports.policies = {
 
-  '*': ['global', 'loginRequired']
+  '*': ['global', 'loginRequired', 'cookieRequired']
   'AuthController': ['global', 'passport']
 
   'UserController':
-    controlLogin: ['global']
-    cart: []
-    loginStatus:['global']
+    controlLogin: ['global', 'cookieRequired']
+    cart: ['cookieRequired']
+    loginStatus:['global','cookieRequired']
     update:['passport']
 
-  'MainController': ['global', 'mailRequired']
+  'MainController': ['global', 'mailRequired', 'cookieRequired']
 
   'ShopController':
-    show: ['global']
-    list: ['global']
-    done: ['global']
-    cartStep2: ['global']
+    show: ['global', 'cookieRequired']
+    list: ['global', 'cookieRequired']
+    done: ['global', 'cookieRequired']
+    cartStep2: ['global', 'cookieRequired']
 
   'AboutController':
     show: ['global']
