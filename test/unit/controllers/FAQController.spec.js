@@ -11,6 +11,13 @@ describe("about FAQ" , () => {
 			sinon.stub(UserService, 'getLoginState', (req) => {
 				return true;
 			});
+			let admin = await db.User.find ({
+	      where: {username: 'admin'},
+	      include: [db.Role]
+	    });
+	    sinon.stub(UserService, 'getLoginUser', (req) => {
+	      return admin;
+	    });
 
 			let newFAQType = {
 				name: "測試類別"
@@ -35,6 +42,7 @@ describe("about FAQ" , () => {
 	after((done) => {
 	  // end this simulated login
 	  UserService.getLoginState.restore();
+		UserService.getLoginUser.restore();
 	  done();
   });
 
