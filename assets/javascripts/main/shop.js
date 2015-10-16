@@ -106,8 +106,18 @@
     var brandname = $(this).attr("data-brandname") || "";
     var name = $(this).attr("data-name") || "";
     var originPrice = $('#originPrice').text();
-    var packable = $("#service-3").hasClass('disabled');
-    var expressable = $("#service-2").hasClass('disabled');
+    var packable;
+    var expressable;
+
+    if($("#service-3").hasClass('disabled'))
+      packable = false;
+    else
+      packable = true;
+
+    if($("#service-2").hasClass('disabled'))
+      expressable = false;
+    else
+      expressable = true;
 
     console.log('=== picklete_cart ===', picklete_cart);
     console.log('=== productId ===', productId);
