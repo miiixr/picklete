@@ -16,6 +16,7 @@
   var shippingFee = 0;
   var shippingFeeFreeThreshold = 390;
 
+  var packableItemTotal = [];
   var packingFee = 60;
   var packingFeeTotal = 0;
   var packingQuantity = 0;
@@ -122,6 +123,7 @@
           '      此商品不提供<br>包裝服務' +
           '    </div>';
         }else{
+          packableItemTotal.push(index);
           var liPackageService =
             '    <div class="col-xs-6 col-sm-3 col-md-2 desktop-p-right-0 desktop-text-center desktop-m-top-5 m-bottom-2">禮品包裝' +
             '      <div class="packQuantities input-group input-group-count max-width-150"><span class="input-group-btn">' +
@@ -290,15 +292,19 @@
 
     // get target prudoct quantity value and its field id.
     var thisName = $(this).attr('name');
-    console.log('=== thisName ===>',thisName);
+    // console.log('=== thisName ===>',thisName);
     var itemQuantId = thisName.charAt(6);
-    console.log('=== itemQuantId ===>',itemQuantId);
+    // console.log('=== itemQuantId ===>',itemQuantId);
     var itemQuantVal = $(this).val();
-    console.log('=== itemQuantVal ===>',itemQuantVal);
+    // console.log('=== itemQuantVal ===>',itemQuantVal);
 
     // set new maximum value
     var targetPackedCount = $("input[name='pack["+itemQuantId+"]']");
+    // console.log('=== releted pack field name ==>',targetPackedCount.attr('name'));
     targetPackedCount.attr('max',itemQuantVal);
+
+    if(targetPackedCount.val() > itemQuantVal)
+      targetPackedCount.val(itemQuantVal);
   });
   // end
 
@@ -306,12 +312,13 @@
   // recalculate price when btnPlus/bntMinus is pressed.
   $(".packQuantities").delegate("input","change", function(){
     packingQuantity = 0;
-    console.log('=== picklete_cart.orderItems.length ===>',picklete_cart.orderItems.length);
-    for(var i=0;i<picklete_cart.orderItems.length;i++){
-       var count = parseInt($("input[name='pack["+i+"]']").val());
+    // console.log('=== picklete_cart.orderItems.length ===>',picklete_cart.orderItems.length);
+    packableItemTotal.forEach(function(value){
+       var count = parseInt($("input[name='pack["+value+"]']").val());
+       console.log('=== value ==>',value,'=== count ===>',count);
        packingQuantity += count;
-    }
-    console.log('=== packingQuantity ===>',packingQuantity);
+    });
+    // console.log('=== packingQuantity ===>',packingQuantity);
 
     //
     packingFeeTotal = packingQuantity * packingFee;
