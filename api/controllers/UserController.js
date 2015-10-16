@@ -144,7 +144,7 @@ let UserController = {
       req.login(user, function(err) {
           if (err) return res.serverError(err);
 
-          return res.redirect('/member/setting');
+          return res.redirect('/');
       })
 
     } catch (e) {

@@ -15,7 +15,8 @@ var allpay = new Allpay({
 
 var self = module.exports = {
   generateOrderSerialNumber: async () => {
-    let dateString = OrderService._dateFormat(moment());
+    // let dateString = OrderService._dateFormat(moment());
+    let dateString = 'W'+moment().format('YYYYMMDD');
     let startDate = moment().startOf('day').toDate();
     let endDate = moment().startOf('day').add(1, 'days').add(-1, 'seconds').toDate();
 
@@ -27,8 +28,7 @@ var self = module.exports = {
       }
     })
 
-    let todayOrderConutString = sprintf("%03d", todayOrderConut);
-
+    let todayOrderConutString = sprintf("%05d", todayOrderConut);
     return `${dateString}${todayOrderConutString}`;
 
   },

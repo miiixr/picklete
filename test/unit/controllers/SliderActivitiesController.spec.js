@@ -6,7 +6,7 @@ describe('SliderActivities Spec', function() {
 
   import sinon from 'sinon';
   before( async (done) => {
-    let admin = db.User.find ({
+    let admin = await db.User.find ({
       where: {username: 'admin'},
       include: [db.Role]
     });

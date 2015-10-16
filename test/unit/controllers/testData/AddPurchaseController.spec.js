@@ -6,6 +6,13 @@ describe('Add Purchase', () => {
     sinon.stub(UserService, 'getLoginState', (req) => {
       return true;
     });
+    let admin = await db.User.find ({
+      where: {username: 'admin'},
+      include: [db.Role]
+    });
+    sinon.stub(UserService, 'getLoginUser', (req) => {
+      return admin;
+    });
 
     createdProductGmComplete = await db.ProductGm.create({
       brandId: 1,
@@ -23,6 +30,7 @@ describe('Add Purchase', () => {
 
   after((done) => {
     UserService.getLoginState.restore();
+    UserService.getLoginUser.restore();
     done();
   });
 
