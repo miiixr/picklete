@@ -26,15 +26,6 @@ OrderController = {
       else
         query.serialNumber =''
 
-      queryShipmentObj.shippingMethod = '';
-      if(query.shippingMethod != '0' && query.shippingMethod){
-        if(query.shippingMethod == 1){
-          queryShipmentObj.shippingMethod = 'postoffice';
-        }else if(query.shippingMethod == 2){
-          queryShipmentObj.shippingMethod = 'delivery';
-        }
-      }
-
       // if(query.keyword)
       //   queryObj.keyword = { 'like': '%'+query.keyword+'%'};
 
@@ -51,6 +42,14 @@ OrderController = {
 
       // if(query.shipmentNotify != '0' && query.shipmentNotify)
       //   queryObj.shipmentNotify = query.shipmentNotify;
+
+      if(query.shippingMethod != '0' && query.shippingMethod){
+        if(query.shippingMethod == 1){
+          queryShipmentObj.shippingType = { 'like': 'postoffice'};
+        }else if(query.shippingMethod == 2){
+          queryShipmentObj.shippingType = { 'like': 'delivery'};
+        }
+      }
 
       if(query.addressee) {
         queryShipmentObj.username = { 'like': '%'+query.addressee+'%'};
@@ -87,10 +86,7 @@ OrderController = {
             }
           }, {
             model: db.Shipment,
-            where: {
-              username: queryShipmentObj.username,
-              shippingType: queryShipmentObj.shippingMethod
-            }
+            where: queryShipmentObj
           }, {
             model: db.OrderItem
           },
