@@ -8,22 +8,30 @@ loginRequired
 module.exports = function(req, res, next) {
   var referer;
   referer = req.path.split('/');
-  if (UserService.getLoginState(req)) {
-    let userInfo = UserService.getLoginUser(req);
-    if(referer['1'] === 'admin'){
-      if (userInfo.Role.authority === 'admin') {
+  try {
+    if (UserService.getLoginState(req)) {
+      let userInfo = UserService.getLoginUser(req);
+      if(referer['1'] === 'admin'){
+        if (userInfo.Role.authority === 'admin') {
+          return next();
+        } else {
+          return res.redirect('/');
+        }
+      }else{
         return next();
-      } else {
-        return res.redirect('/');
       }
-    }else{
-      return next();
     }
-  }
-  if (referer['1'] === 'admin') {
-    return res.redirect('/admin/login');
-  } else {
-    return res.redirect('/');
+    if (referer['1'] === 'admin') {
+      return res.redirect('/admin/login');
+    } else {
+      return res.redirect('/');
+    }
+  } catch (e) {
+    if (referer['1'] === 'admin') {
+      return res.redirect('/admin/login');
+    } else {
+      return res.redirect('/');
+    }
   }
 };
 
