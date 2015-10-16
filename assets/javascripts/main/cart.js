@@ -36,6 +36,22 @@
 
   // calculate total price
   var calcTatalPrice = function () {
+
+    // 免運
+    if((subtotal + buymore - discountAmount) > shippingFeeFreeThreshold){
+      // fee-free!
+      Cookies.set('shippingFee', 0);
+      $("#shippingFeeField").text('**您符合免運資格**');
+    }else{
+      // Normalization
+      shippingFee = parseInt($(this).val(), 10);
+      // set cookie
+      Cookies.set('shippingFee', shippingFee);
+      // show shippingFee to viewfield
+      var shippingFeeField = $('#shippingFeeField');
+      shippingFeeField.text(shippingFee)
+    }
+
     packingFeeTotal = packingFee * packingQuantity;
     totalPrice = (subtotal + buymore - discountAmount) + shippingFee + packingFeeTotal;
     console.log('=== calcTatalPrice ===', totalPrice);
@@ -99,7 +115,7 @@
 
         '    <div class="col-xs-4 col-sm-3 col-md-2">' +
         '      <div class="item-block"><a href="#" class="item-like"><span class="glyphicon glyphicon-heart"></span></a>' +
-        '        <a href="shop-product"><img src="'+orderItem.photos[0]+'" class="img-full"></a>' +
+        '        <a href="/shop/products/'+orderItem.productGmId+'/'+orderItem.ProductId+'"><img src="'+orderItem.photos[0]+'" class="img-full"></a>' +
         '      </div>' +
         '    </div>' +
 
@@ -120,29 +136,32 @@
         '      </div>' +
         '    </div>' ;
 
+
+      var liPackageService="", liPackageServiceOptions="", liPackageServiceEnd="";
+
       if(!orderItem.packable){
-        var liPackageService =
+        liPackageService =
           '    <div class="col-xs-6 col-sm-3 col-md-2 desktop-p-right-0 desktop-text-center desktop-m-top-5 m-bottom-2">' +
           '      此商品不提供<br>包裝服務' +
           '    </div>';
       }else{
           packableItemTotal.push(index);
-          var liPackageService =
+          liPackageService =
             '    <div class="col-xs-6 col-sm-3 col-md-2 desktop-p-right-0 desktop-text-center desktop-m-top-5 m-bottom-2">禮品包裝' +
-            '      <div class="packingQuantities input-group max-width-150"><span class="input-group-btn">' +
+            '      <div class="packingQuantities input-group max-width-150">'+
+            '       <span class="input-group-btn">' +
             '        <select class="form-control text-center font-size-slarge"  name="packingSelect['+index+']">'+
             '         <option value="0">0</option>';
-
-          var liPackageServiceOptions = "";
           for(var i=1;i<parseInt(orderItem.quantity)+1;i++){
             liPackageServiceOptions += '<option value="'+i+'">'+i+'</option>';
-          }
-
-          var liPackageServiceEnd =
+          };
+          liPackageServiceEnd =
             '        </select>'+
+              '     </span>'+
             '      </div>' +
             '    </div>';
         }
+      liPackageService = liPackageService + liPackageServiceOptions + liPackageServiceEnd;
 
       var liPrice =
         '    <div class="col-xs-6 col-sm-2 col-md-2 desktop-text-center desktop-m-top-5 m-bottom-1">' +
@@ -156,7 +175,7 @@
         '  </div>' +
         '</div>';
 
-      liOrderItem = liOrderItem + liPackageService + liPackageServiceOptions + liPackageServiceEnd + liPrice + liRemoveItem;
+      liOrderItem = liOrderItem + liPackageService + liPrice + liRemoveItem;
 
       subtotal += parseInt(orderItem.price*orderItem.quantity, 10);
       subtotalDiv.text(subtotal);
@@ -175,21 +194,6 @@
     e.preventDefault();
     calcTatalPrice();
     $("#feeFreeNoticer").text('');
-
-    // judge threshold
-    if((subtotal + buymore - discountAmount) > shippingFeeFreeThreshold){
-      // fee-free!
-      Cookies.set('shippingFee', 0);
-      $("#feeFreeNoticer").text('**您符合免運資格:)**');
-    }else{
-      // Normalization
-      shippingFee = parseInt($(this).val(), 10);
-      // set cookie
-      Cookies.set('shippingFee', shippingFee);
-      // show shippingFee to viewfield
-      var shippingFeeField = $('#shippingFeeField');
-      shippingFeeField.text(shippingFee)
-    }
   });
   // end
 
