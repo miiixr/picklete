@@ -12,6 +12,7 @@
   var totalPrice = 0;
   var buymore = 0;
   var discountAmount = 0;
+  var totalQuanties = 0;
 
   var shippingFee = 0;
   var shippingFeeFreeThreshold = 390;
@@ -58,6 +59,8 @@
 
       if(orderItem.originPrice == undefined) orderItem.originPrice ='';
       subtotal += parseInt(orderItem.price*orderItem.quantity, 10);
+
+      totalQuanties += 1;
     });
     subtotalDiv.text(subtotal);
     calcTatalPrice();
@@ -111,9 +114,9 @@
 
         '    <div class="col-xs-6 col-sm-3 col-md-2 desktop-p-right-0 desktop-text-center desktop-m-top-5 m-bottom-2">商品數量' +
         '      <div class="productQuantities input-group input-group-count max-width-150"><span class="input-group-btn">' +
-        '          <button type="button" disabled="disabled" data-type="minus" data-field="quant['+index+']" class="btn btn-default btn-number p-left-2 p-right-2"><span class="glyphicon glyphicon-minus"></span></button></span>' +
+        '        <button type="button" disabled="disabled" data-type="minus" data-field="quant['+index+']" class="btn btn-default btn-number p-left-2 p-right-2"><span class="glyphicon glyphicon-minus"></span></button></span>' +
         '        <input type="text" name="quant['+index+']" value="'+orderItem.quantity+'" min="1" max="10" class="form-control input-number text-center font-size-slarge"><span class="input-group-btn">' +
-        '          <button type="button" data-type="plus" data-field="quant['+index+']" class="btn btn-default btn-number p-left-2 p-right-2"><span class="glyphicon glyphicon-plus"></span></button></span>' +
+        '        <button type="button" data-type="plus" data-field="quant['+index+']" class="btn btn-default btn-number p-left-2 p-right-2"><span class="glyphicon glyphicon-plus"></span></button></span>' +
         '      </div>' +
         '    </div>' ;
 
@@ -122,14 +125,21 @@
           '    <div class="col-xs-6 col-sm-3 col-md-2 desktop-p-right-0 desktop-text-center desktop-m-top-5 m-bottom-2">' +
           '      此商品不提供<br>包裝服務' +
           '    </div>';
-        }else{
+      }else{
           packableItemTotal.push(index);
           var liPackageService =
             '    <div class="col-xs-6 col-sm-3 col-md-2 desktop-p-right-0 desktop-text-center desktop-m-top-5 m-bottom-2">禮品包裝' +
-            '      <div class="packQuantities input-group input-group-count max-width-150"><span class="input-group-btn">' +
-            '       <button type="button" disabled="disabled" data-type="minus" data-field="pack['+index+']" class="btn btn-default btn-number p-left-2 p-right-2"><span class="glyphicon glyphicon-minus"></span></button></span>' +
-            '       <input type="text" name="pack['+index+']" value=0 min="0" max="'+orderItem.quantity+'" class="form-control input-number text-center font-size-slarge"><span class="input-group-btn">' +
-            '       <button type="button" data-type="plus" data-field="pack['+index+']" class="btn btn-default btn-number p-left-2 p-right-2"><span class="glyphicon glyphicon-plus"></span></button></span>' +
+            '      <div class="packingQuantities input-group max-width-150"><span class="input-group-btn">' +
+            '        <select class="form-control text-center font-size-slarge"  name="packingSelect['+index+']">'+
+            '         <option value="0">0</option>';
+
+          var liPackageServiceOptions = "";
+          for(var i=1;i<parseInt(orderItem.quantity)+1;i++){
+            liPackageServiceOptions += '<option value="'+i+'">'+i+'</option>';
+          }
+
+          var liPackageServiceEnd =
+            '        </select>'+
             '      </div>' +
             '    </div>';
         }
@@ -146,7 +156,7 @@
         '  </div>' +
         '</div>';
 
-      liOrderItem = liOrderItem + liPackageService + liPrice + liRemoveItem;
+      liOrderItem = liOrderItem + liPackageService + liPackageServiceOptions + liPackageServiceEnd + liPrice + liRemoveItem;
 
       subtotal += parseInt(orderItem.price*orderItem.quantity, 10);
       subtotalDiv.text(subtotal);
@@ -159,13 +169,6 @@
     cartViewer.inputNumber();
 
   };
-
-  // packing fee
-  $(".input-group").delegate("input","change", function(){
-
-
-  });
-  // end
 
   // shippingfee select
   $(".container").on("change", "#shippingFeeSelect", function (e) {
@@ -297,28 +300,37 @@
     // console.log('=== itemQuantId ===>',itemQuantId);
     var itemQuantVal = $(this).val();
     // console.log('=== itemQuantVal ===>',itemQuantVal);
+    var targetSelect = $("select[name='packingSelect["+itemQuantId+"]']");
+    // console.log('=== releted pack field name ==>',targetSelect.attr('name'));
 
-    // set new maximum value
-    var targetPackedCount = $("input[name='pack["+itemQuantId+"]']");
-    // console.log('=== releted pack field name ==>',targetPackedCount.attr('name'));
-    targetPackedCount.attr('max',itemQuantVal);
+    // empty select
+    targetSelect
+    .empty()
+    .append('<option selected="selected" value="0">0</option>')
+    .val('0');
 
-    if(targetPackedCount.val() > itemQuantVal)
-      targetPackedCount.val(itemQuantVal);
+    // append select
+    for(var i=1;i<parseInt(itemQuantVal)+1;i++){
+      targetSelect.append('<option value="'+i+'">'+i+'</option>');
+      console.log('=== packingSelect ==>',targetSelect.val());
+    }
   });
   // end
 
 
   // recalculate price when btnPlus/bntMinus is pressed.
-  $(".packQuantities").delegate("input","change", function(){
+  $(".packingQuantities").delegate("select","change", function(){
+
     packingQuantity = 0;
-    // console.log('=== picklete_cart.orderItems.length ===>',picklete_cart.orderItems.length);
+
     packableItemTotal.forEach(function(value){
-       var count = parseInt($("input[name='pack["+value+"]']").val());
+       var count = parseInt($("select[name='packingSelect["+value+"]']").val());
        console.log('=== value ==>',value,'=== count ===>',count);
        packingQuantity += count;
     });
-    // console.log('=== packingQuantity ===>',packingQuantity);
+    // console.log('=== packableItemTotal ===>',packableItemTotal);
+
+    $(this).attr('value',$(this).val());
 
     // get target prudoct quantity value and its field id.
     var thisName = $(this).attr('name');
@@ -337,7 +349,39 @@
     // calculate price and save cookie after finish.
     calcTatalPrice();
   });
-  //end
+
+
+  // // recalculate price when btnPlus/bntMinus is pressed.
+  // $(".packQuantities").delegate("input","change", function(){
+  //   packingQuantity = 0;
+  //   // console.log('=== picklete_cart.orderItems.length ===>',picklete_cart.orderItems.length);
+  //   packableItemTotal.forEach(function(value){
+  //      var count = parseInt($("input[name='pack["+value+"]']").val());
+  //      console.log('=== value ==>',value,'=== count ===>',count);
+  //      packingQuantity += count;
+  //   });
+  //   // console.log('=== packingQuantity ===>',packingQuantity);
+  //
+  //   $(this).attr('value',$(this).val());
+  //
+  //   // get target prudoct quantity value and its field id.
+  //   var thisName = $(this).attr('name');
+  //   // console.log('=== thisName ===>',thisName);
+  //   var itemQuantId = thisName.charAt(5);
+  //   var targetItemQuantCount = $("input[name='quant["+itemQuantId+"]']");
+  //   if($(this).val() > targetItemQuantCount)
+  //     $(this).val(targetItemQuantCount);
+  //
+  //   //
+  //   packingFeeTotal = packingQuantity * packingFee;
+  //
+  //   // set value to TD field
+  //   packingFeeTD.text(packingFeeTotal);
+  //
+  //   // calculate price and save cookie after finish.
+  //   calcTatalPrice();
+  // });
+  // //end
 
 
   // shippings
