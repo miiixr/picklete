@@ -37,13 +37,21 @@
 
   // calculate total price
   var calcTatalPrice = function () {
+
+    var tmpPrice = subtotal + buymore - discountAmount;
+
     // 免運
-    if(shippingFeeFree)
+    if(parseInt(mpPrice)>parseInt(shippingFeeFreeThreshold)){
       $("#shippingFeeField").text('滿額免運');
+      shippingFeeFree = true;
+    }else{
+      $("#shippingFeeField").text($("#shippingFeeSelect").val());
+      shippingFeeFree = false;
+    }
 
     packingFee = packingFeeBasic * packingQuantity;
 
-    totalPrice = (subtotal + buymore - discountAmount) + shippingFee + packingFee;
+    totalPrice = tmpPrice + shippingFee + packingFee;
     console.log('=== calcTatalPrice ===', totalPrice);
     totalPriceDiv.text(totalPrice);
   }
@@ -182,22 +190,22 @@
   // shippingfee select
   $(".container").on("change", "#shippingFeeSelect", function (e) {
     e.preventDefault();
-    calcTatalPrice();
     var shippingFeeField = $('#shippingFeeField');
     // Normalization
     shippingFee = parseInt($(this).val(), 10);
     // show shippingFee to viewfield
     shippingFeeField.text(shippingFee)
-    // 免運
-    if((subtotal + buymore - discountAmount) > shippingFeeFreeThreshold){
-      // fee-free!
-      shippingFeeFree = true;
-      $("#shippingFeeField").text('滿額免運');
-    }else{
-      shippingFeeFree = false;
-      // set cookie
-      Cookies.set('shippingFee', shippingFee);
-    }
+    // // 免運
+    // if((subtotal + buymore - discountAmount) > shippingFeeFreeThreshold){
+    //   // fee-free!
+    //   shippingFeeFree = true;
+    //   $("#shippingFeeField").text('滿額免運');
+    // }else{
+    //   shippingFeeFree = false;
+    //   // set cookie
+    //   Cookies.set('shippingFee', shippingFee);
+    // }
+    calcTatalPrice();
   });
   // end
 
