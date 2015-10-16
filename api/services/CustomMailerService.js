@@ -14,7 +14,7 @@ module.exports = {
       var mailSendConfig = {...greetingTpl, from: sails.config.mail.config.from, to: email};
 
       mailSendConfig.subject = sprintf(mailSendConfig.subject, {
-        username: user.username
+        username: user.fullName
       });
 
       mailSendConfig.html = sprintf(mailSendConfig.html, {
@@ -197,7 +197,7 @@ module.exports = {
       });
 
       mailSendConfig.html = sprintf(mailSendConfig.html, {
-        username: user.username,
+        username: user.fullName,
         link: link,
         storeName: sails.config.store.name,
         storeName2: sails.config.store.name2,
