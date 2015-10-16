@@ -243,14 +243,23 @@ block body
                     tr
                       td(colspan='2')
                         ul.list-inline
-                          li 運費 #{order.Shipment.shippingFee}
-                          li 包裝 #{order.packingFee}
-                          li 折扣碼 
+                          if(sumPrice>390)
+                            li 運費 (滿額免運)
+                          else
+                            li 運費 #{order.Shipment.shippingFee}
+                          if(order.packingFee)
+                            li 包裝 #{order.packingFee}
+                          else
+                            li 包裝 (無包裝費)
+                          if(order.ShopCodeId)
+                            li 折扣碼ID #{order.ShopCodeId}
+                          else
+                            li 未使用
                       td.text-center.text-danger #{sum}
                       td.text-right(colspan='2')
                         h3
                           small 總計
-                          span.m-left-2 NT$ #{sumPrice + order.Shipment.shippingFee}
+                          span.m-left-2 NT$ #{sumPrice + order.Shipment.shippingFee + order.packingFee}
                       
                 .m-left-1
                   if order.allPayPaymentType == "ATM"
