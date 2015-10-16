@@ -5,7 +5,7 @@ loginRequired
 @description :: Simple policy to allow any authenticated user
 @docs        :: http://sailsjs.org/#!documentation/policies
  */
-module.exports = async function(req, res, next) {
+module.exports = function(req, res, next) {
   var referer;
   referer = req.path.split('/');
   if (UserService.getLoginState(req)) {
