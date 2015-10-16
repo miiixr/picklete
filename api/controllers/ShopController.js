@@ -92,7 +92,9 @@ let ShopController = {
             }],
             where: {id: productId}
           });
-
+      let brand = await db.Brand.findOne({
+        where: {id: productGm.BrandId}
+      });
       productGm = productGm.dataValues;
 
       product = (await PromotionService.productPriceTransPromotionPrice(new Date(), [product]))[0];
@@ -147,7 +149,8 @@ let ShopController = {
           photos: photos,
           services: services,
           coverPhotos: coverPhotos,
-          recommendProducts
+          brand: brand.dataValues,
+          recommendProducts,
          };
 
         return res.view("main/shopProduct", resData);
