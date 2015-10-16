@@ -18,7 +18,7 @@ module.exports = {
       });
 
       mailSendConfig.html = sprintf(mailSendConfig.html, {
-        username: user.username,
+        username: user.fullName,
         storeName: sails.config.store.name,
         storeName2: sails.config.store.name2,
         storeName3:sails.config.store.name3,
@@ -51,7 +51,7 @@ module.exports = {
         storeName2: sails.config.store.name2,
         storeName3:sails.config.store.name3,
         orderTime: sails.moment(result.order.createdAt).format('YYYY/MM/DD HH:mm:ss'),
-        shipmentUsername: result.order.User.username,
+        shipmentUsername: result.order.User.fullName,
         shipmentId: result.order.User.email,
         orderSerialNumber: result.order.serialNumber,
         deadLine:  sails.moment(result.order.createdAt).add(3, 'days').format('YYYY/MM/DD HH:mm:ss'),
@@ -220,11 +220,11 @@ module.exports = {
       var password = passport.password;
       var mailSendConfig = {...newPasswordTpl, from: sails.config.mail.config.from, to: email};
       mailSendConfig.subject = sprintf(mailSendConfig.subject, {
-        username: user.username
+        username: user.fullName
       });
 
       mailSendConfig.html = sprintf(mailSendConfig.html, {
-        username: user.username,
+        username: user.fullName,
         createdAt: sails.moment(passport.updatedAt).format('YYYY/MM/DD HH:mm:ss'),
         userId: user.email,
         password: password,
@@ -280,7 +280,7 @@ module.exports = {
       });
 
       mailSendConfig.html = sprintf(mailSendConfig.html, {
-        username: user.username,
+        username: user.fullName,
         createdAt: sails.moment(new Date()).format('YYYY/MM/DD HH:mm:ss'),
         userId: user.email,
         storeName: sails.config.store.name,
