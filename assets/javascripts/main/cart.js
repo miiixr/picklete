@@ -41,12 +41,14 @@
     var tmpPrice = subtotal + buymore - discountAmount;
 
     // 免運
-    if(parseInt(mpPrice)>parseInt(shippingFeeFreeThreshold)){
+    if(parseInt(tmpPrice)>parseInt(shippingFeeFreeThreshold)){
       $("#shippingFeeField").text('滿額免運');
       shippingFeeFree = true;
+      shippingFee = 0;
     }else{
       $("#shippingFeeField").text($("#shippingFeeSelect").val());
       shippingFeeFree = false;
+      shippingFee = parseInt($("#shippingFeeSelect").val());
     }
 
     packingFee = packingFeeBasic * packingQuantity;
