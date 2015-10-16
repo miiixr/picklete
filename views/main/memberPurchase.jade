@@ -111,12 +111,17 @@ block body
                                 - sumPrice += item.price*item.quantity
                             tr
                               td
-                              if order.allPayPaymentType == "ATM"
-                                p 付款方式：#{order.allPayPaymentType} 繳費帳戶：#{order.BankCode} #{order.vAccount}
-                              else if order.allPayPaymentType == "CVS" || order.allPayPaymentType == "BARCODE"
-                                p 付款方式：#{order.allPayPaymentType} 繳費帳戶：#{order.PaymentNo}
-                              else if order.allPayPaymentType == "Credit"
-                                p 付款方式：#{order.allPayPaymentType}
+                                p 付款方式：#{order.allPayPaymentType} 
+                                if order.BankCode
+                                  | 繳費帳戶：#{order.BankCode} #{order.vAccount}
+                                else if order.PaymentNo
+                                  | 繳費帳戶：#{order.PaymentNo}
+                              //- if order.allPayPaymentType == "ATM"
+                              //-   p 付款方式：#{order.allPayPaymentType} 繳費帳戶：#{order.BankCode} #{order.vAccount}
+                              //- else if order.allPayPaymentType == "CVS" || order.allPayPaymentType == "BARCODE"
+                              //-   p 付款方式：#{order.allPayPaymentType} 繳費帳戶：#{order.PaymentNo}
+                              //- else if order.allPayPaymentType == "Credit"
+                              //-   p 付款方式：#{order.allPayPaymentType}
                                 //- p.text-danger 賣家備註：
                                 //- ol.text-danger
                                 //-   li 管理員代收
