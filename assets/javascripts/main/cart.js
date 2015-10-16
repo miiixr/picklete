@@ -320,6 +320,14 @@
     });
     // console.log('=== packingQuantity ===>',packingQuantity);
 
+    // get target prudoct quantity value and its field id.
+    var thisName = $(this).attr('name');
+    // console.log('=== thisName ===>',thisName);
+    var itemQuantId = thisName.charAt(5);
+    var targetItemQuantCount = $("input[name='quant["+itemQuantId+"]']");
+    if($(this).val() > targetItemQuantCount)
+      $(this).val(targetItemQuantCount);
+
     //
     packingFeeTotal = packingQuantity * packingFee;
 
