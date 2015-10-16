@@ -14,11 +14,11 @@ module.exports = {
       var mailSendConfig = {...greetingTpl, from: sails.config.mail.config.from, to: email};
 
       mailSendConfig.subject = sprintf(mailSendConfig.subject, {
-        fullname: user.fullName
+        fullName: user.fullName
       });
 
       mailSendConfig.html = sprintf(mailSendConfig.html, {
-        fullname: user.fullName,
+        fullName: user.fullName,
         storeName: sails.config.store.name,
         storeName2: sails.config.store.name2,
         storeName3:sails.config.store.name3,
@@ -57,7 +57,7 @@ module.exports = {
         deadLine:  sails.moment(result.order.createdAt).add(3, 'days').format('YYYY/MM/DD HH:mm:ss'),
         productName: productsName.join('、'),
         serviceMail: sails.config.store.serviceMail,
-        // fullname: result.order.User.username,
+        // fullName: result.order.User.username,
         // orderSerialNumber: result.order.serialNumber,
         // productName: productsName.join('、'),
         // bankId: result.order.bankId,
@@ -99,7 +99,7 @@ module.exports = {
         syncLink,
         email,
         storeName: sails.config.store.name,
-        fullname: user.username
+        fullName: user.username
       });
 
       mailSendConfig.type = 'orderSync';
@@ -197,7 +197,7 @@ module.exports = {
       });
 
       mailSendConfig.html = sprintf(mailSendConfig.html, {
-        fullname: user.fullName,
+        fullName: user.fullName,
         link: link,
         storeName: sails.config.store.name,
         storeName2: sails.config.store.name2,
@@ -220,11 +220,11 @@ module.exports = {
       var password = passport.password;
       var mailSendConfig = {...newPasswordTpl, from: sails.config.mail.config.from, to: email};
       mailSendConfig.subject = sprintf(mailSendConfig.subject, {
-        fullname: user.fullName
+        fullName: user.fullName
       });
 
       mailSendConfig.html = sprintf(mailSendConfig.html, {
-        fullname: user.fullName,
+        fullName: user.fullName,
         createdAt: sails.moment(passport.updatedAt).format('YYYY/MM/DD HH:mm:ss'),
         userId: user.email,
         password: password,
@@ -249,11 +249,11 @@ module.exports = {
       var email = user.email;
       var mailSendConfig = {...verificationTpl, from: sails.config.mail.config.from, to: email};
       mailSendConfig.subject = sprintf(mailSendConfig.subject, {
-        fullname: user.fullName
+        fullName: user.fullName
       });
 
       mailSendConfig.html = sprintf(mailSendConfig.html, {
-        fullname: user.fullName,
+        fullName: user.fullName,
         link: link,
         storeName: sails.config.store.name,
         storeName2: sails.config.store.name2,
@@ -276,11 +276,11 @@ module.exports = {
       var email = user.email;
       var mailSendConfig = {...userUpdateTpl, from: sails.config.mail.config.from, to: email};
       mailSendConfig.subject = sprintf(mailSendConfig.subject, {
-        fullname: user.fullName
+        fullName: user.fullName
       });
 
       mailSendConfig.html = sprintf(mailSendConfig.html, {
-        fullname: user.fullName,
+        fullName: user.fullName,
         createdAt: sails.moment(new Date()).format('YYYY/MM/DD HH:mm:ss'),
         userId: user.email,
         storeName: sails.config.store.name,
@@ -306,11 +306,11 @@ module.exports = {
       var email = user.email;
       var mailSendConfig = {...shopCodeTpl, from: sails.config.mail.config.from, to: email};
       mailSendConfig.subject = sprintf(mailSendConfig.subject, {
-        fullname: user.fullName
+        fullName: user.fullName
       });
 
       mailSendConfig.html = sprintf(mailSendConfig.html, {
-        fullname: user.fullName,
+        fullName: user.fullName,
         shopCodeToken: shopCode.code,
         shopCodeSentContent: shopCode.sentContent || '',
         startDate: moment(shopCode.startDate).format('YYYY/MM/DD'),
