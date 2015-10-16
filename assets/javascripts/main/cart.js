@@ -15,11 +15,12 @@
   var totalQuanties = 0;
 
   var shippingFee = 0;
+  var shippingFeeFree = false;
   var shippingFeeFreeThreshold = 390;
 
   var packableItemTotal = [];
-  var packingFee = 60;
-  var packingFeeTotal = 0;
+  var packingFee = 0;
+  var packingFeeBasic = 60;
   var packingQuantity = 0;
 
   /* ======================================== */
@@ -36,24 +37,13 @@
 
   // calculate total price
   var calcTatalPrice = function () {
-
     // 免運
-    if((subtotal + buymore - discountAmount) > shippingFeeFreeThreshold){
-      // fee-free!
-      Cookies.set('shippingFee', 0);
-      $("#shippingFeeField").text('**您符合免運資格**');
-    }else{
-      // Normalization
-      shippingFee = parseInt($(this).val(), 10);
-      // set cookie
-      Cookies.set('shippingFee', shippingFee);
-      // show shippingFee to viewfield
-      var shippingFeeField = $('#shippingFeeField');
-      shippingFeeField.text(shippingFee)
-    }
+    if(shippingFeeFree)
+      $("#shippingFeeField").text('滿額免運');
 
-    packingFeeTotal = packingFee * packingQuantity;
-    totalPrice = (subtotal + buymore - discountAmount) + shippingFee + packingFeeTotal;
+    packingFee = packingFeeBasic * packingQuantity;
+
+    totalPrice = (subtotal + buymore - discountAmount) + shippingFee + packingFee;
     console.log('=== calcTatalPrice ===', totalPrice);
     totalPriceDiv.text(totalPrice);
   }
@@ -193,7 +183,21 @@
   $(".container").on("change", "#shippingFeeSelect", function (e) {
     e.preventDefault();
     calcTatalPrice();
-    $("#feeFreeNoticer").text('');
+    var shippingFeeField = $('#shippingFeeField');
+    // Normalization
+    shippingFee = parseInt($(this).val(), 10);
+    // show shippingFee to viewfield
+    shippingFeeField.text(shippingFee)
+    // 免運
+    if((subtotal + buymore - discountAmount) > shippingFeeFreeThreshold){
+      // fee-free!
+      shippingFeeFree = true;
+      $("#shippingFeeField").text('滿額免運');
+    }else{
+      shippingFeeFree = false;
+      // set cookie
+      Cookies.set('shippingFee', shippingFee);
+    }
   });
   // end
 
@@ -246,11 +250,11 @@
     var shippingType = $("#shippingType").val();
     var shippingFeeTotal = shippingFee;
     var shippingRegion = $('#shippingFeeSelect').find(":selected").attr("data-region")
-    var shipping = { shippingType : shippingType ,shippingFee: shippingFeeTotal, shippingRegion: shippingRegion};
+    var shipping = { shippingType : shippingType ,shippingFee: shippingFeeTotal, shippingRegion: shippingRegion, shippingFeeFree:shippingFeeFree};
     Cookies.set('shipping', shipping);
 
     // packingFee
-    var packing = { packingQuantity: packingQuantity, packingFee: packingFeeTotal};
+    var packing = { packingQuantity: packingQuantity, packingFee: packingFee};
     Cookies.set('packing', packing);
 
     if($('#shippingFeeSelect').val() == 0 || $('#paymentMethod').val()==0)
@@ -317,12 +321,12 @@
     for(var i=1;i<parseInt(itemQuantVal)+1;i++){
       targetSelect.append('<option value="'+i+'">'+i+'</option>');
       console.log('=== packingSelect ==>',targetSelect.val());
-    }
+    };
   });
   // end
 
 
-  // recalculate price when btnPlus/bntMinus is pressed.
+  // packing fee select
   $(".packingQuantities").delegate("select","change", function(){
 
     packingQuantity = 0;
@@ -345,10 +349,10 @@
       $(this).val(targetItemQuantCount);
 
     //
-    packingFeeTotal = packingQuantity * packingFee;
+    packingFee = packingQuantity * packingFeeBasic;
 
     // set value to TD field
-    packingFeeTD.text(packingFeeTotal);
+    packingFeeTD.text(packingFee);
 
     // calculate price and save cookie after finish.
     calcTatalPrice();
