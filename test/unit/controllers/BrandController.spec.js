@@ -6,10 +6,17 @@ describe('Brand API - 品牌', function() {
 
   var brand, cookie;
 
-  before(function (done) {
+  before(async function (done) {
     // simulate login
     sinon.stub(UserService, 'getLoginState', (req) => {
       return true;
+    });
+    let admin = await db.User.find ({
+      where: {username: 'admin'},
+      include: [db.Role]
+    });
+    sinon.stub(UserService, 'getLoginUser', (req) => {
+      return admin;
     });
 
     done();
@@ -18,6 +25,7 @@ describe('Brand API - 品牌', function() {
   after((done) => {
     // end this simulated login
     UserService.getLoginState.restore();
+    UserService.getLoginUser.restore();
     done();
   });
 
