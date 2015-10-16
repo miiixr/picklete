@@ -39,7 +39,7 @@ block body
 
             .fileinput.fileinput-new(data-provides='fileinput')
               .fileinput-new.fileinput-square
-                img.img-full(src='http://fakeimg.pl/150x150/dddddd/FFF/?text=cover')
+                img.img-full(src=promotion.coverPhoto ? promotion.coverPhoto : src='http://fakeimg.pl/150x150/dddddd/FFF/?text=cover')
               // /fileinput-new
               .fileinput-preview.fileinput-exists.border-block-1
               // /fileinput-preview
@@ -51,7 +51,7 @@ block body
                   input(type='hidden', name="filename", value='coverPhoto[]')
                   input(type='hidden', name="width", value='150')
                   input(type='hidden', name="height", value='150')
-                  input(type='hidden', name='coverPhoto[]', form='goodForm', value='')
+                  input(type='hidden', name='coverPhoto[]', form='shopDiscount', value='')
                 a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
 
             //
@@ -74,15 +74,24 @@ block body
       .form-group
         label.col-sm-3.col-md-2.control-label 活動時間
         .col-sm-4.col-md-3
-          input.form-control(type='date',name='startDate',form='shopDiscount',value= sails.moment(promotion.startDate).format('YYYY-MM-DD'))
+          if (promotion.endDate)
+            input.form-control(type='date',name='startDate',form='shopDiscount',value= sails.moment(promotion.startDate).format('YYYY-MM-DD'))
+          else
+            input.form-control(type='date',name='startDate',form='shopDiscount',disabled)
         .col-sm-1.col-md-1.p-left-0.p-right-0.text-center
           p.form-control-static 至
         .col-sm-4.col-md-3
-          input.form-control(type='date',name='endDate',form='shopDiscount',value= sails.moment(promotion.endDate).format('YYYY-MM-DD'))
+          if (promotion.endDate)
+            input.form-control(type='date',name='endDate',form='shopDiscount',value= sails.moment(promotion.endDate).format('YYYY-MM-DD'))
+          else
+            input.form-control(type='date',name='endDate',form='shopDiscount',disabled)
         .col-sm-9.col-sm-offset-3.col-md-3.col-md-offset-0
           .checkbox
             label
-              input(type='checkbox')
+              if (promotion.endDate)
+                input(type='checkbox')#noTimeLimit
+              else
+                input(type='checkbox', checked='true')#noTimeLimit
               |  不限時
       // /form-group
       .form-group
@@ -171,17 +180,21 @@ block body
       each product in products.rows
         tr
           td
-            -if( promotion.id )
+            //- each promotedProduct in promotion.Products
+            -if(product.promoted)
               input.addSelect(type='checkbox' , checked='',value= product.id)
             -else
               input.addSelect(type='checkbox' ,value= product.id)
           td
-            img.width-6(src= product.coverPhoto)
+            img.width-6(src= product.photos[0])
           td= product.name
-          td= product.id
-          td 590
+          td= product.productNumber
+          if (product.originPrice)
+            td= product.originPrice
+          else
+            td= product.price
           td
-            span.text-danger 413
+            span.text-danger= product.price
           td.text-right
             a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
               span.glyphicon.glyphicon-remove

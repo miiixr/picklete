@@ -4,15 +4,26 @@
   var subtotalDiv = $('#subtotal');
   var totalPriceDiv = $('#totalPrice');
   var buymoreDiv = $("#buymore");
+  var packingFeeTD = $("#packingFeeField");
   var discountAmountDiv = $("#discountAmount");
   var quantityVal;
 
   var subtotal = 0;
   var totalPrice = 0;
-  var shippingFee = 0;
   var buymore = 0;
   var discountAmount = 0;
+  var totalQuanties = 0;
+
+  var shippingFee = 0;
+  var shippingFeeFree = false;
   var shippingFeeFreeThreshold = 390;
+
+  var packableItemTotal = [];
+  var packingFee = 0;
+  var packingFeeBasic = 60;
+  var packingQuantity = 0;
+
+  /* ======================================== */
 
   Cookies.remove('buyMoreIds');
   Cookies.remove('shopCode');
@@ -23,18 +34,33 @@
     picklete_cart : {orderItems: []};
   }
 
+
+  // calculate total price
   var calcTatalPrice = function () {
-    var price = (subtotal + buymore - discountAmount);
-    // // 399免運
-    // if( price > shippingFeeFreeThreshold )
-    //   totalPrice = price;
-    // else
-      totalPrice = price + shippingFee;
+
+    var tmpPrice = subtotal + buymore - discountAmount;
+
+    // 免運
+    if(parseInt(tmpPrice)>parseInt(shippingFeeFreeThreshold)){
+      $("#shippingFeeField").text('滿額免運');
+      shippingFeeFree = true;
+      shippingFee = 0;
+    }else{
+      $("#shippingFeeField").text($("#shippingFeeSelect").val());
+      shippingFeeFree = false;
+      shippingFee = parseInt($("#shippingFeeSelect").val());
+    }
+
+    packingFee = packingFeeBasic * packingQuantity;
+
+    totalPrice = tmpPrice + shippingFee + packingFee;
     console.log('=== calcTatalPrice ===', totalPrice);
     totalPriceDiv.text(totalPrice);
   }
+  // end
 
-  var reCalTotalPriceAndSaveCookie = function(){
+  // re-calculate subtotal price and save quant to cookie in case.
+  var reCalSubtotalPriceAndSaveCookie = function(){
 
     subtotal = 0;
 
@@ -49,16 +75,31 @@
 
       if(orderItem.originPrice == undefined) orderItem.originPrice ='';
       subtotal += parseInt(orderItem.price*orderItem.quantity, 10);
-      subtotalDiv.text(subtotal);
-      totalPrice = subtotal;
-      totalPriceDiv.text(totalPrice);
+
+      totalQuanties += 1;
+    });
+    subtotalDiv.text(subtotal);
+    calcTatalPrice();
+    // save new quantities
+    Cookies.set('picklete_cart', picklete_cart);
+  };
+  // end
+
+  // save packing fee/quant to cookie.
+  var reCalPackingFeeAndSaveCookie = function(){
+
+    picklete_cart.orderItems.forEach(function(orderItem, index){
+      packVal =  $("input[name='pack["+index+"]']").val();
+      orderItem.packingFee = packingFee;
+      orderItem.packingQuantity = packingQuantity;
     });
     // save new quantities
     Cookies.set('picklete_cart', picklete_cart);
   };
-
+  // end
 
   var cartViewerInit = function() {
+    // console.log('==== picklete_cart ==>',picklete_cart);
 
     picklete_cart.orderItems.forEach(function(orderItem, index){
 
@@ -74,7 +115,7 @@
 
         '    <div class="col-xs-4 col-sm-3 col-md-2">' +
         '      <div class="item-block"><a href="#" class="item-like"><span class="glyphicon glyphicon-heart"></span></a>' +
-        '        <a href="shop-product"><img src="'+orderItem.photos[0]+'" class="img-full"></a>' +
+        '        <a href="/shop/products/'+orderItem.productGmId+'/'+orderItem.ProductId+'"><img src="'+orderItem.photos[0]+'" class="img-full"></a>' +
         '      </div>' +
         '    </div>' +
 
@@ -83,31 +124,58 @@
         '        <a href="brands">'+ orderItem.brand +'</a>' +
         '      </h6>' +
         '      <h5 class="text-roboto letter-spacing-1 m-top-1-min">' +
-        '        <a href="shop-product">'+ orderItem.name +'</a>' +
+        '        <a href="/shop/products/'+orderItem.productGmId+'/'+orderItem.ProductId+'">'+ orderItem.name +'</a>' +
         '      </h5>' +
         '    </div>' +
 
-        '    <div class="col-xs-6 col-sm-3 col-md-2 desktop-p-left-0 desktop-m-top-5 m-bottom-2">' +
-        '      <div class="input-group input-group-count max-width-150"><span class="input-group-btn">' +
-        '          <button type="button" disabled="disabled" data-type="minus" data-field="quant['+index+']" class="btn btn-default btn-number p-left-2 p-right-2"><span class="glyphicon glyphicon-minus"></span></button></span>' +
+        '    <div class="col-xs-6 col-sm-3 col-md-2 desktop-p-right-0 desktop-text-center desktop-m-top-5 m-bottom-2">商品數量' +
+        '      <div class="productQuantities input-group input-group-count max-width-150"><span class="input-group-btn">' +
+        '        <button type="button" disabled="disabled" data-type="minus" data-field="quant['+index+']" class="btn btn-default btn-number p-left-2 p-right-2"><span class="glyphicon glyphicon-minus"></span></button></span>' +
         '        <input type="text" name="quant['+index+']" value="'+orderItem.quantity+'" min="1" max="10" class="form-control input-number text-center font-size-slarge"><span class="input-group-btn">' +
-        '          <button type="button" data-type="plus" data-field="quant['+index+']" class="btn btn-default btn-number p-left-2 p-right-2"><span class="glyphicon glyphicon-plus"></span></button></span>' +
+        '        <button type="button" data-type="plus" data-field="quant['+index+']" class="btn btn-default btn-number p-left-2 p-right-2"><span class="glyphicon glyphicon-plus"></span></button></span>' +
         '      </div>' +
-        '    </div>' +
+        '    </div>' ;
 
-        '    <div class="col-xs-6 col-sm-3 col-md-2 desktop-p-right-0 desktop-text-center desktop-m-top-5 m-bottom-2">' +
-        '      此商品不提供<br>包裝服務' +
-        '    </div>' +
 
+      var liPackageService="", liPackageServiceOptions="", liPackageServiceEnd="";
+
+      if(!orderItem.packable){
+        liPackageService =
+          '    <div class="col-xs-6 col-sm-3 col-md-2 desktop-p-right-0 desktop-text-center desktop-m-top-5 m-bottom-2">' +
+          '      此商品不提供<br>包裝服務' +
+          '    </div>';
+      }else{
+          packableItemTotal.push(index);
+          liPackageService =
+            '    <div class="col-xs-6 col-sm-3 col-md-2 desktop-p-right-0 desktop-text-center desktop-m-top-5 m-bottom-2">禮品包裝' +
+            '      <div class="packingQuantities input-group max-width-150">'+
+            '       <span class="input-group-btn">' +
+            '        <select class="form-control text-center font-size-slarge"  name="packingSelect['+index+']">'+
+            '         <option value="0">0</option>';
+          for(var i=1;i<parseInt(orderItem.quantity)+1;i++){
+            liPackageServiceOptions += '<option value="'+i+'">'+i+'</option>';
+          };
+          liPackageServiceEnd =
+            '        </select>'+
+              '     </span>'+
+            '      </div>' +
+            '    </div>';
+        }
+      liPackageService = liPackageService + liPackageServiceOptions + liPackageServiceEnd;
+
+      var liPrice =
         '    <div class="col-xs-6 col-sm-2 col-md-2 desktop-text-center desktop-m-top-5 m-bottom-1">' +
         '      <h4 class="m-top-0">$ '+orderItem.price+'<br><small class="text-line-through">'+orderItem.originPrice+'</small></h4>' +
-        '    </div>' +
+        '    </div>';
 
+      var liRemoveItem =
         '    <div class="col-xs-6 col-sm-1 col-md-1 text-right desktop-m-top-5">' +
         '      <a id="remveOrderItem" data-index="'+index+'" data-productId="'+orderItem.id+'" href="#" data-toggle="modal" data-target="#modal-delete" class="btn btn-link delete-link"><span class="glyphicon glyphicon-remove"></span></a>' +
         '    </div>' +
         '  </div>' +
         '</div>';
+
+      liOrderItem = liOrderItem + liPackageService + liPrice + liRemoveItem;
 
       subtotal += parseInt(orderItem.price*orderItem.quantity, 10);
       subtotalDiv.text(subtotal);
@@ -115,8 +183,6 @@
       totalPriceDiv.text(totalPrice);
 
       cartViewer.append(liOrderItem);
-
-
     });
 
     cartViewer.inputNumber();
@@ -126,25 +192,22 @@
   // shippingfee select
   $(".container").on("change", "#shippingFeeSelect", function (e) {
     e.preventDefault();
-
+    var shippingFeeField = $('#shippingFeeField');
+    // Normalization
+    shippingFee = parseInt($(this).val(), 10);
+    // show shippingFee to viewfield
+    shippingFeeField.text(shippingFee)
+    // // 免運
+    // if((subtotal + buymore - discountAmount) > shippingFeeFreeThreshold){
+    //   // fee-free!
+    //   shippingFeeFree = true;
+    //   $("#shippingFeeField").text('滿額免運');
+    // }else{
+    //   shippingFeeFree = false;
+    //   // set cookie
+    //   Cookies.set('shippingFee', shippingFee);
+    // }
     calcTatalPrice();
-
-    $("#feeFreeNoticer").text('');
-
-    // judge threshold
-    if((subtotal + buymore - discountAmount) > shippingFeeFreeThreshold){
-      // fee-free!
-      Cookies.set('shippingFee', 0);
-      $("#feeFreeNoticer").text('**您符合免運資格:)**');
-    }else{
-      // Normalization
-      shippingFee = parseInt($(this).val(), 10);
-      // set cookie
-      Cookies.set('shippingFee', shippingFee);
-      // show shippingFee to viewfield
-      var shippingFeeField = $('#shippingFeeField');
-      shippingFeeField.text(shippingFee)
-    }
   });
   // end
 
@@ -179,10 +242,7 @@
      Cookies.set('picklete_cart', picklete_cart);
 
      window.location.reload();
-
   }
-
-
 
   $("#nextSetp").click(function () {
     var buymoreIds = [];
@@ -196,15 +256,16 @@
     });
     Cookies.set('buyMoreIds', buymoreIds);
 
-
+    // shipping
     var shippingType = $("#shippingType").val();
-    var shippingFee = $("#shippingFeeSelect").val();
+    var shippingFeeTotal = shippingFee;
     var shippingRegion = $('#shippingFeeSelect').find(":selected").attr("data-region")
-
-
-    var shipping = { shippingType : shippingType ,shippingFee: shippingFee, shippingRegion: shippingRegion};
-
+    var shipping = { shippingType : shippingType ,shippingFee: shippingFeeTotal, shippingRegion: shippingRegion, shippingFeeFree:shippingFeeFree};
     Cookies.set('shipping', shipping);
+
+    // packingFee
+    var packing = { packingQuantity: packingQuantity, packingFee: packingFee};
+    Cookies.set('packing', packing);
 
     if($('#shippingFeeSelect').val() == 0 || $('#paymentMethod').val()==0)
       alert("請確認運送、付款方式");
@@ -243,11 +304,103 @@
     calcTatalPrice();
   });
 
-  // recalculate price when btnPlus/bntMinus pressed
-  $(".input-group").delegate("input","change", function(){
+
+  // recalculate price when btnPlus/bntMinus is pressed or clicked.
+  $(".productQuantities").delegate("input","change", function(){
+    // calculate price and save cookie before do anything.
+    reCalSubtotalPriceAndSaveCookie();
     calcTatalPrice();
-    reCalTotalPriceAndSaveCookie();
+
+    // get target prudoct quantity value and its field id.
+    var thisName = $(this).attr('name');
+    // console.log('=== thisName ===>',thisName);
+    var itemQuantId = thisName.charAt(6);
+    // console.log('=== itemQuantId ===>',itemQuantId);
+    var itemQuantVal = $(this).val();
+    // console.log('=== itemQuantVal ===>',itemQuantVal);
+    var targetSelect = $("select[name='packingSelect["+itemQuantId+"]']");
+    // console.log('=== releted pack field name ==>',targetSelect.attr('name'));
+
+    // empty select
+    targetSelect
+    .empty()
+    .append('<option selected="selected" value="0">0</option>')
+    .val('0');
+
+    // append select
+    for(var i=1;i<parseInt(itemQuantVal)+1;i++){
+      targetSelect.append('<option value="'+i+'">'+i+'</option>');
+      console.log('=== packingSelect ==>',targetSelect.val());
+    };
   });
+  // end
+
+
+  // packing fee select
+  $(".packingQuantities").delegate("select","change", function(){
+
+    packingQuantity = 0;
+
+    packableItemTotal.forEach(function(value){
+       var count = parseInt($("select[name='packingSelect["+value+"]']").val());
+       console.log('=== value ==>',value,'=== count ===>',count);
+       packingQuantity += count;
+    });
+    // console.log('=== packableItemTotal ===>',packableItemTotal);
+
+    $(this).attr('value',$(this).val());
+
+    // get target prudoct quantity value and its field id.
+    var thisName = $(this).attr('name');
+    // console.log('=== thisName ===>',thisName);
+    var itemQuantId = thisName.charAt(5);
+    var targetItemQuantCount = $("input[name='quant["+itemQuantId+"]']");
+    if($(this).val() > targetItemQuantCount)
+      $(this).val(targetItemQuantCount);
+
+    //
+    packingFee = packingQuantity * packingFeeBasic;
+
+    // set value to TD field
+    packingFeeTD.text(packingFee);
+
+    // calculate price and save cookie after finish.
+    calcTatalPrice();
+  });
+
+
+  // // recalculate price when btnPlus/bntMinus is pressed.
+  // $(".packQuantities").delegate("input","change", function(){
+  //   packingQuantity = 0;
+  //   // console.log('=== picklete_cart.orderItems.length ===>',picklete_cart.orderItems.length);
+  //   packableItemTotal.forEach(function(value){
+  //      var count = parseInt($("input[name='pack["+value+"]']").val());
+  //      console.log('=== value ==>',value,'=== count ===>',count);
+  //      packingQuantity += count;
+  //   });
+  //   // console.log('=== packingQuantity ===>',packingQuantity);
+  //
+  //   $(this).attr('value',$(this).val());
+  //
+  //   // get target prudoct quantity value and its field id.
+  //   var thisName = $(this).attr('name');
+  //   // console.log('=== thisName ===>',thisName);
+  //   var itemQuantId = thisName.charAt(5);
+  //   var targetItemQuantCount = $("input[name='quant["+itemQuantId+"]']");
+  //   if($(this).val() > targetItemQuantCount)
+  //     $(this).val(targetItemQuantCount);
+  //
+  //   //
+  //   packingFeeTotal = packingQuantity * packingFee;
+  //
+  //   // set value to TD field
+  //   packingFeeTD.text(packingFeeTotal);
+  //
+  //   // calculate price and save cookie after finish.
+  //   calcTatalPrice();
+  // });
+  // //end
+
 
   // shippings
   $("#shippingType").change(function(){
