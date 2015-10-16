@@ -88,7 +88,7 @@ module.exports.mail = {
       sendBy: 'email',
       subject: '使用者 email %(email)s 訂單查詢要求連結',
       html: """
-      <br />Hi %(username)s:
+      <br />Hi %(fullname)s:
 
       <br />請點選下列連結取得訂單資訊
 
@@ -100,9 +100,9 @@ module.exports.mail = {
     },
     greeting: {
       sendBy: 'email',
-      subject: '歡迎 %(username)s 加入ＯＯＯ會員',
+      subject: '歡迎 %(fullname)s 加入ＯＯＯ會員',
       html: """<html><body>
-      <br /><p>歡迎 %(username)s 註冊 %(storeName)s ！</p>
+      <br /><p>歡迎 %(fullname)s 註冊 %(storeName)s ！</p>
       <br />
       <br />誠摯感謝您註冊%(storeName3)s平台精心揀選的優質商品!
       <br />網站成立的宗旨是希望能與更多懂生活的人一同分享及找回生活中的理想樂園，
@@ -127,7 +127,7 @@ module.exports.mail = {
       sendBy: 'email',
       subject: '%(storeName)s - 忘記密碼通知信',
       html: """<html><body>
-      <br />親愛的 %(username)s 您好：
+      <br />親愛的 %(fullname)s 您好：
       <br />
       <br />是您在我們的系統中忘記密碼了嗎??
       <br />若是您忘記了密碼，點選以下連結會幫您重置密碼，並寄到您的信箱
@@ -147,9 +147,9 @@ module.exports.mail = {
     },
     newPassword:{
       sendBy: 'email',
-      subject: '%(username)s - 忘記密碼回覆信',
+      subject: '%(fullname)s - 忘記密碼回覆信',
       html: """"<html><body>
-      <br />親愛的 %(username)s 您好：
+      <br />親愛的 %(fullname)s 您好：
       <br />
       <br />您在%(createdAt)s於%(storeName2)s會員中心詢問用戶密碼，請確認下方用戶密碼並妥保存，謝謝。
       <br />我們已經幫你重置好密碼
@@ -173,14 +173,14 @@ module.exports.mail = {
       sendBy: 'email',
       subject: '您的優惠碼',
       html: """
-      <br />親愛的 %(username)s 您好：
+      <br />親愛的 %(fullname)s 您好：
       <br />
       <br />%(shopCodeSentContent)s
       <br />
       <br />下面是這期的優惠碼：
       <br />%(shopCodeToken)s
       <br />可在 %(startDate)s 開始使用
-      <br />並且在 %(endDate)s 前使用完畢 
+      <br />並且在 %(endDate)s 前使用完畢
       <br />
       <br />此為系統信件，請勿直接回覆此信件
       <br />
@@ -196,9 +196,9 @@ module.exports.mail = {
 
     verification:{
       sendBy: 'email',
-      subject: '%(username)s - 註冊驗證信',
+      subject: '%(fullname)s - 註冊驗證信',
       html: """<html><body>
-      <br />親愛的 %(username)s 您好：
+      <br />親愛的 %(fullname)s 您好：
       <br />
       <br />誠摯感謝您註冊%(storeName3)s平台精心揀選的優質商品!
       <br />網站成立的宗旨是希望能與更多懂生活的人一同分享及找回生活中的理想樂園，
@@ -226,9 +226,9 @@ module.exports.mail = {
 
     userUpdate:{
       sendBy: 'email',
-      subject: '%(username)s - 會員資料修改通知信',
+      subject: '%(fullname)s - 會員資料修改通知信',
       html: """<html><body>
-      <br />親愛的 %(username)s 您好：
+      <br />親愛的 %(fullname)s 您好：
       <br />
       <br />您在 %(createdAt)s 於 %(storeName2)s 會員中心修改會員資料。
       <br />如您最近沒有修改任何會員資料，請聯絡我們並更換密碼。
