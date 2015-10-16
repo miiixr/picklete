@@ -39,9 +39,19 @@
   // end twzipcode
 
   // display shipping fee
-  var shippingFeeDiv = $('#shippingFeeField');
+  var shippingFeeField = $('#shippingFeeField');
   var shippingFeePrice = parseInt(Cookies.getJSON('shipping').shippingFee);
-  shippingFeeDiv.text(shippingFeePrice);
+  var shippingFeeFree = (Cookies.getJSON('shipping').shippingFeeFree);
+  if(shippingFeeFree)
+    shippingFeeField.text('滿額免運');
+  else
+    shippingFeeField.text(shippingFeePrice);
+
+  // display packing fee
+  var packingFeeField = $('#packingFeeField');
+  var packingFeePrice = parseInt(Cookies.getJSON('packing').packingFee);
+  console.log('=== packingFeePrice ===>',packingFeePrice);
+  packingFeeField.text(packingFeePrice);
 
   var picklete_cart = Cookies.getJSON('picklete_cart');
   picklete_cart = picklete_cart ? picklete_cart : window.location.replace("/shop/products");
