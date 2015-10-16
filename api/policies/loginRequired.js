@@ -10,11 +10,8 @@ module.exports = async function(req, res, next) {
   referer = req.path.split('/');
   if (UserService.getLoginState(req)) {
     let userInfo = UserService.getLoginUser(req);
-    let role = await db.Role.find({
-      where: {authority: 'admin'}
-    });
     if(referer['1'] === 'admin'){
-      if (userInfo.RoleId === role.id) {
+      if (userInfo.Role.authority === 'admin') {
         return next();
       } else {
         return res.redirect('/');
