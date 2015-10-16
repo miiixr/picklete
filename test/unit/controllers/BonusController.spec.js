@@ -6,6 +6,14 @@ describe('Bonus', () => {
     sinon.stub(UserService, 'getLoginState', (req) => {
       return true;
     });
+    let admin = await db.User.find ({
+      where: {username: 'admin'},
+      include: [db.Role]
+    });
+    sinon.stub(UserService, 'getLoginUser', (req) => {
+      return admin;
+    });
+
     let bonuspoint={
         remain: 100,
         used: 500,
@@ -18,6 +26,7 @@ describe('Bonus', () => {
 
   after((done) => {
     UserService.getLoginState.restore();
+    UserService.getLoginUser.restore();
     done();
   });
 

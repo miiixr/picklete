@@ -4,6 +4,7 @@ module.exports = {
   environment: ''
   initData: ''
   domain: 'http://localhost:1337'
+  cookieVersion:'0.1'
   # mail: {
   #   type: 'ses'
   #   active: false
@@ -83,5 +84,19 @@ module.exports = {
   }
   googleAnalytics: {
     trackingID: ''
+  }
+  passport:{
+    local: strategy: require('passport-local').Strategy
+    facebook:{
+      name: 'Facebook'
+      protocol: 'oauth2'
+      strategy: require('passport-facebook').Strategy
+      options:{
+        clientID: '1598226980388780'
+        clientSecret: '71ae89eba342ce5a48a30a870d6bd473'
+        scope: [ 'email', 'public_profile' ]
+        callbackURL: "http://localhost:1337/auth/facebook/callback"
+      }
+    }
   }
 }
