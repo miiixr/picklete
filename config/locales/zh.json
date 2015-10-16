@@ -53,5 +53,16 @@
 	"shipping-fee-setting": "運費設定",
 	"shopping-cart": "我的購物車",
 	"delivery-payment": "運送付款",
-	"delivery-way": "運送方式"
+	"delivery-way": "運送方式",
+	"select": "請選擇",
+	"delivery-area": "運送區域",
+	"payment-terms": "付款方式",
+	"subtotal": "小計",
+	"total": "總計",
+	"gift-wrapping": "禮品包裝",
+	"shipping-fee": "運費",
+	"total-discount": "總折扣",
+	"next-step": "下一步",
+	"write-data": "填寫資料",
+	"continue-shopping": "繼續購物"
 }

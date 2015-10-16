@@ -28,7 +28,7 @@ block body
                       | #{i18n('delivery-way')}
                       span.text-danger *
                     select#shippingType.form-control     
-                      option(value='0') 請選擇
+                      option(value='0') #{i18n('select')}
                       option(value='delivery') #{i18n('delivery')}
                       option(value='postoffice') #{i18n('postoffice')}
                     //- select.form-control
@@ -38,10 +38,10 @@ block body
                 .col-sm-4
                   .form-group
                     label
-                      | 運送區域
+                      | #{i18n('delivery-area')}
                       span.text-danger *
                     select#shippingFeeSelect.form-control     
-                     option(value='0') 請選擇
+                     option(value='0') #{i18n('select')}
                       //- each shipping,index in shippings.shippings
                       //-   if(shippingType.selected == 'delivery')
                       //-     option(value='#{shipping.fee}') #{shipping.region} - 運費 #{shipping.fee} 元
@@ -52,10 +52,10 @@ block body
                 .col-sm-4
                   .form-group
                     label
-                      | 付款方式
+                      | #{i18n('payment-terms')}
                       span.text-danger *
                     select#paymentMethod.form-control
-                      option(value='0') 請選擇
+                      option(value='0') #{i18n('select')}
                       each method in paymentMethod
                         option(value= method.code) #{method.name}
                   // /form-group
@@ -72,31 +72,31 @@ block body
               table.table.m-bottom-6
                 tbody
                   tr
-                    th 小計
+                    th #{i18n('subtotal')}
                       td#subtotal.text-right 0
                   tr
-                    th 總折扣
+                    th #{i18n('total-discount')}
                     td.text-right
                       span.text-danger 0
                   tr
-                    th 運費
+                    th #{i18n('shipping-fee')}
                     td#shippingFeeField.text-right 0
                   tr
-                    th 禮品包裝
+                    th #{i18n('gift-wrapping')}
                     td.text-right 0
                   tr
-                    th 折扣碼
+                    th #{i18n('coupon-code')}
                     td.text-right 
                       span#discountAmount.text-danger 0
                   tr
-                    th 加價購
+                    th #{i18n('increase-purchase')}
                     td#buymore.text-right 0
                   tr
-                    th 總計
+                    th #{i18n('total')}
                     td.text-right
                       h3#totalPrice.m-top-0 0
-              a#nextSetp.btn.btn-black.border-radius-circle.btn-block.m-bottom-2 下一步、填寫資料
-              a.btn.btn-link.btn-block.text-gray-light.m-bottom-6(href='/shop/products') 繼續購物
+              a#nextSetp.btn.btn-black.border-radius-circle.btn-block.m-bottom-2 #{i18n('next-step')}、#{i18n('write-data')}
+              a.btn.btn-link.btn-block.text-gray-light.m-bottom-6(href='/shop/products') #{i18n('continue-shopping')}
               .form-group
                 label
                   a(href='#', data-toggle='tooltip', title='折扣代碼限單次消費折抵一次，如有餘額恕不退換現金。')
@@ -163,4 +163,3 @@ block body
     // /modal
   block js
     script(src="/javascripts/main/cart.js")
-    script(src="/javascripts/main/shop.js")
