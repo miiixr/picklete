@@ -46,7 +46,14 @@ let ShopController = {
           products[i].status = 'new';
       }
 
+      let dptSubId = query.dptSubId || '';
+      let dptId = query.dptId || '';
+      let sort = query.sort || '';
+
       let result = {
+        dptSubId,
+        dptId,
+        sort,
         brands,
         dpts,
         query,
@@ -58,6 +65,7 @@ let ShopController = {
         verification: query.verification
       };
 
+      console.log('=== result ===', result.query);
       console.log('=== totalPages ===', result.totalPages);
       console.log('=== totalRows ===', result.totalRows);
 
