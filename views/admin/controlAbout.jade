@@ -141,42 +141,14 @@ block body
                 // /fileinput
                 a.btn-remove(href='#')
                   span.glyphicon.glyphicon-remove
+                if index == photos.length-1
+                  a.btn-add(href='#')
+                    span.glyphicon.glyphicon-plus
                 .form-group.m-top-2.m-bottom-0
                   input.form-control(type='text', form='about-data', name="dealerNames[]", value="#{dealerName[index]}", required)
               // /edit-block
             // /col-md-3
 
-      .col-md-3
-        .edit-block.m-bottom-4
-          // fileinput-img
-          .fileinput.fileinput-new(data-provides='fileinput')
-            .fileinput-new.fileinput-square
-              img.img-full(src='http://fakeimg.pl/1000x1000/dddddd/FFF/?text=800x800')
-            // /fileinput-new
-            .fileinput-preview.fileinput-exists.border-block-1
-            // /fileinput-preview
-            .fileinput-btn
-              form(action="/admin/image/upload", method="POST", enctype="multipart/form-data")
-                span.btn.btn-default.btn-sm.btn-file
-                  span.fileinput-new Select image
-                  span.fileinput-exists Change
-                  input.fileInput(type='file', name="uploadfile", data-name='dealerPhotos[]')
-                  input(type='hidden', name="filename", value='dealerPhotos[]')
-                  input(type='hidden', name="width", value='800')
-                  input(type='hidden', name="height", value='800')
-                  input(type='hidden', name='dealerPhotos[]', form='about-data', value='')
-                a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
-              // /form
-            // /fileinput-btn
-          // /fileinput
-          a.btn-remove(href='#')
-            span.glyphicon.glyphicon-remove
-          a.btn-add(href='#')
-            span.glyphicon.glyphicon-plus
-          .form-group.m-top-2.m-bottom-0
-            input.form-control(type='text', form='about-data', name="dealerNames[]", required)
-        // /edit-block
-      // /col-md-3
 
 
 
