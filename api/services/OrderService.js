@@ -15,7 +15,8 @@ var allpay = new Allpay({
 
 var self = module.exports = {
   generateOrderSerialNumber: async () => {
-    let dateString = OrderService._dateFormat(moment());
+    // let dateString = OrderService._dateFormat(moment());
+    let dateString = 'W'+moment().format('YYYYMMDD');
     let startDate = moment().startOf('day').toDate();
     let endDate = moment().startOf('day').add(1, 'days').add(-1, 'seconds').toDate();
 
@@ -27,8 +28,7 @@ var self = module.exports = {
       }
     })
 
-    let todayOrderConutString = sprintf("%03d", todayOrderConut);
-
+    let todayOrderConutString = sprintf("%05d", todayOrderConut);
     return `${dateString}${todayOrderConutString}`;
 
   },
@@ -157,7 +157,7 @@ var self = module.exports = {
     try {
       if (! newOrder.orderItems)
         throw new Error('無購買任何商品，請跳轉商品頁');
-      
+
       let orderItems = newOrder.orderItems.reduce((result, orderItem) => {
         if(parseInt(orderItem.quantity) === 0) return result;
 
@@ -214,7 +214,9 @@ var self = module.exports = {
         UserId: buyer.id,
         paymentTotalAmount:0,
         serialNumber: await OrderService.generateOrderSerialNumber(),
-        useBunusPoint: 0
+        useBunusPoint: 0,
+        packingFee: newOrder.packingFee,
+        packingQuantity: newOrder.packingQuantity
       };
 
       products.forEach((product, index) => {

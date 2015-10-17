@@ -78,7 +78,7 @@ let UserController = {
     let additionalPurchaseProductGms = await AdditionalPurchaseService.getProductGms(query);
     console.log('=== additionalPurchaseProducts ===', additionalPurchaseProductGms);
 
-    // add an item for Shippings(運費) by kuyen
+    // add an item for Shippings
     let shippings = await ShippingService.findAll();
     // console.log('=== shippings ==>',shippings);
     let paymentMethod = sails.config.allpay.paymentMethod;
@@ -144,7 +144,7 @@ let UserController = {
       req.login(user, function(err) {
           if (err) return res.serverError(err);
 
-          return res.redirect('/member/setting');
+          return res.redirect('/');
       })
 
     } catch (e) {

@@ -13,6 +13,8 @@ module.exports = (sequelize, DataTypes) ->
     comment: DataTypes.STRING
     # spec note
     spec: DataTypes.STRING
+    # packing fee
+    packingFee: DataTypes.FLOAT
   }, classMethods: associate: (models) ->
     OrderItem.belongsTo models.Order
     OrderItem.belongsTo models.Product
