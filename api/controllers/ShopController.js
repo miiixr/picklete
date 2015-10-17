@@ -82,7 +82,8 @@ let ShopController = {
             include: [
               { model: db.Product },
               { model: db.Dpt},
-              { model: db.DptSub}
+              { model: db.DptSub},
+              { model: db.Brand}
             ]
           });
       let product = await db.Product.findOne({
@@ -102,7 +103,6 @@ let ShopController = {
       console.log('=== product ===', product);
 
       let dptId = product.ProductGm.Dpts[0].id;
-
       // recommend products
       let recommendProducts = await db.Product.findAll({
         subQuery: false,
