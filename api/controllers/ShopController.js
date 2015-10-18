@@ -37,18 +37,18 @@ let ShopController = {
       let dpts = await DptService.findAll();
 
 
-      for(var i in products){
-        var Today = new Date();
-        var date = new Date(products[i].createdAt);
-        products[i].price = '$ ' + UtilService.numberFormat(products[i].price);
-        if (products[i].originPrice) {
-          products[i].originPrice = '$ ' + UtilService.numberFormat(products[i].originPrice);
-        }
-        if(products[i].stockQuantity <= 0)
-          products[i].status = 'soldout';
-        else if(products[i].status != 'sale' && (Today - date)/86400000 <= 10)
-          products[i].status = 'new';
-      }
+      // for(var i in products){
+      //   var Today = new Date();
+      //   var date = new Date(products[i].createdAt);
+      //   products[i].price = '$ ' + UtilService.numberFormat(products[i].price);
+      //   if (products[i].originPrice) {
+      //     products[i].originPrice = '$ ' + UtilService.numberFormat(products[i].originPrice);
+      //   }
+      //   if(products[i].stockQuantity <= 0)
+      //     products[i].status = 'soldout';
+      //   else if(products[i].status != 'sale' && (Today - date)/86400000 <= 10)
+      //     products[i].status = 'new';
+      // }
 
       let result = {
         brands,
@@ -146,7 +146,7 @@ let ShopController = {
       }
 
       else {
-        product.price = '$ ' + UtilService.numberFormat(product.price);
+        // product.price = '$ ' + UtilService.numberFormat(product.price);
         let resData = {
           productGm: productGm,
           products: products,

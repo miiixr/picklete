@@ -21,7 +21,7 @@ module.exports = {
     let fnums = parts[0];
     let decimals = parts[1] ? (dsep || '.') + parts[1] : '';
 
-    return fnums.replace(/(\d)(?=(?:\d{3})+$)/g, '$1' + tsep) + decimals;
+    return '$ ' + fnums.replace(/(\d)(?=(?:\d{3})+$)/g, '$1' + tsep) + decimals;
   },
 
   errorHandle: async (req, res) => {
