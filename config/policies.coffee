@@ -24,7 +24,8 @@ module.exports.policies = {
     controlLogin: ['global', 'cookieRequired']
     cart: ['global', 'cookieRequired', 'mailRequired']
     loginStatus:['global','cookieRequired']
-    update:['passport']
+    update: ['passport']
+    verify: true
 
   'MainController': ['global', 'mailRequired', 'cookieRequired']
 

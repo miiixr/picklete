@@ -164,6 +164,31 @@ describe.skip("about User", () => {
   // end
 });
 
+describe.only("none login user api check", () => {
+
+  it('check email is existed', (done) => {
+    request(sails.hooks.http.app)
+    .get('/api/user/verify/' + 'admin@gmail.com')
+    .end((err,res) => {
+      res.statusCode.should.equal(200);
+      res.body.should.be.Object;
+      res.body.result.should.equal('existed');
+      done(err);
+    });
+  });
+
+  it('check email is work', (done) => {
+    request(sails.hooks.http.app)
+    .get('/api/user/verify/' + 'kerkerker@kdkeowl.com.eu')
+    .end((err,res) => {
+      res.statusCode.should.equal(200);
+      res.body.should.be.Object;
+      res.body.result.should.equal('ok');
+      done(err);
+    });
+  });
+});
+
 // test logined user behavior
 describe("login user data", () => {
 
