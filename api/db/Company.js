@@ -17,9 +17,17 @@ module.exports = function(sequelize, DataTypes) {
     // 公司介紹
     desc: DataTypes.TEXT,
 
-    // 公司的 line image
-    line: DataTypes.STRING
+    // 公司 blog 網址
+    blog: DataTypes.STRING,
 
+    // 公司的 line image
+    line: DataTypes.STRING,
+    // facebook url
+    facebook: DataTypes.STRING,
+    // instagram url
+    instagram: DataTypes.STRING,
+    // youtube url
+    youtube: DataTypes.STRING
   });
 
   return Company;
