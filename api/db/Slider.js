@@ -5,6 +5,12 @@ module.exports = function(sequelize, DataTypes) {
     // 活動主圖
     cover: DataTypes.STRING,
 
+    //開啟新視窗
+    openWindow: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+    },
+
     // 活動標題
     title: DataTypes.STRING,
 

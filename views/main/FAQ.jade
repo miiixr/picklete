@@ -31,11 +31,11 @@ block body
               // /row
               .font-size-slarge.line-height-large.m-bottom-10
                 each FAQ ,val in FAQType.FAQs
-                  div.tag-box(id="#q#{index}#{val}")
+                  div.tag-box(id="q#{index}#{val}",style="word-break:break-all")
                     hr.m-top-0.m-bottom-6
                     h4.m-bottom-2 #{FAQ.title}
                     p
-                      #{FAQ.answer}
+                      |#{FAQ.answer}
 
             // /font-size-slarge
           // /col-sm-9

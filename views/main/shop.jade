@@ -47,8 +47,11 @@ block body
             - if (dpt.DptSubs.length)
               .tab-pane.fade(id = "subDpt"+dpt.id)
                   ul.list-inline.list-shop-type-sm.font-size-small
+                    li.active.subDpt
+                      a(href='?dptId=#{dpt.id}')
+                        | 所有商品                 
                     each subDpt, index in dpt.DptSubs
-                      li(class= (index==0)? "active subDpt" : "subDpt" data-id='#{subDpt.id}') 
+                      li(class="subDpt",data-id='#{subDpt.id}') 
                         a(href='?dptSubId=#{subDpt.id}&dptId=#{dpt.id}')
                           | #{subDpt.name}
           // /list-shop-type-9

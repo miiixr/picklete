@@ -149,6 +149,17 @@
     if( !isTheSame ) {
       picklete_cart.orderItems.push(addProduct);
     }
+    var isTheSame = false;
+    for(var orderItem of picklete_cart.orderItems) {
+      if(orderItem.ProductId == addProduct.ProductId) {
+        isTheSame = true;
+        orderItem.quantity = (parseInt(orderItem.quantity,10) + parseInt(addProduct.quantity,10)).toString();
+        break;
+      }
+    }
+    if( !isTheSame ) {
+      picklete_cart.orderItems.push(addProduct);
+    }
 
     Cookies.set('picklete_cart', picklete_cart);
     dropdownCartInit();
