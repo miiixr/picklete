@@ -22,7 +22,8 @@ module.exports = (sequelize, DataTypes) ->
     forgotToken: DataTypes.STRING
     verification:
       type: DataTypes.BOOLEAN
-      defaultValue: false
+      # for hack the verify part
+      defaultValue: true
     admin:
       type: DataTypes.BOOLEAN
       defaultValue: false

@@ -93,7 +93,7 @@ html
                 span.text-en SHOP
                 |             
                 span.text-active #{i18n('shop')}
-            - if (user)
+            - if (user && user.privacyTermsAgree)
               |         
               li.dropdown
                 a.dropdown-toggle.width-11.text-center(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
@@ -263,10 +263,10 @@ html
         #bs-example-navbar-collapse-1.collapse.navbar-collapse
           ul.nav.navbar-nav.navbar-right(aria-multiselectable='true')
             li
-              a.text-center(href='index') 登出
+              a.text-center(href='/logout') 登出
             |         
             li
-              a.text-center(href='control-password') 修改密碼
+              a.text-center(href='/member/setting') 修改密碼
         // /navbar-collapse
       // /container
     // /navbar-fixed-top
