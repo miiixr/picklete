@@ -76,11 +76,11 @@ block body
                   
                   if(product.originPrice == undefined || product.originPrice <= 0)
                     h3
-                      span#price #{product.price}
+                      span#price #{UtilService.numberFormat(product.price)}
                   else 
                     h3.text-black.m-bottom-4
-                      span.text-danger #{product.price}
-                      small.text-line-through.m-left-1#originPrice #{product.originPrice}
+                      span.text-danger #{UtilService.numberFormat(product.price)}
+                      small.text-line-through.m-left-1#originPrice #{UtilService.numberFormat(product.originPrice)}
                     h4.text-danger 活動倒數 #{product.promotionCountDown}
                   
 
