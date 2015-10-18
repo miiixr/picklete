@@ -2,6 +2,8 @@
 module.exports = function(sequelize, DataTypes) {
 
   var Company = sequelize.define('Company', {
+    
+    title: DataTypes.STRING,
     // 公司圖片位置
     avatar: DataTypes.STRING,
     
