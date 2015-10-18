@@ -150,12 +150,12 @@ block body
                   a(href='/shop/products/#{product.ProductGm.id}/#{product.id}') #{product.ProductGm.name} #{name}
                 h5
                   if(product.originPrice == undefined || product.originPrice <= 0)
-                    | $ #{product.price}
+                    | #{product.price}
                   else 
                     span.text-danger
-                      | $ #{product.price} 
+                      | #{product.price} 
                     small.text-line-through.m-left-1
-                      | $ #{product.originPrice} 
+                      | #{product.originPrice} 
               // /item-text-block
             // /col-md-3
           // /row
