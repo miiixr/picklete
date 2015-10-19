@@ -178,7 +178,6 @@ let PromotionController = {
           findProductGm.forEach((ProductGm) => {
             productGmIds.push(ProductGm.id);
           });
-          console.log(productGmIds);
           queryObj.ProductGmId = productGmIds;
         }
 
@@ -267,6 +266,12 @@ let PromotionController = {
       req.session.UserController_controlMembers_limit || 10
     ));
 
+    let brands = await db.Brand.findAll();
+    let productGmIds = [];
+    if(query.brand && query.brand!=0){
+      queryObj.BrandId= query.brand;
+    }
+
     let additionalPurchase = await db.ProductGm.findAndCountAll({
       where: queryObj,
       offset: page * limit,
@@ -276,6 +281,7 @@ let PromotionController = {
     // let additionalPurchase = await db.AdditionalPurchase.findAll();
     res.view('promotion/controlShopBuyMoreAddItem',{
       pageName: "shop-buy-more-add-item",
+      brands,
       additionalPurchase,
       query,
       page,
