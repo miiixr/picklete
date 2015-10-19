@@ -331,6 +331,16 @@ module.exports.routes = {
     }
   }
 
+  # check user email is exited
+  'get /api/user/verify/:email': {
+    controller: "UserController",
+    action: "verify"
+    # cors: {
+    #  origin: "http://localhost:1337, http://localhost:8080",
+    #  credentials: false
+    # }
+  }
+
   'get /api/user/:id': {
     controller: "UserController",
     action: "findOne",

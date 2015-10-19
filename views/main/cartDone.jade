@@ -7,12 +7,14 @@ block body
         .col-md-8.col-md-offset-2
           .border-block-3.p-40.m-bottom-8
             h4.line-height-large
-              | 感謝購買，請盡快至超商付款
+              | 感謝購買，
               br
               |           您的訂單編號為 
               span(style='background:#ffffaa;font-size:120%;font-family:monospace') &nbsp;#{order.serialNumber}&nbsp;
               br
-              |           完成繳費手續後將立即為您處理訂單
+              |           如選擇付款方式為 ATM，請盡快至完成繳費手續，之後將立即為您處理訂單。
+              br
+              |           如選擇付款方式為 信用卡，則無須理會此訊息，將立即為您處理訂單。
           // /border-block-3
           a.btn.btn-default(href='/shop/products') 繼續購物
         // /col-md-8

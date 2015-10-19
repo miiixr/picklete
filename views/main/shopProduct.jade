@@ -71,16 +71,16 @@ block body
               .row.m-bottom-4
                 .col-sm-10.col-xs-9.m-bottom-4
                   h5.text-muted.letter-spacing-3.text-roboto.m-bottom-2
-                    a(href='brands.html') #{productGm.name}
+                    a(href='/brands/#{brand.id}') #{brand.name}
                   h2.text-black.m-bottom-6.text-roboto #{productGm.name} #{name}
                   
                   if(product.originPrice == undefined || product.originPrice <= 0)
                     h3
-                      span#price #{product.price}
+                      span#price #{UtilService.numberFormat(product.price)}
                   else 
                     h3.text-black.m-bottom-4
-                      span.text-danger #{product.price}
-                      small.text-line-through.m-left-1#originPrice #{product.originPrice}
+                      span.text-danger #{UtilService.numberFormat(product.price)}
+                      small.text-line-through.m-left-1#originPrice #{UtilService.numberFormat(product.originPrice)}
                     h4.text-danger 活動倒數 #{product.promotionCountDown}
                   
 
@@ -120,7 +120,7 @@ block body
                 // /col-sm-4
                 .col-sm-8
                   a.btn.btn-black.border-radius-circle.btn-block.btn-lg.add-to-cart(
-                  data-productId=product.id, data-photos=product.photos, 
+                  data-productGmId=productGm.id,, data-productId=product.id, data-photos=product.photos, 
                   data-brand=productGm.name, data-name=product.name , data-brandname=_.find(brands, {id: product.ProductGm.BrandId}).name,
                   data-price=product.price) 加入購物車 
                 // /col-sm-8
@@ -193,7 +193,7 @@ block body
                   // /tab-pane
                   #p-tab-3.tab-pane.fade
                     p
-                      | !{productGm.explain}
+                      | !{productGm.Brand.desc}
                   // /tab-pane
                 // /tab-content
                 h4.m-bottom-4 服務項目 #{product.services}
@@ -201,12 +201,12 @@ block body
                   each service, index in ['快遞宅配', '超商取貨', '國際運送', '禮品包裝']
                     .col-sm-6
                       if services[index]
-                        .border-block-2.text-center.p-10.m-bottom-2
+                        .border-block-2.text-center.p-10.m-bottom-2(id='service-#{index}')
                           h4
                             span.glyphicon.glyphicon-truck.m-right-2.font-size-xlarge
                             | #{service}
                       else
-                        .border-block-2.text-center.p-10.m-bottom-2.disabled
+                        .border-block-2.text-center.p-10.m-bottom-2.disabled(id='service-#{index}')
                           h4
                             span.glyphicon.glyphicon-truck.m-right-2.font-size-xlarge
                             | #{service}

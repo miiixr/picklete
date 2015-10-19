@@ -214,7 +214,9 @@ var self = module.exports = {
         UserId: buyer.id,
         paymentTotalAmount:0,
         serialNumber: await OrderService.generateOrderSerialNumber(),
-        useBunusPoint: 0
+        useBunusPoint: 0,
+        packingFee: newOrder.packingFee,
+        packingQuantity: newOrder.packingQuantity
       };
 
       products.forEach((product, index) => {
@@ -246,8 +248,9 @@ var self = module.exports = {
       if(sails.config.useAllPay !== undefined)
           useAllPay = sails.config.useAllPay;
       if(useAllPay){
-        // 有用歐付寶的運費運算
-        let fee = parseInt(newOrder.shippingFee);
+        // 有用歐付寶的運費運算, to fixed fee is parseInt error or NaN
+        let fee = parseInt(newOrder.shippingFee, 10);
+        fee = fee || 0;
         let shippingFee = await db.Shipping.findAll({
           where:{
             fee

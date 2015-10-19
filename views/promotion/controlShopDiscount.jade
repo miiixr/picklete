@@ -39,7 +39,7 @@ block body
       each promotion in promotions
         tr
           td
-            img.width-10(src='images/demo/shop-item-1-1.jpg')
+            img.width-6(src=promotion.coverPhoto)
           td
             -if(promotion.type == "flash")
               span.label.label-default 閃購

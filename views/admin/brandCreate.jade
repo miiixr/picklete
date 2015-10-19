@@ -46,8 +46,13 @@ block body
             input.form-control(type='text', name="name", placeholder='請輸入品牌名稱' value= brand?brand.name:"")
           .col-sm-9.col-sm-offset-3.col-md-5.col-md-offset-0
             label.radio-inline
+
+              input#inlineRadio1(required,type='radio', name='type', value='AGENT' checked=(brand&&brand.type=="AGENT")?"":undefined)
+              |  #{i18n('other-brand')}
+
               input#inlineRadio1(type='radio', name='type', value='AGENT' checked=(brand&&brand.type=="AGENT")?"":undefined)
               |  #{i18n('agent-brand')}
+
             label.radio-inline
               input#inlineRadio2(required,type='radio', name='type', value='PRIME_GOOD' checked=(brand&&brand.type=="PRIME_GOOD")?"":undefined)
               |  #{i18n('prime-brand')}

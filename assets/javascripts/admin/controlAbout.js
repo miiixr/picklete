@@ -7,11 +7,18 @@
     var s = $(that.parent().parent()).prop('outerHTML');
     // replace index
     var index;
-    if (index = s.match(/good\[\d/)) {
-      index = index[0].match(/\d/)[0];
-      index = parseInt(index, 10) + 1;
-      s = s.replace(/good\[\d/g, "good[" + index);
-    }
+    index = s.match(/src=\"[^\"]*\"/);
+    index = "src='http://fakeimg.pl/1000x1000/dddddd/FFF/?text=800x800'";
+    s = s.replace(/src=\"[^\"]*\"/,index);
+    
+    index = s.match(/name\=\"dealerNames\[\]\" value\=\"[^\"]*\"/);
+    index = "name\=\"dealerNames\[\]\"";
+    s = s.replace(/name\=\"dealerNames\[\]\" value\=\"[^\"]*\"/,index);
+    
+    index = s.match(/\<input type\=\"hidden\" name\=\"dealerPhotos\[\]\" form\=\"about\-data\" value\=\"[^\"]*\"/);
+    index = "\<input type\=\"hidden\" name\=\"dealerPhotos\[\]\" form\=\"about\-data\" value\=\"\"";
+    s = s.replace(/\<input type\=\"hidden\" name\=\"dealerPhotos\[\]\" form\=\"about\-data\" value\=\"[^\"]*\"/,index);
+    
     that.parent().parent().after(s);
     that.remove();
   });

@@ -10,6 +10,28 @@ let moment = require("moment");
 
 let UserController = {
 
+
+  verify: async (req, res) => {
+    var email = req.param("email");;
+
+    if ( ! email)
+      return res.json({ result: 'fail' });
+
+    try {
+      var result = await db.User.findOne({
+        where: {
+          email: email
+        }
+      });
+
+      var response = (result) ? { result: "existed" } : { result: "ok" };
+      return res.json(response);   
+    } catch (e) {
+      return res.json({ result: 'fail'});
+      return res.view("main/memberFavorite", {products: []});
+    }
+  },
+
   favorite: async (req, res) => {
 
     var FAV_KEY = "picklete_fav";
@@ -78,7 +100,7 @@ let UserController = {
     let additionalPurchaseProductGms = await AdditionalPurchaseService.getProductGms(query);
     console.log('=== additionalPurchaseProducts ===', additionalPurchaseProductGms);
 
-    // add an item for Shippings(運費) by kuyen
+    // add an item for Shippings
     let shippings = await ShippingService.findAll();
     // console.log('=== shippings ==>',shippings);
     let paymentMethod = sails.config.allpay.paymentMethod;

@@ -530,7 +530,11 @@ module.exports.createTestData = async ({createRoleUser, createNewBuyer}) => {
     fullname: "Picklete INTERNATIONAL CO.,LTD.",
     email: "hq@picklete.com",
     desc: "週一至週五 早上10:00 -下午5:00",
-    line: "https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/contact.png"
+    line: "https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/contact.png",
+    blog: "http://blog.kerker.com/",
+    facebook: "https://www.facebook.com",
+    instagram: "https://www.instagram.com",
+    youtube: "https://www.yotube.com"
   };
 
   await db.Company.create(companyObj);

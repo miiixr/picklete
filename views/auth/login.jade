@@ -1,26 +1,50 @@
-extends ./../layout
+extends ../_layout_head
 
 block body
   if (errors)
    each error in errors
      include ./../common/warning
 
-  main.login(role="main")
-   .col-md-12.site-login
-     h1.login-title 帳號登入
-     form(role='form', action='/auth/local', method='post')
-       .form-horizontal
-         .form-group
-           .col-md-12
-             input#identifier.form-control(type='text', name='identifier', placeholder='輸入 E-mail 或帳號', required)
-         .form-group
-           .col-md-12
-             input#password.form-control(type='password', name='password', placeholder='密碼', required)
-         .form-group
-           button.btn.btn-default(type='submit') 登入
-           a.link(href="") 忘記帳號密碼
+  .container.font-size-slarge
+    .row.m-top-10.m-bottom-10
+      .col-sm-6.col-sm-offset-3
+        .border-block-3.p-40.text-center
+          h2.text-center.m-bottom-4 登入
+          hr
+          form.m-bottom-4(role='form', action='/auth/local', method='post')
+            .form-group
+              input#identifier.form-control(placeholder='輸入 E-mail 或帳號', type='text', name="identifier", required)
+            // /form-group
+            .form-group
+              input#password.form-control(placeholder='密碼', type='password', name="password", required)
+            // /form-group
+            button.btn.btn-black.border-radius-circle.btn-block.m-bottom-2(type='submit') 登入會員
+            a.btn.btn-fb.border-radius-circle.btn-block(href="/auth/facebook", data-dismiss='modal')  FACEBOOK 登入
+          a(href='#', data-toggle='modal', data-target='#modal-password', data-dismiss='modal') 忘記密碼
+          hr.m-top-4.m-bottom-4
+          h5.m-bottom-4 還沒有帳號？
+          a.btn.btn-line.border-radius-circle.btn-block(href='/register') 申請會員
 
-   hr.divider
-   .row
-     span 還不是會員嗎？
-     a.link(href="/register") 立即註冊
+          #modal-password.modal.fade
+            .modal-dialog.modal-sm(role='document')
+              .modal-content
+                .modal-header.p-30
+                  button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') ×
+                  h1.modal-title.text-center 忘記密碼
+                // /modal-header
+                .modal-body.text-center.p-30
+                  form.m-bottom-4
+                    .form-group
+                      input.form-control(type='email', placeholder='Email')
+                    // /form-group
+                    button.btn.btn-black.border-radius-circle.btn-block.m-bottom-2(type='button', data-dismiss='modal') 發送信箱
+                  a(href='#', data-toggle='modal', data-target='#modal-login', data-dismiss='modal') 取消
+                  hr.m-top-4.m-bottom-4
+                  h5.m-bottom-4 還沒有帳號？
+                  a.btn.btn-line.border-radius-circle.btn-block(href='signup.html') 申請會員
+                // /modal-body
+              // /modal-content
+            // /modal-dialog
+          // /modal
+include ../_layout_footer

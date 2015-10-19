@@ -1,18 +1,32 @@
 (function ($) {
 
+  $.urlParam = function(name) {
+    var results = new RegExp('[\?&amp;]' + name + '=([^&amp;#]*)').exec(window.location.href);
+    return results ? results[1] : false;
+  };
+
   var FAV_KEY = "picklete_fav";
 
-  $('.dpt').on("click", function(e){
-    var e = $(event.currentTarget);
+  var dptDisplay = function (id) {
     //正式上線後要依據大館別固定數量更改
     for(i=1; i<=9; i++) {
       if(document.getElementById('subDpt' + i))
         document.getElementById('subDpt' + i).className="tab-pane fade";
     }
-    document.getElementById('subDpt' + e.data('id')).className="tab-pane fade in active";
+    document.getElementById('subDpt' + id).className="tab-pane fade in active";
     $('.tab-pane.fade.in.active').css("display","none");
     $('.tab-pane.fade.in.active').fadeIn();
+  }
 
+  // when page is loaded, need to display sub menu
+  var dptId = $.urlParam('dptId');
+  if (dptId)
+    dptDisplay(dptId);
+
+  $('.dpt').on("click", function(e){
+    var e = $(event.currentTarget);
+    var id = e.data('id');
+    dptDisplay(id);
   });
 
   // add to favorite
@@ -97,6 +111,7 @@
       picklete_cart = JSON.parse(picklete_cart);
     }
 
+    var productGmId = $(this).attr("data-productGmId");
     var productId = $(this).attr("data-productId");
     var quantity = $('input[name="quant[1]"]').val() || 1;
     var price = $(this).attr("data-price");
@@ -105,15 +120,27 @@
     var brandname = $(this).attr("data-brandname") || "";
     var name = $(this).attr("data-name") || "";
     var originPrice = $('#originPrice').text();
+    var packable;
+    var expressable;
 
+    if($("#service-3").hasClass('disabled'))
+      packable = false;
+    else
+      packable = true;
 
+    if($("#service-2").hasClass('disabled'))
+      expressable = false;
+    else
+      expressable = true;
 
     console.log('=== picklete_cart ===', picklete_cart);
     console.log('=== productId ===', productId);
     console.log('=== quantity ===', quantity);
     console.log('=== price ===', price);
+    console.log('=== packable ===',packable);
 
     var addProduct = {
+      productGmId: productGmId,
       ProductId: productId,
       quantity: quantity,
       brandname: brandname,
@@ -121,8 +148,12 @@
       brand: brand,
       name: name,
       photos: photos,
-      originPrice: originPrice
+      originPrice: originPrice,
+      packable: packable,
+      expressable: expressable
     }
+
+    // check product is added, it will added to same data
     var isTheSame = false;
     for(var orderItem of picklete_cart.orderItems) {
       if(orderItem.ProductId == addProduct.ProductId) {
@@ -131,6 +162,7 @@
         break;
       }
     }
+
     if( !isTheSame ) {
       picklete_cart.orderItems.push(addProduct);
     }
@@ -169,7 +201,7 @@
 
         '    <div class="col-xs-8 p-left-0">' +
         '      <h6 class="text-muted"><a href="/brands">'+orderItem.brandname+'</a></h6>' +
-        '      <h5><a href="shop-product">'+orderItem.brand+"-"+orderItem.name+'</a></h5>' +
+        '      <h5><a href="/shop/products/'+orderItem.productGmId+'/'+orderItem.ProductId+'">'+orderItem.brand+"-"+orderItem.name+'</a></h5>' +
         '      <h5>$ '+orderItem.price+'</h5>' +
         '    </div>' +
         '  </div>' +
@@ -178,7 +210,6 @@
       totalPrice += parseInt(orderItem.price*orderItem.quantity, 10);
 
       dropdownCart.append(liOrderItem);
-
 
     });
 

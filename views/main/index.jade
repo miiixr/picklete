@@ -14,7 +14,7 @@ block body
     .carousel-inner(role='listbox')
       each slider, index in sliders
         - var classActiveSlider = (index == 0) ? 'active' : '';
-        a(href='#{slider.link}', class='item #{classActiveSlider}')
+        a(href='#{slider.link}', class='item #{classActiveSlider}', target= slider.openWindow == true ? "_new" : "_self")
           img.img-full(src='#{slider.cover}', alt='#{slider.title}')
           div(class="carousel-caption #{slider.location}", style="color: #{slider.color}")
             h1 #{slider.title}
