@@ -4,7 +4,9 @@ module.exports = (sequelize, DataTypes) ->
     username: DataTypes.STRING
     fullName: DataTypes.STRING
     gender: DataTypes.ENUM('none', 'male', 'female')
-    email: DataTypes.STRING
+    email:
+      type: DataTypes.STRING
+      unique: true
     mobile: DataTypes.STRING
     birthYear: DataTypes.STRING
     birthMonth: DataTypes.STRING

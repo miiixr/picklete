@@ -120,6 +120,8 @@ let PromotionController = {
       let page = await pagination.page(req);
       let offset = await pagination.offset(req);
 
+      let brands = await db.Brand.findAll();
+
       let promotion = await db.Promotion.findById(query.id);
       // let productGms;
       let products;
@@ -165,6 +167,20 @@ let PromotionController = {
           discount: '',
           price: ''
         };
+
+        if(query.brand && query.brand!=0){
+          let findProductGm = await db.ProductGm.findAll({
+            where:{
+              BrandId: query.brand
+            }
+          });
+          let productGmIds = [];
+          findProductGm.forEach((ProductGm) => {
+            productGmIds.push(ProductGm.id);
+          });
+          queryObj.ProductGmId = productGmIds;
+        }
+
         products = await db.Product.findAndCountAll({
           where: queryObj,
           offset: offset,
@@ -174,6 +190,7 @@ let PromotionController = {
 
       res.view('promotion/controlShopDiscountDetail',{
         pageName: "shop-discount-detail",
+        brands,
         products,
         promotion,
         query,
@@ -249,6 +266,12 @@ let PromotionController = {
       req.session.UserController_controlMembers_limit || 10
     ));
 
+    let brands = await db.Brand.findAll();
+    let productGmIds = [];
+    if(query.brand && query.brand!=0){
+      queryObj.BrandId= query.brand;
+    }
+
     let additionalPurchase = await db.ProductGm.findAndCountAll({
       where: queryObj,
       offset: page * limit,
@@ -258,6 +281,7 @@ let PromotionController = {
     // let additionalPurchase = await db.AdditionalPurchase.findAll();
     res.view('promotion/controlShopBuyMoreAddItem',{
       pageName: "shop-buy-more-add-item",
+      brands,
       additionalPurchase,
       query,
       page,
