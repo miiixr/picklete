@@ -30,8 +30,6 @@ $(function() {
     e.preventDefault();
 
     var page = parseInt(inputPage.val(), 10) + 1;
-    if (page > inputLimit.val())
-      return;
 
     inputPage.val(page);
     formWithPagination.submit();
@@ -42,9 +40,7 @@ $(function() {
   $('#pagination-prev').click(function(e) {
     e.preventDefault();
     var page = parseInt(inputPage.val(), 10) - 1;
-
-    if (page <= 0)
-      page = 0;
+    page = (page <= 0) ? 0 : page;
 
     inputPage.val(page);
     formWithPagination.submit();
