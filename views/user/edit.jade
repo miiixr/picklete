@@ -10,7 +10,7 @@ block body
           .col-md-6.desktop-text-right
             ul.list-inline
               li
-                a.btn.btn-default.border-radius-circle(href='/member/fav') 我的收藏
+                a.btn.btn-default.border-radius-circle(href='/member/favorite') 我的收藏
               li
                 a.btn.btn-default.border-radius-circle(href='/member/purchase') 我的訂單記錄
               li
@@ -27,7 +27,7 @@ block body
             
 block js
   script(src="/javascripts/jquery.twzipcode.min.js")  
-  
+  script(src="/javascripts/user/edit.js") 
   script.
     $('#twzipcode').twzipcode({
     // 'zipcodeIntoDistrict': true,

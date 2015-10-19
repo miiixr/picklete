@@ -114,7 +114,13 @@ passport.connect = async function(req, query, profile, next) {
           where: {authority: 'user'}
         });
         user.RoleId = role.id;
-        user = await db.User.create(user);
+        let checkMail = await db.User.findOne({where:{email:user.email}});
+        if(!checkMail){
+          user = await db.User.create(user);
+        } else{
+          delete user.email;
+          user = await db.User.create(user);
+        }
         query.UserId = user.id;
         let passport = await db.Passport.create(query);
         next(null, user);

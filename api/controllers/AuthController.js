@@ -34,7 +34,6 @@ AuthController = {
 
   },
   register: async (req, res) => {
-
     try {
       let likes = await db.Like.findAll();
       let defaultUser = {

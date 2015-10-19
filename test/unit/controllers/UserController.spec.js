@@ -164,7 +164,7 @@ describe.skip("about User", () => {
   // end
 });
 
-describe.only("none login user api check", () => {
+describe("none login user api check", () => {
 
   it('check email is existed', (done) => {
     request(sails.hooks.http.app)
