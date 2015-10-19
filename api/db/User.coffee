@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) ->
       defaultValue: DataTypes.NOW
     privacyTermsAgree:
       type: DataTypes.BOOLEAN
-      defaultValue: false
+      defaultValue: true
   }, classMethods: associate: (models) ->
     User.hasMany models.Passport
     User.belongsTo models.Role
