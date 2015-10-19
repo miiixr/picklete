@@ -14,7 +14,7 @@ let ShopController = {
     //console.log(order);
     //console.log("======");
 
-    res.view('main/cart-done', {order: order});
+    res.view('main/cartDone', {order: order});
   },
   list: async(req,res) => {
 
