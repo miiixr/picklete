@@ -75,4 +75,10 @@ block js
   script(src='/javascripts/common/pagination.js')
 ```
 
+## 分頁原理
+
+* /api/services/pagination.js
+* /assets/javascripts/common/pagination.js'
+* /views/mixins/pagination.jade
+
 END
