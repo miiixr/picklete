@@ -292,6 +292,13 @@ var self = module.exports = {
         let createdOrderItemIds = createdOrderItems.map((orderItem) => orderItem.id);
 
         let {shipment, invoice} = newOrder;
+        // shipment fee
+        // when user is for him self.
+        if (shipment.zipcode == '') {
+          shipment.zipcode = user.zipcode;
+          shipment.city = user.city;
+          shipment.region = user.region;
+        }
         shipment.address = `${shipment.zipcode} ${shipment.city}${shipment.region}${shipment.address}`;
 
         let createdOrder = await db.Order.create(thisOrder, {transaction});
