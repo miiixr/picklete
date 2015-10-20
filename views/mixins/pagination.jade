@@ -7,7 +7,6 @@ mixin pagination-limit(limit)
     option(selected=(limit==50)) 50
     option(selected=(limit==50)) 100
 
-
 mixin pagination-simple-pager(page, totalPages)
     - page = page || 0;
     .text-center.m-bottom-8
@@ -32,6 +31,7 @@ mixin pagination-simple-pager(page, totalPages)
   //-     li
   //-       a(href='#' id='pagination-next') 下一頁
 
-mixin pagination-fields(page, limit)
+mixin pagination-fields(page, totalPages, limit)
   input(type='hidden', name='page', value=page)
+  input(type='hidden', name='totalPages', value=totalPages)
   input(type='hidden', name='limit', value=limit)

@@ -86,11 +86,13 @@ block body
                         ==================================================
                       .p-10
                         .m-top-2.m-bottom-2
+                          //- h1 #{JSON.stringify(order)}
                           ul.p-left-3
                             li 收件人姓名：#{order.Shipment.username} 先生/小姐
-                            li 收件人電話：#{order.Shipment.shippingType}
+                            li 收件人電話：#{order.Shipment.mobile}
                             li 收件人地址：#{order.Shipment.address}
-                            li 運送方式：#{order.Shipment.shippingType} / 編號：#{order.Shipment.shippingId}
+                            li 運送方式：#{ (order.Shipment.shippingType== 'delivery') ? '快遞' : '郵遞'} 
+                            //- / 編號：#{order.Shipment.shippingId}
                         // /m-top-2 m-bottom-2
                         table.table
                           thead

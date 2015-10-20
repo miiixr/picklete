@@ -51,7 +51,7 @@ form.form-horizontal.with-pagination(name="searchProducts", action="/admin/goods
 然後在 form 增加 hidden fields
 
 ```
-+pagination-fields(page, limit)
++pagination-fields(page, totalPages, limit)
 ```
 
 加入查詢筆數限制下拉選單
@@ -74,5 +74,11 @@ form.form-horizontal.with-pagination(name="searchProducts", action="/admin/goods
 block js
   script(src='/javascripts/common/pagination.js')
 ```
+
+## 分頁原理
+
+* /api/services/pagination.js
+* /assets/javascripts/common/pagination.js'
+* /views/mixins/pagination.jade
 
 END

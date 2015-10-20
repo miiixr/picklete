@@ -148,7 +148,7 @@ block body
         .form-group.m-right-2
           .input-group
             input#keyword.form-control(type='text',name="keyword",form='search',placeholder='輸入關鍵字',value= query.keyword)
-            +pagination-fields(page, limit)
+            +pagination-fields(page, totalPages, limit)
             span.input-group-btn
               button.btn.btn-default.p-left-2.p-right-2(type='button', onClick='$("form[name=\'search\']").submit()')
                 span.glyphicon.glyphicon-search

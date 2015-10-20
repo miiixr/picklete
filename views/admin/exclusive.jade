@@ -47,7 +47,7 @@ block body
                           input(type='hidden', name="filename", value='actives[#{index}][Images][0][path]')
                           input(type='hidden', name="width", value='1100')
                           input(type='hidden', name="height", value='160')
-                          input(type='hidden', name='actives[#{index}][Images][0][path]', form='activesData', value='#{activity.Images[0].path}')
+                          input.file-value(type='hidden', name='actives[#{index}][Images][0][path]', form='activesData', value='#{activity.Images[0].path}')
                       a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
                     // /fileinput-btn
                   // /fileinput
@@ -97,7 +97,7 @@ block body
                           input(type='hidden', name="filename", value='actives[#{index}][Images][0][path]')
                           input(type='hidden', name="width", value='1100')
                           input(type='hidden', name="height", value='350')
-                          input(type='hidden', name='actives[#{index}][Images][0][path]', form='activesData', value='#{activity.Images[0].path}')
+                          input.file-value(type='hidden', name='actives[#{index}][Images][0][path]', form='activesData', value='#{activity.Images[0].path}')
                       a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
                         //- span.glyphicon.glyphicon-remove
                     // /fileinput-btn
@@ -149,7 +149,7 @@ block body
                             input(type='hidden', name="filename", value='actives[#{index}][Images][#{i}][path]')
                             input(type='hidden', name="width", value='545')
                             input(type='hidden', name="height", value='350')
-                            input(type='hidden', name='actives[#{index}][Images][#{i}][path]', form='activesData', value='#{activity.Images[i].path}')
+                            input.file-value(type='hidden', name='actives[#{index}][Images][#{i}][path]', form='activesData', value='#{activity.Images[i].path}')
                         a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
                       // /fileinput-btn
                     // /fileinput
@@ -200,7 +200,7 @@ block body
                             input(type='hidden', name="filename", value='actives[#{index}][Images][#{i}][path]')
                             input(type='hidden', name="width", value='360')
                             input(type='hidden', name="height", value='240')
-                            input(type='hidden', name='actives[#{index}][Images][#{i}][path]', form='activesData', value='#{activity.Images[i].path}')
+                            input.file-value(type='hidden', name='actives[#{index}][Images][#{i}][path]', form='activesData', value='#{activity.Images[i].path}')
                         a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
                       // /fileinput-btn
                     // /fileinput
@@ -297,6 +297,207 @@ block body
         // /modal-content
       // /modal-dialog
     // /modal
+
+    // template
+    script(type='text/template', id='type1')
+      li.well.control-well.p-10-20.m-bottom-8.type1
+        input(type='hidden', name='actives[{index}][type]', value='oneLong', form='activesData')
+        input(type='hidden', name='actives[{index}][weight]',class='activityWeigth', form='activesData')
+        .row
+          .col-sm-6
+            span.glyphicon.glyphicon-menu.font-size-xlarge.m-top-1
+          // /col-sm-6
+          .col-sm-6.text-right
+            a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
+              span.glyphicon.glyphicon-remove
+          // /col-sm-6
+        // /row
+        .form-horizontal
+          .row.row-s.m-bottom-4
+            .col-xs-12
+              .fileinput.fileinput-new(data-provides='fileinput')
+                .fileinput-new
+                  img.img-full(src='http://fakeimg.pl/1100x160')
+                // /fileinput-new
+                .fileinput-preview.fileinput-exists
+                // /fileinput-preview
+                .fileinput-btn
+                  form(action="/admin/image/upload", method="POST", enctype="multipart/form-data")
+                    span.btn.btn-default.btn-sm.btn-file
+                      span.fileinput-new Select image
+                      span.fileinput-exists Change
+                      input.fileInput(type='file', name='uploadfile', data-name='actives[{index}][Images][0][path]')
+                      input(type='hidden', name="filename", value='actives[{index}][Images][0][path]')
+                      input(type='hidden', name="width", value='1100')
+                      input(type='hidden', name="height", value='160')
+                      input.file-value(type='hidden', name='actives[{index}][Images][0][path]', form='activesData', value='')
+                  a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
+                // /fileinput-btn
+              // /fileinput
+            // /col-xs-12
+          // /row
+          .form-group
+            .col-sm-9.col-md-9
+              input.form-control.urlInput(type='text', name='actives[{index}][Images][0][url]', form='activesData', placeholder='http://連結網址', value='')
+            // /col-sm-9
+            .col-sm-3.col-md-3
+              .checkbox
+                label
+                  input(type='checkbox', value='true', name='actives[{index}][Images][0][openWindow]', form='activesData')
+                  |  另開視窗
+          // /form-group
+      // /well
+
+    script(type='text/template', id='type2')
+      li.well.control-well.p-10-20.m-bottom-8.type2
+        input(type='hidden', name='actives[{index}][type]', value='oneBig', form='activesData')
+        input(type='hidden', name='actives[{index}][weight]',class='activityWeigth', form='activesData')
+        .row
+          .col-sm-6
+            span.glyphicon.glyphicon-menu.font-size-xlarge.m-top-1
+          // /col-sm-6
+          .col-sm-6.text-right
+            a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
+              span.glyphicon.glyphicon-remove
+          // /col-sm-6
+        // /row
+        .form-horizontal
+          .row.row-s.m-bottom-4
+            .col-xs-12
+              .fileinput.fileinput-new(data-provides='fileinput')
+                .fileinput-new
+                  img.img-full(src='http://fakeimg.pl/1100x350')
+                // /fileinput-new
+                .fileinput-preview.fileinput-exists
+                // /fileinput-preview
+                .fileinput-btn
+                  form(action="/admin/image/upload", method="POST", enctype="multipart/form-data")
+                    span.btn.btn-default.btn-sm.btn-file
+                      span.fileinput-new Select image
+                      span.fileinput-exists Change
+                      input.fileInput(type='file', name='uploadfile', data-name='actives[{index}][Images][0][path]')
+                      input(type='hidden', name="filename", value='actives[{index}][Images][0][path]')
+                      input(type='hidden', name="width", value='1100')
+                      input(type='hidden', name="height", value='350')
+                      input.file-value(type='hidden', name='actives[{index}][Images][0][path]', form='activesData', value='')
+                  a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
+                    //- span.glyphicon.glyphicon-remove
+                // /fileinput-btn
+              // /fileinput
+            // /col-xs-12
+          // /row
+          .form-group
+            .col-sm-9.col-md-9
+              input.form-control.urlInput(type='text', name='actives[{index}][Images][0][url]', form='activesData', placeholder='http://連結網址', value='')
+            // /col-sm-9
+            .col-sm-3.col-md-3
+              .checkbox
+                label
+                  input(type='checkbox', value='true', name='actives[{index}][Images][0][openWindow]', form='activesData')
+                  |  另開視窗
+          // /form-group
+      // /well
+
+    script(type='text/template', id='type3')
+      li.well.control-well.p-10-20.m-bottom-8.type3
+        input(type='hidden', name='actives[{index}][type]', value='two', form='activesData')
+        input(type='hidden', name='actives[{index}][weight]',class='activityWeigth', form='activesData')
+        .row
+          .col-sm-6
+            span.glyphicon.glyphicon-menu.font-size-xlarge.m-top-1
+          // /col-sm-6
+          .col-sm-6.text-right
+            a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
+              span.glyphicon.glyphicon-remove
+          // /col-sm-6
+        // /row
+        .form-horizontal
+          .row.row-s
+            - for (var i=0; i<2; i++)
+              //- - activity.Images[i] = activity.Images[i] || { url: "", path: "http://fakeimg.pl/545x350", openWindow: false};
+              .col-xs-6
+                .fileinput.fileinput-new.m-bottom-4(data-provides='fileinput')
+                  .fileinput-new
+                    img.img-full(src='http://fakeimg.pl/545x350')
+                  // /fileinput-new
+                  .fileinput-preview.fileinput-exists
+                  // /fileinput-preview
+                  .fileinput-btn
+                    form(action="/admin/image/upload", method="POST", enctype="multipart/form-data")
+                      span.btn.btn-default.btn-sm.btn-file
+                        span.fileinput-new Select image
+                        span.fileinput-exists Change
+                        input.fileInput(type='file', name='uploadfile', data-name='actives[{index}][Images][#{i}][path]')
+                        input(type='hidden', name="filename", value='actives[{index}][Images][#{i}][path]')
+                        input(type='hidden', name="width", value='545')
+                        input(type='hidden', name="height", value='350')
+                        input.file-value(type='hidden', name='actives[{index}][Images][#{i}][path]', form='activesData', value='')
+                    a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
+                  // /fileinput-btn
+                // /fileinput
+                .form-group.m-left-0.m-right-0
+                  .col-sm-9.col-md-9
+                    input.form-control.urlInput(type='text', name='actives[{index}][Images][#{i}][url]', form='activesData', placeholder='http://連結網址', value='')
+                  // /col-sm-9
+                  .col-sm-3.col-md-3
+                    .checkbox
+                      label
+                        input(type='checkbox', value='true', name='actives[{index}][Images][#{i}][openWindow]', form='activesData')
+                        |  另開視窗
+                // /form-group
+              // /col-xs-6
+          // /row
+      // /well
+
+    script(type='text/template', id='type4')
+      li.well.control-well.p-10-20.m-bottom-8.type4
+        input(type='hidden', name='actives[{index}][type]', value='three', form='activesData')
+        input(type='hidden', name='actives[{index}][weight]',class='activityWeigth', form='activesData')
+        .row
+          .col-sm-6
+            span.glyphicon.glyphicon-menu.font-size-xlarge.m-top-1
+          // /col-sm-6
+          .col-sm-6.text-right
+            a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
+              span.glyphicon.glyphicon-remove
+          // /col-sm-6
+        // /row
+        .form-horizontal
+          .row.row-s.m-bottom-4
+            - for (var i=0; i<3; i++)
+              //- - activity.Images[i] = activity.Images[i] || { url: "", path: "http://fakeimg.pl/360x240", openWindow: false};
+              .col-xs-4
+                .fileinput.fileinput-new.m-bottom-4(data-provides='fileinput')
+                  .fileinput-new
+                    img.img-full(src='http://fakeimg.pl/360x240')
+                  // /fileinput-new
+                  .fileinput-preview.fileinput-exists
+                  // /fileinput-preview
+                  .fileinput-btn
+                    form(action="/admin/image/upload", method="POST", enctype="multipart/form-data")
+                      span.btn.btn-default.btn-sm.btn-file
+                        span.fileinput-new Select image
+                        span.fileinput-exists Change
+                        input.fileInput(type='file', name='uploadfile', data-name='actives[{index}][Images][#{i}][path]')
+                        input(type='hidden', name="filename", value='actives[{index}][Images][#{i}][path]')
+                        input(type='hidden', name="width", value='360')
+                        input(type='hidden', name="height", value='240')
+                        input(type='hidden', name='actives[{index}][Images][#{i}][path]', form='activesData', value='')
+                    a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
+                  // /fileinput-btn
+                // /fileinput
+                .form-group.m-left-0.m-right-0
+                  .col-sm-12
+                    input.form-control.urlInput(type='text', name='actives[{index}][Images][#{i}][url]', form='activesData', placeholder='http://連結網址', value='')
+                  // /col-sm-12
+                  .col-sm-12
+                    .checkbox
+                      label
+                        input(type='checkbox', value='true', name='actives[{index}][Images][#{i}][openWindow]', form='activesData')
+                        |  另開視窗
+                  // /col-sm-12
+                // /form-group
+              // /col-xs-4
 
 block js
   script(src="/javascripts/admin/exclusive.js")
