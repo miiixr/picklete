@@ -271,7 +271,7 @@ html
       // /container
     // /navbar-fixed-top
 
-    - var flash = errors || req.flash('message') || req.flash('error')
+    - var flash = errors || req.flash('message') || req.flash('error')[0]
     if flash.length != 0
       .row.col-xs-12
         .alert.alert-danger(role='alert')

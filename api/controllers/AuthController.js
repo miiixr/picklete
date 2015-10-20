@@ -77,7 +77,11 @@ AuthController = {
 
   },
   provider: function(req, res) {
-    passport.endpoint(req, res);
+    try {
+      passport.endpoint(req, res);
+    } catch (e) {
+      console.log(e);
+    }
   },
   callback: async function(req, res) {
     var tryAgain;
@@ -91,6 +95,7 @@ AuthController = {
       }
       req.flash('form', req.body);
       action = req.param('action');
+      // console.log("!!!",req);
       switch (action) {
         case 'register':
           res.redirect('/register');
@@ -105,7 +110,7 @@ AuthController = {
           } catch (e) {
             reference = { path : "" };
           }
-
+          console.log("!!!",req.xhr);
           if (req.xhr)
             return res.ok({
               status: "fail",
@@ -115,7 +120,7 @@ AuthController = {
           if (reference.path === '/admin/login') {
             res.redirect('/admin/login');
           }else {
-            res.redirect('/login');
+            res.redirect('/');
           }
 
       }

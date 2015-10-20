@@ -117,13 +117,16 @@ passport.connect = async function(req, query, profile, next) {
         let checkMail = await db.User.findOne({where:{email:user.email}});
         if(!checkMail){
           user = await db.User.create(user);
+          query.UserId = user.id;
+          let passport = await db.Passport.create(query);
+          next(null, user);
         } else{
-          delete user.email;
-          user = await db.User.create(user);
+          // delete user.email;
+          // user = await db.User.create(user);
+          console.log("????");
+          req.flash('error', 'Error.Passport.Email.Exists');
+          next(new Error())
         }
-        query.UserId = user.id;
-        let passport = await db.Passport.create(query);
-        next(null, user);
       } else {
         if (query.hasOwnProperty('tokens') && query.tokens !== passport.tokens) {
           passport.tokens = query.tokens;
@@ -152,6 +155,7 @@ passport.connect = async function(req, query, profile, next) {
         req.flash('error', 'Error.Passport.User.Exists');
       }
     }
+    console.log(err);
     return next(err);
   }
   //
