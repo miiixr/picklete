@@ -218,20 +218,39 @@ let PromotionController = {
   },
   controlShopBuyMore: async (req, res) => {
     try {
-      let noLimit = await db.AdditionalPurchase.findAll({
+
+      let limit = await pagination.limit(req);
+      let page = await pagination.page(req);
+      let offset = await pagination.offset(req);
+
+      let additionalPurchaseNoLimit = await db.AdditionalPurchase.findAndCountAll({
         where:{
           limit:0
-        }
+        },
+        include:{
+          model: db.ProductGm
+        },
+        offset: offset,
+        limit: limit
       });
-      let limit = await db.AdditionalPurchase.findAll({
+
+      let additionalPurchaseLimit = await db.AdditionalPurchase.findAll({
         where:{
           limit:1500
+        },
+        include:{
+          model: db.ProductGm
         }
       });
+
       res.view('promotion/controlShopBuyMore',{
         pageName: "shop-buy-more",
-        noLimit,
-        limit
+        additionalPurchaseNoLimit,
+        additionalPurchaseLimit,
+        limit: limit,
+        page: page,
+        totalPages: Math.ceil(additionalPurchaseNoLimit.count / limit),
+        totalRows: additionalPurchaseNoLimit.count
       });
     } catch (e) {
       console.error(e.stack);
