@@ -122,8 +122,17 @@ var self = module.exports = {
         orderNo, time, order.paymentTotalAmount, paymentMethod);
 
       var itemArray = [];
-      order.OrderItems.forEach((orderItem) => {
-        itemArray.push(orderItem.name);
+      await* order.OrderItems.map(async(orderItem) => {
+        let orderItemProduct = await db.Product.findOne({
+          where:{
+            id: orderItem.ProductId
+          },
+          include:{
+            model: db.ProductGm
+          }
+        })
+        itemArray.push(`${orderItemProduct.ProductGm.name}(${orderItemProduct.name})X${orderItem.quantity}`);
+        return orderItemProduct;
       });
       data.ItemName = itemArray.join('#');
 
