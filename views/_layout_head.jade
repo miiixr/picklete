@@ -162,11 +162,14 @@ html
       |   
       ul.nav.navmenu-nav.navmenu-nav-top
         li
-          a(href='brands-list') BRANDS
+          a(href='/brand/list') BRANDS
         |     
         //- li
         //-   a(href='http://blog.xxxxx.com/') BLOG
         //- |     
+        li
+          a(herf='#{company.blog}')
+            |BLOG
         li.dropdown
           a.dropdown-toggle(href='#', data-toggle='dropdown')
             | SHOP
@@ -204,7 +207,7 @@ html
               a.btn.btn-default(href='brands-list-shop') #{i18n("brand-list")}
         |     
         li
-          a(href='login')
+          a(href='/login')
             span.glyphicon.glyphicon-user.m-right-1
             | LOGIN
         |     
