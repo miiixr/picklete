@@ -141,11 +141,11 @@ block body
                 // /fileinput
                 a.btn-remove(href='#')
                   span.glyphicon.glyphicon-remove
+                .form-group.m-top-2.m-bottom-0
+                  input.form-control(type='text', form='about-data', name="dealerNames[]", value="#{dealerName[index]}", required)
                 if index == photos.length-1
                   a.btn-add(href='#')
                     span.glyphicon.glyphicon-plus
-                .form-group.m-top-2.m-bottom-0
-                  input.form-control(type='text', form='about-data', name="dealerNames[]", value="#{dealerName[index]}", required)
               // /edit-block
             // /col-md-3
 

@@ -49,7 +49,7 @@ module.exports.routes = {
   'get /admin/brands/update' : 'BrandController.update'
   'post /admin/brands/update' : 'BrandController.update'
   'post /admin/brands/delete/' : 'BrandController.delete'
-  'get /brand/list' : 'BrandController.listView'
+  
 
 
   'get /admin/exclusive' : 'SelectionActiveController.list'
@@ -169,7 +169,7 @@ module.exports.routes = {
   'get /shop/done'  : 'ShopController.done'
 
 
-
+  'get /brands/list' : 'BrandController.listView'
   'get /brands/:id' : 'BrandController.show'
 
   # 'get /admin/brand' : 'BrandController.list'

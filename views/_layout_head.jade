@@ -93,7 +93,7 @@ html
                 span.text-en SHOP
                 |             
                 span.text-active #{i18n('shop')}
-            - if (user && user.privacyTermsAgree)
+            - if (user)
               |         
               li.dropdown
                 a.dropdown-toggle.width-11.text-center(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
@@ -163,7 +163,7 @@ html
       ul.nav.navmenu-nav.navmenu-nav-top
 
         li
-          a(href='/brand/list') BRANDS
+          a(href='/brands/list') BRANDS
         |     
         //- li
         //-   a(href='http://blog.xxxxx.com/') BLOG
