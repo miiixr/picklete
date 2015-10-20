@@ -71,6 +71,7 @@ module.exports.routes = {
 
   'get /index' : 'SelectionActiveController.index'
   'get /FAQ' : 'FAQController.show'
+  'get /user/login' : 'MainController.login'
 
   'get /brands' : view: 'main/brands'
   'get /user/cart' : 'UserController.cart'
