@@ -30,7 +30,6 @@
 
     for (var i in $checked){
 
-
       var itemLength = $('.well');
       var index = itemLength ? itemLength.length : 0;
 
@@ -62,20 +61,30 @@
       dom.value = "" ;
     });
 
-
-
-    
-
-
-
   });
 
   // input check when form submit
   $('form#activesData').submit(function(e){
+    e.preventDefault();
     $(".activityWeigth").map(function(index, input){
       $(this).val(index)
     });
+
+    var fileNodes = $(".file-value") || [];
     var finished = true;
+    $.each(fileNodes, function (idx, item) {
+      
+      if (item.value == '')
+        finished = false;
+    });
+
+    if ( ! finished) {
+      alert("請完整上傳圖片，才能進行儲存！")
+      return finished;
+    }
+
+    $(this).off("submit").submit();
+    
     return finished;
   });
 

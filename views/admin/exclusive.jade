@@ -47,7 +47,7 @@ block body
                           input(type='hidden', name="filename", value='actives[#{index}][Images][0][path]')
                           input(type='hidden', name="width", value='1100')
                           input(type='hidden', name="height", value='160')
-                          input(type='hidden', name='actives[#{index}][Images][0][path]', form='activesData', value='#{activity.Images[0].path}')
+                          input.file-value(type='hidden', name='actives[#{index}][Images][0][path]', form='activesData', value='#{activity.Images[0].path}')
                       a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
                     // /fileinput-btn
                   // /fileinput
@@ -97,7 +97,7 @@ block body
                           input(type='hidden', name="filename", value='actives[#{index}][Images][0][path]')
                           input(type='hidden', name="width", value='1100')
                           input(type='hidden', name="height", value='350')
-                          input(type='hidden', name='actives[#{index}][Images][0][path]', form='activesData', value='#{activity.Images[0].path}')
+                          input.file-value(type='hidden', name='actives[#{index}][Images][0][path]', form='activesData', value='#{activity.Images[0].path}')
                       a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
                         //- span.glyphicon.glyphicon-remove
                     // /fileinput-btn
@@ -149,7 +149,7 @@ block body
                             input(type='hidden', name="filename", value='actives[#{index}][Images][#{i}][path]')
                             input(type='hidden', name="width", value='545')
                             input(type='hidden', name="height", value='350')
-                            input(type='hidden', name='actives[#{index}][Images][#{i}][path]', form='activesData', value='#{activity.Images[i].path}')
+                            input.file-value(type='hidden', name='actives[#{index}][Images][#{i}][path]', form='activesData', value='#{activity.Images[i].path}')
                         a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
                       // /fileinput-btn
                     // /fileinput
@@ -200,7 +200,7 @@ block body
                             input(type='hidden', name="filename", value='actives[#{index}][Images][#{i}][path]')
                             input(type='hidden', name="width", value='360')
                             input(type='hidden', name="height", value='240')
-                            input(type='hidden', name='actives[#{index}][Images][#{i}][path]', form='activesData', value='#{activity.Images[i].path}')
+                            input.file-value(type='hidden', name='actives[#{index}][Images][#{i}][path]', form='activesData', value='#{activity.Images[i].path}')
                         a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
                       // /fileinput-btn
                     // /fileinput
