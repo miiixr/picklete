@@ -15,7 +15,7 @@ module.exports = {
     return promotions;
   },
   // end findAll
-  
+
   // getModel
   getModel: async () => {
     let promotions = await db.Promotion.find({
@@ -153,7 +153,7 @@ module.exports = {
         }]
       });
       console.log('=== findPromotions ==>',findPromotions);
-      
+
       if(!findPromotions.length) return products;
 
       products.forEach((product) => {

@@ -11,6 +11,7 @@ module.exports = function(req, res, next) {
   try {
     if (UserService.getLoginState(req)) {
       let userInfo = UserService.getLoginUser(req);
+      sails.log.info(userInfo.Role.authority);
       if(referer['1'] === 'admin'){
         if (userInfo.Role.authority === 'admin') {
           return next();

@@ -7,10 +7,21 @@ let PromotionController = {
   // list
   list: async (req, res) => {
     try {
-      let promotions = await PromotionService.findAll();
+      let limit = await pagination.limit(req);
+      let page = await pagination.page(req);
+      let offset = await pagination.offset(req);
+
+      let promotions = await db.Promotion.findAndCountAll({
+        offset: offset,
+        limit: limit
+      });
       return res.view('promotion/controlShopDiscount', {
         promotions,
-        pageName: "shop-discount"
+        pageName: "shop-discount",
+        limit: limit,
+        page: page,
+        totalPages: Math.ceil(promotions.count / limit),
+        totalRows: promotions.count
       });
     } catch (error) {
       console.error('=== create error stack ==>',error.stack);
