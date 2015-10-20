@@ -21,7 +21,7 @@ module.exports.policies = {
   'AuthController': ['global', 'passport']
 
   'UserController':
-    controlLogin: ['global', 'cookieRequired']
+    controlLogin: ['global', 'loginRequired', 'cookieRequired']
     cart: ['global', 'cookieRequired', 'mailRequired']
     loginStatus:['global','cookieRequired']
     update: ['passport']
