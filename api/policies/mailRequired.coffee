@@ -12,7 +12,7 @@ module.exports = (req, res, next) ->
   referer = req.path.split('/')
   if UserService.getLoginState(req)
     userInfo = UserService.getLoginUser(req)
-    console.log '=== userInfo ==='
+    console.log '=== userInfo ===',userInfo
     if userInfo.hasOwnProperty('email') && userInfo.hasOwnProperty('mobile') && userInfo.hasOwnProperty('address')
       return next()
     else
