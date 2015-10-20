@@ -1,0 +1,23 @@
+extends ../_layout_head
+
+block body
+  .container.p-top-4.p-bottom-4
+    //
+      dropdown-menu-brands
+      ==================================================
+    .clearfix.m-bottom-2.text-left
+      h4.text-gray-darker.m-bottom-4 #{i18n('agent-brand')}
+      ul.list-inline.list-brand
+        each agent, index in agents
+          li
+            a(href='/brands/#{agent.id}')
+              img.border-block-1.img-full(src='#{agent.avatar}', title='#{agent.name}')
+    // /clearfix
+    .clearfix.m-bottom-2
+      h4.text-gray-darker.m-bottom-4 #{i18n('prime-brand')}
+      ul.list-inline.list-brand
+        each brand, index in brands
+          li
+            a(href='/brands/#{brand.id}')
+              img.border-block-1.img-full(src='#{brand.avatar}', title='#{brand.name}')
+    // /clearfix

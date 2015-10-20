@@ -161,15 +161,17 @@ html
       a.navmenu-brand(href='/') #{company.name}
       |   
       ul.nav.navmenu-nav.navmenu-nav-top
-        li.dropdown
-          a.dropdown-toggle(href='/shop/products', data-toggle='dropdown')
-            | BRANDS
-            span.glyphicon.glyphicon-chevron-down.m-left-1
-          ul.dropdown-menu
-            each brand, idx in brands
-              li
-                a(href='/brands/#{brand.id}') #{brand.name}
-              | 
+
+        li
+          a(href='/brand/list') BRANDS
+        |     
+        //- li
+        //-   a(href='http://blog.xxxxx.com/') BLOG
+        //- |     
+        li
+          a(href='#{company.blog}')
+            |BLOG
+
 
         //- li
         //-   a(href='brands-list') BRANDS
@@ -177,8 +179,6 @@ html
         li
           a(href='/shop/products') SHOP
         |    
-        li
-          a(href='#{company.blog}') BLOG
         //- |     
         //- li.dropdown
         //-   a.dropdown-toggle(href='/shop/products', data-toggle='dropdown')
@@ -217,7 +217,7 @@ html
               a.btn.btn-default(href='brands-list-shop') #{i18n("brand-list")}
         |     
         li
-          a(href='/login')
+          a(href='/user/login')
             span.glyphicon.glyphicon-user.m-right-1
             | LOGIN
         |     

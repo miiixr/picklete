@@ -49,6 +49,7 @@ module.exports.routes = {
   'get /admin/brands/update' : 'BrandController.update'
   'post /admin/brands/update' : 'BrandController.update'
   'post /admin/brands/delete/' : 'BrandController.delete'
+  'get /brand/list' : 'BrandController.listView'
 
 
   'get /admin/exclusive' : 'SelectionActiveController.list'
@@ -70,6 +71,7 @@ module.exports.routes = {
 
   'get /index' : 'SelectionActiveController.index'
   'get /FAQ' : 'FAQController.show'
+  'get /user/login' : 'MainController.login'
 
   'get /brands' : view: 'main/brands'
   'get /user/cart' : 'UserController.cart'
@@ -165,6 +167,8 @@ module.exports.routes = {
   'get /shop/products/:productGmid/:productId' : 'ShopController.show'
 
   'get /shop/done'  : 'ShopController.done'
+
+
 
   'get /brands/:id' : 'BrandController.show'
 
