@@ -4,7 +4,9 @@ module.exports = (sequelize, DataTypes) ->
     username: DataTypes.STRING
     fullName: DataTypes.STRING
     gender: DataTypes.ENUM('none', 'male', 'female')
-    email: DataTypes.STRING
+    email:
+      type: DataTypes.STRING
+      unique: true
     mobile: DataTypes.STRING
     birthYear: DataTypes.STRING
     birthMonth: DataTypes.STRING
@@ -22,7 +24,8 @@ module.exports = (sequelize, DataTypes) ->
     forgotToken: DataTypes.STRING
     verification:
       type: DataTypes.BOOLEAN
-      defaultValue: false
+      # for hack the verify part
+      defaultValue: true
     admin:
       type: DataTypes.BOOLEAN
       defaultValue: false
@@ -34,7 +37,7 @@ module.exports = (sequelize, DataTypes) ->
       defaultValue: DataTypes.NOW
     privacyTermsAgree:
       type: DataTypes.BOOLEAN
-      defaultValue: false
+      defaultValue: true
   }, classMethods: associate: (models) ->
     User.hasMany models.Passport
     User.belongsTo models.Role

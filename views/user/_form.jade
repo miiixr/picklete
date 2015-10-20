@@ -7,7 +7,7 @@ hr
       | 帳號
       span.text-danger *
     .col-sm-9
-      input.form-control(type='email', name='email', value=user.email, placeholder='請填寫電子郵件信箱', required)
+      input#user-email.form-control(type='email', name='email', value=user.email, placeholder='請填寫電子郵件信箱', required)
   // /form-group
   .form-group
     label.col-sm-3.control-label
@@ -205,9 +205,9 @@ hr
       span.text-danger *
     .col-sm-9
       #twzipcode
-        div(value=user.city, name='city')
-        div(value=user.region, name='region')
-        div(value=user.zipcode, name='zipcode')
+        div(value=user.city, name='city' )
+        div(value=user.region, name='region' )
+        div(value=user.zipcode, name='zipcode' )
     .col-sm-9.col-sm-offset-3.m-top-3
       input.form-control(type='text', value=user.address, name='address', required)
   // /form-group

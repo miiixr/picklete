@@ -14,7 +14,7 @@ let ShopController = {
     //console.log(order);
     //console.log("======");
 
-    res.view('main/cart-done', {order: order});
+    res.view('main/cartDone', {order: order});
   },
   list: async(req,res) => {
 
@@ -37,14 +37,18 @@ let ShopController = {
       let dpts = await DptService.findAll();
 
 
-      for(var i in products){
-        var Today = new Date();
-        var date = new Date(products[i].createdAt);
-        if(products[i].stockQuantity <= 0)
-          products[i].status = 'soldout';
-        else if(products[i].status != 'sale' && (Today - date)/86400000 <= 10)
-          products[i].status = 'new';
-      }
+      // for(var i in products){
+      //   var Today = new Date();
+      //   var date = new Date(products[i].createdAt);
+      //   products[i].price = '$ ' + UtilService.numberFormat(products[i].price);
+      //   if (products[i].originPrice) {
+      //     products[i].originPrice = '$ ' + UtilService.numberFormat(products[i].originPrice);
+      //   }
+      //   if(products[i].stockQuantity <= 0)
+      //     products[i].status = 'soldout';
+      //   else if(products[i].status != 'sale' && (Today - date)/86400000 <= 10)
+      //     products[i].status = 'new';
+      // }
 
       let result = {
         brands,
@@ -82,7 +86,8 @@ let ShopController = {
             include: [
               { model: db.Product },
               { model: db.Dpt},
-              { model: db.DptSub}
+              { model: db.DptSub},
+              { model: db.Brand}
             ]
           });
       let product = await db.Product.findOne({
@@ -92,7 +97,9 @@ let ShopController = {
             }],
             where: {id: productId}
           });
-
+      let brand = await db.Brand.findOne({
+        where: {id: productGm.BrandId}
+      });
       productGm = productGm.dataValues;
 
       product = (await PromotionService.productPriceTransPromotionPrice(new Date(), [product]))[0];
@@ -102,7 +109,6 @@ let ShopController = {
       console.log('=== product ===', product);
 
       let dptId = product.ProductGm.Dpts[0].id;
-
       // recommend products
       let recommendProducts = await db.Product.findAll({
         subQuery: false,
@@ -139,7 +145,8 @@ let ShopController = {
         return res.view('common/warning', {errors:'not found'});
       }
 
-      else{
+      else {
+        // product.price = '$ ' + UtilService.numberFormat(product.price);
         let resData = {
           productGm: productGm,
           products: products,
@@ -147,7 +154,8 @@ let ShopController = {
           photos: photos,
           services: services,
           coverPhotos: coverPhotos,
-          recommendProducts
+          brand: brand.dataValues,
+          recommendProducts,
          };
 
         return res.view("main/shopProduct", resData);

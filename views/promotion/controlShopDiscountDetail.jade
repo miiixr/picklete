@@ -140,17 +140,15 @@ block body
       form#search.form-inline.with-pagination(name="search", action="shop-discount-detail", method="get")
         .form-group.m-right-2
           label 品牌名稱
-          select.form-control
-            option 品牌名稱
-            option 2
-            option 3
-            option 4
-            option 5
+          select.form-control(name='brand',form='search' , value = query.brand?query.brand: 0)
+            option(value=0 selected=(query.brand==0)) 品牌名稱
+            each brand in brands
+              option(value=brand.id selected=(query.brand==brand.id)) #{brand.name}
         // /form-group
         .form-group.m-right-2
           .input-group
             input#keyword.form-control(type='text',name="keyword",form='search',placeholder='輸入關鍵字',value= query.keyword)
-            +pagination-fields(page, limit)
+            +pagination-fields(page, totalPages, limit)
             span.input-group-btn
               button.btn.btn-default.p-left-2.p-right-2(type='button', onClick='$("form[name=\'search\']").submit()')
                 span.glyphicon.glyphicon-search

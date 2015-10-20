@@ -14,7 +14,7 @@ describe('Image controller test', () => {
     });
   });
 
-  it(' test uplaod a image', (done) => {
+  it(' test uplaod a image/jpg', (done) => {
     var photo = path.join(process.cwd(), './test/unit/resources/photos1.jpg');
 
     request(sails.hooks.http.app)
@@ -39,4 +39,31 @@ describe('Image controller test', () => {
       return done();
     });
   });
+
+  it(' test uplaod a image/gif', (done) => {
+    var photo = path.join(process.cwd(), './test/unit/resources/photos1.gif');
+
+    request(sails.hooks.http.app)
+    .post('/admin/image/upload')
+    .set('cookie', cookie)
+    .field('filename', 'photos[]')
+    .field('width', '50')
+    .field('height', '50')
+    .attach('uploadfile', photo)
+    .end(function(err, res) {
+      console.log('res.body', res.body);
+
+      res.body.should.be.String;
+      
+      var result = JSON.parse(res.text);
+      result[0].fd.should.be.String;
+      result.filename.should.be.String;
+      result.height.should.be.Number;
+      result.width.should.be.Number;
+      res.body.should.be.String;
+      
+      return done();
+    });
+  });
+
 });

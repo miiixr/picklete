@@ -3,8 +3,7 @@ let domain = sails.config.domain || process.env.domain || 'http://localhost:1337
 import fs from 'fs-extra';
 
 module.exports = {
-  upload: async(req, res) => {
-
+  upload: async(req, res) => { 
     var object = {
       filename: req.body['filename'] || req.query['filename'] || '',
       width: parseInt(req.body['width'], 10) || req.query['width'] || 0,
@@ -24,13 +23,14 @@ module.exports = {
 
     try {
       for (let i in files) {
-        await ImageService.resize({
-          src: files[i].fd,
-          dst: files[i].fd,
-          width: object.width,
-          height: object.height
-        });
-
+        if(files[i].type != 'image/gif'){
+          await ImageService.resize({
+            src: files[i].fd,
+            dst: files[i].fd,
+            width: object.width,
+            height: object.height
+          });
+        }
         files[i].fd = domain + ImageService.processPath(files[i].fd);
       }
 

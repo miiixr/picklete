@@ -76,7 +76,6 @@ module.exports.routes = {
   'get /user/cart' : 'UserController.cart'
   'get /user/loginStatus' : 'UserController.loginStatus'
   'get /user/cart-step-2' : 'ShopController.cartStep2'
-  'get /user/cart-done' : view: 'main/cart-done'
 
   'get /admin/department' : 'DptController.list'
   'post /admin/department/update': 'DptController.update'
@@ -332,6 +331,16 @@ module.exports.routes = {
      origin: "http://localhost:1337, http://localhost:8080",
      credentials: false
     }
+  }
+
+  # check user email is exited
+  'get /api/user/verify/:email': {
+    controller: "UserController",
+    action: "verify"
+    # cors: {
+    #  origin: "http://localhost:1337, http://localhost:8080",
+    #  credentials: false
+    # }
   }
 
   'get /api/user/:id': {

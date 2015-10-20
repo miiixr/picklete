@@ -164,6 +164,8 @@ OrderController = {
 
       console.log('***************');
       console.log(result);
+      if(result.order.paymentTotalAmount <=0)
+        throw new Error ('結帳金額異常');
 
       if (useAllPay) {
         var allPayData = await OrderService.allPayCreate(result.order,newOrder.paymentMethod);

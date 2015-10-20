@@ -1,18 +1,32 @@
 (function ($) {
 
+  $.urlParam = function(name) {
+    var results = new RegExp('[\?&amp;]' + name + '=([^&amp;#]*)').exec(window.location.href);
+    return results ? results[1] : false;
+  };
+
   var FAV_KEY = "picklete_fav";
 
-  $('.dpt').on("click", function(e){
-    var e = $(event.currentTarget);
+  var dptDisplay = function (id) {
     //正式上線後要依據大館別固定數量更改
     for(i=1; i<=9; i++) {
       if(document.getElementById('subDpt' + i))
         document.getElementById('subDpt' + i).className="tab-pane fade";
     }
-    document.getElementById('subDpt' + e.data('id')).className="tab-pane fade in active";
+    document.getElementById('subDpt' + id).className="tab-pane fade in active";
     $('.tab-pane.fade.in.active').css("display","none");
     $('.tab-pane.fade.in.active').fadeIn();
+  }
 
+  // when page is loaded, need to display sub menu
+  var dptId = $.urlParam('dptId');
+  if (dptId)
+    dptDisplay(dptId);
+
+  $('.dpt').on("click", function(e){
+    var e = $(event.currentTarget);
+    var id = e.data('id');
+    dptDisplay(id);
   });
 
   // add to favorite
@@ -138,6 +152,8 @@
       packable: packable,
       expressable: expressable
     }
+
+    // check product is added, it will added to same data
     var isTheSame = false;
     for(var orderItem of picklete_cart.orderItems) {
       if(orderItem.ProductId == addProduct.ProductId) {
@@ -146,17 +162,7 @@
         break;
       }
     }
-    if( !isTheSame ) {
-      picklete_cart.orderItems.push(addProduct);
-    }
-    var isTheSame = false;
-    for(var orderItem of picklete_cart.orderItems) {
-      if(orderItem.ProductId == addProduct.ProductId) {
-        isTheSame = true;
-        orderItem.quantity = (parseInt(orderItem.quantity,10) + parseInt(addProduct.quantity,10)).toString();
-        break;
-      }
-    }
+
     if( !isTheSame ) {
       picklete_cart.orderItems.push(addProduct);
     }
