@@ -174,22 +174,10 @@ block body
                       | 產品尺寸 - #{product.size}
                       br
                       | 產品材質 - #{product.spec}
-                      br
-                      | 產品顏色 - #{product.color}
-                      br
-                      | 產品貨號 - #{product.productNumber}
-                      br
-                      | 備註 - #{product.comment}
                   // /tab-pane
                   #p-tab-2.tab-pane.fade
                     p
-                      | 使用方法
-                      br
                       | !{productGm.notice}
-                      br
-                      | 注意事項
-                      br  
-                      | !{productGm.usage}
                   // /tab-pane
                   #p-tab-3.tab-pane.fade
                     p
@@ -198,17 +186,18 @@ block body
                 // /tab-content
                 h4.m-bottom-4 服務項目 #{product.services}
                 .row.row-s.m-bottom-10
+                  - var icon = ['truck','store','globe','gift2']
                   each service, index in ['快遞宅配', '超商取貨', '國際運送', '禮品包裝']
                     .col-sm-6
                       if services[index]
                         .border-block-2.text-center.p-10.m-bottom-2(id='service-#{index}')
                           h4
-                            span.glyphicon.glyphicon-truck.m-right-2.font-size-xlarge
+                            span.glyphicon.m-right-2.font-size-xlarge(class = "glyphicon-#{icon[index]}")
                             | #{service}
                       else
                         .border-block-2.text-center.p-10.m-bottom-2.disabled(id='service-#{index}')
                           h4
-                            span.glyphicon.glyphicon-truck.m-right-2.font-size-xlarge
+                            span.glyphicon.m-right-2.font-size-xlarge(class = "glyphicon-#{icon[index]}")
                             | #{service}
                       // /border-block-2
                     // /col-sm-6
@@ -216,19 +205,19 @@ block body
                 h4.m-bottom-4 分享至
                 ul.list-inline.list-social.m-bottom-10
                   li
-                    a(href='#', target='_blank')
+                    a(name="fb_share" type="icon_link" href="javascript: void(window.open('http://www.facebook.com/share.php?u='.concat(encodeURIComponent(location.href)) ));")
                       span.label.label-social.label-fb
                         span.glyphicon.glyphicon-fb
                   li
-                    a(href='#', target='_blank')
+                    a(href='#', target='_blank',onClick="javascript: void(window.open('http://twitter.com/home/?status='.concat(encodeURIComponent(document.title)) .concat(' ') .concat(encodeURIComponent(location.href))));")
                       span.label.label-social.label-twitter
                         span.glyphicon.glyphicon-twitter
                   li
-                    a(href='#', target='_blank')
+                    a(href="javascript:void((function(){var%20e=document.createElement('script');e.setAttribute('type','text/javascript');e.setAttribute('charset','UTF-8');e.setAttribute('src','http://assets.pinterest.com/js/pinmarklet.js?r='+Math.random()*99999999);document.body.appendChild(e)})());" class="pin-it-button" count-layout="none" target='_blank')
                       span.label.label-social.label-pinterest
                         span.glyphicon.glyphicon-pinterest
                   li
-                    a(href='#', target='_blank')
+                    a(href="javascript: void(window.open('https:\/\/plus.google.com/share?url='.concat(encodeURIComponent(location.href)), '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600'));", target='_blank')
                       span.label.label-social.label-google
                         span.glyphicon.glyphicon-google
                   li
@@ -262,3 +251,4 @@ block body
     // /cbp-so-scroller
 
 block js
+  //- script(src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript")
