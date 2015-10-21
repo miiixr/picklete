@@ -461,9 +461,31 @@ module.exports = {
           }]
         }],
         offset: offset,
-        limit: limit
+        limit: limit,
       };
 
+      let sort;
+      switch (query.sort) {
+        case 'views':
+          break;
+        case 'top':
+          break;
+        case 'newest':
+          sort = 'createdAt';
+          break;
+        case 'priceHtoL':
+          sort = 'price DESC';
+          break;
+        case 'priceLtoH':
+        sort = 'price';
+          break;
+      }
+
+      if(sort)
+        queryObj.order = sort;
+
+
+      sails.log.info("=== productQuery queryObj ===",queryObj);
 
       // console.log(' ======== queryObj =========');
       // console.log(ProductQueryObj);

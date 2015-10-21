@@ -51,8 +51,8 @@ block body
                       a(href='?dptId=#{dpt.id}')
                         | 所有商品                 
                     each subDpt, index in dpt.DptSubs
-                      li(class="subDpt",data-id='#{subDpt.id}') 
-                        a(href='?dptSubId=#{subDpt.id}&dptId=#{dpt.id}')
+                      li(class="subDpt",data-id='#{subDpt.id}&sort=#{sort}') 
+                        a(href='?dptSubId=#{subDpt.id}&dptId=#{dpt.id}&sort=#{sort}')
                           | #{subDpt.name}
           // /list-shop-type-9
         // /tab-content
@@ -66,6 +66,9 @@ block body
             shop-filter
             ==================================================
           .btn-group
+            input(name='sort',type='hidden', value= sort)
+            input(name='dptSubId',type='hidden', value= dptSubId)
+            input(name='dptId',type='hidden', value= dptId)
             button.btn.btn-default.border-radius-circle.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
               span.glyphicon.glyphicon-list.m-right-1
               | 預設排序
