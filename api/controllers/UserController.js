@@ -156,7 +156,14 @@ let UserController = {
       let updateUser = req.body;
       let passport = await db.Passport.find({where: {UserId: loginUser.id}});
 
-      let user = await db.User.findById(loginUser.id);
+      let user = await db.User.findOne({
+        where:{
+          id: loginUser.id
+        },
+        include:{
+          model: db.Role
+        }
+      });
 
       if(updateUser.password != passport.password){
         passport.password = updateUser.password;

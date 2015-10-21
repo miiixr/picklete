@@ -112,7 +112,7 @@ passport.connect = async function(req, query, profile, next) {
 
     //有一般使用者登入但沒使用FB註冊過
     let loginedUser = req.user;
-    sails.log.info("=== loginuer ===",loginedUser);
+    sails.log.info("=== loginedUser ===",loginedUser);
     if (loginedUser && !passport) {
       query.UserId = loginedUser.id;
       passport = await Passport.create(query);
@@ -125,7 +125,14 @@ passport.connect = async function(req, query, profile, next) {
         passport.tokens = query.tokens;
         passport = await passport.save();
       }
-      user = await db.User.findById(passport.UserId);
+      user = await db.User.findOne({
+        where:{
+          id: passport.UserId
+        },
+        include:{
+          model: db.Role
+        }
+      });
       if(user)
         return next(null, user)
       else
@@ -144,16 +151,17 @@ passport.connect = async function(req, query, profile, next) {
     }
 
     if(checkMail){
-      req.flash('error', 'Error.Passport.Email.Exists');
-      return next(new Error());
+      throw new Error('???');
     } else{
       user = await db.User.create(user);
+      user.dataValues.Role = role;
       query.UserId = user.id;
       passport = await db.Passport.create(query);
       return next(null, user);
     }
 
   } catch (err) {
+    req.flash('error',err.message);
     console.log(err);
     return next(err);
   }
@@ -377,13 +385,13 @@ passport.disconnect = function(req, res, next) {
 };
 
 passport.serializeUser(function(user, next) {
+  sails.log.info("serializeUser",user);
   return next(null, user);
 });
 
-passport.deserializeUser(function(id, next) {
-  return db.User.findOneById(id).then(function(user) {
-    return next(null, user);
-  });
+passport.deserializeUser(function(user, next) {
+  sails.log.info("deserializeUser",user);
+  return next(null, user);
 });
 
 module.exports = passport;
