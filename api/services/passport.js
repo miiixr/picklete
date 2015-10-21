@@ -101,6 +101,8 @@ passport.connect = async function(req, query, profile, next) {
   }
 
   try {
+
+
     let passport = await db.Passport.findOne({
       where: {
         provider: provider,
@@ -108,45 +110,49 @@ passport.connect = async function(req, query, profile, next) {
       }
     });
 
-    if (!req.user) {
-      if (!passport) {
-        let role = await db.Role.find({
-          where: {authority: 'user'}
-        });
-        user.RoleId = role.id;
-        let checkMail = await db.User.findOne({where:{email:user.email}});
-        if(!checkMail){
-          user = await db.User.create(user);
-          query.UserId = user.id;
-          let passport = await db.Passport.create(query);
-          next(null, user);
-        } else{
-          // delete user.email;
-          // user = await db.User.create(user);
-          console.log("????");
-          req.flash('error', 'Error.Passport.Email.Exists');
-          next(new Error())
-        }
-      } else {
-        if (query.hasOwnProperty('tokens') && query.tokens !== passport.tokens) {
-          passport.tokens = query.tokens;
-        }
-        passport = await passport.save();
-        user = await db.User.findById(passport.UserId);
-        if(user)
-          next(null, user)
-        else
-          next(new Error())
-      }
-    }else{
-      if (!passport) {
-        query.user = req.user.id;
-        passport = Passport.create(query);
-        next(null, req.user);
-      } else {
-        next(null, req.user);
-      }
+    //有一般使用者登入但沒使用FB註冊過
+    let loginedUser = req.user;
+    sails.log.info("=== loginuer ===",loginedUser);
+    if (loginedUser && !passport) {
+      query.UserId = loginedUser.id;
+      passport = Passport.create(query);
+      next(null, loginedUser);
     }
+
+    //已用FB註冊過，直接登入
+    if(passport){
+      if(query.hasOwnProperty('tokens') && query.tokens !== passport.tokens){
+        passport.tokens = query.tokens;
+        passport = await passport.save();
+      }
+      user = await db.User.findById(passport.UserId);
+      if(user)
+        next(null, user)
+      else
+        next(new Error())
+    }
+
+    // 註冊FB帳號
+    let role = await db.Role.find({
+      where: {authority: 'user'}
+    });
+    user.RoleId = role.id;
+
+    let checkMail;
+    if(user.hasOwnProperty('eamil')){
+      checkMail = await db.User.findOne({where:{email:user.email}});
+    }
+
+    if(checkMail){
+      req.flash('error', 'Error.Passport.Email.Exists');
+      next(new Error())
+    } else{
+      user = await db.User.create(user);
+      query.UserId = user.id;
+      passport = await db.Passport.create(query);
+      next(null, user);
+    }
+
   } catch (err) {
     if(err.code === 'E_VALIDATION') {
       if (err.invalidAttributes.email) {
