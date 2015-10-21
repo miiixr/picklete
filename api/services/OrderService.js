@@ -122,7 +122,7 @@ var self = module.exports = {
         orderNo, time, order.paymentTotalAmount, paymentMethod);
 
       var itemArray = [];
-      await* order.OrderItems.map(async(orderItem) => {
+      let orderItemProducts = await* order.OrderItems.map(async (orderItem) => {
         let orderItemProduct = await db.Product.findOne({
           where:{
             id: orderItem.ProductId
@@ -131,9 +131,14 @@ var self = module.exports = {
             model: db.ProductGm
           }
         })
-        itemArray.push(`${orderItemProduct.ProductGm.name}(${orderItemProduct.name})X${orderItem.quantity}`);
-        return orderItemProduct;
+        return {orderItemProduct,orderItem};
       });
+
+      orderItemProducts.forEach((order) =>{
+        sails.log.info(order);
+        itemArray.push(`${order.orderItemProduct.ProductGm.name}(${order.orderItemProduct.name})X${order.orderItem.quantity}`)
+      });
+
       data.ItemName = itemArray.join('#');
 
       // let checkMacValue = await new Promise((done) => {
