@@ -59,6 +59,9 @@ block body
       // /container
     // /gray-lighter
     .container
+      - var reqId = parseInt(req.query.brand, 10);
+      - if (reqId)
+        img(src="#{_.find(brands, {id: reqId}).banner}" class="img-full")
       form.with-pagination(name="searchProducts", action="/shop/products", method="get")
         +pagination-fields(page, totalPages, limit)
         .m-top-8.m-bottom-8
