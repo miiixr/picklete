@@ -110,7 +110,7 @@ block body
           td
             input.addSelect(type='checkbox' value= purchase.id)
           td
-            img.width-6(src='images/demo/shop-item-1-1.jpg')
+            img.width-6(src= purchase.coverPhoto[0])
           td #{purchase.name}
           td #{purchase.id}
           td 590

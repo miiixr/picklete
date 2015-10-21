@@ -191,7 +191,7 @@ module.exports.routes = {
 
   'get /api/order/pay': 'OrderController.pay'
 
-  "get /admin/login": view: "admin/login"
+  # "get /admin/login": view: "admin/login"
 
   'get /api/search/:keywords': 'SearchController.productsJson'
   'get /search': 'SearchController.products'

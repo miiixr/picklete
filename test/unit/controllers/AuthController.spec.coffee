@@ -42,7 +42,7 @@ describe "about Auth", (done) ->
       request(sails.hooks.http.app)
       .post("/auth/local")
       .send(loginUser)
-      .expect 'Location', "/login"
+      .expect 'Location', "/"
       .end (err, res) ->
         return done(body) if res.statusCode is 500
         res.statusCode.should.equal 302
