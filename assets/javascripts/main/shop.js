@@ -53,7 +53,7 @@
       favs[productId] = true;
     }
 
-    Cookies.set(FAV_KEY, favs, { expires: 90 });
+    Cookies.set(FAV_KEY, favs, { expires: 2592000 });
 
   });
 
@@ -73,7 +73,7 @@
       delete favs[productId];
     }
 
-    Cookies.set(FAV_KEY, favs, { expires: 90 });
+    Cookies.set(FAV_KEY, favs, { expires: 2592000 });
     $(target).parent().parent().remove();
 
   });
