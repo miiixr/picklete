@@ -467,6 +467,7 @@ module.exports = {
       let sort;
       switch (query.sort) {
         case 'views':
+          sort = 'ProductGm.pageView DESC';
           break;
         case 'top':
           break;

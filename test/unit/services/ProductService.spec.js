@@ -63,6 +63,7 @@ describe("about product service", () => {
 
       createdProductGm = await db.ProductGm.create({
         brandId: 1,
+        pageView: 10,
         explain: 'req.body.explain',
         usage: 'req.body.usage',
         notice: 'req.body.notice',
@@ -96,6 +97,7 @@ describe("about product service", () => {
 
       let createdQueryProductGmA = await db.ProductGm.create({
         brandId: 2,
+        pageView: 20,
         name: "ProductGmNameGroupA",
         depId: dptC.id,
         depSubId: dptSubC.id,
@@ -104,6 +106,7 @@ describe("about product service", () => {
 
       let createdQueryProductGmB = await db.ProductGm.create({
         brandId: 3,
+        pageView: 30,
         name: "ProductGmNameGroupB",
         depId: dptC.id,
         depSubId: dptSubC.id,
@@ -392,16 +395,33 @@ describe("about product service", () => {
     }
   });
 
+  it('product query by views', async (done) => {
+    try{
+      let queryObj = {}, queryResults;
+      queryObj.sort = 'views';
+      queryResults = await ProductService.productQuery(queryObj);
+      sails.log.info(queryResults.rows[0]);
+      let lastPageView = 99999999999;
+      for (let product of queryResults.rows) {
+        sails.log.info(product.ProductGm.pageView);
+        product.ProductGm.pageView.should.be.below(lastPageView+1);
+        lastPageView = product.ProductGm.pageView;
+      }
+      done();
+    } catch (e) {
+      done(e);
+    }
+  });
+
   it('product query by newest', async (done) => {
     try{
       let queryObj = {}, queryResults;
       queryObj.sort = 'newest';
       queryResults = await ProductService.productQuery(queryObj);
-      sails.log.info(queryResults.rows[0]);
-      let lastCreatedAt = queryResults.rows[0].createdAt;
+      let lastCreatedAt = queryResults.rows[0].createdAt
       for (let product of queryResults.rows) {
-          sails.log.info(product.createdAt);
-          lastCreatedAt = product.createdAt;
+        sails.log.info(product.createdAt);
+        lastCreatedAt = product.createdAt;
       }
       done();
     } catch (e) {

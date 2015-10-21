@@ -5,6 +5,10 @@ module.exports = (sequelize, DataTypes) => {
     // brandId: DataTypes.INTEGER,
     // brandName: DataTypes.STRING,
     name: DataTypes.STRING,
+    pageView:{
+      type: DataTypes.INTEGER,
+      defaultValue: 0
+    },
     // 大館別 id
     // dptId: {
     //   type: DataTypes.STRING,

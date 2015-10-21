@@ -110,6 +110,8 @@ let ShopController = {
       let brand = await db.Brand.findOne({
         where: {id: productGm.BrandId}
       });
+      productGm.pageView++;
+      productGm = await productGm.save();
       productGm = productGm.dataValues;
 
       product = (await PromotionService.productPriceTransPromotionPrice(new Date(), [product]))[0];
