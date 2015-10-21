@@ -12,21 +12,36 @@ let UserController = {
 
 
   verify: async (req, res) => {
-    var email = req.param("email");;
+    var email = req.param("email");
 
     if ( ! email)
       return res.json({ result: 'fail' });
 
     try {
-      var result = await db.User.findOne({
-        where: {
-          email: email
+      if(UserService.getLoginState(req)){
+        let loginUser = UserService.getLoginUser(req);
+        var result = await db.User.findOne({
+          where: {
+            email: email
+          }
+        });
+        if(result){
+          if(result.id == loginUser.id){
+            result = null;
+          }
         }
-      });
+      }else{
+        var result = await db.User.findOne({
+          where: {
+            email: email
+          }
+        });
+      }
 
       var response = (result) ? { result: "existed" } : { result: "ok" };
-      return res.json(response);   
+      return res.json(response);
     } catch (e) {
+      console.log(e);
       return res.json({ result: 'fail'});
       return res.view("main/memberFavorite", {products: []});
     }
@@ -141,7 +156,14 @@ let UserController = {
       let updateUser = req.body;
       let passport = await db.Passport.find({where: {UserId: loginUser.id}});
 
-      let user = await db.User.findById(loginUser.id);
+      let user = await db.User.findOne({
+        where:{
+          id: loginUser.id
+        },
+        include:{
+          model: db.Role
+        }
+      });
 
       if(updateUser.password != passport.password){
         passport.password = updateUser.password;
@@ -187,7 +209,7 @@ let UserController = {
     if(UserService.getLoginState(req))
       res.redirect('/admin/goods');
     else
-      res.view({});
+      res.view("admin/login");
   },
   indexSlider: function(req, res) {
     res.view({

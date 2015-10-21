@@ -46,7 +46,19 @@ let BrandController = {
       pageName: '/admin/brands',
       brands: brands.brandsGood,
       agents: brands.brandsAgent,
-      brandLocks: brands.brandLock,
+      brandLocks: brands.brandLock
+    });
+  },
+
+  listView: async (req, res) => {
+
+    let brands = await BrandService.list();
+
+    // return res.ok(brands);
+    res.view('main/brandList', {
+      brands: brands.brandsGood,
+      agents: brands.brandsAgent,
+      brandLocks: brands.brandLock
     });
   },
 

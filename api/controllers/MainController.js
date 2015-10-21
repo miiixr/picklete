@@ -17,5 +17,9 @@ module.exports = {
       let {message} = e;
       res.serverError({message, success: false});
     }
+  },
+
+  login: async (req, res) => {
+    res.view("main/login");
   }
 }

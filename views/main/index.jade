@@ -1,6 +1,8 @@
 extends ../_layout_head
 
 block body
+  if req.flash('error')[0]
+    div#error
   #carousel-index.carousel.slide(data-ride='carousel')
     - var slideLength = sliders.length;
     //- h3=slideLength
@@ -351,3 +353,15 @@ block body
   
   
 block js
+  script.
+    if($("#error").get(0)){
+      $('#modal-login').modal('show');
+      $(this).notifyMe(
+        'top',
+        'cart',
+        '<span style="color:red" class="glyphicon glyphicon-warning m-right-2"></span>'+ '此Email已經註冊過，請重新使用Email/Password方式登入',
+        '',
+        300,
+        3000
+      );
+    }

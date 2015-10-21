@@ -26,12 +26,12 @@ block body
       .m-top-6.m-bottom-10
         .row.m-bottom-4
           .col-md-6
-            p.font-size-slarge.line-height-xlarge.m-bottom-4 會員帳號：email@example.com
+            p.font-size-slarge.line-height-xlarge.m-bottom-4 會員帳號：#{user.email}
           // /col-md-6
           .col-md-6.desktop-text-right
             ul.list-inline
               li
-                a.btn.btn-default.border-radius-circle(href='/member/fav') 我的收藏
+                a.btn.btn-default.border-radius-circle(href='/member/favorite') 我的收藏
               li
                 a.btn.btn-default.border-radius-circle.active(href='/member/purchase') 我的訂單記錄
               li
@@ -86,11 +86,13 @@ block body
                         ==================================================
                       .p-10
                         .m-top-2.m-bottom-2
+                          //- h1 #{JSON.stringify(order)}
                           ul.p-left-3
                             li 收件人姓名：#{order.Shipment.username} 先生/小姐
-                            li 收件人電話：#{order.Shipment.shippingType}
+                            li 收件人電話：#{order.Shipment.mobile}
                             li 收件人地址：#{order.Shipment.address}
-                            li 運送方式：#{order.Shipment.shippingType} / 編號：#{order.Shipment.shippingId}
+                            li 運送方式：#{ (order.Shipment.shippingType== 'delivery') ? '快遞' : '郵遞'} 
+                            //- / 編號：#{order.Shipment.shippingId}
                         // /m-top-2 m-bottom-2
                         table.table
                           thead
@@ -111,19 +113,13 @@ block body
                                 - sumPrice += item.price*item.quantity
                             tr
                               td
-                                p 付款方式：#{order.allPayPaymentType} 
-                                if order.BankCode
-                                  | 繳費帳戶：#{order.BankCode} #{order.vAccount}
-                                else if order.PaymentNo
-                                  | 繳費帳戶：#{order.PaymentNo}
-                              //- if order.allPayPaymentType == "ATM"
-                              //-   p 付款方式：#{order.allPayPaymentType} 繳費帳戶：#{order.BankCode} #{order.vAccount}
-                              //- else if order.allPayPaymentType == "CVS" || order.allPayPaymentType == "BARCODE"
-                              //-   p 付款方式：#{order.allPayPaymentType} 繳費帳戶：#{order.PaymentNo}
-                              //- else if order.allPayPaymentType == "Credit"
-                              //-   p 付款方式：#{order.allPayPaymentType}
-                                //- p.text-danger 賣家備註：
-                                //- ol.text-danger
+                              if order.allPayPaymentType == "ATM"
+                                p 付款方式：#{order.allPayPaymentType} 繳費帳戶：#{order.BankCode} #{order.vAccount}
+                              else if order.allPayPaymentType == "CVS" || order.allPayPaymentType == "BARCODE"
+                                p 付款方式：#{order.allPayPaymentType} 繳費帳戶：#{order.PaymentNo}
+                              else if order.allPayPaymentType == "Credit"
+                                p 付款方式：#{order.allPayPaymentType}
+                              p.text-danger 賣家備註：#{order.description?order.description:'無'}
                                 //-   li 管理員代收
                                 //-   li 禮品的包裝盒請去除價格標籤
                               td

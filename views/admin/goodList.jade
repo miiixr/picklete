@@ -6,7 +6,7 @@ block body
   .well.control-well.p-30.m-bottom-8
     form#goodQuery.form-horizontal.with-pagination(name="searchProducts", action="/admin/goods", method="get")
       
-      +pagination-fields(page, limit)
+      +pagination-fields(page, totalPages, limit)
     
       .row.row-m
         .col-md-4

@@ -32,7 +32,7 @@
       }
     });
   };
-  
+
   $('#twzipcode').twzipcode({
     // 'zipcodeIntoDistrict': true,
     'countyName'   : 'city',
@@ -43,6 +43,10 @@
       'form-control width-auto inline-block',
       'form-control width-auto inline-block']
   });
+
+  $("select[name='city']").prop('required',true);
+  $("select[name='region']").prop('required',true);
+  $("select[name='zipcode']").prop('required',true);
 
   $("#registerForm").on('submit', function(e) {
     e.preventDefault();

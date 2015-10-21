@@ -122,9 +122,23 @@ var self = module.exports = {
         orderNo, time, order.paymentTotalAmount, paymentMethod);
 
       var itemArray = [];
-      order.OrderItems.forEach((orderItem) => {
-        itemArray.push(orderItem.name);
+      let orderItemProducts = await* order.OrderItems.map(async (orderItem) => {
+        let orderItemProduct = await db.Product.findOne({
+          where:{
+            id: orderItem.ProductId
+          },
+          include:{
+            model: db.ProductGm
+          }
+        })
+        return {orderItemProduct,orderItem};
       });
+
+      orderItemProducts.forEach((order) =>{
+        sails.log.info(order);
+        itemArray.push(`${order.orderItemProduct.ProductGm.name}(${order.orderItemProduct.name})X${order.orderItem.quantity}`)
+      });
+
       data.ItemName = itemArray.join('#');
 
       // let checkMacValue = await new Promise((done) => {
@@ -216,7 +230,8 @@ var self = module.exports = {
         serialNumber: await OrderService.generateOrderSerialNumber(),
         useBunusPoint: 0,
         packingFee: newOrder.packingFee,
-        packingQuantity: newOrder.packingQuantity
+        packingQuantity: newOrder.packingQuantity,
+        description: newOrder.description
       };
 
       products.forEach((product, index) => {
@@ -292,6 +307,13 @@ var self = module.exports = {
         let createdOrderItemIds = createdOrderItems.map((orderItem) => orderItem.id);
 
         let {shipment, invoice} = newOrder;
+        // shipment fee
+        // when user is for him self.
+        if (shipment.zipcode == '') {
+          shipment.zipcode = user.zipcode;
+          shipment.city = user.city;
+          shipment.region = user.region;
+        }
         shipment.address = `${shipment.zipcode} ${shipment.city}${shipment.region}${shipment.address}`;
 
         let createdOrder = await db.Order.create(thisOrder, {transaction});

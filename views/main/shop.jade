@@ -60,7 +60,7 @@ block body
     // /gray-lighter
     .container
       form.with-pagination(name="searchProducts", action="/shop/products", method="get")
-        +pagination-fields(page, limit)
+        +pagination-fields(page, totalPages, limit)
         .m-top-8.m-bottom-8
           //
             shop-filter

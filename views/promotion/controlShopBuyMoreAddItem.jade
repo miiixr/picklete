@@ -71,12 +71,10 @@ block body
       form.form-inline(name="search", action="shop-buy-more-add-item", method="get")
         .form-group.m-right-2
           label 品牌名稱
-          select.form-control
-            option 品牌名稱
-            option 2
-            option 3
-            option 4
-            option 5
+          select.form-control(name='brand' , value = query.brand?query.brand: 0)
+            option(value=0 selected=(query.brand==0)) 品牌名稱
+            each brand in brands
+              option(value=brand.id selected=(query.brand==brand.id)) #{brand.name}
         // /form-group
         .form-group.m-right-2
           .input-group
@@ -112,7 +110,7 @@ block body
           td
             input.addSelect(type='checkbox' value= purchase.id)
           td
-            img.width-6(src='images/demo/shop-item-1-1.jpg')
+            img.width-6(src= purchase.coverPhoto[0])
           td #{purchase.name}
           td #{purchase.id}
           td 590

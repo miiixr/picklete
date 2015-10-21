@@ -7,7 +7,7 @@ block body
   .row
     .col-sm-6.col-md-8
       form#search.form-inline.with-pagination(name="search", action="shop-code", method="get")
-        +pagination-fields(page, limit)
+        +pagination-fields(page, totalPages, limit)
         .form-group
           label 顯示
             +pagination-limit
