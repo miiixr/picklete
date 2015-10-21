@@ -115,8 +115,8 @@ passport.connect = async function(req, query, profile, next) {
     sails.log.info("=== loginuer ===",loginedUser);
     if (loginedUser && !passport) {
       query.UserId = loginedUser.id;
-      passport = Passport.create(query);
-      next(null, loginedUser);
+      passport = await Passport.create(query);
+      return next(null, loginedUser);
     }
 
     //已用FB註冊過，直接登入
@@ -127,9 +127,9 @@ passport.connect = async function(req, query, profile, next) {
       }
       user = await db.User.findById(passport.UserId);
       if(user)
-        next(null, user)
+        return next(null, user)
       else
-        next(new Error())
+        throw new Error('???');
     }
 
     // 註冊FB帳號
@@ -145,22 +145,15 @@ passport.connect = async function(req, query, profile, next) {
 
     if(checkMail){
       req.flash('error', 'Error.Passport.Email.Exists');
-      next(new Error())
+      return next(new Error());
     } else{
       user = await db.User.create(user);
       query.UserId = user.id;
       passport = await db.Passport.create(query);
-      next(null, user);
+      return next(null, user);
     }
 
   } catch (err) {
-    if(err.code === 'E_VALIDATION') {
-      if (err.invalidAttributes.email) {
-        req.flash('error', 'Error.Passport.Email.Exists');
-      } else {
-        req.flash('error', 'Error.Passport.User.Exists');
-      }
-    }
     console.log(err);
     return next(err);
   }
