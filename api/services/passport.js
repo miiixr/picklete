@@ -136,7 +136,7 @@ passport.connect = async function(req, query, profile, next) {
       if(user)
         return next(null, user)
       else
-        throw new Error('???');
+        throw new Error('Error user not found');
     }
 
     // 註冊FB帳號
@@ -151,7 +151,7 @@ passport.connect = async function(req, query, profile, next) {
     }
 
     if(checkMail){
-      throw new Error('???');
+      throw new Error('Error passport email exists');
     } else{
       user = await db.User.create(user);
       user.dataValues.Role = role;
