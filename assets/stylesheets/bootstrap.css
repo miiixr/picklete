@@ -11817,3 +11817,11 @@ a.btn-remove {
   border-radius: 20px;
   padding: 6px 12px;
 }
+
+.carousel-caption h1 { 
+  font-weight: bold;
+}
+
+.list-group-item a.active { 
+  color: #00cbbb; text-decoration: none; 
+}
