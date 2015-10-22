@@ -88,9 +88,8 @@ let UserController = {
               isNewFavorite = false
             }
           });
+          product = await db.Product.findById(productId);
           if(isNewFavorite){
-
-            product = await db.Product.findById(productId);
             let productGm = await db.ProductGm.findById(product.ProductGmId);
 
             let like;
