@@ -26,11 +26,17 @@ let ShopController = {
 
     query.brandId = query.brand;
 
-    console.log('=== query ===', query);
+    sails.log.info('=== query ===', query);
 
     try {
+
+      let dptSubId = query.dptSubId || '';
+      let dptId = query.dptId || '';
+      let sort = query.sort || '';
+
       let productsWithCount = await ProductService.productQuery(query, offset, limit);
       let products = productsWithCount.rows;
+      // sails.log.info('=== shop products ===',products);
       products = await PromotionService.productPriceTransPromotionPrice(new Date(), products);;
 
       let brands = await db.Brand.findAll({order: 'weight ASC',});
@@ -51,6 +57,9 @@ let ShopController = {
       // }
 
       let result = {
+        dptSubId,
+        dptId,
+        sort,
         brands,
         dpts,
         query,
@@ -62,14 +71,15 @@ let ShopController = {
         verification: query.verification
       };
 
-      console.log('=== totalPages ===', result.totalPages);
-      console.log('=== totalRows ===', result.totalRows);
+      sails.log.info('=== result ===', result.query);
+      sails.log.info('=== totalPages ===', result.totalPages);
+      sails.log.info('=== totalRows ===', result.totalRows);
 
       res.view('main/shop', result);
 
 
     } catch (e) {
-      console.log(e.stack);
+      sails.log.error(e.stack);
 
       return res.serverError(e);
     }
@@ -100,6 +110,8 @@ let ShopController = {
       let brand = await db.Brand.findOne({
         where: {id: productGm.BrandId}
       });
+      productGm.pageView++;
+      productGm = await productGm.save();
       productGm = productGm.dataValues;
 
       product = (await PromotionService.productPriceTransPromotionPrice(new Date(), [product]))[0];

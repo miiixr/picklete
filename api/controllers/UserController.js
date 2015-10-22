@@ -64,6 +64,37 @@ let UserController = {
       products
     });
   },
+
+  updatefavorite: async (req, res) => {
+
+    var FAV_KEY = "picklete_fav";
+    var favoriteKeys = req.cookies[FAV_KEY];
+    sails.log.info("=== cookies ===",req.cookies);
+    try {
+      favoriteKeys = JSON.parse(favoriteKeys);
+      sails.log.info("=== favoriteKeys ===",favoriteKeys);
+      let products = Object.keys(favoriteKeys);
+      sails.log.info("=== products ===",products);
+      let user = UserService.getLoginUser(req);
+      if(user){
+        user = await db.User.findById(user.id);
+        // let favorite = await* products.map( async (productId) => {
+        //   let product = await db.Product.findById(productId);
+        //   await user.setProductGms([product.ProductGmId]);
+        //   return product;
+        // });
+      }
+      let message = '更新收藏';
+      return res.ok(message);
+    } catch (e) {
+      favoriteKeys = null;
+      sails.log.error(e);
+      let {message} = e;
+      let success = false;
+      return res.json(500,{message, success});
+    }
+  },
+
   purchase:async (req, res) => {
     let loginUser = UserService.getLoginUser(req);
     let orders = await db.Order.findAll({
