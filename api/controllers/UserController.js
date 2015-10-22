@@ -78,26 +78,37 @@ let UserController = {
       let user = UserService.getLoginUser(req);
       if(user){
         user = await db.User.findById(user.id);
-        if(user.FavoriteId){
-          
-        }
+        let UserFavorites = await user.getProducts();
         let favorite = await* products.map( async (productId) => {
-          let product = await db.Product.findById(productId);
-          let productGm = await db.ProductGm.findById(product.ProductGmId);
+          // sails.log.info("==== find ====",find);
+          let product;
+          let isNewFavorite = true;
+          UserFavorites.forEach((favorite) => {
+            if(favorite.id == productId){
+              isNewFavorite = false
+            }
+          });
+          if(isNewFavorite){
 
-          let like;
-          if(productGm.LikesCountId){
-            like = await db.LikesCount.findById(productGm.LikesCountId);
-            like.likesCount++;
-            await like.save();
-          }else{
-            like = await db.LikesCount.create();
+            product = await db.Product.findById(productId);
+            let productGm = await db.ProductGm.findById(product.ProductGmId);
+
+            let like;
+            if(productGm.LikesCountId){
+              like = await db.LikesCount.findById(productGm.LikesCountId);
+              like.likesCount++;
+              await like.save();
+            }else{
+              like = await db.LikesCount.create();
+            }
+            productGm.LikesCountId = like.id;
+            productGm.likesCount ++;
+            productGm = await productGm.save();
+
           }
-          productGm.LikesCountId = like.id;
-          productGm.likesCount ++;
-          productGm = await productGm.save();
           return product;
         });
+        await user.setProducts(favorite);
       }
       let message = '更新收藏';
       return res.ok(message);

@@ -99,7 +99,6 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     classMethods: {
       associate: (models) => {
-        ProductGm.hasOne(models.Favorite)
         ProductGm.belongsTo(models.Brand)
         ProductGm.hasMany(models.Product)
         ProductGm.belongsToMany(models.Dpt, {through: 'DptProductGm'});
