@@ -11828,3 +11828,8 @@ a.btn-remove {
 h4.letter-spacing-1 a.active { 
   color: #00cbbb; text-decoration: none; 
 }
+
+.navbar-nav > li > a.active {
+    -webkit-box-shadow: inset 0px -2px 0px 0px #32373C;
+    box-shadow: inset 0px -2px 0px 0px #32373C;
+}

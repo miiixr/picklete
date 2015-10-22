@@ -46,7 +46,7 @@ html
         .collapse.navbar-collapse
           ul.nav.navbar-nav.navbar-right(aria-multiselectable='true')
             li
-              a.width-11.text-center(data-toggle='collapse', aria-expanded='true', href='#dropdown-menu-brands')
+              a.menu-brand.width-11.text-center(data-toggle='collapse', aria-expanded='true', href='#dropdown-menu-brands')
                 span.text-en BRANDS
                 |             
                 span.text-active #{i18n('brands')}
@@ -83,20 +83,20 @@ html
               // /dropdown-menu
             |         
             li
-              a.width-10.text-center(href='#{company.blog}')
+              a.menu-blog.width-10.text-center(href='#{company.blog}')
                 span.text-en BLOG
                 |             
                 span.text-active 生活誌
             |   
             li
-              a.width-10.text-center(href='/shop/products')
+              a.menu-shop.width-10.text-center(href='/shop/products')
                 span.text-en SHOP
                 |             
                 span.text-active #{i18n('shop')}
             - if (user)
               |         
               li.dropdown
-                a.dropdown-toggle.width-11.text-center(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+                a.menu-member.dropdown-toggle.width-11.text-center(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
                   span.text-en ACCOUNT
                   |             
                   span.text-active 會員中心
@@ -118,7 +118,7 @@ html
             - if ( ! user)
               |         
               li
-                a.width-12.text-center(href='#', data-toggle='modal', data-target='#modal-login')
+                a.menu-member.width-12.text-center(href='#', data-toggle='modal', data-target='#modal-login')
                   span.glyphicon.glyphicon-user.font-size-slarge
                   |             
                   span.text-en LOGIN
@@ -127,7 +127,7 @@ html
             - if (true || user)
               |         
               li.dropdown.icon-link
-                a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+                a.menu-cart.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
                   span.glyphicon.glyphicon-shopping-cart.m-right-1.font-size-slarge
                   span.text-green 
                     span#order-items-count 0
