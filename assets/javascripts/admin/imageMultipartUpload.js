@@ -97,9 +97,11 @@
     $form = that.find("form");
     var height = that.find("input[name=height]").val();
     var width = that.find("input[name=width]").val();
+    var filename = that.find("input[name=filename]").val();
+    console.log(filename);
 
     that.find(".img-full").attr("src", "http://fakeimg.pl/" + width + "x" + height + "/dddddd/FFF/?text=" + width + "x" + height);
-    that.find("input[name='photos[]']").val("");
+    that.find("input[name='" + filename + "']").val("");
   });
 
 
