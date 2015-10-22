@@ -470,6 +470,7 @@ module.exports = {
           sort = 'ProductGm.pageView DESC';
           break;
         case 'top':
+        sort = 'ProductGm.likesCount DESC';
           break;
         case 'newest':
           sort = 'createdAt';

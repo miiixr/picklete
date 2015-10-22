@@ -78,11 +78,26 @@ let UserController = {
       let user = UserService.getLoginUser(req);
       if(user){
         user = await db.User.findById(user.id);
-        // let favorite = await* products.map( async (productId) => {
-        //   let product = await db.Product.findById(productId);
-        //   await user.setProductGms([product.ProductGmId]);
-        //   return product;
-        // });
+        if(user.FavoriteId){
+          
+        }
+        let favorite = await* products.map( async (productId) => {
+          let product = await db.Product.findById(productId);
+          let productGm = await db.ProductGm.findById(product.ProductGmId);
+
+          let like;
+          if(productGm.LikesCountId){
+            like = await db.LikesCount.findById(productGm.LikesCountId);
+            like.likesCount++;
+            await like.save();
+          }else{
+            like = await db.LikesCount.create();
+          }
+          productGm.LikesCountId = like.id;
+          productGm.likesCount ++;
+          productGm = await productGm.save();
+          return product;
+        });
       }
       let message = '更新收藏';
       return res.ok(message);

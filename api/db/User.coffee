@@ -42,6 +42,7 @@ module.exports = (sequelize, DataTypes) ->
     User.hasMany models.Passport
     User.belongsTo models.Role
     User.belongsToMany(models.Like, {through: 'UserLike'});
+    User.belongsToMany(models.Favorite, {through: 'FavoriteProduct'})
     return
   )
   return User

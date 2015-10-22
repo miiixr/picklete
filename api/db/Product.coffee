@@ -69,8 +69,7 @@ module.exports = (sequelize, DataTypes) ->
   },
   paranoid: true,
   classMethods: associate: (models) ->
+    Product.hasOne(models.Favorite)
     Product.belongsTo(models.ProductGm)
     Product.belongsToMany(models.AdditionalPurchase, {through: 'AdditionalPurchaseProduct'});
-
-
   return Product

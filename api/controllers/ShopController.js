@@ -111,7 +111,18 @@ let ShopController = {
         where: {id: productGm.BrandId}
       });
       productGm.pageView++;
+
+      let pageView;
+      if(productGm.PageViewId){
+        pageView = await db.PageView.findById(productGm.PageViewId);
+        pageView.pageView ++;
+        await pageView.save();
+      }else{
+        pageView = await db.PageView.create();
+      }
+      productGm.PageViewId = pageView.id;
       productGm = await productGm.save();
+
       productGm = productGm.dataValues;
 
       product = (await PromotionService.productPriceTransPromotionPrice(new Date(), [product]))[0];

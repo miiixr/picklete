@@ -1,11 +1,9 @@
 
 module.exports = (sequelize, DataTypes) ->
   Favorite = sequelize.define('Favorite', {
-    productId: DataTypes.INTEGER,
-    productGmId: DataTypes.INTEGER,
-    UserId: DataTypes.INTEGER,
   }, classMethods: associate: (models) ->
+    Favorite.belongsToMany(models.User, {through: 'FavoriteProduct'})
     return
   )
-  
+
   return Favorite

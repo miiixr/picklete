@@ -1,8 +1,11 @@
 module.exports = (sequelize, DataTypes) ->
   PageView = sequelize.define('PageView', {
-    productGmPageView: DataTypes.INTEGER,
-    productGmId: DataTypes.INTEGER
+    pageView: {
+      type: DataTypes.INTEGER,
+      defaultValue: 1
+    }
   }, classMethods: associate: (models) ->
+    PageView.hasOne(models.ProductGm)
     return
   )
   return PageView

@@ -9,6 +9,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       defaultValue: 0
     },
+    likesCount:{
+      type: DataTypes.INTEGER,
+      defaultValue: 0
+    },
     // 大館別 id
     // dptId: {
     //   type: DataTypes.STRING,
@@ -95,6 +99,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     classMethods: {
       associate: (models) => {
+        ProductGm.hasOne(models.Favorite)
         ProductGm.belongsTo(models.Brand)
         ProductGm.hasMany(models.Product)
         ProductGm.belongsToMany(models.Dpt, {through: 'DptProductGm'});
