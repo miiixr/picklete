@@ -90,4 +90,17 @@
   });
 
 
+  $(document).on('clear.bs.fileinput', '.fileinput', function (e) {
+    that = $(e.currentTarget || this);
+    inputName = that.find('input[name="uploadfile"]').data('name');
+
+    $form = that.find("form");
+    var height = that.find("input[name=height]").val();
+    var width = that.find("input[name=width]").val();
+
+    that.find(".img-full").attr("src", "http://fakeimg.pl/" + width + "x" + height + "/dddddd/FFF/?text=" + width + "x" + height);
+    that.find("input[name='photos[]']").val("");
+  });
+
+
 }(jQuery));
