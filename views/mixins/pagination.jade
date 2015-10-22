@@ -1,11 +1,11 @@
 mixin pagination-limit(limit)
   select#pagination-limit.form-control
-    option(selected=(limit==12)) 12
-    option(selected=(limit==20)) 20
-    option(selected=(limit==30)) 30
-    option(selected=(limit==40)) 40
-    option(selected=(limit==50)) 50
-    option(selected=(limit==50)) 100
+    option(selected=(limit == 12)) 12
+    option(selected=(limit == 20)) 20
+    option(selected=(limit == 30)) 30
+    option(selected=(limit == 40)) 40
+    option(selected=(limit == 50)) 50
+    option(selected=(limit == 100)) 100
 
 
 mixin pagination-simple-pager(page, totalPages)
@@ -13,17 +13,20 @@ mixin pagination-simple-pager(page, totalPages)
     .text-center.m-bottom-8
       nav
         ul.pagination
-          li
-            a(href='#', aria-label='Previous', id='pagination-prev')
-              span(aria-hidden='true') «
-          - for(var i=1; i <= totalPages; i++) {
-            - var active = (page+1==i) ? 'active' : '';
-            li(href='#', class='#{active} pagination-jump' data-page='#{i}')
-              a(href='#') #{i}
-          - }
-          li
-            a(href='#', aria-label='Next', id='pagination-next')
-              span(aria-hidden='true') »
+          if (page+1 > 1)
+            li
+              a(href='#', aria-label='Previous', id='pagination-prev')
+                span(aria-hidden='true') «
+          if (totalPages > 1)
+            - for(var i=1; i <= totalPages; i++) {
+              - var active = (page+1==i) ? 'active' : '';
+              li(href='#', class='#{active} pagination-jump' data-page='#{i}')
+                a(href='#') #{i}
+            - }
+          if (page+1 < totalPages)
+            li
+              a(href='#', aria-label='Next', id='pagination-next')
+                span(aria-hidden='true') »
   //- .text-center
   //-   ul.list-inline.m-bottom-0.m-top-1
   //-     li.border-right-1.p-right-2

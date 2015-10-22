@@ -3,7 +3,7 @@ var self = module.exports = {
   limit: async (req) => {
     return req.session.ProductService_productQuery_limit =
     parseInt(req.param('limit',
-      req.session.ProductService_productQuery_limit || 10
+      req.session.ProductService_productQuery_limit || 12
     ));
   },
   offset: async (req) => {
