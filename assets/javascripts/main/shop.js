@@ -55,6 +55,18 @@
 
     Cookies.set(FAV_KEY, favs, { expires: 90 });
 
+    $.ajax({
+      url : '/favorite/add',
+      type: "post",
+      success:function(data, textStatus, jqXHR)
+      {
+        console.log(data);
+      },
+      error: function (jqXHR, exception) {
+        console.log(jqXHR);
+      }
+    });
+
   });
 
   // remove from favorite list

@@ -26,6 +26,7 @@ module.exports.policies = {
     loginStatus:['global','cookieRequired']
     update: ['passport']
     verify: true
+    updatefavorite: []
 
   'MainController': ['global', 'mailRequired', 'cookieRequired']
 
