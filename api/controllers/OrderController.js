@@ -364,6 +364,36 @@ OrderController = {
       let {message} = e;
       res.serverError({message, success: false});
     }
+  },
+
+  print: async (req, res) =>{
+    var id = req.query.id;
+    var orderId = id.split(',');
+    
+    var queryObj ={
+      where:{
+        id : orderId
+      },
+      include: [
+        {
+          model: db.User
+        },{
+          model: db.Shipment
+          // where: queryShipmentObj
+        },{
+          model: db.OrderItem,
+          include: db.Product
+        },{
+          model: db.Invoice
+        }
+      ]
+    };
+
+    let orders = await db.Order.findAll(queryObj);
+    console.log(orders.item);
+    return res.view('admin/print',{
+      orders
+    });
   }
 
 };
