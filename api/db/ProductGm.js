@@ -105,6 +105,8 @@ module.exports = (sequelize, DataTypes) => {
         ProductGm.belongsToMany(models.DptSub, {through: 'DptSubProductGm'});
         ProductGm.belongsToMany(models.AdditionalPurchase, {through: 'AdditionalPurchaseProductGm'});
         ProductGm.belongsToMany(models.Promotion, {through: 'PromotionProductGm'});
+        ProductGm.hasOne(models.LikesCount);
+        ProductGm.hasOne(models.PageView);
         return
       }
     },

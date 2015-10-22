@@ -2,10 +2,10 @@ module.exports = (sequelize, DataTypes) ->
   LikesCount = sequelize.define('LikesCount', {
     likesCount: {
       type: DataTypes.INTEGER,
-      defaultValue: 1
+      defaultValue: 0
     }
   }, classMethods: associate: (models) ->
-    LikesCount.hasOne(models.ProductGm)
+    LikesCount.belongsTo(models.ProductGm)
     return
   )
 

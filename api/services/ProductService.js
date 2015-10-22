@@ -463,6 +463,10 @@ module.exports = {
             where: DptSubQueryObj
           },{
             model: db.Brand
+          },{
+            model: db.PageView
+          },{
+            model: db.LikesCount
           }]
         }],
         offset: offset,
@@ -472,10 +476,10 @@ module.exports = {
       let sort;
       switch (query.sort) {
         case 'views':
-          sort = 'ProductGm.pageView DESC';
+          sort = ['ProductGm.pageView DESC','createdAt'];
           break;
         case 'top':
-        sort = 'ProductGm.likesCount DESC';
+          sort = ['ProductGm.likesCount DESC','createdAt'];
           break;
         case 'newest':
           sort = 'createdAt';

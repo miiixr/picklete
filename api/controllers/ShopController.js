@@ -110,17 +110,20 @@ let ShopController = {
       let brand = await db.Brand.findOne({
         where: {id: productGm.BrandId}
       });
-      productGm.pageView++;
 
-      let pageView;
-      if(productGm.PageViewId){
-        pageView = await db.PageView.findById(productGm.PageViewId);
-        pageView.pageView ++;
-        await pageView.save();
-      }else{
-        pageView = await db.PageView.create();
-      }
-      productGm.PageViewId = pageView.id;
+
+      let count = (await db.PageView.findOrCreate({
+        where:{
+          ProductGmId: productGm.id
+        },
+        defaults:{
+          ProductGmId: productGm.id
+        }
+      }))[0];
+      count.pageView ++;
+      count = await count.save();
+
+      productGm.pageView++;
       productGm = await productGm.save();
 
       productGm = productGm.dataValues;

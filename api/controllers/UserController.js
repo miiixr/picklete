@@ -92,15 +92,18 @@ let UserController = {
           if(isNewFavorite){
             let productGm = await db.ProductGm.findById(product.ProductGmId);
 
-            let like;
-            if(productGm.LikesCountId){
-              like = await db.LikesCount.findById(productGm.LikesCountId);
-              like.likesCount++;
-              await like.save();
-            }else{
-              like = await db.LikesCount.create();
-            }
-            productGm.LikesCountId = like.id;
+            let count = (await db.LikesCount.findOrCreate({
+              where:{
+                ProductGmId: productGm.id
+              },
+              defaults:{
+                ProductGmId: productGm.id
+              }
+            }))[0];
+            count.likesCount ++;
+            count = await count.save();
+            
+
             productGm.likesCount ++;
             productGm = await productGm.save();
 
