@@ -318,9 +318,11 @@ let PromotionController = {
       limit
     });
   },
-  controlShopReportForm: function(req, res) {
+  controlShopReportForm: async (req, res) => {
+    let dateList = await ReportService.list();
     res.view('promotion/controlShopReportForm',{
-      pageName: "shop-report-form"
+      pageName: "shop-report-form",
+      dateList: dateList
     });
   }
   // end not clean yet

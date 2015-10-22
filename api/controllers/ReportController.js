@@ -20,4 +20,11 @@ module.exports = {
     // await fs.unlink(excel);
   },
 
+  list: async (req, res) => {
+
+    let list = await ReportService.list();
+
+    return res.ok(list);
+  },
+
 };

@@ -92,4 +92,78 @@ module.exports = {
       return error;
     }
   },
+
+  list: async () => {
+    try {
+      let maxDate = await db.Order.max('paymentConfirmDate');
+      maxDate = moment(maxDate);
+      let now = moment();
+      let startYear = maxDate.get('year');
+      let startMonth = maxDate.get('month') + 1;
+      let nowYear = now.get('year');
+      let nowMonth = now.get('month') + 1;
+
+      // for Debug
+      // startYear = 2015;
+      // startMonth = 10;
+      // nowYear = 2017;
+      // nowMonth = 2;
+      let dateList = [];
+
+      if (startYear == nowYear) {
+        for (; nowMonth >= startMonth; startMonth++) {
+          if (startMonth < 10) {
+            let month = _.padLeft(startMonth.toString(), 2, '0');
+            dateList.push([startYear.toString(), month]);
+          } else {
+            dateList.push([startYear.toString(), startMonth.toString()]);
+          }
+
+        }
+      } else if (startYear < nowYear) {
+
+        for (let startMonthCopy = startMonth; startMonthCopy <= 12; startMonthCopy++) {
+          if (startMonthCopy < 10) {
+            let month = _.padLeft(startMonthCopy.toString(), 2, '0');
+            dateList.push([startYear.toString(), month]);
+          } else {
+            dateList.push([startYear.toString(), startMonthCopy.toString()]);
+          }
+        }
+
+        startYear++;
+
+        if ((nowYear - startYear) >= 1) {
+          let mediumYear = nowYear - startYear - 1;
+          let countYear = 0;
+          while (countYear <= mediumYear) {
+            for (let countMonth = 1; countMonth <= 12; countMonth++) {
+              if (countMonth < 10) {
+                let month = _.padLeft(countMonth.toString(), 2, '0');
+                dateList.push([startYear.toString(), month]);
+              } else {
+                dateList.push([startYear.toString(), countMonth.toString()]);
+              }
+            }
+
+            startYear++;
+            countYear++;
+          }
+        }
+
+        for (let countMonth = 1; countMonth <= nowMonth; countMonth++) {
+          if (countMonth < 10) {
+            let month = _.padLeft(countMonth.toString(), 2, '0');
+            dateList.push([startYear.toString(), month]);
+          } else {
+            dateList.push([startYear.toString(), countMonth.toString()]);
+          }
+        }
+      }
+
+      return dateList;
+    } catch (error) {
+      console.error(error);
+    }
+  },
 };
