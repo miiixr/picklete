@@ -110,6 +110,7 @@ let ShopController = {
       let brand = await db.Brand.findOne({
         where: {id: productGm.BrandId}
       });
+
       productGm.pageView++;
       productGm = await productGm.save();
       productGm = productGm.dataValues;
@@ -122,6 +123,7 @@ let ShopController = {
 
       let dptId = product.ProductGm.Dpts[0].id;
       // recommend products
+
       let recommendProducts = await db.Product.findAll({
         subQuery: false,
         include: [{
@@ -131,7 +133,13 @@ let ShopController = {
             model: db.Dpt,
             where: {
               id: dptId
-            }
+            },
+            include: [{
+              model:db.DptSub,
+              where:{
+                id: productGm.DptSubs[0].dataValues.id
+              }
+            }]
           }]
         }],
         limit: 6
