@@ -20,7 +20,7 @@ let ShopController = {
 
     let query = req.query
 
-    let limit = await pagination.limit(req);
+    let limit = 24;
     let page = await pagination.page(req);
     let offset = await pagination.offset(req);
 
