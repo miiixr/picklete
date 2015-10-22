@@ -238,10 +238,17 @@
 
   var removeOrderItem = function (orderItem, index) {
 
-     picklete_cart.orderItems.splice(index, 1);
-     Cookies.set('picklete_cart', picklete_cart);
+    var item = picklete_cart.orderItems.splice(index, 1);
 
-     window.location.reload();
+    // when user not want this product, save to favorite list
+    var FAV_KEY = "picklete_fav";
+    var favs = Cookies.getJSON(FAV_KEY) || {};
+    favs[item[0].ProductId] = true;
+    Cookies.set(FAV_KEY, favs);
+
+    Cookies.set('picklete_cart', picklete_cart);
+
+    window.location.reload();
   }
 
   $("#nextSetp").click(function () {

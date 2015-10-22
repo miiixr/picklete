@@ -2,6 +2,26 @@
 
   $(".loader").fadeOut("slow");
 
+  // main menu active effect
+  function activeRoute () {
+    console.log('run');
+    var urlPath = window.location.pathname;
+    var ACTIVE_CLASS = 'active';
+
+    if (urlPath.indexOf('member') > -1)
+      return $('.menu-member').addClass(ACTIVE_CLASS);
+
+    if (urlPath.indexOf('shop') > -1)
+      return $('.menu-shop').addClass(ACTIVE_CLASS);
+
+    if (urlPath.indexOf('brand') > -1)
+      return $('.menu-brand').addClass(ACTIVE_CLASS);
+    
+    if (urlPath.indexOf('user') > -1)
+      return $('.menu-cart').addClass(ACTIVE_CLASS);
+  }
+  activeRoute();
+
   // /notifyme
   $('.add-to-cart').on('click', function(){
     $(this).notifyMe(
@@ -18,7 +38,11 @@
 
   function sticky_relocate() {
     var window_top = $(window).scrollTop();
-    var div_top = $('#sticky-anchor').offset().top - $(window).width() /2;
+    var stickyNode = $('#sticky-anchor');
+
+    if (stickyNode.length <= 0) return;
+
+    var div_top = stickyNode.offset().top - $(window).width() /2;
     if (window_top > div_top) {
       $('#sticky').addClass('stick');
     } else {
@@ -44,4 +68,7 @@
 
   new cbpScroller( document.getElementById( 'cbp-so-scroller' ) );
 
+
+
+  
 }(jQuery));

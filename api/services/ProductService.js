@@ -423,6 +423,11 @@ module.exports = {
           };
         }
 
+        if (query.color) {
+          ProductQueryObj.color = query.color;
+        }
+
+
         // 販售狀態 1:隱藏, 2:上架
         if (query.isPublish != '') {
           queryObj.isPublish = (query.isPublish == 'false') ? null : true;

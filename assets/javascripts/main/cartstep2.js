@@ -101,30 +101,42 @@
 
 
 
-  $("#btnOrderCreate").click(function()
-  {
-    if($("input[name='order[user][fullName]']").val()==""){
+  $("#btnOrderCreate").click(function() {
+    if($("input[name='order[user][fullName]']").val() == ""){
       alert("請輸入姓名");
+      $("input[name='order[user][fullName]']").focus();
       return;
     }
-    if($("input[name='order[user][mobile]']").val()==""){
+
+    if($("input[name='order[user][mobile]']").val() == ""){
       alert("請輸入電話");
+      $("input[name='order[user][mobile]']").focus();
       return;
     }
-    if($("input[name='order[user][address]']").val()==""){
+
+    if($("select[name='order[user][city]']").val() == "") {
+      alert("請選擇縣市");
+      $("select[name='order[user][city]']").focus();
+      return;
+    }
+
+    if($("input[name='order[user][address]']").val() == ""){
       alert("請輸入住址");
+      $("input[name='order[user][address]']").focus();
       return;
     }
-    if($("select[name='order[invoice][type]']").val()==""){
+
+    if($("select[name='order[invoice][type]']").val() == ""){
+      $("select[name='order[invoice][type]']").focus();
       alert("選擇發票類型");
       return;
     }
+
     // ensure title
-    if($("select[name='order[invoice][type]']").val()=="triplex"){
-      if( $("input[name='order[invoice][title]']").val() == "" ){
-        alert("請輸入公司抬頭");
-        return;
-      }
+    if($("select[name='order[invoice][type]']").val() == "triplex" && $("input[name='order[invoice][title]']").val() == ""){
+      alert("請輸入公司抬頭");
+      $("input[name='order[invoice][title]']").focus();
+      return;
     }
 
     re = /^[09]{2}[0-9]{8}$/;
@@ -244,13 +256,15 @@
     invoiceDetail.html('');
 
     if(invoiceType == 'duplex')
-      invoiceDetail.html(taxIdField);
+      return;
+      // invoiceDetail.html(taxIdField);
 
-    else if(invoiceType == 'triplex')
+    if(invoiceType == 'triplex')
       invoiceDetail.html(titleField+taxIdField);
 
-    else if(invoiceType == 'charity')
-      invoiceDetail.html(charityNameField);
+    if(invoiceType == 'charity')
+      return;
+      // invoiceDetail.html(charityNameField);
 
   });
 
