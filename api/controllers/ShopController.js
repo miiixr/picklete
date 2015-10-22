@@ -19,7 +19,7 @@ let ShopController = {
   list: async(req,res) => {
 
     let query = req.query
-
+    query.isPublish = true;
     let limit = 24;
     let page = await pagination.page(req);
     let offset = await pagination.offset(req);
@@ -105,7 +105,10 @@ let ShopController = {
               model: db.ProductGm,
               include: [ db.Dpt ]
             }],
-            where: {id: productId}
+            where: {
+              id: productId,
+              isPublish: true
+            }
           });
       let brand = await db.Brand.findOne({
         where: {id: productGm.BrandId}
