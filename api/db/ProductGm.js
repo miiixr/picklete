@@ -5,10 +5,6 @@ module.exports = (sequelize, DataTypes) => {
     // brandId: DataTypes.INTEGER,
     // brandName: DataTypes.STRING,
     name: DataTypes.STRING,
-    pageView:{
-      type: DataTypes.INTEGER,
-      defaultValue: 0
-    },
     // 大館別 id
     // dptId: {
     //   type: DataTypes.STRING,
@@ -101,6 +97,8 @@ module.exports = (sequelize, DataTypes) => {
         ProductGm.belongsToMany(models.DptSub, {through: 'DptSubProductGm'});
         ProductGm.belongsToMany(models.AdditionalPurchase, {through: 'AdditionalPurchaseProductGm'});
         ProductGm.belongsToMany(models.Promotion, {through: 'PromotionProductGm'});
+        ProductGm.hasOne(models.LikesCount);
+        ProductGm.hasOne(models.PageView);
         return
       }
     },
