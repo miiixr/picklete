@@ -38,16 +38,21 @@ module.exports = {
     };
     let createdProductGm;
     // create product gm
+
+    let isolationLevel = db.Sequelize.Transaction.ISOLATION_LEVELS.SERIALIZABLE;
+    let transaction = await db.sequelize.transaction({isolationLevel});
+
     try {
 
-      createdProductGm = await db.ProductGm.create(newProductGm);
-      await createdProductGm.setDpts(updateProduct.dptId);
-      await createdProductGm.setDptSubs(updateProduct.dptSubId);
+      createdProductGm = await db.ProductGm.create(newProductGm,{transaction});
+      await createdProductGm.setDpts(updateProduct.dptId,{transaction});
+      await createdProductGm.setDptSubs(updateProduct.dptSubId,{transaction});
 
       // if(updateProduct.dptSubId != undefined && updateProduct.dptSubId != '')
 
 
     } catch (e) {
+      transaction.rollback();
       console.error(e);
       return;
     }
@@ -94,9 +99,11 @@ module.exports = {
       };
 
       try {
-        product =  await db.Product.create(newProduct);
+        product =  await db.Product.create(newProduct,{transaction});
+        transaction.commit();
         return product;
       } catch (e) {
+        transaction.rollback();
         return console.error(e)
       }
     }
@@ -127,6 +134,9 @@ module.exports = {
           id: updateProduct.productGm.id
         }
       });
+      
+      let isolationLevel = db.Sequelize.Transaction.ISOLATION_LEVELS.SERIALIZABLE;
+      let transaction = await db.sequelize.transaction({isolationLevel});
 
       var goods = updateProduct.good;
       for (var i = 0 ; i < goods.length ; i++) {
@@ -147,7 +157,7 @@ module.exports = {
           if(!good.productNumber){
             // if this product is be deleted at view
             // console.log('=== product ',i,' exists but need to be delete ===');
-            let deleteProduct = await product.destroy();
+            let deleteProduct = await product.destroy({transaction});
             // check status
             // console.log('=== deleteProduct ',i,' status is ==>',deleteProduct.deletedAt);
           }else{
@@ -174,7 +184,7 @@ module.exports = {
 
             product.photos = photos;
 
-            await product.save();
+            await product.save({transaction});
           } // end if
 
         }else {
@@ -205,7 +215,7 @@ module.exports = {
 
           newProduct.photos = photos;
 
-          await db.Product.create(newProduct);
+          await db.Product.create(newProduct,{transaction});
         } // end if
       } // end for
 
@@ -219,17 +229,20 @@ module.exports = {
       productGm.tag = updateProduct.tag;
       productGm.coverPhoto = updateProduct.coverPhoto;
 
-      await productGm.save();
+      await productGm.save({transaction});
 
       if(updateProduct.dptId != null)
-        await productGm.setDpts(updateProduct.dptId);
+        await productGm.setDpts(updateProduct.dptId,{transaction});
 
       if(updateProduct.dptSubId != '')
-        await productGm.setDptSubs(updateProduct.dptSubId);
+        await productGm.setDptSubs(updateProduct.dptSubId,{transaction});
+
+      transaction.commit();
 
       return product;
     } catch (e) {
-      console.error(e.stack);
+      transaction.rollback();
+      sails.log.error(e.stack);
       throw e;
     }
   },
