@@ -63,7 +63,6 @@ describe("about product service", () => {
 
       createdProductGm = await db.ProductGm.create({
         brandId: 1,
-        pageView: 10,
         explain: 'req.body.explain',
         usage: 'req.body.usage',
         notice: 'req.body.notice',
@@ -97,7 +96,6 @@ describe("about product service", () => {
 
       let createdQueryProductGmA = await db.ProductGm.create({
         brandId: 2,
-        pageView: 20,
         name: "ProductGmNameGroupA",
         depId: dptC.id,
         depSubId: dptSubC.id,
@@ -106,7 +104,6 @@ describe("about product service", () => {
 
       let createdQueryProductGmB = await db.ProductGm.create({
         brandId: 3,
-        pageView: 30,
         name: "ProductGmNameGroupB",
         depId: dptC.id,
         depSubId: dptSubC.id,
@@ -172,6 +169,18 @@ describe("about product service", () => {
       }
 
       createTestSortProduct = await db.Product.create(superCheap);
+
+      let pageViewA = {
+        pageView :10,
+        ProductGmId: createdQueryProductGmA.id
+      }
+      let createPageViewA = await db.PageView.create(pageViewA);
+
+      let pageViewB = {
+        pageView :20,
+        ProductGmId: createdQueryProductGmB.id
+      }
+      let createPageViewB = await db.PageView.create(pageViewB);
 
       done();
     } catch (e) {
@@ -403,9 +412,11 @@ describe("about product service", () => {
       sails.log.info(queryResults.rows[0]);
       let lastPageView = 99999999999;
       for (let product of queryResults.rows) {
-        sails.log.info(product.ProductGm.pageView);
-        product.ProductGm.pageView.should.be.below(lastPageView+1);
-        lastPageView = product.ProductGm.pageView;
+        if(product.ProductGm.PageView){
+          sails.log.info(product.ProductGm.PageView.pageView);
+          product.ProductGm.PageView.pageView.should.be.below(lastPageView+1);
+          lastPageView = product.ProductGm.PageView.pageView;
+        }
       }
       done();
     } catch (e) {
