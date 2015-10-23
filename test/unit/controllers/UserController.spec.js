@@ -204,6 +204,7 @@ describe("login user data", () => {
     sinon.stub(UserService, 'getLoginUser', (req) => {
       return admin;
     });
+
     return done();
   });
 
@@ -216,16 +217,11 @@ describe("login user data", () => {
   it('update favorite',(done)=>{
     request(sails.hooks.http.app)
     .post(`/favorite/add`)
-    .expect("picklete_fav:{ '1': true, '2': true}")
+    .set('Cookie', "picklete_fav={ 1: true, 2: true}")
     .end((err, res) => {
       if (res.statusCode === 500) {
         return done(err)
       }
-      // res.statusCode.should.equal(200);
-      // res.body.users.should.be.Array;
-      // res.body.users.forEach(User => {
-      //   User.username.should.be.String;
-      // });
       done(err);
     });
   });

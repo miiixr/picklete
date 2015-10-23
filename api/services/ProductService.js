@@ -476,10 +476,10 @@ module.exports = {
       let sort;
       switch (query.sort) {
         case 'views':
-          sort = ['ProductGm.pageView DESC','createdAt'];
+          sort = [[db.ProductGm,db.PageView,'pageView','DESC']];
           break;
         case 'top':
-          sort = ['ProductGm.likesCount DESC','createdAt'];
+          sort = [[db.ProductGm,db.LikesCount,'likesCount','DESC']];
           break;
         case 'newest':
           sort = 'createdAt';
@@ -488,7 +488,7 @@ module.exports = {
           sort = 'price DESC';
           break;
         case 'priceLtoH':
-        sort = 'price';
+          sort = 'price';
           break;
       }
 
@@ -502,7 +502,7 @@ module.exports = {
       // console.log(ProductQueryObj);
       // console.log(GmQueryObj);
       let products = await db.Product.findAndCountAll(queryObj);
-
+      sails.log.info("=== productQuery products ===",products.rows[0].dataValues);
       // format datetime
       products.rows = products.rows.map(ProductService.withImage);
       for (let product of products.rows) {

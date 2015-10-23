@@ -35,7 +35,7 @@ let ShopController = {
       let sort = query.sort || '';
 
       let productsWithCount = await ProductService.productQuery(query, offset, limit);
-      let products = productsWithCount.rows;
+      let products = productsWithCount.rows || [];
       // sails.log.info('=== shop products ===',products);
       products = await PromotionService.productPriceTransPromotionPrice(new Date(), products);;
 
@@ -123,8 +123,8 @@ let ShopController = {
       count.pageView ++;
       count = await count.save();
 
-      productGm.pageView++;
-      productGm = await productGm.save();
+      product.PageViewId = count.id;
+      await product.save();
 
       productGm = productGm.dataValues;
 

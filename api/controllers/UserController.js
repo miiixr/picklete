@@ -102,10 +102,6 @@ let UserController = {
             }))[0];
             count.likesCount ++;
             count = await count.save();
-            
-
-            productGm.likesCount ++;
-            productGm = await productGm.save();
 
           }
           return product;
