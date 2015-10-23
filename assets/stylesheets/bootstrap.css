@@ -4618,7 +4618,7 @@ input[type="button"].btn-block {
 
 /* line 263, ../sass/_buttons.scss */
 .border-radius-circle {
-  border-radius: 20px;
+  border-radius: 20px !important;
   padding-left: 16px;
   padding-right: 16px;
 }

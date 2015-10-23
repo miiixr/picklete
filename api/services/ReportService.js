@@ -53,19 +53,19 @@ module.exports = {
         });
 
         sheetData.push(singleSheetData);
-        sheetData[0].push('總金額', totalPrice);
 
         sheet.data = sheetData;
         sheet.name = 'Report-' + date;
       });
 
+      sheet.data[0].push('總金額', totalPrice);
       sheets.push(sheet);
 
       let excel = await ReportService.buildExcel(sheets, date, date);
-      console.log(excel);
+      sails.log(excel);
       return excel;
     } catch (error) {
-      console.error(error);
+      sails.log.error(error);
     }
   },
 

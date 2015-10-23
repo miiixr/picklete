@@ -19,8 +19,8 @@ let ShopController = {
   list: async(req,res) => {
 
     let query = req.query
-
-    let limit = 24;
+    query.isPublish = true;
+    let limit = await pagination.limit(req);
     let page = await pagination.page(req);
     let offset = await pagination.offset(req);
 
@@ -105,12 +105,14 @@ let ShopController = {
               model: db.ProductGm,
               include: [ db.Dpt ]
             }],
-            where: {id: productId}
+            where: {
+              id: productId,
+              isPublish: true
+            }
           });
       let brand = await db.Brand.findOne({
         where: {id: productGm.BrandId}
       });
-
 
       let count = (await db.PageView.findOrCreate({
         where:{
@@ -136,6 +138,7 @@ let ShopController = {
 
       let dptId = product.ProductGm.Dpts[0].id;
       // recommend products
+
       let recommendProducts = await db.Product.findAll({
         subQuery: false,
         include: [{
@@ -145,7 +148,13 @@ let ShopController = {
             model: db.Dpt,
             where: {
               id: dptId
-            }
+            },
+            include: [{
+              model:db.DptSub,
+              where:{
+                id: productGm.DptSubs[0].dataValues.id
+              }
+            }]
           }]
         }],
         limit: 6
