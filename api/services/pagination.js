@@ -1,10 +1,12 @@
 
 var self = module.exports = {
   limit: async (req) => {
+    let limitValue = req.session.ProductService_productQuery_limit || 10;
+    if (req.options.controller == 'shop' && req.options.action == 'list')
+      limitValue = 24;
+
     return req.session.ProductService_productQuery_limit =
-    parseInt(req.param('limit',
-      req.session.ProductService_productQuery_limit || 24
-    ));
+    parseInt(req.param('limit', limitValue));
   },
   offset: async (req) => {
     return await self.page(req) * await self.limit(req);
