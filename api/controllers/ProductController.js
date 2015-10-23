@@ -71,7 +71,7 @@ let ProductController = {
       let now = new Date();
       productsWithCount = await PromotionService.productPriceTransPromotionPrice(now,productsWithCount);
 
-      let products = productsWithCount.rows;
+      let products = productsWithCount.rows || [];
 
       let result = {
         brands,
@@ -357,7 +357,7 @@ let ProductController = {
     try {
       let productId = req.param("id");
       let findProduct = await db.Product.findById(productId);
-  
+
       if (!findProduct) {
         throw new Error('找不到商品！ 請確認商品ID！');
       }

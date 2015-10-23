@@ -78,11 +78,35 @@ let UserController = {
       let user = UserService.getLoginUser(req);
       if(user){
         user = await db.User.findById(user.id);
-        // let favorite = await* products.map( async (productId) => {
-        //   let product = await db.Product.findById(productId);
-        //   await user.setProductGms([product.ProductGmId]);
-        //   return product;
-        // });
+        let UserFavorites = await user.getProducts();
+        let favorite = await* products.map( async (productId) => {
+          // sails.log.info("==== find ====",find);
+          let product;
+          let isNewFavorite = true;
+          UserFavorites.forEach((favorite) => {
+            if(favorite.id == productId){
+              isNewFavorite = false
+            }
+          });
+          product = await db.Product.findById(productId);
+          if(isNewFavorite){
+            let productGm = await db.ProductGm.findById(product.ProductGmId);
+
+            let count = (await db.LikesCount.findOrCreate({
+              where:{
+                ProductGmId: productGm.id
+              },
+              defaults:{
+                ProductGmId: productGm.id
+              }
+            }))[0];
+            count.likesCount ++;
+            count = await count.save();
+
+          }
+          return product;
+        });
+        await user.setProducts(favorite);
       }
       let message = '更新收藏';
       return res.ok(message);

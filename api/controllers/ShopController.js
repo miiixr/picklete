@@ -29,13 +29,13 @@ let ShopController = {
     sails.log.info('=== query ===', query);
 
     try {
-
+      let brand = query.brand || '';
       let dptSubId = query.dptSubId || '';
       let dptId = query.dptId || '';
       let sort = query.sort || '';
 
       let productsWithCount = await ProductService.productQuery(query, offset, limit);
-      let products = productsWithCount.rows;
+      let products = productsWithCount.rows || [];
       // sails.log.info('=== shop products ===',products);
       products = await PromotionService.productPriceTransPromotionPrice(new Date(), products);;
 
@@ -60,6 +60,7 @@ let ShopController = {
         dptSubId,
         dptId,
         sort,
+        brand,
         brands,
         dpts,
         query,
@@ -114,8 +115,20 @@ let ShopController = {
         where: {id: productGm.BrandId}
       });
 
-      productGm.pageView++;
-      productGm = await productGm.save();
+      let count = (await db.PageView.findOrCreate({
+        where:{
+          ProductGmId: productGm.id
+        },
+        defaults:{
+          ProductGmId: productGm.id
+        }
+      }))[0];
+      count.pageView ++;
+      count = await count.save();
+
+      product.PageViewId = count.id;
+      await product.save();
+
       productGm = productGm.dataValues;
 
       product = (await PromotionService.productPriceTransPromotionPrice(new Date(), [product]))[0];

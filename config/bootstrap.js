@@ -42,6 +42,7 @@ module.exports.bootstrap = async (cb) => {
     if(sails.config.createInitData !== undefined) createInitData = sails.config.createInitData;
 
     if (sails.config.environment === 'development' || sails.config.environment === 'test') {
+      await init.databaseDropAndCreate();
       await init.database();
       if(createInitData) await init.testData();
     }
