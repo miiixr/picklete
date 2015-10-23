@@ -26,6 +26,7 @@ module.exports.policies = {
     loginStatus:['global','cookieRequired']
     update: ['passport']
     verify: true
+    updatefavorite: []
 
   'MainController': ['global', 'mailRequired', 'cookieRequired']
 
@@ -50,6 +51,7 @@ module.exports.policies = {
   'BrandController':
     show: ['global']
     resetWeight: []
+    listView: ['global']
   # 'admin/*': ['passport', 'loginRequired']
 
   # ProductController:

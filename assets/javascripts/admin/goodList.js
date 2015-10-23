@@ -21,13 +21,13 @@ $(function() {
     var className = $(this).find( "label:first" ).attr('class');
     var id = $(this).attr('id');
     // check class name
-    if ( className == "btn btn-default btn-sm" ){
+    if ( className == "btn btn-default btn-hide btn-sm active" ){
       var path = "/product/publish/" + id;
       $.ajax({
         type: "PUT",
         url: path
       });
-    } else if( className == "btn btn-default btn-sm active"){
+    } else if( className == "btn btn-default btn-hide btn-sm"){
       var path = "/product/unpublish/" + id;
       $.ajax({
         type: "PUT",
@@ -35,4 +35,6 @@ $(function() {
       });
     }
   });
+
+
 });

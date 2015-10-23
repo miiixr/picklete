@@ -357,9 +357,11 @@ let ProductController = {
     try {
       let productId = req.param("id");
       let findProduct = await db.Product.findById(productId);
+  
       if (!findProduct) {
         throw new Error('找不到商品！ 請確認商品ID！');
       }
+
       findProduct.isPublish = true;
       let updateProduct = await findProduct.save();
       if (!updateProduct){

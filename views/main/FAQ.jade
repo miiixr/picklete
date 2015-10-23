@@ -6,7 +6,7 @@ block body
       .row.m-top-10.m-bottom-4
         .col-sm-3
           h3.m-top-0.m-bottom-6 Q&A
-          ul.list-unstyled.font-size-slarge.text-green.line-height-xlarge.m-bottom-6
+          ul.category.list-unstyled.font-size-slarge.text-green.line-height-xlarge.m-bottom-6
             each FAQType,index in FAQTypes
               li
                 a(href='#' data-id=index+1 data-length=FAQTypes.length class="type name") #{FAQType.name}
@@ -35,7 +35,7 @@ block body
                     hr.m-top-0.m-bottom-6
                     h4.m-bottom-2 #{FAQ.title}
                     p
-                      |#{FAQ.answer}
+                      |!{FAQ.answer}
 
             // /font-size-slarge
           // /col-sm-9

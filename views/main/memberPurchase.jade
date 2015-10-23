@@ -119,8 +119,7 @@ block body
                                 p 付款方式：#{order.allPayPaymentType} 繳費帳戶：#{order.PaymentNo}
                               else if order.allPayPaymentType == "Credit"
                                 p 付款方式：#{order.allPayPaymentType}
-                                //- p.text-danger 賣家備註：
-                                //- ol.text-danger
+                              p.text-danger 賣家備註：#{order.description?order.description:'無'}
                                 //-   li 管理員代收
                                 //-   li 禮品的包裝盒請去除價格標籤
                               td

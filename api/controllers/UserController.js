@@ -12,21 +12,36 @@ let UserController = {
 
 
   verify: async (req, res) => {
-    var email = req.param("email");;
+    var email = req.param("email");
 
     if ( ! email)
       return res.json({ result: 'fail' });
 
     try {
-      var result = await db.User.findOne({
-        where: {
-          email: email
+      if(UserService.getLoginState(req)){
+        let loginUser = UserService.getLoginUser(req);
+        var result = await db.User.findOne({
+          where: {
+            email: email
+          }
+        });
+        if(result){
+          if(result.id == loginUser.id){
+            result = null;
+          }
         }
-      });
+      }else{
+        var result = await db.User.findOne({
+          where: {
+            email: email
+          }
+        });
+      }
 
       var response = (result) ? { result: "existed" } : { result: "ok" };
-      return res.json(response);   
+      return res.json(response);
     } catch (e) {
+      console.log(e);
       return res.json({ result: 'fail'});
       return res.view("main/memberFavorite", {products: []});
     }
@@ -49,6 +64,37 @@ let UserController = {
       products
     });
   },
+
+  updatefavorite: async (req, res) => {
+
+    var FAV_KEY = "picklete_fav";
+    var favoriteKeys = req.cookies[FAV_KEY];
+    sails.log.info("=== cookies ===",req.cookies);
+    try {
+      favoriteKeys = JSON.parse(favoriteKeys);
+      sails.log.info("=== favoriteKeys ===",favoriteKeys);
+      let products = Object.keys(favoriteKeys);
+      sails.log.info("=== products ===",products);
+      let user = UserService.getLoginUser(req);
+      if(user){
+        user = await db.User.findById(user.id);
+        // let favorite = await* products.map( async (productId) => {
+        //   let product = await db.Product.findById(productId);
+        //   await user.setProductGms([product.ProductGmId]);
+        //   return product;
+        // });
+      }
+      let message = '更新收藏';
+      return res.ok(message);
+    } catch (e) {
+      favoriteKeys = null;
+      sails.log.error(e);
+      let {message} = e;
+      let success = false;
+      return res.json(500,{message, success});
+    }
+  },
+
   purchase:async (req, res) => {
     let loginUser = UserService.getLoginUser(req);
     let orders = await db.Order.findAll({
@@ -141,7 +187,14 @@ let UserController = {
       let updateUser = req.body;
       let passport = await db.Passport.find({where: {UserId: loginUser.id}});
 
-      let user = await db.User.findById(loginUser.id);
+      let user = await db.User.findOne({
+        where:{
+          id: loginUser.id
+        },
+        include:{
+          model: db.Role
+        }
+      });
 
       if(updateUser.password != passport.password){
         passport.password = updateUser.password;
@@ -187,7 +240,7 @@ let UserController = {
     if(UserService.getLoginState(req))
       res.redirect('/admin/goods');
     else
-      res.view({});
+      res.view("admin/login");
   },
   indexSlider: function(req, res) {
     res.view({

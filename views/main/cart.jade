@@ -8,10 +8,10 @@ block body
         h1.m-bottom-4.text-muted 購物車空空呦！
         h4
           ins
-            a(href='shop/products') 趕快來逛逛
+            a(href='../shop/products') 趕快來逛逛
           | 或是從
           ins
-            a(href='member-fav') 收藏清單
+            a(href='../member/favorite') 收藏清單
           | 內查看！
       // /border-block-3 沒東西顯示這個
       .border-block-3.m-bottom-10
@@ -131,7 +131,7 @@ block body
                 // /col-xs-6
                 .col-xs-6
                   h6.text-muted.text-roboto.letter-spacing-1
-                    a(href='/brands') #{additionalPurchaseProductGm.Brand.name}
+                    a(href='/brands/#{additionalPurchaseProductGm.Brand.id}') #{additionalPurchaseProductGm.Brand.name}
                   h5.h5-two-hide.m-bottom-2.text-roboto.letter-spacing-1
                     a(href='/shop/product') #{additionalPurchaseProductGm.name}
                   select.form-control.m-bottom-2

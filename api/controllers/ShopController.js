@@ -19,18 +19,24 @@ let ShopController = {
   list: async(req,res) => {
 
     let query = req.query
-
+    query.isPublish = true;
     let limit = await pagination.limit(req);
     let page = await pagination.page(req);
     let offset = await pagination.offset(req);
 
     query.brandId = query.brand;
 
-    console.log('=== query ===', query);
+    sails.log.info('=== query ===', query);
 
     try {
+
+      let dptSubId = query.dptSubId || '';
+      let dptId = query.dptId || '';
+      let sort = query.sort || '';
+
       let productsWithCount = await ProductService.productQuery(query, offset, limit);
       let products = productsWithCount.rows;
+      // sails.log.info('=== shop products ===',products);
       products = await PromotionService.productPriceTransPromotionPrice(new Date(), products);;
 
       let brands = await db.Brand.findAll({order: 'weight ASC',});
@@ -51,6 +57,9 @@ let ShopController = {
       // }
 
       let result = {
+        dptSubId,
+        dptId,
+        sort,
         brands,
         dpts,
         query,
@@ -62,14 +71,15 @@ let ShopController = {
         verification: query.verification
       };
 
-      console.log('=== totalPages ===', result.totalPages);
-      console.log('=== totalRows ===', result.totalRows);
+      sails.log.info('=== result ===', result.query);
+      sails.log.info('=== totalPages ===', result.totalPages);
+      sails.log.info('=== totalRows ===', result.totalRows);
 
       res.view('main/shop', result);
 
 
     } catch (e) {
-      console.log(e.stack);
+      sails.log.error(e.stack);
 
       return res.serverError(e);
     }
@@ -95,11 +105,17 @@ let ShopController = {
               model: db.ProductGm,
               include: [ db.Dpt ]
             }],
-            where: {id: productId}
+            where: {
+              id: productId,
+              isPublish: true
+            }
           });
       let brand = await db.Brand.findOne({
         where: {id: productGm.BrandId}
       });
+
+      productGm.pageView++;
+      productGm = await productGm.save();
       productGm = productGm.dataValues;
 
       product = (await PromotionService.productPriceTransPromotionPrice(new Date(), [product]))[0];
@@ -110,6 +126,7 @@ let ShopController = {
 
       let dptId = product.ProductGm.Dpts[0].id;
       // recommend products
+
       let recommendProducts = await db.Product.findAll({
         subQuery: false,
         include: [{
@@ -119,7 +136,13 @@ let ShopController = {
             model: db.Dpt,
             where: {
               id: dptId
-            }
+            },
+            include: [{
+              model:db.DptSub,
+              where:{
+                id: productGm.DptSubs[0].dataValues.id
+              }
+            }]
           }]
         }],
         limit: 6

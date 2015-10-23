@@ -25,10 +25,17 @@
     var id = e.data('id') - 1;
     for(i=0; i<=5; i++) {
       document.getElementById('subDpt' + i).style.display = "none";
+      document.getElementById('subDpt' + i).style.display = "none";
+      
     }
+
+    $("#dpt-big .list-group-item a.active").removeClass("active");
+    e.addClass("active");
     document.getElementById('special').style.display = "none";
     document.getElementById('subDpt'+id).style.display = "block";
     document.getElementById('sm-id').value = e.data('id');
+
+
     _showAddBtn();
   });
 

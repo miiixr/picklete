@@ -51,6 +51,7 @@ module.exports.routes = {
   'post /admin/brands/delete/' : 'BrandController.delete'
 
 
+
   'get /admin/exclusive' : 'SelectionActiveController.list'
   'post /admin/exclusive' : 'SelectionActiveController.update'
 
@@ -70,6 +71,7 @@ module.exports.routes = {
 
   'get /index' : 'SelectionActiveController.index'
   'get /FAQ' : 'FAQController.show'
+  'get /user/login' : 'MainController.login'
 
   'get /brands' : view: 'main/brands'
   'get /user/cart' : 'UserController.cart'
@@ -151,6 +153,7 @@ module.exports.routes = {
 
   # client side / Have to login
   # 'get /member/fav' : view: 'main/member-fav'
+  'post /favorite/add' : 'UserController.updatefavorite'
   'get /member/favorite' : 'UserController.favorite'
   'get /member/purchase' : 'UserController.purchase'
   'get /member/setting' : 'UserController.edit'
@@ -166,6 +169,8 @@ module.exports.routes = {
 
   'get /shop/done'  : 'ShopController.done'
 
+
+  'get /brands/list' : 'BrandController.listView'
   'get /brands/:id' : 'BrandController.show'
 
   # 'get /admin/brand' : 'BrandController.list'
@@ -187,7 +192,7 @@ module.exports.routes = {
 
   'get /api/order/pay': 'OrderController.pay'
 
-  "get /admin/login": view: "admin/login"
+  # "get /admin/login": view: "admin/login"
 
   'get /api/search/:keywords': 'SearchController.productsJson'
   'get /search': 'SearchController.products'

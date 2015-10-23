@@ -27,7 +27,7 @@ block body
             
 block js
   script(src="/javascripts/jquery.twzipcode.min.js")  
-  
+  script(src="/javascripts/user/edit.js") 
   script.
     $('#twzipcode').twzipcode({
     // 'zipcodeIntoDistrict': true,
@@ -40,3 +40,7 @@ block js
       'form-control width-auto inline-block',
       'form-control width-auto inline-block']
     }); 
+    
+    $("select[name='city']").prop('required',true);
+    $("select[name='region']").prop('required',true);
+    $("select[name='zipcode']").prop('required',true);

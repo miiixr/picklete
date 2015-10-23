@@ -53,7 +53,19 @@
       favs[productId] = true;
     }
 
-    Cookies.set(FAV_KEY, favs, { expires: 90 });
+    Cookies.set(FAV_KEY, favs, { expires: 2592000 });
+
+    $.ajax({
+      url : '/favorite/add',
+      type: "post",
+      success:function(data, textStatus, jqXHR)
+      {
+        console.log(data);
+      },
+      error: function (jqXHR, exception) {
+        console.log(jqXHR);
+      }
+    });
 
   });
 
@@ -73,7 +85,7 @@
       delete favs[productId];
     }
 
-    Cookies.set(FAV_KEY, favs, { expires: 90 });
+    Cookies.set(FAV_KEY, favs, { expires: 2592000 });
     $(target).parent().parent().remove();
 
   });
