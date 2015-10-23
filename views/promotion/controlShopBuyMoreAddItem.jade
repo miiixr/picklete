@@ -67,16 +67,16 @@ block body
       form.form-inline.with-pagination(name="search", action="shop-buy-more-add-item", method="get")
         .form-group.m-right-2
           label 品牌名稱
-          select.form-control(name='brandId')
-            option(value=-1) #{i18n('brand-name')}
+          select.form-control(name='brand' , value = query.brand?query.brand: 0)
+            option(value=0 selected=(query.brand==0)) #{i18n('brand-name')}
             each brand in brands
-              option(value='#{brand.id}') #{brand.name}
+              option(value=brand.id selected=(query.brand==brand.id)) #{brand.name}
         // /form-group
         .form-group.m-right-2
           .input-group
             input#keyword.form-control(type='text',name="keyword",placeholder='輸入關鍵字',value = query.keyword)
             //- input(type='hidden', name='page',value = page)
-            +pagination-fields(page, limit)
+            +pagination-fields(page, totalPages, limit)
             span.input-group-btn
               button.btn.btn-default.p-left-2.p-right-2(type='button', onClick='$("form[name=\'search\']").submit()')
                 span.glyphicon.glyphicon-search
@@ -107,7 +107,7 @@ block body
           td
             input.addSelect(type='checkbox' value= purchase.id)
           td
-            img.width-6(src='images/demo/shop-item-1-1.jpg')
+            img.width-6(src= purchase.coverPhoto[0])
           td #{purchase.name}
           td #{purchase.id}
           td 590

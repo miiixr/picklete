@@ -7,10 +7,21 @@ let PromotionController = {
   // list
   list: async (req, res) => {
     try {
-      let promotions = await PromotionService.findAll();
+      let limit = await pagination.limit(req);
+      let page = await pagination.page(req);
+      let offset = await pagination.offset(req);
+
+      let promotions = await db.Promotion.findAndCountAll({
+        offset: offset,
+        limit: limit
+      });
       return res.view('promotion/controlShopDiscount', {
         promotions,
-        pageName: "shop-discount"
+        pageName: "shop-discount",
+        limit: limit,
+        page: page,
+        totalPages: Math.ceil(promotions.count / limit),
+        totalRows: promotions.count
       });
     } catch (error) {
       console.error('=== create error stack ==>',error.stack);
@@ -120,6 +131,8 @@ let PromotionController = {
       let page = await pagination.page(req);
       let offset = await pagination.offset(req);
 
+      let brands = await db.Brand.findAll();
+
       let promotion = await db.Promotion.findById(query.id);
       // let productGms;
       let products;
@@ -165,6 +178,20 @@ let PromotionController = {
           discount: '',
           price: ''
         };
+
+        if(query.brand && query.brand!=0){
+          let findProductGm = await db.ProductGm.findAll({
+            where:{
+              BrandId: query.brand
+            }
+          });
+          let productGmIds = [];
+          findProductGm.forEach((ProductGm) => {
+            productGmIds.push(ProductGm.id);
+          });
+          queryObj.ProductGmId = productGmIds;
+        }
+
         products = await db.Product.findAndCountAll({
           where: queryObj,
           offset: offset,
@@ -174,6 +201,7 @@ let PromotionController = {
 
       res.view('promotion/controlShopDiscountDetail',{
         pageName: "shop-discount-detail",
+        brands,
         products,
         promotion,
         query,
@@ -208,13 +236,15 @@ let PromotionController = {
       let offset = await pagination.offset(req);
 
       let query = req.query;
+      let limitPage = query.limitPage? query.limitPage : 0;
 
+      // query
       if(query.keyword)
         queryObj.name = { 'like': '%'+query.keyword+'%'};
       else
         query.keyword = '';
 
-      let noLimit = await db.AdditionalPurchase.findAndCountAll({
+      let additionalPurchaseNoLimit = await db.AdditionalPurchase.findAndCountAll({
         subQuery: false,
         include: [{
           model: db.ProductGm
@@ -223,9 +253,8 @@ let PromotionController = {
         limit: limit,
         offset: offset
       });
-      console.log(' ==== no Limit ====');
-      console.log(JSON.stringify(noLimit,null,4 ));
-      let limitResult = await db.AdditionalPurchase.findAndCountAll({
+
+      let additionalPurchaseLimit = await db.AdditionalPurchase.findAndCountAll({
         subQuery: false,
         include: [{
           model: db.ProductGm
@@ -236,16 +265,20 @@ let PromotionController = {
         limit: limit,
         offset: offset
       });
+      // end query
 
       res.view('promotion/controlShopBuyMore',{
         query,
         pageName: "/admin/shop-buy-more",
-        noLimit,
-        limitResult,
+        additionalPurchaseNoLimit,
+        additionalPurchaseLimit,
         limit,
         page,
-        totalPages: Math.ceil(noLimit.count / limit),
-        totalRows: noLimit.count
+        totalPages: Math.ceil(additionalPurchaseNoLimit.count / limit),
+        totalRows: additionalPurchaseNoLimit.count,
+        limitTotalPages: Math.ceil(additionalPurchaseLimit.count / limit),
+        limitTotalRows: additionalPurchaseLimit.count,
+        limitPage
       });
     } catch (e) {
       console.error(e.stack);
@@ -277,15 +310,18 @@ let PromotionController = {
     if(query.brandId > 0)
       queryObj.brandId = query.brandId;
 
+    let brands = await db.Brand.findAll();
+    let productGmIds = [];
+    if(query.brand && query.brand!=0){
+      queryObj.BrandId= query.brand;
+    }
+
     let additionalPurchase = await db.ProductGm.findAndCountAll({
       where: queryObj,
       offset: offset,
       limit: limit
     });
-    console.log(JSON.stringify(additionalPurchase,null,4));
-    let brands = await db.Brand.findAll();
 
-    // let additionalPurchase = await db.AdditionalPurchase.findAll();
     res.view('promotion/controlShopBuyMoreAddItem',{
       pageName: "/admin/shop-buy-more",
       additionalPurchase,
@@ -297,9 +333,11 @@ let PromotionController = {
       totalRows: additionalPurchase.count
     });
   },
-  controlShopReportForm: function(req, res) {
+  controlShopReportForm: async (req, res) => {
+    let dateList = await ReportService.list();
     res.view('promotion/controlShopReportForm',{
-      pageName: "shop-report-form"
+      pageName: "shop-report-form",
+      dateList: dateList
     });
   }
   // end not clean yet

@@ -6,11 +6,11 @@ block body
   a.btn.btn-danger.btn-lg.m-bottom-6(href='shop-buy-more-add-item') 建立加價購
   ul.nav.nav-tabs.m-bottom-4
     li.active
-      a(href='#tab-1', data-toggle='tab') 不限金額
+      a#a-tab1(href='#tab-1', data-toggle='tab') 不限金額
     li
-      a(href='#tab-2', data-toggle='tab') 限滿 1,500 元
+      a#a-tab2(href='#tab-2', data-toggle='tab') 限滿 1,500 元
   // /nav
-  .tab-content
+  #tab-container.tab-content(data-tab-status=query.tabStatus?query.tabStatus:'')
     #tab-1.tab-pane.fade.in.active
       .row
         .col-sm-6.col-md-8
@@ -23,7 +23,8 @@ block body
         // /col-sm-6
         .col-sm-6.col-md-4
           form.with-pagination(name="searchNoLimit", action="/admin/shop-buy-more", method="get")
-            +pagination-fields(page, limit)
+            input(type='hidden', name='limitTab', value=limitTab? limitTab: '')
+            +pagination-fields(page, totalPages, limit)
             .input-group
               input.form-control(name='keyword', type='text', placeholder='Search for...', value='#{query.keyword}')
               span.input-group-btn
@@ -45,7 +46,7 @@ block body
             th 時間
             th
         tbody
-          each purchase in noLimit.rows
+          each purchase in additionalPurchaseNoLimit.rows
             tr
               td
                 img.width-6(src='#{purchase.ProductGms[0].coverPhoto[0]}')
@@ -66,18 +67,7 @@ block body
                   span.glyphicon.glyphicon-remove
       hr.dashed-line
       +pagination-simple-pager(page, totalPages)
-      //- .text-center
-        //
-          pagination-block
-          ==================================================
-        ul.list-inline.m-bottom-0.m-top-1
-          li.border-right-1.p-right-2
-            a(href='#') 上一頁
-          li.border-right-1.p-right-2 第 15 之 20
-          li
-            a(href='#') 下一頁
-      // /text-center
-    // /tab-pane
+      
     #tab-2.tab-pane.fade
       .row
         .col-sm-6.col-md-8
@@ -85,12 +75,13 @@ block body
             .form-group
               label 顯示
               +pagination-limit(limit)
-              label 筆資料（共 #{totalRows} 筆）
+              label 筆資料（共 #{limitTotalRows} 筆）
             // /form-group
         // /col-sm-6
         .col-sm-6.col-md-4
           form.with-pagination(name="searchLimit", action="/admin/shop-buy-more", method="get")
-            +pagination-fields(page, limit)
+            input(type='hidden', name='limitTab', value=limitTab? limitTab: '')
+            +pagination-fields(limitPage, limitTotalPages, limit)
             .input-group
               input.form-control(type='text', placeholder='Search for...')
               span.input-group-btn
@@ -112,7 +103,7 @@ block body
             th 時間
             th
         tbody
-          each purchase in limitResult
+          each purchase in additionalPurchaseLimit.rows
             tr
               td
                 img.width-6(src='#{purchase.ProductGms[0].coverPhoto[0]}')
@@ -132,22 +123,7 @@ block body
                 a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
                   span.glyphicon.glyphicon-remove
       hr.dashed-line
-      +pagination-simple-pager(page, totalPages)
-        
-        
-  //-     .text-center
-  //-       //
-  //-         pagination-block
-  //-         ==================================================
-  //-       ul.list-inline.m-bottom-0.m-top-1
-  //-         li.border-right-1.p-right-2
-  //-           a(href='#') 上一頁
-  //-         li.border-right-1.p-right-2 第 15 之 20
-  //-         li
-  //-           a(href='#') 下一頁
-  //-     // /text-center
-  //-   // /tab-pane
-  //- // /tab-content
-  
+      +pagination-simple-pager(limitPage, limitTotalPages)
 block js
+  script(src='/javascripts/admin/controlShopBuyMore.js')
   script(src='/javascripts/common/pagination.js')
