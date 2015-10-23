@@ -1,4 +1,5 @@
 extends ../_layout_auth
+include ../mixins/pagination
 
 block body
   h2.m-bottom-6 加價購
@@ -16,22 +17,19 @@ block body
           form.form-inline
             .form-group
               label 顯示
-              select.form-control
-                option 10
-                option 20
-                option 30
-                option 40
-                option 50
-              label 筆資料（共 90 筆）
+              +pagination-limit(limit)
+              label 筆資料（共 #{totalRows} 筆）
             // /form-group
         // /col-sm-6
         .col-sm-6.col-md-4
-          .input-group
-            input.form-control(type='text', placeholder='Search for...')
-            span.input-group-btn
-              button.btn.btn-default.p-left-2.p-right-2(type='button')
-                span.glyphicon.glyphicon-search
-          // /input-group
+          form.with-pagination(name="searchNoLimit", action="/admin/shop-buy-more", method="get")
+            +pagination-fields(page, limit)
+            .input-group
+              input.form-control(name='keyword', type='text', placeholder='Search for...', value='#{query.keyword}')
+              span.input-group-btn
+                button.btn.btn-default.p-left-2.p-right-2(type='button', onClick='$("form[name=\'searchNoLimit\']").submit()')
+                  span.glyphicon.glyphicon-search
+            // /input-group
         // /col-sm-6
       // /row
       hr.dashed-line
@@ -47,10 +45,10 @@ block body
             th 時間
             th
         tbody
-          each purchase in noLimit
+          each purchase in noLimit.rows
             tr
               td
-                img.width-6(src='images/demo/shop-item-1-1.jpg')
+                img.width-6(src='#{purchase.ProductGms[0].coverPhoto[0]}')
               td #{purchase.name}
               td #{purchase.id}
               td 590
@@ -67,7 +65,8 @@ block body
                 a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
                   span.glyphicon.glyphicon-remove
       hr.dashed-line
-      .text-center
+      +pagination-simple-pager(page, totalPages)
+      //- .text-center
         //
           pagination-block
           ==================================================
@@ -85,21 +84,18 @@ block body
           form.form-inline
             .form-group
               label 顯示
-              select.form-control
-                option 10
-                option 20
-                option 30
-                option 40
-                option 50
-              label 筆資料（共 90 筆）
+              +pagination-limit(limit)
+              label 筆資料（共 #{totalRows} 筆）
             // /form-group
         // /col-sm-6
         .col-sm-6.col-md-4
-          .input-group
-            input.form-control(type='text', placeholder='Search for...')
-            span.input-group-btn
-              button.btn.btn-default.p-left-2.p-right-2(type='button')
-                span.glyphicon.glyphicon-search
+          form.with-pagination(name="searchLimit", action="/admin/shop-buy-more", method="get")
+            +pagination-fields(page, limit)
+            .input-group
+              input.form-control(type='text', placeholder='Search for...')
+              span.input-group-btn
+                button.btn.btn-default.p-left-2.p-right-2(type='button')
+                  span.glyphicon.glyphicon-search
           // /input-group
         // /col-sm-6
       // /row
@@ -116,10 +112,10 @@ block body
             th 時間
             th
         tbody
-          each purchase in limit
+          each purchase in limitResult
             tr
               td
-                img.width-6(src='images/demo/shop-item-1-1.jpg')
+                img.width-6(src='#{purchase.ProductGms[0].coverPhoto[0]}')
               td #{purchase.name}
               td #{purchase.id}
               td 590
@@ -136,16 +132,22 @@ block body
                 a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
                   span.glyphicon.glyphicon-remove
       hr.dashed-line
-      .text-center
-        //
-          pagination-block
-          ==================================================
-        ul.list-inline.m-bottom-0.m-top-1
-          li.border-right-1.p-right-2
-            a(href='#') 上一頁
-          li.border-right-1.p-right-2 第 15 之 20
-          li
-            a(href='#') 下一頁
-      // /text-center
-    // /tab-pane
-  // /tab-content
+      +pagination-simple-pager(page, totalPages)
+        
+        
+  //-     .text-center
+  //-       //
+  //-         pagination-block
+  //-         ==================================================
+  //-       ul.list-inline.m-bottom-0.m-top-1
+  //-         li.border-right-1.p-right-2
+  //-           a(href='#') 上一頁
+  //-         li.border-right-1.p-right-2 第 15 之 20
+  //-         li
+  //-           a(href='#') 下一頁
+  //-     // /text-center
+  //-   // /tab-pane
+  //- // /tab-content
+  
+block js
+  script(src='/javascripts/common/pagination.js')

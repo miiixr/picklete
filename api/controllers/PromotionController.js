@@ -201,20 +201,51 @@ let PromotionController = {
   },
   controlShopBuyMore: async (req, res) => {
     try {
-      let noLimit = await db.AdditionalPurchase.findAll({
-        where:{
-          limit:0
-        }
+      let queryObj = {};
+
+      let limit = await pagination.limit(req);
+      let page = await pagination.page(req);
+      let offset = await pagination.offset(req);
+
+      let query = req.query;
+
+      if(query.keyword)
+        queryObj.name = { 'like': '%'+query.keyword+'%'};
+      else
+        query.keyword = '';
+
+      let noLimit = await db.AdditionalPurchase.findAndCountAll({
+        subQuery: false,
+        include: [{
+          model: db.ProductGm
+        }],
+        where: queryObj,
+        limit: limit,
+        offset: offset
       });
-      let limit = await db.AdditionalPurchase.findAll({
-        where:{
-          limit:1500
-        }
+      console.log(' ==== no Limit ====');
+      console.log(JSON.stringify(noLimit,null,4 ));
+      let limitResult = await db.AdditionalPurchase.findAndCountAll({
+        subQuery: false,
+        include: [{
+          model: db.ProductGm
+        }],
+        where: {
+          limit: 1500
+        },
+        limit: limit,
+        offset: offset
       });
+
       res.view('promotion/controlShopBuyMore',{
-        pageName: "shop-buy-more",
+        query,
+        pageName: "/admin/shop-buy-more",
         noLimit,
-        limit
+        limitResult,
+        limit,
+        page,
+        totalPages: Math.ceil(noLimit.count / limit),
+        totalRows: noLimit.count
       });
     } catch (e) {
       console.error(e.stack);
@@ -234,34 +265,36 @@ let PromotionController = {
     let query = req.query;
     let queryObj = {};
 
+    let limit = await pagination.limit(req);
+    let page = await pagination.page(req);
+    let offset = await pagination.offset(req);
+
     if(query.keyword)
       queryObj.name = { 'like': '%'+query.keyword+'%'};
     else
       query.keyword = ''
 
-    let page = req.session.UserController_controlMembers_page =
-    parseInt(req.param('page',
-      req.session.UserController_controlMembers_page || 0
-    ));
-
-    let limit = req.session.UserController_controlMembers_limit =
-    parseInt(req.param('limit',
-      req.session.UserController_controlMembers_limit || 10
-    ));
+    if(query.brandId > 0)
+      queryObj.brandId = query.brandId;
 
     let additionalPurchase = await db.ProductGm.findAndCountAll({
       where: queryObj,
-      offset: page * limit,
+      offset: offset,
       limit: limit
     });
+    console.log(JSON.stringify(additionalPurchase,null,4));
+    let brands = await db.Brand.findAll();
 
     // let additionalPurchase = await db.AdditionalPurchase.findAll();
     res.view('promotion/controlShopBuyMoreAddItem',{
-      pageName: "shop-buy-more-add-item",
+      pageName: "/admin/shop-buy-more",
       additionalPurchase,
       query,
+      brands,
       page,
-      limit
+      limit,
+      totalPages: Math.ceil(additionalPurchase.count / limit),
+      totalRows: additionalPurchase.count
     });
   },
   controlShopReportForm: function(req, res) {

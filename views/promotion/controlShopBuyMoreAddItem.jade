@@ -1,4 +1,5 @@
 extends ../_layout_auth
+include ../mixins/pagination
 
 block body
   h2.m-bottom-6 加價購設定
@@ -58,30 +59,24 @@ block body
       form.form-inline
         .form-group
           label 顯示
-          select#limit.form-control
-            option(selected=(limit==10)) 10
-            option(selected=(limit==20)) 20
-            option(selected=(limit==30)) 30
-            option(selected=(limit==40)) 40
-            option(selected=(limit==50)) 50
-          label 筆資料（共 #{additionalPurchase.count} 筆）
+          +pagination-limit(limit)
+          label 筆資料（共 #{totalRows} 筆）
         // /form-group
     // /col-md-6
     .col-md-8.desktop-text-right
-      form.form-inline(name="search", action="shop-buy-more-add-item", method="get")
+      form.form-inline.with-pagination(name="search", action="shop-buy-more-add-item", method="get")
         .form-group.m-right-2
           label 品牌名稱
-          select.form-control
-            option 品牌名稱
-            option 2
-            option 3
-            option 4
-            option 5
+          select.form-control(name='brandId')
+            option(value=-1) #{i18n('brand-name')}
+            each brand in brands
+              option(value='#{brand.id}') #{brand.name}
         // /form-group
         .form-group.m-right-2
           .input-group
             input#keyword.form-control(type='text',name="keyword",placeholder='輸入關鍵字',value = query.keyword)
-            input(type='hidden', name='page',value = page)
+            //- input(type='hidden', name='page',value = page)
+            +pagination-fields(page, limit)
             span.input-group-btn
               button.btn.btn-default.p-left-2.p-right-2(type='button', onClick='$("form[name=\'search\']").submit()')
                 span.glyphicon.glyphicon-search
@@ -119,17 +114,8 @@ block body
           td
             span.text-danger 490
   hr.dashed-line
-  .text-center
-    //
-      pagination-block
-      ==================================================
-    ul.list-inline.m-bottom-0.m-top-1
-      li.border-right-1.p-right-2
-      li
-        a#bonusPrevious(href='#') 上一頁
-      li.border-right-1.p-right-2 #{page + 1} / #{Math.ceil(additionalPurchase.count / limit)}
-      li
-        a#bonusNext(href='#') 下一頁
-  // /text-center
+  +pagination-simple-pager(page, totalPages)
+  
   block js
     script(src="/javascripts/admin/addPurchase.js")
+    script(src='/javascripts/common/pagination.js')
