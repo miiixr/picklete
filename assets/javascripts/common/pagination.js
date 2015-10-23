@@ -9,7 +9,7 @@ $(function() {
     inputPage.val(0);
   });
 
-  $('#pagination-limit').change(function() {
+  $('.pagination-limit').change(function() {
     inputPage.val(0);
     inputLimit.val($(this).val());
     formWithPagination.submit();
