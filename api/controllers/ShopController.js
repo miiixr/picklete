@@ -29,7 +29,7 @@ let ShopController = {
     sails.log.info('=== query ===', query);
 
     try {
-
+      let brand = query.brand || '';
       let dptSubId = query.dptSubId || '';
       let dptId = query.dptId || '';
       let sort = query.sort || '';
@@ -60,6 +60,7 @@ let ShopController = {
         dptSubId,
         dptId,
         sort,
+        brand,
         brands,
         dpts,
         query,
