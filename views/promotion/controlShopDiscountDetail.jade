@@ -2,36 +2,17 @@ extends ../_layout_auth
 include ../mixins/pagination
 
 block body
-  h2.m-bottom-6 活動設定
+  h2.m-bottom-6 閃購活動
   .well.control-well.p-30.m-bottom-8
     form#shopDiscount.form-horizontal(action="/admin/shopDiscount/create", method="post")
+      input(type='hidden', name='type', value='flash', form='shopDiscount')
       input.form-control(type='hidden',name='id',form='shopDiscount' value= query.id)
       .form-group
         label.col-sm-3.col-md-2.control-label 活動名稱
         .col-sm-9.col-md-10
           input.form-control(type='text',name='title',form='shopDiscount' value= promotion.title)
         // /col-sm-10
-      // /form-group
-      .form-group
-        label.col-sm-3.col-md-2.control-label 活動類型
-        .col-sm-4.col-md-3
-          .radio
-            label
-              -if( promotion.type=='flash' )
-                input(type='radio', name='type', value='flash', checked='',form='shopDiscount')
-              -else
-                input(type='radio', name='type', value='flash',form='shopDiscount')
-              | 閃購
-        .col-sm-1.col-md-1
-        .col-sm-4.col-md-3
-          .radio
-            label
-              -if( promotion.type=='general' )
-                input(type='radio', name='type', value='general', checked='',form='shopDiscount') 
-              -else
-                input(type='radio', name='type', value='general',form='shopDiscount') 
-              | 一般
-      // /form-group
+
       .form-group
         label.col-sm-3.col-md-2.control-label 活動主圖
         .col-sm-9.col-md-10
@@ -72,20 +53,25 @@ block body
         // /col-sm-10
       // /form-group
       .form-group
-        label.col-sm-3.col-md-2.control-label 活動時間
-        .col-sm-4.col-md-3
+        label.col-sm-3.col-md-2.control-label 活動起始時間
+        .col-sm-9.col-md-5
           if (promotion.endDate)
             input.form-control(type='date',name='startDate',form='shopDiscount',value= sails.moment(promotion.startDate).format('YYYY-MM-DD'))
           else
             input.form-control(type='date',name='startDate',form='shopDiscount',disabled)
         .col-sm-1.col-md-1.p-left-0.p-right-0.text-center
-          p.form-control-static 至
-        .col-sm-4.col-md-3
+
+      .form-group
+        label.col-sm-3.col-md-2.control-label 活動結束時間
+        .col-sm-9.col-md-5
           if (promotion.endDate)
             input.form-control(type='date',name='endDate',form='shopDiscount',value= sails.moment(promotion.endDate).format('YYYY-MM-DD'))
           else
             input.form-control(type='date',name='endDate',form='shopDiscount',disabled)
-        .col-sm-9.col-sm-offset-3.col-md-3.col-md-offset-0
+      
+      .form-group
+        label.col-sm-3.col-md-2.control-label
+        .col-sm-9.col-md-5      
           .checkbox
             label
               if (promotion.endDate)
@@ -93,7 +79,7 @@ block body
               else
                 input(type='checkbox', checked='true')#noTimeLimit
               |  不限時
-      // /form-group
+
       .form-group
         label.col-sm-3.col-md-2.control-label 折扣設定
         .col-sm-4.col-md-3
