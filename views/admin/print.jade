@@ -1,0 +1,97 @@
+doctype html
+each order in orders
+  html
+    head
+      meta(charset='utf-8')
+      title i+DEAL 創而有意 | 好物慢慢選
+      // Mobile device set
+      meta(name='viewport', content='width=device-width, initial-scale=1.0')
+      // Fav and touch icons
+      link(rel='shortcut icon', href='images/ico/favicon.ico')
+      // Style
+      link(href='stylesheets/bootstrap.css', media='screen', rel='stylesheet', type='text/css')
+      link(href='stylesheets/bootstrap.css', media='print', rel='stylesheet', type='text/css')
+    body.control-order-print
+      .container.font-size-slarge.p-top-8.p-bottom-8
+        .text-center.m-bottom-8
+          img.m-bottom-4(src='images/logo.png')
+          h3 創而有意商品明細表
+        // /text-center
+        .m-bottom-4
+          p 親愛的 #{order.paymentConfirmName}，您好：
+          p
+            | 感謝您在 i+DEAL 創而有意訂購商品！為保障您的權益，請您收到商品的同時，依照商品明細表清點內容物！若有短缺、規格不符或瑕疵之情形，煩請您儘速於收到商品後 3 天內與客服人員聯絡，以保障您退換貨權益。
+        // /m-bottom-4
+        table.table.table-bordered
+          tbody
+            tr
+              td(colspan='2')
+                | 訂單編號：
+                b #{order.serialNumber}
+                span.pull-right
+                  | 訂購日期：
+                  b #{sails.moment(order.createdAt.format).format('YYYY/MM/DD')}
+            tr
+              td
+                p.line-height-large.m-bottom-0
+                  | 購買人：#{order.paymentConfirmName} 先生/小姐
+                  br
+                  | 							購買人電話：#{order.User.mobile}
+                  br
+                  | 							收件人：#{order.Shipment.username}
+                  if  order.Invoice.type == 'triplex'
+                    br
+                    |               購買人電話：#{order.User.mobile}
+                    br
+                    |               收件人地址：#{order.Shipment.address}
+              td
+                p.line-height-large.m-bottom-0
+                  | 運送方式：#{i18n(order.Shipment.shippingType)} 
+                  br
+                  | 							發票類型：#{i18n(order.Invoice.type)}
+                  if  order.Invoice.type == 'triplex'
+                    br
+                    | 抬頭：威伯國際有限公司 / 統編：#{order.Invoice.taxId}
+                  br
+                  | 							付款方式：#{order.allPayPaymentType}
+                  if  order.Invoice.type == 'triplex'
+                    br
+                    | 繳費代碼：251563222267
+            if  order.Invoice.type == 'triplex'
+              tr
+                td(colspan='2')
+                  | 買家備註：1.管理員代收 2.禮品的包裝外盒請除去價格標籤        
+            tr
+              td(colspan='2')
+                table.table.no-border
+                  tbody
+                    - var totalItemSum = 0;
+                    each item in order.OrderItems
+                      tr
+                        td #{item.Product.productNumber}
+                        td #{item.name}
+                        td.text-right #{item.quantity}
+                        - totalItemSum += item.quantity;
+            tr
+              td.text-right(colspan='2')
+                | 商品總數：#{totalItemSum}
+        table.table.no-border.m-bottom-10
+          tbody
+            tr
+              td
+                .p-30
+                  p 注意事項
+                  p
+                    | Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.
+                // /p-30
+              td
+                .p-30
+                  p 退貨須知
+                  p
+                    | Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.
+                // /p-30
+        p
+          | 創而有意服務專線：04-23782800
+          br
+          span.font-size-small © WEVO INTERNATIONAL CO.,LTD.
+      // /container

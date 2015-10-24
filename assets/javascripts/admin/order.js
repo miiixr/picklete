@@ -1,4 +1,5 @@
   $(function() {
+    
     $('#order-query-limit').change(function() {
       location.href='/admin/order?limit='+$(this).val();
     });
@@ -29,5 +30,14 @@
           document.location.href="/order/statusUpdate/"+orderId+"?status=deliveryConfirm";
           break;
       }
+    });
+
+    $("#print").click(function(){
+      var id = '';
+      $.each($(".printSelect:checked"),function(){
+        id = id + $(this).val() + ',';
+      });
+      id = id.substring(0,id.length-1);
+      document.location.href="/print?id="+id;
     });
   });

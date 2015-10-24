@@ -1,16 +1,19 @@
 (function ($) {
 
+  var answer = CKEDITOR.replace('answer');
+
   $("#FAQForm").on('submit', function(e) {
-    e.preventDefault();
-    if($("#title").val()=="" | $("#answer").val()=="" ){
-      return alert('請填妥所有欄位');
+    if($("#title").val() == "" || answer.getData()=="" ){
+      e.preventDefault();
+      alert('請填妥所有欄位');
+      return false;
     }
     else{
-      $(this).off('submit');
-      $(this).submit();
+      return true;
     }
 
   });
-  CKEDITOR.replace('answer');
+
+
 
 }(jQuery));

@@ -340,6 +340,14 @@ module.exports.createTestData = async ({createRoleUser, createNewBuyer}) => {
     };
     var createdOrder = await db.Order.create(newOrder2);
 
+    var invoice = {
+      type:'triplex',
+      taxId: '1234554321'
+    };
+    var createInvoice = await db.Invoice.create(invoice);
+
+    await createdOrder.setInvoice(createInvoice);
+
     var shipment2 = {
       username: createFakeUser.fullName,
       mobile: createFakeUser.mobile,
