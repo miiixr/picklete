@@ -63,16 +63,18 @@ block body
             each order, index in orders
               if order.status == "new" || order.status == "paymentConfirm" || order.status == "deliveryConfirm"
                 tr
-                  td #{sails.moment(order.createdAt.format).format('YYYY/MM/DD hh:mm')}
+                  td #{sails.moment(order.createdAt).format('YYYY/MM/DD hh:mm')}
                   td #{order.serialNumber}
                   td #{order.allPayPaymentType}
                   if order.status == "new"
                     td 訂單確認中
+                    td
                   else if order.status == "paymentConfirm"
                     td 訂單完成
+                    td
                   else if order.status == "deliveryConfirm"
                     td 已出貨
-                  td 2015-5-22
+                    td #{sails.moment(order.updatedAt).format('YYYY/MM/DD hh:mm')}
                   td $#{order.paymentTotalAmount}
                   td #{order.Invoice ? i18n(order.Invoice.type) : ''}
                   td
@@ -146,7 +148,7 @@ block body
                                   span.text-danger.pull-right NT$ #{sumPrice+order.Shipment.shippingFee}
               else
                 tr.disabled
-                  td #{sails.moment(order.createdAt.format).format('YYYY/MM/DD hh:mm')}
+                  td #{sails.moment(order.createdAt).format('YYYY/MM/DD hh:mm')}
                   td #{order.Shipment.shippingId}
                   td #{order.allPayPaymentType}
                   td 訂單取消
