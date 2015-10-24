@@ -192,7 +192,7 @@ var self = module.exports = {
         product.name = productGm.name + productName;
 
         if (product.stockQuantity === 0){
-          // mix productGm and product name  
+          // mix productGm and product name
           throw new Error('此商品「'+ product.name +'」已經售鑿！');
         }
 
@@ -243,6 +243,7 @@ var self = module.exports = {
         // orderItems[index].price = product.price;
         orderItems[index].comment = product.comment;
         orderItems[index].spec = product.spec;
+        orderItems[index].productNumber = product.productNumber;
       });
 
       if(newOrder.shopCode){
