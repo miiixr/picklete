@@ -122,7 +122,7 @@ block body
         // /form-group
     // /col-md-6
     .col-md-6.desktop-text-right
-      a.btn.btn-gray(href='#') 列印撿貨單
+      button.btn.btn-gray(id='print') 列印撿貨單
       //- a.btn.btn-gray(href='#') 列印清單
     // /col-md-6
   // /row
@@ -159,7 +159,7 @@ block body
         .panel-heading
           .row.row-s.text-center
             .col-sm-1.col-sm-1-sm
-              input(type='checkbox',value='#{order.id}')
+              input(class='printSelect',type='checkbox',value='#{order.id}')
             // /col-sm-1
             .col-sm-2
               a(data-toggle='collapse', data-parent='#collapse-purchase', href='#collapse-purchase-#{order.serialNumber}', aria-expanded='true') #{order.serialNumber}

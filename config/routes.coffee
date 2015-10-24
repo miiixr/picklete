@@ -151,6 +151,10 @@ module.exports.routes = {
   'get /shipping/:type' : 'ShippingController.type'
   # end shipping
 
+  # print
+  'get /print' : 'OrderController.print'
+  # end print
+
   # client side / Have to login
   # 'get /member/fav' : view: 'main/member-fav'
   'post /favorite/add' : 'UserController.updatefavorite'
