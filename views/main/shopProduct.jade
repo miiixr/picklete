@@ -33,12 +33,13 @@ block body
                     // /carousel-indicators
                   .carousel-inner.carousel-inner-v(role='listbox')
                     each photo, index in coverPhotos
-                      if index == 0
-                        .item.active
-                          img.img-full(src='#{photo}', alt='Second slide image', href='#carousel-shop-product', data-slide='next')
-                      else
-                        .item
-                          img.img-full(src='#{photo}', alt='Second slide image', href='#carousel-shop-product', data-slide='next')
+                      if (photo !== '')
+                        if (index == 0)
+                          .item.active
+                            img.img-full(src='#{photo}', alt='Second slide image', href='#carousel-shop-product', data-slide='next')
+                        else
+                          .item
+                            img.img-full(src='#{photo}', alt='Second slide image', href='#carousel-shop-product', data-slide='next')
                         
                     // /item
                     

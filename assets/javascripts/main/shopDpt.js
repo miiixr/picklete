@@ -37,9 +37,9 @@
     
     // when brand query, not dpt to active
     if (params.brand) return;
-
+    console.log(params);
     // when nothing to query, means first item active
-    if (params.dptId == '' && params.dptSubId == '') {
+    if (! params.dptId || params.dptId == '') {
       dptDisplay(1);
       $('.dpt[data-id="1"]').addClass(ACTIVE_CLASS_NAME);
       $('#subDpt1 .subDpt:eq(0)').addClass(ACTIVE_CLASS_NAME);
