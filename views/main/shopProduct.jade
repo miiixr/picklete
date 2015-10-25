@@ -57,12 +57,12 @@ block body
               ol.breadcrumb.p-left-0.m-bottom-8
                 li
                   a(href='/shop/products/') 全部商品
-                each Dpts in productGm.Dpts
-                  li
-                      a(href='/shop/products/?dptId=#{Dpts.id}') #{Dpts.name} 
-                  li
-                    each DptSubs in productGm.DptSubs
-                      a(href='/shop/products/?dptId=#{Dpts.id}&dptSubId=#{DptSubs.id}') #{DptSubs.name} 
+                - var Dpts = productGm.Dpts[0];
+                li
+                  a(href='/shop/products/?dptId=#{Dpts.id}') #{Dpts.name} 
+                - DptSubs = productGm.DptSubs[0];
+                li
+                  a(href='/shop/products/?dptId=#{Dpts.id}&dptSubId=#{DptSubs.id}') #{DptSubs.name} 
                 - var name = product.name ? "(" + product.name + ")" : "";
                 li.active #{productGm.name} #{name}
               // /breadcrumb
