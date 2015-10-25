@@ -43,11 +43,13 @@
   var shippingFeeField = $('#shippingFeeField');
   var shippingFeePrice = parseInt(Cookies.getJSON('shipping').shippingFee);
   var shippingFeeFree = (Cookies.getJSON('shipping').shippingFeeFree);
-  if(shippingFeeFree)
-    shippingFeeField.text('滿額免運');
-  else
+  if(shippingFeeFree) {
+    shippingFeeField.text('免運');
+    shippingFeePrice = 0;
+  } else {
     shippingFeeField.text(shippingFeePrice);
-
+  }
+    
   // display packing fee
   var packingFeeField = $('#packingFeeField');
   var packingFeePrice = parseInt(Cookies.getJSON('packing').packingFee);
@@ -87,6 +89,7 @@
   // count packing fee
   var packingFee = parseInt(Cookies.getJSON('packing').packingFee);
   packingFeeTD.text(packingFee);
+  totalPrice += shippingFeePrice;
   totalPrice += packingFee;
 
   var discountAmountDiv = $("#discountAmount");
