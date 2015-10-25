@@ -83,6 +83,8 @@ module.exports.routes = {
   'post /admin/department/sub/create' : 'DptSubController.create'
   'post /admin/department/sub/update' : 'DptSubController.update'
   'post /admin/department/sub/delete' : 'DptSubController.smDelete'
+  'put /admin/department/sortable' : 'DptController.sortable'
+  'put /admin/department/sub/sortable' : 'DptSubController.sortable'
 
   'get /admin/goods' : 'ProductController.list'
   'get /admin/goods/update' : 'ProductController.showUpdate'

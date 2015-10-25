@@ -34,6 +34,22 @@ let DptController = {
       .catch(function(error) {
         return res.serverError(error);
       });
+  },
+
+  sortable: async(req,res) => {
+
+    var sort = req.body.sort;
+    var id = req.body.id;
+    
+    for (var index in id){
+     await db.Dpt.update({
+      weight: sort[index],
+      },{
+        where: {
+          id: id[index]
+        }
+      });
+     };
   }
 };
 
