@@ -367,18 +367,23 @@ module.exports = {
       if (Object.keys(query).length > 0) {
         // ================ ProductGm query condition ================
         if (query.name) {
-          GmQueryObj.name = {
-              $like: `%${query.name}%`
-          }
+          var keyword = query.name;
+
+          GmQueryObj.$or = [];
+          GmQueryObj.$or.push(['`ProductGm`.`name` like ?', '%'+keyword+'%'])
+          GmQueryObj.$or.push(['`ProductGm`.`explain` like ?', '%'+keyword+'%'])
+          GmQueryObj.$or.push(['`ProductGm`.`usage` like ?', '%'+keyword+'%'])
+          GmQueryObj.$or.push(['`ProductGm`.`notice` like ?', '%'+keyword+'%'])
         }
 
         if (query.brandId > 0)
           GmQueryObj.brandId = query.brandId;
 
         if (query.tag) {
-          GmQueryObj.tag = {
-            $like: `%${query.tag}%`
-          };
+          GmQueryObj.$or.push(['`ProductGm`.`tag` like ?', '%'+query.tag+'%'])
+          // GmQueryObj.tag = {
+          //   $like: `%${query.tag}%`
+          // };
         }
 
         // ================ Dpt query condition ================

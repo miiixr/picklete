@@ -138,6 +138,10 @@ let ShopController = {
 
       productGm = productGm.dataValues;
 
+      // console.log('------ productGM -----')
+      // console.log(productGm)
+      // console.log('------ productGM end -----')
+
       product = (await PromotionService.productPriceTransPromotionPrice(new Date(), [product]))[0];
 
       product = product.dataValues;
@@ -146,7 +150,6 @@ let ShopController = {
 
       let dptId = product.ProductGm.Dpts[0].id;
       // recommend products
-
       let recommendProducts = await db.Product.findAll({
         subQuery: false,
         include: [{
@@ -207,7 +210,9 @@ let ShopController = {
 
     } catch (e) {
       console.error(e);
-      return res.view('common/warning', {errors:'not found'});
+      let {message} = e;
+      let success = false;
+      return res.serverError({message, e});
     };
 
 
