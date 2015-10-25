@@ -47,8 +47,8 @@ block body
           .col-sm-9.col-sm-offset-3.col-md-5.col-md-offset-0
             label.radio-inline
 
-              input#inlineRadio1(required,type='radio', name='type', value='AGENT' checked=(brand&&brand.type=="AGENT")?"":undefined)
-              |  #{i18n('other-brand')}
+              //- input#inlineRadio1(required,type='radio', name='type', value='AGENT' checked=(brand&&brand.type=="AGENT")?"":undefined)
+              //- |  #{i18n('other-brand')}
 
               input#inlineRadio1(type='radio', name='type', value='AGENT' checked=(brand&&brand.type=="AGENT")?"":undefined)
               |  #{i18n('agent-brand')}
@@ -99,7 +99,7 @@ block body
                     input(type='hidden', name="height", value='500')
                     input(type='hidden', name='photos[]', form='brand-data', value=photo)
 
-                  a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
+                  a.btn.btn-default.btn-sm(href='#', data-dismiss='fileinput') Remove
                 // /fileinput-btn
               //form
             // /fileinput

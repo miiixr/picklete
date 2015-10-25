@@ -15,7 +15,7 @@ module.exports = {
     return promotions;
   },
   // end findAll
-  
+
   // getModel
   getModel: async () => {
     let promotions = await db.Promotion.find({
@@ -152,12 +152,12 @@ module.exports = {
           required: true
         }]
       });
-      console.log('=== findPromotions ==>',findPromotions);
-      
+      // sails.log.verbose('=== findPromotions ==>',findPromotions);
+
       if(!findPromotions.length) return products;
 
       products.forEach((product) => {
-        console.log('=== findPromotions ==>',findPromotions);
+        // sails.log.verbose('=== findPromotions ==>',findPromotions);
         //
         findPromotions.forEach((promotion) => {
           //

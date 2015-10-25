@@ -210,10 +210,10 @@ block body
                         .col-sm-8
                           input.form-control.input-sm(type='text', value='#{i18n(order.Shipment.shippingType)} #{order.Shipment.shippingRegion}') 
                       // /form-group
-                      .form-group.form-group-sm
-                        label.col-sm-4.control-label 訂單編號
-                        .col-sm-8
-                          input.form-control.input-sm(type='text', value='#{order.shippingId || ""}') 
+                      //- .form-group.form-group-sm
+                      //-   label.col-sm-4.control-label 訂單編號
+                      //-   .col-sm-8
+                      //-     input.form-control.input-sm(type='text', value='#{order.shippingId || ""}') 
                       // /form-group
                   // /col-sm-6
                 // /row
@@ -232,7 +232,7 @@ block body
                     - sum = 0
                     each item in order.OrderItems
                       tr
-                        td SNAP6-PLUS_CASE_RD
+                        td #{item.productNumber}
                         td
                           a(href='shop-product') #{item.name}
                         td.text-center #{item.quantity}
@@ -274,13 +274,14 @@ block body
                       li 發票類型：#{order.Invoice ? i18n(order.Invoice.type) : ''}
                       li 抬頭：#{order.Invoice ? order.Invoice.title : ''}
                       li 統編：#{order.Invoice ? order.Invoice.taxId : ''}
-                  p.text-danger #{order.description}
+                  p.text-danger 賣家備註：#{order.description?order.description: '無'}
                 // /m-left-1
               // /well
               .row
                 .col-sm-8
                   p.text-danger 
-                  //- | ※ 會員備註：#{order.description}
+                  -sails.log.info(order)
+                  | ※ 會員備註：#{order.User.comment?order.User.comment: '無'}
                 // /col-sm-8
                 .col-sm-4.text-right
                   button.btn.btn-gray.btn-sm(type='button') 取消整筆訂單

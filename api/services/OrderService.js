@@ -122,9 +122,23 @@ var self = module.exports = {
         orderNo, time, order.paymentTotalAmount, paymentMethod);
 
       var itemArray = [];
-      order.OrderItems.forEach((orderItem) => {
-        itemArray.push(orderItem.name);
+      let orderItemProducts = await* order.OrderItems.map(async (orderItem) => {
+        let orderItemProduct = await db.Product.findOne({
+          where:{
+            id: orderItem.ProductId
+          },
+          include:{
+            model: db.ProductGm
+          }
+        })
+        return {orderItemProduct,orderItem};
       });
+
+      orderItemProducts.forEach((order) =>{
+        sails.log.info(order);
+        itemArray.push(`${order.orderItemProduct.ProductGm.name}(${order.orderItemProduct.name})X${order.orderItem.quantity}`)
+      });
+
       data.ItemName = itemArray.join('#');
 
       // let checkMacValue = await new Promise((done) => {
@@ -173,22 +187,21 @@ var self = module.exports = {
         if (!product)
           throw new Error('找不到商品！ 請確認商品ID！');
 
+        let productGm = await db.ProductGm.findById(product.ProductGmId);
+        let productName = (product.name == null || product.name == '') ? "" : "(" + product.name + ")";
+        product.name = productGm.name + productName;
+
         if (product.stockQuantity === 0){
           // mix productGm and product name
-          let productGm = await db.ProductGm.findById(product.ProductGmId);
-          let productName = product.name;
-          if(product.name == null || product.name == '') productName = '(無型號)'
-          throw new Error('此商品「'+productGm.name+productName+'」已經售鑿！');
+          throw new Error('此商品「'+ product.name +'」已經售鑿！');
         }
 
         if (product.stockQuantity < orderItem.quantity){
           // mix productGm and product name
-          let productGm = await db.ProductGm.findById(product.ProductGmId);
-          let productName = product.name;
-          if(product.name == null || product.name == '') productName = '(無型號)'
-          throw new Error('此商品「'+productGm.name+productName+'」已經不足！');
+          throw new Error('此商品「'+ product.name +'」已經不足！');
         }
 
+        // fixed to save product full name ( product full name = productGM.name + product.name)
         product.stockQuantity = product.stockQuantity - orderItem.quantity;
 
         return product;
@@ -216,7 +229,8 @@ var self = module.exports = {
         serialNumber: await OrderService.generateOrderSerialNumber(),
         useBunusPoint: 0,
         packingFee: newOrder.packingFee,
-        packingQuantity: newOrder.packingQuantity
+        packingQuantity: newOrder.packingQuantity,
+        description: newOrder.description
       };
 
       products.forEach((product, index) => {
@@ -229,6 +243,7 @@ var self = module.exports = {
         // orderItems[index].price = product.price;
         orderItems[index].comment = product.comment;
         orderItems[index].spec = product.spec;
+        orderItems[index].productNumber = product.productNumber;
       });
 
       if(newOrder.shopCode){

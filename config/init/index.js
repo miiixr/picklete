@@ -1,6 +1,8 @@
 import trunk from './trunk'
 import exma from './exma'
 import defaults from './defaults'
+import fs from 'fs-extra';
+
 let production;
 try {
   production = require('./production');
@@ -8,6 +10,19 @@ try {
 }
 
 module.exports = {
+
+  databaseDropAndCreate: async () => {
+    if(sails.config.db.dialect == 'mysql'){
+      await db.sequelize.query(
+        `DROP DATABASE IF EXISTS ${sails.config.db.database};`);
+      await db.sequelize.query(
+        `CREATE DATABASE IF NOT EXISTS ${sails.config.db.database} CHARACTER SET utf8 COLLATE utf8_unicode_ci;`);
+      await db.sequelize.query(`USE ${sails.config.db.database};`);
+    }
+    else if (sails.config.db.dialect == 'sqlite'){
+      await fs.removeSync(sails.config.db.storage);
+    }
+  },
 
   database: async () => {
     let force = sails.config.db.force;

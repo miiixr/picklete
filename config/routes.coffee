@@ -49,7 +49,7 @@ module.exports.routes = {
   'get /admin/brands/update' : 'BrandController.update'
   'post /admin/brands/update' : 'BrandController.update'
   'post /admin/brands/delete/' : 'BrandController.delete'
-  
+
 
 
   'get /admin/exclusive' : 'SelectionActiveController.list'
@@ -159,6 +159,7 @@ module.exports.routes = {
 
   # client side / Have to login
   # 'get /member/fav' : view: 'main/member-fav'
+  'post /favorite/add' : 'UserController.updatefavorite'
   'get /member/favorite' : 'UserController.favorite'
   'get /member/purchase' : 'UserController.purchase'
   'get /member/setting' : 'UserController.edit'
@@ -197,7 +198,7 @@ module.exports.routes = {
 
   'get /api/order/pay': 'OrderController.pay'
 
-  "get /admin/login": view: "admin/login"
+  # "get /admin/login": view: "admin/login"
 
   'get /api/search/:keywords': 'SearchController.productsJson'
   'get /search': 'SearchController.products'

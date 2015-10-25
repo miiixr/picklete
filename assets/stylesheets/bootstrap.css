@@ -4618,7 +4618,7 @@ input[type="button"].btn-block {
 
 /* line 263, ../sass/_buttons.scss */
 .border-radius-circle {
-  border-radius: 20px;
+  border-radius: 20px !important;
   padding-left: 16px;
   padding-right: 16px;
 }
@@ -11816,4 +11816,20 @@ a.btn-remove {
   background: #fff;
   border-radius: 20px;
   padding: 6px 12px;
+}
+
+.carousel-caption h1 { 
+  font-weight: bold;
+}
+
+.list-group-item a.active { 
+  color: #00cbbb; text-decoration: none; 
+}
+h4.letter-spacing-1 a.active { 
+  color: #00cbbb; text-decoration: none; 
+}
+
+.navbar-nav > li > a.active {
+    -webkit-box-shadow: inset 0px -2px 0px 0px #32373C;
+    box-shadow: inset 0px -2px 0px 0px #32373C;
 }

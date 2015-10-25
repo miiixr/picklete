@@ -64,6 +64,61 @@ let UserController = {
       products
     });
   },
+
+  updatefavorite: async (req, res) => {
+
+    var FAV_KEY = "picklete_fav";
+    var favoriteKeys = req.cookies[FAV_KEY];
+    sails.log.info("=== cookies ===",req.cookies);
+    try {
+      favoriteKeys = JSON.parse(favoriteKeys);
+      sails.log.info("=== favoriteKeys ===",favoriteKeys);
+      let products = Object.keys(favoriteKeys);
+      sails.log.info("=== products ===",products);
+      let user = UserService.getLoginUser(req);
+      if(user){
+        user = await db.User.findById(user.id);
+        let UserFavorites = await user.getProducts();
+        let favorite = await* products.map( async (productId) => {
+          // sails.log.info("==== find ====",find);
+          let product;
+          let isNewFavorite = true;
+          UserFavorites.forEach((favorite) => {
+            if(favorite.id == productId){
+              isNewFavorite = false
+            }
+          });
+          product = await db.Product.findById(productId);
+          if(isNewFavorite){
+            let productGm = await db.ProductGm.findById(product.ProductGmId);
+
+            let count = (await db.LikesCount.findOrCreate({
+              where:{
+                ProductGmId: productGm.id
+              },
+              defaults:{
+                ProductGmId: productGm.id
+              }
+            }))[0];
+            count.likesCount ++;
+            count = await count.save();
+
+          }
+          return product;
+        });
+        await user.setProducts(favorite);
+      }
+      let message = '更新收藏';
+      return res.ok(message);
+    } catch (e) {
+      favoriteKeys = null;
+      sails.log.error(e);
+      let {message} = e;
+      let success = false;
+      return res.json(500,{message, success});
+    }
+  },
+
   purchase:async (req, res) => {
     let loginUser = UserService.getLoginUser(req);
     let orders = await db.Order.findAll({
@@ -156,7 +211,14 @@ let UserController = {
       let updateUser = req.body;
       let passport = await db.Passport.find({where: {UserId: loginUser.id}});
 
-      let user = await db.User.findById(loginUser.id);
+      let user = await db.User.findOne({
+        where:{
+          id: loginUser.id
+        },
+        include:{
+          model: db.Role
+        }
+      });
 
       if(updateUser.password != passport.password){
         passport.password = updateUser.password;
@@ -202,7 +264,7 @@ let UserController = {
     if(UserService.getLoginState(req))
       res.redirect('/admin/goods');
     else
-      res.view({});
+      res.view("admin/login");
   },
   indexSlider: function(req, res) {
     res.view({

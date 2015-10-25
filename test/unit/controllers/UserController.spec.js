@@ -204,6 +204,7 @@ describe("login user data", () => {
     sinon.stub(UserService, 'getLoginUser', (req) => {
       return admin;
     });
+
     return done();
   });
 
@@ -211,6 +212,18 @@ describe("login user data", () => {
     UserService.getLoginState.restore();
     UserService.getLoginUser.restore();
     done();
+  });
+
+  it('update favorite',(done)=>{
+    request(sails.hooks.http.app)
+    .post(`/favorite/add`)
+    .set('Cookie', "picklete_fav={ 1: true, 2: true}")
+    .end((err, res) => {
+      if (res.statusCode === 500) {
+        return done(err)
+      }
+      done(err);
+    });
   });
 
   it('user purchase test', (done) => {

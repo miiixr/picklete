@@ -1,4 +1,5 @@
 extends ../_layout_auth
+include ../mixins/pagination
 
 block body
   h2.m-bottom-6 加價購
@@ -13,16 +14,11 @@ block body
     #tab-1.tab-pane.fade.in.active
       .row
         .col-sm-6.col-md-8
-          form.form-inline
+          form.form-inline.with-pagination(name="show", action="/admin/shop-buy-more", method="get")
+            +pagination-fields(page, limit)
             .form-group
               label 顯示
-              select.form-control
-                option 10
-                option 20
-                option 30
-                option 40
-                option 50
-              label 筆資料（共 90 筆）
+                +pagination-limit
             // /form-group
         // /col-sm-6
         .col-sm-6.col-md-4
@@ -47,10 +43,11 @@ block body
             th 時間
             th
         tbody
-          each purchase in noLimit
+          each purchase in additionalPurchaseNoLimit.rows
+            -sails.log.info(purchase)
             tr
               td
-                img.width-6(src='images/demo/shop-item-1-1.jpg')
+                img.width-6(src= purchase.ProductGms[0].coverPhoto[0])
               td #{purchase.name}
               td #{purchase.id}
               td 590
@@ -72,11 +69,7 @@ block body
           pagination-block
           ==================================================
         ul.list-inline.m-bottom-0.m-top-1
-          li.border-right-1.p-right-2
-            a(href='#') 上一頁
-          li.border-right-1.p-right-2 第 15 之 20
-          li
-            a(href='#') 下一頁
+          +pagination-simple-pager(page, totalPages)
       // /text-center
     // /tab-pane
     #tab-2.tab-pane.fade
@@ -116,10 +109,10 @@ block body
             th 時間
             th
         tbody
-          each purchase in limit
+          each purchase in additionalPurchaseLimit
             tr
               td
-                img.width-6(src='images/demo/shop-item-1-1.jpg')
+                img.width-6(src= purchase.ProductGms[0].coverPhoto[0])
               td #{purchase.name}
               td #{purchase.id}
               td 590
@@ -149,3 +142,5 @@ block body
       // /text-center
     // /tab-pane
   // /tab-content
+block js
+  script(src='/javascripts/common/pagination.js')

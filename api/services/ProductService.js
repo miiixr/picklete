@@ -423,6 +423,11 @@ module.exports = {
           };
         }
 
+        if (query.color) {
+          ProductQueryObj.color = query.color;
+        }
+
+
         // 販售狀態 1:隱藏, 2:上架
         if (query.isPublish != '') {
           queryObj.isPublish = (query.isPublish == 'false') ? null : true;
@@ -458,18 +463,46 @@ module.exports = {
             where: DptSubQueryObj
           },{
             model: db.Brand
+          },{
+            model: db.PageView
+          },{
+            model: db.LikesCount
           }]
         }],
         offset: offset,
-        limit: limit
+        limit: limit,
       };
 
+      let sort;
+      switch (query.sort) {
+        case 'views':
+          sort = [[db.ProductGm,db.PageView,'pageView','DESC']];
+          break;
+        case 'top':
+          sort = [[db.ProductGm,db.LikesCount,'likesCount','DESC']];
+          break;
+        case 'newest':
+          sort = 'createdAt';
+          break;
+        case 'priceHtoL':
+          sort = 'price DESC';
+          break;
+        case 'priceLtoH':
+          sort = 'price';
+          break;
+      }
+
+      if(sort)
+        queryObj.order = sort;
+
+
+      sails.log.info("=== productQuery queryObj ===",queryObj);
 
       // console.log(' ======== queryObj =========');
       // console.log(ProductQueryObj);
       // console.log(GmQueryObj);
       let products = await db.Product.findAndCountAll(queryObj);
-
+      sails.log.info("=== productQuery products ===",products.rows[0].dataValues);
       // format datetime
       products.rows = products.rows.map(ProductService.withImage);
       for (let product of products.rows) {

@@ -250,7 +250,7 @@ module.exports.createTestData = async ({createRoleUser, createNewBuyer}) => {
       color: 3,
       productNumber: '2-USA-3-G',
       spec: 'super-metal',
-      photos: ["https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg", "https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/JC1121-set-My-Mug-blue-22.jpg"]
+      photos: ["https://dl.dropboxusercontent.com/u/9662264/mertirial/shop-item-d-5.jpg", "https://dl.dropboxusercontent.com/u/9662264/mertirial/shop-item-d-5.jpg"]
     });
     xs.push(x);
     console.log('______--------__________-------------______________');

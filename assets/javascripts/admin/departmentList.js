@@ -31,10 +31,12 @@
 
   $('.dpt.name').click(function(event){
     var e = $(event.currentTarget);
+
     var id = e.data('id');
     $.each(dptId,function(index){
       document.getElementById('subDpt' + dptId[index]).style.display = "none";
     });
+
     document.getElementById('special').style.display = "none";
     document.getElementById('subDpt'+id).style.display = "block";
   
@@ -45,6 +47,8 @@
     });
   
     document.getElementById('sm-id').value = e.data('id');
+
+
     _showAddBtn();
   });
 

@@ -109,6 +109,8 @@
 
       quantity = orderItem.quantity;
 
+      console.log(orderItem);
+
       var liOrderItem =
         '<div id="orderItem" class="p-20 border-bottom-1">' +
         '  <div class="row row-m">' +
@@ -121,7 +123,7 @@
 
         '    <div class="col-xs-8 col-sm-8 col-md-3 desktop-m-top-4 m-bottom-1 mobile-min-height-100">' +
         '      <h6 class="text-muted text-roboto letter-spacing-1 m-bottom-1-min">' +
-        '        <a href="brands">'+ orderItem.brand +'</a>' +
+        '        <a href="/brands">'+ orderItem.brand +'</a>' +
         '      </h6>' +
         '      <h5 class="text-roboto letter-spacing-1 m-top-1-min">' +
         '        <a href="/shop/products/'+orderItem.productGmId+'/'+orderItem.ProductId+'">'+ orderItem.name +'</a>' +
@@ -238,10 +240,17 @@
 
   var removeOrderItem = function (orderItem, index) {
 
-     picklete_cart.orderItems.splice(index, 1);
-     Cookies.set('picklete_cart', picklete_cart);
+    var item = picklete_cart.orderItems.splice(index, 1);
 
-     window.location.reload();
+    // when user not want this product, save to favorite list
+    var FAV_KEY = "picklete_fav";
+    var favs = Cookies.getJSON(FAV_KEY) || {};
+    favs[item[0].ProductId] = true;
+    Cookies.set(FAV_KEY, favs);
+
+    Cookies.set('picklete_cart', picklete_cart);
+
+    window.location.reload();
   }
 
   $("#nextSetp").click(function () {

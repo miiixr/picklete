@@ -3,6 +3,7 @@ import moment from 'moment';
 describe("about product service", () => {
   let createdProduct, createdProduct2, createdProductGm;
   let productGmA, productGmB, dptA, dptB, dptSubA, dptSubB ,dptC, dptSubC, dptD, dptSubD;
+  let createTestSortProduct;
   before(async (done) => {
 
     try {
@@ -155,6 +156,31 @@ describe("about product service", () => {
         photos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg'],
         ProductGmId: createdQueryProductGmB.id
       }]);
+
+
+      let superCheap ={
+        name: 'B200',
+        stockQuantity: 900,
+        isPublish: 'true',
+        price: 1,
+        productNumber: 'QueryB',
+        photos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg'],
+        ProductGmId: createdQueryProductGmB.id
+      }
+
+      createTestSortProduct = await db.Product.create(superCheap);
+
+      let pageViewA = {
+        pageView :10,
+        ProductGmId: createdQueryProductGmA.id
+      }
+      let createPageViewA = await db.PageView.create(pageViewA);
+
+      let pageViewB = {
+        pageView :20,
+        ProductGmId: createdQueryProductGmB.id
+      }
+      let createPageViewB = await db.PageView.create(pageViewB);
 
       done();
     } catch (e) {
@@ -331,6 +357,82 @@ describe("about product service", () => {
       for (let product of queryResults.rows) {
         let name = product['ProductGm']['name'];
         name.should.be.include(queryObj.name);
+      }
+      done();
+    } catch (e) {
+      done(e);
+    }
+  });
+
+  it('product query by priceLtoH', async (done) => {
+    try{
+      let queryObj = {}, queryResults;
+      queryObj.sort = 'priceLtoH';
+      queryResults = await ProductService.productQuery(queryObj);
+      sails.log.info(queryResults.rows[0]);
+      let lastPrice = 0;
+      for (let product of queryResults.rows) {
+        if(product.price){
+          sails.log.info(product.price);
+          product.price.should.be.above(lastPrice-1);
+          lastPrice = product.price;
+        }
+      }
+      done();
+    } catch (e) {
+      done(e);
+    }
+  });
+
+  it('product query by priceHtoL', async (done) => {
+    try{
+      let queryObj = {}, queryResults;
+      queryObj.sort = 'priceHtoL';
+      queryResults = await ProductService.productQuery(queryObj);
+      sails.log.info(queryResults.rows[0]);
+      let lastPrice = 99999999999;
+      for (let product of queryResults.rows) {
+        if(product.price){
+          sails.log.info(product.price);
+          product.price.should.be.below(lastPrice+1);
+          lastPrice = product.price;
+        }
+      }
+      done();
+    } catch (e) {
+      done(e);
+    }
+  });
+
+  it('product query by views', async (done) => {
+    try{
+      let queryObj = {}, queryResults;
+      queryObj.sort = 'views';
+      queryResults = await ProductService.productQuery(queryObj);
+      sails.log.info(queryResults.rows[0]);
+      let lastPageView = 99999999999;
+      for (let product of queryResults.rows) {
+        if(product.ProductGm.PageView){
+          sails.log.info(product.ProductGm.PageView.pageView);
+          product.ProductGm.PageView.pageView.should.be.below(lastPageView+1);
+          lastPageView = product.ProductGm.PageView.pageView;
+        }
+      }
+      done();
+    } catch (e) {
+      done(e);
+    }
+  });
+
+  it('product query by newest', async (done) => {
+    try{
+      let queryObj = {}, queryResults;
+      queryObj.sort = 'newest';
+      queryResults = await ProductService.productQuery(queryObj);
+      let lastCreatedAt = queryResults.rows[0].createdAt
+      for (let product of queryResults.rows) {
+        sails.log.info(product.createdAt);
+        lastCreatedAt = product.createdAt;
       }
       done();
     } catch (e) {

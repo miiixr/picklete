@@ -166,7 +166,7 @@ block body
                     input(type='hidden', name="width", value='1000')
                     input(type='hidden', name="height", value='1000')
                     input(type='hidden', name='good[#{i}][photos-1]', form='goodForm', value=product.photos[0]? product.photos[0] : '')
-                  a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
+                  a.btn.btn-default.btn-sm(href='#', data-dismiss='fileinput') Remove
                     // /fileinput-btn
                 // /form
               // /fileinput
@@ -191,7 +191,7 @@ block body
                     input(type='hidden', name="width", value='1000')
                     input(type='hidden', name="height", value='1000')
                     input(type='hidden', name='good[#{i}][photos-2]', form='goodForm', value=product.photos[1] ? product.photos[1] : '')
-                  a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
+                  a.btn.btn-default.btn-sm(href='#', data-dismiss='fileinput') Remove
                 // /form
               // /fileinput-btn
             // /fileinput

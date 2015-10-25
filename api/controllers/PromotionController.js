@@ -7,10 +7,21 @@ let PromotionController = {
   // list
   list: async (req, res) => {
     try {
-      let promotions = await PromotionService.findAll();
+      let limit = await pagination.limit(req);
+      let page = await pagination.page(req);
+      let offset = await pagination.offset(req);
+
+      let promotions = await db.Promotion.findAndCountAll({
+        offset: offset,
+        limit: limit
+      });
       return res.view('promotion/controlShopDiscount', {
         promotions,
-        pageName: "shop-discount"
+        pageName: "shop-discount",
+        limit: limit,
+        page: page,
+        totalPages: Math.ceil(promotions.count / limit),
+        totalRows: promotions.count
       });
     } catch (error) {
       console.error('=== create error stack ==>',error.stack);
@@ -218,20 +229,39 @@ let PromotionController = {
   },
   controlShopBuyMore: async (req, res) => {
     try {
-      let noLimit = await db.AdditionalPurchase.findAll({
+
+      let limit = await pagination.limit(req);
+      let page = await pagination.page(req);
+      let offset = await pagination.offset(req);
+
+      let additionalPurchaseNoLimit = await db.AdditionalPurchase.findAndCountAll({
         where:{
           limit:0
-        }
+        },
+        include:{
+          model: db.ProductGm
+        },
+        offset: offset,
+        limit: limit
       });
-      let limit = await db.AdditionalPurchase.findAll({
+
+      let additionalPurchaseLimit = await db.AdditionalPurchase.findAll({
         where:{
           limit:1500
+        },
+        include:{
+          model: db.ProductGm
         }
       });
+
       res.view('promotion/controlShopBuyMore',{
         pageName: "shop-buy-more",
-        noLimit,
-        limit
+        additionalPurchaseNoLimit,
+        additionalPurchaseLimit,
+        limit: limit,
+        page: page,
+        totalPages: Math.ceil(additionalPurchaseNoLimit.count / limit),
+        totalRows: additionalPurchaseNoLimit.count
       });
     } catch (e) {
       console.error(e.stack);
@@ -288,9 +318,11 @@ let PromotionController = {
       limit
     });
   },
-  controlShopReportForm: function(req, res) {
+  controlShopReportForm: async (req, res) => {
+    let dateList = await ReportService.list();
     res.view('promotion/controlShopReportForm',{
-      pageName: "shop-report-form"
+      pageName: "shop-report-form",
+      dateList: dateList
     });
   }
   // end not clean yet
