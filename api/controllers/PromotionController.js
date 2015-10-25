@@ -187,6 +187,8 @@ let PromotionController = {
       let promotion = {productIds: []};
 
       let isCreatePromotion = (query.id == null || query.id == '');
+
+      console.log('=== isCreatePromotion ===', isCreatePromotion);
       if(isCreatePromotion){
         let products = await db.Product.findAll({
           where: {
@@ -211,6 +213,14 @@ let PromotionController = {
           },
           include: [db.Product]
         });
+
+        promotion = promotion.toJSON();
+
+        if(promotion.endDate)
+          promotion.endDate = promotion.endDate.toISOString().replace('Z', '');
+        if(promotion.startDate)
+          promotion.startDate = promotion.startDate.toISOString().replace('Z', '');
+
 
       }
 
