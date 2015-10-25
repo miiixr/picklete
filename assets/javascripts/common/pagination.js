@@ -64,16 +64,12 @@ $(function() {
   var displayPageHandler = function () {
     var totalNumber = parseInt(inputTotalPages.val(), 10) + 1;
     var pageNumber = parseInt(inputPage.val(), 10) + 1;
-    console.log(totalNumber);
-    console.log(pageNumber);
     var PAGE_NUMBER = 5;
 
     var pageNodes = $(".pagination .pagination-jump");
-    console.log(pageNodes);
     pageNodes.hide();
 
     var currentPlus = parseInt(pageNumber / PAGE_NUMBER, 10);
-
 
     if (currentPlus <= 0) {
       for (var i=0; i < PAGE_NUMBER; i++) {
