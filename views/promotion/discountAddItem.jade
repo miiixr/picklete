@@ -1,0 +1,138 @@
+extends ../_layout_auth
+include ../mixins/pagination
+
+
+block body
+  h2.m-bottom-6 選擇折扣商品
+  .well.control-well.p-30.m-bottom-8
+    form.form-inline
+      //- .form-group.m-right-4
+      //-   label 品牌名稱
+      //-   select.form-control
+      //-     option 品牌名稱
+      //-     option 2
+      //-     option 3
+      //-     option 4
+      //-     option 5
+      //- // /form-group
+      //- .form-group.m-right-4
+      //-   label 關鍵字
+      //-   input.form-control(type='text')
+      //- // /form-group
+      //- button.btn.btn-default(type='button') 查詢
+      
+      .form-group.m-right-4
+        form#search.form-inline.with-pagination(name="search", action="promotion/discountAddItem", method="get")
+          
+          input(type='hidden', name='type', value=promotion.type)
+          input(type='hidden', name='title', value=promotion.title)
+          input(type='hidden', name='filename', value=promotion.filename)
+          input(type='hidden', name='discountType', value=promotion.discountType)
+          input(type='hidden', name='price', value=promotion.price)
+          input(type='hidden', name='discount', value=promotion.discount)
+          input(type='hidden', name='startDate', value=promotion.startDate)
+          input(type='hidden', name='endDate', value=promotion.endDate)
+          input(type='hidden', name='description', value=promotion.description)
+          input(type='hidden', name='noLimit', value=promotion.noLimit)
+          input(type='hidden', name='coverPhoto', value=promotion.coverPhoto)
+          each productId in promotion.productId
+            input(type='hidden', name='productId', value=productId)
+              
+          .form-group.m-right-2
+            label 品牌名稱
+            select.form-control(name='brand' , value = query.brand?query.brand: 0)
+              option(value=0 selected=(query.brand==0)) 品牌名稱
+              each brand in brands
+                option(value=brand.id selected=(query.brand==brand.id)) #{brand.name}
+          // /form-group
+          .form-group.m-right-2
+            .input-group
+              input#keyword.form-control(type='text',name="keyword" ,placeholder='輸入關鍵字',value= query.keyword)
+              +pagination-fields(page, totalPages, limit)
+              span.input-group-btn
+                button.btn.btn-default.p-left-2.p-right-2(type='submit')
+                  span.glyphicon.glyphicon-search
+
+  // /well
+  .row
+    .col-md-6
+      form.form-inline
+        .form-group
+          label 顯示
+          select.form-control
+            option 10
+            option 20
+            option 30
+            option 40
+            option 50
+          label 筆資料（共 90 筆）
+        // /form-group
+    // /col-md-6
+    .col-md-6.desktop-text-right
+      button.btn.btn-green(form='shopDiscount') 加入已選取商品
+    // /col-md-6
+  // /row
+  hr.dashed-line
+  form#shopDiscount.form-horizontal(action="/admin/shop-discount-detail", method="get")
+
+    input(type='hidden', name='type', value=promotion.type)
+    input(type='hidden', name='title', value=promotion.title)
+    input(type='hidden', name='filename', value=promotion.filename)
+    input(type='hidden', name='discountType', value=promotion.discountType)
+    input(type='hidden', name='price', value=promotion.price)
+    input(type='hidden', name='discount', value=promotion.discount)
+    input(type='hidden', name='startDate', value=promotion.startDate)
+    input(type='hidden', name='endDate', value=promotion.endDate)
+    input(type='hidden', name='description', value=promotion.description)
+    input(type='hidden', name='noLimit', value=promotion.noLimit)
+    input(type='hidden', name='coverPhoto', value=promotion.coverPhoto)
+    each productId in promotion.productId
+      input(type='hidden', name='productId', value=productId)
+
+    table.table.table-striped
+      thead
+        tr
+          th
+            input(type='checkbox')
+          th 主圖
+          th
+            | 商品名稱
+            span.caret
+          th
+            | 貨號
+            span.caret
+          th
+            | 售價
+            span.caret
+          th
+            | 特價
+            span.caret
+      tbody
+        each product in products.rows
+          tr
+            td
+              input.addSelect(type='checkbox', name='productId', value= product.id, checked=promotion.productId.indexOf(""+product.id)>=0)
+            td
+              img.width-6(src= product.photos[0])
+            td= product.name
+            td= product.productNumber
+            if (product.originPrice)
+              td= product.originPrice
+            else
+              td= product.price
+            td
+              if (product.originPrice)
+                span.text-danger= product.price
+              else 
+                span.text-danger
+  hr.dashed-line
+  .text-center
+    //
+      pagination-block
+      ==================================================
+    ul.list-inline.m-bottom-0.m-top-1
+      +pagination-simple-pager(page, totalPages)
+  // /text-center
+block js
+  script(src='/javascripts/common/pagination.js')
+  script(src="/javascripts/admin/shopDiscount.js")

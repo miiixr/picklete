@@ -75,4 +75,10 @@ $(function() {
     $("#shopDiscount").submit();
 
   });
+
+  $('#discountAddItem').click(function(e){
+    e.preventDefault()
+    var formData = $("#shopDiscount").serialize()
+    window.location.href = 'promotion/discountAddItem?'+formData;
+  });
 });

@@ -112,104 +112,184 @@ let PromotionController = {
       pageName: "shop-type"
     });
   },
-  controlShopItemAdd: function(req, res) {
-    res.view('promotion/controlShopItemAdd',{
-      pageName: "shop-item-add"
-    });
-  },
-  controlShopDiscountDetail: async(req, res) => {
+  discountAddItem: async function(req, res) {
+
     try {
-      console.log('=== controlShopDiscountDetail query ==>',req.query);
       let query = req.query;
       let queryObj = {};
+
+      console.log('==== discountAddItem query ====', query);
+
+      if(!query.hasOwnProperty("productId"))
+        query.productId = [];
+
+      let limit = await pagination.limit(req);
+      let page = await pagination.page(req);
+      let offset = await pagination.offset(req);
+      let brands = await db.Brand.findAll();
+
       if(query.keyword)
         queryObj.name = { 'like': '%'+query.keyword+'%'};
       else
         query.keyword = ''
 
+      if(query.brand && query.brand!=0){
+        let findProductGm = await db.ProductGm.findAll({
+          where:{
+            BrandId: query.brand
+          }
+        });
+        let productGmIds = [];
+        findProductGm.forEach((ProductGm) => {
+          productGmIds.push(ProductGm.id);
+        });
+        queryObj.ProductGmId = productGmIds;
+      }
+
+      console.log('==== queryObj ====', queryObj);
+
+
+      let products = await db.Product.findAndCountAll({
+        where: queryObj,
+        offset: offset,
+        limit: limit
+      });
+
+      products = await PromotionService.productPriceTransPromotionPrice(new Date(), products);
+
+      res.view('promotion/discountAddItem',{
+        pageName: "shop-item-add",
+        query,
+        limit,
+        page,
+        products,
+        brands,
+        promotion: query,
+        totalPages: Math.ceil(products.count / limit),
+        totalRows: products.count
+      });
+    } catch (e) {
+      return res.serverError(e);
+    }
+  },
+  controlShopDiscountDetail: async(req, res) => {
+    try {
+      console.log('=== controlShopDiscountDetail query ==>',req.query);
+      let query = req.query;
+
+
       let limit = await pagination.limit(req);
       let page = await pagination.page(req);
       let offset = await pagination.offset(req);
 
-      let brands = await db.Brand.findAll();
 
-      let promotion = await db.Promotion.findById(query.id);
-      // let productGms;
-      let products;
-      if(promotion){
 
-        products = await db.Product.findAndCountAll({
-          where: queryObj,
-          offset: offset,
-          limit: limit
-        });
+      let promotion = {productId: []};
 
-        promotion = await db.Promotion.find({
-          where:{
-            id: promotion.id
+      let isCreatePromotion = (query.id == null);
+      if(isCreatePromotion){
+        let products = await db.Product.findAll({
+          where: {
+            id: query.productId
           },
-          include:{
-            model: db.Product
-          }
-        });
-
-        promotion.Products.forEach((promotedProduct) => {
-          products.rows.forEach((product) => {
-            console.log('=== product.id ==>', product.id, '===  promotedProduct.id ==>', promotedProduct.id);
-            if(product.id == promotedProduct.id){
-              console.log('=== true ==');
-              product.promoted = true;
-            }
-          });
-        });
-
-        products.rows.forEach((product) => {
-          console.log('=== product.id ==>', product.id, '===  product.promoted ==>',product.promoted);
-        });
-
-      }else{
-        promotion = {
-          title: '',
-          description: '',
-          type: 'flash',
-          discountType: 'price',
-          startDate: null,
-          endDate: null,
-          discount: '',
-          price: ''
-        };
-
-        if(query.brand && query.brand!=0){
-          let findProductGm = await db.ProductGm.findAll({
-            where:{
-              BrandId: query.brand
-            }
-          });
-          let productGmIds = [];
-          findProductGm.forEach((ProductGm) => {
-            productGmIds.push(ProductGm.id);
-          });
-          queryObj.ProductGmId = productGmIds;
-        }
-
-        products = await db.Product.findAndCountAll({
-          where: queryObj,
           offset: offset,
           limit: limit
         });
+
+        if(products == null)
+          products = []
+
+        if(query.type)
+          promotion = query
+
+
+        promotion.Products = products;
+      } else {
+        let promotion = await db.Promotion.find({
+          where: {
+            id: query.id
+          },
+          include: [db.Product]
+        });
+
       }
+
+      console.log('=== promotion ===', promotion);
 
       res.view('promotion/controlShopDiscountDetail',{
         pageName: "shop-discount-detail",
-        brands,
-        products,
         promotion,
         query,
         limit,
         page,
-        totalPages: Math.ceil(products.count / limit),
-        totalRows: products.count
+        totalPages: Math.ceil(promotion.Products.length / limit),
+        totalRows: promotion.Products.length
       });
+
+
+      // if(promotion){
+      //
+      //   products = await db.Product.findAndCountAll({
+      //     where: queryObj,
+      //     offset: offset,
+      //     limit: limit
+      //   });
+      //
+      //   promotion = await db.Promotion.find({
+      //     where:{
+      //       id: promotion.id
+      //     },
+      //     include:{
+      //       model: db.Product
+      //     }
+      //   });
+      //
+      //   promotion.Products.forEach((promotedProduct) => {
+      //     products.rows.forEach((product) => {
+      //       console.log('=== product.id ==>', product.id, '===  promotedProduct.id ==>', promotedProduct.id);
+      //       if(product.id == promotedProduct.id){
+      //         console.log('=== true ==');
+      //         product.promoted = true;
+      //       }
+      //     });
+      //   });
+      //
+      //   products.rows.forEach((product) => {
+      //     console.log('=== product.id ==>', product.id, '===  product.promoted ==>',product.promoted);
+      //   });
+      //
+      // }else{
+      //   promotion = {
+      //     title: '',
+      //     description: '',
+      //     type: 'flash',
+      //     discountType: 'price',
+      //     startDate: null,
+      //     endDate: null,
+      //     discount: '',
+      //     price: ''
+      //   };
+      //
+      //   if(query.brand && query.brand!=0){
+      //     let findProductGm = await db.ProductGm.findAll({
+      //       where:{
+      //         BrandId: query.brand
+      //       }
+      //     });
+      //     let productGmIds = [];
+      //     findProductGm.forEach((ProductGm) => {
+      //       productGmIds.push(ProductGm.id);
+      //     });
+      //     queryObj.ProductGmId = productGmIds;
+      //   }
+      //
+      //   products = await db.Product.findAndCountAll({
+      //     where: queryObj,
+      //     offset: offset,
+      //     limit: limit
+      //   });
+      // }
+
     } catch (e) {
       console.error(e.stack);
       let {message} = e;
