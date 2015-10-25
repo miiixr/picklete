@@ -186,7 +186,7 @@ let PromotionController = {
 
       let promotion = {productIds: []};
 
-      let isCreatePromotion = (query.id == null);
+      let isCreatePromotion = (query.id == null || query.id == '');
       if(isCreatePromotion){
         let products = await db.Product.findAll({
           where: {
@@ -216,7 +216,12 @@ let PromotionController = {
 
       console.log('=== promotion ===', promotion);
 
-      res.view('promotion/controlShopDiscountDetail',{
+      let view = "";
+
+      if(query.discountType == 'flash') view = 'promotion/controlShopDiscountDetail';
+      else view = 'promotion/controlShopDiscountDetail2';
+
+      res.view(view,{
         pageName: "shop-discount-detail",
         promotion,
         query,
@@ -233,16 +238,7 @@ let PromotionController = {
       return res.serverError({message, success});
     }
   },
-  controlShopDiscountDetail2: function(req, res) {
-    res.view('promotion/controlShopDiscountDetail2',{
-      pageName: "shop-discount-detail2"
-    });
-  },
-  controlShopDiscountAddItem: function(req, res) {
-    res.view('promotion/controlShopDiscountAddItem',{
-      pageName: "shop-discount-add-item"
-    });
-  },
+
   controlShopBuyMore: async (req, res) => {
     try {
 

@@ -1,60 +1,94 @@
 extends ../_layout_auth
+include ../mixins/pagination
 
 block body
-  h2.m-bottom-6 一般活動設定
+  h2.m-bottom-6 一般活動
   .well.control-well.p-30.m-bottom-8
-    form.form-horizontal
+    form#shopDiscount.form-horizontal(action="/admin/shopDiscount/create", method="post")
+      each product in promotion.Products
+        input(type='hidden', form='shopDiscount', name='productIds[]', value= product.id)
+
+      input(type='hidden', name='type', value='general', form='shopDiscount')
+      input(type='hidden',name='id',form='shopDiscount' value= query.id)
+
       .form-group
         label.col-sm-3.col-md-2.control-label 活動名稱
         .col-sm-9.col-md-7
-          input.form-control(type='text')
+          input.form-control(type='text',name='title',form='shopDiscount' value= promotion.title)
         // /col-sm-10
         .col-sm-9.col-sm-offset-3.col-md-3.col-md-offset-0
           .checkbox
             label
-              input(type='checkbox')
+              input(type='checkbox', name='createDpt', value='true', checked=promotion.createDpt)
               |  建立館別
       // /form-group
       .form-group
         label.col-sm-3.col-md-2.control-label 活動口號
         .col-sm-9.col-md-10
-          input.form-control(type='text')
-        // /col-sm-10
-      // /form-group
+          input.form-control(type='text', name='slogan', value=promotion.slogan)
+
       .form-group
-        label.col-sm-3.col-md-2.control-label 活動時間
-        .col-sm-4.col-md-3
-          input.form-control(type='datetime-local')
+        label.col-sm-3.col-md-2.control-label 活動起始時間
+        .col-sm-9.col-md-5
+          if (promotion.endDate)
+            input.form-control(type='datetime-local',name='startDate',form='shopDiscount',value=promotion.startDate)
+          else
+            input.form-control(type='datetime-local',name='startDate',form='shopDiscount',disabled)
         .col-sm-1.col-md-1.p-left-0.p-right-0.text-center
-          p.form-control-static 至
-        .col-sm-4.col-md-3
-          input.form-control(type='datetime-local')
-        .col-sm-9.col-sm-offset-3.col-md-3.col-md-offset-0
+
+      .form-group
+        label.col-sm-3.col-md-2.control-label 活動結束時間
+        .col-sm-9.col-md-5
+          if (promotion.endDate)
+            input.form-control(type='datetime-local',name='endDate',form='shopDiscount',value=promotion.endDate)
+          else
+            input.form-control(type='datetime-local',name='endDate',form='shopDiscount',disabled)
+      
+      .form-group
+        label.col-sm-3.col-md-2.control-label
+        .col-sm-9.col-md-5      
           .checkbox
             label
-              input(type='checkbox')
+              if (promotion.endDate)
+                input(type='checkbox')#noTimeLimit
+              else
+                input(type='checkbox', name='noLimit', checked=(promotion.noLimit || !promotion.endDate))#noTimeLimit
               |  不限時
-      // /form-group
+
       .form-group
         label.col-sm-3.col-md-2.control-label 折扣設定
         .col-sm-4.col-md-3
           .radio
             label
-              input#optionsRadios1(type='radio', name='optionsRadios', value='option1', checked='')
-              input.form-control(type='text', placeholder='請輸入折扣金額')
+              - sails.log.info('=== promotion.discountType ===', promotion.discountType)
+              -if( promotion.discountType == null || promotion.discountType=='price' )
+                input#optionsRadios1(type='radio', name='discountType', value='price', checked='',form='shopDiscount')
+              -else
+                input#optionsRadios1(type='radio', name='discountType', value='price',form='shopDiscount')
+                  
+              input.form-control(type='text',name='price', placeholder='請輸入折扣金額',form='shopDiscount',value= promotion.price)
         .col-sm-1.col-md-1
         .col-sm-4.col-md-3
           .radio
             label
-              input#optionsRadios2(type='radio', name='optionsRadios', value='option2')
+              -if( promotion.discountType=='discount' )
+                input#optionsRadios2(type='radio', name='discountType', value='discount', checked='',form='shopDiscount')
+              -else
+                input#optionsRadios2(type='radio', name='discountType', value='discount',form='shopDiscount')
               .input-group.width-12
-                input.form-control(type='text')
+                input.form-control(type='text',name='discount',form='shopDiscount',value= promotion.discount)
                 span.input-group-addon 折
               // /input-group
       // /form-group
+      .form-group
+        label.col-sm-3.col-md-2.control-label 活動文案
+        .col-sm-9.col-md-10
+          textarea.form-control(rows='3',form='shopDiscount',name='description') #{promotion.description}
+        // /col-sm-9
+      // /form-group
       .m-top-6.text-right
-        a.btn.btn-link.delete-link.btn-lg(href='#', data-toggle='modal', data-target='#modal-delete') 刪除
-        a.btn.btn-green.btn-lg(href='#') 確定
+        a.btn.btn-link.delete-link.btn-lg(href='shop-discount') 取消
+        button#add.btn.btn-green.btn-lg(form='shopDiscount') 確認
       // /text-right
   // /well
   .row
@@ -62,26 +96,36 @@ block body
       form.form-inline
         .form-group
           label 顯示
-          select.form-control
-            option 10
-            option 20
-            option 30
-            option 40
-            option 50
-          label 筆資料（共 90 筆）
+            +pagination-limit
+            
+    .col-md-6.desktop-text-right
+      a#discountAddItem.btn.btn-green(href='promotion/discountAddItem') 加入折扣商品
+
         // /form-group
     // /col-md-6
-    .col-md-6.desktop-text-right
-      a.btn.btn-green(href='shop-discount-add-item') 加入折扣商品
+    //- .col-md-8.desktop-text-right
+    //-   form#search.form-inline.with-pagination(name="search", action="shop-discount-detail", method="get")
+    //-     .form-group.m-right-2
+    //-       label 品牌名稱
+    //-       select.form-control(name='brand',form='search' , value = query.brand?query.brand: 0)
+    //-         option(value=0 selected=(query.brand==0)) 品牌名稱
+    //-         each brand in brands
+    //-           option(value=brand.id selected=(query.brand==brand.id)) #{brand.name}
+    //-     // /form-group
+    //-     .form-group.m-right-2
+    //-       .input-group
+    //-         input#keyword.form-control(type='text',name="keyword",form='search',placeholder='輸入關鍵字',value= query.keyword)
+    //-         +pagination-fields(page, totalPages, limit)
+    //-         span.input-group-btn
+    //-           button.btn.btn-default.p-left-2.p-right-2(type='button', onClick='$("form[name=\'search\']").submit()')
+    //-             span.glyphicon.glyphicon-search
     // /col-md-6
   // /row
   hr.dashed-line
   table.table.table-striped
     thead
       tr
-        th
-          | 類型
-          span.caret
+        th 類型
         th 主圖
         th
           | 商品名稱
@@ -97,54 +141,35 @@ block body
           span.caret
         th
     tbody
-      tr
-        td
-          span.label.label-gray 一般
-        td
-          img.width-6(src='images/demo/shop-item-12-1.jpg')
-        td {product_name}
-        td JC1129
-        td 590
-        td
-          span.text-danger 413
-        td.text-right
-          a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
-            span.glyphicon.glyphicon-remove
-      tr
-        td
-          span.label.label-gray 一般
-        td
-          img.width-6(src='images/demo/shop-item-7-1.jpg')
-        td {product_name}
-        td JC1129
-        td 590
-        td
-          span.text-danger 413
-        td.text-right
-          a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
-            span.glyphicon.glyphicon-remove
-      tr
-        td
-          span.label.label-gray 一般
-        td
-          img.width-6(src='images/demo/shop-item-13-1.jpg')
-        td {product_name}
-        td JC1129
-        td 590
-        td
-          span.text-danger 413
-        td.text-right
-          a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
-            span.glyphicon.glyphicon-remove
+      each product in promotion.Products
+        tr
+          td
+            -if(promotion.type == "flash")
+              span.label.label-default 閃購
+            -else
+              span.label.label-default 一般
+
+          td
+            img.width-6(src= product.photos[0])
+          td= product.name
+          td= product.productNumber
+          if (product.originPrice)
+            td= product.originPrice
+          else
+            td= product.price
+          td
+            span.text-danger= product.price
+          td.text-right
+            a.btn.btn-link.delete-link(data-productId=product.id)
+              span.glyphicon.glyphicon-remove
   hr.dashed-line
   .text-center
     //
       pagination-block
       ==================================================
     ul.list-inline.m-bottom-0.m-top-1
-      li.border-right-1.p-right-2
-        a(href='#') 上一頁
-      li.border-right-1.p-right-2 第 15 之 20
-      li
-        a(href='#') 下一頁
+      +pagination-simple-pager(page, totalPages)
   // /text-center
+block js
+  script(src='/javascripts/common/pagination.js')
+  script(src="/javascripts/admin/shopDiscount.js")

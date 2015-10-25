@@ -78,7 +78,7 @@ block body
           .checkbox
             label
               if (promotion.endDate)
-                input(type='checkbox')#noTimeLimit
+                input(type='checkbox', name='noLimit')#noTimeLimit
               else
                 input(type='checkbox', name='noLimit', checked=(promotion.noLimit || !promotion.endDate))#noTimeLimit
               |  不限時

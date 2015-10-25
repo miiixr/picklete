@@ -2,6 +2,11 @@
 module.exports = (sequelize, DataTypes) ->
   Promotion = sequelize.define('Promotion', {
     title: DataTypes.STRING
+    slogan: DataTypes.STRING
+    createDpt: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    }
     description: DataTypes.STRING
     type: DataTypes.ENUM(
       'flash',

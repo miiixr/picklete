@@ -74,7 +74,7 @@ block body
     // /col-md-6
   // /row
   hr.dashed-line
-  form#shopDiscount.form-horizontal(action="/admin/shop-discount-detail", method="get")
+  form#shopDiscount.form-horizontal(action="/admin/shop-discount-detail?discountType=#{promotion.type}", method="get")
 
     input(type='hidden', name='type', value=promotion.type)
     input(type='hidden', name='id', value=promotion.id)
@@ -88,6 +88,8 @@ block body
     input(type='hidden', name='description', value=promotion.description)
     input(type='hidden', name='noLimit', value=promotion.noLimit)
     input(type='hidden', name='coverPhoto', value=promotion.coverPhoto)
+    input(type='hidden', name='slogan', value=promotion.slogan)
+    input(type='hidden', name='createDpt', value=promotion.createDpt)
     each productId in promotion.productIds
       input(type='hidden', name='productIds', value=productId)
 
