@@ -1,5 +1,16 @@
 (function ($) {
 
+  Number.prototype.formatMoney = function(c, d, t){
+    var n = this, 
+        c = isNaN(c = Math.abs(c)) ? 0 : c, 
+        d = d == undefined ? "." : d, 
+        t = t == undefined ? "," : t, 
+        s = n < 0 ? "-" : "", 
+        i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "", 
+        j = (j = i.length) > 3 ? j % 3 : 0;
+       return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+  };
+
   var cartViewer = $('#cart-viewer');
   var subtotalDiv = $('#subtotal');
   var totalPriceDiv = $('#totalPrice');
@@ -55,7 +66,8 @@
 
     totalPrice = tmpPrice + shippingFee + packingFee;
     console.log('=== calcTatalPrice ===', totalPrice);
-    totalPriceDiv.text(totalPrice);
+    totalPriceDiv.text(totalPrice.formatMoney());
+    totalPriceDiv.data('value', totalPrice);
   }
   // end
 
@@ -78,7 +90,8 @@
 
       totalQuanties += 1;
     });
-    subtotalDiv.text(subtotal);
+    subtotalDiv.text(subtotal.formatMoney());
+    subtotalDiv.data('value', subtotal);
     calcTatalPrice();
     // save new quantities
     Cookies.set('picklete_cart', picklete_cart);
@@ -182,9 +195,13 @@
       liOrderItem = liOrderItem + liPackageService + liPrice + liRemoveItem;
 
       subtotal += parseInt(orderItem.price*orderItem.quantity, 10);
-      subtotalDiv.text(subtotal);
+      
+      subtotalDiv.text(subtotal.formatMoney());
+      subtotalDiv.data('value', subtotal);
+
       totalPrice = subtotal;
-      totalPriceDiv.text(totalPrice);
+      totalPriceDiv.text(totalPrice.formatMoney());
+      totalPriceDiv.data('value', totalPrice);
 
       cartViewer.append(liOrderItem);
     });
@@ -198,9 +215,10 @@
     e.preventDefault();
     var shippingFeeField = $('#shippingFeeField');
     // Normalization
-    shippingFee = parseInt($(this).val(), 10);
+    shippingFee = parseInt($(this).data('value'), 10);
     // show shippingFee to viewfield
     shippingFeeField.text(shippingFee)
+    shippingFeeField.data('value', shippingFee)
     // // 免運
     // if((subtotal + buymore - discountAmount) > shippingFeeFreeThreshold){
     //   // fee-free!
@@ -300,7 +318,7 @@
 
   cartViewerInit();
 
-  console.log('=== cartViewerInit ===');
+  console.log('=== cartViewerInit ===');
 
   var previous = 0;
   $("select.form-control.m-bottom-2").on('focus', function(){
@@ -317,7 +335,7 @@
 
 
   // recalculate price when btnPlus/bntMinus is pressed or clicked.
-  $(".productQuantities").delegate("input","change", function(){
+  $(".productQuantities").delegate("input", "change", function(){
     // calculate price and save cookie before do anything.
     reCalSubtotalPriceAndSaveCookie();
     calcTatalPrice();
