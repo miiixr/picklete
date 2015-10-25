@@ -502,7 +502,7 @@ module.exports = {
       // console.log(ProductQueryObj);
       // console.log(GmQueryObj);
       let products = await db.Product.findAndCountAll(queryObj);
-      sails.log.info("=== productQuery products ===",products.rows[0].dataValues);
+      // sails.log.info("=== productQuery products ===",products.rows[0].dataValues);
       // format datetime
       products.rows = products.rows.map(ProductService.withImage);
       for (let product of products.rows) {

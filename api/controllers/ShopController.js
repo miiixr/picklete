@@ -1,3 +1,4 @@
+import moment from 'moment';
 
 let ShopController = {
 
@@ -18,7 +19,7 @@ let ShopController = {
   },
   list: async(req,res) => {
 
-    let query = req.query
+    let query = req.query;
     query.isPublish = true;
     let limit = await pagination.limit(req);
     let page = await pagination.page(req);
@@ -33,6 +34,12 @@ let ShopController = {
       let dptSubId = query.dptSubId || '';
       let dptId = query.dptId || '';
       let sort = query.sort || '';
+
+      // when not query any items, select recent 3 month products.
+      if (brand == '' && dptSubId == '' && dptId == '') {
+        query.dateEnd = moment().format();
+        query.dateFrom = moment().subtract(3, 'months').format();
+      }
 
       let productsWithCount = await ProductService.productQuery(query, offset, limit);
       let products = productsWithCount.rows || [];
