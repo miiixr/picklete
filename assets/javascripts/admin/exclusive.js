@@ -12,12 +12,6 @@
     });
   });
 
-  // var $type1 = $('.type1')[0].outerHTML;
-  // var $type2 = $('.type2')[0].outerHTML;
-  // var $type3 = $('.type3')[0].outerHTML;
-  // var $type4 = $('.type4')[0].outerHTML;
-
-
   var $type1 = $('#type1')[0].innerHTML;
   var $type2 = $('#type2')[0].innerHTML;
   var $type3 = $('#type3')[0].innerHTML;
@@ -74,12 +68,14 @@
     var finished = true;
     $.each(fileNodes, function (idx, item) {
       
-      if (item.value == '')
+      if (item.value == '') {
+        item.focus();
         finished = false;
+      }
     });
 
     if ( ! finished) {
-      alert("請完整上傳圖片，才能進行儲存！")
+      alert("請等待圖片上傳中，或者尚未選擇圖片！")
       return finished;
     }
 

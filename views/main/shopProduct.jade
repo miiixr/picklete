@@ -166,7 +166,7 @@ block body
                 .tab-content.m-bottom-10.font-size-slarge
                   #p-tab-1.tab-pane.fade.in.active
                     p.m-bottom-4
-                      | #{product.description}
+                      | !{product.ProductGm.explain}
                     p.m-bottom-4
                       | 品牌國家 - #{product.country}
                       br
@@ -218,11 +218,11 @@ block body
                       span.label.label-social.label-pinterest
                         span.glyphicon.glyphicon-pinterest
                   li
-                    a(href="javascript: void(window.open('https:\/\/plus.google.com/share?url='.concat(encodeURIComponent(location.href)), '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600'));", target='_blank')
+                    a(href="javascript:void(window.open('https:\/\/plus.google.com/share?url='.concat(encodeURIComponent(location.href)), '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600'));", target='_blank')
                       span.label.label-social.label-google
                         span.glyphicon.glyphicon-google
                   li
-                    a(href='#', target='_blank')
+                    a(href="javascript:void(window.open('mailto:?subject=分享美好的事與物&body=分享美好的事物給你 '.concat(encodeURIComponent(location.href))));", target='_blank')
                       span.label.label-social.label-mail
                         span.glyphicon.glyphicon-mail
                 // /list-social
