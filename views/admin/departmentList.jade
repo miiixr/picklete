@@ -4,14 +4,22 @@ block body
   .row
     #dpt-big.col-md-3.border-right-1.m-bottom-6
       h4.m-bottom-4.text-gray #{i18n('dpt')}
-      ul.list-group.list-group-edit.list-group-lg
-        each dpt, index in dpts
-          li.list-group-item.edit-link
-            span.glyphicon.glyphicon-menu.m-right-2(data-id='#{dpt.id}')
-            a(href='#', data-toggle='modal', data-id='#{dpt.id}',data-name='#{dpt.name}', class=(dpt.weight == 999)? 'special project': 'dpt name')
-              | #{dpt.name}
+      div.list-group.list-group-edit.list-group-lg
+        ul.list-group
+          ul.dpt
+            each dpt, index in dpts
               -if (dpt.weight != 999)
-                span.glyphicon.glyphicon-pencil2.m-left-1(data-id='#{dpt.id}',data-name='#{dpt.name}')
+                li.list-group-item.edit-link.dptSort(data-weight = '#{dpt.weight}',data-id = '#{dpt.id}')
+                  span.glyphicon.glyphicon-menu.m-right-2(data-id='#{dpt.id}')
+                  a(href='#', data-toggle='modal', data-id='#{dpt.id}',data-name='#{dpt.name}', class=(dpt.weight == 999)? 'special project': 'dpt name')
+                    | #{dpt.name}
+          ul.special
+            each dpt, index in dpts
+              -if (dpt.weight == 999)
+                li.list-group-item.edit-link.dptSort(data-weight = '#{dpt.weight}',data-id = '#{dpt.id}')
+                  span.glyphicon.glyphicon-menu.m-right-2(data-id='#{dpt.id}')
+                  a(href='#', data-toggle='modal', data-id='#{dpt.id}',data-name='#{dpt.name}', class=(dpt.weight == 999)? 'special project': 'dpt name')
+                    | #{dpt.name}
         // /list-group-item
       // /list-group-edit
     // /col-md-3
@@ -20,17 +28,17 @@ block body
         | #{i18n('dpt-sub')}
         a.btn.btn-sm-circle.btn-green.m-left-1(id="plus", href='#', data-toggle='modal', data-target='#modal-control-shop-type-sm')
           span.glyphicon.glyphicon-plus
-      .list-group.list-group-edit()
+      .list-group.list-group-edit.list-group-sm
         DptSubs
         each dpt, val in dpts
-          - var subDptId = (dpt.weight === 999) ? "special" : "subDpt" + val;
+          - var subDptId = (dpt.weight === 999) ? "special" : "subDpt" + dpt.id;
           - var subDptClass = (dpt.weight === 999) ? "special" : "dpt";
-          div(id=subDptId, style="display:none", class=subDptClass) 
+          ul(id=subDptId, style="display:none", class=subDptClass) 
 
             - if (dpt.DptSubs.length)
               each subDpt, index in dpt.DptSubs
-                // /list-group-item
-                .list-group-item.edit-link
+                // /list-group-item 
+                li.list-group-item.edit-link(value=dpt.id ,data-weight = '#{subDpt.weight}',data-id = '#{subDpt.id}')
 
                   - if (subDpt.official)
                       =subDpt.name
