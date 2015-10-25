@@ -45,7 +45,7 @@ $(function() {
       }
     });
 
-    if(select.length==0){
+    if($("input[name='productIds[]']").length == 0 ){
       alert("記得選取折扣項目喔");
       return false;
     }
@@ -80,5 +80,17 @@ $(function() {
     e.preventDefault()
     var formData = $("#shopDiscount").serialize()
     window.location.href = 'promotion/discountAddItem?'+formData;
+  });
+
+  $('.btn.btn-link.delete-link').click(function(e){
+    console.log('deletePorduct click');
+    e.preventDefault()
+
+    var deleteProductId = $(this).attr('data-productId');
+    $(this).closest("tr").remove();
+    $('input[name="productIds[]"][value="'+deleteProductId+'"]')[0].remove();
+
+    console.log('=== deleteProductId ===', deleteProductId);
+
   });
 });

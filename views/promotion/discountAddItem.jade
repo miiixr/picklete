@@ -25,6 +25,7 @@ block body
         form#search.form-inline.with-pagination(name="search", action="promotion/discountAddItem", method="get")
           
           input(type='hidden', name='type', value=promotion.type)
+          input(type='hidden', name='id', value=promotion.id)
           input(type='hidden', name='title', value=promotion.title)
           input(type='hidden', name='filename', value=promotion.filename)
           input(type='hidden', name='discountType', value=promotion.discountType)
@@ -35,8 +36,8 @@ block body
           input(type='hidden', name='description', value=promotion.description)
           input(type='hidden', name='noLimit', value=promotion.noLimit)
           input(type='hidden', name='coverPhoto', value=promotion.coverPhoto)
-          each productId in promotion.productId
-            input(type='hidden', name='productId', value=productId)
+          each productId in promotion.productIds
+            input(type='hidden', name='productIds', value=productId)
               
           .form-group.m-right-2
             label 品牌名稱
@@ -76,6 +77,7 @@ block body
   form#shopDiscount.form-horizontal(action="/admin/shop-discount-detail", method="get")
 
     input(type='hidden', name='type', value=promotion.type)
+    input(type='hidden', name='id', value=promotion.id)
     input(type='hidden', name='title', value=promotion.title)
     input(type='hidden', name='filename', value=promotion.filename)
     input(type='hidden', name='discountType', value=promotion.discountType)
@@ -86,8 +88,8 @@ block body
     input(type='hidden', name='description', value=promotion.description)
     input(type='hidden', name='noLimit', value=promotion.noLimit)
     input(type='hidden', name='coverPhoto', value=promotion.coverPhoto)
-    each productId in promotion.productId
-      input(type='hidden', name='productId', value=productId)
+    each productId in promotion.productIds
+      input(type='hidden', name='productIds', value=productId)
 
     table.table.table-striped
       thead
@@ -111,7 +113,7 @@ block body
         each product in products.rows
           tr
             td
-              input.addSelect(type='checkbox', name='productId', value= product.id, checked=promotion.productId.indexOf(""+product.id)>=0)
+              input.addSelect(type='checkbox', name='productIds', value= product.id, checked=promotion.productIds.indexOf(""+product.id)>=0)
             td
               img.width-6(src= product.photos[0])
             td= product.name

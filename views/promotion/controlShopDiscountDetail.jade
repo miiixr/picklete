@@ -6,10 +6,10 @@ block body
   .well.control-well.p-30.m-bottom-8
     form#shopDiscount.form-horizontal(action="/admin/shopDiscount/create", method="post")
       each product in promotion.Products
-        input(type='hidden', name='productId', value= product.id)
+        input(type='hidden', form='shopDiscount', name='productIds[]', value= product.id)
 
       input(type='hidden', name='type', value='flash', form='shopDiscount')
-      input.form-control(type='hidden',name='id',form='shopDiscount' value= query.id)
+      input(type='hidden',name='id',form='shopDiscount' value= query.id)
       .form-group
         label.col-sm-3.col-md-2.control-label 活動名稱
         .col-sm-9.col-md-10
@@ -35,7 +35,7 @@ block body
                   input(type='hidden', name="filename", value='coverPhoto[]')
                   input(type='hidden', name="width", value='150')
                   input(type='hidden', name="height", value='150')
-                  input(type='hidden', name='coverPhoto[]', form='shopDiscount', value='')
+                  input(type='hidden', name='coverPhoto[]', form='shopDiscount', value=promotion.coverPhoto)
                 a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
 
             //
@@ -188,7 +188,7 @@ block body
           td
             span.text-danger= product.price
           td.text-right
-            a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
+            a.btn.btn-link.delete-link(data-productId=product.id)
               span.glyphicon.glyphicon-remove
   hr.dashed-line
   .text-center

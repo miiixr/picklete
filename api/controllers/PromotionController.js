@@ -38,7 +38,7 @@ let PromotionController = {
       if(promotion.id){
         await PromotionService.update(promotion);
       }else {
-        let createdPromotion = await PromotionService.create(promotion);
+        await PromotionService.create(promotion);
       }
       return res.redirect('admin/shop-discount');
     } catch (error) {
@@ -120,8 +120,8 @@ let PromotionController = {
 
       console.log('==== discountAddItem query ====', query);
 
-      if(!query.hasOwnProperty("productId"))
-        query.productId = [];
+      if(!query.hasOwnProperty("productIds"))
+        query.productIds = [];
 
       let limit = await pagination.limit(req);
       let page = await pagination.page(req);
@@ -184,13 +184,13 @@ let PromotionController = {
 
 
 
-      let promotion = {productId: []};
+      let promotion = {productIds: []};
 
       let isCreatePromotion = (query.id == null);
       if(isCreatePromotion){
         let products = await db.Product.findAll({
           where: {
-            id: query.productId
+            id: query.productIds
           },
           offset: offset,
           limit: limit
@@ -205,7 +205,7 @@ let PromotionController = {
 
         promotion.Products = products;
       } else {
-        let promotion = await db.Promotion.find({
+        promotion = await db.Promotion.find({
           where: {
             id: query.id
           },
@@ -225,70 +225,6 @@ let PromotionController = {
         totalPages: Math.ceil(promotion.Products.length / limit),
         totalRows: promotion.Products.length
       });
-
-
-      // if(promotion){
-      //
-      //   products = await db.Product.findAndCountAll({
-      //     where: queryObj,
-      //     offset: offset,
-      //     limit: limit
-      //   });
-      //
-      //   promotion = await db.Promotion.find({
-      //     where:{
-      //       id: promotion.id
-      //     },
-      //     include:{
-      //       model: db.Product
-      //     }
-      //   });
-      //
-      //   promotion.Products.forEach((promotedProduct) => {
-      //     products.rows.forEach((product) => {
-      //       console.log('=== product.id ==>', product.id, '===  promotedProduct.id ==>', promotedProduct.id);
-      //       if(product.id == promotedProduct.id){
-      //         console.log('=== true ==');
-      //         product.promoted = true;
-      //       }
-      //     });
-      //   });
-      //
-      //   products.rows.forEach((product) => {
-      //     console.log('=== product.id ==>', product.id, '===  product.promoted ==>',product.promoted);
-      //   });
-      //
-      // }else{
-      //   promotion = {
-      //     title: '',
-      //     description: '',
-      //     type: 'flash',
-      //     discountType: 'price',
-      //     startDate: null,
-      //     endDate: null,
-      //     discount: '',
-      //     price: ''
-      //   };
-      //
-      //   if(query.brand && query.brand!=0){
-      //     let findProductGm = await db.ProductGm.findAll({
-      //       where:{
-      //         BrandId: query.brand
-      //       }
-      //     });
-      //     let productGmIds = [];
-      //     findProductGm.forEach((ProductGm) => {
-      //       productGmIds.push(ProductGm.id);
-      //     });
-      //     queryObj.ProductGmId = productGmIds;
-      //   }
-      //
-      //   products = await db.Product.findAndCountAll({
-      //     where: queryObj,
-      //     offset: offset,
-      //     limit: limit
-      //   });
-      // }
 
     } catch (e) {
       console.error(e.stack);
