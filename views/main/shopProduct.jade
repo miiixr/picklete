@@ -184,7 +184,7 @@ block body
                   // /tab-pane
                   #p-tab-3.tab-pane.fade
                     p
-                      | !{productGm.Brand.desc}
+                      | !{productGm.Brand.desc.replace(/\n/g, '<br>')}
                   // /tab-pane
                 // /tab-content
                 h4.m-bottom-4 服務項目 #{product.services}
