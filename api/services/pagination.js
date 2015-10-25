@@ -1,7 +1,7 @@
 
 var self = module.exports = {
   defaultLimitValue: async (req) => {
-    let defaultLimitValue = 10;
+    let defaultLimitValue = 20;
 
     //todo: this is not good, let controller pass a defaultLimit params into
     if (req.options.controller == 'shop' && req.options.action == 'list') {
