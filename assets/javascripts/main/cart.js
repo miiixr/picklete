@@ -42,7 +42,7 @@
 
     // 免運
     if(parseInt(tmpPrice)>parseInt(shippingFeeFreeThreshold)){
-      $("#shippingFeeField").text('滿額免運');
+      $("#shippingFeeField").text('免運');
       shippingFeeFree = true;
       shippingFee = 0;
     }else{
@@ -123,14 +123,14 @@
 
         '    <div class="col-xs-8 col-sm-8 col-md-3 desktop-m-top-4 m-bottom-1 mobile-min-height-100">' +
         '      <h6 class="text-muted text-roboto letter-spacing-1 m-bottom-1-min">' +
-        '        <a href="/brands">'+ orderItem.brand +'</a>' +
+        '        <a href="/brands">'+ orderItem.brandname +'</a>' +
         '      </h6>' +
         '      <h5 class="text-roboto letter-spacing-1 m-top-1-min">' +
         '        <a href="/shop/products/'+orderItem.productGmId+'/'+orderItem.ProductId+'">'+ orderItem.name +'</a>' +
         '      </h5>' +
         '    </div>' +
-
-        '    <div class="col-xs-6 col-sm-3 col-md-2 desktop-p-right-0 desktop-text-center desktop-m-top-5 m-bottom-2">商品數量' +
+                         
+        '    <div class="col-xs-6 col-sm-3 col-md-2 desktop-p-left-0 desktop-m-top-5 m-bottom-2">' +
         '      <div class="productQuantities input-group input-group-count max-width-150"><span class="input-group-btn">' +
         '        <button type="button" data-type="minus" data-field="quant['+index+']" class="btn btn-default btn-number p-left-2 p-right-2"><span class="glyphicon glyphicon-minus"></span></button></span>' +
         '        <input type="text" name="quant['+index+']" value="'+orderItem.quantity+'" min="1" max="10" class="form-control input-number text-center font-size-slarge"><span class="input-group-btn">' +
@@ -149,17 +149,19 @@
       }else{
           packableItemTotal.push(index);
           liPackageService =
-            '    <div class="col-xs-6 col-sm-3 col-md-2 desktop-p-right-0 desktop-text-center desktop-m-top-5 m-bottom-2">禮品包裝' +
-            '      <div class="packingQuantities input-group max-width-150">'+
-            '       <span class="input-group-btn">' +
-            '        <select class="form-control text-center font-size-slarge"  name="packingSelect['+index+']">'+
-            '         <option value="0">0</option>';
+
+            '    <div class="col-xs-6 col-sm-3 col-md-2 desktop-p-right-0 desktop-text-center desktop-m-top-5 m-bottom-2">' +
+            '      <div class="form-inline">'+
+            '        <div class="packingQuantities form-group m-bottom-0">'+
+            '         <label>包裝</label>'+
+            '         <select class="form-control m-left-1 font-size-slarge"  name="packingSelect['+index+']">'+
+            '           <option value="0">0</option>';
           for(var i=1;i<parseInt(orderItem.quantity)+1;i++){
             liPackageServiceOptions += '<option value="'+i+'">'+i+'</option>';
           };
           liPackageServiceEnd =
-            '        </select>'+
-              '     </span>'+
+            '         </select>'+
+            '        </div>' +
             '      </div>' +
             '    </div>';
         }
@@ -203,7 +205,7 @@
     // if((subtotal + buymore - discountAmount) > shippingFeeFreeThreshold){
     //   // fee-free!
     //   shippingFeeFree = true;
-    //   $("#shippingFeeField").text('滿額免運');
+    //   $("#shippingFeeField").text('免運');
     // }else{
     //   shippingFeeFree = false;
     //   // set cookie
