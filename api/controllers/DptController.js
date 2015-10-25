@@ -41,15 +41,20 @@ let DptController = {
     var sort = req.body.sort;
     var id = req.body.id;
     
-    for (var index in id){
-     await db.Dpt.update({
-      weight: sort[index],
-      },{
-        where: {
-          id: id[index]
-        }
-      });
-     };
+    try {
+      for (var index in id){
+       await db.Dpt.update({
+        weight: sort[index],
+        },{
+          where: {
+            id: id[index]
+          }
+        });
+      };  
+      return res.json({status: 'ok'});
+    }catch (e) {
+      return res.json({status: 'fail'});
+    }
   }
 };
 
