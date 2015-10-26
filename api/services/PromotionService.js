@@ -44,16 +44,8 @@ module.exports = {
 
       // create promotion
       let createdPromotion = await db.Promotion.create(promotion);
-      console.log('=== createdPromotion ==>',createdPromotion);
 
-      // set products to promotion
-      let products = await* promotion.productIds.map(async (productId)=>{
-        // find product
-        let findProduct = await db.Product.findById(productId);
-        // set products
-        await createdPromotion.setProducts([findProduct]);
-        return createdPromotion;
-      });
+      await createdPromotion.setProducts(promotion.productIds);
 
       return createdPromotion;
     } catch (e) {
@@ -61,7 +53,20 @@ module.exports = {
       return false;
     }
   },
-  // end create
+
+  createDpt: async ({promotion, productIds}) => {
+    let products = await db.Product.findAll({
+      where: {
+        id: productIds
+      }
+    });
+
+    products.map((product)=> {
+      console.log(product);
+    });
+
+  },
+
 
   // update
   update: async (promotion) => {
@@ -187,6 +192,8 @@ module.exports = {
                 console.log('=== promotion.price ==>',promotion.price);
                 product.price = parseInt(product.price - promotion.price);
               }
+
+              if(product.price < 0) product.price = 0;
             } // end if
           }); // end forEach
         }); // end forEach
