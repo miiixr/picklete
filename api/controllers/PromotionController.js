@@ -81,22 +81,24 @@ let PromotionController = {
   addPurchaseUpdate: async (req, res) => {
     let data = req.body;
     try {
-      console.log("data",data);
+      sails.log.info("=== shopBuyMore create ===",data);
       let products = await* data.productIds.map(async (productId)=>{
-        let findProductGm = await db.ProductGm.findById(productId);
+        let findProduct = await db.Product.findById(productId);
         let additionalPurchase = {};
-        additionalPurchase.name = findProductGm.name;
+        additionalPurchase.name = findProduct.name;
         if(data.discount!='')
           additionalPurchase.discount = data.discount;
         if(data.reducePrice!='')
           additionalPurchase.reducePrice = data.reducePrice;
-        additionalPurchase.startDate = data.startDate;
-        additionalPurchase.endDate = data.endDate;
+        if(!data.restrictionDate){
+          additionalPurchase.startDate = data.startDate;
+          additionalPurchase.endDate = data.endDate;
+        }
         additionalPurchase.limit = data.limit;
         additionalPurchase.type = data.type;
         let addPurchase = await db.AdditionalPurchase.create(additionalPurchase);
-        await addPurchase.setProductGms([findProductGm]);
-        return findProductGm;
+        await addPurchase.setProducts([findProduct]);
+        return findProduct;
       });
       return res.ok();
     } catch (error) {
@@ -239,7 +241,7 @@ let PromotionController = {
           limit:0
         },
         include:{
-          model: db.ProductGm
+          model: db.Product
         },
         offset: offset,
         limit: limit
@@ -250,7 +252,7 @@ let PromotionController = {
           limit:1500
         },
         include:{
-          model: db.ProductGm
+          model: db.Product
         }
       });
 
@@ -302,7 +304,7 @@ let PromotionController = {
       queryObj.BrandId= query.brand;
     }
 
-    let additionalPurchase = await db.ProductGm.findAndCountAll({
+    let additionalPurchase = await db.Product.findAndCountAll({
       where: queryObj,
       offset: page * limit,
       limit: limit

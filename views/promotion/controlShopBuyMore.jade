@@ -44,20 +44,19 @@ block body
             th
         tbody
           each purchase in additionalPurchaseNoLimit.rows
-            -sails.log.info(purchase)
             tr
               td
-                img.width-6(src= purchase.ProductGms[0].coverPhoto[0])
+                img.width-6(src= purchase.Products[0].photos[0])
               td #{purchase.name}
               td #{purchase.id}
               td 590
               td
                 span.text-danger 490
-              td #{purchase.discount}
+              td #{purchase.discount || purchase.reducePrice} #{purchase.discount?'折':'元'}
               td
-                | #{sails.moment(purchase.startDate).format('YYYY/MM/DD')}
+                | #{purchase.startDate ? sails.moment(purchase.startDate).format('YYYY/MM/DD') : '不限時'}
                 br
-                | #{sails.moment(purchase.endDate).format('YYYY/MM/DD')}
+                | #{purchase.endDate ? sails.moment(purchase.endDate).format('YYYY/MM/DD') : '不限時'}
               td.text-right
                 a.btn.btn-link(href='../admin/shop-buy-more-add-item?keyword='+ purchase.name)
                   span.glyphicon.glyphicon-pencil2
@@ -112,17 +111,17 @@ block body
           each purchase in additionalPurchaseLimit
             tr
               td
-                img.width-6(src= purchase.ProductGms[0].coverPhoto[0])
+                img.width-6(src= purchase.Products[0].photos[0])
               td #{purchase.name}
               td #{purchase.id}
               td 590
               td
                 span.text-danger 490
-              td #{purchase.discount}
+              td #{purchase.discount || purchase.reducePrice} #{purchase.discount?'折':'元'}
               td
-                | #{sails.moment(purchase.startDate).format('YYYY/MM/DD')}
+                | #{purchase.startDate ? sails.moment(purchase.startDate).format('YYYY/MM/DD') : '不限時'}
                 br
-                | #{sails.moment(purchase.endDate).format('YYYY/MM/DD')}
+                | #{purchase.endDate ? sails.moment(purchase.endDate).format('YYYY/MM/DD') : '不限時'}
               td.text-right
                 a.btn.btn-link(href='../admin/shop-buy-more-add-item?keyword='+ purchase.name)
                   span.glyphicon.glyphicon-pencil2

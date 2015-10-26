@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) ->
       'discount'
     )
   }, classMethods: associate: (models) ->
-    AdditionalPurchase.belongsToMany models.ProductGm, through: 'AdditionalPurchaseProductGm'
+    AdditionalPurchase.belongsToMany models.Product, through: 'AdditionalPurchaseProduct'
     return
   )
   return AdditionalPurchase
