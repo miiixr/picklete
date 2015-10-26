@@ -32,7 +32,7 @@ let PromotionController = {
   // end list
 
   // create
-  create: async (req, res) => {
+  save: async (req, res) => {
     let promotion = req.body;
     try {
       if(promotion.id){
@@ -48,21 +48,6 @@ let PromotionController = {
     }
   },
   // end create
-
-  // update
-  update: async (req, res) => {
-    let promotion = req.body;
-    try {
-      console.log("!!!",promotion);
-      await PromotionService.update(promotion);
-      return res.redirect('promotion/controlShopDiscount');
-    } catch (error) {
-      console.error('=== update error stack ==>',error.stack);
-      let msg = error.message;
-      return res.serverError({msg});
-    }
-  },
-  // end update
 
   // delete
   delete: async (req, res) => {
