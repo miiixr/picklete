@@ -173,7 +173,8 @@
     var totalPrice = 0;
 
     picklete_cart.orderItems.forEach(function(orderItem){
-
+      var price = parseInt(orderItem.price, 10);
+      
       var liOrderItem =
         '<li>' +
         '  <div class="row">' +
@@ -187,7 +188,7 @@
         '    <div class="col-xs-8 p-left-0">' +
         '      <h6 class="text-muted"><a href="/brands">'+orderItem.brandname+'</a></h6>' +
         '      <h5><a href="/shop/products/'+orderItem.productGmId+'/'+orderItem.ProductId+'">'+orderItem.brand+"-"+orderItem.name+'</a></h5>' +
-        '      <h5>$ '+orderItem.price+'</h5>' +
+        '      <h5>$ '+ price.formatMoney() +'</h5>' +
         '    </div>' +
         '  </div>' +
         '</li>';
@@ -203,7 +204,7 @@
       '<li>' +
       '  <div class="row">' +
       '    <div class="col-xs-6">' +
-      '      <h2 class="text-center text-black line-height-small m-top-0 m-bottom-0">$ '+totalPrice+'<br><small class="font-size-50">subtotal</small></h2>' +
+      '      <h2 class="text-center text-black line-height-small m-top-0 m-bottom-0">$ '+ totalPrice.formatMoney() +'<br><small class="font-size-50">subtotal</small></h2>' +
       '    </div>' +
       '    <div class="col-xs-6"><a href="/user/cart" class="btn btn-black border-radius-circle btn-block">結帳</a></div>' +
       '  </div>' +
