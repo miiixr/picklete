@@ -187,6 +187,8 @@ module.exports = {
                 console.log('=== promotion.price ==>',promotion.price);
                 product.price = parseInt(product.price - promotion.price);
               }
+
+              if(product.price < 0) product.price = 0;
             } // end if
           }); // end forEach
         }); // end forEach

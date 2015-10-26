@@ -155,7 +155,7 @@ let PromotionController = {
         limit: limit
       });
 
-      products = await PromotionService.productPriceTransPromotionPrice(new Date(), products);
+      products.rows = await PromotionService.productPriceTransPromotionPrice(new Date(), products.rows);
 
       res.view('promotion/discountAddItem',{
         pageName: "shop-item-add",
@@ -220,6 +220,18 @@ let PromotionController = {
           promotion.endDate = promotion.endDate.toISOString().replace('Z', '');
         if(promotion.startDate)
           promotion.startDate = promotion.startDate.toISOString().replace('Z', '');
+
+        if(query.productIds){
+          let products = await db.Product.findAll({
+            where: {
+              id: query.productIds
+            },
+            offset: offset,
+            limit: limit
+          });
+
+          promotion.Products = products;
+        }
 
 
       }
