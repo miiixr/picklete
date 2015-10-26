@@ -5,8 +5,11 @@ block body
   h2.m-bottom-6 閃購活動
   .well.control-well.p-30.m-bottom-8
     form#shopDiscount.form-horizontal(action="/admin/shopDiscount/create", method="post")
+      each product in promotion.Products
+        input(type='hidden', form='shopDiscount', name='productIds[]', value= product.id)
+
       input(type='hidden', name='type', value='flash', form='shopDiscount')
-      input.form-control(type='hidden',name='id',form='shopDiscount' value= query.id)
+      input(type='hidden',name='id',form='shopDiscount' value= query.id)
       .form-group
         label.col-sm-3.col-md-2.control-label 活動名稱
         .col-sm-9.col-md-10
@@ -32,7 +35,7 @@ block body
                   input(type='hidden', name="filename", value='coverPhoto[]')
                   input(type='hidden', name="width", value='150')
                   input(type='hidden', name="height", value='150')
-                  input(type='hidden', name='coverPhoto[]', form='shopDiscount', value='')
+                  input(type='hidden', name='coverPhoto[]', form='shopDiscount', value=promotion.coverPhoto)
                 a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
 
             //
@@ -56,18 +59,18 @@ block body
         label.col-sm-3.col-md-2.control-label 活動起始時間
         .col-sm-9.col-md-5
           if (promotion.endDate)
-            input.form-control(type='date',name='startDate',form='shopDiscount',value= sails.moment(promotion.startDate).format('YYYY-MM-DD'))
+            input.form-control(type='datetime-local',name='startDate',form='shopDiscount',value=promotion.startDate)
           else
-            input.form-control(type='date',name='startDate',form='shopDiscount',disabled)
+            input.form-control(type='datetime-local',name='startDate',form='shopDiscount',disabled)
         .col-sm-1.col-md-1.p-left-0.p-right-0.text-center
 
       .form-group
         label.col-sm-3.col-md-2.control-label 活動結束時間
         .col-sm-9.col-md-5
           if (promotion.endDate)
-            input.form-control(type='date',name='endDate',form='shopDiscount',value= sails.moment(promotion.endDate).format('YYYY-MM-DD'))
+            input.form-control(type='datetime-local',name='endDate',form='shopDiscount',value=promotion.endDate)
           else
-            input.form-control(type='date',name='endDate',form='shopDiscount',disabled)
+            input.form-control(type='datetime-local',name='endDate',form='shopDiscount',disabled)
       
       .form-group
         label.col-sm-3.col-md-2.control-label
@@ -75,9 +78,9 @@ block body
           .checkbox
             label
               if (promotion.endDate)
-                input(type='checkbox')#noTimeLimit
+                input(type='checkbox', name='noLimit')#noTimeLimit
               else
-                input(type='checkbox', checked='true')#noTimeLimit
+                input(type='checkbox', name='noLimit', checked=(promotion.noLimit || !promotion.endDate))#noTimeLimit
               |  不限時
 
       .form-group
@@ -85,10 +88,12 @@ block body
         .col-sm-4.col-md-3
           .radio
             label
-              -if( promotion.discountType=='price' )
+              - sails.log.info('=== promotion.discountType ===', promotion.discountType)
+              -if( promotion.discountType == null || promotion.discountType=='price' )
                 input#optionsRadios1(type='radio', name='discountType', value='price', checked='',form='shopDiscount')
               -else
                 input#optionsRadios1(type='radio', name='discountType', value='price',form='shopDiscount')
+                  
               input.form-control(type='text',name='price', placeholder='請輸入折扣金額',form='shopDiscount',value= promotion.price)
         .col-sm-1.col-md-1
         .col-sm-4.col-md-3
@@ -115,37 +120,40 @@ block body
       // /text-right
   // /well
   .row
-    .col-md-4
+    .col-md-6
       form.form-inline
         .form-group
           label 顯示
             +pagination-limit
+            
+    .col-md-6.desktop-text-right
+      a#discountAddItem.btn.btn-green(href='promotion/discountAddItem') 加入折扣商品
+
         // /form-group
     // /col-md-6
-    .col-md-8.desktop-text-right
-      form#search.form-inline.with-pagination(name="search", action="shop-discount-detail", method="get")
-        .form-group.m-right-2
-          label 品牌名稱
-          select.form-control(name='brand',form='search' , value = query.brand?query.brand: 0)
-            option(value=0 selected=(query.brand==0)) 品牌名稱
-            each brand in brands
-              option(value=brand.id selected=(query.brand==brand.id)) #{brand.name}
-        // /form-group
-        .form-group.m-right-2
-          .input-group
-            input#keyword.form-control(type='text',name="keyword",form='search',placeholder='輸入關鍵字',value= query.keyword)
-            +pagination-fields(page, totalPages, limit)
-            span.input-group-btn
-              button.btn.btn-default.p-left-2.p-right-2(type='button', onClick='$("form[name=\'search\']").submit()')
-                span.glyphicon.glyphicon-search
+    //- .col-md-8.desktop-text-right
+    //-   form#search.form-inline.with-pagination(name="search", action="shop-discount-detail", method="get")
+    //-     .form-group.m-right-2
+    //-       label 品牌名稱
+    //-       select.form-control(name='brand',form='search' , value = query.brand?query.brand: 0)
+    //-         option(value=0 selected=(query.brand==0)) 品牌名稱
+    //-         each brand in brands
+    //-           option(value=brand.id selected=(query.brand==brand.id)) #{brand.name}
+    //-     // /form-group
+    //-     .form-group.m-right-2
+    //-       .input-group
+    //-         input#keyword.form-control(type='text',name="keyword",form='search',placeholder='輸入關鍵字',value= query.keyword)
+    //-         +pagination-fields(page, totalPages, limit)
+    //-         span.input-group-btn
+    //-           button.btn.btn-default.p-left-2.p-right-2(type='button', onClick='$("form[name=\'search\']").submit()')
+    //-             span.glyphicon.glyphicon-search
     // /col-md-6
   // /row
   hr.dashed-line
   table.table.table-striped
     thead
       tr
-        th
-          input(type='checkbox')
+        th 類型
         th 主圖
         th
           | 商品名稱
@@ -161,14 +169,14 @@ block body
           span.caret
         th
     tbody
-      each product in products.rows
+      each product in promotion.Products
         tr
           td
-            //- each promotedProduct in promotion.Products
-            -if(product.promoted)
-              input.addSelect(type='checkbox' , checked='',value= product.id)
+            -if(promotion.type == "flash")
+              span.label.label-default 閃購
             -else
-              input.addSelect(type='checkbox' ,value= product.id)
+              span.label.label-default 一般
+
           td
             img.width-6(src= product.photos[0])
           td= product.name
@@ -180,7 +188,7 @@ block body
           td
             span.text-danger= product.price
           td.text-right
-            a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
+            a.btn.btn-link.delete-link(data-productId=product.id)
               span.glyphicon.glyphicon-remove
   hr.dashed-line
   .text-center

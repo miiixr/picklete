@@ -92,14 +92,13 @@ module.exports = {
         updatePromoiton.price = promotion.price;
       }
       updatePromoiton.discountType = promotion.discountType;
+      updatePromoiton.coverPhoto = promotion.coverPhoto;
 
-      let products = await* promotion.productIds.map(async (productId)=>{
-        let findProduct = await db.Product.findById(productId);
-        await updatePromoiton.setProducts([findProduct]);
-        return updatePromoiton;
-      });
 
       await updatePromoiton.save();
+      await updatePromoiton.setProducts(promotion.productIds);
+
+
       return updatePromoiton;
     } catch (e) {
       console.log('=== update err ==>',e.stack);

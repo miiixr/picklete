@@ -44,7 +44,7 @@ let ShopController = {
       let productsWithCount = await ProductService.productQuery(query, offset, limit);
       let products = productsWithCount.rows || [];
       // sails.log.info('=== shop products ===',products);
-      products = await PromotionService.productPriceTransPromotionPrice(new Date(), products);;
+      products = await PromotionService.productPriceTransPromotionPrice(new Date(), products);
 
       let brands = await db.Brand.findAll({order: 'weight ASC',});
       let dpts = await DptService.findAll();
