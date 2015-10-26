@@ -257,7 +257,7 @@ describe("about Shop Discount", function() {
     });
 
 
-    it.only('promotions createDpt', async (done) => {
+    it('promotions createDpt', async (done) => {
       try {
 
 
