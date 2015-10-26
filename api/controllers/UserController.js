@@ -168,7 +168,8 @@ let UserController = {
 
       let date = new Date();
       let query = {date, paymentTotalAmount};
-      let additionalPurchaseProductGms = await AdditionalPurchaseService.getProductGms(query);
+      let additionalPurchaseProductGms = []
+      // let additionalPurchaseProductGms = await AdditionalPurchaseService.getProductGms(query);
       console.log('=== additionalPurchaseProducts ===', additionalPurchaseProductGms);
 
       // add an item for Shippings

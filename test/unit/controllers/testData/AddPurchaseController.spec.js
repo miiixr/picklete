@@ -54,7 +54,7 @@ describe('Add Purchase', () => {
     request(sails.hooks.http.app)
       .put(`/admin/buymoreUpdate`)
       .send({
-         limit: '0',
+          activityLimit: '0',
           type: 'reduce',
           startDate: '2015-09-10',
           endDates: '2015-09-30',

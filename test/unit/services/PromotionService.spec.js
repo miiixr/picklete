@@ -240,7 +240,7 @@ describe("about Shop Discount", function() {
       try {
         // find product by given ProductGmId
         let findProducts = [createdProduct3];
-
+        findProducts = findProducts.
         // processing with productPriceTransPromotionPrice
         let pricedProducts = await PromotionService.productPriceTransPromotionPrice(date2, findProducts);
         pricedProducts.should.be.Array;
