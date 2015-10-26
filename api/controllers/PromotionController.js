@@ -294,13 +294,76 @@ let PromotionController = {
       return res.serverError({message, success});
     }
   },
-  controlShopBuyMoreDetail: function(req, res) {
-    console.log('req',req.query);
-    res.view('promotion/controlShopBuyMoreDetail',{
-      pageName: "shop-buy-more-detail"
-    });
+
+  // controlShopBuyMoreDetail: function(req, res) {
+  //   console.log('req',req.query);
+  //   res.view('promotion/controlShopBuyMoreDetail',{
+  //     pageName: "shop-buy-more-detail"
+  //   });
+  // },
+
+  buyMoreAddItem: async function(req, res) {
+
+    try {
+      let query = req.query;
+      let queryObj = {};
+
+      console.log('==== buyMoreAddItem query ====', query);
+
+      if(!query.hasOwnProperty("productIds"))
+        query.productIds = [];
+
+      let limit = await pagination.limit(req);
+      let page = await pagination.page(req);
+      let offset = await pagination.offset(req);
+      let brands = await db.Brand.findAll();
+
+      if(query.keyword)
+        queryObj.name = { 'like': '%'+query.keyword+'%'};
+      else
+        query.keyword = ''
+
+      if(query.brand && query.brand!=0){
+        let findProductGm = await db.ProductGm.findAll({
+          where:{
+            BrandId: query.brand
+          }
+        });
+        let productGmIds = [];
+        findProductGm.forEach((ProductGm) => {
+          productGmIds.push(ProductGm.id);
+        });
+        queryObj.ProductGmId = productGmIds;
+      }
+
+      console.log('==== queryObj ====', queryObj);
+
+
+      let products = await db.Product.findAndCountAll({
+        where: queryObj,
+        offset: offset,
+        limit: limit
+      });
+
+      products = await PromotionService.productPriceTransPromotionPrice(new Date(), products);
+
+      res.view('promotion/buyMoreAddItem',{
+        pageName: "shop-item-add",
+        query,
+        limit,
+        page,
+        products,
+        brands,
+        promotion: query,
+        totalPages: Math.ceil(products.count / limit),
+        totalRows: products.count
+      });
+    } catch (e) {
+      return res.serverError(e);
+    }
   },
-  controlShopBuyMoreAddItem: async (req, res) => {
+
+  controlShopBuyMoreDetail: async (req, res) => {
     console.log('query',req.query);
     let query = req.query;
     let queryObj = {};
@@ -333,7 +396,7 @@ let PromotionController = {
     });
 
     // let additionalPurchase = await db.AdditionalPurchase.findAll();
-    res.view('promotion/controlShopBuyMoreAddItem',{
+      res.view('promotion/controlShopBuyMoreAddItem',{
       pageName: "shop-buy-more-add-item",
       brands,
       additionalPurchase,

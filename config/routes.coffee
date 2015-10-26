@@ -131,9 +131,11 @@ module.exports.routes = {
   'post /admin/shopDiscount/create' : 'PromotionController.create'
   'get /admin/shop-discount-detail' : 'PromotionController.controlShopDiscountDetail'
   'get /admin/promotion/discountAddItem' : 'PromotionController.discountAddItem'
+
   'get /admin/shop-buy-more' : 'PromotionController.controlShopBuyMore'
-  'get /admin/shop-buy-more-detail' : 'PromotionController.controlShopBuyMoreDetail'
-  'get /admin/shop-buy-more-add-item' : 'PromotionController.controlShopBuyMoreAddItem'
+  'get /admin/buymore/detail' : 'PromotionController.controlShopBuyMoreDetail'
+  'get /admin/buymore/buyMoreAddItem' : 'PromotionController.buyMoreAddItem'
+  
   'put /admin/buymoreUpdate' : 'PromotionController.addPurchaseUpdate'
   'get /admin/shop-report-form' : 'PromotionController.controlShopReportForm'
 

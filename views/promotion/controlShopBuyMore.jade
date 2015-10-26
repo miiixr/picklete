@@ -3,7 +3,7 @@ include ../mixins/pagination
 
 block body
   h2.m-bottom-6 加價購
-  a.btn.btn-danger.btn-lg.m-bottom-6(href='shop-buy-more-add-item') 建立加價購
+  a.btn.btn-danger.btn-lg.m-bottom-6(href='buymore/detail') 建立加價購
   ul.nav.nav-tabs.m-bottom-4
     li.active
       a(href='#tab-1', data-toggle='tab') 不限金額
@@ -58,7 +58,7 @@ block body
                 br
                 | #{purchase.endDate ? sails.moment(purchase.endDate).format('YYYY/MM/DD') : '不限時'}
               td.text-right
-                a.btn.btn-link(href='../admin/shop-buy-more-add-item?keyword='+ purchase.name)
+                a.btn.btn-link(href='../admin/buymore/detail?keyword='+ purchase.name)
                   span.glyphicon.glyphicon-pencil2
                 a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
                   span.glyphicon.glyphicon-remove
@@ -123,7 +123,7 @@ block body
                 br
                 | #{purchase.endDate ? sails.moment(purchase.endDate).format('YYYY/MM/DD') : '不限時'}
               td.text-right
-                a.btn.btn-link(href='../admin/shop-buy-more-add-item?keyword='+ purchase.name)
+                a.btn.btn-link(href='../admin/buymore/detail?keyword='+ purchase.name)
                   span.glyphicon.glyphicon-pencil2
                 a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
                   span.glyphicon.glyphicon-remove

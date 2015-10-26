@@ -67,22 +67,25 @@ block body
           label 筆資料（共 #{additionalPurchase.count} 筆）
         // /form-group
     // /col-md-6
+    
     .col-md-8.desktop-text-right
-      form.form-inline(name="search", action="shop-buy-more-add-item", method="get")
-        .form-group.m-right-2
-          label 品牌名稱
-          select.form-control(name='brand' , value = query.brand?query.brand: 0)
-            option(value=0 selected=(query.brand==0)) 品牌名稱
-            each brand in brands
-              option(value=brand.id selected=(query.brand==brand.id)) #{brand.name}
-        // /form-group
-        .form-group.m-right-2
-          .input-group
-            input#keyword.form-control(type='text',name="keyword",placeholder='輸入關鍵字',value = query.keyword)
-            input(type='hidden', name='page',value = page)
-            span.input-group-btn
-              button.btn.btn-default.p-left-2.p-right-2(type='button', onClick='$("form[name=\'search\']").submit()')
-                span.glyphicon.glyphicon-search
+      a#discountAddItem.btn.btn-green(href='buyMoreAddItem') 加入折扣商品
+    //- .col-md-8.desktop-text-right
+    //-   form.form-inline(name="search", action="shop-buy-more-add-item", method="get")
+    //-     .form-group.m-right-2
+    //-       label 品牌名稱
+    //-       select.form-control(name='brand' , value = query.brand?query.brand: 0)
+    //-         option(value=0 selected=(query.brand==0)) 品牌名稱
+    //-         each brand in brands
+    //-           option(value=brand.id selected=(query.brand==brand.id)) #{brand.name}
+    //-     // /form-group
+    //-     .form-group.m-right-2
+    //-       .input-group
+    //-         input#keyword.form-control(type='text',name="keyword",placeholder='輸入關鍵字',value = query.keyword)
+    //-         input(type='hidden', name='page',value = page)
+    //-         span.input-group-btn
+    //-           button.btn.btn-default.p-left-2.p-right-2(type='button', onClick='$("form[name=\'search\']").submit()')
+    //-             span.glyphicon.glyphicon-search
     // /col-md-6
   // /row
   hr.dashed-line
