@@ -44,24 +44,28 @@ block body
             th
         tbody
           each purchase in additionalPurchaseNoLimit.rows
-            tr
-              td
-                img.width-6(src= purchase.Products[0].photos[0])
-              td #{purchase.name}
-              td #{purchase.id}
-              td 590
-              td
-                span.text-danger 490
-              td #{purchase.discount || purchase.reducePrice} #{purchase.discount?'折':'元'}
-              td
-                | #{purchase.startDate ? sails.moment(purchase.startDate).format('YYYY/MM/DD') : '不限時'}
-                br
-                | #{purchase.endDate ? sails.moment(purchase.endDate).format('YYYY/MM/DD') : '不限時'}
-              td.text-right
-                a.btn.btn-link(href='../admin/buymore/detail?id='+ purchase.id)
-                  span.glyphicon.glyphicon-pencil2
-                a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
-                  span.glyphicon.glyphicon-remove
+            each product in purchase.Products
+              tr
+                td
+                  img.width-6(src= product.photos[0])
+                td #{product.name}
+                td #{product.id}
+                td #{product.price}
+                if purchase.type == 'discount'
+                  td
+                    span.text-danger #{Math.ceil(product.price * (purchase.discount*0.1))}
+                  td #{purchase.discount} 折
+                else
+                  td
+                    span.text-danger #{product.price - purchase.reducePrice}
+                  td #{purchase.reducePrice} 元
+                td
+                  | #{purchase.startDate ? sails.moment(purchase.startDate).format('YYYY/MM/DD') : '不限時'}
+                  br
+                  | #{purchase.endDate ? sails.moment(purchase.endDate).format('YYYY/MM/DD') : '不限時'}
+                td.text-right
+                  a.btn.btn-link(href='../admin/buymore/detail?id='+ purchase.id)
+                    span.glyphicon.glyphicon-pencil2
       hr.dashed-line
       .text-center
         //
@@ -109,24 +113,28 @@ block body
             th
         tbody
           each purchase in additionalPurchaseLimit
-            tr
-              td
-                img.width-6(src= purchase.Products[0].photos[0])
-              td #{purchase.name}
-              td #{purchase.id}
-              td 590
-              td
-                span.text-danger 490
-              td #{purchase.discount || purchase.reducePrice} #{purchase.discount?'折':'元'}
-              td
-                | #{purchase.startDate ? sails.moment(purchase.startDate).format('YYYY/MM/DD') : '不限時'}
-                br
-                | #{purchase.endDate ? sails.moment(purchase.endDate).format('YYYY/MM/DD') : '不限時'}
-              td.text-right
-                a.btn.btn-link(href='../admin/buymore/detail?id='+ purchase.id)
-                  span.glyphicon.glyphicon-pencil2
-                a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
-                  span.glyphicon.glyphicon-remove
+            each product in purchase.Products
+              tr
+                td
+                  img.width-6(src= product.photos[0])
+                td #{product.name}
+                td #{product.id}
+                td #{product.price}
+                if purchase.type == 'discount'
+                  td
+                    span.text-danger #{Math.ceil(product.price * (purchase.discount*0.1))}
+                  td #{purchase.discount} 折
+                else
+                  td
+                    span.text-danger #{product.price - purchase.reducePrice}
+                  td #{purchase.reducePrice} 元
+                td
+                  | #{purchase.startDate ? sails.moment(purchase.startDate).format('YYYY/MM/DD') : '不限時'}
+                  br
+                  | #{purchase.endDate ? sails.moment(purchase.endDate).format('YYYY/MM/DD') : '不限時'}
+                td.text-right
+                  a.btn.btn-link(href='../admin/buymore/detail?id='+ purchase.id)
+                    span.glyphicon.glyphicon-pencil2
       hr.dashed-line
       .text-center
         //

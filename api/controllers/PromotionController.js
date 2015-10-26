@@ -79,6 +79,7 @@ let PromotionController = {
       }
       // additionalPurchase.name = findProduct.name;
       if(data.discount!='')
+        if(data.discount>10) data.discount*=0.1;
         additionalPurchase.discount = data.discount;
       if(data.reducePrice!='')
         additionalPurchase.reducePrice = data.reducePrice;

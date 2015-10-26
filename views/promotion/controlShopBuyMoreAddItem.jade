@@ -53,7 +53,7 @@ block body
         .col-sm-4.col-md-3
           .radio
             label
-              if query.reducePrice
+              if query.type == 'reduce'
                 input#optionsRadios1(type='radio',name='type', value='reduce', checked='')
               else
                 input#optionsRadios1(type='radio',name='type', value='reduce')
@@ -62,7 +62,7 @@ block body
         .col-sm-4.col-md-3
           .radio
             label
-              if query.discount
+              if query.type == 'discount'
                 input#optionsRadios2(type='radio',name='type', value='discount', checked='')
               else
                 input#optionsRadios2(type='radio',name='type', value='discount')
@@ -139,12 +139,15 @@ block body
               img.width-6(src= product.photos[0])
             td= product.name
             td= product.productNumber
-            if (product.originPrice)
-              td= product.originPrice
-            else
-              td= product.price
+            td= product.price
             td
-              span.text-danger= product.price
+              if query.type == 'reduce'
+                span.text-danger #{product.price - query.reducePrice}
+              else
+                if query.discount >10
+                  span.text-danger #{Math.ceil(product.price * query.discount * 0.01)}
+                else
+                  span.text-danger #{Math.ceil(product.price * query.discount * 0.1)}
             td.text-right
               a.btn.btn-link.delete-link(data-productId=product.id)
                 span.glyphicon.glyphicon-remove

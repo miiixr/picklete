@@ -115,10 +115,13 @@ block body
             else
               td= product.price
             td
-              if (product.originPrice)
-                span.text-danger= product.price
-              else 
-                span.text-danger
+              if query.type == 'reduce'
+                span.text-danger #{product.price - query.reducePrice}
+              else
+                if query.discount >10
+                  span.text-danger #{Math.ceil(product.price * query.discount * 0.01)}
+                else
+                  span.text-danger #{Math.ceil(product.price * query.discount * 0.1)}
   hr.dashed-line
   .text-center
     //
