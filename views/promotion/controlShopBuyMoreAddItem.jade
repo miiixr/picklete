@@ -1,9 +1,12 @@
 extends ../_layout_auth
 
 block body
+  -console.log('!!!!!!!!!'+query)
   h2.m-bottom-6 加價購設定
   .well.control-well.p-30.m-bottom-8
     form#updateForm.form-horizontal(name = 'updateForm')
+      if query.id
+        input(type='hidden', form='updateForm', name='id', value= query.id)
       if additionalPurchase
         each product in additionalPurchase.rows
           input(type='hidden', form='updateForm', name='productIds[]', value= product.id)
@@ -31,11 +34,11 @@ block body
       .form-group
         label.col-sm-3.col-md-2.control-label 活動時間
         .col-sm-4.col-md-3
-          input.form-control(type='date',name = 'startDate',value= query.startDate)
+          input.form-control(type='date',name = 'startDate',value= sails.moment(query.startDate).format('YYYY-MM-DD'))
         .col-sm-1.col-md-1.p-left-0.p-right-0.text-center
           p.form-control-static 至
         .col-sm-4.col-md-3
-          input.form-control(type='date',name = 'endDate',value= query.endDate)
+          input.form-control(type='date',name = 'endDate',value= sails.moment(query.endDate).format('YYYY-MM-DD'))
         .col-sm-9.col-sm-offset-3.col-md-3.col-md-offset-0
           .checkbox
             label

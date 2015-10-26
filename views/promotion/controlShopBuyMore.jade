@@ -58,7 +58,7 @@ block body
                 br
                 | #{purchase.endDate ? sails.moment(purchase.endDate).format('YYYY/MM/DD') : '不限時'}
               td.text-right
-                a.btn.btn-link(href='../admin/buymore/detail?keyword='+ purchase.name)
+                a.btn.btn-link(href='../admin/buymore/detail?id='+ purchase.id)
                   span.glyphicon.glyphicon-pencil2
                 a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
                   span.glyphicon.glyphicon-remove
@@ -123,7 +123,7 @@ block body
                 br
                 | #{purchase.endDate ? sails.moment(purchase.endDate).format('YYYY/MM/DD') : '不限時'}
               td.text-right
-                a.btn.btn-link(href='../admin/buymore/detail?keyword='+ purchase.name)
+                a.btn.btn-link(href='../admin/buymore/detail?id='+ purchase.id)
                   span.glyphicon.glyphicon-pencil2
                 a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
                   span.glyphicon.glyphicon-remove

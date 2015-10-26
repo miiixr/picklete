@@ -73,24 +73,34 @@ let PromotionController = {
     let data = req.body;
     try {
       sails.log.info("=== shopBuyMore create ===",data);
+      var additionalPurchase = {};
+      if(data.hasOwnProperty("id")){
+        additionalPurchase = await db.AdditionalPurchase.findById(data.id);
+      }
+      // additionalPurchase.name = findProduct.name;
+      if(data.discount!='')
+        additionalPurchase.discount = data.discount;
+      if(data.reducePrice!='')
+        additionalPurchase.reducePrice = data.reducePrice;
+      if(!data.restrictionDate){
+        additionalPurchase.startDate = data.startDate;
+        additionalPurchase.endDate = data.endDate;
+      }
+      additionalPurchase.activityLimit = data.activityLimit;
+      additionalPurchase.type = data.type;
+
       let products = await* data.productIds.map(async (productId)=>{
         let findProduct = await db.Product.findById(productId);
-        let additionalPurchase = {};
-        additionalPurchase.name = findProduct.name;
-        if(data.discount!='')
-          additionalPurchase.discount = data.discount;
-        if(data.reducePrice!='')
-          additionalPurchase.reducePrice = data.reducePrice;
-        if(!data.restrictionDate){
-          additionalPurchase.startDate = data.startDate;
-          additionalPurchase.endDate = data.endDate;
-        }
-        additionalPurchase.activityLimit = data.activityLimit;
-        additionalPurchase.type = data.type;
-        let addPurchase = await db.AdditionalPurchase.create(additionalPurchase);
-        await addPurchase.setProducts([findProduct]);
         return findProduct;
       });
+
+      if(data.hasOwnProperty("id")){
+        await additionalPurchase.save();
+      }else{
+        additionalPurchase = await db.AdditionalPurchase.create(additionalPurchase);
+      }
+        await additionalPurchase.setProducts(products);
+
       return res.ok();
     } catch (error) {
       console.error('=== update error stack ==>',error.stack);
@@ -271,6 +281,8 @@ let PromotionController = {
         limit: limit
       });
 
+      sails.log.info("=== controlShopBuyMore NoLimit ===",additionalPurchaseNoLimit.rows)
+
       let additionalPurchaseLimit = await db.AdditionalPurchase.findAll({
         where:{
           activityLimit:1500
@@ -374,17 +386,6 @@ let PromotionController = {
       let query = req.query;
       let queryObj = {};
 
-      if(query.keyword)
-        queryObj.name = { 'like': '%'+query.keyword+'%'};
-      else
-        query.keyword = ''
-
-      if(query.hasOwnProperty("productIds"))
-        queryObj.id = query.productIds;
-      else
-        queryObj.id = []
-
-
       let page = req.session.UserController_controlMembers_page =
       parseInt(req.param('page',
         req.session.UserController_controlMembers_page || 0
@@ -396,16 +397,43 @@ let PromotionController = {
       ));
 
       let brands = await db.Brand.findAll();
-      let productGmIds = [];
       if(query.brand && query.brand!=0){
         queryObj.BrandId= query.brand;
       }
 
-      let additionalPurchase = await db.Product.findAndCountAll({
-        where: queryObj,
-        offset: page * limit,
-        limit: limit
-      });
+      let additionalPurchase;
+      if(query.hasOwnProperty("id")){
+        additionalPurchase = await db.AdditionalPurchase.findAndCountAll({
+          where: {
+            id: query.id
+          },
+          include:[{
+            model: db.Product
+          }],
+          offset: page * limit,
+          limit: limit
+        });
+        query = additionalPurchase.rows[0].dataValues;
+        additionalPurchase.rows = additionalPurchase.rows[0].Products
+      }else{
+
+        if(query.keyword)
+          queryObj.name = { 'like': '%'+query.keyword+'%'};
+        else
+          query.keyword = ''
+
+        if(query.hasOwnProperty("productIds"))
+          queryObj.id = query.productIds;
+        else
+          queryObj.id = []
+
+        additionalPurchase = await db.Product.findAndCountAll({
+          where: queryObj,
+          offset: page * limit,
+          limit: limit
+        });
+
+      }
 
       // let additionalPurchase = await db.AdditionalPurchase.findAll();
         res.view('promotion/controlShopBuyMoreAddItem',{
