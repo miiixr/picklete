@@ -22,20 +22,16 @@ block body
       //- button.btn.btn-default(type='button') 查詢
       
       .form-group.m-right-4
-        form#search.form-inline.with-pagination(name="search", action="promotion/discountAddItem", method="get")
+        form#search.form-inline.with-pagination(name="search", action="buymore/buyMoreAddItem", method="get")
           
-          input(type='hidden', name='type', value=promotion.type)
-          input(type='hidden', name='id', value=promotion.id)
-          input(type='hidden', name='title', value=promotion.title)
-          input(type='hidden', name='filename', value=promotion.filename)
-          input(type='hidden', name='discountType', value=promotion.discountType)
-          input(type='hidden', name='price', value=promotion.price)
-          input(type='hidden', name='discount', value=promotion.discount)
+          input(type='hidden', name='limit', value=promotion.limit)
           input(type='hidden', name='startDate', value=promotion.startDate)
           input(type='hidden', name='endDate', value=promotion.endDate)
-          input(type='hidden', name='description', value=promotion.description)
-          input(type='hidden', name='noLimit', value=promotion.noLimit)
-          input(type='hidden', name='coverPhoto', value=promotion.coverPhoto)
+          input(type='hidden', name='restrictionDate', value=promotion.restrictionDate)
+          input(type='hidden', name='type', value=promotion.type)
+          input(type='hidden', name='reducePrice', value=promotion.reducePrice)
+          input(type='hidden', name='discount', value=promotion.discount)
+                  
           each productId in promotion.productIds
             input(type='hidden', name='productIds', value=productId)
               
@@ -74,22 +70,16 @@ block body
     // /col-md-6
   // /row
   hr.dashed-line
-  form#shopDiscount.form-horizontal(action="/admin/shop-discount-detail?discountType=#{promotion.type}", method="get")
+  form#shopDiscount.form-horizontal(action="detail", method="get")
 
-    input(type='hidden', name='type', value=promotion.type)
-    input(type='hidden', name='id', value=promotion.id)
-    input(type='hidden', name='title', value=promotion.title)
-    input(type='hidden', name='filename', value=promotion.filename)
-    input(type='hidden', name='discountType', value=promotion.discountType)
-    input(type='hidden', name='price', value=promotion.price)
-    input(type='hidden', name='discount', value=promotion.discount)
+    input(type='hidden', name='limit', value=promotion.limit)
     input(type='hidden', name='startDate', value=promotion.startDate)
     input(type='hidden', name='endDate', value=promotion.endDate)
-    input(type='hidden', name='description', value=promotion.description)
-    input(type='hidden', name='noLimit', value=promotion.noLimit)
-    input(type='hidden', name='coverPhoto', value=promotion.coverPhoto)
-    input(type='hidden', name='slogan', value=promotion.slogan)
-    input(type='hidden', name='createDpt', value=promotion.createDpt)
+    input(type='hidden', name='restrictionDate', value=promotion.restrictionDate)
+    input(type='hidden', name='type', value=promotion.type)
+    input(type='hidden', name='reducePrice', value=promotion.reducePrice)
+    input(type='hidden', name='discount', value=promotion.discount)
+      
     each productId in promotion.productIds
       input(type='hidden', name='productIds', value=productId)
 
@@ -115,7 +105,7 @@ block body
         each product in products.rows
           tr
             td
-              input.addSelect(type='checkbox', name='productIds', value= product.id, checked=promotion.productIds.indexOf(""+product.id)>=0)
+              input.addSelect(type='checkbox', disabled=product.originPrice, name='productIds', value= product.id, checked=promotion.productIds.indexOf(""+product.id)>=0)
             td
               img.width-6(src= product.photos[0])
             td= product.name

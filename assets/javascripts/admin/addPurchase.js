@@ -27,7 +27,20 @@ $(function() {
     $("#optionsRadios2")[0].checked=true;
   });
 
-  $('#add').click(function(){
+
+  $("#option1").change(function(){
+    $('input:radio[name="limit"]').filter('[value="0"]').attr('checked', true);
+    $('input:radio[name="limit"]').filter('[value="1500"]').attr('checked', false);
+    console.log("!!");
+  });
+
+  $("#option2").change(function(){
+    $('input:radio[name="limit"]').filter('[value="1500"]').attr('checked', true);
+    $('input:radio[name="limit"]').filter('[value="0"]').attr('checked', false);
+    console.log("??");
+  });
+
+  $('#createBuyMore').click(function(){
     var select =[];
     $(".addSelect").each(function(index,dom){
       if(dom.checked){
@@ -57,15 +70,21 @@ $(function() {
 
     var postData = $("form[name='updateForm']").serializeArray();
     $.ajax({
-        url : '/admin/buymoreUpdate',
+        url : '../../admin/buymoreUpdate',
         type: "put",
         data : postData,
         success:function()
         {
           console.log("go");
-          location.href='../admin/shop-buy-more';
+          location.href='../../admin/shop-buy-more';
         }
     });
 
+  });
+
+  $('#buyMoreAddBtn').click(function(e){
+    e.preventDefault();
+    var formData = $("form[name='updateForm']").serialize();
+    window.location.href = '../buymore/buyMoreAddItem?'+formData;
   });
 });

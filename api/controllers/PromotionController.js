@@ -256,7 +256,6 @@ let PromotionController = {
 
   controlShopBuyMore: async (req, res) => {
     try {
-
       let limit = await pagination.limit(req);
       let page = await pagination.page(req);
       let offset = await pagination.offset(req);

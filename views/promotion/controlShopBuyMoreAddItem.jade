@@ -3,16 +3,16 @@ extends ../_layout_auth
 block body
   h2.m-bottom-6 加價購設定
   .well.control-well.p-30.m-bottom-8
-    form.form-horizontal(name = 'updateForm')
+    form#updateForm.form-horizontal(name = 'updateForm')
       .form-group
         label.col-sm-3.col-md-2.control-label 是否限滿額
         .col-sm-9.col-md-10
           .btn-group.btn-group-switch(data-toggle='buttons')
-            label.btn.btn-default
-              input#option1(type='radio', name='limit',value= "0" ,autocomplete='off')
+            label#option1.btn.btn-default
+              input(type='radio', name='limit',value= "0" ,autocomplete='off')
               span.btn-text 不限金額
-            label.btn.btn-default.active
-              input#option2(type='radio', name='limit',value= "1500" ,autocomplete='off',checked='')
+            label#option2.btn.btn-default.active
+              input(type='radio', name='limit',value= "1500" ,autocomplete='off', checked='')
               span.btn-text 限滿 1,500 元
           // /btn-group-switch
         // /col-sm-10
@@ -20,15 +20,15 @@ block body
       .form-group
         label.col-sm-3.col-md-2.control-label 活動時間
         .col-sm-4.col-md-3
-          input.form-control(type='date',name = 'startDate')
+          input.form-control(type='date',name = 'startDate',value= query.startDate)
         .col-sm-1.col-md-1.p-left-0.p-right-0.text-center
           p.form-control-static 至
         .col-sm-4.col-md-3
-          input.form-control(type='date',name = 'endDate')
+          input.form-control(type='date',name = 'endDate',value= query.endDate)
         .col-sm-9.col-sm-offset-3.col-md-3.col-md-offset-0
           .checkbox
             label
-              input(type='checkbox' name = 'restrictionDate')
+              input(type='checkbox' name = 'restrictionDate',value= query.restrictionDate)
               |  不限時
       // /form-group
       .form-group
@@ -37,20 +37,20 @@ block body
           .radio
             label
               input#optionsRadios1(type='radio',name='type', value='reduce', checked='')
-              input.form-control(type='text', name='reducePrice' , placeholder='請輸入折扣金額')
+              input.form-control(type='text', name='reducePrice' , placeholder='請輸入折扣金額',value= query.reducePrice)
         .col-sm-1.col-md-1
         .col-sm-4.col-md-3
           .radio
             label
               input#optionsRadios2(type='radio',name='type', value='discount')
               .input-group.width-12
-                input.form-control(type='text',name='discount')
+                input.form-control(type='text',name='discount',value= query.discount)
                 span.input-group-addon 折
               // /input-group
       // /form-group
       .m-top-6.text-right
-        a.btn.btn-link.delete-link.btn-lg(href='../admin/shop-buy-more') 取消
-        a#add.btn.btn-green.btn-lg(href='#') 確定
+        a.btn.btn-link.delete-link.btn-lg(href='../../admin/shop-buy-more') 取消
+        a#createBuyMore.btn.btn-green.btn-lg(href='#') 確定
       // /text-right
   // /well
   .row
@@ -69,7 +69,7 @@ block body
     // /col-md-6
     
     .col-md-8.desktop-text-right
-      a#discountAddItem.btn.btn-green(href='buyMoreAddItem') 加入折扣商品
+      a#buyMoreAddBtn.btn.btn-green() 加入折扣商品
     //- .col-md-8.desktop-text-right
     //-   form.form-inline(name="search", action="shop-buy-more-add-item", method="get")
     //-     .form-group.m-right-2
@@ -132,5 +132,5 @@ block body
       li
         a#bonusNext(href='#') 下一頁
   // /text-center
-  block js
-    script(src="/javascripts/admin/addPurchase.js")
+block js
+  script(src="/javascripts/admin/addPurchase.js")
