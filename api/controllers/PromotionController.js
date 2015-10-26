@@ -32,14 +32,20 @@ let PromotionController = {
   // end list
 
   // create
-  create: async (req, res) => {
+  save: async (req, res) => {
     let promotion = req.body;
     try {
+      let savedPromotion;
       if(promotion.id){
-        await PromotionService.update(promotion);
+        savedPromotion = await PromotionService.update(promotion);
       }else {
-        await PromotionService.create(promotion);
+        savedPromotion = await PromotionService.create(promotion);
       }
+
+      if(savedPromotion.createDpt){
+        PromotionService.createDpt({promotion, productIds: promotion.productIds});
+      }
+
       return res.redirect('admin/shop-discount');
     } catch (error) {
       console.error('=== create error stack ==>',error.stack);
@@ -48,21 +54,6 @@ let PromotionController = {
     }
   },
   // end create
-
-  // update
-  update: async (req, res) => {
-    let promotion = req.body;
-    try {
-      console.log("!!!",promotion);
-      await PromotionService.update(promotion);
-      return res.redirect('promotion/controlShopDiscount');
-    } catch (error) {
-      console.error('=== update error stack ==>',error.stack);
-      let msg = error.message;
-      return res.serverError({msg});
-    }
-  },
-  // end update
 
   // delete
   delete: async (req, res) => {
@@ -155,7 +146,7 @@ let PromotionController = {
         limit: limit
       });
 
-      products = await PromotionService.productPriceTransPromotionPrice(new Date(), products);
+      products.rows = await PromotionService.productPriceTransPromotionPrice(new Date(), products.rows);
 
       res.view('promotion/discountAddItem',{
         pageName: "shop-item-add",
@@ -220,6 +211,18 @@ let PromotionController = {
           promotion.endDate = promotion.endDate.toISOString().replace('Z', '');
         if(promotion.startDate)
           promotion.startDate = promotion.startDate.toISOString().replace('Z', '');
+
+        if(query.productIds){
+          let products = await db.Product.findAll({
+            where: {
+              id: query.productIds
+            },
+            offset: offset,
+            limit: limit
+          });
+
+          promotion.Products = products;
+        }
 
 
       }

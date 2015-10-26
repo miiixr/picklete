@@ -33,7 +33,7 @@ block body
           input(type='hidden', name='discount', value=promotion.discount)
           input(type='hidden', name='startDate', value=promotion.startDate)
           input(type='hidden', name='endDate', value=promotion.endDate)
-          input(type='hidden', name='description', value=promotion.description)
+          textarea(rows="3", name="description", style="display:none;") #{promotion.description}
           input(type='hidden', name='noLimit', value=promotion.noLimit)
           input(type='hidden', name='coverPhoto', value=promotion.coverPhoto)
           each productId in promotion.productIds
@@ -80,12 +80,13 @@ block body
     input(type='hidden', name='id', value=promotion.id)
     input(type='hidden', name='title', value=promotion.title)
     input(type='hidden', name='filename', value=promotion.filename)
-    input(type='hidden', name='discountType', value=promotion.discountType)
+    input(type='hidden', name='discountType', value=promotion.type)
     input(type='hidden', name='price', value=promotion.price)
     input(type='hidden', name='discount', value=promotion.discount)
     input(type='hidden', name='startDate', value=promotion.startDate)
     input(type='hidden', name='endDate', value=promotion.endDate)
-    input(type='hidden', name='description', value=promotion.description)
+      
+    textarea(rows="3", name="description", style="display:none;") #{promotion.description}
     input(type='hidden', name='noLimit', value=promotion.noLimit)
     input(type='hidden', name='coverPhoto', value=promotion.coverPhoto)
     input(type='hidden', name='slogan', value=promotion.slogan)
@@ -115,7 +116,7 @@ block body
         each product in products.rows
           tr
             td
-              input.addSelect(type='checkbox', name='productIds', value= product.id, checked=promotion.productIds.indexOf(""+product.id)>=0)
+              input.addSelect(type='checkbox', disabled=product.originPrice, name='productIds', value= product.id, checked=promotion.productIds.indexOf(""+product.id)>=0)
             td
               img.width-6(src= product.photos[0])
             td= product.name

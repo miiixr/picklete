@@ -187,7 +187,9 @@ describe("about Shop Discount", function() {
           discountType:'discount',
           discount: 0.5,
         });
-        await createdPromotion1.setProducts([createdProduct1, createdProduct2]);
+        createdPromotion1 = await createdPromotion1.setProducts([createdProduct1, createdProduct2]);
+
+
 
         // create promotion 2
         createdPromotion2 = await db.Promotion.create({
@@ -199,7 +201,8 @@ describe("about Shop Discount", function() {
           discountType:'price',
           price: 300,
         });
-        await createdPromotion2.setProducts([createdProduct3]);
+        createdPromotion2 = await createdPromotion2.setProducts([createdProduct3]);
+
 
         done();
       } catch (e) {
@@ -252,7 +255,22 @@ describe("about Shop Discount", function() {
         done(e);
       }
     });
-    // end
+
+
+    it('promotions createDpt', async (done) => {
+      try {
+
+
+        let params = {promotion: createdPromotion1, productIds: [createdProduct1.id, createdProduct2.id]}
+
+        await PromotionService.createDpt(params);
+        done();
+      } catch (e) {
+        console.log(e.stack);
+        done(e);
+      }
+    });
+
 
   });
 

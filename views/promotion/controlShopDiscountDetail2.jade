@@ -4,7 +4,7 @@ include ../mixins/pagination
 block body
   h2.m-bottom-6 一般活動
   .well.control-well.p-30.m-bottom-8
-    form#shopDiscount.form-horizontal(action="/admin/shopDiscount/create", method="post")
+    form#shopDiscount.form-horizontal(action="/admin/shopDiscount/save", method="post")
       each product in promotion.Products
         input(type='hidden', form='shopDiscount', name='productIds[]', value= product.id)
 
