@@ -35,11 +35,17 @@ let PromotionController = {
   save: async (req, res) => {
     let promotion = req.body;
     try {
+      let savedPromotion;
       if(promotion.id){
-        await PromotionService.update(promotion);
+        savedPromotion = await PromotionService.update(promotion);
       }else {
-        await PromotionService.create(promotion);
+        savedPromotion = await PromotionService.create(promotion);
       }
+
+      if(savedPromotion.createDpt){
+        PromotionService.createDpt({promotion, productIds: promotion.productIds});
+      }
+
       return res.redirect('admin/shop-discount');
     } catch (error) {
       console.error('=== create error stack ==>',error.stack);
