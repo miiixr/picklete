@@ -24,7 +24,7 @@ block body
       .form-group.m-right-4
         form#search.form-inline.with-pagination(name="search", action="buymore/buyMoreAddItem", method="get")
           
-          input(type='hidden', name='limit', value=promotion.limit)
+          input(type='hidden', name='activityLimit', value=promotion.activityLimit)
           input(type='hidden', name='startDate', value=promotion.startDate)
           input(type='hidden', name='endDate', value=promotion.endDate)
           input(type='hidden', name='restrictionDate', value=promotion.restrictionDate)
@@ -72,7 +72,7 @@ block body
   hr.dashed-line
   form#shopDiscount.form-horizontal(action="detail", method="get")
 
-    input(type='hidden', name='limit', value=promotion.limit)
+    input(type='hidden', name='activityLimit', value=promotion.activityLimit)
     input(type='hidden', name='startDate', value=promotion.startDate)
     input(type='hidden', name='endDate', value=promotion.endDate)
     input(type='hidden', name='restrictionDate', value=promotion.restrictionDate)

@@ -14,7 +14,7 @@ module.exports = {
           endDate: {
             gte: date
           },
-          limit: {
+          activityLimit: {
             lt: paymentTotalAmount
           }
         },

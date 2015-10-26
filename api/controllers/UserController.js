@@ -149,38 +149,45 @@ let UserController = {
   },
 
   cart: async (req, res) => {
-    console.log('=== req.cookies ===', req.cookies.picklete_cart);
+    try {
+      console.log('=== req.cookies ===', req.cookies.picklete_cart);
 
-    let picklete_cart = req.cookies.picklete_cart;
-    let paymentTotalAmount = 0;
+      let picklete_cart = req.cookies.picklete_cart;
+      let paymentTotalAmount = 0;
 
-    if(picklete_cart != undefined){
-      picklete_cart = JSON.parse(picklete_cart);
+      if(picklete_cart != undefined){
+        picklete_cart = JSON.parse(picklete_cart);
 
-      picklete_cart.orderItems.forEach( (orderItem) => {
-        paymentTotalAmount += parseInt(orderItem.quantity, 10) * parseInt(orderItem.price, 10);
+        picklete_cart.orderItems.forEach( (orderItem) => {
+          paymentTotalAmount += parseInt(orderItem.quantity, 10) * parseInt(orderItem.price, 10);
+        });
+      }
+
+      let company = await db.Company.findOne();
+      let brands = await db.Brand.findAll();
+
+      let date = new Date();
+      let query = {date, paymentTotalAmount};
+      let additionalPurchaseProductGms = await AdditionalPurchaseService.getProductGms(query);
+      console.log('=== additionalPurchaseProducts ===', additionalPurchaseProductGms);
+
+      // add an item for Shippings
+      let shippings = await ShippingService.findAll();
+      // console.log('=== shippings ==>',shippings);
+      let paymentMethod = sails.config.allpay.paymentMethod;
+      return res.view('main/cart', {
+        company,
+        brands,
+        additionalPurchaseProductGms,
+        shippings,
+        paymentMethod
       });
+    } catch (e) {
+      sails.log.error(e.stack);
+      let {message} = e;
+      let success = false;
+      return res.serverError({message, success});
     }
-
-    let company = await db.Company.findOne();
-    let brands = await db.Brand.findAll();
-
-    let date = new Date();
-    let query = {date, paymentTotalAmount};
-    let additionalPurchaseProductGms = await AdditionalPurchaseService.getProductGms(query);
-    console.log('=== additionalPurchaseProducts ===', additionalPurchaseProductGms);
-
-    // add an item for Shippings
-    let shippings = await ShippingService.findAll();
-    // console.log('=== shippings ==>',shippings);
-    let paymentMethod = sails.config.allpay.paymentMethod;
-    return res.view('main/cart', {
-      company,
-      brands,
-      additionalPurchaseProductGms,
-      shippings,
-      paymentMethod
-    });
   },
 
   edit: async (req, res) => {

@@ -28,35 +28,26 @@ $(function() {
   });
 
 
-  $("#option1").change(function(){
-    $('input:radio[name="limit"]').filter('[value="0"]').attr('checked', true);
-    $('input:radio[name="limit"]').filter('[value="1500"]').attr('checked', false);
+  $("#option1").click(function(){
+    $('input:radio[name="activityLimit"]').filter('[value="0"]').attr('checked', true);
+    $('input:radio[name="activityLimit"]').filter('[value="1500"]').attr('checked', false);
     console.log("!!");
   });
 
-  $("#option2").change(function(){
-    $('input:radio[name="limit"]').filter('[value="1500"]').attr('checked', true);
-    $('input:radio[name="limit"]').filter('[value="0"]').attr('checked', false);
+  $("#option2").click(function(){
+    $('input:radio[name="activityLimit"]').filter('[value="1500"]').attr('checked', true);
+    $('input:radio[name="activityLimit"]').filter('[value="0"]').attr('checked', false);
     console.log("??");
   });
 
   $('#createBuyMore').click(function(){
-    var select =[];
-    $(".addSelect").each(function(index,dom){
-      if(dom.checked){
-        select.push(dom);
-        $("form[name='updateForm']").append(
-          '<input type=\'hidden\' name=\'productIds[]\' value =\''+ dom.value +'\' >'
-        );
-      }
-    });
 
     if($("input[name='reducePrice']").val()=="" && $("input[name='discount']").val()==""){
       alert("記得輸入折扣喔");
       return;
     }
 
-    if(select.length==0){
+    if($('input[name="productIds[]"]').length==0){
       alert("記得選取折扣項目喔");
       return;
     }
@@ -86,5 +77,17 @@ $(function() {
     e.preventDefault();
     var formData = $("form[name='updateForm']").serialize();
     window.location.href = '../buymore/buyMoreAddItem?'+formData;
+  });
+
+  $('.btn.btn-link.delete-link').click(function(e){
+    console.log('deletePorduct click');
+    e.preventDefault()
+
+    var deleteProductId = $(this).attr('data-productId');
+    $(this).closest("tr").remove();
+    $('input[name="productIds[]"][value="'+deleteProductId+'"]')[0].remove();
+
+    console.log('=== deleteProductId ===', deleteProductId);
+
   });
 });

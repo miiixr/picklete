@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) ->
     reducePrice: DataTypes.FLOAT
     startDate: DataTypes.DATE
     endDate: DataTypes.DATE
-    limit: {
+    activityLimit: {
       type: DataTypes.INTEGER
       defaultValue: 0
     }

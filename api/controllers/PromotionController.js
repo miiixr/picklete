@@ -85,7 +85,7 @@ let PromotionController = {
           additionalPurchase.startDate = data.startDate;
           additionalPurchase.endDate = data.endDate;
         }
-        additionalPurchase.limit = data.limit;
+        additionalPurchase.activityLimit = data.activityLimit;
         additionalPurchase.type = data.type;
         let addPurchase = await db.AdditionalPurchase.create(additionalPurchase);
         await addPurchase.setProducts([findProduct]);
@@ -262,7 +262,7 @@ let PromotionController = {
 
       let additionalPurchaseNoLimit = await db.AdditionalPurchase.findAndCountAll({
         where:{
-          limit:0
+          activityLimit:0
         },
         include:{
           model: db.Product
@@ -273,7 +273,7 @@ let PromotionController = {
 
       let additionalPurchaseLimit = await db.AdditionalPurchase.findAll({
         where:{
-          limit:1500
+          activityLimit:1500
         },
         include:{
           model: db.Product
@@ -361,51 +361,65 @@ let PromotionController = {
         totalRows: products.count
       });
     } catch (e) {
+      sail.log.error(e);
       return res.serverError(e);
     }
   },
 
   controlShopBuyMoreDetail: async (req, res) => {
-    console.log('query',req.query);
-    let query = req.query;
-    let queryObj = {};
 
-    if(query.keyword)
-      queryObj.name = { 'like': '%'+query.keyword+'%'};
-    else
-      query.keyword = ''
+    try {
 
-    let page = req.session.UserController_controlMembers_page =
-    parseInt(req.param('page',
-      req.session.UserController_controlMembers_page || 0
-    ));
+      console.log('query',req.query);
+      let query = req.query;
+      let queryObj = {};
 
-    let limit = req.session.UserController_controlMembers_limit =
-    parseInt(req.param('limit',
-      req.session.UserController_controlMembers_limit || 10
-    ));
+      if(query.keyword)
+        queryObj.name = { 'like': '%'+query.keyword+'%'};
+      else
+        query.keyword = ''
 
-    let brands = await db.Brand.findAll();
-    let productGmIds = [];
-    if(query.brand && query.brand!=0){
-      queryObj.BrandId= query.brand;
+      if(query.hasOwnProperty("productIds"))
+        queryObj.id = query.productIds;
+      else
+        queryObj.id = []
+
+
+      let page = req.session.UserController_controlMembers_page =
+      parseInt(req.param('page',
+        req.session.UserController_controlMembers_page || 0
+      ));
+
+      let limit = req.session.UserController_controlMembers_limit =
+      parseInt(req.param('limit',
+        req.session.UserController_controlMembers_limit || 10
+      ));
+
+      let brands = await db.Brand.findAll();
+      let productGmIds = [];
+      if(query.brand && query.brand!=0){
+        queryObj.BrandId= query.brand;
+      }
+
+      let additionalPurchase = await db.Product.findAndCountAll({
+        where: queryObj,
+        offset: page * limit,
+        limit: limit
+      });
+
+      // let additionalPurchase = await db.AdditionalPurchase.findAll();
+        res.view('promotion/controlShopBuyMoreAddItem',{
+        pageName: "shop-buy-more-add-item",
+        brands,
+        additionalPurchase,
+        query,
+        page,
+        limit
+      });
+    } catch (e) {
+      sail.log.error(e);
+      return res.serverError(e);
     }
-
-    let additionalPurchase = await db.Product.findAndCountAll({
-      where: queryObj,
-      offset: page * limit,
-      limit: limit
-    });
-
-    // let additionalPurchase = await db.AdditionalPurchase.findAll();
-      res.view('promotion/controlShopBuyMoreAddItem',{
-      pageName: "shop-buy-more-add-item",
-      brands,
-      additionalPurchase,
-      query,
-      page,
-      limit
-    });
   },
   controlShopReportForm: async (req, res) => {
     let dateList = await ReportService.list();
