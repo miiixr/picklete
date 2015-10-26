@@ -364,6 +364,10 @@ module.exports = {
 
     try {
 
+      let productDptSubConfig = {
+        model: db.DptSub
+      }
+
       if (Object.keys(query).length > 0) {
         // ================ ProductGm query condition ================
         if (query.name) {
@@ -381,18 +385,44 @@ module.exports = {
 
         if (query.tag) {
           GmQueryObj.$or.push(['`ProductGm`.`tag` like ?', '%'+query.tag+'%'])
-          // GmQueryObj.tag = {
-          //   $like: `%${query.tag}%`
-          // };
         }
+
+
 
         // ================ Dpt query condition ================
         if (query.dptId > 0 ) {
           DptQueryObj.id = query.dptId;
         }
         // ================ DptSub query condition ================
+
+
         if (query.dptSubId > 0 ) {
           DptSubQueryObj.id = query.dptSubId;
+        }
+
+        if (query.dptId > 0 ) {
+          let dpt = await db.Dpt.find({
+            where: {
+              id: query.dptId
+            }
+          });
+          console.log('======== dpt', dpt);
+          if(dpt.name == '特別企劃'){
+            if (query.dptSubId > 0 ) {
+              productDptSubConfig.where = {
+                id: query.dptSubId
+              }
+            } else {
+              productDptSubConfig.where = {
+                id: {
+                  $gte: 0
+                }
+              }
+            }
+            productDptSubConfig.required = true;
+            delete DptQueryObj.id
+            delete DptSubQueryObj.id
+          }
         }
         // ================ Product query condition =============
 
@@ -454,6 +484,8 @@ module.exports = {
         }
       }
       // ================ merge queryObj ================
+
+      console.log('===== productDptSubConfig', productDptSubConfig);
       queryObj = {
         subQuery: false,
         where: ProductQueryObj,
@@ -473,7 +505,7 @@ module.exports = {
           },{
             model: db.LikesCount
           }]
-        }],
+        }, productDptSubConfig],
         offset: offset,
         limit: limit,
       };
