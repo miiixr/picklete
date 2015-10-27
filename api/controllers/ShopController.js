@@ -96,8 +96,12 @@ let ShopController = {
   show: async(req,res) => {
 
     let productGmid = req.params.productGmid;
-    let productId = req.params.productId
+    let productId = req.params.productId;
+    let brandId = req.query.brandId ? req.query.brandId : 0;
+    
     try {
+  
+    
       let productGm = await db.ProductGm.findOne({
             where: {id: productGmid},
             include: [
@@ -200,6 +204,7 @@ let ShopController = {
           services: services,
           coverPhotos: coverPhotos,
           brand: brand.dataValues,
+          brandId: brandId,
           recommendProducts,
          };
         console.log("hhihihihihi",resData);
