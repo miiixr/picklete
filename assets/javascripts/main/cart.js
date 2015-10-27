@@ -10,7 +10,7 @@
 
   var subtotal = 0;
   var totalPrice = 0;
-  var buymore = parseInt(buymoreDiv.text(),10);
+  var buymore = parseInt(buymoreDiv.text(),10) || 0;
   var discountAmount = 0;
   var totalQuanties = 0;
 

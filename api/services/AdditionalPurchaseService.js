@@ -60,7 +60,7 @@ module.exports = {
 cartAddAdditionalPurchases: async(additionalPurchasesItems) => {
     try {
       sails.log.info("=== additionalPurchasesItems ===",additionalPurchasesItems);
-      let buyTotal = 0;
+      let buyMoreTotalPrice = 0;
       additionalPurchasesItems = await* additionalPurchasesItems.map(async (item) =>{
         let find = await db.AdditionalPurchase.findOne({
           where:{
@@ -88,10 +88,10 @@ cartAddAdditionalPurchases: async(additionalPurchasesItems) => {
           else
             find.price = find.originPrice * (find.discount * 0.1);
         }
-        buyTotal += find.price ;
+        buyMoreTotalPrice += find.price ;
         return find;
       });
-      return {additionalPurchasesItems,buyTotal};
+      return {additionalPurchasesItems,buyMoreTotalPrice};
     } catch (e) {
       throw e;
     }

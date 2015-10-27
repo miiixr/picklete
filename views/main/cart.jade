@@ -131,12 +131,12 @@ block body
                       span#discountAmount.text-danger(data-value='0') 0
                   tr
                     th #{i18n('increase-purchase')}
-                    td#buymore.text-right(data-value='0') #{slesctedAdditionalPurchases.buyTotal}
+                    td#buymore.text-right(data-value='0') #{slesctedAdditionalPurchases.buyMoreTotalPrice || '0'} 
                   tr
                     th #{i18n('total')}
                     td.text-right
                       h3.m-top-0 $ 
-                        span#totalPrice(data-value='0') #{slesctedAdditionalPurchases.buyTotal}
+                        span#totalPrice(data-value='0') 0
               a#nextSetp.btn.btn-black.border-radius-circle.btn-block.m-bottom-2 #{i18n('next-step')}、#{i18n('write-data')}
               a.btn.btn-link.btn-block.text-gray-light.m-bottom-6(href='/shop/products') #{i18n('continue-shopping')}
               .form-group

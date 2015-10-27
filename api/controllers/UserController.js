@@ -164,7 +164,7 @@ let UserController = {
       let slesctedAdditionalPurchases=[];
       if(picklete_cart.hasOwnProperty('additionalPurchasesItem')){
         slesctedAdditionalPurchases = await AdditionalPurchaseService.cartAddAdditionalPurchases(picklete_cart.additionalPurchasesItem);
-        picklete_cart.buymore = slesctedAdditionalPurchases.buyTotal;
+        picklete_cart.buymore = slesctedAdditionalPurchases.buyMoreTotalPrice;
         res.cookie('picklete_cart', JSON.stringify(picklete_cart));
       }
 

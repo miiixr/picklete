@@ -155,6 +155,7 @@
     postData.order.shippingFee = Cookies.getJSON('shippingFee');
     postData.order.paymentMethod = Cookies.getJSON('paymentMethod');
 
+    postData.order.additionalPurchasesItem = picklete_cart.additionalPurchasesItem
 
 
     if(shopCodeObject){
