@@ -46,7 +46,7 @@ module.exports = {
 
       });
 
-      return additionalProducts;
+      return {additionalProducts,additionalPurchases};
 
 
     } catch (e) {
@@ -79,6 +79,7 @@ cartAddAdditionalPurchases: async(additionalPurchasesItems) => {
             }
           }
         });
+        sails.log.info("=== additionalPurchasesItems ===",JSON.stringify(find,null,2));
         find.originPrice = find.Products[0].price;
         if(find.type == 'reduce')
           find.price = find.originPrice - find.reducePrice;

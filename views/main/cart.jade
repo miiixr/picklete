@@ -157,7 +157,7 @@ block body
       h2.text-black.m-bottom-6 購物滿額，即可以優惠價加購商品
       .border-block-3.m-bottom-10.p-20
         .row.row-l
-          each product in additionalPurchaseProducts
+          each product in additionalPurchaseProducts.additionalProducts
             .col-md-4.col-sm-6
               .row.row-m.cart-add-product.cart-add-product-1
                 .col-xs-6
@@ -177,7 +177,7 @@ block body
                   //- select.form-control.m-bottom-2
                   //-   option(value= 0 ,data-price= 0) 選擇規格
                   //-   each product in additionalPurchaseProductGm.Products
-                  a.btn.btn-green(href= '/user/cart/addAdditionalPurchases?additionalPurchasesId=#{additionalPurchaseProducts[0].id}&productId=#{product.id}') 加價購
+                  a.btn.btn-green(href= '/user/cart/addAdditionalPurchases?additionalPurchasesId=#{additionalPurchaseProducts.additionalPurchases[0].id}&productId=#{product.id}') 加價購
                   h4.text-green
                     | $ #{product.price}
                     small.text-line-through.m-left-1 $ #{product.originPrice}

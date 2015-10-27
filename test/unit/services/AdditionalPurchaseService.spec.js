@@ -84,7 +84,7 @@ describe("Additional Purchase", () => {
       let query = {date, paymentTotalAmount: 1000}
       let additionalPurchaseProductGms = await AdditionalPurchaseService.getProducts(query);
 
-      additionalPurchaseProductGms.length.should.be.equal(2);
+      additionalPurchaseProductGms.additionalProducts.length.should.be.equal(2);
 
       done();
 
@@ -103,7 +103,7 @@ describe("Additional Purchase", () => {
       let query = {date, paymentTotalAmount: 2000}
       let additionalPurchaseProductGms = await AdditionalPurchaseService.getProducts(query);
       sails.log.info(additionalPurchaseProductGms);
-      additionalPurchaseProductGms.length.should.be.equal(3);
+      additionalPurchaseProductGms.additionalProducts.length.should.be.equal(3);
 
       done();
 
