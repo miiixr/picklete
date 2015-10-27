@@ -71,7 +71,7 @@ describe("about Mailer service", () => {
         question: '沒什麼問題'
     }
 
-    let result = CustomMailerService.contactUs(user);
+    let result = CustomMailerService.contactUs(user, user.email);
     result.type.should.be.equal('contactUs');
 
   });

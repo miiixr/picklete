@@ -18,13 +18,19 @@ module.exports = {
       let user = req.query;
       user.issue = user.issue.join("、");
 
-      let messageConfig = await CustomMailerService.contactUs(user);
+      // 寄給使用者
+      let messageConfig = await CustomMailerService.contactUs(user, user.email);
       let message = await db.Message.create(messageConfig);
       await CustomMailerService.sendMail(message);
 
-      res.ok(send);
+      // 寄給系統信箱
+      let systemMail = "service@wevo.com.tw";
+      messageConfig = await CustomMailerService.contactUs(user, systemMail);
+      message = await db.Message.create(messageConfig);
+      await CustomMailerService.sendMail(message);
 
-      //res.ok(mailSendConfig);
+      return res.ok();
+
     } catch (e) {
       console.error(e);
       throw error;

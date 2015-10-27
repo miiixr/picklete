@@ -332,12 +332,12 @@ module.exports = {
   /*
    * 前台聯絡聯絡我們
    */
-  contactUs: (user) => {
+  contactUs: (user, target) => {
 
     try {
       var contactUsTpl = sails.config.mail.templete.contactUs;
       var email = user.email;
-      var mailSendConfig = {...contactUsTpl, from: sails.config.mail.config.from, to: email};
+      var mailSendConfig = {...contactUsTpl, from: sails.config.mail.config.from, to: target};
 
       mailSendConfig.subject = sprintf(mailSendConfig.subject, {
         userName: user.name,
