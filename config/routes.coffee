@@ -76,6 +76,7 @@ module.exports.routes = {
   'get /brands' : view: 'main/brands'
   'get /user/cart' : 'UserController.cart'
   'get /user/cart/addAdditionalPurchases' : 'UserController.addAdditionalPurchases'
+  'get /user/cart/removeAdditionalPurchases' : 'UserController.removeAdditionalPurchases'
   'get /user/loginStatus' : 'UserController.loginStatus'
   'get /user/cart-step-2' : 'ShopController.cartStep2'
 

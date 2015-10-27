@@ -215,6 +215,24 @@ let UserController = {
     }
   },
 
+  removeAdditionalPurchases: async (req, res) => {
+    try{
+      console.log('=== addAdditionalPurchases ===',req.query);
+      let data = req.query;
+      let picklete_cart = req.cookies.picklete_cart;
+      if(picklete_cart != undefined){
+        picklete_cart = JSON.parse(picklete_cart);
+        picklete_cart.additionalPurchasesItem.splice(data.index, 1);
+        res.cookie('picklete_cart', JSON.stringify(picklete_cart));
+      }
+      res.redirect("/user/cart");
+    } catch (e) {
+      console.error(e.stack);
+      let {message} = e;
+      res.serverError({message});
+    }
+  },
+
   edit: async (req, res) => {
     let loginUser = UserService.getLoginUser(req);
 
