@@ -31,13 +31,11 @@ $(function() {
   $("#option1").click(function(){
     $('input:radio[name="activityLimit"]').filter('[value="0"]').attr('checked', true);
     $('input:radio[name="activityLimit"]').filter('[value="1500"]').attr('checked', false);
-    console.log("!!");
   });
 
   $("#option2").click(function(){
     $('input:radio[name="activityLimit"]').filter('[value="1500"]').attr('checked', true);
     $('input:radio[name="activityLimit"]').filter('[value="0"]').attr('checked', false);
-    console.log("??");
   });
 
   $('#createBuyMore').click(function(){
@@ -66,7 +64,6 @@ $(function() {
         data : postData,
         success:function()
         {
-          console.log("go");
           location.href='../../admin/shop-buy-more';
         }
     });

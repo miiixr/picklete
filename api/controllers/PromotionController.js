@@ -361,8 +361,6 @@ let PromotionController = {
         limit: limit
       });
 
-      sails.log.info("!!!!",products);
-
       res.view('promotion/buyMoreAddItem',{
         pageName: "shop-item-add",
         query,
