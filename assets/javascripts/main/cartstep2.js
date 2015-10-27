@@ -49,7 +49,7 @@
   } else {
     shippingFeeField.text(shippingFeePrice);
   }
-    
+
   // display packing fee
   var packingFeeField = $('#packingFeeField');
   var packingFeePrice = parseInt(Cookies.getJSON('packing').packingFee);
@@ -69,7 +69,7 @@
 
   var subtotal = 0;
   var totalPrice = 0;
-  var buymore = 0;
+  var buymore = picklete_cart.buymore;
   if(buyMoreObject){
     buyMoreObject.forEach(function(item,index){
       buymore += item.price;
