@@ -55,15 +55,52 @@ module.exports = {
   },
 
   createDpt: async ({promotion, productIds}) => {
-    let products = await db.Product.findAll({
-      where: {
-        id: productIds
-      }
-    });
+    try {
+      let dptSubName;
+      if(promotion.type == 'flash')
+        dptSubName = '閃購專區'
+      else dptSubName = promotion.title;
 
-    products.map((product)=> {
-      console.log(product);
-    });
+
+      let targetDptSub = await db.DptSub.findOne({
+        where:{
+          name: dptSubName
+        }
+      })
+
+      let doCreateNewDptSub = (targetDptSub == null);
+
+      if(doCreateNewDptSub){
+        let selectionDpt = await db.Dpt.findOne({
+          where:{
+            name: '特別企劃'
+          }
+        })
+
+        targetDptSub = await db.DptSub.create({
+          name: dptSubName,
+          weight: 999,
+          official: true,
+          DptId: selectionDpt.id
+        });
+      }
+
+      let products = await db.Product.findAll({
+        where: {
+          id: productIds
+        },
+        include: [{
+          model: db.DptSub
+        }]
+      });
+
+      await* products.map((product) => {
+        return product.addDptSubs(targetDptSub)
+      });
+
+    } catch (e) {
+      throw e;
+    }
 
   },
 

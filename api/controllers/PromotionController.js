@@ -42,8 +42,9 @@ let PromotionController = {
         savedPromotion = await PromotionService.create(promotion);
       }
 
-      if(savedPromotion.createDpt){
-        PromotionService.createDpt({promotion, productIds: promotion.productIds});
+      console.log('=== promotion ===', promotion);
+      if(promotion.createDpt || promotion.type == 'flash'){
+        await PromotionService.createDpt({promotion, productIds: promotion.productIds});
       }
 
       return res.redirect('admin/shop-discount');

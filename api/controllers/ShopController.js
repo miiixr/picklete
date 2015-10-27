@@ -209,7 +209,7 @@ let ShopController = {
       }
 
     } catch (e) {
-      console.error(e);
+      console.error(e.stack);
       let {message} = e;
       let success = false;
       return res.serverError({message, e});

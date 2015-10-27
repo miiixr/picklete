@@ -19,6 +19,7 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models) {
         DptSub.belongsTo(models.Dpt);
         DptSub.belongsToMany(models.ProductGm, {through: 'DptSubProductGm'});
+        DptSub.belongsToMany(models.Product, {through: 'DptSubProduct'})
 
         return
       }
