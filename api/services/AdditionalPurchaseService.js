@@ -55,5 +55,45 @@ module.exports = {
 
     }
 
+  },
+
+cartAddAdditionalPurchases: async(additionalPurchasesItems) => {
+    try {
+      sails.log.info("=== additionalPurchasesItems ===",additionalPurchasesItems);
+      let buyTotal = 0;
+      additionalPurchasesItems = await* additionalPurchasesItems.map(async (item) =>{
+        let find = await db.AdditionalPurchase.findOne({
+          where:{
+            id: item.additionalPurchasesId
+          },
+          include:{
+            model: db.Product,
+            where:{
+              id: item.productId
+            },
+            include:{
+              model: db.ProductGm,
+              include:{
+                model: db.Brand
+              }
+            }
+          }
+        });
+        find.originPrice = find.Products[0].price;
+        if(find.type == 'reduce')
+          find.price = find.originPrice - find.reducePrice;
+        else{
+          if(find.discount > 10)
+            find.price = find.originPrice * (find.discount * 0.01);
+          else
+            find.price = find.originPrice * (find.discount * 0.1);
+        }
+        buyTotal += find.price ;
+        return find;
+      });
+      return {additionalPurchasesItems,buyTotal};
+    } catch (e) {
+      throw e;
+    }
   }
 }

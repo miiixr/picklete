@@ -187,7 +187,7 @@ describe("about Shop Discount", function() {
           discountType:'discount',
           discount: 0.5,
         });
-        createdPromotion1 = await createdPromotion1.setProducts([createdProduct1, createdProduct2]);
+        await createdPromotion1.setProducts([createdProduct1, createdProduct2]);
 
 
 
@@ -201,7 +201,7 @@ describe("about Shop Discount", function() {
           discountType:'price',
           price: 300,
         });
-        createdPromotion2 = await createdPromotion2.setProducts([createdProduct3]);
+        await createdPromotion2.setProducts([createdProduct3]);
 
 
         done();

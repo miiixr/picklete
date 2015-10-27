@@ -361,7 +361,7 @@ let PromotionController = {
         limit: limit
       });
 
-      products = await PromotionService.productPriceTransPromotionPrice(new Date(), products);
+      sails.log.info("!!!!",products);
 
       res.view('promotion/buyMoreAddItem',{
         pageName: "shop-item-add",

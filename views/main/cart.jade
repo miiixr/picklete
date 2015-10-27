@@ -18,7 +18,43 @@ block body
         .row
           .col-md-9.border-right-1-desktop.desktop-p-right-0.min-height-500
             #cart-viewer
-            
+              // /.p-20.border-bottom-1 加價購
+              each item in slesctedAdditionalPurchases.additionalPurchasesItems
+                #orderItem.p-20.border-bottom-1
+                  .row.row-m
+                      .col-xs-4.col-sm-3.col-md-2
+                        .item-block
+                          a.item-like(href='#')
+                            span.glyphicon.glyphicon-heart
+                          |         
+                          a(href='/shop/products/#{item.Products[0].ProductGm.id}/#{item.Products[0].id}')
+                            img.img-full(src= '#{item.Products[0].photos[0]}')
+                      |     
+                      .col-xs-8.col-sm-8.col-md-3.desktop-m-top-4.m-bottom-1.mobile-min-height-100
+                        h6.text-muted.text-roboto.letter-spacing-1.m-bottom-1-min
+                          a(href='/brands') #{item.Products[0].ProductGm.Brand.name}
+                        |       
+                        h4.text-green 加價購
+                        h5.text-roboto.letter-spacing-1.m-top-1-min
+                          a(href='/shop/products/#{item.Products[0].ProductGm.id}/#{item.Products[0].id}') #{item.Products[0].ProductGm.name}(#{item.Products[0].name})
+                      |     
+                      .col-xs-6.col-sm-3.col-md-2.desktop-p-left-0.desktop-m-top-5.m-bottom-2
+                        .productQuantities.input-group.input-group-count.max-width-150
+                      |     
+                      .col-xs-6.col-sm-3.col-md-2.desktop-p-right-0.desktop-text-center.desktop-m-top-5.m-bottom-2
+                        | 此商品不提供
+                        br
+                        | 包裝服務
+                      |     
+                      .col-xs-6.col-sm-2.col-md-2.desktop-text-center.desktop-m-top-5.m-bottom-1
+                        h4.text-green
+                          | $ #{item.price}
+                          small.text-line-through.m-left-1 $ #{item.originPrice}
+                      |     
+                      .col-xs-6.col-sm-1.col-md-1.text-right.desktop-m-top-5
+                        a#remveOrderItem.btn.btn-link.delete-link(data-index='0', data-productid='undefined', href='#', data-toggle='modal', data-target='#modal-delete')
+                          span.glyphicon.glyphicon-remove
+              // /.p-20.border-bottom-1 加價購
             .p-20
               h2.m-bottom-4 #{i18n('delivery-payment')}
               .row
@@ -92,7 +128,7 @@ block body
                       span#discountAmount.text-danger(data-value='0') 0
                   tr
                     th #{i18n('increase-purchase')}
-                    td#buymore.text-right(data-value='0') 0
+                    td#buymore.text-right(data-value='0') #{slesctedAdditionalPurchases.buyTotal}
                   tr
                     th #{i18n('total')}
                     td.text-right
@@ -138,7 +174,7 @@ block body
                   //- select.form-control.m-bottom-2
                   //-   option(value= 0 ,data-price= 0) 選擇規格
                   //-   each product in additionalPurchaseProductGm.Products
-                  //-     option(value=product.id, data-price= product.price) #{product.name}
+                  a.btn.btn-green(href= '/user/cart/addAdditionalPurchases?additionalPurchasesId=#{additionalPurchaseProducts[0].id}&productId=#{product.id}') 加價購
                   h4.text-green
                     | $ #{product.price}
                     small.text-line-through.m-left-1 $ #{product.originPrice}

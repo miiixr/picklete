@@ -2,6 +2,7 @@
 describe("Additional Purchase", () => {
   var additionalPurchaseLimited = {};
   var additionalPurchase = {};
+  let createdProductA, createdProductB;
   before(async () => {
     let createdProductGmGood = await db.ProductGm.create({
       brandId: 1,
@@ -13,7 +14,7 @@ describe("Additional Purchase", () => {
       coverPhoto: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/JC1121-set-My-Mug-blue-22.jpg', 'https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/JC1121-set-My-Mug-blue-2.jpg']
     });
 
-    let createdProductA = await db.Product.create({
+    createdProductA = await db.Product.create({
       name: '超值組 spec A',
       description: '讚讚讚',
       stockQuantity: '100',
@@ -29,7 +30,7 @@ describe("Additional Purchase", () => {
       photos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg']
     });
 
-    let createdProductB = await db.Product.create({
+    createdProductB = await db.Product.create({
       name: '超值組 spec B',
       description: '讚讚讚',
       stockQuantity: '100',
@@ -114,6 +115,21 @@ describe("Additional Purchase", () => {
 
   });
 
+  it('get cartAddAdditionalPurchases and show information',async(done) =>{
+    try {
+      let additionalPurchasesItems = [ { additionalPurchasesId: additionalPurchaseLimited.id, productId: createdProductA.id },
+        { additionalPurchasesId: additionalPurchase.id, productId: createdProductB.id } ];
+      sails.log.info(additionalPurchasesItems);
+      let result = await AdditionalPurchaseService.cartAddAdditionalPurchases(additionalPurchasesItems);
+      sails.log.info(JSON.stringify(result,null,2));
+      done();
+
+    } catch (e) {
+
+      done(e);
+
+    }
+  });
 
 
 });
