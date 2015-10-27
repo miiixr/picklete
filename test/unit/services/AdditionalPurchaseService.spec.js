@@ -122,6 +122,7 @@ describe("Additional Purchase", () => {
       sails.log.info(additionalPurchasesItems);
       let result = await AdditionalPurchaseService.cartAddAdditionalPurchases(additionalPurchasesItems);
       sails.log.info(JSON.stringify(result,null,2));
+      result.buyTotal.should.be.equal((createdProductA.price - additionalPurchaseLimited.reducePrice ) + (createdProductB.price - additionalPurchase.reducePrice));
       done();
 
     } catch (e) {
