@@ -327,8 +327,42 @@ module.exports = {
     } catch (e) {
       throw e;
     }
-  }
+  },
 
+  /*
+   * 前台聯絡聯絡我們
+   */
+  contactUs: (user) => {
+
+    try {
+      var contactUsTpl = sails.config.mail.templete.contactUs;
+      var email = user.email;
+      var mailSendConfig = {...contactUsTpl, from: sails.config.mail.config.from, to: email};
+
+      mailSendConfig.subject = sprintf(mailSendConfig.subject, {
+        userName: user.name,
+        storeName: sails.config.store.name
+      });
+
+      mailSendConfig.html = sprintf(mailSendConfig.html, {
+        userName: user.name,
+        userContact: user.contact,
+        userIssue: user.issue,
+        userQuestion: user.question,
+        storeName: sails.config.store.name,
+        serviceMail: sails.config.store.serviceMail,
+      });
+
+
+      mailSendConfig.type = 'contactUs';
+
+      return mailSendConfig;
+
+    } catch (e) {
+      throw error;
+    }
+
+  }
 
 
 };
