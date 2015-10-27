@@ -98,7 +98,6 @@ let ShopController = {
     let productGmid = req.params.productGmid;
     let productId = req.params.productId
     try {
-
       let productGm = await db.ProductGm.findOne({
             where: {id: productGmid},
             include: [
@@ -203,7 +202,7 @@ let ShopController = {
           brand: brand.dataValues,
           recommendProducts,
          };
-
+        console.log("hhihihihihi",resData);
         return res.view("main/shopProduct", resData);
 
       }

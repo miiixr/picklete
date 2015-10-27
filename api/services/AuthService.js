@@ -29,6 +29,7 @@ module.exports = {
           forgotToken
         }
       });
+      console.log('user~~~',user);
       user.forgotToken = crypto.randomBytes(32).toString('hex').substr(0, 20);
       await user.save();
 
