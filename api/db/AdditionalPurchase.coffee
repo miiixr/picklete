@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) ->
     reducePrice: DataTypes.FLOAT
     startDate: DataTypes.DATE
     endDate: DataTypes.DATE
-    limit: {
+    activityLimit: {
       type: DataTypes.INTEGER
       defaultValue: 0
     }
@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) ->
       'discount'
     )
   }, classMethods: associate: (models) ->
-    AdditionalPurchase.belongsToMany models.ProductGm, through: 'AdditionalPurchaseProductGm'
+    AdditionalPurchase.belongsToMany models.Product, through: 'AdditionalPurchaseProduct'
     return
   )
   return AdditionalPurchase

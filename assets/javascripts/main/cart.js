@@ -10,7 +10,7 @@
 
   var subtotal = 0;
   var totalPrice = 0;
-  var buymore = 0;
+  var buymore = parseInt(buymoreDiv.text(),10) || 0;
   var discountAmount = 0;
   var totalQuanties = 0;
 
@@ -33,7 +33,6 @@
   }else{
     picklete_cart : {orderItems: []};
   }
-
 
   // calculate total price
   var calcTatalPrice = function () {
@@ -131,7 +130,7 @@
         '        <a href="/shop/products/'+orderItem.productGmId+'/'+orderItem.ProductId+'">'+ orderItem.name +'</a>' +
         '      </h5>' +
         '    </div>' +
-                         
+
         '    <div class="col-xs-6 col-sm-3 col-md-2 desktop-p-left-0 desktop-m-top-5 m-bottom-2">' +
         '      <div class="productQuantities input-group input-group-count max-width-150"><span class="input-group-btn">' +
         '        <button type="button" data-type="minus" data-field="quant['+index+']" class="btn btn-default btn-number p-left-2 p-right-2"><span class="glyphicon glyphicon-minus"></span></button></span>' +
@@ -184,11 +183,11 @@
       liOrderItem = liOrderItem + liPackageService + liPrice + liRemoveItem;
 
       subtotal += parseInt(orderItem.price*orderItem.quantity, 10);
-      
+
       subtotalDiv.text(subtotal.formatMoney());
       subtotalDiv.data('value', subtotal);
 
-      totalPrice = subtotal;
+      totalPrice = subtotal + buymore;
       totalPriceDiv.text(totalPrice.formatMoney());
       totalPriceDiv.data('value', totalPrice);
 

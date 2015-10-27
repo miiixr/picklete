@@ -136,8 +136,15 @@ var self = module.exports = {
 
       orderItemProducts.forEach((order) =>{
         sails.log.info(order);
-        itemArray.push(`${order.orderItemProduct.ProductGm.name}(${order.orderItemProduct.name})X${order.orderItem.quantity}`)
+        itemArray.push(`${order.orderItemProduct.ProductGm.name}(${order.orderItemProduct.name})X${order.orderItem.quantity}`);
       });
+
+      if(order.additionalPurchasesItems){
+        await* order.additionalPurchasesItems.map((item) => {
+          itemArray.push(`${item.Products[0].ProductGm.name}(${item.Products[0].name})X1`);
+        });
+      }
+
 
       data.ItemName = itemArray.join('#');
 
@@ -167,7 +174,7 @@ var self = module.exports = {
 
   create: async (newOrder) => {
     let result = {};
-
+    sails.log.info("==== newOrder ===",newOrder);
     try {
       if (! newOrder.orderItems)
         throw new Error('無購買任何商品，請跳轉商品頁');
@@ -294,6 +301,12 @@ var self = module.exports = {
         bonusPoint.remain = 0;
       }
 
+      let getBuyMore;
+      if(newOrder.additionalPurchasesItem){
+        getBuyMore = await AdditionalPurchaseService.cartAddAdditionalPurchases(newOrder.additionalPurchasesItem);
+        thisOrder.paymentTotalAmount += getBuyMore.buyMoreTotalPrice;
+      }
+
       let isolationLevel = db.Sequelize.Transaction.ISOLATION_LEVELS.SERIALIZABLE;
       let transaction = await db.sequelize.transaction({isolationLevel});
 
@@ -334,6 +347,9 @@ var self = module.exports = {
         result.order.OrderItems = createdOrderItems;
         result.order.User = buyer;
         result.order.Shipment = createdShipment;
+
+        if(newOrder.additionalPurchasesItem)
+          result.order.additionalPurchasesItems = getBuyMore.additionalPurchasesItems;
 
         let useAllPay = false;
         if(sails.config.useAllPay !== undefined)

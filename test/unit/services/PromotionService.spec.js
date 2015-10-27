@@ -183,11 +183,11 @@ describe("about Shop Discount", function() {
           description : 'this is a test promotion',
           startDate : new Date(2015, 1, 1),
           endDate : new Date(2016, 12, 30),
-          type : 'general',
+          type : 'flash',
           discountType:'discount',
           discount: 0.5,
         });
-        createdPromotion1 = await createdPromotion1.setProducts([createdProduct1, createdProduct2]);
+        await createdPromotion1.setProducts([createdProduct1, createdProduct2]);
 
 
 
@@ -201,7 +201,7 @@ describe("about Shop Discount", function() {
           discountType:'price',
           price: 300,
         });
-        createdPromotion2 = await createdPromotion2.setProducts([createdProduct3]);
+        await createdPromotion2.setProducts([createdProduct3]);
 
 
         done();
@@ -240,7 +240,6 @@ describe("about Shop Discount", function() {
       try {
         // find product by given ProductGmId
         let findProducts = [createdProduct3];
-
         // processing with productPriceTransPromotionPrice
         let pricedProducts = await PromotionService.productPriceTransPromotionPrice(date2, findProducts);
         pricedProducts.should.be.Array;
@@ -257,13 +256,56 @@ describe("about Shop Discount", function() {
     });
 
 
-    it('promotions createDpt', async (done) => {
+    it('promotions type: flash do createDpt', async (done) => {
       try {
 
-
-        let params = {promotion: createdPromotion1, productIds: [createdProduct1.id, createdProduct2.id]}
-
+        let productIds = [createdProduct1.id, createdProduct2.id];
+        let params = {promotion: createdPromotion1, productIds}
         await PromotionService.createDpt(params);
+
+        let updatedProducts = await db.Product.findAll({
+          where: {
+            id: productIds
+          },
+          include: [db.DptSub]
+        })
+
+
+        updatedProducts.forEach((product) => {
+          product.DptSubs.forEach((dptSub) => {
+            dptSub.name.should.be.equal('閃購專區');
+          });
+        });
+
+        done();
+      } catch (e) {
+        console.log(e.stack);
+        done(e);
+      }
+    });
+
+
+    it('promotions type: general do createDpt', async (done) => {
+      try {
+
+        let productIds = [createdProduct3.id];
+        let params = {promotion: createdPromotion2, productIds}
+        await PromotionService.createDpt(params);
+
+        let updatedProducts = await db.Product.findAll({
+          where: {
+            id: productIds
+          },
+          include: [db.DptSub]
+        })
+
+
+        updatedProducts.forEach((product) => {
+          product.DptSubs.forEach((dptSub) => {
+            dptSub.name.should.be.equal(createdPromotion2.title);
+          });
+        });
+
         done();
       } catch (e) {
         console.log(e.stack);

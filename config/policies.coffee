@@ -27,6 +27,8 @@ module.exports.policies = {
     update: ['passport']
     verify: true
     updatefavorite: []
+    addAdditionalPurchases: ['global']
+    removeAdditionalPurchases: ['global']
 
   'MainController': ['global', 'mailRequired', 'cookieRequired']
 

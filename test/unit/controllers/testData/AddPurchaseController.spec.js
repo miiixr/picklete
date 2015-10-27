@@ -1,7 +1,7 @@
 var sinon = require('sinon');
 
 describe('Add Purchase', () => {
-  let createdProductGmComplete
+  let createdProductGmComplete,createdProduct;
   before(async (done) => {
     sinon.stub(UserService, 'getLoginState', (req) => {
       return true;
@@ -25,6 +25,22 @@ describe('Add Purchase', () => {
       coverPhoto: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/JC1121-set-My-Mug-blue-2.jpg']
     });
 
+    createdProduct = await db.Product.create({
+      name: '超值組',
+      description: '讚讚讚',
+      stockQuantity: '100',
+      isPublish: 'true',
+      price: 999,
+      size: 'normal',
+      service: ["express"],
+      country: 'U.K',
+      madeby: 'TW',
+      color: 3,
+      productNumber: '1-USA-2-G',
+      spec: 'super-metal',
+      photos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg']
+    });
+
     done();
   });
 
@@ -38,13 +54,13 @@ describe('Add Purchase', () => {
     request(sails.hooks.http.app)
       .put(`/admin/buymoreUpdate`)
       .send({
-         limit: '0',
+          activityLimit: '0',
           type: 'reduce',
           startDate: '2015-09-10',
           endDates: '2015-09-30',
           reducePrice: '1000',
           discount: '',
-          productIds: [createdProductGmComplete.id]
+          productIds: [createdProduct.id]
       })
       .end((err, res) => {
         console.log('res.body', res.body);
@@ -66,7 +82,7 @@ describe('Add Purchase', () => {
         reducePrice: '',
         type: 'discount',
         discount: '9',
-        productIds: [createdProductGmComplete.id]
+        productIds: [createdProduct.id]
       })
       .end((err, res) => {
         console.log('res.body', res.body);
