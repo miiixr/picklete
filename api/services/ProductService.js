@@ -384,6 +384,7 @@ module.exports = {
           GmQueryObj.brandId = query.brandId;
 
         if (query.tag) {
+          if(!GmQueryObj.$or) GmQueryObj.$or = [];
           GmQueryObj.$or.push(['`ProductGm`.`tag` like ?', '%'+query.tag+'%'])
         }
 
@@ -547,12 +548,11 @@ module.exports = {
       }
 
       resultProducts = products;
-      // console.log(JSON.stringify(resultProducts,null,4));
+      return {rows: resultProducts.rows, count: resultProducts.count };
     } catch (error) {
       console.error(error.stack);
-      // let msg = error.message;
-      // return res.serverError({msg});
+      throw error;
     }
-    return {rows: resultProducts.rows, count: resultProducts.count };
+
   }
 };
