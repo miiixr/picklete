@@ -9,13 +9,13 @@ module.exports = {
       let additionalPurchases = await db.AdditionalPurchase.findAll({
         where: {
           startDate: {
-            lt: date
+            $lt: date
           },
           endDate: {
-            gte: date
+            $gte: date
           },
           activityLimit: {
-            lt: paymentTotalAmount
+            $lt: paymentTotalAmount
           }
         },
         include: [{

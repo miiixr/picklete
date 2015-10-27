@@ -50,7 +50,7 @@ describe("Additional Purchase", () => {
 
     additionalPurchaseLimited = {
       name: '加價購測試商品 limted spec ' ,
-      limit: 1500,
+      activityLimit: 1500,
       reducePrice: 100,
       type: 'reduce',
       startDate: new Date(2000, 9, 7),
@@ -60,11 +60,11 @@ describe("Additional Purchase", () => {
     }
 
     additionalPurchaseLimited = await db.AdditionalPurchase.create(additionalPurchaseLimited);
-    await additionalPurchaseLimited.setProductGms([createdProductGmGood])
+    await additionalPurchaseLimited.setProducts([createdProductA])
 
     additionalPurchase = {
       name: '加價購測試商品 unlimted spec ' ,
-      limit: 0,
+      activityLimit: 0,
       reducePrice: 100,
       type: 'reduce',
       startDate: new Date(2000, 9, 7),
@@ -72,7 +72,7 @@ describe("Additional Purchase", () => {
     }
 
     additionalPurchase = await db.AdditionalPurchase.create(additionalPurchase);
-    await additionalPurchase.setProductGms([createdProductGmGood])
+    await additionalPurchase.setProducts([createdProductA, createdProductB])
 
   });
 
@@ -81,9 +81,9 @@ describe("Additional Purchase", () => {
     try {
       let date = new Date(2000, 9, 9);
       let query = {date, paymentTotalAmount: 1000}
-      let additionalPurchaseProductGms = await AdditionalPurchaseService.getProductGms(query);
+      let additionalPurchaseProductGms = await AdditionalPurchaseService.getProducts(query);
 
-      additionalPurchaseProductGms.length.should.be.equal(1);
+      additionalPurchaseProductGms.length.should.be.equal(2);
 
       done();
 
@@ -100,9 +100,9 @@ describe("Additional Purchase", () => {
     try {
       let date = new Date(2000, 9, 9);
       let query = {date, paymentTotalAmount: 2000}
-      let additionalPurchaseProductGms = await AdditionalPurchaseService.getProductGms(query);
-
-      additionalPurchaseProductGms.length.should.be.equal(2);
+      let additionalPurchaseProductGms = await AdditionalPurchaseService.getProducts(query);
+      sails.log.info(additionalPurchaseProductGms);
+      additionalPurchaseProductGms.length.should.be.equal(3);
 
       done();
 
