@@ -392,6 +392,7 @@ module.exports.createTestData = async ({createRoleUser, createNewBuyer}) => {
     var additionalPurchase = {
       name: '加價購測試商品'+i ,
       reducePrice: 100 ,
+      type:'reduce',
       startDate: randomDate(new Date(2015, 8, 8), new Date(2015, 8, 11)),
       endDate: randomDate(new Date(2015, 10, 21), new Date(2015, 10, 31))
     }

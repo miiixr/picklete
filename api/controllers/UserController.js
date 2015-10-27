@@ -168,10 +168,7 @@ let UserController = {
 
       let date = new Date();
       let query = {date, paymentTotalAmount};
-      let additionalPurchaseProductGms = []
-      // let additionalPurchaseProductGms = await AdditionalPurchaseService.getProductGms(query);
-      console.log('=== additionalPurchaseProducts ===', additionalPurchaseProductGms);
-
+      let additionalPurchaseProducts = await AdditionalPurchaseService.getProducts(query);
       // add an item for Shippings
       let shippings = await ShippingService.findAll();
       // console.log('=== shippings ==>',shippings);
@@ -179,7 +176,7 @@ let UserController = {
       return res.view('main/cart', {
         company,
         brands,
-        additionalPurchaseProductGms,
+        additionalPurchaseProducts,
         shippings,
         paymentMethod
       });

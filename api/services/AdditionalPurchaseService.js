@@ -1,5 +1,5 @@
 module.exports = {
-  getProductGms: async ({date, paymentTotalAmount}) => {
+  getProducts: async ({date, paymentTotalAmount}) => {
 
     console.log(date, paymentTotalAmount);
 
@@ -19,36 +19,34 @@ module.exports = {
           }
         },
         include: [{
-          model: db.ProductGm,
-          include: [db.Product, db.Brand]
+          model: db.Product,
+          include:{
+            model: db.ProductGm,
+            include:{
+              model: db.Brand,
+            }
+          }
         }]
 
       });
-
-      additionalPurchases.forEach((additionalPurchase) => {
-        let finalAdditionalPurchase = additionalPurchase.toJSON();
-        let productGms = finalAdditionalPurchase.ProductGms;
-
-        productGms.forEach((productGm) => {
-          productGm.originPrice = productGm.Products[0].price;
-
-          productGm.Products.forEach((product, index) => {
-
-            if(additionalPurchase.type == 'reduce')
-              product.price = product.price - additionalPurchase.reducePrice;
-            else {
-              product.price = product.price * additionalPurchase.discount;
-            }
-
-          });
-
-          productGm.price = productGm.Products[0].price;
-          additionalPurchaseProductGms.push(productGm);
+      let additionalProducts = [];
+      additionalPurchases.forEach((additional) => {
+        additional.Products.forEach((product) => {
+          product.originPrice = product.price;
+          if(additional.type == 'reduce'){
+            product.price = product.price - additional.reducePrice;
+          }else{
+            if(additional.discount > 10)
+              product.price = product.price * (additional.discount * 0.01);
+            else
+              product.price = product.price * (additional.discount * 0.1);
+          }
+          additionalProducts.push(product);
         });
 
       });
 
-      return additionalPurchaseProductGms;
+      return additionalProducts;
 
 
     } catch (e) {
