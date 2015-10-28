@@ -28,22 +28,22 @@ $(function() {
 
   // pagination 2
   // for new style, that can jump to sepcific page.
-  var formWithPagination = $('form.with-pagination2');
+  var formWithPagination2 = $('form.with-pagination2');
   // page number current
-  var inputPage = $('input[name=limitPage]', formWithPagination);
+  var inputPage = $('input[name=limitPage]', formWithPagination2);
   // total page number
-  var inputTotalPages = $('input[name=totalPages]', formWithPagination);
+  var inputTotalPages = $('input[name=totalPages]', formWithPagination2);
   // each page how many items
-  var inputLimit = $('input[name=limit]', formWithPagination);
+  var inputLimit = $('input[name=limit]', formWithPagination2);
 
-  $('.form-control', formWithPagination).change(function() {
+  $('.form-control', formWithPagination2).change(function() {
     inputPage.val(0);
   });
 
   $('#pagination2-limit').change(function() {
     inputPage.val(0);
     inputLimit.val($(this).val());
-    formWithPagination.submit();
+    formWithPagination2.submit();
   });
 
   // for new style, that can jump to sepcific page.
@@ -54,7 +54,7 @@ $(function() {
     page = (page < 0) ? 0 : page;
 
     inputPage.val(page);
-    formWithPagination.submit();
+    formWithPagination2.submit();
     return false;
   });
 
@@ -69,7 +69,7 @@ $(function() {
     }
 
     inputPage.val(page);
-    formWithPagination.submit();
+    formWithPagination2.submit();
 
     return false;
   });
@@ -84,7 +84,7 @@ $(function() {
     }
 
     inputPage.val(page);
-    formWithPagination.submit();
+    formWithPagination2.submit();
 
     return false;
   });
