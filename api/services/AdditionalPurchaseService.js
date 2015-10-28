@@ -8,15 +8,19 @@ module.exports = {
       let additionalPurchaseProductGms = [];
       let additionalPurchases = await db.AdditionalPurchase.findAll({
         where: {
-          startDate: {
-            $lt: date
-          },
-          endDate: {
-            $gte: date
-          },
-          activityLimit: {
-            $lt: paymentTotalAmount
-          }
+          $or:[{
+            anyTime: true
+          },{
+            startDate: {
+              $lt: date
+            },
+            endDate: {
+              $gte: date
+            },
+            activityLimit: {
+              $lt: paymentTotalAmount
+            }
+          }]
         },
         include: [{
           model: db.Product,
