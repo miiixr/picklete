@@ -46,6 +46,7 @@ module.exports.policies = {
 
   'ContactController':
     index: ['global']
+    contactUs: ['global']
 
   'FAQController':
     show: ['global']

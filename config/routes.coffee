@@ -108,6 +108,7 @@ module.exports.routes = {
   'get /admin/order' : 'OrderController.index'
 
   'get /contact': 'ContactController.index'
+  'get /contact/send': 'ContactController.contactUs'
   'get /admin/about' : 'AboutController.create'
   'post /admin/about' : 'AboutController.create'
 
