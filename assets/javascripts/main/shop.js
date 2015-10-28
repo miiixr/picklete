@@ -178,7 +178,7 @@
 
     picklete_cart.orderItems.forEach(function(orderItem){
       var price = parseInt(orderItem.price, 10);
-      if(orderItem.stockQuantity < 1111111){
+      if(orderItem.stockQuantity <= 0){
         alert(orderItem.name + '商品數項已售完，請至購物車修改');
       }
       var liOrderItem =
