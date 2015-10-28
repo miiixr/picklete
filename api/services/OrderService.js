@@ -194,10 +194,6 @@ var self = module.exports = {
         if (!product)
           throw new Error('找不到商品！ 請確認商品ID！');
 
-        let productGm = await db.ProductGm.findById(product.ProductGmId);
-        let productName = (product.name == null || product.name == '') ? "" : "(" + product.name + ")";
-        product.name = productGm.name + productName;
-
         if (product.stockQuantity === 0){
           // mix productGm and product name
           throw new Error('此商品「'+ product.name +'」已經售鑿！');
@@ -239,7 +235,7 @@ var self = module.exports = {
         packingQuantity: newOrder.packingQuantity,
         description: newOrder.description
       };
-
+      // 計算購買商品價格
       products.forEach((product, index) => {
         let quantity = parseInt(orderItems[index].quantity);
         thisOrder.paymentTotalAmount += (orderItems[index].price * quantity);
@@ -252,7 +248,7 @@ var self = module.exports = {
         orderItems[index].spec = product.spec;
         orderItems[index].productNumber = product.productNumber;
       });
-
+      // 使用折扣碼
       if(newOrder.shopCode){
         var shopCodeData = {
           code: newOrder.shopCode,
@@ -265,31 +261,41 @@ var self = module.exports = {
           thisOrder.ShopCodeId = shopCode.id;
         }
       }
+      // 計算加價購
+      let getBuyMore;
+      if(newOrder.additionalPurchasesItem){
+        getBuyMore = await AdditionalPurchaseService.cartAddAdditionalPurchases(newOrder.additionalPurchasesItem);
+        thisOrder.paymentTotalAmount += getBuyMore.buyMoreTotalPrice;
+      }
 
+      // 計算運費
       let useAllPay = false;
       if(sails.config.useAllPay !== undefined)
           useAllPay = sails.config.useAllPay;
       if(useAllPay){
         // 有用歐付寶的運費運算, to fixed fee is parseInt error or NaN
-        let fee = parseInt(newOrder.shippingFee, 10);
-        fee = fee || 0;
-        let shippingFee = await db.Shipping.findAll({
-          where:{
-            fee
-          }
-        });
-        console.log('=== shippingFee ==>',shippingFee);
-        if(shippingFee)
-          thisOrder.paymentTotalAmount += fee;
-        else
-          throw new error ("運費有錯誤！");
+        if(thisOrder.paymentTotalAmount < 390){
+          let fee = parseInt(newOrder.shipment.shippingFee, 10);
+          fee = fee || 0;
+          let shippingFee = await db.Shipping.findOne({
+            where:{
+              fee
+            }
+          });
+          console.log('=== shippingFee ==>',shippingFee);
+          if(shippingFee)
+            thisOrder.paymentTotalAmount += fee;
+          else
+            throw new error ("運費有錯誤！");
+        }
       }else{
         if(thisOrder.quantity == 1)
           thisOrder.paymentTotalAmount += 90;
         else
           thisOrder.paymentTotalAmount += (thisOrder.quantity * 60);
       }
-
+      
+      // 計算紅利點數
       let bonusPoint = await db.BonusPoint.findOne({
         where: {email: user.email}
       });
@@ -299,12 +305,6 @@ var self = module.exports = {
         thisOrder.useBunusPoint = bonusPoint.remain;
         bonusPoint.used += bonusPoint.remain;
         bonusPoint.remain = 0;
-      }
-
-      let getBuyMore;
-      if(newOrder.additionalPurchasesItem){
-        getBuyMore = await AdditionalPurchaseService.cartAddAdditionalPurchases(newOrder.additionalPurchasesItem);
-        thisOrder.paymentTotalAmount += getBuyMore.buyMoreTotalPrice;
       }
 
       let isolationLevel = db.Sequelize.Transaction.ISOLATION_LEVELS.SERIALIZABLE;
