@@ -192,7 +192,7 @@
       totalPriceDiv.data('value', totalPrice);
 
       cartViewer.append(liOrderItem);
-      $("select[name='packingSelect["+index+"]']").val(orderItem.packingQuantity);
+      $("select[name='packingSelect["+index+"]']").val(orderItem.packingQuantity || 0);
     });
 
     cartViewer.inputNumber();
@@ -338,6 +338,9 @@
     // console.log('=== itemQuantVal ===>',itemQuantVal);
     var targetSelect = $("select[name='packingSelect["+itemQuantId+"]']");
     // console.log('=== releted pack field name ==>',targetSelect.attr('name'));
+
+    picklete_cart.orderItems[itemQuantId].packingQuantity = 0;
+    Cookies.set('picklete_cart', picklete_cart);
 
     // empty select
     targetSelect
