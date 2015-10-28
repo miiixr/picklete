@@ -73,14 +73,6 @@ let PromotionController = {
   addPurchaseUpdate: async (req, res) => {
     let data = req.body;
     try {
-      // { productIds: [ '1' ],
-      // activityLimit: '1500',
-      // startDate: '2015-10-28',
-      // endDate: '2015-10-28',
-      // restrictionDate: 'on',
-      // reducePrice: '',
-      // type: 'discount',
-      // discount: '95' }
       sails.log.info("=== shopBuyMore create ===",data);
       var additionalPurchase = {};
       if(data.hasOwnProperty("id")){
