@@ -1,5 +1,6 @@
-mixin pagination-limit(limit)
-  select.pagination-limit.form-control
+//- 當一頁需要兩個獨立 pagination 時，可透過 anotherId 設定第二個 pagination-limit select 的 id 
+mixin pagination-limit(limit, anotherId)
+  select.form-control(id=anotherId?anotherId:'pagination-limit')
     option(selected=(limit==20)) 20
     option(selected=(limit==30)) 30
     option(selected=(limit==40)) 40

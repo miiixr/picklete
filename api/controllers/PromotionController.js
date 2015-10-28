@@ -275,7 +275,6 @@ let PromotionController = {
 
       let query = req.query;
       let limitPage = query.limitPage? query.limitPage : 0;
-
       // query
       if(query.keyword)
         queryObj.name = { 'like': '%'+query.keyword+'%'};
@@ -293,17 +292,25 @@ let PromotionController = {
         limit: limit
       });
 
-      sails.log.info("=== controlShopBuyMore NoLimit ===",additionalPurchaseNoLimit.rows)
+      sails.log.info("=== controlShopBuyMore NoLimit ===",additionalPurchaseNoLimit.rows);
 
-      let additionalPurchaseLimit = await db.AdditionalPurchase.findAll({
+      let additionalPurchaseLimit = await db.AdditionalPurchase.findAndCountAll({
         where:{
           activityLimit:1500
         },
         include:{
           model: db.Product
-        }
+        },
+        offset: offset,
+        limit: limit
       });
       // end query
+      // console.log("=== controlShopBuyMore Limit ===",additionalPurchaseLimit.count);
+
+      console.log('==========  limit  ===============  Page   ===============');
+      console.log(limitPage);
+      console.log(Math.ceil(additionalPurchaseLimit.count / limit));
+      console.log(additionalPurchaseLimit.count);
 
       res.view('promotion/controlShopBuyMore',{
         query,

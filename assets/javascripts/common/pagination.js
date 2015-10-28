@@ -11,7 +11,7 @@ $(function() {
     inputPage.val(0);
   });
 
-  $('.pagination-limit').change(function() {
+  $('#pagination-limit').change(function() {
     inputPage.val(0);
     inputLimit.val($(this).val());
     formWithPagination.submit();
@@ -60,7 +60,7 @@ $(function() {
     return false;
   });
 
-  
+
   var displayPageHandler = function () {
     var totalNumber = parseInt(inputTotalPages.val(), 10) + 1;
     var pageNumber = parseInt(inputPage.val(), 10) + 1;

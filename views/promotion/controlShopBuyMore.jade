@@ -78,13 +78,14 @@ block body
           form.form-inline
             .form-group
               label 顯示
-              +pagination-limit(limit)
+              +pagination-limit(limit, 'pagination2-limit')
               label 筆資料（共 #{limitTotalRows} 筆）
             // /form-group
         // /col-sm-6
         .col-sm-6.col-md-4
-          form.with-pagination(name="searchLimit", action="/admin/shop-buy-more", method="get")
+          form.with-pagination2(name="searchLimit", action="/admin/shop-buy-more", method="get")
             input(type='hidden', name='limitTab', value=limitTab? limitTab: '')
+            input(type="hidden", name="limitPage", value=limitPage? limitPage: 0)
             +pagination-fields(limitPage, limitTotalPages, limit)
             .input-group
               input.form-control(type='text', placeholder='Search for...')
@@ -107,7 +108,7 @@ block body
             th 時間
             th
         tbody
-          each purchase in additionalPurchaseLimit
+          each purchase in additionalPurchaseLimit.rows
             each product in purchase.Products
               tr
                 td
@@ -131,7 +132,23 @@ block body
                   a.btn.btn-link(href='../admin/buymore/detail?id='+ purchase.id)
                     span.glyphicon.glyphicon-pencil2
       hr.dashed-line
-      //- +pagination-simple-pager(limitPage, limitTotalPages)
+      .text-center.m-bottom-8
+        nav
+          ul.pagination
+            if (limitPage+1 > 1)
+              li
+                a(href='#', aria-label='Previous', id='pagination2-prev')
+                  span(aria-hidden='true') «
+            if (limitTotalPages > 1)
+              - for(var i=1; i <= limitTotalPages; i++) {
+                - var active = (parseInt(limitPage)+1==parseInt(i)) ? 'active' : '';
+                li(href='#', class='#{active} pagination2-jump' data-page='#{i}')
+                  a(href='#') #{i}
+              - }
+            if (limitPage+1 < limitTotalPages)
+              li
+                a(href='#', aria-label='Next', id='pagination2-next')
+                  span(aria-hidden='true') »
 block js
   script(src='/javascripts/admin/controlShopBuyMore.js')
   script(src='/javascripts/common/pagination.js')

@@ -3,7 +3,7 @@ $(function() {
   var $a_tab2 = $('#a-tab2');
   var $tab_container = $('#tab-container');
   // $tab_container.data('tabStatus');
-  if ( $tab_container.data('tab-status') == 2 )
+  if ($tab_container.data('tab-status') == 2)
     $a_tab2.click();
 
   // $a_tab1.onClick(function() {
@@ -18,11 +18,75 @@ $(function() {
       .attr("type", "hidden")
       .attr("name", "tabStatus").val(2);
 
-    var a_tab2_class = $a_tab2.parent().attr('class')? $a_tab2.parent().attr('class'):'';
-    if( a_tab2_class.indexOf('active') )
+    var a_tab2_class = $a_tab2.parent().attr('class') ? $a_tab2.parent().attr('class') : '';
+    if (a_tab2_class.indexOf('active'))
       $inputTabStatus = $inputTabStatus.val(1);
 
     $(this).append($inputTabStatus);
     return true;
   });
+
+  // pagination 2
+  // for new style, that can jump to sepcific page.
+  var formWithPagination = $('form.with-pagination2');
+  // page number current
+  var inputPage = $('input[name=limitPage]', formWithPagination);
+  // total page number
+  var inputTotalPages = $('input[name=totalPages]', formWithPagination);
+  // each page how many items
+  var inputLimit = $('input[name=limit]', formWithPagination);
+
+  $('.form-control', formWithPagination).change(function() {
+    inputPage.val(0);
+  });
+
+  $('#pagination2-limit').change(function() {
+    inputPage.val(0);
+    inputLimit.val($(this).val());
+    formWithPagination.submit();
+  });
+
+  // for new style, that can jump to sepcific page.
+  $('.pagination2-jump').on('click', function(e) {
+    e.preventDefault();
+
+    var page = (parseInt($(this).data('page'), 0) - 1) || 0;
+    page = (page < 0) ? 0 : page;
+
+    inputPage.val(page);
+    formWithPagination.submit();
+    return false;
+  });
+
+  $('#pagination2-next').click(function(e) {
+    e.preventDefault();
+
+    var page = parseInt(inputPage.val(), 0) + 1;
+    var totalPages = parseInt(inputTotalPages.val(), 0);
+
+    if (page >= totalPages) {
+      page = totalPages - 1;
+    }
+
+    inputPage.val(page);
+    formWithPagination.submit();
+
+    return false;
+  });
+
+  $('#pagination2-prev').click(function(e) {
+    e.preventDefault();
+    var page = parseInt(inputPage.val(), 0) - 1;
+
+    //page = (page <= 0) ? 0 : page;
+    if (page < 0) {
+      page = 0;
+    }
+
+    inputPage.val(page);
+    formWithPagination.submit();
+
+    return false;
+  });
+
 });
