@@ -17,10 +17,10 @@ module.exports = {
             endDate: {
               $gte: date
             },
-            activityLimit: {
-              $lt: paymentTotalAmount
-            }
-          }]
+          }],
+          activityLimit: {
+            $lt: paymentTotalAmount
+          }
         },
         include: [{
           model: db.Product,
