@@ -237,7 +237,7 @@ var self = module.exports = {
       };
       // 計算購買商品價格
       products.forEach((product, index) => {
-        let quantity = parseInt(orderItems[index].quantity);
+        let quantity = parseInt(orderItems[index].quantity,10);
         thisOrder.paymentTotalAmount += (orderItems[index].price * quantity);
         thisOrder.quantity += quantity;
 
@@ -247,6 +247,9 @@ var self = module.exports = {
         orderItems[index].comment = product.comment;
         orderItems[index].spec = product.spec;
         orderItems[index].productNumber = product.productNumber;
+
+        if(orderItems[index].packingQuantity)
+          orderItems[index].packingFee = parseInt(orderItems[index].packingQuantity,10) * 60;
       });
       // 使用折扣碼
       if(newOrder.shopCode){
@@ -294,7 +297,14 @@ var self = module.exports = {
         else
           thisOrder.paymentTotalAmount += (thisOrder.quantity * 60);
       }
-      
+
+      //計算包裝費
+      orderItems.forEach((item) => {
+        if(item.packingQuantity){
+          thisOrder.paymentTotalAmount +=  parseInt(item.packingQuantity,10) * 60;
+        }
+      });
+
       // 計算紅利點數
       let bonusPoint = await db.BonusPoint.findOne({
         where: {email: user.email}
