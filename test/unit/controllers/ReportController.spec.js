@@ -64,4 +64,21 @@ describe('about Report', () => {
       done(err);
     });
   });
+
+  it('Report export date list', (done) => {
+
+    request(sails.hooks.http.app).get('/report/list').end((err, res) => {
+      if (res.statusCode === 500) {
+        return done();
+      }
+
+      res.statusCode.should.equal(200);
+      let result = res.body;
+      result.should.be.Array;
+      result[0].should.be.Array;
+      result[0][0].should.be.String;
+      result[0][1].should.be.String;
+      done(err);
+    });
+  });
 });

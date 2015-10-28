@@ -13,7 +13,7 @@ module.exports = (req, res, next) ->
   if UserService.getLoginState(req)
     userInfo = UserService.getLoginUser(req)
     console.log '=== userInfo ===',userInfo
-    if userInfo.hasOwnProperty('email')
+    if userInfo.hasOwnProperty('email') && userInfo.hasOwnProperty('mobile') && userInfo.hasOwnProperty('address')
       return next()
     else
       return res.redirect('/member/setting')

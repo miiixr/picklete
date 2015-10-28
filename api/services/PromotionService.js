@@ -15,7 +15,7 @@ module.exports = {
     return promotions;
   },
   // end findAll
-  
+
   // getModel
   getModel: async () => {
     let promotions = await db.Promotion.find({
@@ -44,16 +44,8 @@ module.exports = {
 
       // create promotion
       let createdPromotion = await db.Promotion.create(promotion);
-      console.log('=== createdPromotion ==>',createdPromotion);
 
-      // set products to promotion
-      let products = await* promotion.productIds.map(async (productId)=>{
-        // find product
-        let findProduct = await db.Product.findById(productId);
-        // set products
-        await createdPromotion.setProducts([findProduct]);
-        return createdPromotion;
-      });
+      await createdPromotion.setProducts(promotion.productIds);
 
       return createdPromotion;
     } catch (e) {
@@ -61,7 +53,57 @@ module.exports = {
       return false;
     }
   },
-  // end create
+
+  createDpt: async ({promotion, productIds}) => {
+    try {
+      let dptSubName;
+      if(promotion.type == 'flash')
+        dptSubName = '閃購專區'
+      else dptSubName = promotion.title;
+
+
+      let targetDptSub = await db.DptSub.findOne({
+        where:{
+          name: dptSubName
+        }
+      })
+
+      let doCreateNewDptSub = (targetDptSub == null);
+
+      if(doCreateNewDptSub){
+        let selectionDpt = await db.Dpt.findOne({
+          where:{
+            name: '特別企劃'
+          }
+        })
+
+        targetDptSub = await db.DptSub.create({
+          name: dptSubName,
+          weight: 999,
+          official: true,
+          DptId: selectionDpt.id
+        });
+      }
+
+      let products = await db.Product.findAll({
+        where: {
+          id: productIds
+        },
+        include: [{
+          model: db.DptSub
+        }]
+      });
+
+      await* products.map((product) => {
+        return product.addDptSubs(targetDptSub)
+      });
+
+    } catch (e) {
+      throw e;
+    }
+
+  },
+
 
   // update
   update: async (promotion) => {
@@ -92,14 +134,13 @@ module.exports = {
         updatePromoiton.price = promotion.price;
       }
       updatePromoiton.discountType = promotion.discountType;
+      updatePromoiton.coverPhoto = promotion.coverPhoto;
 
-      let products = await* promotion.productIds.map(async (productId)=>{
-        let findProduct = await db.Product.findById(productId);
-        await updatePromoiton.setProducts([findProduct]);
-        return updatePromoiton;
-      });
 
       await updatePromoiton.save();
+      await updatePromoiton.setProducts(promotion.productIds);
+
+
       return updatePromoiton;
     } catch (e) {
       console.log('=== update err ==>',e.stack);
@@ -152,12 +193,12 @@ module.exports = {
           required: true
         }]
       });
-      console.log('=== findPromotions ==>',findPromotions);
-      
+      // sails.log.verbose('=== findPromotions ==>',findPromotions);
+
       if(!findPromotions.length) return products;
 
       products.forEach((product) => {
-        console.log('=== findPromotions ==>',findPromotions);
+        // sails.log.verbose('=== findPromotions ==>',findPromotions);
         //
         findPromotions.forEach((promotion) => {
           //
@@ -188,6 +229,8 @@ module.exports = {
                 console.log('=== promotion.price ==>',promotion.price);
                 product.price = parseInt(product.price - promotion.price);
               }
+
+              if(product.price < 0) product.price = 0;
             } // end if
           }); // end forEach
         }); // end forEach

@@ -1,5 +1,5 @@
 module.exports = {
-  getProductGms: async ({date, paymentTotalAmount}) => {
+  getProducts: async ({date, paymentTotalAmount}) => {
 
     console.log(date, paymentTotalAmount);
 
@@ -9,46 +9,44 @@ module.exports = {
       let additionalPurchases = await db.AdditionalPurchase.findAll({
         where: {
           startDate: {
-            lt: date
+            $lt: date
           },
           endDate: {
-            gte: date
+            $gte: date
           },
-          limit: {
-            lt: paymentTotalAmount
+          activityLimit: {
+            $lt: paymentTotalAmount
           }
         },
         include: [{
-          model: db.ProductGm,
-          include: [db.Product, db.Brand]
+          model: db.Product,
+          include:{
+            model: db.ProductGm,
+            include:{
+              model: db.Brand,
+            }
+          }
         }]
 
       });
-
-      additionalPurchases.forEach((additionalPurchase) => {
-        let finalAdditionalPurchase = additionalPurchase.toJSON();
-        let productGms = finalAdditionalPurchase.ProductGms;
-
-        productGms.forEach((productGm) => {
-          productGm.originPrice = productGm.Products[0].price;
-
-          productGm.Products.forEach((product, index) => {
-
-            if(additionalPurchase.type == 'reduce')
-              product.price = product.price - additionalPurchase.reducePrice;
-            else {
-              product.price = product.price * additionalPurchase.discount;
-            }
-
-          });
-
-          productGm.price = productGm.Products[0].price;
-          additionalPurchaseProductGms.push(productGm);
+      let additionalProducts = [];
+      additionalPurchases.forEach((additional) => {
+        additional.Products.forEach((product) => {
+          product.originPrice = product.price;
+          if(additional.type == 'reduce'){
+            product.price = product.price - additional.reducePrice;
+          }else{
+            if(additional.discount > 10)
+              product.price = product.price * (additional.discount * 0.01);
+            else
+              product.price = product.price * (additional.discount * 0.1);
+          }
+          additionalProducts.push(product);
         });
 
       });
 
-      return additionalPurchaseProductGms;
+      return {additionalProducts,additionalPurchases};
 
 
     } catch (e) {
@@ -57,5 +55,46 @@ module.exports = {
 
     }
 
+  },
+
+cartAddAdditionalPurchases: async(additionalPurchasesItems) => {
+    try {
+      sails.log.info("=== additionalPurchasesItems ===",additionalPurchasesItems);
+      let buyMoreTotalPrice = 0;
+      additionalPurchasesItems = await* additionalPurchasesItems.map(async (item) =>{
+        let find = await db.AdditionalPurchase.findOne({
+          where:{
+            id: item.additionalPurchasesId
+          },
+          include:{
+            model: db.Product,
+            where:{
+              id: item.productId
+            },
+            include:{
+              model: db.ProductGm,
+              include:{
+                model: db.Brand
+              }
+            }
+          }
+        });
+        sails.log.info("=== additionalPurchasesItems ===",JSON.stringify(find,null,2));
+        find.originPrice = find.Products[0].price;
+        if(find.type == 'reduce')
+          find.price = find.originPrice - find.reducePrice;
+        else{
+          if(find.discount > 10)
+            find.price = find.originPrice * (find.discount * 0.01);
+          else
+            find.price = find.originPrice * (find.discount * 0.1);
+        }
+        buyMoreTotalPrice += find.price ;
+        return find;
+      });
+      return {additionalPurchasesItems,buyMoreTotalPrice};
+    } catch (e) {
+      throw e;
+    }
   }
 }

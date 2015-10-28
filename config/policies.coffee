@@ -26,6 +26,9 @@ module.exports.policies = {
     loginStatus:['global','cookieRequired']
     update: ['passport']
     verify: true
+    updatefavorite: []
+    addAdditionalPurchases: ['global']
+    removeAdditionalPurchases: ['global']
 
   'MainController': ['global', 'mailRequired', 'cookieRequired']
 
@@ -43,6 +46,7 @@ module.exports.policies = {
 
   'ContactController':
     index: ['global']
+    contactUs: ['global']
 
   'FAQController':
     show: ['global']
@@ -50,6 +54,7 @@ module.exports.policies = {
   'BrandController':
     show: ['global']
     resetWeight: []
+    listView: ['global']
   # 'admin/*': ['passport', 'loginRequired']
 
   # ProductController:
@@ -75,7 +80,7 @@ module.exports.policies = {
     create: []
 
   'ShopCodeController':
-    checkCode: []
+    checkCode: ['global']
 
   # #'/api/search/*': []
   # SearchController:

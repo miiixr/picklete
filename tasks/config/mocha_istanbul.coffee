@@ -1,13 +1,13 @@
 module.exports = (grunt) ->
   grunt.config.set 'mocha_istanbul',
-  coverage:
-    src: 'test/unit/'
-    options:
-      coverageFolder: 'coverage'
-      # istanbulOptions: ['--hook-run-in-context']
-      # mask: '**/*.spec.coffee'
-      # mask: '**/*.js'
-      root: 'api/'
+  # coverage:
+  #   src: 'test/unit/'
+  #   options:
+  #     coverageFolder: 'coverage'
+  #     # istanbulOptions: ['--hook-run-in-context']
+  #     # mask: '**/*.spec.coffee'
+  #     # mask: '**/*.js'
+  #     root: 'api/'
   coveralls:
     src: [
       'test/unit'

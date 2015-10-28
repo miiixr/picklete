@@ -3,32 +3,48 @@ extends ../_layout_auth
 block body
   h2.m-bottom-6 加價購設定
   .well.control-well.p-30.m-bottom-8
-    form.form-horizontal(name = 'updateForm')
+    form#updateForm.form-horizontal(name = 'updateForm')
+      if query.id
+        input(type='hidden', form='updateForm', name='id', value= query.id)
+      if additionalPurchase
+        each product in additionalPurchase.rows
+          input(type='hidden', form='updateForm', name='productIds[]', value= product.id)
       .form-group
         label.col-sm-3.col-md-2.control-label 是否限滿額
         .col-sm-9.col-md-10
           .btn-group.btn-group-switch(data-toggle='buttons')
-            label.btn.btn-default
-              input#option1(type='radio', name='limit',value= "0" ,autocomplete='off')
-              span.btn-text 不限金額
-            label.btn.btn-default.active
-              input#option2(type='radio', name='limit',value= "1500" ,autocomplete='off',checked='')
-              span.btn-text 限滿 1,500 元
+            if query.activityLimit == 0
+              label#option1.btn.btn-default.active
+                input(type='radio', name='activityLimit',value= "0" ,autocomplete='off', checked='')
+                span.btn-text 不限金額
+              label#option2.btn.btn-default
+                input(type='radio', name='activityLimit',value= "1500" ,autocomplete='off')
+                span.btn-text 限滿 1,500 元
+            else
+              label#option1.btn.btn-default
+                input(type='radio', name='activityLimit',value= "0" ,autocomplete='off')
+                span.btn-text 不限金額
+              label#option2.btn.btn-default.active
+                input(type='radio', name='activityLimit',value= "1500" ,autocomplete='off', checked='')
+                span.btn-text 限滿 1,500 元
           // /btn-group-switch
         // /col-sm-10
       // /form-group
       .form-group
         label.col-sm-3.col-md-2.control-label 活動時間
         .col-sm-4.col-md-3
-          input.form-control(type='date',name = 'startDate')
+          input.form-control(type='date',name = 'startDate',value= sails.moment(query.startDate).format('YYYY-MM-DD'))
         .col-sm-1.col-md-1.p-left-0.p-right-0.text-center
           p.form-control-static 至
         .col-sm-4.col-md-3
-          input.form-control(type='date',name = 'endDate')
+          input.form-control(type='date',name = 'endDate',value= sails.moment(query.endDate).format('YYYY-MM-DD'))
         .col-sm-9.col-sm-offset-3.col-md-3.col-md-offset-0
           .checkbox
             label
-              input(type='checkbox')
+              if query.restrictionDate
+                input(type='checkbox' name = 'restrictionDate', checked='')
+              else
+                input(type='checkbox' name = 'restrictionDate')
               |  不限時
       // /form-group
       .form-group
@@ -36,21 +52,27 @@ block body
         .col-sm-4.col-md-3
           .radio
             label
-              input#optionsRadios1(type='radio',name='type', value='reduce', checked='')
-              input.form-control(type='text', name='reducePrice' , placeholder='請輸入折扣金額')
+              if query.type == 'reduce'
+                input#optionsRadios1(type='radio',name='type', value='reduce', checked='')
+              else
+                input#optionsRadios1(type='radio',name='type', value='reduce')
+              input.form-control(type='text', name='reducePrice' , placeholder='請輸入折扣金額',value= query.reducePrice)
         .col-sm-1.col-md-1
         .col-sm-4.col-md-3
           .radio
             label
-              input#optionsRadios2(type='radio',name='type', value='discount')
+              if query.type == 'discount'
+                input#optionsRadios2(type='radio',name='type', value='discount', checked='')
+              else
+                input#optionsRadios2(type='radio',name='type', value='discount')
               .input-group.width-12
-                input.form-control(type='text',name='discount')
+                input.form-control(type='text',name='discount',value= query.discount)
                 span.input-group-addon 折
               // /input-group
       // /form-group
       .m-top-6.text-right
-        a.btn.btn-link.delete-link.btn-lg(href='../admin/shop-buy-more') 取消
-        a#add.btn.btn-green.btn-lg(href='#') 確定
+        a.btn.btn-link.delete-link.btn-lg(href='../../admin/shop-buy-more') 取消
+        a#createBuyMore.btn.btn-green.btn-lg 確定
       // /text-right
   // /well
   .row
@@ -67,32 +89,33 @@ block body
           label 筆資料（共 #{additionalPurchase.count} 筆）
         // /form-group
     // /col-md-6
+    
     .col-md-8.desktop-text-right
-      form.form-inline(name="search", action="shop-buy-more-add-item", method="get")
-        .form-group.m-right-2
-          label 品牌名稱
-          select.form-control
-            option 品牌名稱
-            option 2
-            option 3
-            option 4
-            option 5
-        // /form-group
-        .form-group.m-right-2
-          .input-group
-            input#keyword.form-control(type='text',name="keyword",placeholder='輸入關鍵字',value = query.keyword)
-            input(type='hidden', name='page',value = page)
-            span.input-group-btn
-              button.btn.btn-default.p-left-2.p-right-2(type='button', onClick='$("form[name=\'search\']").submit()')
-                span.glyphicon.glyphicon-search
+      a#buyMoreAddBtn.btn.btn-green() 加入折扣商品
+    //- .col-md-8.desktop-text-right
+    //-   form.form-inline(name="search", action="shop-buy-more-add-item", method="get")
+    //-     .form-group.m-right-2
+    //-       label 品牌名稱
+    //-       select.form-control(name='brand' , value = query.brand?query.brand: 0)
+    //-         option(value=0 selected=(query.brand==0)) 品牌名稱
+    //-         each brand in brands
+    //-           option(value=brand.id selected=(query.brand==brand.id)) #{brand.name}
+    //-     // /form-group
+    //-     .form-group.m-right-2
+    //-       .input-group
+    //-         input#keyword.form-control(type='text',name="keyword",placeholder='輸入關鍵字',value = query.keyword)
+    //-         input(type='hidden', name='page',value = page)
+    //-         span.input-group-btn
+    //-           button.btn.btn-default.p-left-2.p-right-2(type='button', onClick='$("form[name=\'search\']").submit()')
+    //-             span.glyphicon.glyphicon-search
     // /col-md-6
   // /row
   hr.dashed-line
   table.table.table-striped
     thead
       tr
-        th
-          input(type='checkbox')
+        //- th
+          //- input(type='checkbox')
         th 主圖
         th
           | 商品名稱
@@ -106,18 +129,27 @@ block body
         th
           | 特價
           span.caret
+        th
     tbody
-      each purchase in additionalPurchase.rows
-        tr
-          td
-            input.addSelect(type='checkbox' value= purchase.id)
-          td
-            img.width-6(src='images/demo/shop-item-1-1.jpg')
-          td #{purchase.name}
-          td #{purchase.id}
-          td 590
-          td
-            span.text-danger 490
+      if additionalPurchase
+        each product in additionalPurchase.rows
+          tr
+            td
+              img.width-6(src= product.photos[0])
+            td= product.name
+            td= product.productNumber
+            td= product.price
+            td
+              if query.type == 'reduce'
+                span.text-danger #{product.price - query.reducePrice}
+              else
+                if query.discount >10
+                  span.text-danger #{Math.ceil(product.price * query.discount * 0.01)}
+                else
+                  span.text-danger #{Math.ceil(product.price * query.discount * 0.1)}
+            td.text-right
+              a.btn.btn-link.delete-link(data-productId=product.id)
+                span.glyphicon.glyphicon-remove
   hr.dashed-line
   .text-center
     //
@@ -131,5 +163,5 @@ block body
       li
         a#bonusNext(href='#') 下一頁
   // /text-center
-  block js
-    script(src="/javascripts/admin/addPurchase.js")
+block js
+  script(src="/javascripts/admin/addPurchase.js")

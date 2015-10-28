@@ -27,10 +27,16 @@
   $('.row').on('click','.btn-remove',function(e){
     e.preventDefault();
     var that = $(this);
-    if( ! that.next().hasClass("btn-add")){
+    if( ! that.next().next().hasClass("btn-add")){
+      that.parent().parent().remove();
+    }
+    else if(that.parent().parent().prev().hasClass("col-md-3")){
+      that.parent().parent().prev().children().append("\<a href\=\"\#\" class\=\"btn-add\"\>\<span class\=\"glyphicon glyphicon-plus\"\>\<\/span\>\<\/a\>");
       that.parent().parent().remove();
     }
   });
+
+  $(".row.row-m").sortable();
 
 }(jQuery));
 

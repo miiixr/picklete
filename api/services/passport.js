@@ -101,6 +101,8 @@ passport.connect = async function(req, query, profile, next) {
   }
 
   try {
+
+
     let passport = await db.Passport.findOne({
       where: {
         provider: provider,
@@ -108,44 +110,59 @@ passport.connect = async function(req, query, profile, next) {
       }
     });
 
-    if (!req.user) {
-      if (!passport) {
-        let role = await db.Role.find({
-          where: {authority: 'user'}
-        });
-        user.RoleId = role.id;
-        user = await db.User.create(user);
-        query.UserId = user.id;
-        let passport = await db.Passport.create(query);
-        next(null, user);
-      } else {
-        if (query.hasOwnProperty('tokens') && query.tokens !== passport.tokens) {
-          passport.tokens = query.tokens;
-        }
+    //有一般使用者登入但沒使用FB註冊過
+    let loginedUser = req.user;
+    sails.log.info("=== loginedUser ===",loginedUser);
+    if (loginedUser && !passport) {
+      query.UserId = loginedUser.id;
+      passport = await Passport.create(query);
+      return next(null, loginedUser);
+    }
+
+    //已用FB註冊過，直接登入
+    if(passport){
+      if(query.hasOwnProperty('tokens') && query.tokens !== passport.tokens){
+        passport.tokens = query.tokens;
         passport = await passport.save();
-        user = await db.User.findById(passport.UserId);
-        if(user)
-          next(null, user)
-        else
-          next(new Error())
       }
-    }else{
-      if (!passport) {
-        query.user = req.user.id;
-        passport = Passport.create(query);
-        next(null, req.user);
-      } else {
-        next(null, req.user);
-      }
+      user = await db.User.findOne({
+        where:{
+          id: passport.UserId
+        },
+        include:{
+          model: db.Role
+        }
+      });
+      if(user)
+        return next(null, user)
+      else
+        throw new Error('Error user not found');
     }
+
+    // 註冊FB帳號
+    let role = await db.Role.find({
+      where: {authority: 'user'}
+    });
+    user.RoleId = role.id;
+
+    let checkMail;
+    if(user.hasOwnProperty('eamil')){
+      checkMail = await db.User.findOne({where:{email:user.email}});
+    }
+
+    if(checkMail){
+      throw new Error('Error passport email exists');
+    } else{
+      user = await db.User.create(user);
+      user.dataValues.Role = role;
+      query.UserId = user.id;
+      passport = await db.Passport.create(query);
+      return next(null, user);
+    }
+
   } catch (err) {
-    if(err.code === 'E_VALIDATION') {
-      if (err.invalidAttributes.email) {
-        req.flash('error', 'Error.Passport.Email.Exists');
-      } else {
-        req.flash('error', 'Error.Passport.User.Exists');
-      }
-    }
+    req.flash('error',err.message);
+    console.log(err);
     return next(err);
   }
   //
@@ -368,13 +385,13 @@ passport.disconnect = function(req, res, next) {
 };
 
 passport.serializeUser(function(user, next) {
+  sails.log.info("serializeUser",user);
   return next(null, user);
 });
 
-passport.deserializeUser(function(id, next) {
-  return db.User.findOneById(id).then(function(user) {
-    return next(null, user);
-  });
+passport.deserializeUser(function(user, next) {
+  sails.log.info("deserializeUser",user);
+  return next(null, user);
 });
 
 module.exports = passport;

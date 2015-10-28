@@ -250,7 +250,7 @@ module.exports.createTestData = async ({createRoleUser, createNewBuyer}) => {
       color: 3,
       productNumber: '2-USA-3-G',
       spec: 'super-metal',
-      photos: ["https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg", "https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/JC1121-set-My-Mug-blue-22.jpg"]
+      photos: ["https://dl.dropboxusercontent.com/u/9662264/mertirial/shop-item-d-5.jpg", "https://dl.dropboxusercontent.com/u/9662264/mertirial/shop-item-d-5.jpg"]
     });
     xs.push(x);
     console.log('______--------__________-------------______________');
@@ -323,9 +323,9 @@ module.exports.createTestData = async ({createRoleUser, createNewBuyer}) => {
       orderSyncToken: '',
       mobile: '0900'+randomInt(100000, 999999)
     };
-    var createFakeUser = await db.User.create(fakeUser);  
+    var createFakeUser = await db.User.create(fakeUser);
     await createFakeUser.setLikes([1]);
-    
+
     var newOrder2 = {
       serialNumber: '00000'+i+1,
       paymentIsConfirmed: true,
@@ -339,6 +339,14 @@ module.exports.createTestData = async ({createRoleUser, createNewBuyer}) => {
       ProductId: createdProduct.id
     };
     var createdOrder = await db.Order.create(newOrder2);
+
+    var invoice = {
+      type:'triplex',
+      taxId: '1234554321'
+    };
+    var createInvoice = await db.Invoice.create(invoice);
+
+    await createdOrder.setInvoice(createInvoice);
 
     var shipment2 = {
       username: createFakeUser.fullName,
@@ -383,13 +391,14 @@ module.exports.createTestData = async ({createRoleUser, createNewBuyer}) => {
 
     var additionalPurchase = {
       name: '加價購測試商品'+i ,
-      discount: 100 ,
+      reducePrice: 100 ,
+      type:'reduce',
       startDate: randomDate(new Date(2015, 8, 8), new Date(2015, 8, 11)),
       endDate: randomDate(new Date(2015, 10, 21), new Date(2015, 10, 31))
     }
 
     var createAdditionalPurchase = await db.AdditionalPurchase.create(additionalPurchase);
-    createAdditionalPurchase.setProductGms(createdProductGmGood);
+    createAdditionalPurchase.setProducts(createdProduct);
   }
 
   // selectionActive EXCLUSIVES

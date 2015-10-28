@@ -15,19 +15,19 @@ block body
     img.m-bottom-8(src='#{company.line}')
     h4.letter-spacing-1
       | 有問題想詢問？請先看
-      a(href='qa.html') 常見問與答
+      a.active(href='qa.html') 常見問與答
   // /page-header
   .row
     .col-md-6.col-md-offset-3
-      form.font-size-slarge.desktop-max-width-470.m-h-auto(action="mailto:#{company.email}", enctype="text/plain", method="post")
+      form.font-size-slarge.desktop-max-width-470.m-h-auto(method='get', action="/contact/send")
         .form-group
-          input.form-control(type='text', name='name' placeholder='姓名')
+          input.form-control(type='text', name='name' placeholder='姓名', required)
         // /form-group
         .form-group
-          input.form-control(type='email', name='email', placeholder='Email')
+          input.form-control(type='email', name='email', placeholder='Email', required)
         // /form-group
         .form-group
-          input.form-control(type='text', name='contact',placeholder='聯絡電話')
+          input.form-control(type='text', name='contact',placeholder='聯絡電話', required)
         // /form-group
         .form-group.m-bottom-4
           .row
@@ -76,7 +76,7 @@ block body
           // /row
         // /form-group
         .form-group
-          textarea.form-control(rows='7', name='question', placeholder='我想詢問...')
+          textarea.form-control(rows='7', name='question', placeholder='我想詢問...', required)
         // /form-group
         .row.text-center.m-bottom-8.m-top-4
           .col-xs-4.col-xs-offset-4

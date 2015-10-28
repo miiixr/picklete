@@ -4,7 +4,9 @@ module.exports = (sequelize, DataTypes) ->
     username: DataTypes.STRING
     fullName: DataTypes.STRING
     gender: DataTypes.ENUM('none', 'male', 'female')
-    email: DataTypes.STRING
+    email:
+      type: DataTypes.STRING
+      unique: true
     mobile: DataTypes.STRING
     birthYear: DataTypes.STRING
     birthMonth: DataTypes.STRING
@@ -40,6 +42,7 @@ module.exports = (sequelize, DataTypes) ->
     User.hasMany models.Passport
     User.belongsTo models.Role
     User.belongsToMany(models.Like, {through: 'UserLike'});
+    User.belongsToMany(models.Product, {through: 'UserFavorite'})
     return
   )
   return User

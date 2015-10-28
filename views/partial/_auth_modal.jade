@@ -104,6 +104,8 @@
         p 您確定要將
           span.FAQTypeTitle          
           | 刪除？
+          br 
+          | [注意] 此類別底下的問題，也將一併刪除。
       // /modal-body
       .modal-footer
         form(action='/admin/FAQTypeDelete', method='POST')

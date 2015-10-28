@@ -1,8 +1,9 @@
 extends ../_layout_auth
+include ../mixins/pagination
 
 block body
   h2.m-bottom-6 加價購
-  a.btn.btn-danger.btn-lg.m-bottom-6(href='shop-buy-more-add-item') 建立加價購
+  a.btn.btn-danger.btn-lg.m-bottom-6(href='buymore/detail') 建立加價購
   ul.nav.nav-tabs.m-bottom-4
     li.active
       a(href='#tab-1', data-toggle='tab') 不限金額
@@ -13,16 +14,11 @@ block body
     #tab-1.tab-pane.fade.in.active
       .row
         .col-sm-6.col-md-8
-          form.form-inline
+          form.form-inline.with-pagination(name="show", action="/admin/shop-buy-more", method="get")
+            +pagination-fields(page, limit)
             .form-group
               label 顯示
-              select.form-control
-                option 10
-                option 20
-                option 30
-                option 40
-                option 50
-              label 筆資料（共 90 筆）
+                +pagination-limit
             // /form-group
         // /col-sm-6
         .col-sm-6.col-md-4
@@ -47,36 +43,36 @@ block body
             th 時間
             th
         tbody
-          each purchase in noLimit
-            tr
-              td
-                img.width-6(src='images/demo/shop-item-1-1.jpg')
-              td #{purchase.name}
-              td #{purchase.id}
-              td 590
-              td
-                span.text-danger 490
-              td #{purchase.discount}
-              td
-                | #{sails.moment(purchase.startDate).format('YYYY/MM/DD')}
-                br
-                | #{sails.moment(purchase.endDate).format('YYYY/MM/DD')}
-              td.text-right
-                a.btn.btn-link(href='../admin/shop-buy-more-add-item?keyword='+ purchase.name)
-                  span.glyphicon.glyphicon-pencil2
-                a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
-                  span.glyphicon.glyphicon-remove
+          each purchase in additionalPurchaseNoLimit.rows
+            each product in purchase.Products
+              tr
+                td
+                  img.width-6(src= product.photos[0])
+                td #{product.name}
+                td #{product.id}
+                td #{product.price}
+                if purchase.type == 'discount'
+                  td
+                    span.text-danger #{Math.ceil(product.price * (purchase.discount*0.1))}
+                  td #{purchase.discount} 折
+                else
+                  td
+                    span.text-danger #{product.price - purchase.reducePrice}
+                  td #{purchase.reducePrice} 元
+                td
+                  | #{purchase.startDate ? sails.moment(purchase.startDate).format('YYYY/MM/DD') : '不限時'}
+                  br
+                  | #{purchase.endDate ? sails.moment(purchase.endDate).format('YYYY/MM/DD') : '不限時'}
+                td.text-right
+                  a.btn.btn-link(href='../admin/buymore/detail?id='+ purchase.id)
+                    span.glyphicon.glyphicon-pencil2
       hr.dashed-line
       .text-center
         //
           pagination-block
           ==================================================
         ul.list-inline.m-bottom-0.m-top-1
-          li.border-right-1.p-right-2
-            a(href='#') 上一頁
-          li.border-right-1.p-right-2 第 15 之 20
-          li
-            a(href='#') 下一頁
+          +pagination-simple-pager(page, totalPages)
       // /text-center
     // /tab-pane
     #tab-2.tab-pane.fade
@@ -116,25 +112,29 @@ block body
             th 時間
             th
         tbody
-          each purchase in limit
-            tr
-              td
-                img.width-6(src='images/demo/shop-item-1-1.jpg')
-              td #{purchase.name}
-              td #{purchase.id}
-              td 590
-              td
-                span.text-danger 490
-              td #{purchase.discount}
-              td
-                | #{sails.moment(purchase.startDate).format('YYYY/MM/DD')}
-                br
-                | #{sails.moment(purchase.endDate).format('YYYY/MM/DD')}
-              td.text-right
-                a.btn.btn-link(href='../admin/shop-buy-more-add-item?keyword='+ purchase.name)
-                  span.glyphicon.glyphicon-pencil2
-                a.btn.btn-link.delete-link(href='#', data-toggle='modal', data-target='#modal-delete')
-                  span.glyphicon.glyphicon-remove
+          each purchase in additionalPurchaseLimit
+            each product in purchase.Products
+              tr
+                td
+                  img.width-6(src= product.photos[0])
+                td #{product.name}
+                td #{product.id}
+                td #{product.price}
+                if purchase.type == 'discount'
+                  td
+                    span.text-danger #{Math.ceil(product.price * (purchase.discount*0.1))}
+                  td #{purchase.discount} 折
+                else
+                  td
+                    span.text-danger #{product.price - purchase.reducePrice}
+                  td #{purchase.reducePrice} 元
+                td
+                  | #{purchase.startDate ? sails.moment(purchase.startDate).format('YYYY/MM/DD') : '不限時'}
+                  br
+                  | #{purchase.endDate ? sails.moment(purchase.endDate).format('YYYY/MM/DD') : '不限時'}
+                td.text-right
+                  a.btn.btn-link(href='../admin/buymore/detail?id='+ purchase.id)
+                    span.glyphicon.glyphicon-pencil2
       hr.dashed-line
       .text-center
         //
@@ -149,3 +149,5 @@ block body
       // /text-center
     // /tab-pane
   // /tab-content
+block js
+  script(src='/javascripts/common/pagination.js')

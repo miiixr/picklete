@@ -62,4 +62,18 @@ describe("about Mailer service", () => {
 
   });
 
+  it('contactUs send', () => {
+    let user = {
+        name: 'testUser',
+        email: 'xyz@gmail.com',
+        contact: '123456789',
+        issue: '商品問題',
+        question: '沒什麼問題'
+    }
+
+    let result = CustomMailerService.contactUs(user, user.email);
+    result.type.should.be.equal('contactUs');
+
+  });
+
 });

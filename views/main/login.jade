@@ -1,0 +1,126 @@
+extends ../_layout_head
+
+block body
+  #modal-login
+    .modal-dialog.modal-sm(role='document')
+      .modal-content
+        .modal-header.p-30
+          | &#x9;&#x9;&#x9;&#x9;
+          h1.modal-title.text-center &#x767B;&#x5165;
+        // /modal-header
+        .modal-body.text-center.p-30
+          form#login-form.m-bottom-4(action='/auth/local/', method='post')
+            .form-group
+              input.form-control(type='email', name='identifier', placeholder='Email')
+            // /form-group
+            .form-group
+              input.form-control(type='password', name='password', placeholder='Password')
+            // /form-group SSS
+            button.btn.btn-black.border-radius-circle.btn-block.m-bottom-2(type='submit') 登入會員
+            | &#x9;&#x9;&#x9;&#x9;&#x9;
+          a.btn.btn-black.border-radius-circle.btn-block.m-bottom-2(href='/auth/facebook') 使用 FB 登入
+            //- button.btn.btn-fb.border-radius-circle.btn-block(type='button', data-dismiss='modal') FACEBOOK &#x767B;&#x5165;
+          | &#x9;&#x9;&#x9;&#x9;
+          a(href='#', data-toggle='modal', data-target='#modal-password2', data-dismiss='modal') &#x5FD8;&#x8A18;&#x5BC6;&#x78BC;
+          | &#x9;&#x9;&#x9;&#x9;
+          hr.m-top-4.m-bottom-4
+          | &#x9;&#x9;&#x9;&#x9;
+          h5.m-bottom-4 &#x9084;&#x6C92;&#x6709;&#x5E33;&#x865F;&#xFF1F;
+          | &#x9;&#x9;&#x9;&#x9;
+          a.btn.btn-line.border-radius-circle.btn-block(href='/register') &#x7533;&#x8ACB;&#x6703;&#x54E1;
+        // /modal-body
+      // /modal-content
+    // /modal-dialog
+  // /modal
+  //
+  //-   modal-login-feedback
+  //-   ==================================================
+  //- #modal-login-feedback.modal.fade
+  //-   .modal-dialog.modal-sm(role='document')
+  //-     .modal-content
+  //-       .modal-header.p-30
+  //-         button.close(type='button', data-dismiss='modal', aria-label='Close')
+  //-           span(aria-hidden='true') &times;
+  //-         | &#x9;&#x9;&#x9;&#x9;
+  //-         h1.modal-title.text-center &#x767B;&#x5165;
+  //-       // /modal-header
+  //-       .modal-body.text-center.p-30
+  //-         form.m-bottom-4
+  //-           .form-group.has-success.has-feedback
+  //-             input.form-control(type='email', placeholder='Email')
+  //-             | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
+  //-             span.glyphicon.glyphicon-ok.form-control-feedback(aria-hidden='true')
+  //-           // /form-group
+  //-           .form-group.has-error.has-feedback
+  //-             input#exampleInputPassword1.form-control(type='password', placeholder='Password')
+  //-             | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
+  //-             span.glyphicon.glyphicon-remove.form-control-feedback(aria-hidden='true')
+  //-           // /form-group
+  //-           button.btn.btn-black.border-radius-circle.btn-block.m-bottom-2(type='submit', data-dismiss='modal') &#x767B;&#x5165;&#x6703;&#x54E1;
+  //-           | &#x9;&#x9;&#x9;&#x9;&#x9;
+  //-           //- button.btn.btn-fb.border-radius-circle.btn-block(type='submit', data-dismiss='modal') FACEBOOK &#x767B;&#x5165;
+  //-         | &#x9;&#x9;&#x9;&#x9;
+  //-         a(href='#', data-toggle='modal', data-target='#modal-password', data-dismiss='modal') &#x5FD8;&#x8A18;&#x5BC6;&#x78BC;
+  //-         | &#x9;&#x9;&#x9;&#x9;
+  //-         hr.m-top-4.m-bottom-4
+  //-         | &#x9;&#x9;&#x9;&#x9;
+  //-         h5.m-bottom-4 &#x9084;&#x6C92;&#x6709;&#x5E33;&#x865F;&#xFF1F;
+  //-         | &#x9;&#x9;&#x9;&#x9;
+  //-         a.btn.btn-line.border-radius-circle.btn-block(href='/register') &#x7533;&#x8ACB;&#x6703;&#x54E1;
+  //-       // /modal-body
+  //-     // /modal-content
+  //-   // /modal-dialog
+  //- // /modal
+  //- //
+    modal-password
+    ==================================================
+  #modal-password2.modal.fade
+    .modal-dialog.modal-sm(role='document')
+      .modal-content
+        .modal-header.p-30
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') &times;
+          | &#x9;&#x9;&#x9;&#x9;
+          h1.modal-title.text-center &#x5FD8;&#x8A18;&#x5BC6;&#x78BC;
+        // /modal-header
+        .modal-body.text-center.p-30
+          form#forgotPassword.m-bottom-4(method='get',action='/forgotPassword')
+            .form-group
+              input.form-control(type='email',name='email',form='forgotPassword', placeholder='Email')
+            // /form-group
+            button#forgotPasswordBtm.btn.btn-black.border-radius-circle.btn-block.m-bottom-2(type='submit',form='forgotPassword') 發送信箱
+          | &#x9;&#x9;&#x9;&#x9;
+          a(href='#', data-dismiss='modal') &#x53D6;&#x6D88;
+          | &#x9;&#x9;&#x9;&#x9;
+          hr.m-top-4.m-bottom-4
+          | &#x9;&#x9;&#x9;&#x9;
+          h5.m-bottom-4 &#x9084;&#x6C92;&#x6709;&#x5E33;&#x865F;&#xFF1F;
+          | &#x9;&#x9;&#x9;&#x9;
+          a.btn.btn-line.border-radius-circle.btn-block(href='/user/signup') &#x7533;&#x8ACB;&#x6703;&#x54E1;
+        // /modal-body
+      // /modal-content
+    // /modal-dialog
+  // /modal
+  //- #modal-verification.modal.fade
+  //-   -console.log(user);
+  //-   .modal-dialog.modal-sm(role='document')
+  //-     .modal-content
+  //-       .modal-header.p-30
+  //-         button.close(type='button', data-dismiss='modal', aria-label='Close')
+  //-           span(aria-hidden='true') &times;
+  //-         | &#x9;&#x9;&#x9;&#x9;
+  //-         h1.modal-title.text-center 帳號尚未驗證
+  //-           h3 我們發現你的帳號尚未驗證喔，要在發一次驗證信嗎？
+  //-       // /modal-header
+  //-       .modal-body.text-center.p-30
+  //-         form#verificationMailAgain.m-bottom-4(method='get',action='/verification/send')
+  //-           .form-group
+  //-             input#verificationMailEmail.form-control(type='email',name='email',form='verificationMailAgain', value= user?user.email:'')
+  //-           // /form-group
+  //-           button.btn.btn-black.border-radius-circle.btn-block.m-bottom-2(type='submit',form='verificationMailAgain') 發送
+  //-         | &#x9;&#x9;&#x9;&#x9;
+  //-         a(type='button', data-dismiss='modal', aria-label='Close') 取消
+  //-       // /modal-body
+  //-     // /modal-content
+  //-   // /modal-dialog
+  //- // /modal

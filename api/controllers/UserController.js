@@ -12,21 +12,36 @@ let UserController = {
 
 
   verify: async (req, res) => {
-    var email = req.param("email");;
+    var email = req.param("email");
 
     if ( ! email)
       return res.json({ result: 'fail' });
 
     try {
-      var result = await db.User.findOne({
-        where: {
-          email: email
+      if(UserService.getLoginState(req)){
+        let loginUser = UserService.getLoginUser(req);
+        var result = await db.User.findOne({
+          where: {
+            email: email
+          }
+        });
+        if(result){
+          if(result.id == loginUser.id){
+            result = null;
+          }
         }
-      });
+      }else{
+        var result = await db.User.findOne({
+          where: {
+            email: email
+          }
+        });
+      }
 
       var response = (result) ? { result: "existed" } : { result: "ok" };
-      return res.json(response);   
+      return res.json(response);
     } catch (e) {
+      console.log(e);
       return res.json({ result: 'fail'});
       return res.view("main/memberFavorite", {products: []});
     }
@@ -49,6 +64,61 @@ let UserController = {
       products
     });
   },
+
+  updatefavorite: async (req, res) => {
+
+    var FAV_KEY = "picklete_fav";
+    var favoriteKeys = req.cookies[FAV_KEY];
+    sails.log.info("=== cookies ===",req.cookies);
+    try {
+      favoriteKeys = JSON.parse(favoriteKeys);
+      sails.log.info("=== favoriteKeys ===",favoriteKeys);
+      let products = Object.keys(favoriteKeys);
+      sails.log.info("=== products ===",products);
+      let user = UserService.getLoginUser(req);
+      if(user){
+        user = await db.User.findById(user.id);
+        let UserFavorites = await user.getProducts();
+        let favorite = await* products.map( async (productId) => {
+          // sails.log.info("==== find ====",find);
+          let product;
+          let isNewFavorite = true;
+          UserFavorites.forEach((favorite) => {
+            if(favorite.id == productId){
+              isNewFavorite = false
+            }
+          });
+          product = await db.Product.findById(productId);
+          if(isNewFavorite){
+            let productGm = await db.ProductGm.findById(product.ProductGmId);
+
+            let count = (await db.LikesCount.findOrCreate({
+              where:{
+                ProductGmId: productGm.id
+              },
+              defaults:{
+                ProductGmId: productGm.id
+              }
+            }))[0];
+            count.likesCount ++;
+            count = await count.save();
+
+          }
+          return product;
+        });
+        await user.setProducts(favorite);
+      }
+      let message = '更新收藏';
+      return res.ok(message);
+    } catch (e) {
+      favoriteKeys = null;
+      sails.log.error(e);
+      let {message} = e;
+      let success = false;
+      return res.json(500,{message, success});
+    }
+  },
+
   purchase:async (req, res) => {
     let loginUser = UserService.getLoginUser(req);
     let orders = await db.Order.findAll({
@@ -79,38 +149,90 @@ let UserController = {
   },
 
   cart: async (req, res) => {
-    console.log('=== req.cookies ===', req.cookies.picklete_cart);
+    try {
+      console.log('=== req.cookies ===', req.cookies.picklete_cart);
 
-    let picklete_cart = req.cookies.picklete_cart;
-    let paymentTotalAmount = 0;
+      let picklete_cart = req.cookies.picklete_cart;
+      let paymentTotalAmount = 0;
 
-    if(picklete_cart != undefined){
-      picklete_cart = JSON.parse(picklete_cart);
+      if(picklete_cart != undefined){
+        picklete_cart = JSON.parse(picklete_cart);
+        picklete_cart.orderItems.forEach( (orderItem) => {
+          paymentTotalAmount += parseInt(orderItem.quantity, 10) * parseInt(orderItem.price, 10);
+        });
+      }
+      let slesctedAdditionalPurchases=[];
+      if(picklete_cart.hasOwnProperty('additionalPurchasesItem')){
+        slesctedAdditionalPurchases = await AdditionalPurchaseService.cartAddAdditionalPurchases(picklete_cart.additionalPurchasesItem);
+        picklete_cart.buymore = slesctedAdditionalPurchases.buyMoreTotalPrice;
+        res.cookie('picklete_cart', JSON.stringify(picklete_cart));
+      }
 
-      picklete_cart.orderItems.forEach( (orderItem) => {
-        paymentTotalAmount += parseInt(orderItem.quantity, 10) * parseInt(orderItem.price, 10);
+      let company = await db.Company.findOne();
+      let brands = await db.Brand.findAll();
+
+      let date = new Date();
+      let query = {date, paymentTotalAmount};
+      let additionalPurchaseProducts = await AdditionalPurchaseService.getProducts(query);
+      // add an item for Shippings
+      let shippings = await ShippingService.findAll();
+      // console.log('=== shippings ==>',shippings);
+      let paymentMethod = sails.config.allpay.paymentMethod;
+      return res.view('main/cart', {
+        company,
+        brands,
+        additionalPurchaseProducts,
+        slesctedAdditionalPurchases,
+        shippings,
+        paymentMethod
       });
+    } catch (e) {
+      sails.log.error(e.stack);
+      let {message} = e;
+      let success = false;
+      return res.serverError({message, success});
     }
+  },
 
-    let company = await db.Company.findOne();
-    let brands = await db.Brand.findAll();
+  addAdditionalPurchases: async (req, res) => {
+    try{
+      console.log('=== addAdditionalPurchases ===',req.query);
+      let data = req.query;
+      let picklete_cart = req.cookies.picklete_cart;
+      if(picklete_cart != undefined){
+        picklete_cart = JSON.parse(picklete_cart);
+        if(!picklete_cart.hasOwnProperty('additionalPurchasesItem'))
+          picklete_cart.additionalPurchasesItem = [];
+        picklete_cart.additionalPurchasesItem.push({
+          additionalPurchasesId: data.additionalPurchasesId,
+          productId: data.productId
+        });
+        res.cookie('picklete_cart', JSON.stringify(picklete_cart));
+      }
+      res.redirect("/user/cart");
+    } catch (e) {
+      console.error(e.stack);
+      let {message} = e;
+      res.serverError({message});
+    }
+  },
 
-    let date = new Date();
-    let query = {date, paymentTotalAmount};
-    let additionalPurchaseProductGms = await AdditionalPurchaseService.getProductGms(query);
-    console.log('=== additionalPurchaseProducts ===', additionalPurchaseProductGms);
-
-    // add an item for Shippings
-    let shippings = await ShippingService.findAll();
-    // console.log('=== shippings ==>',shippings);
-    let paymentMethod = sails.config.allpay.paymentMethod;
-    return res.view('main/cart', {
-      company,
-      brands,
-      additionalPurchaseProductGms,
-      shippings,
-      paymentMethod
-    });
+  removeAdditionalPurchases: async (req, res) => {
+    try{
+      console.log('=== addAdditionalPurchases ===',req.query);
+      let data = req.query;
+      let picklete_cart = req.cookies.picklete_cart;
+      if(picklete_cart != undefined){
+        picklete_cart = JSON.parse(picklete_cart);
+        picklete_cart.additionalPurchasesItem.splice(data.index, 1);
+        res.cookie('picklete_cart', JSON.stringify(picklete_cart));
+      }
+      res.redirect("/user/cart");
+    } catch (e) {
+      console.error(e.stack);
+      let {message} = e;
+      res.serverError({message});
+    }
   },
 
   edit: async (req, res) => {
@@ -141,7 +263,14 @@ let UserController = {
       let updateUser = req.body;
       let passport = await db.Passport.find({where: {UserId: loginUser.id}});
 
-      let user = await db.User.findById(loginUser.id);
+      let user = await db.User.findOne({
+        where:{
+          id: loginUser.id
+        },
+        include:{
+          model: db.Role
+        }
+      });
 
       if(updateUser.password != passport.password){
         passport.password = updateUser.password;
@@ -187,7 +316,7 @@ let UserController = {
     if(UserService.getLoginState(req))
       res.redirect('/admin/goods');
     else
-      res.view({});
+      res.view("admin/login");
   },
   indexSlider: function(req, res) {
     res.view({

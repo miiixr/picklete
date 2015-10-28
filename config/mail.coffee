@@ -245,6 +245,31 @@ module.exports.mail = {
       <br />
       <br />上班時間：週一至週五，10.00AM - 5.00PM，比照國定休假日
       </body></html>"""
-    }
+    },
+
+    contactUs: {
+      sendBy: 'email',
+      subject: '%(userName)s 聯繫 %(storeName)s',
+      html: """<html><body>
+      <br /><p> %(userName)s 聯繫 %(storeName)s ！</p>
+      <br />
+      <br />信件內容：
+      <br /><p> 你的大名：%(userName)s </p>
+      <br /><p> 你的聯絡方式：%(userContact)s </p>
+      <br /><p> 你的問題類型：%(userIssue)s </p>
+      <br /><p> 你的問題：%(userQuestion)s </p>
+      <br />
+      <br />此為系統信件，請勿直接回覆此信件
+      <br />
+      <br />---
+      <br />
+      <br />%(storeName)s | 好物慢慢選
+      <br />
+      <br />客服信箱：%(serviceMail)s
+      <br />
+      <br />上班時間：週一至週五，10.00AM - 5.00PM，比照國定休假日
+      </body></html>"""
+    },
+
   }
 }

@@ -70,8 +70,12 @@ module.exports = {
         let originPrice = price;
         if(result.type == 'price')
           price -= result.description;
-        else
-          price *= (result.description*0.01);
+        else{
+          if(result.description>10){
+            result.description *= 0.1;
+          }
+          price = Math.ceil(price * (result.description*0.1));
+        }
         discountAmount = originPrice - price;
       }
       else{

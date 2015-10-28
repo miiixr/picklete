@@ -1,4 +1,5 @@
 (function ($) {
+
   // about twzipcode plugin
   // pre-load data from controller
   var userZipcode = $('input[name="userZipcode"]').val();
@@ -42,10 +43,12 @@
   var shippingFeeField = $('#shippingFeeField');
   var shippingFeePrice = parseInt(Cookies.getJSON('shipping').shippingFee);
   var shippingFeeFree = (Cookies.getJSON('shipping').shippingFeeFree);
-  if(shippingFeeFree)
-    shippingFeeField.text('滿額免運');
-  else
+  if(shippingFeeFree) {
+    shippingFeeField.text('免運');
+    shippingFeePrice = 0;
+  } else {
     shippingFeeField.text(shippingFeePrice);
+  }
 
   // display packing fee
   var packingFeeField = $('#packingFeeField');
@@ -66,7 +69,7 @@
 
   var subtotal = 0;
   var totalPrice = 0;
-  var buymore = 0;
+  var buymore = picklete_cart.buymore;
   if(buyMoreObject){
     buyMoreObject.forEach(function(item,index){
       buymore += item.price;
@@ -76,7 +79,7 @@
 
   picklete_cart.orderItems.forEach(function(orderItem, index){
     subtotal += parseInt(orderItem.price*orderItem.quantity, 10);
-    subtotalDiv.text(subtotal);
+    subtotalDiv.text(subtotal.formatMoney());
     totalPrice = subtotal;
   });
 
@@ -86,6 +89,7 @@
   // count packing fee
   var packingFee = parseInt(Cookies.getJSON('packing').packingFee);
   packingFeeTD.text(packingFee);
+  totalPrice += shippingFeePrice;
   totalPrice += packingFee;
 
   var discountAmountDiv = $("#discountAmount");
@@ -97,34 +101,46 @@
   }
 
   // count shipping fee and display
-  totalPriceDiv.text(totalPrice);
+  totalPriceDiv.text('$' + totalPrice.formatMoney(0));
 
 
 
-  $("#btnOrderCreate").click(function()
-  {
-    if($("input[name='order[user][fullName]']").val()==""){
+  $("#btnOrderCreate").click(function() {
+    if($("input[name='order[user][fullName]']").val() == ""){
       alert("請輸入姓名");
+      $("input[name='order[user][fullName]']").focus();
       return;
     }
-    if($("input[name='order[user][mobile]']").val()==""){
+
+    if($("input[name='order[user][mobile]']").val() == ""){
       alert("請輸入電話");
+      $("input[name='order[user][mobile]']").focus();
       return;
     }
-    if($("input[name='order[user][address]']").val()==""){
+
+    if($("select[name='order[user][city]']").val() == "") {
+      alert("請選擇縣市");
+      $("select[name='order[user][city]']").focus();
+      return;
+    }
+
+    if($("input[name='order[user][address]']").val() == ""){
       alert("請輸入住址");
+      $("input[name='order[user][address]']").focus();
       return;
     }
-    if($("select[name='order[invoice][type]']").val()==""){
+
+    if($("select[name='order[invoice][type]']").val() == ""){
+      $("select[name='order[invoice][type]']").focus();
       alert("選擇發票類型");
       return;
     }
+
     // ensure title
-    if($("select[name='order[invoice][type]']").val()=="triplex"){
-      if( $("input[name='order[invoice][title]']").val() == "" ){
-        alert("請輸入公司抬頭");
-        return;
-      }
+    if($("select[name='order[invoice][type]']").val() == "triplex" && $("input[name='order[invoice][title]']").val() == ""){
+      alert("請輸入公司抬頭");
+      $("input[name='order[invoice][title]']").focus();
+      return;
     }
 
     re = /^[09]{2}[0-9]{8}$/;
@@ -139,6 +155,7 @@
     postData.order.shippingFee = Cookies.getJSON('shippingFee');
     postData.order.paymentMethod = Cookies.getJSON('paymentMethod');
 
+    postData.order.additionalPurchasesItem = picklete_cart.additionalPurchasesItem
 
 
     if(shopCodeObject){
@@ -244,13 +261,15 @@
     invoiceDetail.html('');
 
     if(invoiceType == 'duplex')
-      invoiceDetail.html(taxIdField);
+      return;
+      // invoiceDetail.html(taxIdField);
 
-    else if(invoiceType == 'triplex')
+    if(invoiceType == 'triplex')
       invoiceDetail.html(titleField+taxIdField);
 
-    else if(invoiceType == 'charity')
-      invoiceDetail.html(charityNameField);
+    if(invoiceType == 'charity')
+      return;
+      // invoiceDetail.html(charityNameField);
 
   });
 
