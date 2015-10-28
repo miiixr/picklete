@@ -139,13 +139,6 @@ var self = module.exports = {
         itemArray.push(`${order.orderItemProduct.ProductGm.name}(${order.orderItemProduct.name})X${order.orderItem.quantity}`);
       });
 
-      if(order.additionalPurchasesItems){
-        await* order.additionalPurchasesItems.map((item) => {
-          itemArray.push(`${item.Products[0].ProductGm.name}(${item.Products[0].name})X1`);
-        });
-      }
-
-
       data.ItemName = itemArray.join('#');
 
       // let checkMacValue = await new Promise((done) => {
@@ -231,7 +224,7 @@ var self = module.exports = {
         paymentTotalAmount:0,
         serialNumber: await OrderService.generateOrderSerialNumber(),
         useBunusPoint: 0,
-        packingFee: newOrder.packingFee,
+        packingFee: newOrder.packingFee || 0,
         packingQuantity: newOrder.packingQuantity,
         description: newOrder.description
       };
@@ -267,7 +260,31 @@ var self = module.exports = {
       // 計算加價購
       let getBuyMore;
       if(newOrder.additionalPurchasesItem){
+
         getBuyMore = await AdditionalPurchaseService.cartAddAdditionalPurchases(newOrder.additionalPurchasesItem);
+        getBuyMore.additionalPurchasesItems.forEach((purchasesItem)=>{
+
+          let purchasesItemData = {
+            quantity: 1,
+            name: purchasesItem.Products[0].name,
+            description: purchasesItem.Products[0].description,
+            comment: purchasesItem.Products[0].comment || '',
+            spec: purchasesItem.Products[0].spec || '',
+            productNumber: purchasesItem.Products[0].productNumber,
+            ProductId: purchasesItem.Products[0].id
+          };
+
+          if(purchasesItem.type == 'reduce'){
+            purchasesItemData.price = purchasesItem.Products[0].price - purchasesItem.reducePrice;
+          }else{
+            if(purchasesItem.discount > 10)
+              purchasesItemData.price = purchasesItem.Products[0].price * (purchasesItem.discount * 0.01);
+            else
+              purchasesItemData.price = purchasesItem.Products[0].price * (purchasesItem.discount * 0.1);
+          }
+          orderItems.push(purchasesItemData);
+        });
+
         thisOrder.paymentTotalAmount += getBuyMore.buyMoreTotalPrice;
       }
 
