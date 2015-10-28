@@ -79,7 +79,7 @@ module.exports.policies = {
     create: []
 
   'ShopCodeController':
-    checkCode: []
+    checkCode: ['global']
 
   # #'/api/search/*': []
   # SearchController:
