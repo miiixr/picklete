@@ -282,7 +282,14 @@ var self = module.exports = {
             else
               purchasesItemData.price = purchasesItem.Products[0].price * (purchasesItem.discount * 0.1);
           }
+          
           orderItems.push(purchasesItemData);
+
+          if (purchasesItem.Products[0].stockQuantity === 0){
+            throw new Error('此商品「'+ purchasesItem.Products[0].name +'」已經售鑿！');
+          }
+          purchasesItem.Products[0].stockQuantity --;
+          products.push(purchasesItem.Products[0]);
         });
 
         thisOrder.paymentTotalAmount += getBuyMore.buyMoreTotalPrice;
