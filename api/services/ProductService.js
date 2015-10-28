@@ -364,30 +364,66 @@ module.exports = {
 
     try {
 
+      let productDptSubConfig = {
+        model: db.DptSub
+      }
+
       if (Object.keys(query).length > 0) {
         // ================ ProductGm query condition ================
         if (query.name) {
-          GmQueryObj.name = {
-              $like: `%${query.name}%`
-          }
+          var keyword = query.name;
+
+          GmQueryObj.$or = [];
+          GmQueryObj.$or.push(['`ProductGm`.`name` like ?', '%'+keyword+'%'])
+          GmQueryObj.$or.push(['`ProductGm`.`explain` like ?', '%'+keyword+'%'])
+          GmQueryObj.$or.push(['`ProductGm`.`usage` like ?', '%'+keyword+'%'])
+          GmQueryObj.$or.push(['`ProductGm`.`notice` like ?', '%'+keyword+'%'])
         }
 
         if (query.brandId > 0)
           GmQueryObj.brandId = query.brandId;
 
         if (query.tag) {
-          GmQueryObj.tag = {
-            $like: `%${query.tag}%`
-          };
+          if(!GmQueryObj.$or) GmQueryObj.$or = [];
+          GmQueryObj.$or.push(['`ProductGm`.`tag` like ?', '%'+query.tag+'%'])
         }
+
+
 
         // ================ Dpt query condition ================
         if (query.dptId > 0 ) {
           DptQueryObj.id = query.dptId;
         }
         // ================ DptSub query condition ================
+
+
         if (query.dptSubId > 0 ) {
           DptSubQueryObj.id = query.dptSubId;
+        }
+
+        if (query.dptId > 0 ) {
+          let dpt = await db.Dpt.find({
+            where: {
+              id: query.dptId
+            }
+          });
+          console.log('======== dpt', dpt);
+          if(dpt.name == '特別企劃'){
+            if (query.dptSubId > 0 ) {
+              productDptSubConfig.where = {
+                id: query.dptSubId
+              }
+            } else {
+              productDptSubConfig.where = {
+                id: {
+                  $gte: 0
+                }
+              }
+            }
+            productDptSubConfig.required = true;
+            delete DptQueryObj.id
+            delete DptSubQueryObj.id
+          }
         }
         // ================ Product query condition =============
 
@@ -449,6 +485,8 @@ module.exports = {
         }
       }
       // ================ merge queryObj ================
+
+      console.log('===== productDptSubConfig', productDptSubConfig);
       queryObj = {
         subQuery: false,
         where: ProductQueryObj,
@@ -468,7 +506,7 @@ module.exports = {
           },{
             model: db.LikesCount
           }]
-        }],
+        }, productDptSubConfig],
         offset: offset,
         limit: limit,
       };
@@ -502,7 +540,7 @@ module.exports = {
       // console.log(ProductQueryObj);
       // console.log(GmQueryObj);
       let products = await db.Product.findAndCountAll(queryObj);
-      sails.log.info("=== productQuery products ===",products.rows[0].dataValues);
+      // sails.log.info("=== productQuery products ===",products.rows[0].dataValues);
       // format datetime
       products.rows = products.rows.map(ProductService.withImage);
       for (let product of products.rows) {
@@ -510,12 +548,11 @@ module.exports = {
       }
 
       resultProducts = products;
-      // console.log(JSON.stringify(resultProducts,null,4));
+      return {rows: resultProducts.rows, count: resultProducts.count };
     } catch (error) {
       console.error(error.stack);
-      // let msg = error.message;
-      // return res.serverError({msg});
+      throw error;
     }
-    return {rows: resultProducts.rows, count: resultProducts.count };
+
   }
 };

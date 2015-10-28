@@ -27,38 +27,64 @@ $(function() {
     $("#optionsRadios2")[0].checked=true;
   });
 
-  $('#add').click(function(){
-    var select =[];
-    $(".addSelect").each(function(index,dom){
-      if(dom.checked){
-        select.push(dom);
-        $("form[name='updateForm']").append(
-          '<input type=\'hidden\' name=\'productIds[]\' value =\''+ dom.value +'\' >'
-        );
-      }
-    });
+
+  $("#option1").click(function(){
+    $('input:radio[name="activityLimit"]').filter('[value="0"]').attr('checked', true);
+    $('input:radio[name="activityLimit"]').filter('[value="1500"]').attr('checked', false);
+  });
+
+  $("#option2").click(function(){
+    $('input:radio[name="activityLimit"]').filter('[value="1500"]').attr('checked', true);
+    $('input:radio[name="activityLimit"]').filter('[value="0"]').attr('checked', false);
+  });
+
+  $('#createBuyMore').click(function(){
 
     if($("input[name='reducePrice']").val()=="" && $("input[name='discount']").val()==""){
       alert("記得輸入折扣喔");
       return;
     }
 
-    if(select.length==0){
+    if($('input[name="productIds[]"]').length==0){
       alert("記得選取折扣項目喔");
       return;
     }
 
+    if($("input[name='restrictionDate']")[0].checked == false){
+      if($("input[name='startDate']").val()=="" || $("input[name='endDate']").val()==""){
+        alert("記得選取活動時間喔");
+        return;
+      }
+    }
+
     var postData = $("form[name='updateForm']").serializeArray();
     $.ajax({
-        url : '/admin/buymoreUpdate',
+        url : '../../admin/buymoreUpdate',
         type: "put",
         data : postData,
         success:function()
         {
-          console.log("go");
-          location.href='../admin/shop-buy-more';
+          location.href='../../admin/shop-buy-more';
         }
     });
+
+  });
+
+  $('#buyMoreAddBtn').click(function(e){
+    e.preventDefault();
+    var formData = $("form[name='updateForm']").serialize();
+    window.location.href = '../buymore/buyMoreAddItem?'+formData;
+  });
+
+  $('.btn.btn-link.delete-link').click(function(e){
+    console.log('deletePorduct click');
+    e.preventDefault()
+
+    var deleteProductId = $(this).attr('data-productId');
+    $(this).closest("tr").remove();
+    $('input[name="productIds[]"][value="'+deleteProductId+'"]')[0].remove();
+
+    console.log('=== deleteProductId ===', deleteProductId);
 
   });
 });

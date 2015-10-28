@@ -57,9 +57,9 @@ block body
               .col-md-8
                 select.form-control(name='status', value = query.status?query.status: 0)
                   option(value='0') 選擇狀態
-                  option(value='new') new
-                  option(value='paymentConfirm') paymentConfirm
-                  option(value='deliveryConfirm') deliveryConfirm
+                  option(value='new') 訂單確認中
+                  option(value='paymentConfirm') 已收到付款
+                  option(value='deliveryConfirm') 已出貨
             // /form-group
           // /col-md-4
           .col-md-4
@@ -68,10 +68,8 @@ block body
               .col-md-8
                 select.form-control(name='shipmentNotify', value = query.shipmentNotify?query.shipmentNotify: 0)
                   option(value=0) 選擇狀態
-                  option(value=1) 1
-                  option(value=2) 2
-                  option(value=3) 3
-                  option(value=4) 4
+                  option(value='deliveryConfirm') 已出貨
+                  option(value=0) 未出貨
             // /form-group
           // /col-md-4
         // /row
@@ -122,7 +120,7 @@ block body
         // /form-group
     // /col-md-6
     .col-md-6.desktop-text-right
-      a.btn.btn-gray(href='#') 列印撿貨單
+      button.btn.btn-gray(id='print') 列印撿貨單
       //- a.btn.btn-gray(href='#') 列印清單
     // /col-md-6
   // /row
@@ -159,12 +157,12 @@ block body
         .panel-heading
           .row.row-s.text-center
             .col-sm-1.col-sm-1-sm
-              input(type='checkbox',value='#{order.id}')
+              input(class='printSelect',type='checkbox',value='#{order.id}')
             // /col-sm-1
             .col-sm-2
               a(data-toggle='collapse', data-parent='#collapse-purchase', href='#collapse-purchase-#{order.serialNumber}', aria-expanded='true') #{order.serialNumber}
             // /col-sm-2
-            .col-sm-1 #{order.User.username}
+            .col-sm-1 #{order.User.fullName}
             // /col-sm-1
             .col-sm-2 #{order.User.mobile}
             // /col-sm-2
@@ -210,10 +208,10 @@ block body
                         .col-sm-8
                           input.form-control.input-sm(type='text', value='#{i18n(order.Shipment.shippingType)} #{order.Shipment.shippingRegion}') 
                       // /form-group
-                      .form-group.form-group-sm
-                        label.col-sm-4.control-label 訂單編號
-                        .col-sm-8
-                          input.form-control.input-sm(type='text', value='#{order.shippingId || ""}') 
+                      //- .form-group.form-group-sm
+                      //-   label.col-sm-4.control-label 訂單編號
+                      //-   .col-sm-8
+                      //-     input.form-control.input-sm(type='text', value='#{order.shippingId || ""}') 
                       // /form-group
                   // /col-sm-6
                 // /row
@@ -232,7 +230,7 @@ block body
                     - sum = 0
                     each item in order.OrderItems
                       tr
-                        td SNAP6-PLUS_CASE_RD
+                        td #{item.productNumber}
                         td
                           a(href='shop-product') #{item.name}
                         td.text-center #{item.quantity}
@@ -279,9 +277,8 @@ block body
               // /well
               .row
                 .col-sm-8
-                  p.text-danger 
-                  -sails.log.info(order)
-                  | ※ 會員備註：#{order.User.comment?order.User.comment: '無'}
+                  p.text-danger
+                    | ※ 會員備註：#{order.User.comment?order.User.comment: '無'}
                 // /col-sm-8
                 .col-sm-4.text-right
                   button.btn.btn-gray.btn-sm(type='button') 取消整筆訂單

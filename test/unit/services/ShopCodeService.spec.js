@@ -3,7 +3,7 @@ import moment from 'moment';
 
 describe("about shopcode service", () => {
 
-  let testShopCode,testTimeOutShopCode,testTimeNolimitShopCode,testTypeDiscountShopCode;
+  let testShopCode, testTimeOutShopCode, testTimeNolimitShopCode, testTypeDiscountShopCode, testTypeDiscountShopCode2;
 
   before(async (done) => {
     try {
@@ -54,6 +54,7 @@ describe("about shopcode service", () => {
         };
       testTimeNolimitShopCode = await db.ShopCode.create(shopcode3);
 
+      // 打八折
       var shopcode4 = {
           title: '測試打折的折扣碼',
           code: 'EEEEEEEEEEFFFFFFFFFF',
@@ -68,6 +69,23 @@ describe("about shopcode service", () => {
           restrictionDate: 'on'
         };
       testTypeDiscountShopCode = await db.ShopCode.create(shopcode4);
+
+      // 打七折
+      var shopcode5 = {
+          title: '測試打折的折扣碼',
+          code: 'GGGGGGGGGGHHHHHHHHHH',
+          autoRandomCode: 'on',
+          startDate: '1970-01-01',
+          endDate: '1970-01-01',
+          type: 'discount',
+          description: 7,
+          restriction: 999,
+          sentType: 'all',
+          sentContent: '測試',
+          restrictionDate: 'on'
+        };
+      testTypeDiscountShopCode2 = await db.ShopCode.create(shopcode5);
+
 
       done();
 
@@ -136,6 +154,39 @@ describe("about shopcode service", () => {
       let check = await ShopCodeService.use(data);
       check.price.should.be.equal(800);
       check.discountAmount.should.be.equal(200);
+      done();
+    } catch (e) {
+      console.log(e);
+      done(e);
+    }
+  });
+
+
+  it('use ShopCode type discount', async (done) => {
+    try {
+      var data ={
+        code: testTypeDiscountShopCode.code,
+        price: 1234,
+      }
+      let check = await ShopCodeService.use(data);
+      check.price.should.be.equal(988);
+      check.discountAmount.should.be.equal(246);
+      done();
+    } catch (e) {
+      console.log(e);
+      done(e);
+    }
+  });
+
+  it('use ShopCode type discount', async (done) => {
+    try {
+      var data ={
+        code: testTypeDiscountShopCode2.code,
+        price: 1234,
+      }
+      let check = await ShopCodeService.use(data);
+      check.price.should.be.equal(864);
+      check.discountAmount.should.be.equal(370);
       done();
     } catch (e) {
       console.log(e);

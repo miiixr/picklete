@@ -178,7 +178,7 @@ $(function  () {
         $modalConfirmButton.attr('data-dismiss','');
       }
       else if ( !filesUploaded ) {
-        alert('尚有圖片在上傳中');
+        alert('尚有圖片在上傳中 ...');
       }
       else {
         /* add image openWindow, path & url back to form hidden input */

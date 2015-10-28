@@ -1,3 +1,4 @@
+import moment from 'moment';
 
 let ShopController = {
 
@@ -18,7 +19,7 @@ let ShopController = {
   },
   list: async(req,res) => {
 
-    let query = req.query
+    let query = req.query;
     query.isPublish = true;
     let limit = await pagination.limit(req);
     let page = await pagination.page(req);
@@ -34,10 +35,16 @@ let ShopController = {
       let dptId = query.dptId || '';
       let sort = query.sort || '';
 
+      // when not query any items, select recent 3 month products.
+      if (brand == '' && dptSubId == '' && dptId == '') {
+        query.dateEnd = moment().format();
+        query.dateFrom = moment().subtract(3, 'months').format();
+      }
+
       let productsWithCount = await ProductService.productQuery(query, offset, limit);
       let products = productsWithCount.rows || [];
       // sails.log.info('=== shop products ===',products);
-      products = await PromotionService.productPriceTransPromotionPrice(new Date(), products);;
+      products = await PromotionService.productPriceTransPromotionPrice(new Date(), products);
 
       let brands = await db.Brand.findAll({order: 'weight ASC',});
       let dpts = await DptService.findAll();
@@ -89,9 +96,12 @@ let ShopController = {
   show: async(req,res) => {
 
     let productGmid = req.params.productGmid;
-    let productId = req.params.productId
+    let productId = req.params.productId;
+    let brandId = req.query.brandId ? req.query.brandId : 0;
+    
     try {
-
+  
+    
       let productGm = await db.ProductGm.findOne({
             where: {id: productGmid},
             include: [
@@ -131,6 +141,10 @@ let ShopController = {
 
       productGm = productGm.dataValues;
 
+      // console.log('------ productGM -----')
+      // console.log(productGm)
+      // console.log('------ productGM end -----')
+
       product = (await PromotionService.productPriceTransPromotionPrice(new Date(), [product]))[0];
 
       product = product.dataValues;
@@ -139,7 +153,6 @@ let ShopController = {
 
       let dptId = product.ProductGm.Dpts[0].id;
       // recommend products
-
       let recommendProducts = await db.Product.findAll({
         subQuery: false,
         include: [{
@@ -191,16 +204,19 @@ let ShopController = {
           services: services,
           coverPhotos: coverPhotos,
           brand: brand.dataValues,
+          brandId: brandId,
           recommendProducts,
          };
-
+        console.log("hhihihihihi",resData);
         return res.view("main/shopProduct", resData);
 
       }
 
     } catch (e) {
-      console.error(e);
-      return res.view('common/warning', {errors:'not found'});
+      console.error(e.stack);
+      let {message} = e;
+      let success = false;
+      return res.serverError({message, e});
     };
 
 

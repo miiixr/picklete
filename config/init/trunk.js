@@ -87,6 +87,7 @@ module.exports.createTestData = async () => {
     stockQuantity: 100,
     price: 500,
     ProductGmId: createdProductGmComplete.id,
+    isPublish: true,
     photos: [
       'http://dev.agricloud.cc:3000/img/cover2.jpg',
       'http://dev.agricloud.cc:3000/img/cover1.jpg'
@@ -97,6 +98,7 @@ module.exports.createTestData = async () => {
     stockQuantity: 100,
     price: 625,
     ProductGmId: createdProductGmComplete.id,
+    isPublish: true,
     photos: [
       'http://dev.agricloud.cc:3000/img/cover2.jpg',
       'http://dev.agricloud.cc:3000/img/cover1.jpg'
@@ -107,6 +109,7 @@ module.exports.createTestData = async () => {
     stockQuantity: 100,
     price: 750,
     ProductGmId: createdProductGmComplete.id,
+    isPublish: true,
     photos: [
       'http://dev.agricloud.cc:3000/img/cover2.jpg',
       'http://dev.agricloud.cc:3000/img/cover1.jpg'
@@ -117,6 +120,7 @@ module.exports.createTestData = async () => {
     stockQuantity: 100,
     price: 950,
     ProductGmId: createdProductGmComplete.id,
+    isPublish: true,
     photos: [
       'http://dev.agricloud.cc:3000/img/cover2.jpg',
       'http://dev.agricloud.cc:3000/img/cover1.jpg'
@@ -127,6 +131,7 @@ module.exports.createTestData = async () => {
     stockQuantity: 100,
     price: 1200,
     ProductGmId: createdProductGmComplete.id,
+    isPublish: true,
     photos: [
       'http://dev.agricloud.cc:3000/img/cover2.jpg',
       'http://dev.agricloud.cc:3000/img/cover1.jpg'

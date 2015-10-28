@@ -10,7 +10,7 @@
 
   var subtotal = 0;
   var totalPrice = 0;
-  var buymore = 0;
+  var buymore = parseInt(buymoreDiv.text(),10) || 0;
   var discountAmount = 0;
   var totalQuanties = 0;
 
@@ -34,7 +34,6 @@
     picklete_cart : {orderItems: []};
   }
 
-
   // calculate total price
   var calcTatalPrice = function () {
 
@@ -42,7 +41,7 @@
 
     // 免運
     if(parseInt(tmpPrice)>parseInt(shippingFeeFreeThreshold)){
-      $("#shippingFeeField").text('滿額免運');
+      $("#shippingFeeField").text('免運');
       shippingFeeFree = true;
       shippingFee = 0;
     }else{
@@ -55,7 +54,8 @@
 
     totalPrice = tmpPrice + shippingFee + packingFee;
     console.log('=== calcTatalPrice ===', totalPrice);
-    totalPriceDiv.text(totalPrice);
+    totalPriceDiv.text(totalPrice.formatMoney());
+    totalPriceDiv.data('value', totalPrice);
   }
   // end
 
@@ -78,7 +78,8 @@
 
       totalQuanties += 1;
     });
-    subtotalDiv.text(subtotal);
+    subtotalDiv.text(subtotal.formatMoney());
+    subtotalDiv.data('value', subtotal);
     calcTatalPrice();
     // save new quantities
     Cookies.set('picklete_cart', picklete_cart);
@@ -123,14 +124,14 @@
 
         '    <div class="col-xs-8 col-sm-8 col-md-3 desktop-m-top-4 m-bottom-1 mobile-min-height-100">' +
         '      <h6 class="text-muted text-roboto letter-spacing-1 m-bottom-1-min">' +
-        '        <a href="/brands">'+ orderItem.brand +'</a>' +
+        '        <a href="/brands">'+ orderItem.brandname +'</a>' +
         '      </h6>' +
         '      <h5 class="text-roboto letter-spacing-1 m-top-1-min">' +
         '        <a href="/shop/products/'+orderItem.productGmId+'/'+orderItem.ProductId+'">'+ orderItem.name +'</a>' +
         '      </h5>' +
         '    </div>' +
 
-        '    <div class="col-xs-6 col-sm-3 col-md-2 desktop-p-right-0 desktop-text-center desktop-m-top-5 m-bottom-2">商品數量' +
+        '    <div class="col-xs-6 col-sm-3 col-md-2 desktop-p-left-0 desktop-m-top-5 m-bottom-2">' +
         '      <div class="productQuantities input-group input-group-count max-width-150"><span class="input-group-btn">' +
         '        <button type="button" data-type="minus" data-field="quant['+index+']" class="btn btn-default btn-number p-left-2 p-right-2"><span class="glyphicon glyphicon-minus"></span></button></span>' +
         '        <input type="text" name="quant['+index+']" value="'+orderItem.quantity+'" min="1" max="10" class="form-control input-number text-center font-size-slarge"><span class="input-group-btn">' +
@@ -149,17 +150,19 @@
       }else{
           packableItemTotal.push(index);
           liPackageService =
-            '    <div class="col-xs-6 col-sm-3 col-md-2 desktop-p-right-0 desktop-text-center desktop-m-top-5 m-bottom-2">禮品包裝' +
-            '      <div class="packingQuantities input-group max-width-150">'+
-            '       <span class="input-group-btn">' +
-            '        <select class="form-control text-center font-size-slarge"  name="packingSelect['+index+']">'+
-            '         <option value="0">0</option>';
+
+            '    <div class="col-xs-6 col-sm-3 col-md-2 desktop-p-right-0 desktop-text-center desktop-m-top-5 m-bottom-2">' +
+            '      <div class="form-inline">'+
+            '        <div class="packingQuantities form-group m-bottom-0">'+
+            '         <label>包裝</label>'+
+            '         <select class="form-control m-left-1 font-size-slarge"  name="packingSelect['+index+']">'+
+            '           <option value="0">0</option>';
           for(var i=1;i<parseInt(orderItem.quantity)+1;i++){
             liPackageServiceOptions += '<option value="'+i+'">'+i+'</option>';
           };
           liPackageServiceEnd =
-            '        </select>'+
-              '     </span>'+
+            '         </select>'+
+            '        </div>' +
             '      </div>' +
             '    </div>';
         }
@@ -180,9 +183,13 @@
       liOrderItem = liOrderItem + liPackageService + liPrice + liRemoveItem;
 
       subtotal += parseInt(orderItem.price*orderItem.quantity, 10);
-      subtotalDiv.text(subtotal);
-      totalPrice = subtotal;
-      totalPriceDiv.text(totalPrice);
+
+      subtotalDiv.text(subtotal.formatMoney());
+      subtotalDiv.data('value', subtotal);
+
+      totalPrice = subtotal + buymore;
+      totalPriceDiv.text(totalPrice.formatMoney());
+      totalPriceDiv.data('value', totalPrice);
 
       cartViewer.append(liOrderItem);
     });
@@ -196,14 +203,15 @@
     e.preventDefault();
     var shippingFeeField = $('#shippingFeeField');
     // Normalization
-    shippingFee = parseInt($(this).val(), 10);
+    shippingFee = parseInt($(this).data('value'), 10);
     // show shippingFee to viewfield
     shippingFeeField.text(shippingFee)
+    shippingFeeField.data('value', shippingFee)
     // // 免運
     // if((subtotal + buymore - discountAmount) > shippingFeeFreeThreshold){
     //   // fee-free!
     //   shippingFeeFree = true;
-    //   $("#shippingFeeField").text('滿額免運');
+    //   $("#shippingFeeField").text('免運');
     // }else{
     //   shippingFeeFree = false;
     //   // set cookie
@@ -298,7 +306,7 @@
 
   cartViewerInit();
 
-  console.log('=== cartViewerInit ===');
+  console.log('=== cartViewerInit ===');
 
   var previous = 0;
   $("select.form-control.m-bottom-2").on('focus', function(){
@@ -315,7 +323,7 @@
 
 
   // recalculate price when btnPlus/bntMinus is pressed or clicked.
-  $(".productQuantities").delegate("input","change", function(){
+  $(".productQuantities").delegate("input", "change", function(){
     // calculate price and save cookie before do anything.
     reCalSubtotalPriceAndSaveCookie();
     calcTatalPrice();

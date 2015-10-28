@@ -1,7 +1,7 @@
 
 var self = module.exports = {
   defaultLimitValue: async (req) => {
-    let defaultLimitValue = 10;
+    let defaultLimitValue = 20;
 
     //todo: this is not good, let controller pass a defaultLimit params into
     if (req.options.controller == 'shop' && req.options.action == 'list') {
@@ -11,7 +11,7 @@ var self = module.exports = {
     return defaultLimitValue;
   },
   limit: async (req) => {
-    return parseInt(req.param('limit', self.defaultLimitValue(req)));
+    return parseInt(req.param('limit', await self.defaultLimitValue(req)));
   },
   offset: async (req) => {
     return await self.page(req) * await self.limit(req);
@@ -21,6 +21,9 @@ var self = module.exports = {
   },
   limitWithSession: async (req) => {
     let key = await sessionKey(req, 'limit');
+
+    console.log('=== req.session[key] ===', req.session[key]);
+    console.log('=== key ===', key);
     return req.session[key] =
       parseInt(req.param('limit', req.session[key] || self.defaultLimitValue(req)));
   },

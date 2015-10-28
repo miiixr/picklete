@@ -75,6 +75,8 @@ module.exports.routes = {
 
   'get /brands' : view: 'main/brands'
   'get /user/cart' : 'UserController.cart'
+  'get /user/cart/addAdditionalPurchases' : 'UserController.addAdditionalPurchases'
+  'get /user/cart/removeAdditionalPurchases' : 'UserController.removeAdditionalPurchases'
   'get /user/loginStatus' : 'UserController.loginStatus'
   'get /user/cart-step-2' : 'ShopController.cartStep2'
 
@@ -83,6 +85,8 @@ module.exports.routes = {
   'post /admin/department/sub/create' : 'DptSubController.create'
   'post /admin/department/sub/update' : 'DptSubController.update'
   'post /admin/department/sub/delete' : 'DptSubController.smDelete'
+  'put /admin/department/sortable' : 'DptController.sortable'
+  'put /admin/department/sub/sortable' : 'DptSubController.sortable'
 
   'get /admin/goods' : 'ProductController.list'
   'get /admin/goods/update' : 'ProductController.showUpdate'
@@ -104,6 +108,7 @@ module.exports.routes = {
   'get /admin/order' : 'OrderController.index'
 
   'get /contact': 'ContactController.index'
+  'get /contact/send': 'ContactController.contactUs'
   'get /admin/about' : 'AboutController.create'
   'post /admin/about' : 'AboutController.create'
 
@@ -126,13 +131,14 @@ module.exports.routes = {
 
   # promotions
   'get /admin/shop-discount' : 'PromotionController.list'
-  'post /admin/shopDiscount/create' : 'PromotionController.create'
+  'post /admin/shopDiscount/save' : 'PromotionController.save'
   'get /admin/shop-discount-detail' : 'PromotionController.controlShopDiscountDetail'
-  'get /admin/shop-discount-detail2' : 'PromotionController.controlShopDiscountDetail2'
-  'get /admin/shop-discount-add-item' : 'PromotionController.controlShopDiscountAddItem'
+  'get /admin/promotion/discountAddItem' : 'PromotionController.discountAddItem'
+
   'get /admin/shop-buy-more' : 'PromotionController.controlShopBuyMore'
-  'get /admin/shop-buy-more-detail' : 'PromotionController.controlShopBuyMoreDetail'
-  'get /admin/shop-buy-more-add-item' : 'PromotionController.controlShopBuyMoreAddItem'
+  'get /admin/buymore/detail' : 'PromotionController.controlShopBuyMoreDetail'
+  'get /admin/buymore/buyMoreAddItem' : 'PromotionController.buyMoreAddItem'
+
   'put /admin/buymoreUpdate' : 'PromotionController.addPurchaseUpdate'
   'get /admin/shop-report-form' : 'PromotionController.controlShopReportForm'
 
@@ -150,6 +156,10 @@ module.exports.routes = {
   'post /admin/shipping' : 'ShippingController.save'
   'get /shipping/:type' : 'ShippingController.type'
   # end shipping
+
+  # print
+  'get /print' : 'OrderController.print'
+  # end print
 
   # client side / Have to login
   # 'get /member/fav' : view: 'main/member-fav'

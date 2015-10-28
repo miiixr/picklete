@@ -1,4 +1,5 @@
 (function ($) {
+
   // about twzipcode plugin
   // pre-load data from controller
   var userZipcode = $('input[name="userZipcode"]').val();
@@ -42,10 +43,12 @@
   var shippingFeeField = $('#shippingFeeField');
   var shippingFeePrice = parseInt(Cookies.getJSON('shipping').shippingFee);
   var shippingFeeFree = (Cookies.getJSON('shipping').shippingFeeFree);
-  if(shippingFeeFree)
-    shippingFeeField.text('滿額免運');
-  else
+  if(shippingFeeFree) {
+    shippingFeeField.text('免運');
+    shippingFeePrice = 0;
+  } else {
     shippingFeeField.text(shippingFeePrice);
+  }
 
   // display packing fee
   var packingFeeField = $('#packingFeeField');
@@ -66,7 +69,7 @@
 
   var subtotal = 0;
   var totalPrice = 0;
-  var buymore = 0;
+  var buymore = picklete_cart.buymore;
   if(buyMoreObject){
     buyMoreObject.forEach(function(item,index){
       buymore += item.price;
@@ -76,7 +79,7 @@
 
   picklete_cart.orderItems.forEach(function(orderItem, index){
     subtotal += parseInt(orderItem.price*orderItem.quantity, 10);
-    subtotalDiv.text(subtotal);
+    subtotalDiv.text(subtotal.formatMoney());
     totalPrice = subtotal;
   });
 
@@ -86,6 +89,7 @@
   // count packing fee
   var packingFee = parseInt(Cookies.getJSON('packing').packingFee);
   packingFeeTD.text(packingFee);
+  totalPrice += shippingFeePrice;
   totalPrice += packingFee;
 
   var discountAmountDiv = $("#discountAmount");
@@ -97,7 +101,7 @@
   }
 
   // count shipping fee and display
-  totalPriceDiv.text(totalPrice);
+  totalPriceDiv.text('$' + totalPrice.formatMoney(0));
 
 
 
@@ -151,6 +155,7 @@
     postData.order.shippingFee = Cookies.getJSON('shippingFee');
     postData.order.paymentMethod = Cookies.getJSON('paymentMethod');
 
+    postData.order.additionalPurchasesItem = picklete_cart.additionalPurchasesItem
 
 
     if(shopCodeObject){

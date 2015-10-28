@@ -27,6 +27,8 @@ module.exports.policies = {
     update: ['passport']
     verify: true
     updatefavorite: []
+    addAdditionalPurchases: ['global']
+    removeAdditionalPurchases: ['global']
 
   'MainController': ['global', 'mailRequired', 'cookieRequired']
 
@@ -44,6 +46,7 @@ module.exports.policies = {
 
   'ContactController':
     index: ['global']
+    contactUs: ['global']
 
   'FAQController':
     show: ['global']
@@ -77,7 +80,7 @@ module.exports.policies = {
     create: []
 
   'ShopCodeController':
-    checkCode: []
+    checkCode: ['global']
 
   # #'/api/search/*': []
   # SearchController:

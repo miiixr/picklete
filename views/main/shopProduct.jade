@@ -33,12 +33,13 @@ block body
                     // /carousel-indicators
                   .carousel-inner.carousel-inner-v(role='listbox')
                     each photo, index in coverPhotos
-                      if index == 0
-                        .item.active
-                          img.img-full(src='#{photo}', alt='Second slide image', href='#carousel-shop-product', data-slide='next')
-                      else
-                        .item
-                          img.img-full(src='#{photo}', alt='Second slide image', href='#carousel-shop-product', data-slide='next')
+                      if (photo !== '')
+                        if (index == 0)
+                          .item.active
+                            img.img-full(src='#{photo}', alt='Second slide image', href='#carousel-shop-product', data-slide='next')
+                        else
+                          .item
+                            img.img-full(src='#{photo}', alt='Second slide image', href='#carousel-shop-product', data-slide='next')
                         
                     // /item
                     
@@ -57,12 +58,16 @@ block body
               ol.breadcrumb.p-left-0.m-bottom-8
                 li
                   a(href='/shop/products/') 全部商品
-                each Dpts in productGm.Dpts
+                if brandId == 0
+                  - var Dpts = productGm.Dpts[0];
                   li
-                      a(href='/shop/products/?dptId=#{Dpts.id}') #{Dpts.name} 
+                    a(href='/shop/products/?dptId=#{Dpts.id}') #{Dpts.name} 
+                  - DptSubs = productGm.DptSubs[0];
                   li
-                    each DptSubs in productGm.DptSubs
-                      a(href='/shop/products/?dptId=#{Dpts.id}&dptSubId=#{DptSubs.id}') #{DptSubs.name} 
+                    a(href='/shop/products/?dptId=#{Dpts.id}&dptSubId=#{DptSubs.id}') #{DptSubs.name} 
+                else
+                  li
+                    a(href='/shop/list?brand=#{brand.id}') #{brand.name}
                 - var name = product.name ? "(" + product.name + ")" : "";
                 li.active #{productGm.name} #{name}
               // /breadcrumb
@@ -111,7 +116,7 @@ block body
                       button.btn.btn-default.btn-number.p-left-2.p-right-2(type='button', disabled='disabled', data-type='minus', data-field='quant[1]')
                         span.glyphicon.glyphicon-minus
                     // /input-group-btn
-                    input.form-control.input-number.text-center.font-size-large(type='text', name='quant[1]', value='1', min='1', max='999')
+                    input.form-control.input-number.text-center.font-size-large(type='text', name='quant[1]', value='1', min='1', max='#{product.stockQuantity}')
                     span.input-group-btn
                       button.btn.btn-default.btn-number.p-left-2.p-right-2(type='button', data-type='plus', data-field='quant[1]')
                         span.glyphicon.glyphicon-plus
@@ -119,8 +124,9 @@ block body
                   // /input-group
                 // /col-sm-4
                 .col-sm-8
+                  - var disabled = (product.stockQuantity == 0) ? 'disabled' : '';
                   - var productName = (product.name) ? "(" + product.name + ")" : "";
-                  a.btn.btn-black.border-radius-circle.btn-block.btn-lg.add-to-cart(
+                  a.btn.btn-black.border-radius-circle.btn-block.btn-lg.add-to-cart(class='#{disabled}', 
                   data-productGmId=productGm.id,, data-productId=product.id, data-photos=product.photos, 
                   data-brand=productGm.name, data-name="#{product.ProductGm.name}#{productName}" , data-brandname=_.find(brands, {id: product.ProductGm.BrandId}).name,
                   data-price=product.price) 加入購物車 
@@ -131,12 +137,7 @@ block body
               .row.row-m.m-bottom-6
                 each thisProduct in products
                   .col-xs-3.col-sm-2
-                    if thisProduct.id == product.id
-                      .item-block.border-block-img.m-bottom-4.active
-                        a(href='/shop/products/#{thisProduct.ProductGmId}/#{thisProduct.id}')
-                          img.img-full(src='#{thisProduct.photos[0]}')
-                          // /item-block
-                    else if thisProduct.stockQuantity == 0
+                    if (thisProduct.stockQuantity == 0)
                       .item-block.border-block-img.m-bottom-4.item-soldout
                         .item-soldout-text
                           h6
@@ -146,7 +147,12 @@ block body
                         a(href='/shop/products/#{thisProduct.ProductGmId}/#{thisProduct.id}')
                           img.img-full(src='#{thisProduct.photos[0]}')
                         // /item-block
-                    else if thisProduct.isPublish == true
+                    else if (thisProduct.id == product.id)
+                      .item-block.border-block-img.m-bottom-4.active
+                        a(href='/shop/products/#{thisProduct.ProductGmId}/#{thisProduct.id}')
+                          img.img-full(src='#{thisProduct.photos[0]}')
+                          // /item-block
+                    else if (thisProduct.isPublish == true)
                       .item-block.border-block-img.m-bottom-4
                         a(href='/shop/products/#{thisProduct.ProductGmId}/#{thisProduct.id}')
                           img.img-full(src='#{thisProduct.photos[0]}')
@@ -166,7 +172,7 @@ block body
                 .tab-content.m-bottom-10.font-size-slarge
                   #p-tab-1.tab-pane.fade.in.active
                     p.m-bottom-4
-                      | #{product.description}
+                      | !{product.ProductGm.explain}
                     p.m-bottom-4
                       | 品牌國家 - #{product.country}
                       br
@@ -182,7 +188,7 @@ block body
                   // /tab-pane
                   #p-tab-3.tab-pane.fade
                     p
-                      | !{productGm.Brand.desc}
+                      | !{productGm.Brand.desc.replace(/\n/g, '<br>')}
                   // /tab-pane
                 // /tab-content
                 h4.m-bottom-4 服務項目 #{product.services}
@@ -218,11 +224,11 @@ block body
                       span.label.label-social.label-pinterest
                         span.glyphicon.glyphicon-pinterest
                   li
-                    a(href="javascript: void(window.open('https:\/\/plus.google.com/share?url='.concat(encodeURIComponent(location.href)), '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600'));", target='_blank')
+                    a(href="javascript:void(window.open('https:\/\/plus.google.com/share?url='.concat(encodeURIComponent(location.href)), '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600'));", target='_blank')
                       span.label.label-social.label-google
                         span.glyphicon.glyphicon-google
                   li
-                    a(href='#', target='_blank')
+                    a(href="javascript:void(window.open('mailto:?subject=分享美好的事與物&body=分享美好的事物給你 '.concat(encodeURIComponent(location.href))));", target='_blank')
                       span.label.label-social.label-mail
                         span.glyphicon.glyphicon-mail
                 // /list-social

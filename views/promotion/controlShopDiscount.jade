@@ -3,7 +3,8 @@ include ../mixins/pagination
 
 block body
   h2.m-bottom-6 商品折扣
-  a.btn.btn-danger.btn-lg.m-bottom-6(href='shop-discount-detail') 建立活動
+  a.btn.btn-danger.btn-lg.m-bottom-6.m-right-1(href='shop-discount-detail?discountType=flash') 建立閃購活動
+  a.btn.btn-danger.btn-lg.m-bottom-6(href='shop-discount-detail?discountType=general') 建立一般活動
   form.form-inline.with-pagination(name="show", action="/admin/shop-discount", method="get")
     +pagination-fields(page, limit)
     .form-group
@@ -13,34 +14,27 @@ block body
   hr.dashed-line
   table.table.table-striped
     thead
-      tr
-        th 主圖
-        th
-          | 類型
-          span.caret
-        th
-          | 折扣名稱
-          span.caret
-        th
-          | 活動類型
-          span.caret
-        th
-          | 活動時間
-          span.caret
-        th
+       tr
+          th
+            | 折扣名稱
+            span.caret
+          th
+            | 活動類型
+            span.caret
+          th
+            | 活動時間
+            span.caret
+          th
     tbody
       each promotion in promotions.rows
         -sails.log.info(promotion)
         tr
-          td
-            img.width-6(src=promotion.coverPhoto)
+          td #{promotion.title}
           td
             -if(promotion.type == "flash")
               span.label.label-default 閃購
             -else
               span.label.label-default 一般
-          td #{promotion.title}
-          td #{promotion.discountType}
           td 
             span= sails.moment(promotion.startDate).format('YYYY/MM/DD hh:mm')
             span= " - "

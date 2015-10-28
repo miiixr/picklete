@@ -175,46 +175,19 @@ html
 
         //- li
         //-   a(href='brands-list') BRANDS
-        //- | 
-        li
-          a(href='/shop/products') SHOP
-        |    
         //- |     
-        //- li.dropdown
-        //-   a.dropdown-toggle(href='/shop/products', data-toggle='dropdown')
-        //-     | SHOP
-        //-     span.glyphicon.glyphicon-chevron-down.m-left-1
-        //-   |       
-          //- ul.dropdown-menu.navmenu-nav(role='menu')
-            li
-              a(href='shop/products') 新品上市
+        li.dropdown
+          a.dropdown-toggle(data-toggle='dropdown')
+            | SHOP
+            span.glyphicon.glyphicon-chevron-down.m-left-1
+          |       
+          ul.dropdown-menu.navmenu-nav(role='menu')
+            each dpt in headDpts
+              li
+                a(href='/shop/list?dptId='+dpt.id) #{dpt.name}
             |         
             li
-              a(href='shop/products') 居家生活
-            |         
-            li
-              a(href='shop/products') 餐廚食器
-            |         
-            li
-              a(href='shop/products') 事務文具
-            |         
-            li
-              a(href='shop/products') 收納整理
-            |         
-            li
-              a(href='shop/products') 配件小物
-            |         
-            li
-              a(href='shop/products') 數位科技
-            |         
-            li
-              a(href='shop/products') 工藝職人
-            |         
-            li
-              a(href='shop/products') 特別企劃
-            |         
-            li
-              a.btn.btn-default(href='brands-list-shop') #{i18n("brand-list")}
+              a.btn.btn-default(href='/brands/list') #{i18n("brand-list")}
         |     
         li
           a(href='/user/login')
@@ -308,6 +281,7 @@ html
   script(type='text/javascript' src='/javascripts/user/login.js')
   script(type='text/javascript' src='/bower/js-cookie/js.cookie.js')
   script(type='text/javascript' src='/bower/jquery.serializeJSON/jquery.serializejson.js')
+  script(src="/javascripts/common/number.js")
   script(src="/javascripts/main/shop.js")
   script.
     window.USER = !{JSON.stringify(user)};

@@ -4,7 +4,6 @@
 
   // main menu active effect
   function activeRoute () {
-    console.log('run');
     var urlPath = window.location.pathname;
     var ACTIVE_CLASS = 'active';
 
