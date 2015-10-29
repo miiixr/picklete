@@ -187,6 +187,10 @@ var self = module.exports = {
         if (!product)
           throw new Error('找不到商品！ 請確認商品ID！');
 
+        let productGm = await db.ProductGm.findById(product.ProductGmId);   
+        let productName = (product.name == null || product.name == '') ? "" : "(" + product.name + ")";    
+        product.name = productGm.name + productName;
+
         if (product.stockQuantity === 0){
           // mix productGm and product name
           throw new Error('此商品「'+ product.name +'」已經售鑿！');
