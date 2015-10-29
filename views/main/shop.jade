@@ -162,14 +162,7 @@ block body
                 h4.m-bottom-2.h4-max-two-hide
                   - var name = product.name ? "(" + product.name + ")" : "";
                   //- a(href='/shop/product?pid=#{product.id}') #{product.ProductGm.name} #{name}
-                  - if (reqId)
-                    a(href='/shop/products/#{product.ProductGm.id}/#{product.id}?brandId='+reqId) #{product.ProductGm.name} #{name}
-                  - else if(dptSubId)
-                    a(href='/shop/products/#{product.ProductGm.id}/#{product.id}?dptId='+dptId+'&dptSubId='+dptSubId) #{product.ProductGm.name} #{name}
-                  - else if(dptId)
-                    a(href='/shop/products/#{product.ProductGm.id}/#{product.id}?dptId='+dptId) #{product.ProductGm.name} #{name}
-                  - else
-                    a(href='/shop/products/#{product.ProductGm.id}/#{product.id}') #{product.ProductGm.name} #{name}
+                  a(href='/shop/products/#{product.ProductGm.id}/#{product.id}'+ url) #{product.ProductGm.name} #{name}
                 h5
                   if(product.originPrice == undefined || product.originPrice <= 0)
                     | #{UtilService.numberFormat(product.price)}
