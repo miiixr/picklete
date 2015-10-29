@@ -98,10 +98,20 @@ let ShopController = {
     let productGmid = req.params.productGmid;
     let productId = req.params.productId;
     let brandId = req.query.brandId ? req.query.brandId : 0;
+    let dptId = req.query.dptId ? req.query.dptId : 0;
+    let dptSubId = req.query.dptSubId ? req.query.dptSubId : 0;
+    let dpt = 0;
+    let dptSub = 0;
     
+    if(dptId != 0){
+      dpt = await db.Dpt.findById(dptId);
+    }
+    if(dptSubId != 0){
+      dptSub = await db.DptSub.findById(dptSubId);
+    }
     try {
-  
-    
+
+      
       let productGm = await db.ProductGm.findOne({
             where: {id: productGmid},
             include: [
@@ -173,7 +183,6 @@ let ShopController = {
         }],
         limit: 6
       });
-
       let products = productGm.Products;
       var coverPhotos = JSON.parse(productGm.coverPhoto);
       var photos = JSON.parse(product.photos);
@@ -197,6 +206,8 @@ let ShopController = {
       else {
         // product.price = '$ ' + UtilService.numberFormat(product.price);
         let resData = {
+          dpt: dpt,
+          dptSub: dptSub,
           productGm: productGm,
           products: products,
           product: product,
@@ -207,7 +218,7 @@ let ShopController = {
           brandId: brandId,
           recommendProducts,
          };
-        console.log("hhihihihihi",resData);
+         console.log("hihihi",resData);
         return res.view("main/shopProduct", resData);
 
       }

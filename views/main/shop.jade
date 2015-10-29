@@ -142,13 +142,19 @@ block body
                 else if (sails.moment().diff(sails.moment(product.createdAt), 'days') < 8)
                   // label: new
                   span.label.label-success NEW
-
-
-                a(href='/shop/products/#{product.ProductGm.id}/#{product.id}')
-
-
+                - var url
+                - if (reqId)
+                  - url = '?brandId='+reqId                  
+                - else if(dptSubId)
+                  - url = '?dptId='+dptId+'&dptSubId='+dptSubId
+                - else if(dptId)
+                  - url = '?dptId='+dptId
+                - else
+                  - url = ''
+                a(href='/shop/products/#{product.ProductGm.id}/#{product.id}'+ url)
                   img.img-full.item-show(src=product.photos && product.photos[0]? product.photos[0] : "http://www.culpwrit.com/wp-content/uploads/2012/09/no11.jpg")
                   img.img-full.item-hide(src=product.photos && product.photos[1]? product.photos[1] : product.photos[0])
+
               // /item-block
               .item-text-block.m-bottom-8
                 h6.text-muted
@@ -156,8 +162,7 @@ block body
                 h4.m-bottom-2.h4-max-two-hide
                   - var name = product.name ? "(" + product.name + ")" : "";
                   //- a(href='/shop/product?pid=#{product.id}') #{product.ProductGm.name} #{name}
-
-                  a(href='/shop/products/#{product.ProductGm.id}/#{product.id}') #{product.ProductGm.name} #{name}
+                  a(href='/shop/products/#{product.ProductGm.id}/#{product.id}'+ url) #{product.ProductGm.name} #{name}
                 h5
                   if(product.originPrice == undefined || product.originPrice <= 0)
                     | #{UtilService.numberFormat(product.price)}
