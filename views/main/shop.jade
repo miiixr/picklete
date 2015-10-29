@@ -147,10 +147,19 @@ block body
                   a(href='/shop/products/#{product.ProductGm.id}/#{product.id}?brandId='+reqId)
                     img.img-full.item-show(src=product.photos && product.photos[0]? product.photos[0] : "http://www.culpwrit.com/wp-content/uploads/2012/09/no11.jpg")
                     img.img-full.item-hide(src=product.photos && product.photos[1]? product.photos[1] : product.photos[0])
+                - else if(dptSubId)
+                  a(href='/shop/products/#{product.ProductGm.id}/#{product.id}?dptId='+dptId+'&dptSubId='+dptSubId)
+                    img.img-full.item-show(src=product.photos && product.photos[0]? product.photos[0] : "http://www.culpwrit.com/wp-content/uploads/2012/09/no11.jpg")
+                    img.img-full.item-hide(src=product.photos && product.photos[1]? product.photos[1] : product.photos[0])
+                - else if(dptId)
+                  a(href='/shop/products/#{product.ProductGm.id}/#{product.id}?dptId='+dptId)
+                    img.img-full.item-show(src=product.photos && product.photos[0]? product.photos[0] : "http://www.culpwrit.com/wp-content/uploads/2012/09/no11.jpg")
+                    img.img-full.item-hide(src=product.photos && product.photos[1]? product.photos[1] : product.photos[0])
                 - else
                   a(href='/shop/products/#{product.ProductGm.id}/#{product.id}')
                     img.img-full.item-show(src=product.photos && product.photos[0]? product.photos[0] : "http://www.culpwrit.com/wp-content/uploads/2012/09/no11.jpg")
                     img.img-full.item-hide(src=product.photos && product.photos[1]? product.photos[1] : product.photos[0])
+
               // /item-block
               .item-text-block.m-bottom-8
                 h6.text-muted
@@ -160,6 +169,10 @@ block body
                   //- a(href='/shop/product?pid=#{product.id}') #{product.ProductGm.name} #{name}
                   - if (reqId)
                     a(href='/shop/products/#{product.ProductGm.id}/#{product.id}?brandId='+reqId) #{product.ProductGm.name} #{name}
+                  - else if(dptSubId)
+                    a(href='/shop/products/#{product.ProductGm.id}/#{product.id}?dptId='+dptId+'&dptSubId='+dptSubId) #{product.ProductGm.name} #{name}
+                  - else if(dptId)
+                    a(href='/shop/products/#{product.ProductGm.id}/#{product.id}?dptId='+dptId) #{product.ProductGm.name} #{name}
                   - else
                     a(href='/shop/products/#{product.ProductGm.id}/#{product.id}') #{product.ProductGm.name} #{name}
                 h5
