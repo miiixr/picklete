@@ -89,7 +89,7 @@ block body
       each promo in flashPromotions
       
         .col-md-4.col-sm-6
-          a.item-block.m-bottom-6(href='shop-discount')
+          a.item-block.m-bottom-6(href='/shop/list?flash=#{promo.id}')
             img.img-full(src='#{promo.coverPhoto[0]}')
             | &#x9;&#x9;&#x9;&#x9;
             .info-block
@@ -101,7 +101,8 @@ block body
                     | #{promo.description.replace(/\n/g, '<br>')}
                 // /col-xs-8
                 .col-xs-4
-                  h4.text-danger.text-right.countdown  倒數 #{promo.endDate}
+                  h4.promo-end.text-danger.text-right.countdown(data-end='#{promo.endDate}')  倒數 
+                    span #{promo.endDate}
                 // /col-xs-4
               // /row
             // /info-block
@@ -256,6 +257,7 @@ block body
   
   
 block js
+  script(src='/javascripts/main/index.js')
   script.
     if($("#error").get(0)){
       $('#modal-login').modal('show');
