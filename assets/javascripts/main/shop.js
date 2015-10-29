@@ -193,7 +193,7 @@
 
         '    <div class="col-xs-8 p-left-0">' +
         '      <h6 class="text-muted"><a href="/brands">'+orderItem.brandname+'</a></h6>' +
-        '      <h5><a href="/shop/products/'+orderItem.productGmId+'/'+orderItem.ProductId+'">'+orderItem.brand+"-"+orderItem.name+'</a></h5>' +
+        '      <h5><a href="/shop/products/'+orderItem.productGmId+'/'+orderItem.ProductId+'">' + orderItem.name + '</a></h5>' +
         '      <h5>$ '+ price.formatMoney() +'</h5>' +
         '    </div>' +
         '  </div>' +
