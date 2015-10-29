@@ -56,4 +56,24 @@
 
   };
   activeDptHandler();
+
+
+
+  $('.filterMenu a').on('click', function (e) {
+    e.preventDefault();
+    var target = $(this);
+    var targetQuery = target.attr('href').replace('?', '');
+    var search = location.search;
+    var url = location.href;
+    if (search == '') {
+      return window.location.href = window.location.href + '?' + target.attr('href');
+    }
+
+    url = url.replace(/&sort=.*&/, '');
+    url = url.replace(/&sort=.*/, '');
+    url = url.replace(/&color=.*/, '');
+    url = url.replace(/&color=.*&/, '');
+
+    return window.location.href = url + '&' + targetQuery;
+  });
 }(jQuery));
