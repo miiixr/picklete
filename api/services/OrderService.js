@@ -134,9 +134,10 @@ var self = module.exports = {
         return {orderItemProduct,orderItem};
       });
 
+      console.log("!!!!",JSON.stringify(orderItemProducts,null,2));
       orderItemProducts.forEach((order) =>{
         sails.log.info(order);
-        itemArray.push(`${order.orderItemProduct.ProductGm.name}(${order.orderItemProduct.name})X${order.orderItem.quantity}`);
+        itemArray.push(`${order.orderItem.name}X${order.orderItem.quantity}`);
       });
 
       data.ItemName = itemArray.join('#');
@@ -182,23 +183,31 @@ var self = module.exports = {
 
       let products = await* orderItems.map(async (orderItem) => {
 
-        let product = await db.Product.findById(orderItem.ProductId);
+        let product = await db.Product.findOne({
+          where:{
+            id: orderItem.ProductId
+          },
+          include:{
+            model: db.ProductGm
+          }
+        });
 
         if (!product)
           throw new Error('找不到商品！ 請確認商品ID！');
 
-        let productGm = await db.ProductGm.findById(product.ProductGmId);   
-        let productName = (product.name == null || product.name == '') ? "" : "(" + product.name + ")";    
-        product.name = productGm.name + productName;
+        // let productGm = await db.ProductGm.findById(product.ProductGmId);
+        // let productName = (product.name == null || product.name == '') ? "" : "(" + product.name + ")";
+        let productName = product.ProductGm.name+  "(" + product.name + ")"
+        // product.name = productGm.name + productName;
 
         if (product.stockQuantity === 0){
           // mix productGm and product name
-          throw new Error('此商品「'+ product.name +'」已經售鑿！');
+          throw new Error('此商品「'+ productName +'」已經售鑿！');
         }
 
         if (product.stockQuantity < orderItem.quantity){
           // mix productGm and product name
-          throw new Error('此商品「'+ product.name +'」已經不足！');
+          throw new Error('此商品「'+ productName +'」已經不足！');
         }
 
         // fixed to save product full name ( product full name = productGM.name + product.name)
@@ -234,11 +243,17 @@ var self = module.exports = {
       };
       // 計算購買商品價格
       products.forEach((product, index) => {
+
+        // let productGm = await db.ProductGm.findById(product.ProductGmId);
+        // let productName = (product.name == null || product.name == '') ? "" : "(" + product.name + ")";
+
+        let productName = product.ProductGm.name+  "(" + product.name + ")"
+
         let quantity = parseInt(orderItems[index].quantity,10);
         thisOrder.paymentTotalAmount += (orderItems[index].price * quantity);
         thisOrder.quantity += quantity;
 
-        orderItems[index].name = product.name;
+        orderItems[index].name = productName;
         orderItems[index].description = product.description;
         // orderItems[index].price = product.price;
         orderItems[index].comment = product.comment;
@@ -286,7 +301,7 @@ var self = module.exports = {
             else
               purchasesItemData.price = purchasesItem.Products[0].price * (purchasesItem.discount * 0.1);
           }
-          
+
           orderItems.push(purchasesItemData);
 
           if (purchasesItem.Products[0].stockQuantity === 0){
