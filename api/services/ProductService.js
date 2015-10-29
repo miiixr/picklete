@@ -407,7 +407,7 @@ module.exports = {
               id: query.dptId
             }
           });
-          console.log('======== dpt', dpt);
+          // console.log('======== dpt', dpt);
           if(dpt.name == '特別企劃'){
             if (query.dptSubId > 0 ) {
               productDptSubConfig.where = {
@@ -486,7 +486,7 @@ module.exports = {
       }
       // ================ merge queryObj ================
 
-      console.log('===== productDptSubConfig', productDptSubConfig);
+      // console.log('===== productDptSubConfig', productDptSubConfig);
       queryObj = {
         subQuery: false,
         where: ProductQueryObj,

@@ -56,7 +56,8 @@ block body
       form.form-inline
         .form-group
           label 顯示
-          +pagination-limit
+          +pagination-limit(limit)
+          label 筆資料（共 #{totalRows} 筆）
         // /form-group
     // /col-md-6
     .col-md-6.desktop-text-right
@@ -117,12 +118,7 @@ block body
                 else
                   span.text-danger #{Math.ceil(product.price * query.discount * 0.1)}
   hr.dashed-line
-  .text-center
-    //
-      pagination-block
-      ==================================================
-    ul.list-inline.m-bottom-0.m-top-1
-      +pagination-simple-pager(page, totalPages)
+  +pagination-simple-pager(page, totalPages, limit)
   // /text-center
 block js
   script(src='/javascripts/common/pagination.js')

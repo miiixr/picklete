@@ -273,6 +273,14 @@ let PromotionController = {
       let page = await pagination.page(req);
       let offset = await pagination.offset(req);
 
+      let query = req.query;
+      let limitPage = query.limitPage? query.limitPage : 0;
+      // query
+      if(query.keyword)
+        queryObj.name = { 'like': '%'+query.keyword+'%'};
+      else
+        query.keyword = '';
+
       let additionalPurchaseNoLimit = await db.AdditionalPurchase.findAndCountAll({
         where:{
           activityLimit:0
@@ -284,25 +292,38 @@ let PromotionController = {
         limit: limit
       });
 
-      sails.log.info("=== controlShopBuyMore NoLimit ===",additionalPurchaseNoLimit.rows)
+      sails.log.info("=== controlShopBuyMore NoLimit ===",additionalPurchaseNoLimit.rows);
 
-      let additionalPurchaseLimit = await db.AdditionalPurchase.findAll({
+      let additionalPurchaseLimit = await db.AdditionalPurchase.findAndCountAll({
         where:{
           activityLimit:1500
         },
         include:{
           model: db.Product
-        }
+        },
+        offset: offset,
+        limit: limit
       });
+      // end query
+      // console.log("=== controlShopBuyMore Limit ===",additionalPurchaseLimit.count);
+
+      console.log('==========  limit  ===============  Page   ===============');
+      console.log(limitPage);
+      console.log(Math.ceil(additionalPurchaseLimit.count / limit));
+      console.log(additionalPurchaseLimit.count);
 
       res.view('promotion/controlShopBuyMore',{
-        pageName: "shop-buy-more",
+        query,
+        pageName: "/admin/shop-buy-more",
         additionalPurchaseNoLimit,
         additionalPurchaseLimit,
-        limit: limit,
-        page: page,
+        limit,
+        page,
         totalPages: Math.ceil(additionalPurchaseNoLimit.count / limit),
-        totalRows: additionalPurchaseNoLimit.count
+        totalRows: additionalPurchaseNoLimit.count,
+        limitTotalPages: Math.ceil(additionalPurchaseLimit.count / limit),
+        limitTotalRows: additionalPurchaseLimit.count,
+        limitPage
       });
     } catch (e) {
       console.error(e.stack);
@@ -311,13 +332,6 @@ let PromotionController = {
       return res.serverError({message, success});
     }
   },
-
-  // controlShopBuyMoreDetail: function(req, res) {
-  //   console.log('req',req.query);
-  //   res.view('promotion/controlShopBuyMoreDetail',{
-  //     pageName: "shop-buy-more-detail"
-  //   });
-  // },
 
   buyMoreAddItem: async function(req, res) {
 
@@ -363,7 +377,7 @@ let PromotionController = {
       });
 
       res.view('promotion/buyMoreAddItem',{
-        pageName: "shop-item-add",
+        pageName: "/admin/shop-buy-more",
         query,
         limit,
         page,
@@ -379,23 +393,18 @@ let PromotionController = {
     }
   },
 
+
   controlShopBuyMoreDetail: async (req, res) => {
 
     try {
 
+      let limit = await pagination.limit(req);
+      let page = await pagination.page(req);
+      let offset = await pagination.offset(req);
+
       console.log('query',req.query);
       let query = req.query;
       let queryObj = {};
-
-      let page = req.session.UserController_controlMembers_page =
-      parseInt(req.param('page',
-        req.session.UserController_controlMembers_page || 0
-      ));
-
-      let limit = req.session.UserController_controlMembers_limit =
-      parseInt(req.param('limit',
-        req.session.UserController_controlMembers_limit || 10
-      ));
 
       let brands = await db.Brand.findAll();
       if(query.brand && query.brand!=0){
@@ -411,7 +420,7 @@ let PromotionController = {
           include:[{
             model: db.Product
           }],
-          offset: page * limit,
+          offset: offset,
           limit: limit
         });
         query = additionalPurchase.rows[0].dataValues;
@@ -430,7 +439,7 @@ let PromotionController = {
 
         additionalPurchase = await db.Product.findAndCountAll({
           where: queryObj,
-          offset: page * limit,
+          offset: offset,
           limit: limit
         });
 
@@ -438,12 +447,14 @@ let PromotionController = {
 
       // let additionalPurchase = await db.AdditionalPurchase.findAll();
         res.view('promotion/controlShopBuyMoreAddItem',{
-        pageName: "shop-buy-more-add-item",
+        pageName: "/admin/shop-buy-more",
         brands,
         additionalPurchase,
         query,
         page,
-        limit
+        limit,
+        totalPages: Math.ceil(additionalPurchase.count / limit),
+        totalRows: additionalPurchase.count
       });
     } catch (e) {
       sail.log.error(e);

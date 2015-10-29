@@ -60,7 +60,7 @@ $(function() {
     return false;
   });
 
-  
+
   var displayPageHandler = function () {
     var totalNumber = parseInt(inputTotalPages.val(), 10) + 1;
     var pageNumber = parseInt(inputPage.val(), 10) + 1;
