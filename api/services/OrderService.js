@@ -195,10 +195,8 @@ var self = module.exports = {
         if (!product)
           throw new Error('找不到商品！ 請確認商品ID！');
 
-        // let productGm = await db.ProductGm.findById(product.ProductGmId);
-        // let productName = (product.name == null || product.name == '') ? "" : "(" + product.name + ")";
-        let productName = product.ProductGm.name+  "(" + product.name + ")"
-        // product.name = productGm.name + productName;
+        let productName = (product.name == null || product.name == '') ? "" : "(" + product.name + ")";
+        productName = product.ProductGm.name + productName;
 
         if (product.stockQuantity === 0){
           // mix productGm and product name
@@ -244,10 +242,11 @@ var self = module.exports = {
       // 計算購買商品價格
       products.forEach((product, index) => {
 
-        // let productGm = await db.ProductGm.findById(product.ProductGmId);
-        // let productName = (product.name == null || product.name == '') ? "" : "(" + product.name + ")";
 
-        let productName = product.ProductGm.name+  "(" + product.name + ")"
+        // let productName = product.ProductGm.name+  "(" + product.name + ")"
+        
+        let productName = (product.name == null || product.name == '') ? "" : "(" + product.name + ")";
+        productName = product.ProductGm.name + productName;
 
         let quantity = parseInt(orderItems[index].quantity,10);
         thisOrder.paymentTotalAmount += (orderItems[index].price * quantity);
