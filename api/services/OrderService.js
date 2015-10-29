@@ -134,7 +134,6 @@ var self = module.exports = {
         return {orderItemProduct,orderItem};
       });
 
-      console.log("!!!!",JSON.stringify(orderItemProducts,null,2));
       orderItemProducts.forEach((order) =>{
         sails.log.info(order);
         itemArray.push(`${order.orderItem.name}X${order.orderItem.quantity}`);
@@ -242,9 +241,6 @@ var self = module.exports = {
       // 計算購買商品價格
       products.forEach((product, index) => {
 
-
-        // let productName = product.ProductGm.name+  "(" + product.name + ")"
-        
         let productName = (product.name == null || product.name == '') ? "" : "(" + product.name + ")";
         productName = product.ProductGm.name + productName;
 
