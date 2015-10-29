@@ -1,6 +1,10 @@
 extends ../_layout_head
 
 block body
+  - var flash = req.flash('info');
+  if flash.length != 0
+    .alert.alert-success(role='success')
+      p= flash
   if req.flash('error')[0]
     div#error
   #carousel-index.carousel.slide(data-ride='carousel')

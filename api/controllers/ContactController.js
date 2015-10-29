@@ -16,7 +16,8 @@ module.exports = {
     try {
 
       let user = req.query;
-      user.issue = user.issue.join("、");
+      if(user.issue)
+        user.issue = user.issue.join("、");
 
       // 寄給使用者
       let messageConfig = await CustomMailerService.contactUs(user, user.email);
@@ -29,7 +30,11 @@ module.exports = {
       message = await db.Message.create(messageConfig);
       await CustomMailerService.sendMail(message);
 
-      return res.ok();
+      // return res.ok();
+
+      req.flash('info', '你的訊息已送出');
+      res.redirect('/');
+      return
 
     } catch (e) {
       console.error(e);
