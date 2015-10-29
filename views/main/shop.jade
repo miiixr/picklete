@@ -143,12 +143,14 @@ block body
                   // label: new
                   span.label.label-success NEW
 
-
-                a(href='/shop/products/#{product.ProductGm.id}/#{product.id}')
-
-
-                  img.img-full.item-show(src=product.photos && product.photos[0]? product.photos[0] : "http://www.culpwrit.com/wp-content/uploads/2012/09/no11.jpg")
-                  img.img-full.item-hide(src=product.photos && product.photos[1]? product.photos[1] : product.photos[0])
+                - if (reqId)
+                  a(href='/shop/products/#{product.ProductGm.id}/#{product.id}?brandId='+reqId)
+                    img.img-full.item-show(src=product.photos && product.photos[0]? product.photos[0] : "http://www.culpwrit.com/wp-content/uploads/2012/09/no11.jpg")
+                    img.img-full.item-hide(src=product.photos && product.photos[1]? product.photos[1] : product.photos[0])
+                - else
+                  a(href='/shop/products/#{product.ProductGm.id}/#{product.id}')
+                    img.img-full.item-show(src=product.photos && product.photos[0]? product.photos[0] : "http://www.culpwrit.com/wp-content/uploads/2012/09/no11.jpg")
+                    img.img-full.item-hide(src=product.photos && product.photos[1]? product.photos[1] : product.photos[0])
               // /item-block
               .item-text-block.m-bottom-8
                 h6.text-muted
@@ -156,8 +158,10 @@ block body
                 h4.m-bottom-2.h4-max-two-hide
                   - var name = product.name ? "(" + product.name + ")" : "";
                   //- a(href='/shop/product?pid=#{product.id}') #{product.ProductGm.name} #{name}
-
-                  a(href='/shop/products/#{product.ProductGm.id}/#{product.id}') #{product.ProductGm.name} #{name}
+                  - if (reqId)
+                    a(href='/shop/products/#{product.ProductGm.id}/#{product.id}?brandId='+reqId) #{product.ProductGm.name} #{name}
+                  - else
+                    a(href='/shop/products/#{product.ProductGm.id}/#{product.id}') #{product.ProductGm.name} #{name}
                 h5
                   if(product.originPrice == undefined || product.originPrice <= 0)
                     | #{UtilService.numberFormat(product.price)}
