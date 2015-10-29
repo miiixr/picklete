@@ -53,13 +53,13 @@ $.fn.inputNumber = function() {
 		if(valueCurrent >= minValue) {
 			$(".btn-number[data-type='minus'][data-field='"+name+"']", ___scope).removeAttr('disabled')
 		} else {
-			alert('Sorry, the minimum value was reached');
+			alert('很抱歉，請選擇最小數量');
 			$(this).val($(this).data('oldValue'));
 		}
 		if(valueCurrent <= maxValue) {
 			$(".btn-number[data-type='plus'][data-field='"+name+"']", ___scope).removeAttr('disabled')
 		} else {
-			alert('Sorry, the maximum value was reached');
+			alert('很抱歉，已超過可購買數量');
 			$(this).val($(this).data('oldValue'));
 		}
 	})

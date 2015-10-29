@@ -244,10 +244,7 @@
 
     var charityNameField =
       '<div class="form-group">' +
-      '  <label class="col-sm-3 control-label">慈善機構<span class="text-danger">*</span></label>' +
-      '  <div class="col-sm-9">' +
-      '    <input type="text" name="order[invoice][charityName]" placeholder="請選擇慈善機構" class="form-control" required />' +
-      '  </div>' +
+      '  <p class="pull-right">※發票將每月隨機捐給各慈善機構，如：家扶基金會、中華社會福利聯合勸募協會等。</p>' +
       '</div>';
 
     var titleField =
@@ -275,9 +272,10 @@
     if(invoiceType == 'triplex')
       invoiceDetail.html(titleField+taxIdField);
 
-    if(invoiceType == 'charity')
+    if(invoiceType == 'charity') {
+      invoiceDetail.html(charityNameField);
       return;
-      // invoiceDetail.html(charityNameField);
+    }
 
   });
 
