@@ -175,6 +175,12 @@
 
     console.log('=== postData ===', postData);
 
+    Cookies.remove('shippingType');
+    Cookies.remove('paymentMethod');
+    Cookies.remove('shippingRegion');
+    Cookies.remove('code');
+    Cookies.remove('calcTatalPrice');
+
     $.ajax(
     {
         url : '/api/order',
@@ -183,11 +189,6 @@
         success:function(data, textStatus, jqXHR)
         {
             $(document.body).html(data);
-            Cookies.remove('shippingType');
-            Cookies.remove('paymentMethod');
-            Cookies.remove('shippingRegion');
-            Cookies.remove('code');
-            Cookies.remove('calcTatalPrice');
 
         },
         error: function (jqXHR, exception) {
