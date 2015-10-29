@@ -34,6 +34,7 @@
     picklete_cart : {orderItems: []};
   }
 
+
   // calculate total price
   var calcTatalPrice = function () {
 
@@ -54,6 +55,7 @@
 
     totalPrice = tmpPrice + shippingFee + packingFee;
     console.log('=== calcTatalPrice ===', totalPrice);
+    Cookies.set('calcTatalPrice', totalPrice);
     totalPriceDiv.text(totalPrice.formatMoney());
     totalPriceDiv.data('value', totalPrice);
   }
@@ -198,7 +200,7 @@
 
   };
 
-  // shippingfee select
+  // shippingfee select   // 運送區域：台灣/外島
   $(".container").on("change", "#shippingFeeSelect", function (e) {
     e.preventDefault();
     var shippingFeeField = $('#shippingFeeField');
@@ -218,6 +220,8 @@
     //   Cookies.set('shippingFee', shippingFee);
     // }
     calcTatalPrice();
+    Cookies.set('shippingRegion', $('#shippingFeeSelect').val());
+    console.log('==== shippingRegion ==>', $('#shippingFeeSelect').val());
   });
   // end
 
@@ -225,6 +229,27 @@
     e.preventDefault();
     Cookies.set('paymentMethod', $('#paymentMethod').val());
   });
+
+  // 運送方式：快遞/郵寄
+  $(".container").on("change", "#shippingType", function (e) {
+    e.preventDefault();
+    Cookies.set('shippingType', $('#shippingType').val());
+    console.log('==== shippingType ==>', $('#shippingType').val());
+  });
+
+  // 付款方式：ATM/信用卡
+  $(".container").on("change", "#paymentMethod", function (e) {
+    e.preventDefault();
+    Cookies.set('paymentMethod', $('#paymentMethod').val());
+    console.log('==== paymentMethod ==>', $('#paymentMethod').val());
+  });
+
+  // 折扣代碼：code
+  $(".container").on("change", "#code", function (e) {
+    e.preventDefault();
+    Cookies.set('code', $("#code").val());
+    console.log('==== code ==>', $("#code").val());
+  });  
 
   var selectedDeleteOrderitem = {};
   var selectedDeleteOrderitemIndex = -1;
@@ -275,7 +300,7 @@
 
     // shipping
     var shippingType = $("#shippingType").val();
-    var shippingFeeTotal = shippingFee;
+    var shippingFeeTotal = Cookies.getJSON('shippingRegion');
     var shippingRegion = $('#shippingFeeSelect').find(":selected").attr("data-region")
     var shipping = { shippingType : shippingType ,shippingFee: shippingFeeTotal, shippingRegion: shippingRegion, shippingFeeFree:shippingFeeFree};
     Cookies.set('shipping', shipping);
@@ -438,9 +463,15 @@
           success:function(data, textStatus, jqXHR)
           {
             var shippingFeeSelect = $("#shippingFeeSelect");
+            var shippingRegion = Cookies.getJSON('shippingRegion');
             for(i=0;i<data.shippings.length;i++){
               shipping = data.shippings[i].region + ' ' + data.shippings[i].fee + ' 元';
-              shippingFeeSelect.append($("<option data-region='"+data.shippings[i].region+"'></option>").attr("value", data.shippings[i].fee).text(shipping));
+              if(data.shippings[i].fee == shippingRegion){
+                shippingFeeSelect.append($("<option data-region='"+data.shippings[i].region+"'></option>").attr("value", data.shippings[i].fee).attr('selected','selected').text(shipping));
+                $("#shippingFeeSelect").change();
+              }
+              else
+                shippingFeeSelect.append($("<option data-region='"+data.shippings[i].region+"'></option>").attr("value", data.shippings[i].fee).text(shipping));
             }
           }
       });
@@ -478,5 +509,20 @@ var checkCode = function(){
   $("#shopCodeCheck").click(function(){
     checkCode();
   });
+
+
+
+  var shippingType = Cookies.getJSON('shippingType');
+  var paymentMethod = Cookies.getJSON('paymentMethod');
+  var code = Cookies.getJSON('code');
+  if(shippingType){
+    $("#shippingType").val(shippingType).change();
+  }
+  if(paymentMethod){
+    $("#paymentMethod").val(paymentMethod).change();
+  }
+  if(code){
+    $("#code").val(code).change();
+  }
 
 }(jQuery));
