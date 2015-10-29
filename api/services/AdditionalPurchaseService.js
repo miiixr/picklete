@@ -24,6 +24,11 @@ module.exports = {
         },
         include: [{
           model: db.Product,
+          where:{
+            stockQuantity:{
+              $gt: 0
+            }
+          },
           include:{
             model: db.ProductGm,
             include:{
