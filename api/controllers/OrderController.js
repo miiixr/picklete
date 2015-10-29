@@ -163,7 +163,7 @@ OrderController = {
       let result = await OrderService.create(newOrder);
 
       console.log('***************');
-      console.log(result);
+      console.log(JSON.stringify(result,null,2));
       if(result.order.paymentTotalAmount <=0)
         throw new Error ('結帳金額異常');
 
@@ -369,7 +369,7 @@ OrderController = {
   print: async (req, res) =>{
     var id = req.query.id;
     var orderId = id.split(',');
-    
+
     var queryObj ={
       where:{
         id : orderId

@@ -42,10 +42,10 @@ block body
         .col-sm-9.col-sm-offset-3.col-md-3.col-md-offset-0
           .checkbox
             label
-              if query.restrictionDate
-                input(type='checkbox' name = 'restrictionDate', checked='')
+              if query.anyTime
+                input(type='checkbox' name = 'anyTime', checked='')
               else
-                input(type='checkbox' name = 'restrictionDate')
+                input(type='checkbox' name = 'anyTime')
               |  不限時
       // /form-group
       .form-group

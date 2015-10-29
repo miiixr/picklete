@@ -168,8 +168,8 @@
             '      </div>' +
             '    </div>';
         }
-      liPackageService = liPackageService + liPackageServiceOptions + liPackageServiceEnd;
 
+      liPackageService = liPackageService + liPackageServiceOptions + liPackageServiceEnd;
       var liPrice =
         '    <div class="col-xs-6 col-sm-2 col-md-2 desktop-text-center desktop-m-top-5 m-bottom-1">' +
         '      <h4 class="m-top-0">$ '+orderItem.price+'<br><small class="text-line-through">'+orderItem.originPrice+'</small></h4>' +
@@ -194,6 +194,7 @@
       totalPriceDiv.data('value', totalPrice);
 
       cartViewer.append(liOrderItem);
+      $("select[name='packingSelect["+index+"]']").val(orderItem.packingQuantity || 0);
     });
 
     cartViewer.inputNumber();
@@ -363,6 +364,9 @@
     var targetSelect = $("select[name='packingSelect["+itemQuantId+"]']");
     // console.log('=== releted pack field name ==>',targetSelect.attr('name'));
 
+    picklete_cart.orderItems[itemQuantId].packingQuantity = 0;
+    Cookies.set('picklete_cart', picklete_cart);
+
     // empty select
     targetSelect
     .empty()
@@ -386,6 +390,8 @@
     packableItemTotal.forEach(function(value){
        var count = parseInt($("select[name='packingSelect["+value+"]']").val());
        console.log('=== value ==>',value,'=== count ===>',count);
+       picklete_cart.orderItems[value].packingQuantity = count;
+       Cookies.set('picklete_cart', picklete_cart);
        packingQuantity += count;
     });
     // console.log('=== packableItemTotal ===>',packableItemTotal);

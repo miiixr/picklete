@@ -131,7 +131,7 @@ let UserController = {
         model: db.Invoice
       }]
     });
-    console.log(orders);
+    sails.log.info("=== purchase orders ===",JSON.stringify(orders,null,2));
     res.view("main/memberPurchase",{
       orders
     });

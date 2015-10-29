@@ -85,9 +85,13 @@ let PromotionController = {
       }
       if(data.reducePrice!='')
         additionalPurchase.reducePrice = data.reducePrice;
-      if(!data.restrictionDate){
+
+      if(!data.anyTime){
         additionalPurchase.startDate = data.startDate;
         additionalPurchase.endDate = data.endDate;
+        additionalPurchase.anyTime = false
+      }else{
+        additionalPurchase.anyTime = true
       }
       additionalPurchase.activityLimit = data.activityLimit;
       additionalPurchase.type = data.type;

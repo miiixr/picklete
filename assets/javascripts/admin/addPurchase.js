@@ -50,7 +50,7 @@ $(function() {
       return;
     }
 
-    if($("input[name='restrictionDate']")[0].checked == false){
+    if($("input[name='anyTime']")[0].checked == false){
       if($("input[name='startDate']").val()=="" || $("input[name='endDate']").val()==""){
         alert("記得選取活動時間喔");
         return;

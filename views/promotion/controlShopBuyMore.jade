@@ -63,9 +63,9 @@ block body
                     span.text-danger #{product.price - purchase.reducePrice}
                   td #{purchase.reducePrice} 元
                 td
-                  | #{purchase.startDate ? sails.moment(purchase.startDate).format('YYYY/MM/DD') : '不限時'}
+                  | #{purchase.anyTime ? '不限時' : sails.moment(purchase.startDate).format('YYYY/MM/DD')}
                   br
-                  | #{purchase.endDate ? sails.moment(purchase.endDate).format('YYYY/MM/DD') : '不限時'}
+                  | #{purchase.anyTime ? '不限時' : sails.moment(purchase.endDate).format('YYYY/MM/DD')}
                 td.text-right
                   a.btn.btn-link(href='../admin/buymore/detail?id='+ purchase.id)
                     span.glyphicon.glyphicon-pencil2
@@ -125,9 +125,9 @@ block body
                     span.text-danger #{product.price - purchase.reducePrice}
                   td #{purchase.reducePrice} 元
                 td
-                  | #{purchase.startDate ? sails.moment(purchase.startDate).format('YYYY/MM/DD') : '不限時'}
+                  | #{purchase.anyTime ? '不限時' : sails.moment(purchase.startDate).format('YYYY/MM/DD')}
                   br
-                  | #{purchase.endDate ? sails.moment(purchase.endDate).format('YYYY/MM/DD') : '不限時'}
+                  | #{purchase.anyTime ? '不限時' : sails.moment(purchase.endDate).format('YYYY/MM/DD')}
                 td.text-right
                   a.btn.btn-link(href='../admin/buymore/detail?id='+ purchase.id)
                     span.glyphicon.glyphicon-pencil2

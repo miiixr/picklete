@@ -69,7 +69,7 @@
 
   var subtotal = 0;
   var totalPrice = 0;
-  var buymore = picklete_cart.buymore;
+  var buymore = picklete_cart.buymore || 0;
   if(buyMoreObject){
     buyMoreObject.forEach(function(item,index){
       buymore += item.price;
