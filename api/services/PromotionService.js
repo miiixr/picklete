@@ -27,10 +27,28 @@ module.exports = {
           required: true
         }]
       });
-    console.log('=== find flash promotion ==>',promotions);
+    // console.log('=== find flash promotion ==>',promotions);
     return promotions;
   },
   // end getModel
+
+  getCurrentFlashPackage: async () => {
+    let promotions = await db.Promotion.findAll({
+        where: {
+          type: 'flash',
+          $or: [
+            {
+              startDate: { $lte: new Date() },
+              endDate: { $gte: new Date() }
+            }, {
+              startDate: null
+            }
+          ]
+        }
+      });
+    // console.log('=== find flash promotion ==>',promotions);
+    return promotions;
+  },
 
   // create
   create: async (promotion) => {

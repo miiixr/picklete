@@ -36,11 +36,14 @@ block body
             -else
               span.label.label-default 一般
           td 
-            span= sails.moment(promotion.startDate).format('YYYY/MM/DD hh:mm')
-            span= " - "
-            span= sails.moment(promotion.endDate).format('YYYY/MM/DD hh:mm')
+            - if (! promotion.startDate)
+              span 不限時
+            - else
+              span= sails.moment(promotion.startDate).format('YYYY/MM/DD hh:mm')
+              span= " - "
+              span= sails.moment(promotion.endDate).format('YYYY/MM/DD hh:mm')
           td.text-right
-            a.btn.btn-link(href='shop-discount-detail?id='+ promotion.id)
+            a.btn.btn-link(href='shop-discount-detail?id=#{promotion.id}&discountType=#{promotion.type}')
               span.glyphicon.glyphicon-pencil2
       //- tr
       //-   td

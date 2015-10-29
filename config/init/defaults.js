@@ -488,29 +488,86 @@ module.exports.createTestData = async ({createRoleUser, createNewBuyer}) => {
   await db.TopicActive.bulkCreate(topicActives);
   // End TopicActive
 
+  productNames = ['flash_黃金曼特寧', 'flash_夏威夷可娜', 'flash_耶加雪夫', 'flash_肯亞AA', 'flash_巴西喜拉朵', 'flash_薇薇特南果', 'flash_薩爾瓦多伊莎貝爾', 'flash_瓜地馬拉．安提瓜．花神', 'flash_星巴克過期豆'];
+
+  var flashProduct = [];
+  for (i=0; i < productNames.length; i++) {
+    var x = await db.Product.create({
+      weight: [i],
+      name: productNames[i],
+      description: '超級精選' + productNames[i] + '咖啡豆',
+      stockQuantity: 1111,
+      isPublish: true,
+      price: 1399,
+      size: 'normal',
+      service: ["express"],
+      country: 'U.K',
+      madeby: 'TW',
+      color: 3,
+      productNumber: '2-USA-3-G',
+      spec: 'super-metal',
+      photos: ["https://dl.dropboxusercontent.com/u/9662264/mertirial/shop-item-d-5.jpg", "https://dl.dropboxusercontent.com/u/9662264/mertirial/shop-item-d-5.jpg"]
+    });
+    flashProduct.push(x);
+    console.log('______--------__________-------------______________');
+  }
+  await createdProductGmGood.setProducts(xs);
+
   // promotions
-  var promotion1 = {
-    title : 'best price!',
+  var promotionFlash = [{
+    title : 'Cool!',
     description : 'this is a test promotion',
     startDate : randomDate(new Date(2015, 5, 8), new Date(2015, 5, 20)),
     endDate : randomDate(new Date(2015, 9, 8), new Date(2016, 9, 20)),
-    price : 2999.97,
+    price : 1999.97,
     type : 'flash',
-    discountType:'price'
-  }
+    discountType:'price',
+    coverPhoto: ['https://cldup.com/DrVIRreS6B.jpg']
+  },{
+    title : 'Best price!',
+    description : 'this is a test promotion',
+    startDate : randomDate(new Date(2015, 5, 8), new Date(2015, 5, 20)),
+    endDate : randomDate(new Date(2020, 9, 8), new Date(2021, 9, 20)),
+    price : 3999.97,
+    type : 'flash',
+    discountType:'price',
+    coverPhoto: ['https://cldup.com/DrVIRreS6B.jpg']
+  },{
+    title : 'Awesome price!',
+    description : 'this is a test promotion',
+    startDate : randomDate(new Date(2015, 5, 8), new Date(2021, 5, 20)),
+    endDate : randomDate(new Date(2020, 9, 8), new Date(2021, 9, 20)),
+    price : 999.97,
+    type : 'flash',
+    discountType:'price',
+    coverPhoto: ['https://cldup.com/DrVIRreS6B.jpg']
+  },{
+    title : 'Lol price!',
+    description : 'this is a test promotion',
+    startDate : randomDate(new Date(2015, 5, 8), new Date(2021, 11, 20)),
+    endDate : randomDate(new Date(2020, 9, 8), new Date(2021, 11, 20)),
+    price : 1999.97,
+    type : 'flash',
+    discountType:'price',
+    coverPhoto: ['https://cldup.com/DrVIRreS6B.jpg']
+  }];
+
   var promotion2 = {
     title : '50% sale!',
     description : 'this is a test promotion',
     startDate : randomDate(new Date(2015, 5, 8), new Date(2015, 5, 20)),
-    endDate : randomDate(new Date(2015, 9, 8), new Date(2016, 9, 20)),
+    endDate : randomDate(new Date(2020, 9, 8), new Date(2021, 9, 20)),
     discount : 0.5,
     type : 'general',
     discountType:'discount'
   }
-  var createPromotion1 = await db.Promotion.create(promotion1);
-  var createPromotion2 = await db.Promotion.create(promotion2);
+  for(var key in promotionFlash) {
+    console.log('--------- flash key, ', key);
+    var promo = await db.Promotion.create(promotionFlash[key])
+    await promo.setProducts([flashProduct[key]]);
+  }
 
-  await createPromotion1.setProducts([noneNameProduct, createdProduct]);
+  var createPromotion2 = await db.Promotion.create(promotion2);
   // end promotions
 
   // slide active
