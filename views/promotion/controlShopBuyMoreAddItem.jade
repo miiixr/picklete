@@ -1,4 +1,5 @@
 extends ../_layout_auth
+include ../mixins/pagination
 
 block body
   h2.m-bottom-6 加價購設定
@@ -41,10 +42,10 @@ block body
         .col-sm-9.col-sm-offset-3.col-md-3.col-md-offset-0
           .checkbox
             label
-              if query.restrictionDate
-                input(type='checkbox' name = 'restrictionDate', checked='')
+              if query.anyTime
+                input(type='checkbox' name = 'anyTime', checked='')
               else
-                input(type='checkbox' name = 'restrictionDate')
+                input(type='checkbox' name = 'anyTime')
               |  不限時
       // /form-group
       .form-group
@@ -80,13 +81,8 @@ block body
       form.form-inline
         .form-group
           label 顯示
-          select#limit.form-control
-            option(selected=(limit==10)) 10
-            option(selected=(limit==20)) 20
-            option(selected=(limit==30)) 30
-            option(selected=(limit==40)) 40
-            option(selected=(limit==50)) 50
-          label 筆資料（共 #{additionalPurchase.count} 筆）
+          +pagination-limit(limit)
+          label 筆資料（共 #{totalRows} 筆）
         // /form-group
     // /col-md-6
     
@@ -151,17 +147,8 @@ block body
               a.btn.btn-link.delete-link(data-productId=product.id)
                 span.glyphicon.glyphicon-remove
   hr.dashed-line
-  .text-center
-    //
-      pagination-block
-      ==================================================
-    ul.list-inline.m-bottom-0.m-top-1
-      li.border-right-1.p-right-2
-      li
-        a#bonusPrevious(href='#') 上一頁
-      li.border-right-1.p-right-2 #{page + 1} / #{Math.ceil(additionalPurchase.count / limit)}
-      li
-        a#bonusNext(href='#') 下一頁
-  // /text-center
-block js
-  script(src="/javascripts/admin/addPurchase.js")
+  +pagination-simple-pager(page, totalPages)
+  
+  block js
+    script(src="/javascripts/admin/addPurchase.js")
+    script(src='/javascripts/common/pagination.js')

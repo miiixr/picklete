@@ -69,7 +69,7 @@
 
   var subtotal = 0;
   var totalPrice = 0;
-  var buymore = picklete_cart.buymore;
+  var buymore = picklete_cart.buymore || 0;
   if(buyMoreObject){
     buyMoreObject.forEach(function(item,index){
       buymore += item.price;
@@ -100,6 +100,7 @@
     totalPrice -= discountAmount;
   }
 
+  totalPrice = parseInt(Cookies.getJSON('calcTatalPrice'));
   // count shipping fee and display
   totalPriceDiv.text('$' + totalPrice.formatMoney(0));
 
@@ -182,6 +183,12 @@
         success:function(data, textStatus, jqXHR)
         {
             $(document.body).html(data);
+            Cookies.remove('shippingType');
+            Cookies.remove('paymentMethod');
+            Cookies.remove('shippingRegion');
+            Cookies.remove('code');
+            Cookies.remove('calcTatalPrice');
+
         },
         error: function (jqXHR, exception) {
           var err = jQuery.parseJSON(jqXHR.responseText);

@@ -8,12 +8,16 @@ module.exports = {
       let additionalPurchaseProductGms = [];
       let additionalPurchases = await db.AdditionalPurchase.findAll({
         where: {
-          startDate: {
-            $lt: date
-          },
-          endDate: {
-            $gte: date
-          },
+          $or:[{
+            anyTime: true
+          },{
+            startDate: {
+              $lt: date
+            },
+            endDate: {
+              $gte: date
+            },
+          }],
           activityLimit: {
             $lt: paymentTotalAmount
           }
@@ -79,7 +83,6 @@ cartAddAdditionalPurchases: async(additionalPurchasesItems) => {
             }
           }
         });
-        sails.log.info("=== additionalPurchasesItems ===",JSON.stringify(find,null,2));
         find.originPrice = find.Products[0].price;
         if(find.type == 'reduce')
           find.price = find.originPrice - find.reducePrice;
@@ -92,6 +95,7 @@ cartAddAdditionalPurchases: async(additionalPurchasesItems) => {
         buyMoreTotalPrice += find.price ;
         return find;
       });
+      sails.log.info("=== additionalPurchasesItems ===",JSON.stringify(additionalPurchasesItems,null,2));
       return {additionalPurchasesItems,buyMoreTotalPrice};
     } catch (e) {
       throw e;
