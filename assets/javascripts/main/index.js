@@ -8,7 +8,7 @@
   $.each(promos, function (idx, promo) {
     var self = $(promo);
     var end = self.data('end');
-    if (end)
+    if ( ! end)
       return self.find('span').text('不限時');  
     var eventTime = moment(end).valueOf();
     var currentTime = moment().valueOf(); // Timestamp - Sun, 21 Apr 2013 12:30:00 GMT
