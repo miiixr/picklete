@@ -209,9 +209,11 @@ let UserController = {
           res.serverError({message});
         }
         
-        if(picklete_cart.hasOwnProperty('additionalPurchasesItem')) {
-          picklete_cart.additionalPurchasesItem = [];
-        }
+        // if(picklete_cart.hasOwnProperty('additionalPurchasesItem')) {
+        //   picklete_cart.additionalPurchasesItem = [];
+        // }
+
+        picklete_cart.additionalPurchasesItem = picklete_cart.additionalPurchasesItem ? picklete_cart.additionalPurchasesItem : [];
 
         picklete_cart.additionalPurchasesItem.push({
           additionalPurchasesId: data.additionalPurchasesId,
