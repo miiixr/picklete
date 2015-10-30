@@ -99,6 +99,7 @@ let PaymentController = {
     try {
       let data = req.body;
       console.log("req",req.body);
+      let checkMacValue = allpay.genCheckMacValue(data);
       let find;
       if(sails.config.environment === 'development' || sails.config.environment === 'test' || sails.config.allpay.debug){
         find = data.MerchantTradeNo.replace(sails.config.allpay.merchantID,"");
@@ -126,8 +127,11 @@ let PaymentController = {
         throw new Error(`${find} 找不到訂單!!`);
 
       if (!(sails.config.environment === 'development' || sails.config.environment === 'test' || sails.config.allpay.debug)) {
-        if(checkMacValue != data.CheckMacValue)
+        if(checkMacValue != data.CheckMacValue) {
+          // order mark error
           throw new Error(`CheckMacError!!`);
+        }
+          
       }
 
 
