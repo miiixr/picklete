@@ -93,4 +93,14 @@ $(function() {
     console.log('=== deleteProductId ===', deleteProductId);
 
   });
+
+  $('.selectAll').on('click', function () {
+    var status = $(this).prop('checked');
+    if (status === true) {
+      $('.addSelect').prop('checked', true);
+    } else {
+      $('.addSelect').prop('checked', false);
+    }
+
+  });
 });
