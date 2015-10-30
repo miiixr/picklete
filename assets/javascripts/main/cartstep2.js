@@ -194,14 +194,17 @@
         error: function (jqXHR, exception) {
           var err = jQuery.parseJSON(jqXHR.responseText);
 
-          $(this).notifyMe(
-            'top',
-            'cart',
-            '<span style="color:red" class="glyphicon glyphicon-warning m-right-2"></span>'+ err.message,
-            '',
-            300,
-            3000
-          );
+          // $(this).notifyMe(
+          //   'top',
+          //   'cart',
+          //   '<span style="color:red" class="glyphicon glyphicon-warning m-right-2"></span>'+ err.message,
+          //   '',
+          //   300,
+          //   3000
+          // );
+
+          alert(err.message);
+          window.history.go(-1);
 
         }
     });

@@ -204,7 +204,7 @@ var self = module.exports = {
 
         if (product.stockQuantity < orderItem.quantity){
           // mix productGm and product name
-          throw new Error('此商品「'+ productName +'」已經不足！');
+          throw new Error('此商品「'+ productName +'」已經不足！請至購物車修改。');
         }
 
         // fixed to save product full name ( product full name = productGM.name + product.name)
