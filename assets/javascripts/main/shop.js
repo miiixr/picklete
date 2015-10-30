@@ -2,6 +2,8 @@
 
   var FAV_KEY = "picklete_fav";
 
+  $('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
+
   // add to favorite
   $(".container").on("click", ".item-like, .label-like", function (e) {
     e.preventDefault();
