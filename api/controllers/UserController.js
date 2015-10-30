@@ -119,10 +119,13 @@ let UserController = {
     }
   },
 
+  // /* 3:50:05 AM Localhost */ SELECT * FROM `Orders` ORDER BY `createdAt` DESC LIMIT 0,1000;
+
   purchase:async (req, res) => {
     let loginUser = UserService.getLoginUser(req);
     let orders = await db.Order.findAll({
       where: {UserId: loginUser.id},
+      order: 'createdAt DESC',
       include: [{
         model: db.OrderItem
       },{
@@ -131,7 +134,8 @@ let UserController = {
         model: db.Invoice
       }]
     });
-    sails.log.info("=== purchase orders ===",JSON.stringify(orders,null,2));
+
+    // sails.log.info("=== purchase orders ===",JSON.stringify(orders,null,2));
     res.view("main/memberPurchase",{
       orders
     });
