@@ -23,7 +23,7 @@ block body
 
             .fileinput.fileinput-new(data-provides='fileinput')
               .fileinput-new.fileinput-square
-                img.img-full(src=promotion.coverPhoto ? promotion.coverPhoto : src='http://fakeimg.pl/150x150/dddddd/FFF/?text=cover')
+                img.img-full(src=promotion.coverPhoto ? promotion.coverPhoto : src='http://fakeimg.pl/360x360/dddddd/FFF/?text=cover')
               // /fileinput-new
               .fileinput-preview.fileinput-exists.border-block-1
               // /fileinput-preview
@@ -33,8 +33,8 @@ block body
                   span.fileinput-exists Change
                   input.fileInput(type='file', name="uploadfile", data-name='coverPhoto[]')
                   input(type='hidden', name="filename", value='coverPhoto[]')
-                  input(type='hidden', name="width", value='150')
-                  input(type='hidden', name="height", value='150')
+                  input(type='hidden', name="width", value='360')
+                  input(type='hidden', name="height", value='360')
                   input(type='hidden', name='coverPhoto[]', form='shopDiscount', value=promotion.coverPhoto)
                 a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
 

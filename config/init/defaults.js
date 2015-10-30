@@ -511,7 +511,7 @@ module.exports.createTestData = async ({createRoleUser, createNewBuyer}) => {
     flashProduct.push(x);
     console.log('______--------__________-------------______________');
   }
-  await createdProductGmGood.setProducts(xs);
+  await createdProductGmGood.setProducts(flashProduct);
 
   // promotions
   var promotionFlash = [{

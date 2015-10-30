@@ -132,7 +132,7 @@ block body
             .form-horizontal
               .row.row-s
                 - for (var i=0; i<2; i++)
-                  - activity.Images[i] = activity.Images[i] || { url: "", path: "http://fakeimg.pl/545x350", openWindow: false};
+                  - activity.Images[i] = activity.Images[i] || { url: "", path: "http://fakeimg.pl/565x363", openWindow: false};
                   .col-xs-6
                     .fileinput.fileinput-new.m-bottom-4(data-provides='fileinput')
                       .fileinput-new
@@ -147,8 +147,8 @@ block body
                             span.fileinput-exists Change
                             input.fileInput(type='file', name='uploadfile', data-name='actives[#{index}][Images][#{i}][path]')
                             input(type='hidden', name="filename", value='actives[#{index}][Images][#{i}][path]')
-                            input(type='hidden', name="width", value='545')
-                            input(type='hidden', name="height", value='350')
+                            input(type='hidden', name="width", value='565')
+                            input(type='hidden', name="height", value='363')
                             input.file-value(type='hidden', name='actives[#{index}][Images][#{i}][path]', form='activesData', value='#{activity.Images[i].path}')
                         a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
                       // /fileinput-btn
@@ -418,7 +418,7 @@ block body
               .col-xs-6
                 .fileinput.fileinput-new.m-bottom-4(data-provides='fileinput')
                   .fileinput-new
-                    img.img-full(src='http://fakeimg.pl/545x350')
+                    img.img-full(src='http://fakeimg.pl/565x363')
                   // /fileinput-new
                   .fileinput-preview.fileinput-exists
                   // /fileinput-preview
@@ -429,8 +429,8 @@ block body
                         span.fileinput-exists Change
                         input.fileInput(type='file', name='uploadfile', data-name='actives[{index}][Images][#{i}][path]')
                         input(type='hidden', name="filename", value='actives[{index}][Images][#{i}][path]')
-                        input(type='hidden', name="width", value='545')
-                        input(type='hidden', name="height", value='350')
+                        input(type='hidden', name="width", value='565')
+                        input(type='hidden', name="height", value='353')
                         input.file-value(type='hidden', name='actives[{index}][Images][#{i}][path]', form='activesData', value='')
                     a.btn.btn-default.btn-sm.fileinput-exists(href='#', data-dismiss='fileinput') Remove
                   // /fileinput-btn

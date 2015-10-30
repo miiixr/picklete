@@ -156,11 +156,14 @@ let PromotionController = {
         queryObj.ProductGmId = productGmIds;
       }
 
-      console.log('==== queryObj ====', queryObj);
+      // console.log('==== queryObj ====', queryObj);
 
 
       let products = await db.Product.findAndCountAll({
         where: queryObj,
+        include: [{
+          model: db.ProductGm
+        }],
         offset: offset,
         limit: limit
       });
