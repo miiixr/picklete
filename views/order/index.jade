@@ -176,7 +176,7 @@ block body
               else
                 span.glyphicon.glyphicon-remove-circle.text-danger
             // /col-sm-1
-            .col-sm-2 #{sails.moment(order.createdAt.format).format('YYYY/MM/DD hh:mm')}
+            .col-sm-2 #{sails.moment(order.createdAt).format('YYYY/MM/DD hh:mm')}
             // /col-sm-2
             .col-sm-1.col-sm-1-lg
               if order.status == "new"
