@@ -138,7 +138,17 @@ let ShopController = {
     }
     try {
 
-      let additionalPurchase = await db.AdditionalPurchase.findById(additionalPurchaseId);
+      let additionalPurchase = await db.AdditionalPurchase.findOne({
+        where:{
+          id: additionalPurchaseId
+        },
+        include:{
+          model: db.Product,
+          where:{
+            id: productId
+          }
+        }
+      });
 
       let productGm = await db.ProductGm.findOne({
             where: {id: productGmid},
