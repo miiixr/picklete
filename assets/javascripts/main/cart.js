@@ -41,7 +41,7 @@
     var tmpPrice = subtotal + buymore - discountAmount;
 
     // 免運
-    if(parseInt(tmpPrice)>parseInt(shippingFeeFreeThreshold)){
+    if(parseInt(tmpPrice) >= shippingFeeFreeThreshold){
       $("#shippingFeeField").text('免運');
       shippingFeeFree = true;
       shippingFee = 0;
