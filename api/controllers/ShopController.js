@@ -47,14 +47,14 @@ let ShopController = {
           }]
         });
 
-      
+
         console.log(promotion.Products);
 
         res.view('main/flash', {
           promotion: promotion,
           products: promotion.Products
         });
-        return 
+        return
       }
       let brand = query.brand || '';
       let dptSubId = query.dptSubId || '';
@@ -128,7 +128,8 @@ let ShopController = {
     let dptSubId = req.query.dptSubId ? req.query.dptSubId : 0;
     let dpt = 0;
     let dptSub = 0;
-    
+    let additionalPurchaseId = req.query.additionalPurchaseId;
+
     if(dptId != 0){
       dpt = await db.Dpt.findById(dptId);
     }
@@ -137,7 +138,8 @@ let ShopController = {
     }
     try {
 
-      
+      let additionalPurchase = await db.AdditionalPurchase.findById(additionalPurchaseId);
+
       let productGm = await db.ProductGm.findOne({
             where: {id: productGmid},
             include: [
@@ -157,6 +159,19 @@ let ShopController = {
               isPublish: true
             }
           });
+
+      let additionalPurchasePrice;
+      if(additionalPurchase){
+        if(additionalPurchase.type == 'reduce')
+          additionalPurchasePrice = product.price - additionalPurchase.reducePrice;
+        else{
+          if(additionalPurchase.discount > 10)
+            additionalPurchasePrice = product.price * (additionalPurchase.discount * 0.01);
+          else
+            additionalPurchasePrice = product.price * (additionalPurchase.discount * 0.1);
+        }
+      }
+
       let brand = await db.Brand.findOne({
         where: {id: productGm.BrandId}
       });
@@ -243,6 +258,8 @@ let ShopController = {
           brand: brand.dataValues,
           brandId: brandId,
           recommendProducts,
+          additionalPurchasePrice,
+          additionalPurchase
          };
          console.log("hihihi",resData);
         return res.view("main/shopProduct", resData);

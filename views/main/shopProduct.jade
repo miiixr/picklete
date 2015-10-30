@@ -79,15 +79,19 @@ block body
                   h5.text-muted.letter-spacing-3.text-roboto.m-bottom-2
                     a(href='/brands/#{brand.id}') #{brand.name}
                   h2.text-black.m-bottom-6.text-roboto #{productGm.name} #{name}
-                  
-                  if(product.originPrice == undefined || product.originPrice <= 0)
-                    h3
-                      span#price #{UtilService.numberFormat(product.price)}
-                  else 
+                  if !additionalPurchase
+                    if(product.originPrice == undefined || product.originPrice <= 0)
+                      h3
+                        span#price #{UtilService.numberFormat(product.price)}
+                    else 
+                      h3.text-black.m-bottom-4
+                        span.text-danger #{UtilService.numberFormat(product.price)}
+                        small.text-line-through.m-left-1#originPrice #{UtilService.numberFormat(product.originPrice)}
+                      h4.text-danger 活動倒數 #{product.promotionCountDown}
+                  else
                     h3.text-black.m-bottom-4
-                      span.text-danger #{UtilService.numberFormat(product.price)}
-                      small.text-line-through.m-left-1#originPrice #{UtilService.numberFormat(product.originPrice)}
-                    h4.text-danger 活動倒數 #{product.promotionCountDown}
+                      span.text-green 加價購 #{UtilService.numberFormat(additionalPurchasePrice)}
+                      small.text-line-through.m-left-1#originPrice #{UtilService.numberFormat(product.price)}
                   
 
                 // /col-sm-10
@@ -111,53 +115,57 @@ block body
 
               // 商品數量
               .row.m-bottom-6
-                .col-sm-4
-                  .input-group.input-group-count.input-group-lg.m-bottom-4.max-width-150
-                    span.input-group-btn
-                      button.btn.btn-default.btn-number.p-left-2.p-right-2(type='button', disabled='disabled', data-type='minus', data-field='quant[1]')
-                        span.glyphicon.glyphicon-minus
-                    // /input-group-btn
-                    input.form-control.input-number.text-center.font-size-large(type='text', name='quant[1]', value='1', min='1', max='#{product.stockQuantity}')
-                    span.input-group-btn
-                      button.btn.btn-default.btn-number.p-left-2.p-right-2(type='button', data-type='plus', data-field='quant[1]')
-                        span.glyphicon.glyphicon-plus
-                    // /input-group-btn
-                  // /input-group
-                // /col-sm-4
-                .col-sm-8
-                  - var disabled = (product.stockQuantity == 0) ? 'disabled' : '';
-                  - var productName = (product.name) ? "(" + product.name + ")" : "";
-                  a.btn.btn-black.border-radius-circle.btn-block.btn-lg.add-to-cart(class='#{disabled}', 
-                  data-productGmId=productGm.id,, data-productId=product.id, data-photos=product.photos, 
-                  data-brand=productGm.name, data-name="#{product.ProductGm.name}#{productName}" , data-brandname=_.find(brands, {id: product.ProductGm.BrandId}).name,
-                  data-price=product.price) 加入購物車 
-                // /col-sm-8
+                if !additionalPurchase
+                  .col-sm-4
+                    .input-group.input-group-count.input-group-lg.m-bottom-4.max-width-150
+                      span.input-group-btn
+                        button.btn.btn-default.btn-number.p-left-2.p-right-2(type='button', disabled='disabled', data-type='minus', data-field='quant[1]')
+                          span.glyphicon.glyphicon-minus
+                      // /input-group-btn
+                      input.form-control.input-number.text-center.font-size-large(type='text', name='quant[1]', value='1', min='1', max='#{product.stockQuantity}')
+                      span.input-group-btn
+                        button.btn.btn-default.btn-number.p-left-2.p-right-2(type='button', data-type='plus', data-field='quant[1]')
+                          span.glyphicon.glyphicon-plus
+                      // /input-group-btn
+                    // /input-group
+                  // /col-sm-4
+                  .col-sm-8
+                    - var disabled = (product.stockQuantity == 0) ? 'disabled' : '';
+                    - var productName = (product.name) ? "(" + product.name + ")" : "";
+                    a.btn.btn-black.border-radius-circle.btn-block.btn-lg.add-to-cart(class='#{disabled}', 
+                    data-productGmId=productGm.id,, data-productId=product.id, data-photos=product.photos, 
+                    data-brand=productGm.name, data-name="#{product.ProductGm.name}#{productName}" , data-brandname=_.find(brands, {id: product.ProductGm.BrandId}).name,
+                    data-price=product.price) 加入購物車 
+                  // /col-sm-8
+                else
+                  a.btn.btn-black.border-radius-circle.btn-block.btn-lg(href= "/user/cart/addAdditionalPurchases?additionalPurchasesId=#{additionalPurchase.id}&productId=#{product.id}") 加入購物車 
               // /row
               
               // 其他商品 
               .row.row-m.m-bottom-6
-                each thisProduct in products
-                  .col-xs-3.col-sm-2
-                    if (thisProduct.stockQuantity == 0)
-                      .item-block.border-block-img.m-bottom-4.item-soldout
-                        .item-soldout-text
-                          h6
-                            | SOLD
-                            br
-                            | OUT
-                        a(href='/shop/products/#{thisProduct.ProductGmId}/#{thisProduct.id}')
-                          img.img-full(src='#{thisProduct.photos[0]}')
-                        // /item-block
-                    else if (thisProduct.id == product.id)
-                      .item-block.border-block-img.m-bottom-4.active
-                        a(href='/shop/products/#{thisProduct.ProductGmId}/#{thisProduct.id}')
-                          img.img-full(src='#{thisProduct.photos[0]}')
+                if !additionalPurchase
+                  each thisProduct in products
+                    .col-xs-3.col-sm-2
+                      if (thisProduct.stockQuantity == 0)
+                        .item-block.border-block-img.m-bottom-4.item-soldout
+                          .item-soldout-text
+                            h6
+                              | SOLD
+                              br
+                              | OUT
+                          a(href='/shop/products/#{thisProduct.ProductGmId}/#{thisProduct.id}')
+                            img.img-full(src='#{thisProduct.photos[0]}')
                           // /item-block
-                    else if (thisProduct.isPublish == true)
-                      .item-block.border-block-img.m-bottom-4
-                        a(href='/shop/products/#{thisProduct.ProductGmId}/#{thisProduct.id}')
-                          img.img-full(src='#{thisProduct.photos[0]}')
-                          // /item-block
+                      else if (thisProduct.id == product.id)
+                        .item-block.border-block-img.m-bottom-4.active
+                          a(href='/shop/products/#{thisProduct.ProductGmId}/#{thisProduct.id}')
+                            img.img-full(src='#{thisProduct.photos[0]}')
+                            // /item-block
+                      else if (thisProduct.isPublish == true)
+                        .item-block.border-block-img.m-bottom-4
+                          a(href='/shop/products/#{thisProduct.ProductGmId}/#{thisProduct.id}')
+                            img.img-full(src='#{thisProduct.photos[0]}')
+                            // /item-block
                   // /col-xs-3
               // /row 
 
@@ -260,4 +268,3 @@ block body
 
 block js
   //- script(src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript")
-
