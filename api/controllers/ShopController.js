@@ -30,6 +30,32 @@ let ShopController = {
     sails.log.info('=== query ===', query);
 
     try {
+
+      if (query.flash) {
+
+        let promotion = await db.Promotion.findOne({
+          where: {
+            id: query.flash,
+            type: 'flash'
+          },
+          include:[{
+            model: db.Product,
+            required: true,
+            include:[{
+              model: db.ProductGm
+            }]
+          }]
+        });
+
+      
+        console.log(promotion.Products);
+
+        res.view('main/flash', {
+          promotion: promotion,
+          products: promotion.Products
+        });
+        return 
+      }
       let brand = query.brand || '';
       let dptSubId = query.dptSubId || '';
       let dptId = query.dptId || '';
