@@ -69,10 +69,10 @@
       return window.location.href = window.location.href + '?' + target.attr('href');
     }
 
-    url = url.replace(/&sort=.*&/, '');
-    url = url.replace(/&sort=.*/, '');
-    url = url.replace(/&color=.*/, '');
-    url = url.replace(/&color=.*&/, '');
+    url = url.replace(/&sort=\w*&/g, '&');
+    url = url.replace(/&sort=\w*/g, '&');
+    url = url.replace(/&color=\w*/g, '&');
+    url = url.replace(/&color=\w*&/g, '&');
 
     return window.location.href = url + '&' + targetQuery;
   });

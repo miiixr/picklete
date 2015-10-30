@@ -188,11 +188,18 @@ html
             |         
             li
               a.btn.btn-default(href='/brands/list') #{i18n("brand-list")}
-        |     
-        li
-          a(href='/user/login')
-            span.glyphicon.glyphicon-user.m-right-1
-            | LOGIN
+        | 
+        - if ( ! user) 
+          li
+            a(href='/user/login')
+              span.glyphicon.glyphicon-user.m-right-1
+              | LOGIN
+        - else
+          li
+            a(href='/member/favorite')
+              span.glyphicon.glyphicon-user.m-right-1
+              | MEMBER
+
         |     
         li
           a(href='/user/cart')
