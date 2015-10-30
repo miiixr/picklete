@@ -136,6 +136,7 @@ let PromotionController = {
       let limit = await pagination.limit(req);
       let page = await pagination.page(req);
       let offset = await pagination.offset(req);
+      
       let brands = await db.Brand.findAll();
 
       if(query.keyword)
@@ -158,6 +159,8 @@ let PromotionController = {
 
       // console.log('==== queryObj ====', queryObj);
 
+      console.log('------------ page');
+      console.log(offset);
 
       let products = await db.Product.findAndCountAll({
         where: queryObj,
@@ -182,6 +185,8 @@ let PromotionController = {
         totalRows: products.count
       });
     } catch (e) {
+      console.log('------------ error');
+      console.log(e);
       return res.serverError(e);
     }
   },

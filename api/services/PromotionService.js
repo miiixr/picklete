@@ -225,8 +225,8 @@ module.exports = {
             let endDate = promotion.endDate;
             //
             if(product.id == promotedProduct.id){
-              console.log('=== promotedProduct ==>',promotedProduct);
-              console.log('=== promotedProduct.price ==>',promotedProduct.price);
+              // console.log('=== promotedProduct ==>',promotedProduct);
+              // console.log('=== promotedProduct.price ==>',promotedProduct.price);
               //
               product.originPrice = promotedProduct.price;
               let duration = moment.duration(moment(endDate).diff(moment(date)));
@@ -241,10 +241,10 @@ module.exports = {
               product.status = 'discount';
               //
               if(promotion.discountType == 'discount'){
-                console.log('=== promotion.discount ==>',promotion.discount);
+                // console.log('=== promotion.discount ==>',promotion.discount);
                 product.price = parseInt(product.price * promotion.discount);
               }else if(promotion.discountType == 'price'){
-                console.log('=== promotion.price ==>',promotion.price);
+                // console.log('=== promotion.price ==>',promotion.price);
                 product.price = parseInt(product.price - promotion.price);
               }
 
@@ -254,6 +254,8 @@ module.exports = {
         }); // end forEach
         // return product;
       }); // end map
+      console.log('---------------------- promotion')
+      console.log(products)
       return products;
     } catch (e) {
       console.log('=== productPriceTransPromotionPrice err ==>',e.stack);

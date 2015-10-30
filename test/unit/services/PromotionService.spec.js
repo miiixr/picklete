@@ -236,7 +236,7 @@ describe("about Shop Discount", function() {
     // end
 
     // productPriceTransPromotionPrice - date2
-    it('Pricing: Set product price fron promotions', async (done) => {
+    it.only('Pricing: Set product price fron promotions', async (done) => {
       try {
         // find product by given ProductGmId
         let findProducts = [createdProduct3];
