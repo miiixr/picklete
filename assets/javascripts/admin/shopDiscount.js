@@ -45,10 +45,10 @@ $(function() {
       }
     });
 
-    if($("input[name='productIds[]']").length == 0 ){
-      alert("記得選取折扣項目喔");
-      return false;
-    }
+    // if($("input[name='productIds[]']").length == 0 ){
+    //   alert("記得選取折扣項目喔");
+    //   return false;
+    // }
 
     if($("input[name='title']").val()==""){
       alert("記得輸入活動名稱喔");
