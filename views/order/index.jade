@@ -86,14 +86,14 @@ block body
             .form-group
               label.col-md-4.control-label 訂單日期
               .col-md-8
-                input.form-control(type='date', name='createdStart', value = query.createdStart?query.createdStart: null)
+                input.form-control(type='date', placeholder="2015-10-30", name='createdStart', value = query.createdStart?query.createdStart: null)
             // /form-group
           // /col-md-4
           .col-md-4
             .form-group
               label.col-md-4.control-label.text-center #{i18n('until')}
               .col-md-8
-                input.form-control(type='date', name='createdEnd', value = query.createdEnd?query.createdEnd: null)
+                input.form-control(type='date', placeholder="2015-10-30", name='createdEnd', value = query.createdEnd?query.createdEnd: null)
                 input(type='hidden', name='page' value = query.page?query.page: 0)
             // /form-group
           // /col-md-4
