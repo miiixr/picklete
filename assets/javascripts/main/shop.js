@@ -2,7 +2,16 @@
 
   var FAV_KEY = "picklete_fav";
 
-  $('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
+  if ('ontouchstart' in document.documentElement) {
+    // if mobile we we use a backdrop because click events don't delegate
+    $('<div class="dropdown-backdrop"/>').insertAfter($(this)).on('click', clearMenus)
+  }
+
+  $('#yourId').on('hidden.bs.dropdown', function (){
+    $(this).click(function (event) {
+       $('.dropdown-toggle').dropdown('toggle'); 
+    });
+  });
 
   // add to favorite
   $(".container").on("click", ".item-like, .label-like", function (e) {
