@@ -265,8 +265,6 @@ module.exports = {
         }); // end forEach
         // return product;
       }); // end map
-      console.log('---------------------- promotion')
-      console.log(products)
       return products;
     } catch (e) {
       console.log('=== productPriceTransPromotionPrice err ==>',e.stack);

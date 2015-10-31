@@ -183,9 +183,9 @@ html
           |       
           ul.dropdown-menu.navmenu-nav(role='menu')
             each dpt in headDpts
-              - dptId = (dpt.id == 1) ? '' : dpt.id;
+              - _mobileDptId = (dpt.id == 1) ? '' : dpt.id;
               li
-                a(href='/shop/list?dptId='+dptId) #{dpt.name}
+                a(href='/shop/list?dptId=' + _mobileDptId) #{dpt.name}
             |         
             li
               a.btn.btn-default(href='/brands/list') #{i18n("brand-list")}
