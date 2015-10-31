@@ -62,14 +62,10 @@ module.exports = {
         delete promotion.price;
 
         // make integer be a discount 
-        var discount = promotion.discount.toString().length;
-        discount = (discount > 1) ? parseInt(discount, 10) / 100 : parseInt(discount, 10) / 10;
+        var count = promotion.discount.toString().length;
+        var discount = (count > 1) ? parseInt(promotion.discount, 10) / 100 : parseInt(promotion.discount, 10) / 10;
         promotion.discount = discount;
       }
-        
-
-
-      PromotionService
 
       // create promotion
       let createdPromotion = await db.Promotion.create(promotion);
@@ -162,8 +158,8 @@ module.exports = {
         updatePromoiton.price = null;
 
         // make integer be a discount 
-        var discount = promotion.discount.toString().length;
-        discount = (discount > 1) ? parseInt(discount, 10) / 100 : parseInt(discount, 10) / 10;
+        var count = promotion.discount.toString().length;
+        var discount = (count > 1) ? parseInt(promotion.discount, 10) / 100 : parseInt(promotion.discount, 10) / 10;
         promotion.discount = discount;
 
         updatePromoiton.discount = promotion.discount;
