@@ -251,7 +251,7 @@ module.exports = {
               product.originPrice = promotedProduct.price;
 
               // make front end display end date
-              product.discountEndDate = endDate;
+              product.discountEndDate = promotion.endDate;
               //
               product.status = 'discount';
               //
