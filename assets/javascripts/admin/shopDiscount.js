@@ -97,7 +97,7 @@ $(function() {
   $('.selectAll').on('click', function () {
     var status = $(this).prop('checked');
     if (status === true) {
-      $('.addSelect').prop('checked', true);
+      $('.addSelect:not(:disabled)').prop('checked', true);
     } else {
       $('.addSelect').prop('checked', false);
     }
@@ -106,7 +106,6 @@ $(function() {
 
 
   // front end hack
-  
   var _visualDiscountNumber = function () {
     var disCountNode = $('input[name=discount]');
     if (disCountNode.val() == undefined || disCountNode.val() === 0)

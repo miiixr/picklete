@@ -79,10 +79,14 @@ let PromotionController = {
         additionalPurchase = await db.AdditionalPurchase.findById(data.id);
       }
       // additionalPurchase.name = findProduct.name;
-      if(data.discount!=''){
-        if(data.discount>10) data.discount*=0.1;
-        additionalPurchase.discount = data.discount;
+      if(data.discount != '') {
+        var count = data.discount.toString().length;
+        var discount = (count > 1) ? parseInt(data.discount, 10) / 100 : parseInt(data.discount, 10) / 10;
+        additionalPurchase.discount = discount;
+        console.log('---------------- discount');
+        console.log(discount);
       }
+
       if(data.reducePrice!='')
         additionalPurchase.reducePrice = data.reducePrice;
 
@@ -244,14 +248,12 @@ let PromotionController = {
             where: {
               id: query.productIds
             },
-            offset: offset,
-            limit: limit
+            // offset: offset,
+            // limit: limit
           });
 
           promotion.Products = products;
         }
-
-
       }
 
       console.log('=== promotion ===', promotion);
@@ -458,7 +460,7 @@ let PromotionController = {
       }
 
       // let additionalPurchase = await db.AdditionalPurchase.findAll();
-        res.view('promotion/controlShopBuyMoreAddItem',{
+      res.view('promotion/controlShopBuyMoreAddItem',{
         pageName: "/admin/shop-buy-more",
         brands,
         additionalPurchase,

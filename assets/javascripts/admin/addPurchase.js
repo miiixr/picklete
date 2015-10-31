@@ -59,7 +59,7 @@ $(function() {
 
     var postData = $("form[name='updateForm']").serializeArray();
     $.ajax({
-        url : '../../admin/buymoreUpdate',
+        url : '/admin/buymoreUpdate',
         type: "put",
         data : postData,
         success:function()

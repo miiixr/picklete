@@ -56,18 +56,18 @@ block body
                 td #{product.price}
                 if purchase.type == 'discount'
                   td
-                    span.text-danger #{Math.ceil(product.price * (purchase.discount*0.1))}
+                    span.text-danger #{Math.ceil(product.price * purchase.discount)}
                   td #{purchase.discount} 折
                 else
                   td
-                    span.text-danger #{product.price - purchase.reducePrice}
+                    span.text-danger #{purchase.reducePrice}
                   td #{purchase.reducePrice} 元
                 td
                   | #{purchase.anyTime ? '不限時' : sails.moment(purchase.startDate).format('YYYY/MM/DD')}
                   br
                   | #{purchase.anyTime ? '不限時' : sails.moment(purchase.endDate).format('YYYY/MM/DD')}
                 td.text-right
-                  a.btn.btn-link(href='../admin/buymore/detail?id='+ purchase.id)
+                  a.btn.btn-link(href='/admin/buymore/detail?id='+ purchase.id)
                     span.glyphicon.glyphicon-pencil2
       hr.dashed-line
       +pagination-simple-pager(page, totalPages)
