@@ -249,14 +249,9 @@ module.exports = {
               // console.log('=== promotedProduct.price ==>',promotedProduct.price);
               //
               product.originPrice = promotedProduct.price;
-              let duration = moment.duration(moment(endDate).diff(moment(date)));
-              //
-              product.promotionCountDown =
-                `${duration.get("days")} 天 ${duration.get("hours")
-                + ":"
-                + duration.get("minutes")
-                + ":"
-                + duration.get("seconds")}`;
+
+              // make front end display end date
+              product.discountEndDate = endDate;
               //
               product.status = 'discount';
               //

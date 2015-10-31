@@ -52,7 +52,7 @@ let ShopController = {
 
         res.view('main/flash', {
           promotion: promotion,
-          products: promotion.Products
+          products: products
         });
         return 
       }

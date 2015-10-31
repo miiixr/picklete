@@ -88,8 +88,8 @@ block body
                     h3.text-black.m-bottom-4
                       span.text-danger #{UtilService.numberFormat(product.price)}
                       small.text-line-through.m-left-1#originPrice #{UtilService.numberFormat(product.originPrice)}
-                    h4.text-danger 活動倒數 #{product.promotionCountDown}
-                  
+                    h4(class="promo-end text-danger m-bottom-10 countdown", data-end='#{product.discountEndDate}') 活動倒數 
+                      span 
 
                 // /col-sm-10
                 .col-sm-2.col-xs-3
@@ -260,5 +260,6 @@ block body
     // /cbp-so-scroller
 
 block js
+  script(src='/javascripts/common/discountCountdown.js')
   //- script(src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript")
 
