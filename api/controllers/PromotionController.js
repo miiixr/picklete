@@ -247,7 +247,7 @@ let PromotionController = {
           let products = await db.Product.findAll({
             where: {
               id: query.productIds
-            },
+            }
             // offset: offset,
             // limit: limit
           });
