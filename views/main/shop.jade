@@ -136,7 +136,7 @@ block body
                     | SOLD
                     br
                     | OUT
-                else if product.status == 'sale'
+                else if (product.originPrice && product.price)
                   // label: sale
                   span.label.label-danger SALE
                 else if (sails.moment().diff(sails.moment(product.createdAt), 'days') < 8)

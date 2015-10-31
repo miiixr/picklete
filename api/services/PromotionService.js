@@ -211,14 +211,18 @@ module.exports = {
       let productIds = products.map((product) => product.id)
 
       let findPromotions = await db.Promotion.findAll({
-        where:{
+        $or: [{
           startDate: {
             lt: date
           },
           endDate: {
             gte: date
-          }
-        },
+          },
+
+        }, {
+            startDate: null,
+            endDate: null,
+        }],
         include:[{
           model: db.Product,
           where: {

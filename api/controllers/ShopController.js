@@ -48,7 +48,7 @@ let ShopController = {
         });
 
       
-        console.log(promotion.Products);
+        products = await PromotionService.productPriceTransPromotionPrice(new Date(), promotion.Products);
 
         res.view('main/flash', {
           promotion: promotion,
