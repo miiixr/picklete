@@ -57,8 +57,19 @@ module.exports = {
 
       if(promotion.discount =='')
         delete promotion.discount;
-      if(promotion.price=='')
+
+      if(promotion.price=='') {
         delete promotion.price;
+
+        // make integer be a discount 
+        var discount = promotion.discount.toString().length;
+        discount = (discount > 1) ? parseInt(discount, 10) / 100 : parseInt(discount, 10) / 10;
+        promotion.discount = discount;
+      }
+        
+
+
+      PromotionService
 
       // create promotion
       let createdPromotion = await db.Promotion.create(promotion);
@@ -138,26 +149,31 @@ module.exports = {
       updatePromoiton.type = promotion.type;
       updatePromoiton.startDate = promotion.startDate;
       updatePromoiton.endDate = promotion.endDate;
-      if(promotion.discount == '' || promotion.discount==100){
-        updatePromoiton.discount = 100;
-      }
-      else{
-        updatePromoiton.discount = promotion.discount;
-      }
 
-      if(promotion.price == '' || promotion.price == 0){
-        updatePromoiton.price = 0;
-      }
-      else{
+      // when discount is null, process price
+      if ( ! promotion.discount || promotion.discount == '') {
+        updatePromoiton.discount = null;
+
         updatePromoiton.price = promotion.price;
       }
+
+      // when price is null, process discount
+      if ( ! promotion.price || promotion.price == '') {
+        updatePromoiton.price = null;
+
+        // make integer be a discount 
+        var discount = promotion.discount.toString().length;
+        discount = (discount > 1) ? parseInt(discount, 10) / 100 : parseInt(discount, 10) / 10;
+        promotion.discount = discount;
+
+        updatePromoiton.discount = promotion.discount;
+      }
+      
       updatePromoiton.discountType = promotion.discountType;
       updatePromoiton.coverPhoto = promotion.coverPhoto;
 
-
       await updatePromoiton.save();
       await updatePromoiton.setProducts(promotion.productIds);
-
 
       return updatePromoiton;
     } catch (e) {
@@ -242,10 +258,10 @@ module.exports = {
               //
               if(promotion.discountType == 'discount'){
                 // console.log('=== promotion.discount ==>',promotion.discount);
-                product.price = parseInt(product.price * promotion.discount);
+                product.price = Math.ceil(parseInt(product.price * promotion.discount));
               }else if(promotion.discountType == 'price'){
                 // console.log('=== promotion.price ==>',promotion.price);
-                product.price = parseInt(product.price - promotion.price);
+                product.price = promotion.price;
               }
 
               if(product.price < 0) product.price = 0;
