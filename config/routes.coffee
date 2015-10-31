@@ -464,6 +464,25 @@ module.exports.routes = {
      credentials: false
     }
   }
+
+  'post /api/buymore/delete/:id': {
+    controller: "PromotionController",
+    action: "buymoreDelete",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+
+  'post /api/shopDiscount/delete/:id': {
+    controller: "PromotionController",
+    action: "shopDiscountDelete",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+
   'put /admin/brands/resetWeight' : {
     controller: "BrandController",
     action: "resetWeight",

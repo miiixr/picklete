@@ -481,7 +481,33 @@ let PromotionController = {
       pageName: "shop-report-form",
       dateList: dateList
     });
+  },
+
+  buymoreDelete: async (req, res) => {
+    try {
+      let id = req.params.id;
+      let additionalPurchase = await db.AdditionalPurchase.findOne({ where: {id: id} });
+      await additionalPurchase.destroy();
+      return res.ok(additionalPurchase);
+    } catch (e) {
+      sail.log.error(e);
+      return res.serverError(e);
+    }
+  },
+
+  shopDiscountDelete: async (req, res) => {
+    try {
+      let id = req.params.id;
+      let promotion = await db.Promotion.findOne({ where: {id: id} });
+      await promotion.destroy();
+      return res.ok(promotion);
+    } catch (e) {
+      sail.log.error(e);
+      return res.serverError(e);
+    }
   }
+
+
   // end not clean yet
 
 
