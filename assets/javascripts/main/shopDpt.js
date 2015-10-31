@@ -27,6 +27,7 @@
     var keys = window.location.search.replace('?', '').split('&');
     var params = {};
     var ACTIVE_CLASS_NAME = 'active';
+
     $.each(keys, function (idx, val) {
       var item = val.split('=');
       params[item[0]] = item[1];
@@ -37,7 +38,7 @@
     
     // when brand query, not dpt to active
     if (params.brand) return;
-    console.log(params);
+
     // when nothing to query, means first item active
     if (! params.dptId || params.dptId == '') {
       dptDisplay(1);
