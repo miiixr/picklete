@@ -94,15 +94,6 @@ $(function() {
 
   });
 
-  $('.selectAll').on('click', function () {
-    var status = $(this).prop('checked');
-    if (status === true) {
-      $('.addSelect:not(:disabled)').prop('checked', true);
-    } else {
-      $('.addSelect').prop('checked', false);
-    }
-
-  });
 
 
   // front end hack
@@ -114,7 +105,5 @@ $(function() {
     disCountNode.val(disCountNode.val() * 100);
   };
   _visualDiscountNumber();
-  
-
-  
+    
 });

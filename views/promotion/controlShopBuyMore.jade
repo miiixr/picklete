@@ -57,7 +57,7 @@ block body
                 if purchase.type == 'discount'
                   td
                     span.text-danger #{Math.ceil(product.price * purchase.discount)}
-                  td #{purchase.discount} 折
+                  td #{purchase.discount * 100} 折
                 else
                   td
                     span.text-danger #{purchase.reducePrice}
@@ -118,11 +118,11 @@ block body
                 td #{product.price}
                 if purchase.type == 'discount'
                   td
-                    span.text-danger #{Math.ceil(product.price * (purchase.discount*0.1))}
-                  td #{purchase.discount} 折
+                    span.text-danger #{Math.ceil(product.price * purchase.discount)}
+                  td #{purchase.discount * 100} 折
                 else
                   td
-                    span.text-danger #{product.price - purchase.reducePrice}
+                    span.text-danger #{purchase.reducePrice}
                   td #{purchase.reducePrice} 元
                 td
                   | #{purchase.anyTime ? '不限時' : sails.moment(purchase.startDate).format('YYYY/MM/DD')}
