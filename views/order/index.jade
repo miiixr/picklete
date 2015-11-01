@@ -281,8 +281,10 @@ block body
                   p.text-danger
                     | ※ 會員備註：#{order.User.comment?order.User.comment: '無'}
                 // /col-sm-8
-                .col-sm-4.text-right
-                  button.btn.btn-gray.btn-sm(type='button') 取消整筆訂單
+
+                if (order.status !== "orderCancel")
+                  .col-sm-4.text-right
+                    button.cancel-order.btn.btn-gray.btn-sm(type='button', data-id="#{order.serialNumber}") 取消整筆訂單
                 // /col-sm-4
               // /row
             // /p-10
@@ -305,5 +307,5 @@ block body
         a(href='#' id='next') 下一頁
   // /text-center
 
-  block js
-    script(src='/javascripts/admin/order.js')
+block js
+  script(src='/javascripts/admin/order.js')
