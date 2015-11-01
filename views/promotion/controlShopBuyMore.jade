@@ -6,28 +6,31 @@ block body
   a.btn.btn-danger.btn-lg.m-bottom-6(href='buymore/detail') 建立加價購
   ul.nav.nav-tabs.m-bottom-4
     li.active
-      a(href='#tab-1', data-toggle='tab') 不限金額
+      a#a-tab1(href='#tab-1', data-toggle='tab') 不限金額
     li
-      a(href='#tab-2', data-toggle='tab') 限滿 1,500 元
+      a#a-tab2(href='#tab-2', data-toggle='tab') 限滿 1,500 元
   // /nav
-  .tab-content
+  #tab-container.tab-content(data-tab-status=query.tabStatus?query.tabStatus:'')
     #tab-1.tab-pane.fade.in.active
       .row
         .col-sm-6.col-md-8
-          form.form-inline.with-pagination(name="show", action="/admin/shop-buy-more", method="get")
-            +pagination-fields(page, limit)
+          form.form-inline
             .form-group
               label 顯示
-                +pagination-limit
+              +pagination-limit(limit)
+              label 筆資料（共 #{totalRows} 筆）
             // /form-group
         // /col-sm-6
         .col-sm-6.col-md-4
-          .input-group
-            input.form-control(type='text', placeholder='Search for...')
-            span.input-group-btn
-              button.btn.btn-default.p-left-2.p-right-2(type='button')
-                span.glyphicon.glyphicon-search
-          // /input-group
+          form.with-pagination(name="searchNoLimit", action="/admin/shop-buy-more", method="get")
+            input(type='hidden', name='limitTab', value=limitTab? limitTab: '')
+            +pagination-fields(page, totalPages, limit)
+            .input-group
+              input.form-control(name='keyword', type='text', placeholder='Search for...', value='#{query.keyword}')
+              span.input-group-btn
+                button.btn.btn-default.p-left-2.p-right-2(type='button', onClick='$("form[name=\'searchNoLimit\']").submit()')
+                  span.glyphicon.glyphicon-search
+            // /input-group
         // /col-sm-6
       // /row
       hr.dashed-line
@@ -53,49 +56,45 @@ block body
                 td #{product.price}
                 if purchase.type == 'discount'
                   td
-                    span.text-danger #{Math.ceil(product.price * (purchase.discount*0.1))}
-                  td #{purchase.discount} 折
+                    span.text-danger #{Math.ceil(product.price * purchase.discount)}
+                  td #{purchase.discount * 100} 折
                 else
                   td
-                    span.text-danger #{product.price - purchase.reducePrice}
+                    span.text-danger #{purchase.reducePrice}
                   td #{purchase.reducePrice} 元
                 td
-                  | #{purchase.startDate ? sails.moment(purchase.startDate).format('YYYY/MM/DD') : '不限時'}
+                  | #{purchase.anyTime ? '不限時' : sails.moment(purchase.startDate).format('YYYY/MM/DD')}
                   br
-                  | #{purchase.endDate ? sails.moment(purchase.endDate).format('YYYY/MM/DD') : '不限時'}
+                  | #{purchase.anyTime ? '不限時' : sails.moment(purchase.endDate).format('YYYY/MM/DD')}
                 td.text-right
-                  a.btn.btn-link(href='../admin/buymore/detail?id='+ purchase.id)
+                  a.btn.btn-link(href='/admin/buymore/detail?id='+ purchase.id)
                     span.glyphicon.glyphicon-pencil2
+                  input(type='hidden', value='#{purchase.id}')
+                  a.btn.btn-link.delete-link(href='', data-toggle='modal', data-target='#modal-delete')
+                    span.glyphicon.glyphicon-remove
       hr.dashed-line
-      .text-center
-        //
-          pagination-block
-          ==================================================
-        ul.list-inline.m-bottom-0.m-top-1
-          +pagination-simple-pager(page, totalPages)
-      // /text-center
-    // /tab-pane
+      +pagination-simple-pager(page, totalPages)
+      
     #tab-2.tab-pane.fade
       .row
         .col-sm-6.col-md-8
           form.form-inline
             .form-group
               label 顯示
-              select.form-control
-                option 10
-                option 20
-                option 30
-                option 40
-                option 50
-              label 筆資料（共 90 筆）
+              +pagination-limit(limit, 'pagination2-limit')
+              label 筆資料（共 #{limitTotalRows} 筆）
             // /form-group
         // /col-sm-6
         .col-sm-6.col-md-4
-          .input-group
-            input.form-control(type='text', placeholder='Search for...')
-            span.input-group-btn
-              button.btn.btn-default.p-left-2.p-right-2(type='button')
-                span.glyphicon.glyphicon-search
+          form.with-pagination2(name="searchLimit", action="/admin/shop-buy-more", method="get")
+            input(type='hidden', name='limitTab', value=limitTab? limitTab: '')
+            input(type="hidden", name="limitPage", value=limitPage? limitPage: 0)
+            +pagination-fields(limitPage, limitTotalPages, limit)
+            .input-group
+              input.form-control(type='text', placeholder='Search for...')
+              span.input-group-btn
+                button.btn.btn-default.p-left-2.p-right-2(type='button')
+                  span.glyphicon.glyphicon-search
           // /input-group
         // /col-sm-6
       // /row
@@ -112,7 +111,7 @@ block body
             th 時間
             th
         tbody
-          each purchase in additionalPurchaseLimit
+          each purchase in additionalPurchaseLimit.rows
             each product in purchase.Products
               tr
                 td
@@ -122,32 +121,60 @@ block body
                 td #{product.price}
                 if purchase.type == 'discount'
                   td
-                    span.text-danger #{Math.ceil(product.price * (purchase.discount*0.1))}
-                  td #{purchase.discount} 折
+                    span.text-danger #{Math.ceil(product.price * purchase.discount)}
+                  td #{purchase.discount * 100} 折
                 else
                   td
-                    span.text-danger #{product.price - purchase.reducePrice}
+                    span.text-danger #{purchase.reducePrice}
                   td #{purchase.reducePrice} 元
                 td
-                  | #{purchase.startDate ? sails.moment(purchase.startDate).format('YYYY/MM/DD') : '不限時'}
+                  | #{purchase.anyTime ? '不限時' : sails.moment(purchase.startDate).format('YYYY/MM/DD')}
                   br
-                  | #{purchase.endDate ? sails.moment(purchase.endDate).format('YYYY/MM/DD') : '不限時'}
+                  | #{purchase.anyTime ? '不限時' : sails.moment(purchase.endDate).format('YYYY/MM/DD')}
                 td.text-right
                   a.btn.btn-link(href='../admin/buymore/detail?id='+ purchase.id)
                     span.glyphicon.glyphicon-pencil2
-      hr.dashed-line
-      .text-center
-        //
-          pagination-block
-          ==================================================
-        ul.list-inline.m-bottom-0.m-top-1
-          li.border-right-1.p-right-2
-            a(href='#') 上一頁
-          li.border-right-1.p-right-2 第 15 之 20
-          li
-            a(href='#') 下一頁
-      // /text-center
-    // /tab-pane
-  // /tab-content
+                  input(type='hidden', value='#{purchase.id}')
+                  a.btn.btn-link.delete-link(href='', data-toggle='modal', data-target='#modal-delete')
+                    span.glyphicon.glyphicon-remove
+
+
+
+    #modal-delete.modal.fade
+      .modal-dialog(role='document')
+        .modal-content.font-size-slarge
+          .modal-header.p-30
+            button.close(type='button', data-dismiss='modal', aria-label='Close')
+              span(aria-hidden='true') ×
+            h2.modal-title 刪除
+          // /modal-header
+          .modal-body.p-30.p-top-0
+            p 您確定要將此 項目 刪除？
+          // /modal-body
+          .modal-footer
+            button.btn.btn-default(type='button', data-dismiss='modal') 取消
+            button.btn.btn-green(type='button', data-dismiss='modal') 確定
+          // /modal-footer
+        // /modal-content
+      // /modal-dialog
+    hr.dashed-line
+    .text-center.m-bottom-8
+      nav
+        ul.pagination
+          if (limitPage+1 > 1)
+            li
+              a(href='#', aria-label='Previous', id='pagination2-prev')
+                span(aria-hidden='true') «
+          if (limitTotalPages > 1)
+            - for(var i=1; i <= limitTotalPages; i++) {
+              - var active = (parseInt(limitPage)+1==parseInt(i)) ? 'active' : '';
+              li(href='#', class='#{active} pagination2-jump' data-page='#{i}')
+                a(href='#') #{i}
+            - }
+          if (limitPage+1 < limitTotalPages)
+            li
+              a(href='#', aria-label='Next', id='pagination2-next')
+                span(aria-hidden='true') »
 block js
+  script(src='/javascripts/admin/controlShopBuyMore.js')
   script(src='/javascripts/common/pagination.js')

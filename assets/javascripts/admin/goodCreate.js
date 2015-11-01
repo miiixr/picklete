@@ -52,6 +52,7 @@
       index = index[0].match(/\d/)[0];
       index = parseInt(index, 10) + 1;
       s = s.replace(/good\[\d/g, "good[" + index);
+      console.log(s);
     }
     that.parent().parent().after(s);
     that.remove();
@@ -59,7 +60,7 @@
   // end btn-add
 
   // btn-remove
-  $('.row').on('click','.btn-remove',function(e){
+  $('.well').on('click','.btn-remove',function(e){
     e.preventDefault();
     var that = $(this);
     // console.log('=== that.context.previousElementSibling is ==>',that.context.previousElementSibling);

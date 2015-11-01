@@ -1,10 +1,10 @@
 extends ../_layout_auth
 
 block body
-  - var flash = req.flash('message')
-  if flash.length != 0
-    .alert.alert-danger(role='alert')
-      p= flash
+  //- - var flash = req.flash('message')
+  //- if flash.length != 0
+  //-   .alert.alert-danger(role='alert')
+  //-     p= flash
   .row
     .col-xs-10
       h2.m-bottom-6 訂單管理
@@ -86,14 +86,14 @@ block body
             .form-group
               label.col-md-4.control-label 訂單日期
               .col-md-8
-                input.form-control(type='date', name='createdStart', value = query.createdStart?query.createdStart: null)
+                input.form-control(type='date', placeholder="2015-10-30", name='createdStart', value = query.createdStart?query.createdStart: null)
             // /form-group
           // /col-md-4
           .col-md-4
             .form-group
               label.col-md-4.control-label.text-center #{i18n('until')}
               .col-md-8
-                input.form-control(type='date', name='createdEnd', value = query.createdEnd?query.createdEnd: null)
+                input.form-control(type='date', placeholder="2015-10-30", name='createdEnd', value = query.createdEnd?query.createdEnd: null)
                 input(type='hidden', name='page' value = query.page?query.page: 0)
             // /form-group
           // /col-md-4
@@ -176,7 +176,7 @@ block body
               else
                 span.glyphicon.glyphicon-remove-circle.text-danger
             // /col-sm-1
-            .col-sm-2 #{sails.moment(order.createdAt.format).format('YYYY/MM/DD hh:mm')}
+            .col-sm-2 #{sails.moment(order.createdAt).format('YYYY/MM/DD hh:mm')}
             // /col-sm-2
             .col-sm-1.col-sm-1-lg
               if order.status == "new"
@@ -232,7 +232,7 @@ block body
                       tr
                         td #{item.productNumber}
                         td
-                          a(href='shop-product') #{item.name}
+                          a(href='#') #{item.name}
                         td.text-center #{item.quantity}
                         td #{item.price}
                         td.text-right #{item.price*item.quantity}
@@ -242,6 +242,7 @@ block body
                       td(colspan='2')
                         ul.list-inline
                           if(sumPrice>390)
+                            - order.Shipment.shippingFee = 0;
                             li 運費 (滿額免運)
                           else
                             li 運費 #{order.Shipment.shippingFee}
@@ -257,7 +258,7 @@ block body
                       td.text-right(colspan='2')
                         h3
                           small 總計
-                          span.m-left-2 NT$ #{sumPrice + order.Shipment.shippingFee + order.packingFee}
+                          span.m-left-2 NT$ #{order.paymentTotalAmount}
                       
                 .m-left-1
                   if order.allPayPaymentType == "ATM"

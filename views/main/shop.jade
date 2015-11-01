@@ -82,44 +82,44 @@ block body
             button.btn.btn-default.border-radius-circle.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
               span.glyphicon.glyphicon-list.m-right-1
               | 預設排序
-            ul.dropdown-menu.width-210.m-top-2.p-top-2.p-bottom-2
+            ul.filterMenu.dropdown-menu.width-210.m-top-2.p-top-2.p-bottom-2
               li
-                a(href='?dptSubId=#{dptSubId}&dptId=#{dptId}&sort=views')
+                a(href='?sort=views')
                   | 受關注度優先
                   span.glyphicon.glyphicon-chevron-thin-right.pull-right
               li
-                a(href='?dptSubId=#{dptSubId}&dptId=#{dptId}&sort=top')
+                a(href='?sort=top')
                   | 熱門收藏優先
                   span.glyphicon.glyphicon-chevron-thin-right.pull-right
               li
-                a(href='?dptSubId=#{dptSubId}&dptId=#{dptId}&sort=newest')
+                a(href='?sort=newest')
                   | 最新上架優先
                   span.glyphicon.glyphicon-chevron-thin-right.pull-right
               li
-                a(href='?dptSubId=#{dptSubId}&dptId=#{dptId}&sort=priceHtoL')
+                a(href='?sort=priceHtoL')
                   | 價格由高至低
                   span.glyphicon.glyphicon-chevron-thin-right.pull-right
               li
-                a(href='?dptSubId=#{dptSubId}&dptId=#{dptId}&sort=priceLtoH')
+                a(href='?sort=priceLtoH')
                   | 價格由低至高
                   span.glyphicon.glyphicon-chevron-thin-right.pull-right
               li.p-8-30
                 | 顏色：
                 br
-                a.color-filter.color-red(href='?dptSubId=#{dptSubId}&dptId=#{dptId}&color=1')
-                a.color-filter.color-orange(href='?dptSubId=#{dptSubId}&dptId=#{dptId}&color=2')
-                a.color-filter.color-yellow(href='?dptSubId=#{dptSubId}&dptId=#{dptId}&color=3')
-                a.color-filter.color-green(href='?dptSubId=#{dptSubId}&dptId=#{dptId}&color=4')
-                a.color-filter.color-blue(href='?dptSubId=#{dptSubId}&dptId=#{dptId}&color=5')
-                a.color-filter.color-purple(href='?dptSubId=#{dptSubId}&dptId=#{dptId}&color=6')
-                a.color-filter.color-deeppink(href='?dptSubId=#{dptSubId}&dptId=#{dptId}&color=7')
-                a.color-filter.color-pink(href='?dptSubId=#{dptSubId}&dptId=#{dptId}&color=8')
-                a.color-filter.color-black(href='?dptSubId=#{dptSubId}&dptId=#{dptId}&color=9')
-                a.color-filter.color-gray(href='?dptSubId=#{dptSubId}&dptId=#{dptId}&color=10')
-                a.color-filter.color-graylight(href='?dptSubId=#{dptSubId}&dptId=#{dptId}&color=11')
-                a.color-filter.color-gold(href='?dptSubId=#{dptSubId}&dptId=#{dptId}&color=12')
-                a.color-filter.color-brown(href='?dptSubId=#{dptSubId}&dptId=#{dptId}&color=13')
-                a.color-filter.color-mix(href='?dptSubId=#{dptSubId}&dptId=#{dptId}&color=14')
+                a.color-filter.color-red(href='?color=1')
+                a.color-filter.color-orange(href='?color=2')
+                a.color-filter.color-yellow(href='?color=3')
+                a.color-filter.color-green(href='?color=4')
+                a.color-filter.color-blue(href='?color=5')
+                a.color-filter.color-purple(href='?color=6')
+                a.color-filter.color-deeppink(href='?color=7')
+                a.color-filter.color-pink(href='?color=8')
+                a.color-filter.color-black(href='?color=9')
+                a.color-filter.color-gray(href='?color=10')
+                a.color-filter.color-graylight(href='?color=11')
+                a.color-filter.color-gold(href='?color=12')
+                a.color-filter.color-brown(href='?color=13')
+                a.color-filter.color-mix(href='?color=14')
           //-   // /dropdown-menu
           // /btn-group
           // /m-top-8 m-bottom-8
@@ -136,19 +136,26 @@ block body
                     | SOLD
                     br
                     | OUT
-                else if product.status == 'sale'
+                else if (product.originPrice && product.price)
                   // label: sale
                   span.label.label-danger SALE
                 else if (sails.moment().diff(sails.moment(product.createdAt), 'days') < 8)
                   // label: new
                   span.label.label-success NEW
 
-
-                a(href='/shop/products/#{product.ProductGm.id}/#{product.id}')
-
-
-                  img.img-full.item-show(src=product.photos && product.photos[0]? product.photos[0] : "http://www.culpwrit.com/wp-content/uploads/2012/09/no11.jpg")
+                - var url
+                - if (reqId)
+                  - url = '?brandId='+reqId                  
+                - else if(dptSubId)
+                  - url = '?dptId='+dptId+'&dptSubId='+dptSubId
+                - else if(dptId)
+                  - url = '?dptId='+dptId
+                - else
+                  - url = ''
+                a(href='/shop/products/#{product.ProductGm.id}/#{product.id}'+ url)
+                  img.img-full.item-show(src=product.photos && product.photos[0]? product.photos[0] : "http://cldup.com/yNNXaYXfBE.jpg")
                   img.img-full.item-hide(src=product.photos && product.photos[1]? product.photos[1] : product.photos[0])
+
               // /item-block
               .item-text-block.m-bottom-8
                 h6.text-muted
@@ -156,8 +163,7 @@ block body
                 h4.m-bottom-2.h4-max-two-hide
                   - var name = product.name ? "(" + product.name + ")" : "";
                   //- a(href='/shop/product?pid=#{product.id}') #{product.ProductGm.name} #{name}
-
-                  a(href='/shop/products/#{product.ProductGm.id}/#{product.id}') #{product.ProductGm.name} #{name}
+                  a(href='/shop/products/#{product.ProductGm.id}/#{product.id}'+ url) #{product.ProductGm.name} #{name}
                 h5
                   if(product.originPrice == undefined || product.originPrice <= 0)
                     | #{UtilService.numberFormat(product.price)}

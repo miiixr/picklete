@@ -1,3 +1,4 @@
+include ../mixins/_product
 extends ../_layout_head
 
 block body
@@ -173,7 +174,8 @@ block body
                   h6.text-muted.text-roboto.letter-spacing-1
                     a(href='/brands/#{product.ProductGm.Brand.id}') #{product.ProductGm.Brand.name}
                   h5.h5-two-hide.m-bottom-2.text-roboto.letter-spacing-1
-                    a(href='../shop/products/#{product.ProductGm.id}/#{product.id}') #{product.name}
+                    a(href='../shop/products/#{product.ProductGm.id}/#{product.id}') 
+                      +productName(product)
                   //- select.form-control.m-bottom-2
                   //-   option(value= 0 ,data-price= 0) 選擇規格
                   //-   each product in additionalPurchaseProductGm.Products

@@ -57,7 +57,7 @@ form.form-horizontal.with-pagination(name="searchProducts", action="/admin/goods
 加入查詢筆數限制下拉選單
 
 ```
-+pagination-limit
++pagination-limit(limit)
 ```
 
 頁數顯示和上下頁按鈕範例（按鈕的重點是 id 必須是 pagination-prev 或 pagination-next）

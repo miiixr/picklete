@@ -255,6 +255,7 @@ module.exports.mail = {
       <br />
       <br />信件內容：
       <br /><p> 你的大名：%(userName)s </p>
+      <br /><p> 你的 Email：%(userEmail)s </p>
       <br /><p> 你的聯絡方式：%(userContact)s </p>
       <br /><p> 你的問題類型：%(userIssue)s </p>
       <br /><p> 你的問題：%(userQuestion)s </p>

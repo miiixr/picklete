@@ -177,22 +177,30 @@ html
         //-   a(href='brands-list') BRANDS
         //- |     
         li.dropdown
-          a.dropdown-toggle(data-toggle='dropdown')
+          a.dropdown-toggle(data-toggle='dropdown', href='#')
             | SHOP
             span.glyphicon.glyphicon-chevron-down.m-left-1
           |       
           ul.dropdown-menu.navmenu-nav(role='menu')
             each dpt in headDpts
+              - _mobileDptId = (dpt.id == 1) ? '' : dpt.id;
               li
-                a(href='/shop/list?dptId='+dpt.id) #{dpt.name}
+                a(href='/shop/list?dptId=' + _mobileDptId) #{dpt.name}
             |         
             li
               a.btn.btn-default(href='/brands/list') #{i18n("brand-list")}
-        |     
-        li
-          a(href='/user/login')
-            span.glyphicon.glyphicon-user.m-right-1
-            | LOGIN
+        | 
+        - if ( ! user) 
+          li
+            a(href='/user/login')
+              span.glyphicon.glyphicon-user.m-right-1
+              | LOGIN
+        - else
+          li
+            a(href='/member/favorite')
+              span.glyphicon.glyphicon-user.m-right-1
+              | MEMBER
+
         |     
         li
           a(href='/user/cart')
@@ -257,6 +265,7 @@ html
     include _layout_footer
 
   script(src='/javascripts/plugin/modernizr.custom.js')
+  script(src='//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js')
   script(src='http://code.jquery.com/jquery-1.9.1.js')
   script(src='/javascripts/plugin/scrolltotop.js')
   // /scrolltotop

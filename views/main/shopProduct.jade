@@ -1,3 +1,4 @@
+include ../mixins/_product
 extends ../_layout_head
 
 block body
@@ -58,14 +59,15 @@ block body
               ol.breadcrumb.p-left-0.m-bottom-8
                 li
                   a(href='/shop/products/') 全部商品
-                if brandId == 0
-                  - var Dpts = productGm.Dpts[0];
+                - if (brandId == 0 && dpt == 0 && dptSub ==0)
+                  | 
+                - else if (dpt != 0)
                   li
-                    a(href='/shop/products/?dptId=#{Dpts.id}') #{Dpts.name} 
-                  - DptSubs = productGm.DptSubs[0];
-                  li
-                    a(href='/shop/products/?dptId=#{Dpts.id}&dptSubId=#{DptSubs.id}') #{DptSubs.name} 
-                else
+                    a(href='/shop/products/?dptId=#{dpt.id}') #{dpt.name}
+                    - if (dptSub != 0)
+                      li
+                        a(href='/shop/products/?dptId=#{dpt.id}&dptSubId=#{dptSub.id}') #{dptSub.name}
+                - else
                   li
                     a(href='/shop/list?brand=#{brand.id}') #{brand.name}
                 - var name = product.name ? "(" + product.name + ")" : "";
@@ -86,8 +88,8 @@ block body
                     h3.text-black.m-bottom-4
                       span.text-danger #{UtilService.numberFormat(product.price)}
                       small.text-line-through.m-left-1#originPrice #{UtilService.numberFormat(product.originPrice)}
-                    h4.text-danger 活動倒數 #{product.promotionCountDown}
-                  
+                    //- h4(class="promo-end text-danger m-bottom-10 countdown", data-end='#{product.discountEndDate}') 活動倒數 
+                    //-   span 
 
                 // /col-sm-10
                 .col-sm-2.col-xs-3
@@ -258,4 +260,6 @@ block body
     // /cbp-so-scroller
 
 block js
+  script(src='/javascripts/common/discountCountdown.js')
   //- script(src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript")
+

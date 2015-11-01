@@ -25,11 +25,11 @@ block body
       .form-group
         label.col-sm-3.col-md-2.control-label 優惠時間
         .col-sm-4.col-md-3
-          input.form-control(type='date', name='startDate', value= sails.moment(shopCode.startDate).format('YYYY-MM-DD'))
+          input.form-control(type='date', placeholder="2015-10-30", name='startDate', value= sails.moment(shopCode.startDate).format('YYYY-MM-DD'))
         .col-sm-1.col-md-1.p-left-0.p-right-0.text-center
           p.form-control-static 至
         .col-sm-4.col-md-3
-          input.form-control(type='date', name='endDate', value= sails.moment(shopCode.endDate).format('YYYY-MM-DD'))
+          input.form-control(type='date', placeholder="2015-10-30", name='endDate', value= sails.moment(shopCode.endDate).format('YYYY-MM-DD'))
         .col-sm-9.col-sm-offset-3.col-md-3.col-md-offset-0
           .checkbox
             label
@@ -83,6 +83,10 @@ block body
               input#optionsRadios2(type='radio', name='sentType', value='specific')
               | 									自動發送指定會員
               a.btn.btn-default.btn-sm(href='#', data-toggle='modal', data-target='#modal-add-member') 點我選擇會員
+          .radio
+            label
+              input#optionsRadios1(type='radio', name='sentType', value='none')
+              |                  不自動發送
           .radio.disabled
             label
               input#optionsRadios3(type='radio', name='sentType', value='beginner', disabled='')

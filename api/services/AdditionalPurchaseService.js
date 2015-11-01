@@ -8,38 +8,44 @@ module.exports = {
       let additionalPurchaseProductGms = [];
       let additionalPurchases = await db.AdditionalPurchase.findAll({
         where: {
-          startDate: {
-            $lt: date
-          },
-          endDate: {
-            $gte: date
-          },
+          $or:[{
+            anyTime: true
+          },{
+            startDate: {
+              $lt: date
+            },
+            endDate: {
+              $gte: date
+            },
+          }],
           activityLimit: {
             $lt: paymentTotalAmount
           }
         },
         include: [{
           model: db.Product,
+          where:{
+            stockQuantity:{
+              $gt: 0
+            }
+          },
           include:{
             model: db.ProductGm,
             include:{
               model: db.Brand,
             }
           }
-        }]
-
+        }],
+        limit: 6
       });
       let additionalProducts = [];
       additionalPurchases.forEach((additional) => {
         additional.Products.forEach((product) => {
           product.originPrice = product.price;
           if(additional.type == 'reduce'){
-            product.price = product.price - additional.reducePrice;
+            product.price = additional.reducePrice;
           }else{
-            if(additional.discount > 10)
-              product.price = product.price * (additional.discount * 0.01);
-            else
-              product.price = product.price * (additional.discount * 0.1);
+            product.price = product.price * additional.discount;
           }
           additionalProducts.push(product);
         });
@@ -47,8 +53,6 @@ module.exports = {
       });
 
       return {additionalProducts,additionalPurchases};
-
-
     } catch (e) {
 
       throw e;
@@ -79,19 +83,16 @@ cartAddAdditionalPurchases: async(additionalPurchasesItems) => {
             }
           }
         });
-        sails.log.info("=== additionalPurchasesItems ===",JSON.stringify(find,null,2));
         find.originPrice = find.Products[0].price;
         if(find.type == 'reduce')
-          find.price = find.originPrice - find.reducePrice;
+          find.price = find.reducePrice;
         else{
-          if(find.discount > 10)
-            find.price = find.originPrice * (find.discount * 0.01);
-          else
-            find.price = find.originPrice * (find.discount * 0.1);
+          find.price = find.originPrice * find.discount;
         }
         buyMoreTotalPrice += find.price ;
         return find;
       });
+      sails.log.info("=== additionalPurchasesItems ===",JSON.stringify(additionalPurchasesItems,null,2));
       return {additionalPurchasesItems,buyMoreTotalPrice};
     } catch (e) {
       throw e;

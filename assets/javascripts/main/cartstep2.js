@@ -69,7 +69,7 @@
 
   var subtotal = 0;
   var totalPrice = 0;
-  var buymore = picklete_cart.buymore;
+  var buymore = picklete_cart.buymore || 0;
   if(buyMoreObject){
     buyMoreObject.forEach(function(item,index){
       buymore += item.price;
@@ -100,6 +100,7 @@
     totalPrice -= discountAmount;
   }
 
+  totalPrice = parseInt(Cookies.getJSON('calcTatalPrice'));
   // count shipping fee and display
   totalPriceDiv.text('$' + totalPrice.formatMoney(0));
 
@@ -137,10 +138,17 @@
     }
 
     // ensure title
-    if($("select[name='order[invoice][type]']").val() == "triplex" && $("input[name='order[invoice][title]']").val() == ""){
-      alert("請輸入公司抬頭");
-      $("input[name='order[invoice][title]']").focus();
-      return;
+    if($("select[name='order[invoice][type]']").val() == "triplex") {
+      if ($("input[name='order[invoice][title]']").val() == "") {
+        alert("請輸入公司抬頭");
+        $("input[name='order[invoice][title]']").focus();
+        return;
+      } 
+      if ($("input[name='order[invoice][taxId]']").val() == "") {
+        alert("請輸入統一編號");
+        $("input[name='order[invoice][taxId]']").focus();
+        return;
+      }
     }
 
     re = /^[09]{2}[0-9]{8}$/;
@@ -174,6 +182,12 @@
 
     console.log('=== postData ===', postData);
 
+    Cookies.remove('shippingType');
+    Cookies.remove('paymentMethod');
+    Cookies.remove('shippingRegion');
+    Cookies.remove('code');
+    Cookies.remove('calcTatalPrice');
+
     $.ajax(
     {
         url : '/api/order',
@@ -182,18 +196,22 @@
         success:function(data, textStatus, jqXHR)
         {
             $(document.body).html(data);
+
         },
         error: function (jqXHR, exception) {
           var err = jQuery.parseJSON(jqXHR.responseText);
 
-          $(this).notifyMe(
-            'top',
-            'cart',
-            '<span style="color:red" class="glyphicon glyphicon-warning m-right-2"></span>'+ err.message,
-            '',
-            300,
-            3000
-          );
+          // $(this).notifyMe(
+          //   'top',
+          //   'cart',
+          //   '<span style="color:red" class="glyphicon glyphicon-warning m-right-2"></span>'+ err.message,
+          //   '',
+          //   300,
+          //   3000
+          // );
+
+          alert(err.message);
+          window.history.go(-1);
 
         }
     });
@@ -236,10 +254,7 @@
 
     var charityNameField =
       '<div class="form-group">' +
-      '  <label class="col-sm-3 control-label">慈善機構<span class="text-danger">*</span></label>' +
-      '  <div class="col-sm-9">' +
-      '    <input type="text" name="order[invoice][charityName]" placeholder="請選擇慈善機構" class="form-control" required />' +
-      '  </div>' +
+      '  <p class="pull-right">※發票將每月隨機捐給各慈善機構，如：家扶基金會、中華社會福利聯合勸募協會等。</p>' +
       '</div>';
 
     var titleField =
@@ -252,7 +267,7 @@
 
     var taxIdField =
       '<div class="form-group">' +
-      '  <label class="col-sm-3 control-label">統一編號</label>' +
+      '  <label class="col-sm-3 control-label">統一編號<span class="text-danger">*</span></label>' +
       '  <div class="col-sm-9">' +
       '    <input type="text" name="order[invoice][taxId]" placeholder="請輸入統一編號" class="form-control" required />' +
       '  </div>' +
@@ -267,9 +282,10 @@
     if(invoiceType == 'triplex')
       invoiceDetail.html(titleField+taxIdField);
 
-    if(invoiceType == 'charity')
+    if(invoiceType == 'charity') {
+      invoiceDetail.html(charityNameField);
       return;
-      // invoiceDetail.html(charityNameField);
+    }
 
   });
 

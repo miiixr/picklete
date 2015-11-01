@@ -11833,3 +11833,7 @@ h4.letter-spacing-1 a.active {
     -webkit-box-shadow: inset 0px -2px 0px 0px #32373C;
     box-shadow: inset 0px -2px 0px 0px #32373C;
 }
+
+.dropdown-backdrop {
+  position: static;
+}

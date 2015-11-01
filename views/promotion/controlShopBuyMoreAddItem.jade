@@ -1,4 +1,5 @@
 extends ../_layout_auth
+include ../mixins/pagination
 
 block body
   h2.m-bottom-6 加價購設定
@@ -33,18 +34,18 @@ block body
       .form-group
         label.col-sm-3.col-md-2.control-label 活動時間
         .col-sm-4.col-md-3
-          input.form-control(type='date',name = 'startDate',value= sails.moment(query.startDate).format('YYYY-MM-DD'))
+          input.form-control(type='date',name = 'startDate', placeholder="2015-10-30", value= sails.moment(query.startDate).format('YYYY-MM-DD'))
         .col-sm-1.col-md-1.p-left-0.p-right-0.text-center
           p.form-control-static 至
         .col-sm-4.col-md-3
-          input.form-control(type='date',name = 'endDate',value= sails.moment(query.endDate).format('YYYY-MM-DD'))
+          input.form-control(type='date',name = 'endDate', placeholder="2015-10-30", value= sails.moment(query.endDate).format('YYYY-MM-DD'))
         .col-sm-9.col-sm-offset-3.col-md-3.col-md-offset-0
           .checkbox
             label
-              if query.restrictionDate
-                input(type='checkbox' name = 'restrictionDate', checked='')
+              if query.anyTime
+                input(type='checkbox' name = 'anyTime', checked='')
               else
-                input(type='checkbox' name = 'restrictionDate')
+                input(type='checkbox' name = 'anyTime')
               |  不限時
       // /form-group
       .form-group
@@ -71,7 +72,7 @@ block body
               // /input-group
       // /form-group
       .m-top-6.text-right
-        a.btn.btn-link.delete-link.btn-lg(href='../../admin/shop-buy-more') 取消
+        a.btn.btn-link.delete-link.btn-lg(href='/admin/shop-buy-more') 取消
         a#createBuyMore.btn.btn-green.btn-lg 確定
       // /text-right
   // /well
@@ -80,13 +81,8 @@ block body
       form.form-inline
         .form-group
           label 顯示
-          select#limit.form-control
-            option(selected=(limit==10)) 10
-            option(selected=(limit==20)) 20
-            option(selected=(limit==30)) 30
-            option(selected=(limit==40)) 40
-            option(selected=(limit==50)) 50
-          label 筆資料（共 #{additionalPurchase.count} 筆）
+          +pagination-limit(limit)
+          label 筆資料（共 #{totalRows} 筆）
         // /form-group
     // /col-md-6
     
@@ -151,17 +147,8 @@ block body
               a.btn.btn-link.delete-link(data-productId=product.id)
                 span.glyphicon.glyphicon-remove
   hr.dashed-line
-  .text-center
-    //
-      pagination-block
-      ==================================================
-    ul.list-inline.m-bottom-0.m-top-1
-      li.border-right-1.p-right-2
-      li
-        a#bonusPrevious(href='#') 上一頁
-      li.border-right-1.p-right-2 #{page + 1} / #{Math.ceil(additionalPurchase.count / limit)}
-      li
-        a#bonusNext(href='#') 下一頁
-  // /text-center
-block js
+  +pagination-simple-pager(page, totalPages)
+  
+block js  
+  script(src='/javascripts/common/pagination.js')
   script(src="/javascripts/admin/addPurchase.js")

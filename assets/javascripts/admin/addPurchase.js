@@ -1,4 +1,4 @@
-$(function() {
+(function($) {
   $('#limit').change(function() {
     location.href='/admin/shop-buy-more-add-item?limit='+$(this).val();
   });
@@ -50,7 +50,7 @@ $(function() {
       return;
     }
 
-    if($("input[name='restrictionDate']")[0].checked == false){
+    if($("input[name='anyTime']")[0].checked == false){
       if($("input[name='startDate']").val()=="" || $("input[name='endDate']").val()==""){
         alert("記得選取活動時間喔");
         return;
@@ -58,8 +58,11 @@ $(function() {
     }
 
     var postData = $("form[name='updateForm']").serializeArray();
+
+    // console.log(postData);
+    // alert(1);
     $.ajax({
-        url : '../../admin/buymoreUpdate',
+        url : '/admin/buymoreUpdate',
         type: "put",
         data : postData,
         success:function()
@@ -87,4 +90,15 @@ $(function() {
     console.log('=== deleteProductId ===', deleteProductId);
 
   });
-});
+
+  // front end hack
+  var _visualDiscountNumber = function () {
+    var disCountNode = $('input[name=discount]');
+    if (disCountNode.val() == undefined || disCountNode.val() === 0)
+      return;
+
+    disCountNode.val(disCountNode.val() * 100);
+  };
+  _visualDiscountNumber();
+
+}(jQuery));

@@ -31,18 +31,18 @@ block body
         label.col-sm-3.col-md-2.control-label 活動起始時間
         .col-sm-9.col-md-5
           if (promotion.endDate)
-            input.form-control(type='datetime-local',name='startDate',form='shopDiscount',value=promotion.startDate)
+            input.form-control(type='datetime-local', placeholder="2015-10-30 12:00:00 AM", name='startDate',form='shopDiscount',value=promotion.startDate)
           else
-            input.form-control(type='datetime-local',name='startDate',form='shopDiscount',disabled)
+            input.form-control(type='datetime-local', placeholder="2015-10-30 12:00:00 AM" ,name='startDate',form='shopDiscount',disabled)
         .col-sm-1.col-md-1.p-left-0.p-right-0.text-center
 
       .form-group
         label.col-sm-3.col-md-2.control-label 活動結束時間
         .col-sm-9.col-md-5
           if (promotion.endDate)
-            input.form-control(type='datetime-local',name='endDate',form='shopDiscount',value=promotion.endDate)
+            input.form-control(type='datetime-local', placeholder="2015-10-30 12:00:00 AM" ,name='endDate',form='shopDiscount',value=promotion.endDate)
           else
-            input.form-control(type='datetime-local',name='endDate',form='shopDiscount',disabled)
+            input.form-control(type='datetime-local', placeholder="2015-10-30 12:00:00 AM" ,name='endDate',form='shopDiscount',disabled)
       
       .form-group
         label.col-sm-3.col-md-2.control-label
@@ -94,10 +94,10 @@ block body
   // /well
   .row
     .col-md-6
-      form.form-inline
-        .form-group
-          label 顯示
-            +pagination-limit
+      //- form.form-inline
+      //-   .form-group
+      //-     label 顯示
+      //-       +pagination-limit
             
     .col-md-6.desktop-text-right
       a#discountAddItem.btn.btn-green(href='promotion/discountAddItem') 加入折扣商品

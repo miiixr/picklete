@@ -45,10 +45,10 @@ $(function() {
       }
     });
 
-    if($("input[name='productIds[]']").length == 0 ){
-      alert("記得選取折扣項目喔");
-      return false;
-    }
+    // if($("input[name='productIds[]']").length == 0 ){
+    //   alert("記得選取折扣項目喔");
+    //   return false;
+    // }
 
     if($("input[name='title']").val()==""){
       alert("記得輸入活動名稱喔");
@@ -93,4 +93,17 @@ $(function() {
     console.log('=== deleteProductId ===', deleteProductId);
 
   });
+
+
+
+  // front end hack
+  var _visualDiscountNumber = function () {
+    var disCountNode = $('input[name=discount]');
+    if (disCountNode.val() == undefined || disCountNode.val() === 0)
+      return;
+
+    disCountNode.val(disCountNode.val() * 100);
+  };
+  _visualDiscountNumber();
+    
 });

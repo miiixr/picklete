@@ -9,7 +9,7 @@ module.exports = (req, res, next) ->
 
   # get user data
   res.locals.user = UserService.getLoginUser(req)
-  console.log("user--->",res.locals.user);
+  # console.log("user--->",res.locals.user);
 
   try
     res.locals.gaTrackingID = sails.config.googleAnalytics.trackingID;
@@ -25,7 +25,7 @@ module.exports = (req, res, next) ->
       db.Dpt.findAll({order: 'weight',})
       .then (Dpts) ->
         res.locals.headDpts = Dpts;
-        console.log("headDpts--->",res.locals.headDpts);
+        # console.log("headDpts--->",res.locals.headDpts);
         next()
   catch error
     console.error "==== without Company Data!! ===="

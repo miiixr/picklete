@@ -2,6 +2,17 @@
 
   var FAV_KEY = "picklete_fav";
 
+  if ('ontouchstart' in document.documentElement) {
+    // if mobile we we use a backdrop because click events don't delegate
+    $('<div class="dropdown-backdrop"/>').insertAfter($(this)).on('click', clearMenus)
+  }
+
+  $('#yourId').on('hidden.bs.dropdown', function (){
+    $(this).click(function (event) {
+       $('.dropdown-toggle').dropdown('toggle'); 
+    });
+  });
+
   // add to favorite
   $(".container").on("click", ".item-like, .label-like", function (e) {
     e.preventDefault();
@@ -118,11 +129,14 @@
     else
       expressable = true;
 
+    var stockQuantity = $("input[type='text'][min='1']").attr('max');
+
     console.log('=== picklete_cart ===', picklete_cart);
     console.log('=== productId ===', productId);
     console.log('=== quantity ===', quantity);
     console.log('=== price ===', price);
     console.log('=== packable ===',packable);
+    console.log('=== stockQuantity ===',stockQuantity);
 
     var addProduct = {
       productGmId: productGmId,
@@ -135,7 +149,8 @@
       photos: photos,
       originPrice: originPrice,
       packable: packable,
-      expressable: expressable
+      expressable: expressable,
+      stockQuantity: stockQuantity
     }
 
     // check product is added, it will added to same data
@@ -174,7 +189,9 @@
 
     picklete_cart.orderItems.forEach(function(orderItem){
       var price = parseInt(orderItem.price, 10);
-      
+      if(orderItem.stockQuantity <= 0){
+        alert(orderItem.name + '商品數項已售完，請至購物車修改');
+      }
       var liOrderItem =
         '<li>' +
         '  <div class="row">' +
@@ -187,7 +204,7 @@
 
         '    <div class="col-xs-8 p-left-0">' +
         '      <h6 class="text-muted"><a href="/brands">'+orderItem.brandname+'</a></h6>' +
-        '      <h5><a href="/shop/products/'+orderItem.productGmId+'/'+orderItem.ProductId+'">'+orderItem.brand+"-"+orderItem.name+'</a></h5>' +
+        '      <h5><a href="/shop/products/'+orderItem.productGmId+'/'+orderItem.ProductId+'">' + orderItem.name + '</a></h5>' +
         '      <h5>$ '+ price.formatMoney() +'</h5>' +
         '    </div>' +
         '  </div>' +

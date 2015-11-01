@@ -4,7 +4,7 @@ module.exports = {
       let selectionActivities = await SelectionActiveService.getModel();
       let sliders = await db.Slider.findAll();
       let topicActivities = await TopicActiveService.getModel();
-      let flashPromotions = await PromotionService.getModel();
+      let flashPromotions = await PromotionService.getCurrentFlashPackage();
       res.view("main/index", {
         selectionActivities,
         topicActivities,

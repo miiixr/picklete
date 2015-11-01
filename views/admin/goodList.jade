@@ -99,14 +99,14 @@ block body
           .form-group
             label.col-md-4.control-label #{i18n('filing-date')}
             .col-md-8
-              input.form-control(type='date', name='dateFrom', value=query.dateFrom?query.dateFrom:null)
+              input.form-control(type='date', name='dateFrom', placeholder="2015-10-30", value=query.dateFrom?query.dateFrom:null)
           // /form-group
         // /col-md-4
         .col-md-4
           .form-group
             label.col-md-4.control-label.text-center #{i18n('until')}
             .col-md-8
-              input.form-control(type='date', name='dateEnd', value=query.dateEnd?query.dateEnd:null)
+              input.form-control(type='date', name='dateEnd', placeholder="2015-10-30", value=query.dateEnd?query.dateEnd:null)
           // /form-group
         // /col-md-4
         // /col-md-7
@@ -121,7 +121,7 @@ block body
       form.form-inline
         .form-group
           label 顯示
-          +pagination-limit
+          +pagination-limit(limit)
           label 筆資料（共 #{totalRows} 筆）
     .col-md-6.desktop-text-right
       //- a.btn.btn-green(href='#', id='btnSave') 儲存變更

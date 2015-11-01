@@ -215,12 +215,12 @@ block body
             .col-sm-9
               .input-group.input-group-count.input-group-sm.max-width-100
                 span.input-group-btn
-                  button.btn.btn-default.btn-number(type='button', disabled='disabled', data-type='minus', data-field='quant[1]')
+                  button.btn.btn-default.btn-number(type='button', data-type='minus', data-field='good[0][stockQuantity]')
                     span.glyphicon.glyphicon-minus
                 // /input-group-btn
-                input.form-control.input-number.text-center(type='text', name="good[0][stockQuantity]", value='999', min='1', max='999', form='goodForm')
+                input.form-control.input-number.text-center(type='text', name="good[0][stockQuantity]", value='1', min='0', max='999', form='goodForm')
                 span.input-group-btn
-                  button.btn.btn-default.btn-number(type='button', data-type='plus', data-field='quant[1]')
+                  button.btn.btn-default.btn-number(type='button', data-type='plus', data-field='good[0][stockQuantity]')
                     span.glyphicon.glyphicon-plus
                 // /input-group-btn
               // /input-group

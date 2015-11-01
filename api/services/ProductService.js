@@ -407,7 +407,7 @@ module.exports = {
               id: query.dptId
             }
           });
-          console.log('======== dpt', dpt);
+          // console.log('======== dpt', dpt);
           if(dpt.name == '特別企劃'){
             if (query.dptSubId > 0 ) {
               productDptSubConfig.where = {
@@ -486,7 +486,7 @@ module.exports = {
       }
       // ================ merge queryObj ================
 
-      console.log('===== productDptSubConfig', productDptSubConfig);
+      // console.log('===== productDptSubConfig', productDptSubConfig);
       queryObj = {
         subQuery: false,
         where: ProductQueryObj,
@@ -520,7 +520,7 @@ module.exports = {
           sort = [[db.ProductGm,db.LikesCount,'likesCount','DESC']];
           break;
         case 'newest':
-          sort = 'createdAt';
+          sort = 'createdAt DESC';
           break;
         case 'priceHtoL':
           sort = 'price DESC';
@@ -532,6 +532,8 @@ module.exports = {
 
       if(sort)
         queryObj.order = sort;
+      else
+        queryObj.order = 'createdAt DESC';
 
 
       sails.log.info("=== productQuery queryObj ===",queryObj);
