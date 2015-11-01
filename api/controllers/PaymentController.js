@@ -126,13 +126,14 @@ let PaymentController = {
       if(!order)
         throw new Error(`${find} 找不到訂單!!`);
 
-      if (!(sails.config.environment === 'development' || sails.config.environment === 'test' || sails.config.allpay.debug)) {
-        if(checkMacValue != data.CheckMacValue) {
-          // order mark error
-          throw new Error(`CheckMacError!!`);
-        }
+      // @TODO: have to fixed checkMac issue
+      // if (!(sails.config.environment === 'development' || sails.config.environment === 'test' || sails.config.allpay.debug)) {
+      //   if(checkMacValue != data.CheckMacValue) {
+      //     // order mark error
+      //     throw new Error(`CheckMacError!!`);
+      //   }
           
-      }
+      // }
 
 
       order.allPayRtnCode = data.RtnCode;
