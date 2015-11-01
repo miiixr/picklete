@@ -346,9 +346,10 @@ module.exports = {
 
       mailSendConfig.html = sprintf(mailSendConfig.html, {
         userName: user.name,
+        userEmail: user.email,
         userContact: user.contact,
         userIssue: user.issue,
-        userQuestion: user.question,
+        userQuestion: user.question.replace(/\n/g, '<br>'),
         storeName: sails.config.store.name,
         serviceMail: sails.config.store.serviceMail,
       });
