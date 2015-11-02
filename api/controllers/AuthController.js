@@ -110,6 +110,7 @@ AuthController = {
           } catch (e) {
             reference = { path : "" };
           }
+          console.log("!!!!!!!!!!!!!!!!",req.xhr);
           if (req.xhr)
             return res.ok({
               status: "fail",
@@ -140,7 +141,6 @@ AuthController = {
         }
 
         console.log('=== user.Role ===', user);
-
         if (req.xhr)
           return res.ok({
             status: "ok",
