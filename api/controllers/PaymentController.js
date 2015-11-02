@@ -161,6 +161,13 @@ let PaymentController = {
       result.bankAccountId = data.vAccount;
       result.order = order;
 
+      if (result.allPayPaymentType.toLowerCase().indexOf("credit") > -1) {
+        result.paymentMethod = "信用卡 / 付款狀態：已完成付款";
+      } else {
+        result.paymentMethod = "ATM繳款/ " + result.bankId + " 帳號 " + result.bankAccountId;
+      }
+
+
       let messageConfig = await CustomMailerService.orderConfirm(result);
       let message = await db.Message.create(messageConfig);
       await CustomMailerService.sendMail(message);
