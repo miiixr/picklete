@@ -69,10 +69,11 @@ let PaymentController = {
       if(!order)
         throw new Error(`${find} 嚴重錯誤!!付款後找不到訂單!!`);
 
-      if (!(sails.config.environment === 'development' || sails.config.environment === 'test'|| sails.config.allpay.debug)) {
-        if(checkMacValue != data.CheckMacValue)
-          throw new Error(`CheckMacError!!`);
-      }
+      // if (!(sails.config.environment === 'development' || sails.config.environment === 'test'|| sails.config.allpay.debug)) {
+      //   if(checkMacValue != data.CheckMacValue)
+      //     throw new Error(`CheckMacError!!`);
+      // }
+
       order.TradeNo = data.TradeNo;
       order.allPayRtnCode = data.RtnCode;
       order.allPayRtnMsg = data.RtnMsg;
