@@ -314,6 +314,16 @@ module.exports.routes = {
     }
   }
 
+  'get /api/order/cancel/:id': {
+    controller: "OrderController",
+    action: "orderCancel",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+
+
   'get /api/order/sync': {
     controller: "OrderController",
     action: "sync",

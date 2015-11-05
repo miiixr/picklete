@@ -297,13 +297,27 @@ module.exports.createTestData = async ({createRoleUser, createNewBuyer}) => {
       return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
   };
 
+
+  var shopcode = {
+    title: 'test',
+    code: 'test',
+    autoRandomCode: 'off',
+    startDate: '2015-10-01',
+    endDate: '2016-12-14',
+    type: 'price',
+    description: 1000,
+    restriction: 10,
+    sentType: 'none'
+  };
+  await db.ShopCode.create(shopcode);
+
   for (var i=0; i<50; i++) {
     var shopcode = {
         title: '測試'+i,
         code: '12345678901234567890',
         autoRandomCode: 'on',
         startDate: '2015-10-01',
-        endDate: '2015-10-14',
+        endDate: '2015-12-14',
         type: 'price',
         description: 99,
         restriction: 999,

@@ -173,6 +173,8 @@ let ShopController = {
       count = await count.save();
 
       product.PageViewId = count.id;
+
+      // have some error message.
       await product.save();
 
       productGm = productGm.dataValues;

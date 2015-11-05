@@ -133,7 +133,8 @@ OrderController = {
         }
       });
       if (!order) {
-        throw ('order not found')
+        res.serverError('order not found');
+        throw ('order not found');
       }
       order.paymentIsConfirmed = true;
       order.paymentConfirmDate = req.body.paymentConfirmDate;
@@ -228,6 +229,57 @@ OrderController = {
       let {message} = e;
       let success = false;
       return res.serverError({message, success});
+    }
+  },
+
+  orderCancel: async function(req, res) {
+    var id = req.query.id;
+    var status = req.query.status;
+
+    if (status !== "orderCancel" || id == 0) {
+      let message = 'status error';
+      let success = false;
+      return res.json(500,{message, success});
+    }
+
+
+    try {
+      // update order status
+      let orderData = await db.Order.findOne({
+        where: {serialNumber: id},
+        include: [
+          {
+            model: db.User
+          }, {
+            model: db.Shipment
+          }, {
+            model: db.OrderItem
+          },
+          db.Invoice
+        ]
+      });
+
+      if (! orderData)
+        return res.json(500,{success: false});
+
+      orderData.status = status;
+      await orderData.save();
+
+      // send mail to user
+      let messageConfig = await CustomMailerService.orderCancel(orderData);
+
+      let message = await db.Message.create(messageConfig);
+      await CustomMailerService.sendMail(message);
+      return res.json({
+        result: true
+      });
+
+
+    } catch (e) {
+      console.error(e.stack);
+      let {message} = e;
+      let success = false;
+      return res.json(500,{message, success});
     }
   },
 

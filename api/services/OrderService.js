@@ -266,9 +266,12 @@ var self = module.exports = {
         }
         let shopCode = await ShopCodeService.checkCode(shopCodeData.code);
         if(shopCode){
+          shopCodeData.user = buyer;
           let shopCodeDiscount = await ShopCodeService.use(shopCodeData);
           thisOrder.paymentTotalAmount = shopCodeDiscount.price;
           thisOrder.ShopCodeId = shopCode.id;
+
+          ShopCodeService.expendCode(shopCodeDiscount.code, buyer);
         }
       }
       // 計算加價購
