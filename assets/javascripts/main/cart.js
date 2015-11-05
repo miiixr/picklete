@@ -8,6 +8,8 @@
   var discountAmountDiv = $("#discountAmount");
   var quantityVal;
 
+  var isMobile = ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) ? true : false;
+
   var subtotal = 0;
   var totalPrice = 0;
   var buymore = parseInt(buymoreDiv.text(),10) || 0;
@@ -103,6 +105,11 @@
 
   var cartViewerInit = function() {
     // console.log('==== picklete_cart ==>',picklete_cart);
+
+
+    if (! picklete_cart || ! picklete_cart.orderItems) {
+      return;
+    }
 
     picklete_cart.orderItems.forEach(function(orderItem, index){
 
@@ -320,6 +327,11 @@
             if(data.loginStatus){
               window.location.replace("/user/cart-step-2");
             }else{
+              if (isMobile) {
+                alert('請先登入帳號密碼')
+                return location.href='/user/login';
+              }
+                
               $('#modal-login').modal('show')
             }
           }

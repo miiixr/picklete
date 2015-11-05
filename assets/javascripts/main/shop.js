@@ -2,16 +2,10 @@
 
   var FAV_KEY = "picklete_fav";
 
-  if ('ontouchstart' in document.documentElement) {
-    // if mobile we we use a backdrop because click events don't delegate
-    $('<div class="dropdown-backdrop"/>').insertAfter($(this)).on('click', clearMenus)
-  }
-
-  $('#yourId').on('hidden.bs.dropdown', function (){
-    $(this).click(function (event) {
-       $('.dropdown-toggle').dropdown('toggle'); 
-    });
-  });
+  // if ('ontouchstart' in document.documentElement) {
+  //   // if mobile we we use a backdrop because click events don't delegate
+  //   $('<div class="dropdown-backdrop"/>').insertAfter($(this)).on('click', clearMenus)
+  // }
 
   // add to favorite
   $(".container").on("click", ".item-like, .label-like", function (e) {
@@ -235,16 +229,16 @@
 
   }
 
-  dropdownCartInit();
-  if($("#verification").attr("data-verification")){
-    $(this).notifyMe(
-      'top',
-      'cart',
-      '<span class="glyphicon glyphicon-ok-circle m-right-2"></span>帳號已開通',
-      '',
-      500,
-      3000
-    );
-  }
+  // dropdownCartInit();
+  // if($("#verification").attr("data-verification")){
+  //   $(this).notifyMe(
+  //     'top',
+  //     'cart',
+  //     '<span class="glyphicon glyphicon-ok-circle m-right-2"></span>帳號已開通',
+  //     '',
+  //     500,
+  //     3000
+  //   );
+  // }
 
 }(jQuery));
