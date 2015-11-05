@@ -495,6 +495,40 @@ let UserController = {
       return res.serverError(error);
     }
   },
+  controlAdminMember: async(req, res) => {
+    
+    let user = await db.User.findOne({
+      where :{ 
+        RoleId :2
+      }
+    });
+
+    let passport = await db.Passport.find({where: {UserId: user.id}});
+    user.password = passport.password;
+    user.passwordAgain = passport.password;
+
+    console.log(user);
+    if (req.method=='GET') {
+      return res.view("admin/adminSet",user);
+    }
+
+    let updateUser = req.body;
+      
+    if(updateUser.password != passport.password){
+      passport.password = updateUser.password;
+      await passport.save()
+    }
+
+    let updateUserKeys = Object.keys(updateUser);
+
+    updateUserKeys.forEach((key)=>{
+      if(typeof(user[key]) != undefined) user[key] = updateUser[key];
+    });
+
+    await user.save();
+
+    return res.view("admin/adminSet",user);
+  },
   controlMemberDetail: async function(req, res) {
     try {
       res.view("user/controlMemberDetail", {
