@@ -45,7 +45,37 @@ module.exports = {
 
   },
 
-  use: async ({code, price}) => {
+  expendCode: async (code, buyer) => {
+    try {
+      let shopcode = await db.ShopCode.findOne({
+        where:{
+          code: code,
+        }
+      });
+
+      // console.log('---- shop code query, expendCode -----')
+      // console.log(shopcode);
+
+      // console.log('---- user data, expendCode -----')
+      // console.log(buyer);
+
+      let user = await db.User.findOne({
+        where:{
+          id: buyer.id
+        }
+      });
+
+      // let result = await shopcode.setUsers(user);
+      user.setShopCodes(shopcode.dataValues.id);
+      console.log(' ---- save shop code usage ----');
+      return true;
+    } catch (e) {
+      console.error(e);
+      return false;
+    }
+  },
+
+  use: async ({code, price, user}) => {
     try {
       let result = await db.ShopCode.findOne({
         where:{
@@ -65,6 +95,30 @@ module.exports = {
           }
         }
       });
+
+      if ( ! user) {
+        throw new Error("使用優惠碼前請先登入");
+      }
+
+      let used = await await db.User.findOne({
+        where:{
+          id: user.id
+        },
+        include: [{
+          model: db.ShopCode,
+          where: {
+            code: code
+          }
+        }]
+      });
+
+      // console.log('-- used --');
+      // console.log(used);
+
+      if (used) {
+        throw new Error("您已經使用過此優惠碼");
+      }
+
       let discountAmount;
       if(result){
         let originPrice = price;

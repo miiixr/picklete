@@ -41,6 +41,7 @@ module.exports = function(sequelize, DataTypes) {
       associate: (models) => {
         ShopCode.hasMany(models.User);
         ShopCode.hasMany(models.Order);
+        ShopCode.belongsToMany(models.User, {through: 'userShopCode'});
       }
     }
   });

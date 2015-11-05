@@ -181,6 +181,10 @@ let ShopCodeController = {
   checkCode: async (req, res )=>{
     try {
       let data = req.query;
+      // get current user
+      let loginUser = UserService.getLoginUser(req);
+      data.user = loginUser;
+
       let check = await ShopCodeService.use(data);
       return res.ok(check);
     } catch (e) {

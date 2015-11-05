@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) ->
     forgotToken: DataTypes.STRING
     verification:
       type: DataTypes.BOOLEAN
-      # for hack the verify part
+      # for hack the verify partπ
       defaultValue: true
     admin:
       type: DataTypes.BOOLEAN
@@ -43,6 +43,7 @@ module.exports = (sequelize, DataTypes) ->
     User.belongsTo models.Role
     User.belongsToMany(models.Like, {through: 'UserLike'});
     User.belongsToMany(models.Product, {through: 'UserFavorite'})
+    User.belongsToMany(models.ShopCode, {through: 'userShopCode'});
     return
   )
   return User
