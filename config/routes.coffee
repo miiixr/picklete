@@ -127,8 +127,8 @@ module.exports.routes = {
   #'get /admin/qa-type' : 'UserController.controlQaType'
   #'get /admin/qa-add' : 'UserController.controlQaAdd'
   'get /admin/members' : 'UserController.controlMembers'
-  'get /admin/adminSet' : 'UserController.controlAdminMember'
-  'post /admin/adminSet' : 'UserController.controlAdminMember'
+  'get /admin/adminSet' : 'UserController.showAdminInformation'
+  'post /admin/adminSet' : 'UserController.updateAdminInformation'
   'get /admin/member-detail/:id' : 'UserController.controlMemberDetail'
 
   # promotions

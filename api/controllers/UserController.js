@@ -495,22 +495,30 @@ let UserController = {
       return res.serverError(error);
     }
   },
-  controlAdminMember: async(req, res) => {
+  showAdminInformation: async(req, res) => {
     
     let user = await db.User.findOne({
       where :{ 
-        RoleId :2
+        email :'admin@gmail.com'
       }
     });
 
     let passport = await db.Passport.find({where: {UserId: user.id}});
     user.password = passport.password;
     user.passwordAgain = passport.password;
+    return res.view("admin/adminSet",{user});
+  },
+  updateAdminInformation: async(req, res) => {
 
-    console.log(user);
-    if (req.method=='GET') {
-      return res.view("admin/adminSet",user);
-    }
+    let user = await db.User.findOne({
+      where :{ 
+        email :'admin@gmail.com'
+      }
+    });
+
+    let passport = await db.Passport.find({where: {UserId: user.id}});
+    user.password = passport.password;
+    user.passwordAgain = passport.password;
 
     let updateUser = req.body;
       
@@ -524,10 +532,11 @@ let UserController = {
     updateUserKeys.forEach((key)=>{
       if(typeof(user[key]) != undefined) user[key] = updateUser[key];
     });
-
+    
     await user.save();
 
-    return res.view("admin/adminSet",user);
+    return res.view("admin/adminSet",{user});
+
   },
   controlMemberDetail: async function(req, res) {
     try {
