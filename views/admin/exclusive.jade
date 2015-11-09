@@ -17,7 +17,7 @@ block body
       case activity.type
         when 'oneLong'
           - activity.Images[0] = activity.Images[0] || { url: "", path: "http://fakeimg.pl/1140x166", openWindow: false};
-          li.well.control-well.p-10-20.m-bottom-8.type1
+          li.well.control-well.p-10-20.m-bottom-8.type1.none-style
             input(type='hidden', name='actives[#{index}][type]', value=activity.type, form='activesData')
             input(type='hidden', name='actives[#{index}][weight]',class='activityWeigth', form='activesData')
             .row
@@ -67,7 +67,7 @@ block body
 
         when 'oneBig'
           - activity.Images[0] = activity.Images[0] || { url: "", path: "http://fakeimg.pl/1140x363", openWindow: false};
-          li.well.control-well.p-10-20.m-bottom-8.type2
+          li.well.control-well.p-10-20.m-bottom-8.type2.none-style
             input(type='hidden', name='actives[#{index}][type]', value=activity.type, form='activesData')
             input(type='hidden', name='actives[#{index}][weight]',class='activityWeigth', form='activesData')
             .row
@@ -117,7 +117,7 @@ block body
           // /well
 
         when 'two'
-          li.well.control-well.p-10-20.m-bottom-8.type3
+          li.well.control-well.p-10-20.m-bottom-8.type3.none-style
             input(type='hidden', name='actives[#{index}][type]', value=activity.type, form='activesData')
             input(type='hidden', name='actives[#{index}][weight]',class='activityWeigth', form='activesData')
             .row
@@ -168,7 +168,7 @@ block body
           // /well
 
         when 'three'
-          li.well.control-well.p-10-20.m-bottom-8.type4
+          li.well.control-well.p-10-20.m-bottom-8.type4.none-style
             input(type='hidden', name='actives[#{index}][type]', value=activity.type, form='activesData')
             input(type='hidden', name='actives[#{index}][weight]',class='activityWeigth', form='activesData')
             .row
@@ -300,7 +300,7 @@ block body
 
     // template
     script(type='text/template', id='type1')
-      li.well.control-well.p-10-20.m-bottom-8.type1
+      li.well.control-well.p-10-20.m-bottom-8.type1.none-style
         input(type='hidden', name='actives[{index}][type]', value='oneLong', form='activesData')
         input(type='hidden', name='actives[{index}][weight]',class='activityWeigth', form='activesData')
         .row
@@ -349,7 +349,7 @@ block body
       // /well
 
     script(type='text/template', id='type2')
-      li.well.control-well.p-10-20.m-bottom-8.type2
+      li.well.control-well.p-10-20.m-bottom-8.type2.none-style
         input(type='hidden', name='actives[{index}][type]', value='oneBig', form='activesData')
         input(type='hidden', name='actives[{index}][weight]',class='activityWeigth', form='activesData')
         .row
@@ -399,7 +399,7 @@ block body
       // /well
 
     script(type='text/template', id='type3')
-      li.well.control-well.p-10-20.m-bottom-8.type3
+      li.well.control-well.p-10-20.m-bottom-8.type3.none-style
         input(type='hidden', name='actives[{index}][type]', value='two', form='activesData')
         input(type='hidden', name='actives[{index}][weight]',class='activityWeigth', form='activesData')
         .row
@@ -450,7 +450,7 @@ block body
       // /well
 
     script(type='text/template', id='type4')
-      li.well.control-well.p-10-20.m-bottom-8.type4
+      li.well.control-well.p-10-20.m-bottom-8.type4.none-style
         input(type='hidden', name='actives[{index}][type]', value='three', form='activesData')
         input(type='hidden', name='actives[{index}][weight]',class='activityWeigth', form='activesData')
         .row
