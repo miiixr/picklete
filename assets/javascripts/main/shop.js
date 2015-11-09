@@ -210,7 +210,6 @@
 
     });
 
-
     var liEnd =
       '<li>' +
       '  <div class="row">' +
@@ -222,14 +221,10 @@
       '</li>';
 
     dropdownCart.append(liEnd);
+  };
 
+  dropdownCartInit();
 
-    console.log('=== dropdownCartInit finish ===');
-
-
-  }
-
-  // dropdownCartInit();
   // if($("#verification").attr("data-verification")){
   //   $(this).notifyMe(
   //     'top',
