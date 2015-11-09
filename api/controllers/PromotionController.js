@@ -17,7 +17,7 @@ let PromotionController = {
       });
       return res.view('promotion/controlShopDiscount', {
         promotions,
-        pageName: "shop-discount",
+        pageName: "/admin/shop-discount",
         limit: limit,
         page: page,
         totalPages: Math.ceil(promotions.count / limit),
@@ -140,7 +140,7 @@ let PromotionController = {
       let limit = await pagination.limit(req);
       let page = await pagination.page(req);
       let offset = await pagination.offset(req);
-      
+
       let brands = await db.Brand.findAll();
 
       if(query.keyword)
@@ -478,7 +478,7 @@ let PromotionController = {
   controlShopReportForm: async (req, res) => {
     let dateList = await ReportService.list();
     res.view('promotion/controlShopReportForm',{
-      pageName: "shop-report-form",
+      pageName: "/admin/shop-report-form",
       dateList: dateList
     });
   },
