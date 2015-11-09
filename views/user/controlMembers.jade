@@ -1,4 +1,5 @@
 extends ../_layout_auth
+include ../mixins/pagination
 
 block body
   .row
@@ -13,8 +14,7 @@ block body
   #collapse-member.collapse.in
     .well.control-well.p-30.m-bottom-8
       form.form-horizontal.with-pagination(name="searchUsers", action="members", method="get")
-        input(type='hidden', name='page', value=query.page?query.page:0)
-        input(type='hidden', name='limit', value=limit)
+        +pagination-fields(page, totalPages, limit)
         .row.row-m
           .col-md-4
             .form-group
@@ -62,12 +62,7 @@ block body
       form.form-inline
         .form-group
           label 顯示
-          select#pagination-limit.form-control
-            option(selected=(limit==10)) 10
-            option(selected=(limit==20)) 20
-            option(selected=(limit==30)) 30
-            option(selected=(limit==40)) 40
-            option(selected=(limit==50)) 50
+          +pagination-limit(limit)
           label 筆資料（共 #{totalRows} 筆）
         // /form-group
     // /col-md-6
@@ -111,17 +106,7 @@ block body
             a.btn.btn-link(href='member-detail/'+member.id)
               span.glyphicon.glyphicon-plus-circle
   hr.dashed-line
-  .text-center
-    //
-      pagination-block
-      ==================================================
-    ul.list-inline.m-bottom-0.m-top-1
-      li.border-right-1.p-right-2
-        a(href='#' id='pagination-prev') 上一頁
-      li.border-right-1.p-right-2 #{page + 1} / #{totalPages}
-      li
-        a(href='#' id='pagination-next') 下一頁
-  // /text-center
+  +pagination-simple-pager(page, totalPages)
   
   block js
     script(src='/javascripts/common/pagination.js')
