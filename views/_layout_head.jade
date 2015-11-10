@@ -7,7 +7,7 @@ html
     // Mobile device set
     meta(name='viewport', content='width=device-width, initial-scale=1.0', data-gatracking-id="#{locals.gaTrackingID}")
     // Fav and touch icons
-    link(rel='shortcut icon', href='#{company.avatar}')
+    link(rel='shortcut icon', href='/images/ico/favicon.ico', type='image/x-icon')
     // Style
     link(href='/stylesheets/bootstrap.css', media='screen', rel='stylesheet', type='text/css')
     | &#x9;
@@ -200,12 +200,18 @@ html
             a(href='/member/favorite')
               span.glyphicon.glyphicon-user.m-right-1
               | MEMBER
-
         |     
         li
           a(href='/user/cart')
             span.glyphicon.glyphicon-shopping-cart.m-right-1
             | CART
+
+        - if (user) 
+          li
+              a(href='/logout')
+                span.glyphicon.glyphicon-user.m-right-1
+                | LOGOUT
+
         |     
         li
           .input-group.m-bottom-2.m-top-2
