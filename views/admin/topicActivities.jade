@@ -6,6 +6,7 @@ block body
   hr.dashed-line
   form#ActivitiesData(action='/admin/topicActivities', method='POST')
     .form-group
+    - if (activities[0])
       - var title = activities[0].title? activities[0].title : ''
       input#topicTitle.form-control(type='text', placeholder='請輸入主題活動標題', name='title', value='#{title}', required="required")
       // /form-group

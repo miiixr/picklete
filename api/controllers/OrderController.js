@@ -443,7 +443,7 @@ OrderController = {
     };
 
     let orders = await db.Order.findAll(queryObj);
-    console.log(orders.item);
+    console.log(orders.Shipment);
     return res.view('admin/print',{
       orders
     });
