@@ -1,0 +1,12 @@
+extends ../_layout_auth
+block body
+  .container
+    .m-top-6.m-bottom-10
+      .row
+        form.col-md-8(action='/admin/adminSet', method='post')
+          include ./_form
+          .row
+            .col-sm-4.col-sm-offset-4
+              button.btn.btn-black.border-radius-circle.btn-block(type='submit') 確認修改
+block js
+
