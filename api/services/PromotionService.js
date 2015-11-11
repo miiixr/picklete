@@ -57,8 +57,15 @@ module.exports = {
 
       if(promotion.discount =='')
         delete promotion.discount;
-      if(promotion.price=='')
+
+      if(promotion.price=='') {
         delete promotion.price;
+
+        // make integer be a discount 
+        var count = promotion.discount.toString().length;
+        var discount = (count > 1) ? parseInt(promotion.discount, 10) / 100 : parseInt(promotion.discount, 10) / 10;
+        promotion.discount = discount;
+      }
 
       // create promotion
       let createdPromotion = await db.Promotion.create(promotion);
@@ -138,26 +145,31 @@ module.exports = {
       updatePromoiton.type = promotion.type;
       updatePromoiton.startDate = promotion.startDate;
       updatePromoiton.endDate = promotion.endDate;
-      if(promotion.discount == '' || promotion.discount==100){
-        updatePromoiton.discount = 100;
-      }
-      else{
-        updatePromoiton.discount = promotion.discount;
-      }
 
-      if(promotion.price == '' || promotion.price == 0){
-        updatePromoiton.price = 0;
-      }
-      else{
+      // when discount is null, process price
+      if ( ! promotion.discount || promotion.discount == '') {
+        updatePromoiton.discount = null;
+
         updatePromoiton.price = promotion.price;
       }
+
+      // when price is null, process discount
+      if ( ! promotion.price || promotion.price == '') {
+        updatePromoiton.price = null;
+
+        // make integer be a discount 
+        var count = promotion.discount.toString().length;
+        var discount = (count > 1) ? parseInt(promotion.discount, 10) / 100 : parseInt(promotion.discount, 10) / 10;
+        promotion.discount = discount;
+
+        updatePromoiton.discount = promotion.discount;
+      }
+      
       updatePromoiton.discountType = promotion.discountType;
       updatePromoiton.coverPhoto = promotion.coverPhoto;
 
-
       await updatePromoiton.save();
       await updatePromoiton.setProducts(promotion.productIds);
-
 
       return updatePromoiton;
     } catch (e) {
@@ -195,14 +207,18 @@ module.exports = {
       let productIds = products.map((product) => product.id)
 
       let findPromotions = await db.Promotion.findAll({
-        where:{
+        $or: [{
           startDate: {
             lt: date
           },
           endDate: {
             gte: date
-          }
-        },
+          },
+
+        }, {
+            startDate: null,
+            endDate: null,
+        }],
         include:[{
           model: db.Product,
           where: {
@@ -225,27 +241,22 @@ module.exports = {
             let endDate = promotion.endDate;
             //
             if(product.id == promotedProduct.id){
-              console.log('=== promotedProduct ==>',promotedProduct);
-              console.log('=== promotedProduct.price ==>',promotedProduct.price);
+              // console.log('=== promotedProduct ==>',promotedProduct);
+              // console.log('=== promotedProduct.price ==>',promotedProduct.price);
               //
               product.originPrice = promotedProduct.price;
-              let duration = moment.duration(moment(endDate).diff(moment(date)));
-              //
-              product.promotionCountDown =
-                `${duration.get("days")} 天 ${duration.get("hours")
-                + ":"
-                + duration.get("minutes")
-                + ":"
-                + duration.get("seconds")}`;
+
+              // make front end display end date
+              product.discountEndDate = promotion.endDate;
               //
               product.status = 'discount';
               //
               if(promotion.discountType == 'discount'){
-                console.log('=== promotion.discount ==>',promotion.discount);
-                product.price = parseInt(product.price * promotion.discount);
+                // console.log('=== promotion.discount ==>',promotion.discount);
+                product.price = Math.ceil(parseInt(product.price * promotion.discount));
               }else if(promotion.discountType == 'price'){
-                console.log('=== promotion.price ==>',promotion.price);
-                product.price = parseInt(product.price - promotion.price);
+                // console.log('=== promotion.price ==>',promotion.price);
+                product.price = promotion.price;
               }
 
               if(product.price < 0) product.price = 0;

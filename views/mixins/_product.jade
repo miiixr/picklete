@@ -1,0 +1,4 @@
+mixin productName(product, productGm)
+  - productGm = productGm || product.ProductGm || { name: ''};
+  - var name = ( ! product.name || product.name === '') ?  '' : '(' + product.name + ')';
+  | #{productGm.name} #{name}

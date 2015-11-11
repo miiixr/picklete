@@ -127,6 +127,8 @@ module.exports.routes = {
   #'get /admin/qa-type' : 'UserController.controlQaType'
   #'get /admin/qa-add' : 'UserController.controlQaAdd'
   'get /admin/members' : 'UserController.controlMembers'
+  'get /admin/adminSet' : 'UserController.showAdminInformation'
+  'post /admin/adminSet' : 'UserController.updateAdminInformation'
   'get /admin/member-detail/:id' : 'UserController.controlMemberDetail'
 
   # promotions
@@ -314,6 +316,16 @@ module.exports.routes = {
     }
   }
 
+  'get /api/order/cancel/:id': {
+    controller: "OrderController",
+    action: "orderCancel",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+
+
   'get /api/order/sync': {
     controller: "OrderController",
     action: "sync",
@@ -464,6 +476,25 @@ module.exports.routes = {
      credentials: false
     }
   }
+
+  'post /api/buymore/delete/:id': {
+    controller: "PromotionController",
+    action: "buymoreDelete",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+
+  'post /api/shopDiscount/delete/:id': {
+    controller: "PromotionController",
+    action: "shopDiscountDelete",
+    cors: {
+     origin: "http://localhost:1337, http://localhost:8080",
+     credentials: false
+    }
+  }
+
   'put /admin/brands/resetWeight' : {
     controller: "BrandController",
     action: "resetWeight",

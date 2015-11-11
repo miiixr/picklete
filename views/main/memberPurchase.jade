@@ -132,7 +132,8 @@ block body
                                 // /row
                                 .row.m-bottom-1
                                   .col-xs-6 運費
-                                  .col-xs-6.text-right #{order.Shipment.shippingFee}
+                                  - var shippingFee = (sumPrice >= 390) ? 0 : order.Shipment.shippingFee;
+                                  .col-xs-6.text-right #{shippingFee}
                                 // /row
                                 .row.m-bottom-1
                                   .col-xs-6 包裝
@@ -145,7 +146,7 @@ block body
                                 hr
                                 h2
                                   small 總計
-                                  span.text-danger.pull-right NT$ #{sumPrice+order.Shipment.shippingFee+order.packingFee}
+                                  span.text-danger.pull-right NT$ #{order.paymentTotalAmount}
               else
                 tr.disabled
                   td #{sails.moment(order.createdAt).format('YYYY/MM/DD hh:mm')}

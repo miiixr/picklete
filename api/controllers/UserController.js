@@ -119,10 +119,13 @@ let UserController = {
     }
   },
 
+  // /* 3:50:05 AM Localhost */ SELECT * FROM `Orders` ORDER BY `createdAt` DESC LIMIT 0,1000;
+
   purchase:async (req, res) => {
     let loginUser = UserService.getLoginUser(req);
     let orders = await db.Order.findAll({
       where: {UserId: loginUser.id},
+      order: 'createdAt DESC',
       include: [{
         model: db.OrderItem
       },{
@@ -131,7 +134,8 @@ let UserController = {
         model: db.Invoice
       }]
     });
-    sails.log.info("=== purchase orders ===",JSON.stringify(orders,null,2));
+
+    // sails.log.info("=== purchase orders ===",JSON.stringify(orders,null,2));
     res.view("main/memberPurchase",{
       orders
     });
@@ -209,9 +213,7 @@ let UserController = {
           res.serverError({message});
         }
 
-        if( ! picklete_cart.hasOwnProperty('additionalPurchasesItem')) {
-          picklete_cart.additionalPurchasesItem = [];
-        }
+        picklete_cart.additionalPurchasesItem = picklete_cart.additionalPurchasesItem ? picklete_cart.additionalPurchasesItem : [];
 
         picklete_cart.additionalPurchasesItem.push({
           additionalPurchasesId: data.additionalPurchasesId,
@@ -488,6 +490,49 @@ let UserController = {
     catch (error) {
       return res.serverError(error);
     }
+  },
+  showAdminInformation: async(req, res) => {
+
+    let user = await db.User.findOne({
+      where :{
+        email :'admin@gmail.com'
+      }
+    });
+
+    let passport = await db.Passport.find({where: {UserId: user.id}});
+    user.password = passport.password;
+    user.passwordAgain = passport.password;
+    return res.view("admin/adminSet",{user});
+  },
+  updateAdminInformation: async(req, res) => {
+
+    let user = await db.User.findOne({
+      where :{
+        email :'admin@gmail.com'
+      }
+    });
+
+    let passport = await db.Passport.find({where: {UserId: user.id}});
+    user.password = passport.password;
+    user.passwordAgain = passport.password;
+
+    let updateUser = req.body;
+
+    if(updateUser.password != passport.password){
+      passport.password = updateUser.password;
+      await passport.save()
+    }
+
+    let updateUserKeys = Object.keys(updateUser);
+
+    updateUserKeys.forEach((key)=>{
+      if(typeof(user[key]) != undefined) user[key] = updateUser[key];
+    });
+
+    await user.save();
+
+    return res.view("admin/adminSet",{user});
+
   },
   controlMemberDetail: async function(req, res) {
     try {

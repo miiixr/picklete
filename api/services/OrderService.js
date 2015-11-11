@@ -204,7 +204,7 @@ var self = module.exports = {
 
         if (product.stockQuantity < orderItem.quantity){
           // mix productGm and product name
-          throw new Error('此商品「'+ productName +'」已經不足！');
+          throw new Error('此商品「'+ productName +'」已經不足！請至購物車修改。');
         }
 
         // fixed to save product full name ( product full name = productGM.name + product.name)
@@ -266,9 +266,12 @@ var self = module.exports = {
         }
         let shopCode = await ShopCodeService.checkCode(shopCodeData.code);
         if(shopCode){
+          shopCodeData.user = buyer;
           let shopCodeDiscount = await ShopCodeService.use(shopCodeData);
           thisOrder.paymentTotalAmount = shopCodeDiscount.price;
           thisOrder.ShopCodeId = shopCode.id;
+
+          ShopCodeService.expendCode(shopCodeDiscount.code, buyer);
         }
       }
       // 計算加價購

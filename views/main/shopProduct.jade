@@ -1,3 +1,4 @@
+include ../mixins/_product
 extends ../_layout_head
 
 block body
@@ -92,7 +93,6 @@ block body
                     h3.text-black.m-bottom-4
                       span.text-green 加價購 #{UtilService.numberFormat(additionalPurchasePrice)}
                       small.text-line-through.m-left-1#originPrice #{UtilService.numberFormat(product.price)}
-                  
 
                 // /col-sm-10
                 .col-sm-2.col-xs-3
@@ -267,4 +267,5 @@ block body
     // /cbp-so-scroller
 
 block js
+  script(src='/javascripts/common/discountCountdown.js')
   //- script(src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript")

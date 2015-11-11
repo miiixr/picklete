@@ -47,12 +47,11 @@ let ShopController = {
           }]
         });
 
-
-        console.log(promotion.Products);
+        products = await PromotionService.productPriceTransPromotionPrice(new Date(), promotion.Products);
 
         res.view('main/flash', {
           promotion: promotion,
-          products: promotion.Products
+          products: products
         });
         return
       }
@@ -198,6 +197,8 @@ let ShopController = {
       count = await count.save();
 
       product.PageViewId = count.id;
+
+      // have some error message.
       await product.save();
 
       productGm = productGm.dataValues;

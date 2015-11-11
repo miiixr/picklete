@@ -8,6 +8,8 @@
   var discountAmountDiv = $("#discountAmount");
   var quantityVal;
 
+  var isMobile = ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) ? true : false;
+
   var subtotal = 0;
   var totalPrice = 0;
   var buymore = parseInt(buymoreDiv.text(),10) || 0;
@@ -41,7 +43,7 @@
     var tmpPrice = subtotal + buymore - discountAmount;
 
     // 免運
-    if(parseInt(tmpPrice)>parseInt(shippingFeeFreeThreshold)){
+    if(parseInt(tmpPrice) >= shippingFeeFreeThreshold){
       $("#shippingFeeField").text('免運');
       shippingFeeFree = true;
       shippingFee = 0;
@@ -104,6 +106,11 @@
   var cartViewerInit = function() {
     // console.log('==== picklete_cart ==>',picklete_cart);
 
+
+    if (! picklete_cart || ! picklete_cart.orderItems) {
+      return;
+    }
+
     picklete_cart.orderItems.forEach(function(orderItem, index){
 
       // console.log('==== orderItem ==>',orderItem);
@@ -136,7 +143,7 @@
         '    <div class="col-xs-6 col-sm-3 col-md-2 desktop-p-left-0 desktop-m-top-5 m-bottom-2">' +
         '      <div class="productQuantities input-group input-group-count max-width-150"><span class="input-group-btn">' +
         '        <button type="button" data-type="minus" data-field="quant['+index+']" class="btn btn-default btn-number p-left-2 p-right-2"><span class="glyphicon glyphicon-minus"></span></button></span>' +
-        '        <input type="text" name="quant['+index+']" value="'+orderItem.quantity+'" min="1" max="10" class="form-control input-number text-center font-size-slarge"><span class="input-group-btn">' +
+        '        <input type="text" name="quant['+index+']" value="' + orderItem.quantity + '" min="1" max="' + orderItem.stockQuantity + '" class="form-control input-number text-center font-size-slarge"><span class="input-group-btn">' +
         '        <button type="button" data-type="plus" data-field="quant['+index+']" class="btn btn-default btn-number p-left-2 p-right-2"><span class="glyphicon glyphicon-plus"></span></button></span>' +
         '      </div>' +
         '    </div>' ;
@@ -196,9 +203,6 @@
       cartViewer.append(liOrderItem);
       $("select[name='packingSelect["+index+"]']").val(orderItem.packingQuantity || 0);
     });
-
-    cartViewer.inputNumber();
-
   };
 
   // shippingfee select   // 運送區域：台灣/外島
@@ -323,6 +327,11 @@
             if(data.loginStatus){
               window.location.replace("/user/cart-step-2");
             }else{
+              if (isMobile) {
+                alert('請先登入帳號密碼')
+                return location.href='/user/login';
+              }
+                
               $('#modal-login').modal('show')
             }
           }

@@ -65,7 +65,7 @@
     }
   });
 
-  new cbpScroller( document.getElementById( 'cbp-so-scroller' ) );
+  // new cbpScroller( document.getElementById( 'cbp-so-scroller' ) );
 
 
 

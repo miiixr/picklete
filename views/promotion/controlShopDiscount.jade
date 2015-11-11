@@ -45,6 +45,9 @@ block body
           td.text-right
             a.btn.btn-link(href='shop-discount-detail?id=#{promotion.id}&discountType=#{promotion.type}')
               span.glyphicon.glyphicon-pencil2
+            input(type='hidden', value='#{promotion.id}')
+            a.btn.btn-link.delete-link(href='', data-toggle='modal', data-target='#modal-delete')
+              span.glyphicon.glyphicon-remove
       //- tr
       //-   td
       //-     img.width-10(src='images/demo/shop-item-3-1.jpg')
@@ -54,6 +57,25 @@ block body
       //-   td.text-right
       //-     a.btn.btn-link(href='shop-discount-detail2')
       //-       span.glyphicon.glyphicon-pencil2
+
+
+  #modal-delete.modal.fade
+    .modal-dialog(role='document')
+      .modal-content.font-size-slarge
+        .modal-header.p-30
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') ×
+          h2.modal-title 刪除
+        // /modal-header
+        .modal-body.p-30.p-top-0
+          p 您確定要將此 項目 刪除？
+        // /modal-body
+        .modal-footer
+          button.btn.btn-default(type='button', data-dismiss='modal') 取消
+          button.btn.btn-green(type='button', data-dismiss='modal') 確定
+        // /modal-footer
+      // /modal-content
+    // /modal-dialog
   hr.dashed-line
   .text-center
     //
@@ -62,6 +84,6 @@ block body
     ul.list-inline.m-bottom-0.m-top-1
       +pagination-simple-pager(page, totalPages)
   // /text-center
-  block js
-    script(src="/javascripts/admin/discount.js")
-    script(src='/javascripts/common/pagination.js')
+block js
+  script(src="/javascripts/admin/discount.js")
+  script(src='/javascripts/common/pagination.js')

@@ -100,7 +100,7 @@ describe("about Shop Discount", function() {
       let createPromotion = await PromotionService.update(promotion);
 			createPromotion.title.should.be.equal("AAAAAA");
       createPromotion.description.should.be.equal("BBBBBBB");
-      createPromotion.price.should.be.equal(0);
+      createPromotion.price.should.be.equal(999.97);
       createPromotion.type.should.be.equal('general');
       createPromotion.discountType.should.be.equal('discount');
       done();
@@ -223,7 +223,7 @@ describe("about Shop Discount", function() {
         // check status
         discountedProducts.should.be.Object;
         discountedProducts.forEach(product => {
-          product.price.should.be.equal(commonPrice * createdPromotion1.discount);
+          product.price.should.be.equal(createdPromotion1.discount * product.originPrice);
           product.originPrice.should.be.equal(commonPrice);
         });
 
@@ -244,7 +244,7 @@ describe("about Shop Discount", function() {
         let pricedProducts = await PromotionService.productPriceTransPromotionPrice(date2, findProducts);
         pricedProducts.should.be.Array;
         pricedProducts.forEach(product => {
-          product.price.should.be.equal(commonPrice - createdPromotion2.price);
+          product.price.should.be.equal(createdPromotion2.price);
           product.originPrice.should.be.equal(commonPrice);
         });
 

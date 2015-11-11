@@ -7,7 +7,7 @@ html
     // Mobile device set
     meta(name='viewport', content='width=device-width, initial-scale=1.0', data-gatracking-id="#{locals.gaTrackingID}")
     // Fav and touch icons
-    link(rel='shortcut icon', href='#{company.avatar}')
+    link(rel='shortcut icon', href='/images/ico/favicon.ico', type='image/x-icon')
     // Style
     link(href='/stylesheets/bootstrap.css', media='screen', rel='stylesheet', type='text/css')
     | &#x9;
@@ -183,22 +183,35 @@ html
           |       
           ul.dropdown-menu.navmenu-nav(role='menu')
             each dpt in headDpts
+              - _mobileDptId = (dpt.id == 1) ? '' : dpt.id;
               li
-                a(href='/shop/list?dptId='+dpt.id) #{dpt.name}
+                a(href='/shop/list?dptId=' + _mobileDptId) #{dpt.name}
             |         
             li
               a.btn.btn-default(href='/brands/list') #{i18n("brand-list")}
-        |     
-        li
-          a(href='/user/login')
-            span.glyphicon.glyphicon-user.m-right-1
-            | LOGIN
+        | 
+        - if ( ! user) 
+          li
+            a(href='/user/login')
+              span.glyphicon.glyphicon-user.m-right-1
+              | LOGIN
+        - else
+          li
+            a(href='/member/favorite')
+              span.glyphicon.glyphicon-user.m-right-1
+              | MEMBER
         |     
         li
           a(href='/user/cart')
             span.glyphicon.glyphicon-shopping-cart.m-right-1
-            span.text-green
-              span#order-items-count 0
+            | CART
+
+        - if (user) 
+          li
+              a(href='/logout')
+                span.glyphicon.glyphicon-user.m-right-1
+                | LOGOUT
+
         |     
         li
           .input-group.m-bottom-2.m-top-2
@@ -256,37 +269,39 @@ html
 
     include _layout_footer
 
-  script(src='/javascripts/plugin/modernizr.custom.js')
-  script(src='//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js')
-  script(src='http://code.jquery.com/jquery-1.9.1.js')
-  script(src='/javascripts/plugin/scrolltotop.js')
-  // /scrolltotop
-  script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
-  script(src='/javascripts/plugin/bootstrap.js')
-  // /bootstrap
-  script(src='/javascripts/plugin/jasny-bootstrap.js')
-  // /jasny-bootstrap
-  script(src='/javascripts/plugin/classie.js')
-  script(src='/javascripts/plugin/uisearch.js')
-  // /sb-search
-  script(src='/javascripts/plugin/input-number.js')
-  // /input-number
-  script(src='/javascripts/plugin/tagsinput.js')
-  script(src='/javascripts/plugin/cbpAnimatedHeader.js')
-  // /cbpAnimatedHeader
-  script(type='text/javascript', src='/javascripts/plugin/notifyme.js')
-  script(src='/javascripts/plugin/scrolltotop.js')
-  script(src='/javascripts/plugin/cbpScroller.js')
-  script(src="/bower/js-cookie/js.cookie.js")
-  script(type='text/javascript' src='/javascripts/common/head_layout.js')
-  script(type='text/javascript' src='/javascripts/user/login.js')
-  script(type='text/javascript' src='/bower/js-cookie/js.cookie.js')
-  script(type='text/javascript' src='/bower/jquery.serializeJSON/jquery.serializejson.js')
-  script(src="/javascripts/common/number.js")
-  script(src="/javascripts/main/shop.js")
-  script.
-    window.USER = !{JSON.stringify(user)};
+    script(src='https://code.jquery.com/jquery-1.11.3.min.js')
+    script(src='/javascripts/plugin/modernizr.custom.js')
+    script(src='//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js')
+    //- script(src='http://code.jquery.com/jquery-1.9.1.js')
+    //- script(src='/javascripts/plugin/jquery.mobile.min.js')
+    script(src='/javascripts/plugin/scrolltotop.js')
+    // /scrolltotop
+    //- script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
+    script(src='/javascripts/plugin/bootstrap.js')
+    script(type='text/javascript' src='/bower/js-cookie/js.cookie.js')
+    // /bootstrap
+    script(src='/javascripts/plugin/jasny-bootstrap.js')
+    // /jasny-bootstrap
+    script(src='/javascripts/plugin/classie.js')
+    script(src='/javascripts/plugin/uisearch.js')
+    // /sb-search
+    script(src='/javascripts/plugin/input-number.js')
+    // /input-number
+    script(src='/javascripts/plugin/tagsinput.js')
+    script(src='/javascripts/plugin/cbpAnimatedHeader.js')
+    // /cbpAnimatedHeader
+    script(type='text/javascript', src='/javascripts/plugin/notifyme.js')
+    script(src='/javascripts/plugin/scrolltotop.js')
+    script(src='/javascripts/plugin/cbpScroller.js')
+    script(type='text/javascript' src='/javascripts/common/head_layout.js')
+    script(type='text/javascript' src='/javascripts/user/login.js')
+    
+    script(type='text/javascript' src='/bower/jquery.serializeJSON/jquery.serializejson.js')
+    script(src="/javascripts/common/number.js")
+    script(src="/javascripts/main/shop.js")
+    script.
+      window.USER = !{JSON.stringify(user)};
 
-  block js
-    //- //ＢＵＧ 放shop裡不行
-    //- script(src="/javascripts/main/shop.js")
+    block js
+      //- //ＢＵＧ 放shop裡不行
+      //- script(src="/javascripts/main/shop.js")

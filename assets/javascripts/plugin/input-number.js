@@ -6,7 +6,7 @@ $.fn.inputNumber = function() {
 	//http://jsfiddle.net/laelitenetwork/puJ6G/
 	//re-package as jQuery plugin with lyhcode 2015/10/13
 
-	$('.btn-number', ___scope).on("click", function(e){
+	$(document).on("click", '.btn-number', ___scope, function(e){
 		e.preventDefault();
 
 		var that = $(this);
@@ -39,11 +39,11 @@ $.fn.inputNumber = function() {
 			input.val(0);
 		}
 	});
-	$('.input-number', ___scope)
-	.on("focusin", function(){
+	$(document)
+	.on("focusin", '.input-number', ___scope, function(){
 		$(this).data('oldValue', $(this).val());
 	})
-	.on("change", function() {
+	.on("change", '.input-number', ___scope, function() {
 
 		minValue =  parseInt($(this).attr('min'));
 		maxValue =  parseInt($(this).attr('max'));
@@ -63,7 +63,7 @@ $.fn.inputNumber = function() {
 			$(this).val($(this).data('oldValue'));
 		}
 	})
-	.on("keydown", function (e) {
+	.on("keydown", '.input-number', ___scope, function (e) {
 			// Allow: backspace, delete, tab, escape, enter and .
 			if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
 				 // Allow: Ctrl+A

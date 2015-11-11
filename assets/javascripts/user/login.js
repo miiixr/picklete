@@ -33,7 +33,7 @@
     });
   });
 
-  $('#forgotPassword').submit(function() {
+  $('#forgotPassword').on('submit', function() {
     $.ajax({
         type: 'get',
         url: $(this).attr('action'),
@@ -65,7 +65,7 @@
     return false;
   });
 
-  $('#verificationMailAgain').submit(function() {
+  $('#verificationMailAgain').on('submit', function() {
     $.ajax({
         type: 'get',
         url: $(this).attr('action'),

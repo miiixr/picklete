@@ -138,10 +138,17 @@
     }
 
     // ensure title
-    if($("select[name='order[invoice][type]']").val() == "triplex" && $("input[name='order[invoice][title]']").val() == ""){
-      alert("請輸入公司抬頭");
-      $("input[name='order[invoice][title]']").focus();
-      return;
+    if($("select[name='order[invoice][type]']").val() == "triplex") {
+      if ($("input[name='order[invoice][title]']").val() == "") {
+        alert("請輸入公司抬頭");
+        $("input[name='order[invoice][title]']").focus();
+        return;
+      } 
+      if ($("input[name='order[invoice][taxId]']").val() == "") {
+        alert("請輸入統一編號");
+        $("input[name='order[invoice][taxId]']").focus();
+        return;
+      }
     }
 
     re = /^[09]{2}[0-9]{8}$/;
@@ -194,14 +201,17 @@
         error: function (jqXHR, exception) {
           var err = jQuery.parseJSON(jqXHR.responseText);
 
-          $(this).notifyMe(
-            'top',
-            'cart',
-            '<span style="color:red" class="glyphicon glyphicon-warning m-right-2"></span>'+ err.message,
-            '',
-            300,
-            3000
-          );
+          // $(this).notifyMe(
+          //   'top',
+          //   'cart',
+          //   '<span style="color:red" class="glyphicon glyphicon-warning m-right-2"></span>'+ err.message,
+          //   '',
+          //   300,
+          //   3000
+          // );
+
+          alert(err.message);
+          window.history.go(-1);
 
         }
     });
@@ -257,7 +267,7 @@
 
     var taxIdField =
       '<div class="form-group">' +
-      '  <label class="col-sm-3 control-label">統一編號</label>' +
+      '  <label class="col-sm-3 control-label">統一編號<span class="text-danger">*</span></label>' +
       '  <div class="col-sm-9">' +
       '    <input type="text" name="order[invoice][taxId]" placeholder="請輸入統一編號" class="form-control" required />' +
       '  </div>' +

@@ -79,10 +79,14 @@ let PromotionController = {
         additionalPurchase = await db.AdditionalPurchase.findById(data.id);
       }
       // additionalPurchase.name = findProduct.name;
-      if(data.discount!=''){
-        if(data.discount>10) data.discount*=0.1;
-        additionalPurchase.discount = data.discount;
+      if(data.discount != '') {
+        var count = data.discount.toString().length;
+        var discount = (count > 1) ? parseInt(data.discount, 10) / 100 : parseInt(data.discount, 10) / 10;
+        additionalPurchase.discount = discount;
+        console.log('---------------- discount');
+        console.log(discount);
       }
+
       if(data.reducePrice!='')
         additionalPurchase.reducePrice = data.reducePrice;
 
@@ -136,6 +140,7 @@ let PromotionController = {
       let limit = await pagination.limit(req);
       let page = await pagination.page(req);
       let offset = await pagination.offset(req);
+      
       let brands = await db.Brand.findAll();
 
       if(query.keyword)
@@ -156,11 +161,16 @@ let PromotionController = {
         queryObj.ProductGmId = productGmIds;
       }
 
-      console.log('==== queryObj ====', queryObj);
+      // console.log('==== queryObj ====', queryObj);
 
+      console.log('------------ page');
+      console.log(offset);
 
       let products = await db.Product.findAndCountAll({
         where: queryObj,
+        include: [{
+          model: db.ProductGm
+        }],
         offset: offset,
         limit: limit
       });
@@ -179,6 +189,8 @@ let PromotionController = {
         totalRows: products.count
       });
     } catch (e) {
+      console.log('------------ error');
+      console.log(e);
       return res.serverError(e);
     }
   },
@@ -235,15 +247,13 @@ let PromotionController = {
           let products = await db.Product.findAll({
             where: {
               id: query.productIds
-            },
-            offset: offset,
-            limit: limit
+            }
+            // offset: offset,
+            // limit: limit
           });
 
           promotion.Products = products;
         }
-
-
       }
 
       console.log('=== promotion ===', promotion);
@@ -450,7 +460,7 @@ let PromotionController = {
       }
 
       // let additionalPurchase = await db.AdditionalPurchase.findAll();
-        res.view('promotion/controlShopBuyMoreAddItem',{
+      res.view('promotion/controlShopBuyMoreAddItem',{
         pageName: "/admin/shop-buy-more",
         brands,
         additionalPurchase,
@@ -471,7 +481,33 @@ let PromotionController = {
       pageName: "shop-report-form",
       dateList: dateList
     });
+  },
+
+  buymoreDelete: async (req, res) => {
+    try {
+      let id = req.params.id;
+      let additionalPurchase = await db.AdditionalPurchase.findOne({ where: {id: id} });
+      await additionalPurchase.destroy();
+      return res.ok(additionalPurchase);
+    } catch (e) {
+      sail.log.error(e);
+      return res.serverError(e);
+    }
+  },
+
+  shopDiscountDelete: async (req, res) => {
+    try {
+      let id = req.params.id;
+      let promotion = await db.Promotion.findOne({ where: {id: id} });
+      await promotion.destroy();
+      return res.ok(promotion);
+    } catch (e) {
+      sail.log.error(e);
+      return res.serverError(e);
+    }
   }
+
+
   // end not clean yet
 
 

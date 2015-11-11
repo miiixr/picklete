@@ -11,9 +11,10 @@ $(function() {
     inputPage.val(0);
   });
 
-  $('#pagination-limit').change(function() {
+  $('#pagination-limit').on('change', function() {
     inputPage.val(0);
     inputLimit.val($(this).val());
+    console.log('hello')
     formWithPagination.submit();
   });
 

@@ -1,4 +1,4 @@
-$(function() {
+(function($) {
   $('#limit').change(function() {
     location.href='/admin/shop-buy-more-add-item?limit='+$(this).val();
   });
@@ -58,8 +58,11 @@ $(function() {
     }
 
     var postData = $("form[name='updateForm']").serializeArray();
+
+    // console.log(postData);
+    // alert(1);
     $.ajax({
-        url : '../../admin/buymoreUpdate',
+        url : '/admin/buymoreUpdate',
         type: "put",
         data : postData,
         success:function()
@@ -87,4 +90,15 @@ $(function() {
     console.log('=== deleteProductId ===', deleteProductId);
 
   });
-});
+
+  // front end hack
+  var _visualDiscountNumber = function () {
+    var disCountNode = $('input[name=discount]');
+    if (disCountNode.val() == undefined || disCountNode.val() === 0)
+      return;
+
+    disCountNode.val(disCountNode.val() * 100);
+  };
+  _visualDiscountNumber();
+
+}(jQuery));

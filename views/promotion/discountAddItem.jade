@@ -1,11 +1,11 @@
 extends ../_layout_auth
 include ../mixins/pagination
+include ../mixins/_product
 
 
 block body
   h2.m-bottom-6 選擇折扣商品
   .well.control-well.p-30.m-bottom-8
-    form.form-inline
       //- .form-group.m-right-4
       //-   label 品牌名稱
       //-   select.form-control
@@ -22,8 +22,8 @@ block body
       //- button.btn.btn-default(type='button') 查詢
       
       .form-group.m-right-4
-        form#search.form-inline.with-pagination(name="search", action="promotion/discountAddItem", method="get")
-          
+        form#search.form-inline.with-pagination(name="search", action="/promotion/discountAddItem", method="get")
+          +pagination-fields(page, totalPages, limit)
           input(type='hidden', name='type', value=promotion.type)
           input(type='hidden', name='id', value=promotion.id)
           input(type='hidden', name='title', value=promotion.title)
@@ -49,7 +49,7 @@ block body
           .form-group.m-right-2
             .input-group
               input#keyword.form-control(type='text',name="keyword" ,placeholder='輸入關鍵字',value= query.keyword)
-              +pagination-fields(page, totalPages, limit)
+              
               span.input-group-btn
                 button.btn.btn-default.p-left-2.p-right-2(type='submit')
                   span.glyphicon.glyphicon-search
@@ -60,13 +60,8 @@ block body
       form.form-inline
         .form-group
           label 顯示
-          select.form-control
-            option 10
-            option 20
-            option 30
-            option 40
-            option 50
-          label 筆資料（共 90 筆）
+          +pagination-limit(limit)
+          label 筆資料（共 #{totalRows} 筆）
         // /form-group
     // /col-md-6
     .col-md-6.desktop-text-right
@@ -98,7 +93,7 @@ block body
       thead
         tr
           th
-            input(type='checkbox')
+            input(type='checkbox', class='selectAll')
           th 主圖
           th
             | 商品名稱
@@ -119,7 +114,11 @@ block body
               input.addSelect(type='checkbox', disabled=product.originPrice, name='productIds', value= product.id, checked=promotion.productIds.indexOf(""+product.id)>=0)
             td
               img.width-6(src= product.photos[0])
-            td= product.name
+            - var name = ( ! product.name || product.name == "") ? "" : "(" + product.name + ")";
+            //- td #{JSON.stringify(product.ProductGm)}
+            //- td #{name}
+            td
+              +productName(product)
             td= product.productNumber
             if (product.originPrice)
               td= product.originPrice
@@ -131,13 +130,8 @@ block body
               else 
                 span.text-danger
   hr.dashed-line
-  .text-center
-    //
-      pagination-block
-      ==================================================
-    ul.list-inline.m-bottom-0.m-top-1
-      +pagination-simple-pager(page, totalPages)
+  +pagination-simple-pager(page, totalPages)
   // /text-center
 block js
   script(src='/javascripts/common/pagination.js')
-  script(src="/javascripts/admin/shopDiscount.js")
+  script(src="/javascripts/admin/buymore.js")

@@ -18,7 +18,7 @@ each order in orders
           h3 創而有意商品明細表
         // /text-center
         .m-bottom-4
-          p 親愛的 #{order.paymentConfirmName}，您好：
+          p 親愛的 #{order.User.username}，您好：
           p
             | 感謝您在 i+DEAL 創而有意訂購商品！為保障您的權益，請您收到商品的同時，依照商品明細表清點內容物！若有短缺、規格不符或瑕疵之情形，煩請您儘速於收到商品後 3 天內與客服人員聯絡，以保障您退換貨權益。
         // /m-bottom-4
@@ -34,7 +34,7 @@ each order in orders
             tr
               td
                 p.line-height-large.m-bottom-0
-                  | 購買人：#{order.paymentConfirmName} 先生/小姐
+                  | 購買人：#{order.User.username} 先生/小姐
                   br
                   | 							購買人電話：#{order.User.mobile}
                   br

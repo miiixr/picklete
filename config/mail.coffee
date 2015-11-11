@@ -25,6 +25,7 @@ module.exports.mail = {
       <br />訂購帳號：%(shipmentId)s
       <br />訂單編號：%(orderSerialNumber)s
       <br />付款方式：
+      <br />%(paymentMethod)s
       <br />付款方式備注：為避免取消訂單，請於%(deadLine)s前繳款完畢
       <br />
       <br />訂購項目：
@@ -37,6 +38,32 @@ module.exports.mail = {
       <br />%(storeName)s | 好物慢慢選
       <br />客服信箱：%(serviceMail)s
       <br />上班時間：週一至週五，10.00AM - 5.00PM，比照國定休假日
+      </body></html>"""
+    },
+    orderCancelConfirm: {
+      sendBy: 'email',
+      subject: '訂單 %(orderSerialNumber)s 過期取消通知信',
+      text: """<html><body>
+      <br />親愛的i+DEAL顧客您好!
+      <br />
+      <br />很抱歉，由於您的訂單已超過繳款期限，我們將取消此筆訂單。如尚需購買下列商品，請直接回到購物頁面重新選購，謝謝您的支持。
+      <br />
+      <br />訂購人：%(shipmentUsername)s
+      <br />訂購帳號：%(shipmentId)s
+      <br />訂單編號：%(orderSerialNumber)s
+      <br />
+      <br />為了保障您的資料安全，請登入會員中心查詢90天內所有訂單詳細資訊。
+      <br />
+      <br />祝您購物愉快
+      <br />此為系統信件，請勿直接回覆此信件
+      <br />
+      <br />---
+      <br />
+      <br />i+DEAL創而有意 | 好物慢慢選
+      <br />
+      <br />客服信箱：service@wevo.com.tw
+      <br />上班時間：週一至週五，10.00AM - 5.00PM，比照國定休假日
+      <br />
       </body></html>"""
     },
     paymentConfirm: {
@@ -255,6 +282,7 @@ module.exports.mail = {
       <br />
       <br />信件內容：
       <br /><p> 你的大名：%(userName)s </p>
+      <br /><p> 你的 Email：%(userEmail)s </p>
       <br /><p> 你的聯絡方式：%(userContact)s </p>
       <br /><p> 你的問題類型：%(userIssue)s </p>
       <br /><p> 你的問題：%(userQuestion)s </p>

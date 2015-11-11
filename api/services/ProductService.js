@@ -520,7 +520,7 @@ module.exports = {
           sort = [[db.ProductGm,db.LikesCount,'likesCount','DESC']];
           break;
         case 'newest':
-          sort = 'createdAt';
+          sort = 'createdAt DESC';
           break;
         case 'priceHtoL':
           sort = 'price DESC';
@@ -532,6 +532,8 @@ module.exports = {
 
       if(sort)
         queryObj.order = sort;
+      else
+        queryObj.order = 'createdAt DESC';
 
 
       sails.log.info("=== productQuery queryObj ===",queryObj);

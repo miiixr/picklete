@@ -56,8 +56,8 @@ block body
           a(href="/") Home
         li(class="active") #{promotion.title}
       h2(class="text-black  m-bottom-2") #{promotion.title}
-      h4(class="text-danger m-bottom-10 countdown", data-end='#{promotion.endDate}') 活動倒數 
-        span 08:15:46
+      h4(class="promo-end text-danger m-bottom-10 countdown", data-end='#{promotion.endDate}') 活動倒數 
+        span 
       .row
         if products.count==0
           p 沒有發現任何有關商品，請重新來過
@@ -66,6 +66,20 @@ block body
             .item-block.m-bottom-4
               a.item-like.active(href='#')
                 span.glyphicon.glyphicon-heart
+              // /item-like
+              if product.stockQuantity <= 0
+                // label: sold out
+                span.label.label-default
+                  | SOLD
+                  br
+                  | OUT
+              else if (product.originPrice && product.price)
+                // label: sale
+                span.label.label-danger SALE
+              else if (sails.moment().diff(sails.moment(product.createdAt), 'days') < 8)
+                // label: new
+                span.label.label-success NEW
+
               // /item-like
               a(href='/shop/products/#{product.ProductGm.id}/#{product.id}')
                 img.img-full.item-show(src=product.photos[0])
@@ -80,7 +94,13 @@ block body
 
                   a(href='/shop/products/#{product.ProductGm.id}/#{product.id}') #{product.ProductGm.name} #{name}
                 h5
-                  | $ #{product.price}
+                  if(product.originPrice == undefined || product.originPrice <= 0)
+                    | #{UtilService.numberFormat(product.price)}
+                  else 
+                    span.text-danger
+                      | #{UtilService.numberFormat(product.price)} 
+                    small.text-line-through.m-left-1
+                      | #{UtilService.numberFormat(product.originPrice)} 
             // /item-text-block
           // /col-md-3
         // /row
@@ -109,18 +129,4 @@ block body
       // /text-center
     // /container
 block js
-  script.
-    (function ($) {
-      var self = $('.countdown');
-      var end = self.data('end');
-      if ( ! end)
-        return self.find('span').text('不限時');  
-      var eventTime = moment(end).valueOf();
-      var currentTime = moment().valueOf(); // Timestamp - Sun, 21 Apr 2013 12:30:00 GMT
-      var diffTime = eventTime - currentTime;
-      var duration = moment.duration(diffTime*1000, 'milliseconds');
-      duration = moment.duration(duration - interval, 'milliseconds');
-      self.find('span').text(duration.hours() + ":" + duration.minutes() + ":" + duration.seconds());
-    }(jQuery));
-
-
+  script(src='/javascripts/common/discountCountdown.js')

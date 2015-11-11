@@ -34,11 +34,11 @@ block body
       .form-group
         label.col-sm-3.col-md-2.control-label 活動時間
         .col-sm-4.col-md-3
-          input.form-control(type='date',name = 'startDate',value= sails.moment(query.startDate).format('YYYY-MM-DD'))
+          input.form-control(type='date',name = 'startDate', placeholder="2015-10-30", value= sails.moment(query.startDate).format('YYYY-MM-DD'))
         .col-sm-1.col-md-1.p-left-0.p-right-0.text-center
           p.form-control-static 至
         .col-sm-4.col-md-3
-          input.form-control(type='date',name = 'endDate',value= sails.moment(query.endDate).format('YYYY-MM-DD'))
+          input.form-control(type='date',name = 'endDate', placeholder="2015-10-30", value= sails.moment(query.endDate).format('YYYY-MM-DD'))
         .col-sm-9.col-sm-offset-3.col-md-3.col-md-offset-0
           .checkbox
             label
@@ -72,7 +72,7 @@ block body
               // /input-group
       // /form-group
       .m-top-6.text-right
-        a.btn.btn-link.delete-link.btn-lg(href='../../admin/shop-buy-more') 取消
+        a.btn.btn-link.delete-link.btn-lg(href='/admin/shop-buy-more') 取消
         a#createBuyMore.btn.btn-green.btn-lg 確定
       // /text-right
   // /well
@@ -149,6 +149,6 @@ block body
   hr.dashed-line
   +pagination-simple-pager(page, totalPages)
   
-  block js
-    script(src="/javascripts/admin/addPurchase.js")
-    script(src='/javascripts/common/pagination.js')
+block js  
+  script(src='/javascripts/common/pagination.js')
+  script(src="/javascripts/admin/addPurchase.js")

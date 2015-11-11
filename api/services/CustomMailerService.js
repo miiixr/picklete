@@ -57,6 +57,7 @@ module.exports = {
         deadLine:  sails.moment(result.order.createdAt).add(3, 'days').format('YYYY/MM/DD HH:mm:ss'),
         productName: productsName.join('、'),
         serviceMail: sails.config.store.serviceMail,
+        paymentMethod: result.paymentMethod
         // fullName: result.order.User.username,
         // orderSerialNumber: result.order.serialNumber,
         // productName: productsName.join('、'),
@@ -162,6 +163,33 @@ module.exports = {
       throw error;
     }
 
+  },
+  orderCancel: (order) => {
+
+    try {
+      console.log("result",result);
+      var orderCancelConfirmTemplete = sails.config.mail.templete.orderCancelConfirm;
+      var mailSendConfig = {...orderCancelConfirmTemplete, to: order.User.email};
+      // var productsName = result.OrderItems.map((item) => item.name);
+      // var DOMAIN_HOST = process.env.DOMAIN_HOST || 'localhost:1337';
+      // var orderConfirmLink = `http://${DOMAIN_HOST}/order/paymentConfirm?serial=${result.order.serialNumber}`
+      var {bank} = sails.config;
+
+      mailSendConfig.subject = sprintf(mailSendConfig.subject, {orderSerialNumber: order.serialNumber});
+      mailSendConfig.html = sprintf(mailSendConfig.html, {
+        shipmentUsername: result.order.User.fullName,
+        shipmentId: order.User.email,
+        orderSerialNumber: order.serialNumber,
+        serviceMail: sails.config.store.serviceMail
+      });
+
+      mailSendConfig.type = 'orderConfirm';
+
+      return mailSendConfig;
+
+    } catch (error) {
+      throw error;
+    }
   },
   sendMail: async (message) => {
 
@@ -346,9 +374,10 @@ module.exports = {
 
       mailSendConfig.html = sprintf(mailSendConfig.html, {
         userName: user.name,
+        userEmail: user.email,
         userContact: user.contact,
         userIssue: user.issue,
-        userQuestion: user.question,
+        userQuestion: user.question.replace(/\n/g, '<br>'),
         storeName: sails.config.store.name,
         serviceMail: sails.config.store.serviceMail,
       });

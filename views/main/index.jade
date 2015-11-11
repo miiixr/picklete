@@ -23,7 +23,7 @@ block body
         a(href='#{slider.link}', class='item #{classActiveSlider}', target= slider.openWindow == true ? "_new" : "_self")
           img.img-full(src='#{slider.cover}', alt='#{slider.title}')
           div(class="carousel-caption #{slider.location}", style="color: #{slider.color}")
-            h1 #{slider.title}
+            h1(style="color: #{slider.color}") #{slider.title}
             - if (slider.description)
               p !{slider.description.replace(/\n/g, "<br>")}
           // /carousel-caption
@@ -257,7 +257,7 @@ block body
   
   
 block js
-  script(src='/javascripts/main/index.js')
+  script(src='/javascripts/common/discountCountdown.js')
   script.
     if($("#error").get(0)){
       $('#modal-login').modal('show');

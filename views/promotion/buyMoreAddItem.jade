@@ -82,7 +82,7 @@ block body
       thead
         tr
           th
-            input(type='checkbox')
+            input.selectAll(type='checkbox')
           th 主圖
           th
             | 商品名稱
@@ -111,15 +111,13 @@ block body
               td= product.price
             td
               if query.type == 'reduce'
-                span.text-danger #{product.price - query.reducePrice}
+                span.text-danger #{query.reducePrice}
               else
-                if query.discount >10
-                  span.text-danger #{Math.ceil(product.price * query.discount * 0.01)}
-                else
-                  span.text-danger #{Math.ceil(product.price * query.discount * 0.1)}
+                span.text-danger #{Math.ceil(product.price * query.discount)}
+                
   hr.dashed-line
   +pagination-simple-pager(page, totalPages, limit)
   // /text-center
 block js
   script(src='/javascripts/common/pagination.js')
-  script(src="/javascripts/admin/shopDiscount.js")
+  script(src="/javascripts/admin/buymore.js")
