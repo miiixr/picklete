@@ -182,7 +182,7 @@ let ProductController = {
 
   doUpdate: async (req, res) => {
     let productUpdate = req.body;
-    // console.log('=== ProductContoller : productUpdate ==>\n', productUpdate);
+    sails.log.info('=== ProductContoller : productUpdate ==>\n', productUpdate);
     try {
       let result = await ProductService.update(productUpdate);
       let query = req.query.responseType;
