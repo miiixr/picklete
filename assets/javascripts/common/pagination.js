@@ -65,7 +65,7 @@ $(function() {
   var displayPageHandler = function () {
     var totalNumber = parseInt(inputTotalPages.val(), 10) + 1;
     var pageNumber = parseInt(inputPage.val(), 10) + 1;
-    var PAGE_NUMBER = 5;
+    var PAGE_NUMBER = parseInt(inputLimit.val(), 10);
 
     var pageNodes = $(".pagination .pagination-jump");
     pageNodes.hide();
