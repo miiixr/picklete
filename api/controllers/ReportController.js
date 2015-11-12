@@ -14,8 +14,16 @@ module.exports = {
     let date = req.body.date;
 
     let excel = await ReportService.create(date);
-
-    await res.download(excel);
+    if (excel == null) {
+      let dateList = await ReportService.list();
+      return res.view('promotion/controlShopReportForm', {
+        pageName: '/admin/shop-report-form',
+        dateList: dateList,
+        message: req.flash('message', '此月份沒有訂單資料'),
+      });
+    } else {
+      await res.download(excel);
+    }
 
     // await fs.unlink(excel);
   },

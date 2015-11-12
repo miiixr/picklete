@@ -1,11 +1,24 @@
 extends ../_layout_auth
 
 block body
-  h2.m-bottom-6 營收報表
-  form.form-inline(action="/report/export", method="POST", name="report")
-    .form-group
-      select.form-control(name='date')
-        each date in dateList
-          option(value="#{date[0]}-#{date[1]}") #{date[0]} 年 #{date[1]} 月
-    // /form-control
-    button.btn.btn-danger(type='submit') 匯出報表
+  - var flash = errors || req.flash('message') || req.flash('error')
+  if flash.length != 0
+    .row.col-xs-12(id='flashMessage')
+      .alert.alert-danger(role='alert')
+        button(type="button", class="close", data-dismiss="alert", aria-label="Close")
+          span(aria-hidden="true")&times;
+        p #{flash}
+        p(style="display:none;")= flash
+
+  .row.col-xs-12
+    h2.m-bottom-6 營收報表
+    form.form-inline(action="/report/export", method="POST", name="report")
+      .form-group
+        select.form-control(name='date')
+          each date, index in dateList
+            if index < dateList.length - 1
+              option(value="#{date[0]}-#{date[1]}") #{date[0]} 年 #{date[1]} 月
+            else
+              option(value="#{date[0]}-#{date[1]}", selected="selected") #{date[0]} 年 #{date[1]} 月
+      // /form-control
+      button.btn.btn-danger(type='submit') 匯出報表
