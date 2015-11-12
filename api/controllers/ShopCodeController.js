@@ -24,7 +24,7 @@ let ShopCodeController = {
       limit: limit,
     });
     res.view('promotion/controlShopCode',{
-      pageName: "shop-code",
+      pageName: "/admin/shop-code",
       shopCodes: ShopCodes,
       query: query,
       limit: limit,

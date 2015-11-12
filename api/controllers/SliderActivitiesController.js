@@ -1,5 +1,5 @@
 let SliderActivitiesController = {
-    
+
   create: async (req, res) => {
     var params = req.body;
     var checkOpenWindow = req.body['openWindow'];
@@ -51,7 +51,7 @@ let SliderActivitiesController = {
 
     let id = req.query.id;
     let updateSlider = await db.Slider.findOne({ where: {id: id} });
-    
+
     try {
        return res.view("admin/sliderActivitiesUpdate",{ slider: updateSlider });
     } catch (e) {
@@ -65,23 +65,23 @@ let SliderActivitiesController = {
       var params = req.body;
       let id = parseInt(req.body['id'] || req.query.id);
       let updateSlider = await db.Slider.findOne({ where: {id: id} });
-      
+
       updateSlider.cover = req.body['cover'];
-      
+
       let checkOpenWindow = req.body['openWindow'];
       if(checkOpenWindow == undefined){
         updateSlider.openWindow = false;
       } else if(checkOpenWindow == 'on'){
         updateSlider.openWindow = true;
       }
-      
+
       updateSlider.title = req.body['title'];
       updateSlider.description = req.body['description'];
       updateSlider.location = req.body['location'];
       updateSlider.color = req.body['color'];
       updateSlider.link = req.body['link'];
 
-    
+
       await updateSlider.save();
       return res.redirect("/admin/index-slider");
     } catch (e) {
@@ -90,10 +90,10 @@ let SliderActivitiesController = {
   },
 
   updateSlider: async (req, res) => {
-  	
+
   	let id = req.params.id;
     let updateSlider = await db.Slider.findOne({ where: {id: id} });
-    
+
 		updateSlider.cover = req.body['cover'];
 		updateSlider.title = req.body['title'];
 		updateSlider.description = req.body['description'];
@@ -108,7 +108,8 @@ let SliderActivitiesController = {
   list: async (req, res) => {
 
   	let listSliders = await db.Slider.findAll();
-  	return res.view("admin/sliderActivities", { 
+  	return res.view("admin/sliderActivities", {
+        pageName: "/admin/index-slider",
   			sliders: listSliders
       });
   },
@@ -120,12 +121,12 @@ let SliderActivitiesController = {
   },
 
   delete: async (req, res) => {
-    
+
     let id = req.body['id'];
 
     let slider = await db.Slider.findOne({ where: {id: id} });
     await slider.destroy();
-    
+
     try {
        return res.redirect("/admin/index-slider");
     } catch (e) {
@@ -135,7 +136,7 @@ let SliderActivitiesController = {
 
 
   deleteSlider: async (req, res) => {
-    
+
     let id = req.params.id;
     let slider = await db.Slider.findOne({ where: {id: id} });
     await slider.destroy();
