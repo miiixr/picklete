@@ -2,6 +2,7 @@
 
   var cartViewer = $('#cart-viewer');
   var subtotalDiv = $('#subtotal');
+  var totaldiscountDiv = $('#total-discount');
   var totalPriceDiv = $('#totalPrice');
   var buymoreDiv = $("#buymore");
   var packingFeeTD = $("#packingFeeField");
@@ -11,6 +12,7 @@
   var isMobile = ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) ? true : false;
 
   var subtotal = 0;
+  var totaldiscount = 0;
   var totalPrice = 0;
   var buymore = parseInt(buymoreDiv.text(),10) || 0;
   var discountAmount = 0;
@@ -79,11 +81,12 @@
 
       if(orderItem.originPrice == undefined) orderItem.originPrice ='';
       subtotal += parseInt(orderItem.price*orderItem.quantity, 10);
-
+      totaldiscount = parseInt(subtotal-parseInt(orderItem.originPrice.replace(',','').replace('$',''),10)*orderItem.quantity, 10)
       totalQuanties += 1;
     });
     subtotalDiv.text(subtotal.formatMoney());
     subtotalDiv.data('value', subtotal);
+    totaldiscountDiv.text(totaldiscount.formatMoney());
     calcTatalPrice();
     // save new quantities
     Cookies.set('picklete_cart', picklete_cart);
@@ -192,9 +195,11 @@
       liOrderItem = liOrderItem + liPackageService + liPrice + liRemoveItem;
 
       subtotal += parseInt(orderItem.price*orderItem.quantity, 10);
-
       subtotalDiv.text(subtotal.formatMoney());
       subtotalDiv.data('value', subtotal);
+       
+      totaldiscount = parseInt(subtotal-parseInt(orderItem.originPrice.replace(',','').replace('$',''),10)*orderItem.quantity, 10)
+      totaldiscountDiv.text(totaldiscount.formatMoney());
 
       totalPrice = subtotal + buymore;
       totalPriceDiv.text(totalPrice.formatMoney());
