@@ -204,15 +204,15 @@ let UserController = {
       let data = req.query;
       let picklete_cart = req.cookies.picklete_cart;
       if(picklete_cart != undefined){
-        
+
         try {
-          picklete_cart = JSON.parse(picklete_cart);  
+          picklete_cart = JSON.parse(picklete_cart);
         } catch (e) {
           console.error(e.stack);
           let {message} = e;
           res.serverError({message});
         }
-        
+
         // if(picklete_cart.hasOwnProperty('additionalPurchasesItem')) {
         //   picklete_cart.additionalPurchasesItem = [];
         // }
@@ -223,7 +223,7 @@ let UserController = {
           additionalPurchasesId: data.additionalPurchasesId,
           productId: data.productId
         });
-        
+
         res.cookie('picklete_cart', JSON.stringify(picklete_cart));
       }
       res.redirect("/user/cart");
@@ -321,11 +321,6 @@ let UserController = {
       res.serverError({message});
 
     }
-
-
-
-
-
 
   },
 
@@ -487,7 +482,7 @@ let UserController = {
       }
 
       res.view("user/controlMembers", {
-        pageName: "members",
+        pageName: "/admin/members",
         members: members,
         page: page,
         limit: limit,
@@ -500,11 +495,68 @@ let UserController = {
       return res.serverError(error);
     }
   },
+  showAdminInformation: async(req, res) => {
+    
+    let user = await db.User.findOne({
+      where :{ 
+        email :'admin@gmail.com'
+      }
+    });
+
+    let passport = await db.Passport.find({where: {UserId: user.id}});
+    user.password = passport.password;
+    user.passwordAgain = passport.password;
+    return res.view("admin/adminSet",{user});
+  },
+  updateAdminInformation: async(req, res) => {
+
+    let user = await db.User.findOne({
+      where :{ 
+        email :'admin@gmail.com'
+      }
+    });
+
+    let passport = await db.Passport.find({where: {UserId: user.id}});
+    user.password = passport.password;
+    user.passwordAgain = passport.password;
+
+    let updateUser = req.body;
+      
+    if(updateUser.password != passport.password){
+      passport.password = updateUser.password;
+      await passport.save()
+    }
+
+    let updateUserKeys = Object.keys(updateUser);
+
+    updateUserKeys.forEach((key)=>{
+      if(typeof(user[key]) != undefined) user[key] = updateUser[key];
+    });
+    
+    await user.save();
+
+    return res.view("admin/adminSet",{user});
+
+  },
   controlMemberDetail: async function(req, res) {
     try {
+      let query = req.query;
+      let userId = req.param('id');
+
+      if (query.comment) {
+        let member = await db.User.findById(userId);
+        member.comment = query.comment;
+        await member.save();
+      }
+      let orders = await OrderService.findAllByUserComplete({id: userId});
+      // console.log(JSON.stringify(orders, null, 4));
+      let user = await UserService.findOne(userId);
+      // console.log(JSON.stringify(user, null, 4));
       res.view("user/controlMemberDetail", {
-        pageName: "member-detail",
-        member: await db.User.findById(req.param('id'))
+        pageName: "/admin/members",
+        member: await db.User.findById(req.param('id')),
+        orders,
+        user
       });
     }
     catch (error) {

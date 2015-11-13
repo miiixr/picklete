@@ -97,7 +97,12 @@ OrderController = {
 
       let orders = await db.Order.findAndCountAll(queryObj);
 
-      return res.view({orders,query,page,limit});
+      return res.view({
+        pageName: "/admin/order",
+        orders,
+        query,
+        page,limit
+      });
     } catch (error) {
       return res.serverError(error);
     }
