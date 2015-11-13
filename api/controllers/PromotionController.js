@@ -212,14 +212,17 @@ let PromotionController = {
 
       console.log('=== isCreatePromotion ===', isCreatePromotion);
       if(isCreatePromotion){
-        let products = await db.Product.findAll({
+        let products = await db.Product.findAndCountAll({
           where: {
             id: query.productIds
           },
+          include:[{
+            model: db.ProductGm,
+          }],
           offset: offset,
-          limit: limit
+          limit: limit,
+          subQuery: false
         });
-
         if(products == null)
           products = []
 
@@ -233,7 +236,10 @@ let PromotionController = {
           where: {
             id: query.id
           },
-          include: [db.Product]
+          include: [{
+            model: db.Product,
+            include:[db.ProductGm]
+          }]
         });
 
         promotion = promotion.toJSON();
@@ -247,7 +253,7 @@ let PromotionController = {
           let products = await db.Product.findAll({
             where: {
               id: query.productIds
-            }
+            },
             // offset: offset,
             // limit: limit
           });
@@ -262,7 +268,6 @@ let PromotionController = {
 
       if(query.discountType == 'flash') view = 'promotion/controlShopDiscountDetail';
       else view = 'promotion/controlShopDiscountDetail2';
-
       res.view(view,{
         pageName: "shop-discount-detail",
         promotion,
@@ -431,9 +436,7 @@ let PromotionController = {
           where: {
             id: query.id
           },
-          include:[{
-            model: db.Product
-          }],
+          include:[db.ProductGm],
           offset: offset,
           limit: limit
         });

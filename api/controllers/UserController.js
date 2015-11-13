@@ -354,20 +354,25 @@ let UserController = {
       if (req.method=='POST') {
 
         let user = await UserService.getLoginUser(req);
-
         if (user) {
           let passport = await db.Passport.findOne({
             where: {
               protocol: 'local',
-              UserId: user
+              UserId: user.id
             }
           });
-
-          if (passport) {
-            passport.password = req.body.newPassword;
-            passport.save();
-
-            message = '密碼已經更新';
+          if(passport.password == req.body.oldPassword){
+            if (passport && req.body.newPassword == req.body.newPassword2) {
+              passport.password = req.body.newPassword;
+              passport.save();
+              message = '密碼已經更新';
+            } 
+            else{
+              message = '密碼輸入不一致';
+            }
+          }
+          else{
+            message = '原有密碼輸入錯誤';
           }
         }
       }
