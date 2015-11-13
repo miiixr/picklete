@@ -38,7 +38,9 @@ module.exports = (sequelize, DataTypes) ->
     privacyTermsAgree:
       type: DataTypes.BOOLEAN
       defaultValue: true
-  }, classMethods: associate: (models) ->
+  },
+   paranoid: true,
+   classMethods: associate: (models) ->
     User.hasMany models.Passport
     User.belongsTo models.Role
     User.belongsToMany(models.Like, {through: 'UserLike'});

@@ -491,9 +491,9 @@ let UserController = {
     }
   },
   showAdminInformation: async(req, res) => {
-    
+
     let user = await db.User.findOne({
-      where :{ 
+      where :{
         email :'admin@gmail.com'
       }
     });
@@ -506,7 +506,7 @@ let UserController = {
   updateAdminInformation: async(req, res) => {
 
     let user = await db.User.findOne({
-      where :{ 
+      where :{
         email :'admin@gmail.com'
       }
     });
@@ -516,7 +516,7 @@ let UserController = {
     user.passwordAgain = passport.password;
 
     let updateUser = req.body;
-      
+
     if(updateUser.password != passport.password){
       passport.password = updateUser.password;
       await passport.save()
@@ -527,7 +527,7 @@ let UserController = {
     updateUserKeys.forEach((key)=>{
       if(typeof(user[key]) != undefined) user[key] = updateUser[key];
     });
-    
+
     await user.save();
 
     return res.view("admin/adminSet",{user});
@@ -652,6 +652,7 @@ let UserController = {
   delete: async (req, res) => {
     try{
       let userId = req.param("id");
+      console.log(userId);
       let findUser = await db.User.findById(userId);
       if (!findUser) {
         return res.serverError({
@@ -664,7 +665,7 @@ let UserController = {
       if(ensureDelete) {
         return res.serverError({msg: 'delete失敗'});
       }
-      return res.redirect('user/index/');
+      return res.ok({status: 'ok'});
     }catch(error){
       return res.serverError(error);
     }
