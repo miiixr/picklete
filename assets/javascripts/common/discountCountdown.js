@@ -1,4 +1,39 @@
 (function ($) {
+  var isMobile = ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) ? true : false;
+  $(".notice-to-buy").on("click", function(e){
+     var productid = $(".notice-to-buy").data("productid");
+     $.ajax({
+          url : '/user/loginStatus',
+          type: "get",
+          data : null,
+          success:function(data, textStatus, jqXHR)
+          {
+            console.log('=== data ==>',data.loginStatus);
+            if(data.loginStatus){
+              $.ajax({
+                url : '/user/AdviceCustomerListController',
+                type: "get",
+                data : {
+                  productid : productid
+                },
+                success:function(data, textStatus, jqXHR)
+                {
+                  alert(data);
+                }
+              });
+            }else{
+              if (isMobile) {
+                alert('請先登入帳號密碼')
+                return location.href='/user/login';
+              }
+                
+              $('#modal-login').modal('show')
+            }
+          }
+      });  
+   });
+
+
 
   var interval = 1000;
   var runTimer = function (differ, target) {
@@ -34,5 +69,7 @@
 
     runTimer(duration, self);    
   });
+
+
 
 }(jQuery));

@@ -131,7 +131,7 @@ let PromotionController = {
     try {
       let query = req.query;
       let queryObj = {};
-
+      queryObj.$or = [];
       console.log('==== discountAddItem query ====', query);
 
       if(!query.hasOwnProperty("productIds"))
@@ -143,8 +143,22 @@ let PromotionController = {
 
       let brands = await db.Brand.findAll();
 
-      if(query.keyword)
-        queryObj.name = { 'like': '%'+query.keyword+'%'};
+      if(query.keyword){
+        let eachKeywords = query.keyword.split('+');
+        for (var i=0; i<eachKeywords.length; i++) {
+          let keyword = eachKeywords[i];
+
+          queryObj.$or.push({ name: { $like: '%'+keyword+'%' } });
+          queryObj.$or.push({ description: { $like: '%'+keyword+'%' } });
+          queryObj.$or.push({ country: { $like: '%'+keyword+'%' } });
+          queryObj.$or.push({ spec: { $like: '%'+keyword+'%' } });
+
+          queryObj.$or.push(['`ProductGm`.`name` like ?', '%'+keyword+'%']);
+          queryObj.$or.push(['`ProductGm`.`explain` like ?', '%'+keyword+'%']);
+          queryObj.$or.push(['`ProductGm`.`usage` like ?', '%'+keyword+'%']);
+          queryObj.$or.push(['`ProductGm`.`notice` like ?', '%'+keyword+'%']);
+        }
+      }
       else
         query.keyword = ''
 
@@ -165,14 +179,16 @@ let PromotionController = {
 
       console.log('------------ page');
       console.log(offset);
-
+       console.log("123hihihi",queryObj);
       let products = await db.Product.findAndCountAll({
-        where: queryObj,
+        subQuery: false,
         include: [{
+          required: true,
           model: db.ProductGm
         }],
-        offset: offset,
-        limit: limit
+        where: queryObj,
+        limit: limit,
+        order: [['id', 'ASC']]
       });
 
       products.rows = await PromotionService.productPriceTransPromotionPrice(new Date(), products.rows);
@@ -212,17 +228,14 @@ let PromotionController = {
 
       console.log('=== isCreatePromotion ===', isCreatePromotion);
       if(isCreatePromotion){
-        let products = await db.Product.findAndCountAll({
+        let products = await db.Product.findAll({
           where: {
             id: query.productIds
           },
-          include:[{
-            model: db.ProductGm,
-          }],
           offset: offset,
-          limit: limit,
-          subQuery: false
+          limit: limit
         });
+
         if(products == null)
           products = []
 
@@ -261,7 +274,7 @@ let PromotionController = {
           promotion.Products = products;
         }
       }
-
+      promotion.products = await PromotionService.productPriceTransPromotionPrice(promotion.startDate,promotion.Products);
       console.log('=== promotion ===', promotion);
 
       let view = "";

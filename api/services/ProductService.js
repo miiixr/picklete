@@ -163,6 +163,9 @@ module.exports = {
             product.spec = updateProduct.spec;
             product.color = good.color;
             product.productNumber = good.productNumber;
+            if(product.stockQuantity == 0 && good.stockQuantity > 0){
+              await AdviceCustomerListService.sendEmail(product.id);
+            }
             product.stockQuantity = good.stockQuantity;
             product.description = good.description;
             product.isPublish = (good.isPublish == "false") ? false : true;
