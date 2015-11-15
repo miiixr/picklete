@@ -59,7 +59,6 @@ let UserController = {
     }
 
     let products = await ProductService.findFavorite(favoriteKeys);
-
     res.view("main/memberFavorite", {
       products
     });

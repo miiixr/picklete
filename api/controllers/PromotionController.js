@@ -179,7 +179,6 @@ let PromotionController = {
 
       console.log('------------ page');
       console.log(offset);
-       console.log("123hihihi",queryObj);
       let products = await db.Product.findAndCountAll({
         subQuery: false,
         include: [{
