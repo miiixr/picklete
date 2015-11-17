@@ -8,7 +8,7 @@
       var duration = moment.duration(durationTime, 'milliseconds');
       durationTime -= interval;
       //show how many hours, minutes and seconds are left
-      target.find('span').text(moment(duration.asMilliseconds()).format('h:mm:ss'));
+      target.find('span').text(moment(duration.asMilliseconds()).format('hhh:mm:ss'));
     }, interval);
   };
 
