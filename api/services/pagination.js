@@ -11,13 +11,13 @@ var self = module.exports = {
     return defaultLimitValue;
   },
   limit: async (req) => {
-    return parseInt(req.param('limit', await self.defaultLimitValue(req)));
+    return parseInt(req.param('limit', await self.defaultLimitValue(req)), 10);
   },
   offset: async (req) => {
     return await self.page(req) * await self.limit(req);
   },
   page: async (req) => {
-    return parseInt(req.param('page', 0));
+    return parseInt(req.param('page', 0), 10);
   },
   limitWithSession: async (req) => {
     let key = await sessionKey(req, 'limit');
@@ -25,7 +25,7 @@ var self = module.exports = {
     console.log('=== req.session[key] ===', req.session[key]);
     console.log('=== key ===', key);
     return req.session[key] =
-      parseInt(req.param('limit', req.session[key] || self.defaultLimitValue(req)));
+      parseInt(req.param('limit', req.session[key] || self.defaultLimitValue(req)), 10);
   },
   offsetWithSession: async (req) => {
     return await self.pageWithSession(req) * await self.limitWithSession(req);
@@ -33,7 +33,7 @@ var self = module.exports = {
   pageWithSession: async (req) => {
     let key = await sessionKey(req, 'page');
     return req.session[key] =
-      parseInt(req.param('page', req.session[key] || 0));
+      parseInt(req.param('page', req.session[key] || 0), 10);
   },
   sessionKey: async (req, postfix) => {
     return req.options.controller + '.' + req.options.action + '.' + postfix;
