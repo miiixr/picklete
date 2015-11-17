@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
   let ProductGm = sequelize.define('ProductGm', {
     // 品牌 id
     // brandId: DataTypes.INTEGER,
-    // brandName: DataTypes.STRING,
+    brandName: DataTypes.STRING,
     name: DataTypes.STRING,
     // 大館別 id
     // dptId: {
