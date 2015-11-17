@@ -259,8 +259,8 @@ module.exports.createTestData = async ({createRoleUser, createNewBuyer}) => {
 
   let createdProductGmOthers = await db.ProductGm.create({
     BrandId: 5,
-    brandName: '其他品牌',
-    name: "其他品牌",
+    brandName: '其他品牌名稱',
+    name: "其他商品名稱",
     explain: '其他品牌',
     usage: '其他品牌',
     notice: '其他品牌',
@@ -272,6 +272,21 @@ module.exports.createTestData = async ({createRoleUser, createNewBuyer}) => {
   await createdProductGmOthers.setDpts([dptA]);
   await createdProductGmOthers.setDptSubs([dptSubA]);
 
+  let otherBrandsProduct = await db.Product.create({
+    stockQuantity: 1,
+    isPublish: 'true',
+    price: 888,
+    size: 'normal',
+    service: ["快遞宅配", "超商取貨", "禮品包裝"],
+    country: 'U.K',
+    madeby: 'TW',
+    color: 3,
+    productNumber: '2-USA-3-G',
+    spec: 'super-metal',
+    photos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg']
+  });
+
+  await createdProductGmOthers.setProducts([otherBrandsProduct]);  
 
   // create tag
   let tags = ["男人", "女人", "兒童", "情人", "學生", "寵物", "旅行", "閱讀", "咖啡", "午茶", "派對", "時尚", "印花", "夏日", "冬季", "聖誕", "森林", "動物", "花園", "浪漫", "可愛", "趣味", "復古", "環保", "工業", "簡約"];
