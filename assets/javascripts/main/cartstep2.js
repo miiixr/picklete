@@ -63,11 +63,14 @@
   var shopCodeObject =Cookies.getJSON('shopCode');
 
   var subtotalDiv = $('#subtotal');
+  var totaldiscountDiv = $('#total-discount');
+
   var totalPriceDiv = $('#totalPrice');
   var buymoreDiv = $('#buymore');
   var packingFeeTD = $("#packingFeeField");
 
   var subtotal = 0;
+  var totaldiscount = 0;
   var totalPrice = 0;
   var buymore = picklete_cart.buymore || 0;
   if(buyMoreObject){
@@ -81,11 +84,17 @@
     subtotal += parseInt(orderItem.price*orderItem.quantity, 10);
     subtotalDiv.text(subtotal.formatMoney());
     totalPrice = subtotal;
+
+    // count 總折扣
+    totaldiscount = parseInt(subtotal-parseInt(orderItem.originPrice.replace(',','').replace('$',''),10)*orderItem.quantity, 10)
+    totaldiscountDiv.text(totaldiscount.formatMoney());
   });
 
   // count 加價購
   totalPrice += buymore;
 
+  
+  
   // count packing fee
   var packingFee = parseInt(Cookies.getJSON('packing').packingFee);
   packingFeeTD.text(packingFee);
