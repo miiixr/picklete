@@ -257,6 +257,22 @@ module.exports.createTestData = async ({createRoleUser, createNewBuyer}) => {
   }
   await createdProductGmGood.setProducts(xs);
 
+  let createdProductGmOthers = await db.ProductGm.create({
+    BrandId: 5,
+    brandName: '其他品牌',
+    name: "其他品牌",
+    explain: '其他品牌',
+    usage: '其他品牌',
+    notice: '其他品牌',
+    depId: dptA.id,
+    depSubId: dptSubA.id,
+    coverPhoto: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/JC1121-set-My-Mug-blue-2.jpg']
+  });
+
+  await createdProductGmOthers.setDpts([dptA]);
+  await createdProductGmOthers.setDptSubs([dptSubA]);
+
+
   // create tag
   let tags = ["男人", "女人", "兒童", "情人", "學生", "寵物", "旅行", "閱讀", "咖啡", "午茶", "派對", "時尚", "印花", "夏日", "冬季", "聖誕", "森林", "動物", "花園", "浪漫", "可愛", "趣味", "復古", "環保", "工業", "簡約"];
   for (let i in tags) {
