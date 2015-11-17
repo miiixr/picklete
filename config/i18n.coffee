@@ -15,11 +15,6 @@ https://github.com/mashpie/i18n-node#list-of-configuration-options
 module.exports.i18n = {
   updateFiles: true
   localesDirectory: '/config/locales'
-  localesDirectory: '/views/_layout_head.jade'
-  localesDirectory: '/views/admin/goodList.jade'
-  localesDirectory: '/views/admin/goodCreate.jade'
-  localesDirectory: '/views/partial/_auth_sidebar'
-  localesDirectory: '/views/main/cart.jade'
   locales: ['en', 'zh']
 }
 
