@@ -122,7 +122,7 @@
   // end of CKEDITOR
 
   // form submit
-  $(function  () {
+  $(function() {
     $("form#goodForm").submit(function() {
       var pass = true;
 
@@ -138,6 +138,22 @@
         $(this).find('.weight').val(index);
       });
       // end give weight
+
+      $("select[name='dptId[]']").map(function(index) {
+        if ($(this).val().length > 2) {
+          $(this).focus();
+          alert('請選擇大館別');
+          pass = false;
+        }
+      });
+
+      $("select[name='dptSubId[]']").map(function(index) {
+        if ($(this).val() == '') {
+          $(this).focus();
+          alert('請選擇小館別');
+          pass = false;
+        }
+      });
 
       return pass;
     });
