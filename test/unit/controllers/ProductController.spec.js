@@ -246,7 +246,7 @@ describe("about Product", () => {
     });
   });
 
-  it('create a product for one type, custom brandType, test about - ProductController.createUpdate', (done) => {
+  it.only('create a product for one type, custom brandType, test about - ProductController.createUpdate', (done) => {
 
     request(sails.hooks.http.app)
     .post('/admin/goods/create')
@@ -289,8 +289,7 @@ describe("about Product", () => {
     .post('/admin/goods/create')
     // .set('cookie', cookie)
     .field('brandType', 'custom') // other, PRIEM, AGENT
-    .field('brandName', 'otherBrand')
-    .field('name', 'kerkerker')
+    .field('customBrand', 'otherBrand')
     .field('brandId', 1)
     .field('dptId', '1')
     .field('dptSubId', '1')
@@ -325,7 +324,7 @@ describe("about Product", () => {
     .field('tag', '兒童,學生')
     .end(function(err, res) {
       res.statusCode.should.be.equal(302);
-      res.headers.location.should.be.equal('/admin/goods/');
+      res.headers.location.should.be.equal('/admin/goods');
 
       return done();
     });
