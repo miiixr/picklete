@@ -59,7 +59,8 @@ block body
           .form-group.m-bottom-0
             label.col-md-1.control-label.text-muted 住址
             .col-md-11
-              p.form-control-static #{user.address}
+              - var userAddress = (user.zipcode?user.zipcode:'') + ' ' + (user.city?user.city:'') + (user.region?user.region:'') + (user.address?user.address:'');
+              p.form-control-static #{userAddress}
           // /form-group
         // /col-md-6
       // /row
@@ -68,7 +69,7 @@ block body
           .form-group
             label.col-md-1.control-label.text-muted 興趣
             .col-md-11
-              p.form-control-static TODO: not yet impl.
+              p.form-control-static #{userLikes}
           // /form-group
         // /col-md-6
       // /row

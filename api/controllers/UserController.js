@@ -561,13 +561,23 @@ let UserController = {
       }
       let orders = await OrderService.findAllByUserComplete({id: userId});
       // console.log(JSON.stringify(orders, null, 4));
-      let user = await UserService.findOne(userId);
-      // console.log(JSON.stringify(user, null, 4));
+      let user = await UserService.findOneWithLikes(userId);
+      console.log(JSON.stringify(user, null, 4));
+
+      let likes = [];
+      let userLikes='';
+      for(let like of user.Likes) {
+        if(userLikes.length>0)
+          userLikes += '、';
+        userLikes += like.title;
+      }
+      console.log(JSON.stringify(likes, null, 4));
       res.view("user/controlMemberDetail", {
         pageName: "/admin/members",
         member: await db.User.findById(req.param('id')),
         orders,
-        user
+        user,
+        userLikes
       });
     }
     catch (error) {
