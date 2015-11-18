@@ -78,7 +78,7 @@ OrderController = {
         where: queryObj,
         offset: page * limit,
         limit: limit,
-        order: 'createdAt DESC',
+        order: [['createdAt', 'DESC']],
         include: [
           {
             model: db.User,

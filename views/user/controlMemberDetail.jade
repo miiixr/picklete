@@ -1,6 +1,24 @@
 extends ../_layout_auth
 
 block body
+  #modal-member-delete.modal.fade
+    .modal-dialog(role='document')
+      .modal-content.font-size-slarge
+        .modal-header.p-30
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') ×
+          h2.modal-title 刪除
+        // /modal-header
+        .modal-body.p-30.p-top-0
+          p 您確定要將 
+            span 
+            | 此會員刪除？
+          //- p 您確定要將此 XXXXXXX 移出此折扣活動？
+        // /modal-body
+        .modal-footer
+          button.btn.btn-default(type='button', data-dismiss='modal') 取消
+          button.btn.btn-green(type='button', onClick="deleteMember(#{member.id});") 確定
+
   h2.m-bottom-6 會員資料
   .well.control-well.p-30.m-bottom-8
     form#memberDetail.form-horizontal(name="memberDetail", action="/admin/member-detail/#{member.id}", method="get")
@@ -191,5 +209,8 @@ block body
               a(data-toggle='collapse', data-parent='#collapse-purchase', href='#collapse-purchase-One')
                 span.glyphicon.glyphicon-plus              
   .text-center.m-top-8.m-bottom-6
-    a.btn.btn-link.delete-link.btn-lg(data-toggle="modal", data-target="#modal-delete") 刪除會員
+    a.btn.btn-link.delete-link.btn-lg(data-toggle="modal", data-target="#modal-member-delete") 刪除會員
     button.btn.btn-green(form="memberDetail") 儲存變更
+
+block js
+  script(src='/javascripts/admin/controlMemberDetail.js')

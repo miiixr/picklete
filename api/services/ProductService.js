@@ -507,7 +507,7 @@ module.exports = {
           }]
         }, productDptSubConfig],
         offset: offset,
-        limit: limit,
+        limit: limit
       };
      
       let sort;

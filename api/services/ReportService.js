@@ -34,36 +34,42 @@ module.exports = {
       let allOrder = await OrderService.findAllByDateComplete(startDate, endDate);
       sheetData.push([]);
       sheetData.push(sheetHeader);
+      if (allOrder.length != 0) {
+        _.forEach(allOrder, function(eachReport) {
+          console.log(eachReport);
+          let singleSheetData = [];
+          let eachReportData = eachReport.dataValues;
+          let orderItems = eachReportData.OrderItems;
 
-      _.forEach(allOrder, function(eachReport) {
-        let singleSheetData = [];
-        let eachReportData = eachReport.dataValues;
-        let orderItems = eachReportData.OrderItems;
+          singleSheetData.push(eachReportData.serialNumber);
+          singleSheetData.push(eachReportData.quantity);
+          singleSheetData.push(eachReportData.status);
+          singleSheetData.push(eachReportData.User.dataValues.username);
+          singleSheetData.push(eachReportData.updatedAt);
 
-        singleSheetData.push(eachReportData.serialNumber);
-        singleSheetData.push(eachReportData.quantity);
-        singleSheetData.push(eachReportData.status);
-        singleSheetData.push(eachReportData.User.dataValues.username);
-        singleSheetData.push(eachReportData.updatedAt);
+          _.forEach(orderItems, function(orderItem) {
+            let quantity = orderItem.dataValues.quantity;
+            let price = orderItem.dataValues.price;
+            totalPrice += quantity * price;
+          });
 
-        _.forEach(orderItems, function(orderItem) {
-          let quantity = orderItem.dataValues.quantity;
-          let price = orderItem.dataValues.price;
-          totalPrice += quantity * price;
+          sheetData.push(singleSheetData);
+          sheet.data = sheetData;
+          sheet.name = 'Report-' + date;
+          console.log(sheet);
         });
 
-        sheetData.push(singleSheetData);
+        console.log(sheet);
+        sheet.data[0].push('總金額', totalPrice);
+        sheets.push(sheet);
 
-        sheet.data = sheetData;
-        sheet.name = 'Report-' + date;
-      });
+        let excel = await ReportService.buildExcel(sheets, date, date);
+        sails.log(excel);
+        return excel;
+      } else {
+        return null;
+      }
 
-      sheet.data[0].push('總金額', totalPrice);
-      sheets.push(sheet);
-
-      let excel = await ReportService.buildExcel(sheets, date, date);
-      sails.log(excel);
-      return excel;
     } catch (error) {
       sails.log.error(error);
     }
