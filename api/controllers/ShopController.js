@@ -47,7 +47,7 @@ let ShopController = {
           }]
         });
 
-      
+     
         products = await PromotionService.productPriceTransPromotionPrice(new Date(), promotion.Products);
 
         res.view('main/flash', {
@@ -66,10 +66,12 @@ let ShopController = {
         query.dateEnd = moment().format();
         query.dateFrom = moment().subtract(3, 'months').format();
       }
-
+         
       let productsWithCount = await ProductService.productQuery(query, offset, limit);
+  
       let products = productsWithCount.rows || [];
       // sails.log.info('=== shop products ===',products);
+      
       products = await PromotionService.productPriceTransPromotionPrice(new Date(), products);
 
       let brands = await db.Brand.findAll({order: 'weight ASC',});
@@ -179,10 +181,6 @@ let ShopController = {
 
       productGm = productGm.dataValues;
 
-      // console.log('------ productGM -----')
-      // console.log(productGm)
-      // console.log('------ productGM end -----')
-
       product = (await PromotionService.productPriceTransPromotionPrice(new Date(), [product]))[0];
 
       product = product.dataValues;
@@ -232,7 +230,7 @@ let ShopController = {
       }
 
       else {
-        // product.price = '$ ' + UtilService.numberFormat(product.price);
+      
         let resData = {
           dpt: dpt,
           dptSub: dptSub,

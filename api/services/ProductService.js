@@ -163,6 +163,9 @@ module.exports = {
             product.spec = updateProduct.spec;
             product.color = good.color;
             product.productNumber = good.productNumber;
+            if(product.stockQuantity == 0 && good.stockQuantity > 0){
+              await AdviceCustomerListService.sendEmail(product.id);
+            }
             product.stockQuantity = good.stockQuantity;
             product.description = good.description;
             product.isPublish = (good.isPublish == "false") ? false : true;
@@ -464,25 +467,21 @@ module.exports = {
         }
 
 
-        // 販售狀態 1:隱藏, 2:上架
-        if (query.isPublish != '') {
-          queryObj.isPublish = (query.isPublish == 'false') ? null : true;
-        }
-
         // productGm 搜尋
         if (query.brandId > 0)
-          queryObj.BrandId = query.brandId;
+          ProductQueryObj.BrandId = query.brandId;
 
         // tag keyword search
         if (query.tag) {
-          queryObj.tag = {
+          ProductQueryObj.tag = {
             $like: '%' + query.tag + '%'
           };
         }
 
-        if (typeof query.isPublish != 'undefined') {
-          ProductQueryObj.isPublish = (query.isPublish == 'false') ? null : true;
+        if (query.isPublish != '') {
+          ProductQueryObj.isPublish = (query.isPublish == 'false') ? 0 : 1;
         }
+        console.log("zxc123",ProductQueryObj);
       }
       // ================ merge queryObj ================
 
@@ -510,7 +509,7 @@ module.exports = {
         offset: offset,
         limit: limit
       };
-
+     
       let sort;
       switch (query.sort) {
         case 'views':

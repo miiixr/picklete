@@ -200,10 +200,10 @@ module.exports = {
   productPriceTransPromotionPrice: async(date, products) => {
     try {
       // find all promotions within a specific date
-
+console.log("date:=====",date);
       // check each prduct
       if(!products.length) return products;
-
+      
       let productIds = products.map((product) => product.id)
 
       let findPromotions = await db.Promotion.findAll({

@@ -240,7 +240,29 @@ module.exports = {
       throw e;
     }
   },
+  adviceCustomerMail: async({adviceCustomer,link}) => {
+    try {
+      var checkForgotTpl = sails.config.mail.templete.adviseCustomer;
+      var email = adviceCustomer.User.email;
+      var mailSendConfig = {...checkForgotTpl, from: sails.config.mail.config.from, to: email};
+      mailSendConfig.subject = sprintf(mailSendConfig.subject, {
+        fullName: adviceCustomer.User.username
+      });
 
+      mailSendConfig.html = sprintf(mailSendConfig.html, {
+        fullName: adviceCustomer.User.username,
+        link: link,
+        storeName: sails.config.store.name,
+        serviceMail: sails.config.store.serviceMail,
+      });
+
+      mailSendConfig.type = 'adviceCustomer';
+
+      return mailSendConfig;
+    } catch (e) {
+      throw e;
+    }
+  },
   newPasswordMail: async({user,passport}) =>{
     try {
       var newPasswordTpl = sails.config.mail.templete.newPassword;

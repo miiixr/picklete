@@ -299,5 +299,28 @@ module.exports.mail = {
       </body></html>"""
     },
 
+    adviseCustomer:{
+      sendBy: 'email',
+      subject: '%(fullName)s 貨到通知信',
+      html: """<html><body>
+      <br /><p> 親愛的 %(fullName)s 您好!！</p>
+      <br />
+      <br />您於i+DEAL創而有意平台登記缺貨通知的商品已到貨，請參考下方是您已期待許久的商品 !：
+      <br />
+      <br /><%(link)s
+      <br />趕緊把心怡已久的商品帶回家吧 !  
+      <br />
+      <br />此為系統信件，請勿直接回覆此信件
+      <br />
+      <br />---
+      <br />
+      <br />%(storeName)s | 好物慢慢選
+      <br />
+      <br />客服信箱：%(serviceMail)s
+      <br />
+      <br />上班時間：週一至週五，10.00AM - 5.00PM，比照國定休假日
+      </body></html>"""
+    }
+
   }
 }
