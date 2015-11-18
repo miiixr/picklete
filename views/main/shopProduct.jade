@@ -67,7 +67,10 @@ block body
               .row.m-bottom-4
                 .col-sm-10.col-xs-9.m-bottom-4
                   h5.text-muted.letter-spacing-3.text-roboto.m-bottom-2
-                    a(href='/brands/#{brand.id}') #{brand.name}
+                    if productGm.brandName
+                      a(href='/brands/#{brand.id}') #{productGm.brandName}
+                    else
+                      a(href='/brands/#{brand.id}') #{brand.name} 
                   h2.text-black.m-bottom-6.text-roboto #{productGm.name} #{name}
                   
                   if(product.originPrice == undefined || product.originPrice <= 0)
