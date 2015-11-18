@@ -30,6 +30,15 @@ module.exports = {
     return user;
   },
 
+  findOneWithLikes: async (id) => {
+    let user = await db.User.findById(id,{
+      include: [{
+        model: db.Like
+      }]
+    });
+    return user;
+  },
+
   findAllByRole: async (id) => {
     let users = await db.User.findAll({
       where:{
