@@ -51,7 +51,8 @@ block body
               tr
                 td
                   img.width-6(src= product.photos[0])
-                td #{product.name}
+                - var name = (product.name && product.name.length > 0) ? "(" + product.name + ")" : "";
+                td #{product.ProductGm.name} #{name}
                 td #{product.id}
                 td #{product.price}
                 if purchase.type == 'discount'
@@ -91,9 +92,9 @@ block body
             input(type="hidden", name="limitPage", value=limitPage? limitPage: 0)
             +pagination-fields(limitPage, limitTotalPages, limit)
             .input-group
-              input.form-control(type='text', placeholder='Search for...')
+              input.form-control(name='limitKeyword', type='text', placeholder='Search for...', value='#{query.limitKeyword}')
               span.input-group-btn
-                button.btn.btn-default.p-left-2.p-right-2(type='button')
+                button.btn.btn-default.p-left-2.p-right-2(type='button', onClick='$("form[name=\'searchLimit\']").submit()')
                   span.glyphicon.glyphicon-search
           // /input-group
         // /col-sm-6
@@ -116,13 +117,14 @@ block body
               tr
                 td
                   img.width-6(src= product.photos[0])
-                td #{product.name}
+                - var name = (product.name && product.name.length > 0) ? "(" + product.name + ")" : "";
+                td #{product.ProductGm.name} #{name}
                 td #{product.id}
                 td #{product.price}
                 if purchase.type == 'discount'
                   td
                     span.text-danger #{Math.ceil(product.price * purchase.discount)}
-                  td #{purchase.discount * 100} 折
+                  td #{purchase.discount*10} 折
                 else
                   td
                     span.text-danger #{purchase.reducePrice}
