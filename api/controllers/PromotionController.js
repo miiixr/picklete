@@ -74,6 +74,7 @@ let PromotionController = {
     let data = req.body;
     try {
       sails.log.info("=== shopBuyMore create ===",data);
+
       var additionalPurchase = {};
       if(data.hasOwnProperty("id")){
         additionalPurchase = await db.AdditionalPurchase.findById(data.id);
@@ -193,7 +194,7 @@ let PromotionController = {
       products.rows = await PromotionService.productPriceTransPromotionPrice(new Date(), products.rows);
 
       res.view('promotion/discountAddItem',{
-        pageName: "shop-item-add",
+        pageName: "/admin/shop-discount",
         query,
         limit,
         page,
@@ -281,7 +282,7 @@ let PromotionController = {
       if(query.discountType == 'flash') view = 'promotion/controlShopDiscountDetail';
       else view = 'promotion/controlShopDiscountDetail2';
       res.view(view,{
-        pageName: "shop-discount-detail",
+        pageName: "/admin/shop-discount",
         promotion,
         query,
         limit,
@@ -303,21 +304,37 @@ let PromotionController = {
       let limit = await pagination.limit(req);
       let page = await pagination.page(req);
       let offset = await pagination.offset(req);
+      let queryObj = {},
+          limitQueryObj = {};
 
       let query = req.query;
       let limitPage = query.limitPage? query.limitPage : 0;
-      // query
+      // nolimit query
       if(query.keyword)
         queryObj.name = { 'like': '%'+query.keyword+'%'};
       else
         query.keyword = '';
+      // limit query
+      if(query.limitKeyword)
+        limitQueryObj.name = { 'like': '%'+query.limitKeyword+'%'};
+      else
+        query.limitKeyword = '';
+
+      console.log('===========');
+      console.log(query.limitKeyword);
+      console.log(limitQueryObj);
 
       let additionalPurchaseNoLimit = await db.AdditionalPurchase.findAndCountAll({
+        subQuery: false,
         where:{
           activityLimit:0
         },
         include:{
-          model: db.Product
+          model: db.Product,
+          include: {
+            model: db.ProductGm,
+            where: queryObj
+          }
         },
         offset: offset,
         limit: limit
@@ -326,11 +343,16 @@ let PromotionController = {
       sails.log.info("=== controlShopBuyMore NoLimit ===",additionalPurchaseNoLimit.rows);
 
       let additionalPurchaseLimit = await db.AdditionalPurchase.findAndCountAll({
+        subQuery: false,
         where:{
           activityLimit:1500
         },
         include:{
-          model: db.Product
+          model: db.Product,
+          include: {
+            model: db.ProductGm,
+            where: limitQueryObj
+          }
         },
         offset: offset,
         limit: limit
@@ -338,11 +360,12 @@ let PromotionController = {
       // end query
       // console.log("=== controlShopBuyMore Limit ===",additionalPurchaseLimit.count);
 
-      console.log('==========  limit  ===============  Page   ===============');
-      console.log(limitPage);
-      console.log(Math.ceil(additionalPurchaseLimit.count / limit));
-      console.log(additionalPurchaseLimit.count);
+      sails.log('==========  limit  ===============  Page   ===============');
+      sails.log(limitPage);
+      sails.log(Math.ceil(additionalPurchaseLimit.count / limit));
+      sails.log(additionalPurchaseLimit.count);
 
+      console.log(JSON.stringify(additionalPurchaseLimit, null, 4));
       res.view('promotion/controlShopBuyMore',{
         query,
         pageName: "/admin/shop-buy-more",
@@ -368,7 +391,9 @@ let PromotionController = {
 
     try {
       let query = req.query;
-      let queryObj = {};
+      let queryObj = {},
+          queryGmObj = {};
+      let discountRate = null;
 
       console.log('==== buyMoreAddItem query ====', query);
 
@@ -380,10 +405,19 @@ let PromotionController = {
       let offset = await pagination.offset(req);
       let brands = await db.Brand.findAll();
 
+      if(query.discount) {
+        if(query.discount>10) {
+          discountRate = parseInt(query.discount,10)/100;
+        }
+        else{
+          discountRate = parseInt(query.discount,10)/10;
+        }
+      }
+
       if(query.keyword)
-        queryObj.name = { 'like': '%'+query.keyword+'%'};
+        queryGmObj.name = { 'like': '%'+query.keyword+'%'};
       else
-        query.keyword = ''
+        query.keyword = '';
 
       if(query.brand && query.brand!=0){
         let findProductGm = await db.ProductGm.findAll({
@@ -399,9 +433,14 @@ let PromotionController = {
       }
 
       console.log('==== queryObj ====', queryObj);
-
+      console.log('==== discountRate ===', discountRate);
 
       let products = await db.Product.findAndCountAll({
+        subQuery: false,
+        include: {
+          model: db.ProductGm,
+          where: queryGmObj
+        },
         where: queryObj,
         offset: offset,
         limit: limit
@@ -415,6 +454,7 @@ let PromotionController = {
         products,
         brands,
         promotion: query,
+        discountRate,
         totalPages: Math.ceil(products.count / limit),
         totalRows: products.count
       });
@@ -468,6 +508,7 @@ let PromotionController = {
 
         additionalPurchase = await db.Product.findAndCountAll({
           where: queryObj,
+          include:[db.ProductGm],
           offset: offset,
           limit: limit
         });
