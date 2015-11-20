@@ -320,9 +320,9 @@ let PromotionController = {
       else
         query.limitKeyword = '';
 
-      console.log('===========');
-      console.log(query.limitKeyword);
-      console.log(limitQueryObj);
+      // console.log('===========');
+      // console.log(query.limitKeyword);
+      // console.log(limitQueryObj);
 
       // let additionalPurchaseNoLimit = await db.AdditionalPurchase.findAndCountAll({
       //   subQuery: false,
@@ -390,12 +390,12 @@ let PromotionController = {
       // end query
       // console.log("=== controlShopBuyMore Limit ===",additionalPurchaseLimit.count);
 
-      sails.log('==========  limit  ===============  Page   ===============');
-      sails.log(limitPage);
-      sails.log(Math.ceil(additionalPurchaseLimitProducts.count / limit));
-      sails.log(additionalPurchaseLimitProducts.count);
+      // sails.log('==========  limit  ===============  Page   ===============');
+      // sails.log(limitPage);
+      // sails.log(Math.ceil(additionalPurchaseLimitProducts.count / limit));
+      // sails.log(additionalPurchaseLimitProducts.count);
 
-      console.log(JSON.stringify(additionalPurchaseLimitProducts, null, 4));
+      // console.log(JSON.stringify(additionalPurchaseLimitProducts, null, 4));
       res.view('promotion/controlShopBuyMore',{
         query,
         pageName: "/admin/shop-buy-more",
