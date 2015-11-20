@@ -324,36 +324,66 @@ let PromotionController = {
       console.log(query.limitKeyword);
       console.log(limitQueryObj);
 
-      let additionalPurchaseNoLimit = await db.AdditionalPurchase.findAndCountAll({
+      // let additionalPurchaseNoLimit = await db.AdditionalPurchase.findAndCountAll({
+      //   subQuery: false,
+      //   where:{
+      //     activityLimit:0
+      //   },
+      //   include:{
+      //     model: db.Product,
+      //     include: {
+      //       model: db.ProductGm,
+      //       where: queryObj
+      //     }
+      //   },
+      //   offset: offset,
+      //   limit: limit
+      // });
+      let additionalPurchaseNoLimitProducts = await db.Product.findAndCountAll({
         subQuery: false,
-        where:{
-          activityLimit:0
-        },
-        include:{
-          model: db.Product,
-          include: {
-            model: db.ProductGm,
-            where: queryObj
+        include:[{
+          model: db.AdditionalPurchase,
+          required: true,
+          where:{
+            activityLimit:0
           }
-        },
+        },{
+          model: db.ProductGm,
+          where: limitQueryObj
+        }],
         offset: offset,
         limit: limit
       });
 
-      sails.log.info("=== controlShopBuyMore NoLimit ===",additionalPurchaseNoLimit.rows);
+      sails.log.info("=== controlShopBuyMore NoLimit ===",additionalPurchaseNoLimitProducts.rows);
 
-      let additionalPurchaseLimit = await db.AdditionalPurchase.findAndCountAll({
+      // let additionalPurchaseLimit = await db.AdditionalPurchase.findAndCountAll({
+      //   subQuery: false,
+      //   where:{
+      //     activityLimit:1500
+      //   },
+      //   include:{
+      //     model: db.Product,
+      //     include: {
+      //       model: db.ProductGm,
+      //       where: limitQueryObj
+      //     }
+      //   },
+      //   offset: offset,
+      //   limit: limit
+      // });
+      let additionalPurchaseLimitProducts = await db.Product.findAndCountAll({
         subQuery: false,
-        where:{
-          activityLimit:1500
-        },
-        include:{
-          model: db.Product,
-          include: {
-            model: db.ProductGm,
-            where: limitQueryObj
+        include:[{
+          model: db.AdditionalPurchase,
+          required: true,
+          where:{
+            activityLimit:1500
           }
-        },
+        },{
+          model: db.ProductGm,
+          where: limitQueryObj
+        }],
         offset: offset,
         limit: limit
       });
@@ -362,21 +392,21 @@ let PromotionController = {
 
       sails.log('==========  limit  ===============  Page   ===============');
       sails.log(limitPage);
-      sails.log(Math.ceil(additionalPurchaseLimit.count / limit));
-      sails.log(additionalPurchaseLimit.count);
+      sails.log(Math.ceil(additionalPurchaseLimitProducts.count / limit));
+      sails.log(additionalPurchaseLimitProducts.count);
 
-      console.log(JSON.stringify(additionalPurchaseLimit, null, 4));
+      console.log(JSON.stringify(additionalPurchaseLimitProducts, null, 4));
       res.view('promotion/controlShopBuyMore',{
         query,
         pageName: "/admin/shop-buy-more",
-        additionalPurchaseNoLimit,
-        additionalPurchaseLimit,
+        additionalPurchaseNoLimitProducts,
+        additionalPurchaseLimitProducts,
         limit,
         page,
-        totalPages: Math.ceil(additionalPurchaseNoLimit.count / limit),
-        totalRows: additionalPurchaseNoLimit.count,
-        limitTotalPages: Math.ceil(additionalPurchaseLimit.count / limit),
-        limitTotalRows: additionalPurchaseLimit.count,
+        totalPages: Math.ceil(additionalPurchaseNoLimitProducts.count / limit),
+        totalRows: additionalPurchaseNoLimitProducts.count,
+        limitTotalPages: Math.ceil(additionalPurchaseLimitProducts.count / limit),
+        limitTotalRows: additionalPurchaseLimitProducts.count,
         limitPage
       });
     } catch (e) {
