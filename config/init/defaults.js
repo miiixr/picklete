@@ -255,7 +255,7 @@ module.exports.createTestData = async ({createRoleUser, createNewBuyer}) => {
     xs.push(x);
     console.log('______--------__________-------------______________');
   }
-  await createdProductGmGood.setProducts(xs);
+  // await createdProductGmGood.setProducts(xs);
 
   let createdProductGmOthers = await db.ProductGm.create({
     BrandId: 5,
@@ -533,7 +533,7 @@ module.exports.createTestData = async ({createRoleUser, createNewBuyer}) => {
   await db.TopicActive.bulkCreate(topicActives);
   // End TopicActive
 
-  productNames = ['flash_黃金曼特寧', 'flash_夏威夷可娜', 'flash_耶加雪夫', 'flash_肯亞AA', 'flash_巴西喜拉朵', 'flash_薇薇特南果', 'flash_薩爾瓦多伊莎貝爾', 'flash_瓜地馬拉．安提瓜．花神', 'flash_星巴克過期豆'];
+  productNames = ['flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧', 'flash_夏威夷可娜', 'flash_耶加雪夫', 'flash_肯亞AA', 'flash_巴西喜拉朵', 'flash_薇薇特南果', 'flash_薩爾瓦多伊莎貝爾', 'flash_瓜地馬拉．安提瓜．花神', 'flash_星巴克過期豆'];
 
   var flashProduct = [];
   for (i=0; i < productNames.length; i++) {
