@@ -147,12 +147,7 @@ let PromotionController = {
       let brands = await db.Brand.findAll();
 
       if(query.discount) {
-        if(query.discount>10) {
-          discountRate = parseInt(query.discount,10)/100;
-        }
-        else{
-          discountRate = parseInt(query.discount,10)/10;
-        }
+        discountRate = await PromotionService.promotionDiscountRate(query.discount);
       }
 
       if(query.keyword){
@@ -203,7 +198,7 @@ let PromotionController = {
       });
 
       products.rows = await PromotionService.productPriceTransPromotionPrice(new Date(), products.rows);
-
+      query.discountRate = discountRate;
       res.view('promotion/discountAddItem',{
         pageName: "/admin/shop-discount",
         query,
@@ -212,7 +207,6 @@ let PromotionController = {
         products,
         brands,
         promotion: query,
-        discountRate,
         totalPages: Math.ceil(products.count / limit),
         totalRows: products.count
       });
