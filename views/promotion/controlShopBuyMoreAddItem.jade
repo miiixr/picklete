@@ -139,7 +139,8 @@ block body
             td= product.price
             td
               if query.type == 'reduce'
-                span.text-danger #{product.price - query.reducePrice}
+                - var salePrice = product.price - query.reducePrice;
+                span.text-danger #{ (salePrice > 0)? salePrice : 0 }
               else
                 if query.discount >10
                   span.text-danger #{Math.ceil(product.price * query.discount * 0.01)}
