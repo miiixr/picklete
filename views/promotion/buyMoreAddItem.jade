@@ -1,6 +1,7 @@
 extends ../_layout_auth
 include ../mixins/pagination
-
+include ../mixins/_product
+include ../mixins/_promotion
 
 block body
   h2.m-bottom-6 選擇折扣商品
@@ -103,17 +104,14 @@ block body
               input.addSelect(type='checkbox', disabled=product.originPrice, name='productIds', value= product.id, checked=promotion.productIds.indexOf(""+product.id)>=0)
             td
               img.width-6(src= product.photos[0])
-            td= product.name
-            td= product.productNumber
-            if (product.originPrice)
-              td= product.originPrice
-            else
-              td= product.price
             td
-              if query.type == 'reduce'
-                span.text-danger #{query.reducePrice}
-              else
-                span.text-danger #{Math.ceil(product.price * query.discount)}
+              +productName(product)
+            td= product.productNumber
+            td
+              +originPrice(product)
+            td
+              span.text-danger
+                +salePrice(product, promotion)
                 
   hr.dashed-line
   +pagination-simple-pager(page, totalPages, limit)
