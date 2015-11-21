@@ -438,8 +438,8 @@ let PromotionController = {
 
     try {
       let query = req.query;
-      let queryObj = {},
-          queryGmObj = {};
+      let queryObj={};
+      queryObj.$or = [];
       let discountRate = null;
 
       console.log('==== buyMoreAddItem query ====', query);
@@ -456,8 +456,24 @@ let PromotionController = {
         discountRate = await PromotionService.promotionDiscountRate(query.discount);
       }
 
-      if(query.keyword)
-        queryGmObj.name = { 'like': '%'+query.keyword+'%'};
+      // if(query.keyword)
+      //   queryGmObj.name = { 'like': '%'+query.keyword+'%'};
+      if(query.keyword){
+        let eachKeywords = query.keyword.split('+');
+        for (var i=0; i<eachKeywords.length; i++) {
+          let keyword = eachKeywords[i];
+
+          queryObj.$or.push({ name: { $like: '%'+keyword+'%' } });
+          queryObj.$or.push({ description: { $like: '%'+keyword+'%' } });
+          queryObj.$or.push({ country: { $like: '%'+keyword+'%' } });
+          queryObj.$or.push({ spec: { $like: '%'+keyword+'%' } });
+
+          queryObj.$or.push(['`ProductGm`.`name` like ?', '%'+keyword+'%']);
+          queryObj.$or.push(['`ProductGm`.`explain` like ?', '%'+keyword+'%']);
+          queryObj.$or.push(['`ProductGm`.`usage` like ?', '%'+keyword+'%']);
+          queryObj.$or.push(['`ProductGm`.`notice` like ?', '%'+keyword+'%']);
+        }
+      }
       else
         query.keyword = '';
 
@@ -479,13 +495,14 @@ let PromotionController = {
 
       let products = await db.Product.findAndCountAll({
         subQuery: false,
-        include: {
-          model: db.ProductGm,
-          where: queryGmObj
-        },
+        include: [{
+          required: true,
+          model: db.ProductGm
+        }],
         where: queryObj,
         offset: offset,
-        limit: limit
+        limit: limit,
+        order: [['id', 'ASC']]
       });
       query.discountRate = discountRate;
       // console.log('---------');
