@@ -1,0 +1,8 @@
+mixin originPrice(product)
+  - var originPrice = (product.originPrice)? product.originPrice : product.price;
+  | #{originPrice}
+
+mixin salePrice(product, promotion)
+  - var originPrice = (product.originPrice)? product.originPrice : product.price;
+  - var salePrice = (promotion.discountType == 'price')? ((originPrice - promotion.price) > 0 ? originPrice - promotion.price : 0 ) : Math.ceil(product.price * promotion.discountRate);
+  | #{salePrice}
