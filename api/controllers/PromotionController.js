@@ -250,6 +250,7 @@ let PromotionController = {
           where: {
             id: query.productIds
           },
+          include: db.ProductGm,
           offset: offset,
           limit: limit
         });
@@ -269,7 +270,7 @@ let PromotionController = {
           },
           include: [{
             model: db.Product,
-            include:[db.ProductGm]
+            include:[{model: db.ProductGm}]
           }]
         });
 
@@ -285,6 +286,9 @@ let PromotionController = {
             where: {
               id: query.productIds
             },
+            include: {
+              model: db.ProductGm
+            }
             // offset: offset,
             // limit: limit
           });
@@ -293,16 +297,16 @@ let PromotionController = {
         }
       }
       promotion.products = await PromotionService.productPriceTransPromotionPrice(promotion.startDate,promotion.Products);
+      promotion.discountRate = discountRate;
       console.log('=== promotion ===', promotion);
 
+      console.log(JSON.stringify(promotion,null,4));
       let view = "";
-
-      if(query.discountType == 'flash') view = 'promotion/controlShopDiscountDetail';
+      if(query.promotionType == 'flash') view = 'promotion/controlShopDiscountDetail';
       else view = 'promotion/controlShopDiscountDetail2';
       res.view(view,{
         pageName: "/admin/shop-discount",
         promotion,
-        discountRate,
         query,
         limit,
         page,
