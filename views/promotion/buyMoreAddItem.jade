@@ -1,6 +1,7 @@
 extends ../_layout_auth
 include ../mixins/pagination
 include ../mixins/_product
+include ../mixins/_promotion
 
 block body
   h2.m-bottom-6 選擇折扣商品
@@ -106,11 +107,11 @@ block body
             td
               +productName(product)
             td= product.productNumber
-            - var originPrice = (product.originPrice)? product.originPrice : product.price;
-            td= originPrice
             td
-              - var reducePrice = (query.type == 'reduce')? (originPrice - query.reducePrice) : Math.ceil(product.price * discountRate);
-              span.text-danger #{reducePrice}
+              +originPrice(product)
+            td
+              span.text-danger
+                +salePrice(product, promotion)
                 
   hr.dashed-line
   +pagination-simple-pager(page, totalPages, limit)
