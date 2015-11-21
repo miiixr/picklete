@@ -468,8 +468,8 @@ module.exports = {
 
 
         // productGm 搜尋
-        if (query.brandId > 0)
-          ProductQueryObj.BrandId = query.brandId;
+        if (query.productGmId > 0)
+          ProductQueryObj.productGmId = query.productGmId;
 
         // tag keyword search
         if (query.tag) {
