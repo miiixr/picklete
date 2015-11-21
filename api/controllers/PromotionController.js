@@ -131,7 +131,9 @@ let PromotionController = {
 
     try {
       let query = req.query;
+      let discountRate = null;
       let queryObj = {};
+
       queryObj.$or = [];
       console.log('==== discountAddItem query ====', query);
 
@@ -143,6 +145,15 @@ let PromotionController = {
       let offset = await pagination.offset(req);
 
       let brands = await db.Brand.findAll();
+
+      if(query.discount) {
+        if(query.discount>10) {
+          discountRate = parseInt(query.discount,10)/100;
+        }
+        else{
+          discountRate = parseInt(query.discount,10)/10;
+        }
+      }
 
       if(query.keyword){
         let eachKeywords = query.keyword.split('+');
@@ -201,6 +212,7 @@ let PromotionController = {
         products,
         brands,
         promotion: query,
+        discountRate,
         totalPages: Math.ceil(products.count / limit),
         totalRows: products.count
       });
@@ -214,6 +226,12 @@ let PromotionController = {
     try {
       console.log('=== controlShopDiscountDetail query ==>',req.query);
       let query = req.query;
+      console.log(JSON.stringify(query,null,4));
+      let discountRate = null;
+
+      if(query.discount) {
+        discountRate = await PromotionService.promotionDiscountRate(query.discount);
+      }
 
 
       let limit = await pagination.limit(req);
@@ -284,6 +302,7 @@ let PromotionController = {
       res.view(view,{
         pageName: "/admin/shop-discount",
         promotion,
+        discountRate,
         query,
         limit,
         page,

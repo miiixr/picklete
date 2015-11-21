@@ -114,21 +114,14 @@ block body
               input.addSelect(type='checkbox', disabled=product.originPrice, name='productIds', value= product.id, checked=promotion.productIds.indexOf(""+product.id)>=0)
             td
               img.width-6(src= product.photos[0])
-            - var name = ( ! product.name || product.name == "") ? "" : "(" + product.name + ")";
-            //- td #{JSON.stringify(product.ProductGm)}
-            //- td #{name}
             td
               +productName(product)
             td= product.productNumber
-            if (product.originPrice)
-              td= product.originPrice
-            else
-              td= product.price
+            - var originPrice = (product.originPrice)? product.originPrice : product.price;
+            td= originPrice
             td
-              if (product.originPrice)
-                span.text-danger= product.price
-              else 
-                span.text-danger
+              - var salePrice = (query.discountType == 'price')? ((originPrice - query.price) > 0 ? originPrice - query.price : 0 ) : Math.ceil(product.price * discountRate);
+              span.text-danger #{salePrice}
   hr.dashed-line
   +pagination-simple-pager(page, totalPages)
   // /text-center

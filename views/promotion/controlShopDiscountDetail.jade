@@ -183,12 +183,11 @@ block body
           td
             +productName(product)
           td= product.productNumber
-          if (product.originPrice)
-            td= product.originPrice
-          else
-            td= product.price
+          - var originPrice = (product.originPrice)? product.originPrice : product.price;
+          td= originPrice
           td
-            span.text-danger= product.price
+            - var salePrice = (promotion.discountType == 'price')? ((originPrice - promotion.price) > 0 )? originPrice - promotion.price : 0 : Math.ceil(originPrice * discountRate);
+            span.text-danger #{salePrice}
           td.text-right
             a.btn.btn-link.delete-link(data-productId=product.id)
               span.glyphicon.glyphicon-remove
