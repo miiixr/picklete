@@ -1,5 +1,6 @@
 extends ../_layout_auth
 include ../mixins/pagination
+include ../mixins/_product
 
 block body
   h2.m-bottom-6 加價購設定
@@ -67,7 +68,7 @@ block body
               else
                 input#optionsRadios2(type='radio',name='type', value='discount')
               .input-group.width-12
-                input.form-control(type='text',name='discount',value= query.discount)
+                input.form-control(type='text',name='discount',value=query.discount)
                 span.input-group-addon 折
               // /input-group
       // /form-group
@@ -132,12 +133,14 @@ block body
           tr
             td
               img.width-6(src= product.photos[0])
-            td= product.name
+            td
+              +productName(product)
             td= product.productNumber
             td= product.price
             td
               if query.type == 'reduce'
-                span.text-danger #{product.price - query.reducePrice}
+                - var salePrice = product.price - query.reducePrice;
+                span.text-danger #{ (salePrice > 0)? salePrice : 0 }
               else
                 if query.discount >10
                   span.text-danger #{Math.ceil(product.price * query.discount * 0.01)}

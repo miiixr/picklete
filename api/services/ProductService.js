@@ -356,7 +356,7 @@ module.exports = {
   },
 
   productQuery: async (query, offset = 0, limit = 2000) => {
-
+    
     let queryObjArray = [],
         queryObj = {},
         GmQueryObj = {},
@@ -479,9 +479,8 @@ module.exports = {
         }
 
         if (query.isPublish != '') {
-          ProductQueryObj.isPublish = (query.isPublish == 'false') ? 0 : 1;
+          ProductQueryObj.isPublish = (query.isPublish == 'false') ? false : true;
         }
-        console.log("zxc123",ProductQueryObj);
       }
       // ================ merge queryObj ================
 

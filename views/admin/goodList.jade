@@ -1,5 +1,6 @@
 extends ../_layout_auth
 include ../mixins/pagination
+include ../mixins/_product
 
 block body
   h2.m-bottom-6 商品列表
@@ -160,8 +161,8 @@ block body
         tr
           td
             img.width-6(src=product.photos[0])
-          - var name = (product.name && product.name.length > 0) ? "(" + product.name + ")" : "";
-          td #{product.ProductGm.name} #{name}
+          td
+            +productName(product)
           td #{product.price}
           td #{product.productNumber}
           td #{product.createdAt}

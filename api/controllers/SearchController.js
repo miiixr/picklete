@@ -49,7 +49,9 @@ module.exports = /* SearchController */ {
       let keywords = req.param('keywords') || req.param('q');
       let limit = parseInt(req.param('limit', 100));
 
-      let conditions = {};
+      let conditions = {
+        isPublish : 1
+      };
 
       conditions.$or = [];
 
@@ -68,7 +70,6 @@ module.exports = /* SearchController */ {
         conditions.$or.push(['`ProductGm`.`usage` like ?', '%'+keyword+'%'])
         conditions.$or.push(['`ProductGm`.`notice` like ?', '%'+keyword+'%'])
       }
-
       let products = await db.Product.findAndCountAll({
         subQuery: false,
         include: [{

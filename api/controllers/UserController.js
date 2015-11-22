@@ -349,6 +349,7 @@ let UserController = {
 
 
         let user = await UserService.getLoginUser(req);
+
         console.log(user);
 
         // confirm oldPassword
@@ -358,7 +359,7 @@ let UserController = {
           }
         });
         let currentPassword = currentPassport.password;
-        console.log('===',currentPassword.toString(),req.body.oldPassword.toString());
+        // console.log('===',currentPassword.toString(),req.body.oldPassword.toString());
         if (req.body.oldPassword == currentPassword) {
           if (user) {
             let passport = await db.Passport.findOne({
