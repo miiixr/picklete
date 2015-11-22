@@ -468,15 +468,15 @@ module.exports = {
 
 
         // productGm 搜尋
-        if (query.brandId > 0)
-          ProductQueryObj.BrandId = query.brandId;
+        // if (query.brandId > 0)
+        //   GmQueryObj.brandId = query.brandId;
 
         // tag keyword search
-        if (query.tag) {
-          ProductQueryObj.tag = {
-            $like: '%' + query.tag + '%'
-          };
-        }
+        // if (query.tag) {
+        //   ProductQueryObj.tag = {
+        //     $like: '%' + query.tag + '%'
+        //   };
+        // }
 
         if (query.isPublish != '') {
           ProductQueryObj.isPublish = (query.isPublish == 'false') ? false : true;
@@ -508,7 +508,7 @@ module.exports = {
         offset: offset,
         limit: limit
       };
-     
+
       let sort;
       switch (query.sort) {
         case 'views':
