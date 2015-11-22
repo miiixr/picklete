@@ -485,31 +485,53 @@ module.exports = {
       // ================ merge queryObj ================
 
       // console.log('===== productDptSubConfig', productDptSubConfig);
-      queryObj = {
-        subQuery: false,
-        where: ProductQueryObj,
-        include: [{
-          model: db.ProductGm,
-          where: GmQueryObj,
-          include:[
-          // {
-          //   model: db.Dpt,
-          //   where: DptQueryObj
-          // },{
-          //   model: db.DptSub,
-          //   where: DptSubQueryObj
-          // },
-          {
-            model: db.Brand
-          },{
-            model: db.PageView
-          },{
-            model: db.LikesCount
-          }]
-        }, productDptSubConfig],
-        offset: offset,
-        limit: limit
-      };
+      if (query.dptSubId > 0 ){
+        queryObj = {
+          subQuery: false,
+          where: ProductQueryObj,
+          include: [{
+            model: db.ProductGm,
+            where: GmQueryObj,
+            include:[
+            {
+              model: db.Dpt,
+              where: DptQueryObj
+            },{
+              model: db.DptSub,
+              where: DptSubQueryObj
+            },
+            {
+              model: db.Brand
+            },{
+              model: db.PageView
+            },{
+              model: db.LikesCount
+            }]
+          }, productDptSubConfig],
+          offset: offset,
+          limit: limit
+        };
+      } else {
+        queryObj = {
+          subQuery: false,
+          where: ProductQueryObj,
+          include: [{
+            model: db.ProductGm,
+            where: GmQueryObj,
+            include:[
+            {
+              model: db.Brand
+            },{
+              model: db.PageView
+            },{
+              model: db.LikesCount
+            }]
+          }, productDptSubConfig],
+          offset: offset,
+          limit: limit
+        };
+
+      }
 
       let sort;
       switch (query.sort) {
