@@ -491,13 +491,15 @@ module.exports = {
         include: [{
           model: db.ProductGm,
           where: GmQueryObj,
-          include:[{
-            model: db.Dpt,
-            where: DptQueryObj
-          },{
-            model: db.DptSub,
-            where: DptSubQueryObj
-          },{
+          include:[
+          // {
+          //   model: db.Dpt,
+          //   where: DptQueryObj
+          // },{
+          //   model: db.DptSub,
+          //   where: DptSubQueryObj
+          // },
+          {
             model: db.Brand
           },{
             model: db.PageView
