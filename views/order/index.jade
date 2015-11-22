@@ -216,6 +216,19 @@ block body
                       //-     input.form-control.input-sm(type='text', value='#{order.shippingId || ""}') 
                       // /form-group
                   // /col-sm-6
+                  .col-sm-6
+                    form.form-horizontal
+                      .form-group.form-group-sm
+                        label.col-sm-4.control-label 編號
+                        .col-sm-8
+                          input.form-control.input-sm(type='text', value=order.Shipment.shippingId) 
+                      // /form-group
+                      //- .form-group.form-group-sm
+                      //-   label.col-sm-4.control-label 訂單編號
+                      //-   .col-sm-8
+                      //-     input.form-control.input-sm(type='text', value='#{order.shippingId || ""}') 
+                      // /form-group
+                  // /col-sm-6
                 // /row
               // /m-top-2 m-bottom-2
               .well
@@ -234,9 +247,10 @@ block body
                       tr
                         td #{item.productNumber}
                         td
-                          a(href='#') #{item.name}
+                          - var packings = item.packingFee? '(包裝:' + item.packingFee/60 + ')' : '';
+                          a(href='#') #{item.name} #{packings}
                         td.text-center #{item.quantity}
-                        td #{item.price}
+                        td #{sails.numeral(item.price).format('0,0')}
                         td.text-right #{sails.numeral(item.price*item.quantity).format('0,0')}
                         - sumPrice += item.price*item.quantity
                         - sum += item.quantity
@@ -244,18 +258,17 @@ block body
                       td(colspan='2')
                         ul.list-inline
                           if(sumPrice>390)
-                            - order.Shipment.shippingFee = 0;
-                            li 運費 (滿額免運)
+                            li 運費 0
                           else
                             li 運費 #{order.Shipment.shippingFee}
                           if(order.packingFee)
                             li 包裝 #{order.packingFee}
                           else
-                            li 包裝 (無包裝費)
-                          if(order.ShopCodeId)
-                            li 折扣碼ID #{order.ShopCodeId}
+                            li 包裝 0
+                          if(order.ShopCode)
+                            li 折扣碼 - #{order.ShopCode.description}
                           else
-                            li 折扣碼ID 未使用
+                            li 折扣碼 0
                       td.text-center.text-danger #{sum}
                       td.text-right(colspan='2')
                         h3
