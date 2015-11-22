@@ -90,13 +90,16 @@ OrderController = {
             where: queryShipmentObj
           }, {
             model: db.OrderItem
-          },
-          db.Invoice
+          },{
+            model: db.Invoice
+          },{
+            model: db.ShopCode
+          }
         ]
       };
 
       let orders = await db.Order.findAndCountAll(queryObj);
-
+      console.log(JSON.stringify(orders, null, 4));
       return res.view({
         pageName: "/admin/order",
         orders,
