@@ -1,5 +1,5 @@
 (function ($) {
-
+  $subDptContainer = $('.gray-lighter');
   $.urlParam = function(name) {
     var results = new RegExp('[\?&amp;]' + name + '=([^&amp;#]*)').exec(window.location.href);
     return results ? results[1] : false;
@@ -35,7 +35,7 @@
 
     $('.dpt.active').removeClass(ACTIVE_CLASS_NAME)
     $('li.active.subDpt').removeClass(ACTIVE_CLASS_NAME);
-    
+
     // when brand query, not dpt to active
     if (params.brand) return;
 
@@ -76,5 +76,13 @@
     url = url.replace(/&color=\w*&/g, '&');
 
     return window.location.href = url + '&' + targetQuery;
+  });
+
+  $dpts = $('ul.list-shop-type>li.dpt');
+  $dpts.on('click', function(e) {
+    $dpts.removeClass('active');
+    if($subDptContainer.hasClass('hide')) {
+      $subDptContainer.removeClass('hide');
+    }
   });
 }(jQuery));
