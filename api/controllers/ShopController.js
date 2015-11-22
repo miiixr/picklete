@@ -28,11 +28,10 @@ let ShopController = {
     query.brandId = query.brand;
 
     sails.log.info('=== query ===', query);
-
+    console.log('aaaa');
+    console.log(JSON.stringify(query,null,4));
     try {
-
       if (query.flash) {
-
         let promotion = await db.Promotion.findOne({
           where: {
             id: query.flash,
@@ -47,14 +46,14 @@ let ShopController = {
           }]
         });
 
-     
+
         products = await PromotionService.productPriceTransPromotionPrice(new Date(), promotion.Products);
 
         res.view('main/flash', {
           promotion: promotion,
           products: products
         });
-        return 
+        return
       }
       let brand = query.brand || '';
       let dptSubId = query.dptSubId || '';
@@ -66,12 +65,10 @@ let ShopController = {
         query.dateEnd = moment().format();
         query.dateFrom = moment().subtract(3, 'months').format();
       }
-         
       let productsWithCount = await ProductService.productQuery(query, offset, limit);
-  
+
       let products = productsWithCount.rows || [];
       // sails.log.info('=== shop products ===',products);
-      
       products = await PromotionService.productPriceTransPromotionPrice(new Date(), products);
 
       let brands = await db.Brand.findAll({order: 'weight ASC',});
@@ -130,7 +127,7 @@ let ShopController = {
     let dptSubId = req.query.dptSubId ? req.query.dptSubId : 0;
     let dpt = 0;
     let dptSub = 0;
-    
+
     if(dptId != 0){
       dpt = await db.Dpt.findById(dptId);
     }
@@ -139,7 +136,7 @@ let ShopController = {
     }
     try {
 
-      
+
       let productGm = await db.ProductGm.findOne({
             where: {id: productGmid},
             include: [
@@ -230,7 +227,7 @@ let ShopController = {
       }
 
       else {
-      
+
         let resData = {
           dpt: dpt,
           dptSub: dptSub,
@@ -244,7 +241,7 @@ let ShopController = {
           brandId: brandId,
           recommendProducts,
          };
-         console.log("hihihi",resData);
+  
         return res.view("main/shopProduct", resData);
 
       }

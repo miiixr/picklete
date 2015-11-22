@@ -356,7 +356,7 @@ module.exports = {
   },
 
   productQuery: async (query, offset = 0, limit = 2000) => {
-
+    
     let queryObjArray = [],
         queryObj = {},
         GmQueryObj = {},
@@ -468,20 +468,19 @@ module.exports = {
 
 
         // productGm 搜尋
-        if (query.productGmId > 0)
-          ProductQueryObj.productGmId = query.productGmId;
+        // if (query.brandId > 0)
+        //   GmQueryObj.brandId = query.brandId;
 
         // tag keyword search
-        if (query.tag) {
-          ProductQueryObj.tag = {
-            $like: '%' + query.tag + '%'
-          };
-        }
+        // if (query.tag) {
+        //   ProductQueryObj.tag = {
+        //     $like: '%' + query.tag + '%'
+        //   };
+        // }
 
         if (query.isPublish != '') {
           ProductQueryObj.isPublish = (query.isPublish == 'false') ? false : true;
         }
-        console.log("zxc123",ProductQueryObj);
       }
       // ================ merge queryObj ================
 
@@ -509,7 +508,7 @@ module.exports = {
         offset: offset,
         limit: limit
       };
-     
+
       let sort;
       switch (query.sort) {
         case 'views':
