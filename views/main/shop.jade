@@ -47,7 +47,8 @@ block body
         // /container
       // /dropdown-menu
     // /mobile-hide
-    .gray-lighter.min-height-38
+    - console.log(query);
+    .gray-lighter.min-height-38(class= (typeof query.brandId == 'undefined')? 'hide': '' )
       .container
         .tab-content
           each dpt, val in dpts
