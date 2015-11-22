@@ -28,7 +28,7 @@ block body
     tbody
       each promotion in promotions.rows
         -sails.log.info(promotion)
-        tr
+        tr(class= (promotion.type == "flash")? 'gray-background': 'white-background')
           td #{promotion.title}
           td
             -if(promotion.type == "flash")
