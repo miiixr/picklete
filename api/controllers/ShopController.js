@@ -241,7 +241,7 @@ let ShopController = {
           brandId: brandId,
           recommendProducts,
          };
-         console.log("hihihi",resData);
+  
         return res.view("main/shopProduct", resData);
 
       }
