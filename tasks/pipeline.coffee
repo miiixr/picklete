@@ -21,6 +21,7 @@ jsFilesToInject = [
   # Load sails.io before everything else
   "bower/jQuery/*.js"
   "bower/moment/*.js"
+  "bower/numeral/*.js"
   "!bower/jquery-form/*.js"
   "!bower/ckeditor/*.js"
   "!javascripts/plugin/ckeditor/config.js"
