@@ -18,7 +18,7 @@ each order in orders
           h3 創而有意商品明細表
         // /text-center
         .m-bottom-4
-          p 親愛的 #{order.paymentConfirmName}，您好：
+          p 親愛的 #{order.User.username}，您好：
           p
             | 感謝您在 i+DEAL 創而有意訂購商品！為保障您的權益，請您收到商品的同時，依照商品明細表清點內容物！若有短缺、規格不符或瑕疵之情形，煩請您儘速於收到商品後 3 天內與客服人員聯絡，以保障您退換貨權益。
         // /m-bottom-4
@@ -34,7 +34,7 @@ each order in orders
             tr
               td
                 p.line-height-large.m-bottom-0
-                  | 購買人：#{order.paymentConfirmName} 先生/小姐
+                  | 購買人：#{order.User.username} 先生/小姐
                   br
                   | 							購買人電話：#{order.User.mobile}
                   br
@@ -80,15 +80,21 @@ each order in orders
             tr
               td
                 .p-30
-                  p 注意事項
+                  p 注意事項：
                   p
-                    | Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.
+                    | 敬請核對您所訂購的商品，若商品不符或短缺，請至本網www.iplusdeal.com「聯絡我們」通知協助處理，或聯絡線上客服：04-23782800
+                  p 退貨需知及流程：
+                  p
+                    | 根據消保法規定，網購顧客享有七日鑑賞期，如有新品瑕疵問題，可無條件辦理退換貨服務。退換之商品及其外包裝，需保持全新無受損。
                 // /p-30
               td
                 .p-30
-                  p 退貨須知
+                  p 退貨須知:
+                  p 1.辦理退換貨請將商品、贈品、發票及訂單明細置入原紙箱內，並保持商品包裝完整，若有毀損恕不受理退換貨。
+                  p 2.宅配員將與您聯繫取貨時間，請主動索取單據，並保留至手續完成。
+                  p 3.本站收到貨品後，將email通知退換貨及退款時間，敬請留意。
                   p
-                    | Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.
+                    ※ 防詐騙：本公司不會以電話通知更改付款方式或指示操作ATM。
                 // /p-30
         p
           | 創而有意服務專線：04-23782800

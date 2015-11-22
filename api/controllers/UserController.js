@@ -59,7 +59,6 @@ let UserController = {
     }
 
     let products = await ProductService.findFavorite(favoriteKeys);
-
     res.view("main/memberFavorite", {
       products
     });
@@ -204,15 +203,15 @@ let UserController = {
       let data = req.query;
       let picklete_cart = req.cookies.picklete_cart;
       if(picklete_cart != undefined){
-        
+
         try {
-          picklete_cart = JSON.parse(picklete_cart);  
+          picklete_cart = JSON.parse(picklete_cart);
         } catch (e) {
           console.error(e.stack);
           let {message} = e;
           res.serverError({message});
         }
-        
+
         // if(picklete_cart.hasOwnProperty('additionalPurchasesItem')) {
         //   picklete_cart.additionalPurchasesItem = [];
         // }
@@ -223,7 +222,7 @@ let UserController = {
           additionalPurchasesId: data.additionalPurchasesId,
           productId: data.productId
         });
-        
+
         res.cookie('picklete_cart', JSON.stringify(picklete_cart));
       }
       res.redirect("/user/cart");
@@ -322,11 +321,6 @@ let UserController = {
 
     }
 
-
-
-
-
-
   },
 
   controlLogin: function(req, res) {
@@ -353,22 +347,39 @@ let UserController = {
 
       if (req.method=='POST') {
 
+
         let user = await UserService.getLoginUser(req);
 
-        if (user) {
-          let passport = await db.Passport.findOne({
-            where: {
-              protocol: 'local',
-              UserId: user
-            }
-          });
+        console.log(user);
 
-          if (passport) {
-            passport.password = req.body.newPassword;
-            passport.save();
-
-            message = '密碼已經更新';
+        // confirm oldPassword
+        let currentPassport = await db.Passport.findOne({
+          where: {
+            UserId: user.id
           }
+        });
+        let currentPassword = currentPassport.password;
+        // console.log('===',currentPassword.toString(),req.body.oldPassword.toString());
+        if (req.body.oldPassword == currentPassword) {
+          if (user) {
+            let passport = await db.Passport.findOne({
+              where: {
+                protocol: 'local',
+                UserId: user.id
+              }
+            });
+
+            if (passport) {
+              console.log(req.body.newPassword);
+              passport.password = req.body.newPassword;
+              passport.save();
+
+              message = '密碼已經更新';
+            }
+          }
+        }
+        else {
+          message = "原密碼錯誤";
         }
       }
     }
@@ -482,7 +493,7 @@ let UserController = {
       }
 
       res.view("user/controlMembers", {
-        pageName: "members",
+        pageName: "/admin/members",
         members: members,
         page: page,
         limit: limit,
@@ -495,11 +506,78 @@ let UserController = {
       return res.serverError(error);
     }
   },
+  showAdminInformation: async(req, res) => {
+
+    let user = await db.User.findOne({
+      where :{
+        email :'admin@gmail.com'
+      }
+    });
+
+    let passport = await db.Passport.find({where: {UserId: user.id}});
+    user.password = passport.password;
+    user.passwordAgain = passport.password;
+    return res.view("admin/adminSet",{user});
+  },
+  updateAdminInformation: async(req, res) => {
+
+    let user = await db.User.findOne({
+      where :{
+        email :'admin@gmail.com'
+      }
+    });
+
+    let passport = await db.Passport.find({where: {UserId: user.id}});
+    user.password = passport.password;
+    user.passwordAgain = passport.password;
+
+    let updateUser = req.body;
+
+    if(updateUser.password != passport.password){
+      passport.password = updateUser.password;
+      await passport.save()
+    }
+
+    let updateUserKeys = Object.keys(updateUser);
+
+    updateUserKeys.forEach((key)=>{
+      if(typeof(user[key]) != undefined) user[key] = updateUser[key];
+    });
+
+    await user.save();
+
+    return res.view("admin/adminSet",{user});
+
+  },
   controlMemberDetail: async function(req, res) {
     try {
+      let query = req.query;
+      let userId = req.param('id');
+
+      if (query.comment) {
+        let member = await db.User.findById(userId);
+        member.comment = query.comment;
+        await member.save();
+      }
+      let orders = await OrderService.findAllByUserComplete({id: userId});
+      // console.log(JSON.stringify(orders, null, 4));
+      let user = await UserService.findOneWithLikes(userId);
+      console.log(JSON.stringify(user, null, 4));
+
+      let likes = [];
+      let userLikes='';
+      for(let like of user.Likes) {
+        if(userLikes.length>0)
+          userLikes += '、';
+        userLikes += like.title;
+      }
+      console.log(JSON.stringify(likes, null, 4));
       res.view("user/controlMemberDetail", {
-        pageName: "member-detail",
-        member: await db.User.findById(req.param('id'))
+        pageName: "/admin/members",
+        member: await db.User.findById(req.param('id')),
+        orders,
+        user,
+        userLikes
       });
     }
     catch (error) {
@@ -600,6 +678,7 @@ let UserController = {
   delete: async (req, res) => {
     try{
       let userId = req.param("id");
+      console.log(userId);
       let findUser = await db.User.findById(userId);
       if (!findUser) {
         return res.serverError({
@@ -612,7 +691,7 @@ let UserController = {
       if(ensureDelete) {
         return res.serverError({msg: 'delete失敗'});
       }
-      return res.redirect('user/index/');
+      return res.ok({status: 'ok'});
     }catch(error){
       return res.serverError(error);
     }

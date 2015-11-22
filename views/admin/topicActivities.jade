@@ -6,13 +6,13 @@ block body
   hr.dashed-line
   form#ActivitiesData(action='/admin/topicActivities', method='POST')
     .form-group
-      - var title = activities[0].title? activities[0].title : ''
+      - var title = (activities && activities[0] && activities[0].title) ? activities[0].title : ''
       input#topicTitle.form-control(type='text', placeholder='請輸入主題活動標題', name='title', value='#{title}', required="required")
       // /form-group
     ul.imageSection
       if activities.length>0 
         each activity, index in activities
-          li.well.control-well.p-10-20.m-bottom-4.imageSection
+          li.well.control-well.p-10-20.m-bottom-4.imageSection.none-style
             .row
               .col-sm-6
                 span.glyphicon.glyphicon-menu.font-size-xlarge.m-top-1 

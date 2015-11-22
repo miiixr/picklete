@@ -70,10 +70,10 @@ var self = module.exports = {
   },
 
   findAllByDateComplete: async (startDate, endDate) => {
-    console.log(startDate._d, endDate._d);
+    sails.log('Report Date Rang =>', startDate._d, endDate._d);
     let orders = await db.Order.findAll({
       where: {
-        updatedAt: {
+        paymentConfirmDate: {
           $gt: startDate._d,
           $lt: endDate._d,
         },

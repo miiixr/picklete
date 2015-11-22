@@ -78,7 +78,7 @@ OrderController = {
         where: queryObj,
         offset: page * limit,
         limit: limit,
-        order: 'createdAt DESC',
+        order: [['createdAt', 'DESC']],
         include: [
           {
             model: db.User,
@@ -97,7 +97,12 @@ OrderController = {
 
       let orders = await db.Order.findAndCountAll(queryObj);
 
-      return res.view({orders,query,page,limit});
+      return res.view({
+        pageName: "/admin/order",
+        orders,
+        query,
+        page,limit
+      });
     } catch (error) {
       return res.serverError(error);
     }
@@ -443,7 +448,7 @@ OrderController = {
     };
 
     let orders = await db.Order.findAll(queryObj);
-    console.log(orders.item);
+    console.log(orders.Shipment);
     return res.view('admin/print',{
       orders
     });

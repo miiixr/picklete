@@ -51,4 +51,15 @@ $(function() {
       alert("更新失敗，請重新嘗試");
     });
   });
+
+  $("#checkAll").on("click",function(){
+    if($(this).prop('checked')==false){
+      $(".printSelect").prop("checked", null);
+    }
+    else{
+      $(".printSelect").prop("checked", true);
+    }
+  });
+
+
 });

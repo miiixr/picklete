@@ -15,7 +15,8 @@ module.exports = (sequelize, DataTypes) ->
       'newPassword',
       'verification',
       'shopCode',
-      'contactUs'
+      'contactUs',
+      'adviceCustomer'
     )
     from: DataTypes.STRING
     to: DataTypes.STRING

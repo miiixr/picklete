@@ -6,10 +6,10 @@ let FAQController = {
           model: db.FAQ
         }],
         //order: []
-    });  
+    });
     return res.view("main/FAQ",{
       FAQTypes : FAQTypes
-    }); 
+    });
   },
 
   FAQ : async(req,res) => {
@@ -22,6 +22,7 @@ let FAQController = {
       })
 
       return res.view("user/controlFAQ", {
+        pageName: "/admin/FAQ",
         FAQTypes: FAQTypes
       });
 
@@ -39,7 +40,8 @@ let FAQController = {
 
       if(req.method == "GET"){
         return res.view("user/controlFAQAdd",{
-         FAQTypes: FAQTypes || null
+          pageName: "/admin/FAQ",
+          FAQTypes: FAQTypes || null
         });
       }
 
@@ -50,7 +52,7 @@ let FAQController = {
       }
 
       let FAQAdd = db.FAQ.create(FAQData);
-      
+
       return res.redirect("/admin/FAQ");
     } catch(e){
       console.log(e);
@@ -58,31 +60,31 @@ let FAQController = {
   },
 
   FAQUpdate : async(req,res) => {
-   
+
     try{
-     
+
       var FAQId = req.query.FAQId;
       let FAQ = await db.FAQ.findById(FAQId);
       let FAQTypes = await db.FAQType.findAll();
-      
+
       if(req.method == "GET"){
         return res.view("user/controlFAQAdd",{
           FAQ :FAQ,
           FAQTypes : FAQTypes || null
         });
       }
-      
+
       var params = req.body;
 
       if (! params) {
         return res.redirect("/admin/FAQ");
-      
+
       }
       FAQ.title = params["title"];
       FAQ.FAQTypeId = params["typeId"];
       FAQ.answer = params["answer"];
       let updatedFAQ = await FAQ.save();
-      
+
       return res.redirect("/admin/FAQ");
 
     } catch(e){
@@ -96,6 +98,7 @@ let FAQController = {
       let FAQTypes = await db.FAQType.findAll();
       if(req.method == "GET"){
         return res.view("user/controlFQAType",{
+          pageName: "/admin/FAQ",
           FAQTypes: FAQTypes || null
         });
       }
@@ -117,7 +120,7 @@ let FAQController = {
         console.log(e);
         return res.serverError(e);
       }
-      
+
       return res.redirect("/admin/FAQ");
     } catch(e){
       console.log(e);
@@ -125,14 +128,14 @@ let FAQController = {
   },
 
   FAQDelete : async(req,res) => {
-    
+
     try{
       var FAQDelete = await db.FAQ.destroy({
         where: {
           id :req.body.id
         }
       });
-      
+
       return res.redirect("/admin/FAQ");
     } catch(e){
       console.log(e);
@@ -140,7 +143,7 @@ let FAQController = {
   },
 
   FAQTypeDelete : async(req,res) => {
-    
+
     try{
       var FAQDelete = await db.FAQ.destroy({
         where: {
@@ -154,7 +157,7 @@ let FAQController = {
         }
       });
       return res.redirect("/admin/FAQTypeUpdate");
-    
+
     } catch(e){
       console.log(e);
     }

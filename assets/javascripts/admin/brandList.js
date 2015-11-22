@@ -1,5 +1,4 @@
 (function($) {
-  console.log('test2');
   var group = $('ul.list-brand').sortable({
     group: 'serialization',
     onDrop: function($item, container, _super) {

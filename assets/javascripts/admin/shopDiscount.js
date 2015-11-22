@@ -102,8 +102,8 @@ $(function() {
     if (disCountNode.val() == undefined || disCountNode.val() === 0)
       return;
 
-    disCountNode.val(disCountNode.val() * 100);
+    // disCountNode.val(disCountNode.val() * 100);
   };
   _visualDiscountNumber();
-    
+
 });

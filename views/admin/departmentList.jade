@@ -9,14 +9,14 @@ block body
           ul.dpt
             each dpt, index in dpts
               -if (dpt.weight != 999)
-                li.list-group-item.edit-link.dptSort(data-weight = '#{dpt.weight}',data-id = '#{dpt.id}')
+                li.list-group-item.edit-link.dptSort.none-style(data-weight = '#{dpt.weight}',data-id = '#{dpt.id}')
                   span.glyphicon.glyphicon-menu.m-right-2(data-id='#{dpt.id}')
                   a(href='#', data-toggle='modal', data-id='#{dpt.id}',data-name='#{dpt.name}', class=(dpt.weight == 999)? 'special project': 'dpt name')
                     | #{dpt.name}
           ul.special
             each dpt, index in dpts
               -if (dpt.weight == 999)
-                li.list-group-item.edit-link.dptSort(data-weight = '#{dpt.weight}',data-id = '#{dpt.id}')
+                li.list-group-item.edit-link.dptSort.none-style(data-weight = '#{dpt.weight}',data-id = '#{dpt.id}')
                   span.glyphicon.glyphicon-menu.m-right-2(data-id='#{dpt.id}')
                   a(href='#', data-toggle='modal', data-id='#{dpt.id}',data-name='#{dpt.name}', class=(dpt.weight == 999)? 'special project': 'dpt name')
                     | #{dpt.name}

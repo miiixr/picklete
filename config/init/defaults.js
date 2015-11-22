@@ -232,30 +232,61 @@ module.exports.createTestData = async ({createRoleUser, createNewBuyer}) => {
 
   await createdProductGmComplete.setProducts([noneNameProduct, createdProduct]);
 
-  let productNames = ['黃金曼特寧', '夏威夷可娜', '耶加雪夫', '肯亞AA', '巴西喜拉朵', '薇薇特南果', '薩爾瓦多伊莎貝爾', '瓜地馬拉．安提瓜．花神', '星巴克過期豆'];
+  // let productNames = ['黃金曼特寧', '夏威夷可娜', '耶加雪夫', '肯亞AA', '巴西喜拉朵', '薇薇特南果', '薩爾瓦多伊莎貝爾', '瓜地馬拉．安提瓜．花神', '星巴克過期豆'];
 
-  var xs = []
-  for (var i=0; i < productNames.length; i++) {
-    var x = await db.Product.create({
-      weight: [i],
-      name: productNames[i],
-      description: '超級精選' + productNames[i] + '咖啡豆',
-      stockQuantity: 1111,
-      isPublish: true,
-      price: 1399,
-      size: 'normal',
-      service: ["express"],
-      country: 'U.K',
-      madeby: 'TW',
-      color: 3,
-      productNumber: '2-USA-3-G',
-      spec: 'super-metal',
-      photos: ["https://dl.dropboxusercontent.com/u/9662264/mertirial/shop-item-d-5.jpg", "https://dl.dropboxusercontent.com/u/9662264/mertirial/shop-item-d-5.jpg"]
-    });
-    xs.push(x);
-    console.log('______--------__________-------------______________');
-  }
-  await createdProductGmGood.setProducts(xs);
+  // var xs = []
+  // for (var i=0; i < productNames.length; i++) {
+  //   var x = await db.Product.create({
+  //     weight: [i],
+  //     name: productNames[i],
+  //     description: '超級精選' + productNames[i] + '咖啡豆',
+  //     stockQuantity: 1111,
+  //     isPublish: true,
+  //     price: 1399,
+  //     size: 'normal',
+  //     service: ["express"],
+  //     country: 'U.K',
+  //     madeby: 'TW',
+  //     color: 3,
+  //     productNumber: '2-USA-3-G',
+  //     spec: 'super-metal',
+  //     photos: ["https://dl.dropboxusercontent.com/u/9662264/mertirial/shop-item-d-5.jpg", "https://dl.dropboxusercontent.com/u/9662264/mertirial/shop-item-d-5.jpg"]
+  //   });
+  //   xs.push(x);
+  //   console.log('______--------__________-------------______________');
+  // }
+  // await createdProductGmGood.setProducts(xs);
+
+  let createdProductGmOthers = await db.ProductGm.create({
+    BrandId: 5,
+    brandName: '其他品牌名稱',
+    name: "其他商品名稱",
+    explain: '其他品牌',
+    usage: '其他品牌',
+    notice: '其他品牌',
+    depId: dptA.id,
+    depSubId: dptSubA.id,
+    coverPhoto: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/JC1121-set-My-Mug-blue-2.jpg']
+  });
+
+  await createdProductGmOthers.setDpts([dptA]);
+  await createdProductGmOthers.setDptSubs([dptSubA]);
+
+  let otherBrandsProduct = await db.Product.create({
+    stockQuantity: 1,
+    isPublish: 'true',
+    price: 888,
+    size: 'normal',
+    service: ["快遞宅配", "超商取貨", "禮品包裝"],
+    country: 'U.K',
+    madeby: 'TW',
+    color: 3,
+    productNumber: '2-USA-3-G',
+    spec: 'super-metal',
+    photos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/shop-type-1.jpg']
+  });
+
+  await createdProductGmOthers.setProducts([otherBrandsProduct]);  
 
   // create tag
   let tags = ["男人", "女人", "兒童", "情人", "學生", "寵物", "旅行", "閱讀", "咖啡", "午茶", "派對", "時尚", "印花", "夏日", "冬季", "聖誕", "森林", "動物", "花園", "浪漫", "可愛", "趣味", "復古", "環保", "工業", "簡約"];
@@ -502,7 +533,7 @@ module.exports.createTestData = async ({createRoleUser, createNewBuyer}) => {
   await db.TopicActive.bulkCreate(topicActives);
   // End TopicActive
 
-  productNames = ['flash_黃金曼特寧', 'flash_夏威夷可娜', 'flash_耶加雪夫', 'flash_肯亞AA', 'flash_巴西喜拉朵', 'flash_薇薇特南果', 'flash_薩爾瓦多伊莎貝爾', 'flash_瓜地馬拉．安提瓜．花神', 'flash_星巴克過期豆'];
+  let productNames = ['flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧','flash_黃金曼特寧', 'flash_夏威夷可娜', 'flash_耶加雪夫', 'flash_肯亞AA', 'flash_巴西喜拉朵', 'flash_薇薇特南果', 'flash_薩爾瓦多伊莎貝爾', 'flash_瓜地馬拉．安提瓜．花神', 'flash_星巴克過期豆'];
 
   var flashProduct = [];
   for (i=0; i < productNames.length; i++) {

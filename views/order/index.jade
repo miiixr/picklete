@@ -1,4 +1,5 @@
 extends ../_layout_auth
+include ../mixins/pagination
 
 block body
   //- - var flash = req.flash('message')
@@ -16,7 +17,8 @@ block body
   // /row
   #collapse-order.collapse.in
     .well.control-well.p-30.m-bottom-8
-      form.form-horizontal(name="searchOrders", action="order", method="get")
+      form.form-horizontal.with-pagination(name="searchOrders", action="order", method="get")
+        +pagination-fields(page, totalPages, limit)
         .row.row-m
           .col-md-4
             .form-group
@@ -131,7 +133,7 @@ block body
     .p-10-20
       .row.row-s.text-center.font-size-base
         .col-sm-1.col-sm-1-sm
-          input(type='checkbox')
+          input(type='checkbox' id='checkAll')
         // /col-sm-1
         .col-sm-2 訂單編號
         // /col-sm-2
@@ -295,17 +297,12 @@ block body
 
   // pagination
   hr.dashed-line
-  .text-center
-    //
-      pagination-block
-      ==================================================
-    ul.list-inline.m-bottom-0.m-top-1
-      li.border-right-1.p-right-2
-        a(href='#' id='previous') 上一頁
-      li.border-right-1.p-right-2 #{page + 1} / #{Math.ceil(orders.count / limit)}
-      li
-        a(href='#' id='next') 下一頁
+  - totalPages = Math.ceil(orders.count / limit)
+  +pagination-simple-pager(page, totalPages)
+
   // /text-center
+
 
 block js
   script(src='/javascripts/admin/order.js')
+  script(src='/javascripts/common/pagination.js')

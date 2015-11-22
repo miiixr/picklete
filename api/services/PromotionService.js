@@ -61,7 +61,7 @@ module.exports = {
       if(promotion.price=='') {
         delete promotion.price;
 
-        // make integer be a discount 
+        // make integer be a discount
         var count = promotion.discount.toString().length;
         var discount = (count > 1) ? parseInt(promotion.discount, 10) / 100 : parseInt(promotion.discount, 10) / 10;
         promotion.discount = discount;
@@ -157,14 +157,14 @@ module.exports = {
       if ( ! promotion.price || promotion.price == '') {
         updatePromoiton.price = null;
 
-        // make integer be a discount 
+        // make integer be a discount
         var count = promotion.discount.toString().length;
         var discount = (count > 1) ? parseInt(promotion.discount, 10) / 100 : parseInt(promotion.discount, 10) / 10;
         promotion.discount = discount;
 
         updatePromoiton.discount = promotion.discount;
       }
-      
+
       updatePromoiton.discountType = promotion.discountType;
       updatePromoiton.coverPhoto = promotion.coverPhoto;
 
@@ -200,7 +200,7 @@ module.exports = {
   productPriceTransPromotionPrice: async(date, products) => {
     try {
       // find all promotions within a specific date
-
+console.log("date:=====",date);
       // check each prduct
       if(!products.length) return products;
 
@@ -270,7 +270,21 @@ module.exports = {
       console.log('=== productPriceTransPromotionPrice err ==>',e.stack);
       throw e;
     }
+  },
+  promotionDiscountRate: async (discount) => {
+    try {
+        if(discount>10) {
+          return parseInt(discount,10)/100;
+        }
+        else{
+          return parseInt(discount,10)/10;
+        }
+    } catch (e) {
+      console.log('=== promotionDiscountRate err ==>',e.stack);
+      throw e;
+    }
   }
+
   // end productPriceTransPromotionPrice
 
 };

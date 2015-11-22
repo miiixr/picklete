@@ -1,9 +1,27 @@
 extends ../_layout_auth
 
 block body
+  #modal-member-delete.modal.fade
+    .modal-dialog(role='document')
+      .modal-content.font-size-slarge
+        .modal-header.p-30
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') ×
+          h2.modal-title 刪除
+        // /modal-header
+        .modal-body.p-30.p-top-0
+          p 您確定要將 
+            span 
+            | 此會員刪除？
+          //- p 您確定要將此 XXXXXXX 移出此折扣活動？
+        // /modal-body
+        .modal-footer
+          button.btn.btn-default(type='button', data-dismiss='modal') 取消
+          button.btn.btn-green(type='button', onClick="deleteMember(#{member.id});") 確定
+
   h2.m-bottom-6 會員資料
   .well.control-well.p-30.m-bottom-8
-    form.form-horizontal
+    form#memberDetail.form-horizontal(name="memberDetail", action="/admin/member-detail/#{member.id}", method="get")
       .row.row-m
         .col-md-6
           .form-group.m-bottom-0
@@ -41,7 +59,8 @@ block body
           .form-group.m-bottom-0
             label.col-md-1.control-label.text-muted 住址
             .col-md-11
-              p.form-control-static TODO: add address filed to user
+              - var userAddress = (user.zipcode?user.zipcode:'') + ' ' + (user.city?user.city:'') + (user.region?user.region:'') + (user.address?user.address:'');
+              p.form-control-static #{userAddress}
           // /form-group
         // /col-md-6
       // /row
@@ -50,7 +69,7 @@ block body
           .form-group
             label.col-md-1.control-label.text-muted 興趣
             .col-md-11
-              p.form-control-static TODO: not yet impl.
+              p.form-control-static #{userLikes}
           // /form-group
         // /col-md-6
       // /row
@@ -59,13 +78,14 @@ block body
           .form-group
             label.col-md-1.control-label.text-muted 備註
             .col-md-11
-              textarea.form-control(rows='3') #{member.comment}
+              textarea.form-control(name="comment", rows='3') #{member.comment}
+              input(name="id", value="#{member.id}", type="hidden")
           // /form-group
         // /col-md-6
       // /row
-      .text-right
-        button.btn.btn-green(type='button') 更新
-      // /text-right
+      //- .text-right
+      //-   button.btn.btn-green(type='submit') 更新
+      //- // /text-right
     // /form-horizontal
   // /well
   hr.dashed-line
@@ -88,93 +108,110 @@ block body
         th
           span.glyphicon.glyphicon-plus
     tbody
-      tr.disabled
-        td 2015-5-21
-        td w201505210009
-        td 信用卡
-        td
-          span.text-danger 訂單已取消
-        td 2015-5-22
-        td 5,790
-        td 已捐贈
-        td
-          a(data-toggle='collapse', data-parent='#collapse-purchase', href='#')
-            span.glyphicon.glyphicon-plus
-      tr
-        td 2015-5-21
-        td w201505210009
-        td 信用卡
-        td 訂單完成
-        td 2015-5-22
-        td 5,790
-        td 已捐贈
-        td
-          a(data-toggle='collapse', data-parent='#collapse-purchase', href='#collapse-purchase-One')
-            span.glyphicon.glyphicon-plus
-      tr.tr-hide
-        td(colspan='8')
-          #collapse-purchase-One.panel-collapse.collapse
-            //
-              purchase-detail
-              ==================================================
-            .p-10
-              .m-top-2.m-bottom-2
-                ul.p-left-3
-                  li 收件人姓名：{consumer_name} 小姐
-                  li 收件人電話：09123456**
-                  li 收件人地址：407 台中市南區****街三段379號
-                  li 運送方式：{delivery_company} / 編號：{tax_id}
-              // /m-top-2 m-bottom-2
-              table.table
-                thead
-                  tr
-                    th 商品名稱
-                    th.text-center 數量
-                    th 單價
-                    th.text-right 小計
-                tbody
-                  tr
-                    td
-                      a(href='shop-product') {product_name}
-                    td.text-center 3
-                    td 1,440
-                    td.text-right 3,450
-                  tr
-                    td
-                      a(href='shop-product') {product_name}
-                    td.text-center 3
-                    td
-                      | 1,440
-                      small.text-line-through.m-left-1 1,700
-                    td.text-right 3,450
-                  tr
-                    td
-                      p 付款方式：7-11 ibon 代碼繳費，繳費代碼：251563222267
-                      p.text-danger 賣家備註：
-                      ol.text-danger
-                        li 管理員代收
-                        li 禮品的包裝盒請去除價格標籤
-                    td
-                    td(colspan='2')
-                      .row.m-bottom-1
-                        .col-xs-6 小計
-                        .col-xs-6.text-right 3,240
-                      // /row
-                      .row.m-bottom-1
-                        .col-xs-6 運費
-                        .col-xs-6.text-right 免運
-                      // /row
-                      .row.m-bottom-1
-                        .col-xs-6 包裝
-                        .col-xs-6.text-right 120
-                      // /row
-                      .row.m-bottom-1
-                        .col-xs-6 折扣碼
-                        .col-xs-6.text-right -30
-                      // /row
-                      hr
-                      h2
-                        small 總計
-                        span.text-danger.pull-right NT$2,390
-            // /p-10
-          // /panel-collapse
+      each order, index in orders
+        if (order.status == "new" || order.status == "paymentConfirm" || order.status == "deliveryConfirm")
+          tr(class = !order.status?"disabled":"")
+            td #{sails.moment(order.createdAt).format('YYYY/MM/DD')}
+            td #{order.serialNumber}
+            td #{order.allPayPaymentType}
+            if order.status == "new"
+              td 訂單確認中
+              td
+            else if order.status == "paymentConfirm"
+              td 訂單完成
+              td
+            else if order.status == "deliveryConfirm"
+              td 已出貨
+              td #{sails.moment(order.updatedAt).format('YYYY/MM/DD hh:mm')}
+            else
+              td 
+                span.text-danger 訂單取消
+              td
+            td #{order.paymentTotalAmount}
+            td #{order.Invoice ? i18n(order.Invoice.type) : ''}
+            td
+              a(data-toggle='collapse', data-parent='#collapse-purchase', href='#collapse-purchase-#{order.serialNumber}')
+                span.glyphicon.glyphicon-plus
+          tr.tr-hide
+            td(colspan='8')
+              .panel-collapse.collapse(id="collapse-purchase-#{order.serialNumber}")
+                //
+                  purchase-detail
+                  ==================================================
+                .p-10
+                  .m-top-2.m-bottom-2
+                    ul.p-left-3
+                      li 收件人姓名：#{order.Shipment.userName} 先生/小姐
+                      li 收件人電話：#{order.Shipment.mobile}
+                      li 收件人地址：#{order.Shipment.address}
+                      li 運送方式：#{ (order.Shipment.shippingType== 'delivery') ? '快遞' : '郵遞'} 
+                  // /m-top-2 m-bottom-2
+                  table.table
+                    thead
+                      tr
+                        th 商品名稱
+                        th.text-center 數量
+                        th 單價
+                        th.text-right 小計
+                    tbody
+                      - sumPrice = 0
+                      each item in order.OrderItems
+                        tr
+                          td
+                            a(href='#') #{item.name}
+                          td.text-center #{item.quantity}
+                          td $#{item.price}
+                          td.text-right $#{item.quantity * item.price}
+                          - sumPrice += item.price*item.quantity
+                      tr
+                        td
+                        if order.allPayPaymentType == "ATM"
+                          p 付款方式：#{order.allPayPaymentType} 繳費帳戶：#{order.BankCode} #{order.vAccount}
+                        else if order.allPayPaymentType == "CVS" || order.allPayPaymentType == "BARCODE"
+                          p 付款方式：#{order.allPayPaymentType} 繳費帳戶：#{order.PaymentNo}
+                        else if order.allPayPaymentType == "Credit"
+                          p 付款方式：#{order.allPayPaymentType}
+                        p.text-danger 賣家備註：#{order.description?order.description:'無'}
+                          //-   li 管理員代收
+                          //-   li 禮品的包裝盒請去除價格標籤
+                        td
+                        td(colspan='2')
+                          .row.m-bottom-1
+                            .col-xs-6 小計
+                            .col-xs-6.text-right #{sumPrice}
+                          // /row
+                          .row.m-bottom-1
+                            .col-xs-6 運費
+                            - var shippingFee = (sumPrice >= 390) ? 0 : order.Shipment.shippingFee;
+                            .col-xs-6.text-right #{shippingFee}
+                          // /row
+                          .row.m-bottom-1
+                            .col-xs-6 包裝
+                            .col-xs-6.text-right #{order.packingFee || 0} 
+                          // /row
+                          //- .row.m-bottom-1
+                          //-   .col-xs-6 折扣碼
+                          //-   .col-xs-6.text-right -30
+                          // /row
+                          hr
+                          h2
+                            small 總計
+                            span.text-danger.pull-right NT$ #{order.paymentTotalAmount} 
+        else
+          tr.disabled
+            td #{sails.moment(order.createdAt).format('YYYY/MM/DD hh:mm')}
+            td #{order.Shipment.shippingId}
+            td #{order.allPayPaymentType}
+            td 訂單取消
+            //- td 2015-5-22
+            td $#{order.paymentTotalAmount}
+            td #{order.Invoice ? i18n(order.Invoice.type) : ''}
+            td
+              a(data-toggle='collapse', data-parent='#collapse-purchase', href='#collapse-purchase-One')
+                span.glyphicon.glyphicon-plus              
+  .text-center.m-top-8.m-bottom-6
+    a.btn.btn-link.delete-link.btn-lg(data-toggle="modal", data-target="#modal-member-delete") 刪除會員
+    button.btn.btn-green(form="memberDetail") 儲存變更
+
+block js
+  script(src='/javascripts/admin/controlMemberDetail.js')

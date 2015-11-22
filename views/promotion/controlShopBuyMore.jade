@@ -1,5 +1,6 @@
 extends ../_layout_auth
 include ../mixins/pagination
+include ../mixins/_product
 
 block body
   h2.m-bottom-6 加價購
@@ -46,30 +47,31 @@ block body
             th 時間
             th
         tbody
-          each purchase in additionalPurchaseNoLimit.rows
-            each product in purchase.Products
+          each product in additionalPurchaseNoLimitProducts.rows
+            each noLimitPurchase in product.AdditionalPurchases
               tr
                 td
                   img.width-6(src= product.photos[0])
-                td #{product.name}
+                td 
+                  +productName(product)
                 td #{product.id}
                 td #{product.price}
-                if purchase.type == 'discount'
+                if noLimitPurchase.type == 'discount'
                   td
-                    span.text-danger #{Math.ceil(product.price * purchase.discount)}
-                  td #{purchase.discount * 100} 折
+                    span.text-danger #{Math.ceil(product.price * noLimitPurchase.discount)}
+                  td #{noLimitPurchase.discount * 100} 折
                 else
                   td
-                    span.text-danger #{purchase.reducePrice}
-                  td #{purchase.reducePrice} 元
+                    span.text-danger #{(product.price - noLimitPurchase.reducePrice)}
+                  td #{noLimitPurchase.reducePrice} 元
                 td
-                  | #{purchase.anyTime ? '不限時' : sails.moment(purchase.startDate).format('YYYY/MM/DD')}
+                  | #{noLimitPurchase.anyTime ? '不限時' : sails.moment(noLimitPurchase.startDate).format('YYYY/MM/DD')}
                   br
-                  | #{purchase.anyTime ? '不限時' : sails.moment(purchase.endDate).format('YYYY/MM/DD')}
+                  | #{noLimitPurchase.anyTime ? '不限時' : sails.moment(noLimitPurchase.endDate).format('YYYY/MM/DD')}
                 td.text-right
-                  a.btn.btn-link(href='/admin/buymore/detail?id='+ purchase.id)
+                  a.btn.btn-link(href='/admin/buymore/detail?id='+ noLimitPurchase.id)
                     span.glyphicon.glyphicon-pencil2
-                  input(type='hidden', value='#{purchase.id}')
+                  input(type='hidden', value='#{noLimitPurchase.id}')
                   a.btn.btn-link.delete-link(href='', data-toggle='modal', data-target='#modal-delete')
                     span.glyphicon.glyphicon-remove
       hr.dashed-line
@@ -91,9 +93,9 @@ block body
             input(type="hidden", name="limitPage", value=limitPage? limitPage: 0)
             +pagination-fields(limitPage, limitTotalPages, limit)
             .input-group
-              input.form-control(type='text', placeholder='Search for...')
+              input.form-control(name='limitKeyword', type='text', placeholder='Search for...', value='#{query.limitKeyword}')
               span.input-group-btn
-                button.btn.btn-default.p-left-2.p-right-2(type='button')
+                button.btn.btn-default.p-left-2.p-right-2(type='button', onClick='$("form[name=\'searchLimit\']").submit()')
                   span.glyphicon.glyphicon-search
           // /input-group
         // /col-sm-6
@@ -111,30 +113,32 @@ block body
             th 時間
             th
         tbody
-          each purchase in additionalPurchaseLimit.rows
-            each product in purchase.Products
+          each product in additionalPurchaseLimitProducts.rows
+            each limitPurchase in product.AdditionalPurchases
               tr
                 td
                   img.width-6(src= product.photos[0])
-                td #{product.name}
+                - var name = (product.name && product.name.length > 0) ? "(" + product.name + ")" : "";
+                td 
+                  +productName(product)
                 td #{product.id}
                 td #{product.price}
-                if purchase.type == 'discount'
+                if limitPurchase.type == 'discount'
                   td
-                    span.text-danger #{Math.ceil(product.price * purchase.discount)}
-                  td #{purchase.discount * 100} 折
+                    span.text-danger #{Math.ceil(product.price * limitPurchase.discount)}
+                  td #{limitPurchase.discount*10} 折
                 else
                   td
-                    span.text-danger #{purchase.reducePrice}
-                  td #{purchase.reducePrice} 元
+                    span.text-danger #{(product.price - limitPurchase.reducePrice)}
+                  td #{limitPurchase.reducePrice} 元
                 td
-                  | #{purchase.anyTime ? '不限時' : sails.moment(purchase.startDate).format('YYYY/MM/DD')}
+                  | #{limitPurchase.anyTime ? '不限時' : sails.moment(limitPurchase.startDate).format('YYYY/MM/DD')}
                   br
-                  | #{purchase.anyTime ? '不限時' : sails.moment(purchase.endDate).format('YYYY/MM/DD')}
+                  | #{limitPurchase.anyTime ? '不限時' : sails.moment(limitPurchase.endDate).format('YYYY/MM/DD')}
                 td.text-right
-                  a.btn.btn-link(href='../admin/buymore/detail?id='+ purchase.id)
+                  a.btn.btn-link(href='../admin/buymore/detail?id='+ limitPurchase.id)
                     span.glyphicon.glyphicon-pencil2
-                  input(type='hidden', value='#{purchase.id}')
+                  input(type='hidden', value='#{limitPurchase.id}')
                   a.btn.btn-link.delete-link(href='', data-toggle='modal', data-target='#modal-delete')
                     span.glyphicon.glyphicon-remove
 

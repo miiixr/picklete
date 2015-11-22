@@ -5,7 +5,7 @@ block body
   ul.list-brand
   form.form-horizontal(action="/admin/FAQTypeUpdate", method="POST", id="FAQTypeForm")
     each FAQType,index in FAQTypes
-      li
+      li.none-style
         .well.control-well.p-10-20.m-bottom-4
           .row
             .col-md-1.col-sm-1
@@ -40,4 +40,3 @@ block body
     // /text-center
 block js
   script(src="/javascripts/admin/controlFAQType.js")
-

@@ -163,6 +163,9 @@ module.exports = {
             product.spec = updateProduct.spec;
             product.color = good.color;
             product.productNumber = good.productNumber;
+            if(product.stockQuantity == 0 && good.stockQuantity > 0){
+              await AdviceCustomerListService.sendEmail(product.id);
+            }
             product.stockQuantity = good.stockQuantity;
             product.description = good.description;
             product.isPublish = (good.isPublish == "false") ? false : true;
@@ -353,7 +356,7 @@ module.exports = {
   },
 
   productQuery: async (query, offset = 0, limit = 2000) => {
-
+    
     let queryObjArray = [],
         queryObj = {},
         GmQueryObj = {},
@@ -464,52 +467,71 @@ module.exports = {
         }
 
 
-        // 販售狀態 1:隱藏, 2:上架
-        if (query.isPublish != '') {
-          queryObj.isPublish = (query.isPublish == 'false') ? null : true;
-        }
-
         // productGm 搜尋
-        if (query.brandId > 0)
-          queryObj.BrandId = query.brandId;
+        // if (query.brandId > 0)
+        //   GmQueryObj.brandId = query.brandId;
 
         // tag keyword search
-        if (query.tag) {
-          queryObj.tag = {
-            $like: '%' + query.tag + '%'
-          };
-        }
+        // if (query.tag) {
+        //   ProductQueryObj.tag = {
+        //     $like: '%' + query.tag + '%'
+        //   };
+        // }
 
-        if (typeof query.isPublish != 'undefined') {
-          ProductQueryObj.isPublish = (query.isPublish == 'false') ? null : true;
+        if (query.isPublish != '') {
+          ProductQueryObj.isPublish = (query.isPublish == 'false') ? false : true;
         }
       }
       // ================ merge queryObj ================
 
       // console.log('===== productDptSubConfig', productDptSubConfig);
-      queryObj = {
-        subQuery: false,
-        where: ProductQueryObj,
-        include: [{
-          model: db.ProductGm,
-          where: GmQueryObj,
-          include:[{
-            model: db.Dpt,
-            where: DptQueryObj
-          },{
-            model: db.DptSub,
-            where: DptSubQueryObj
-          },{
-            model: db.Brand
-          },{
-            model: db.PageView
-          },{
-            model: db.LikesCount
-          }]
-        }, productDptSubConfig],
-        offset: offset,
-        limit: limit,
-      };
+      if (query.dptSubId > 0 ){
+        queryObj = {
+          subQuery: false,
+          where: ProductQueryObj,
+          include: [{
+            model: db.ProductGm,
+            where: GmQueryObj,
+            include:[
+            {
+              model: db.Dpt,
+              where: DptQueryObj
+            },{
+              model: db.DptSub,
+              where: DptSubQueryObj
+            },
+            {
+              model: db.Brand
+            },{
+              model: db.PageView
+            },{
+              model: db.LikesCount
+            }]
+          }, productDptSubConfig],
+          offset: offset,
+          limit: limit
+        };
+      } else {
+        queryObj = {
+          subQuery: false,
+          where: ProductQueryObj,
+          include: [{
+            model: db.ProductGm,
+            where: GmQueryObj,
+            include:[
+            {
+              model: db.Brand
+            },{
+              model: db.PageView
+            },{
+              model: db.LikesCount
+            }]
+          }, productDptSubConfig],
+          offset: offset,
+          limit: limit
+        };
+
+      }
 
       let sort;
       switch (query.sort) {
