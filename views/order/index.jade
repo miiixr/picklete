@@ -237,7 +237,7 @@ block body
                           a(href='#') #{item.name}
                         td.text-center #{item.quantity}
                         td #{item.price}
-                        td.text-right #{item.price*item.quantity}
+                        td.text-right #{sails.numeral(item.price*item.quantity).format('0,0')}
                         - sumPrice += item.price*item.quantity
                         - sum += item.quantity
                     tr
@@ -260,7 +260,7 @@ block body
                       td.text-right(colspan='2')
                         h3
                           small 總計
-                          span.m-left-2 NT$ #{order.paymentTotalAmount}
+                          span.m-left-2 NT$ #{ sails.numeral(order.paymentTotalAmount).format('0,0') }
                       
                 .m-left-1
                   if order.allPayPaymentType == "ATM"
