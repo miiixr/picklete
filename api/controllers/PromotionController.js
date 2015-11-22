@@ -255,7 +255,7 @@ let PromotionController = {
           promotion.Products = products;
         }
       }
-
+      promotion.products = await PromotionService.productPriceTransPromotionPrice(promotion.startDate,promotion.Products);
       console.log('=== promotion ===', promotion);
 
       let view = "";
