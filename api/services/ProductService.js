@@ -26,6 +26,10 @@ module.exports = {
       tag = tag.split(',');
     }
 
+    // Remove empty strings from array
+    if(updateProduct['coverPhoto'])
+      updateProduct['coverPhoto'] = updateProduct['coverPhoto'].filter(Boolean);
+
     let newProductGm = {
       BrandId: brandId,
       name: updateProduct.name,
