@@ -223,6 +223,30 @@ module.exports.mail = {
       </body></html>"""
     },
 
+    shopCodeWithoutLimit: {
+      sendBy: 'email',
+      subject: '您的優惠碼',
+      html: """
+      <br />親愛的 %(fullName)s 您好：
+      <br />
+      <br />%(shopCodeSentContent)s
+      <br />
+      <br />下面是這期的優惠碼：
+      <br />%(shopCodeToken)s
+      <br />即日起開始使用，不限時
+      <br />
+      <br />此為系統信件，請勿直接回覆此信件
+      <br />
+      <br />---
+      <br />
+      <br />%(storeName)s | 好物慢慢選
+      <br />
+      <br />客服信箱：%(serviceMail)s
+      <br />
+      <br />上班時間：週一至週五，10.00AM - 5.00PM，比照國定休假日
+      </body></html>"""
+    },
+
     verification:{
       sendBy: 'email',
       subject: '%(fullName)s - 註冊驗證信',

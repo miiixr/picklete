@@ -62,6 +62,17 @@ describe("about Mailer service", () => {
 
   });
 
+  it('offer code without limited time send', () => {
+    let shopCode = {
+      token: '11223344',
+      restrictionDate: 'on'
+    }
+
+    let result = CustomMailerService.shopCodeMail({shopCode, user});
+    result.type.should.be.equal('shopCode');
+
+  });
+
   it('contactUs send', () => {
     let user = {
         name: 'testUser',
