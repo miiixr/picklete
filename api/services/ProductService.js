@@ -216,6 +216,10 @@ module.exports = {
         } // end if
       } // end for
 
+      // Remove empty strings from array
+      if(updateProduct.coverPhoto)
+        updateProduct.coverPhoto = updateProduct.coverPhoto.filter(Boolean);
+
       productGm.BrandId = brand.id;
       productGm.name = updateProduct.name;
       productGm.dptId = updateProduct.dptId;
