@@ -291,7 +291,9 @@ let PromotionController = {
         }
       }
       promotion.products = await PromotionService.productPriceTransPromotionPrice(promotion.startDate,promotion.Products);
+
       promotion.discountRate = discountRate;
+
       console.log('=== promotion ===', promotion);
 
       console.log(JSON.stringify(promotion,null,4));
