@@ -25,7 +25,7 @@ module.exports = {
       await CustomMailerService.sendMail(message);
 
       // 寄給系統信箱
-      let systemMail = "service@wevo.com.tw";
+      let systemMail = sails.config.store.serviceMail;
       messageConfig = await CustomMailerService.contactUs(user, systemMail);
       message = await db.Message.create(messageConfig);
       await CustomMailerService.sendMail(message);
