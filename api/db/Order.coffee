@@ -77,6 +77,8 @@ module.exports = (sequelize, DataTypes) ->
     Order.hasOne models.Shipment
     # invoice type, 二聯，三聯，以及發票格式會有不同
     Order.belongsTo models.Invoice
+    # the ShopCode used in order
+    Order.belongsTo models.ShopCode
     return
   )
   return Order

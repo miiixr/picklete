@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) ->
     shippingRegion: DataTypes.STRING
     shippingFee: DataTypes.FLOAT
     shippingId: DataTypes.STRING
+    serialNo: DataTypes.STRING
 
   }, classMethods: associate: (models) ->
     Shipment.belongsTo models.Order
