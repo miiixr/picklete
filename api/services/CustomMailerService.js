@@ -154,6 +154,7 @@ module.exports = {
         paymentTotalAmount: order.paymentTotalAmount,
         orderSerialNumber: order.serialNumber,
         serviceMail: sails.config.store.serviceMail,
+        shipmentSerialNo: order.Shipment.serialNo,
 
       });
 
