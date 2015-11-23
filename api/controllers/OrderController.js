@@ -368,12 +368,25 @@ OrderController = {
 
     let id = req.param("id");
     let status = req.query.status;
+    let query = req.query;
 
     try {
+
+      let shipment = await db.Shipment.find({
+        where: {
+          OrderId: id
+        }
+      });
+
+      if(query.serialNo) {
+        shipment.serialNo = query.serialNo;
+      }
+      await shipment.save();
+
       let order = await db.Order.find({
         where: {id},
-        include: [{model: db.User}]
-      });;
+        include: [{model: db.User},{model: db.Shipment}]
+      });
 
       if (order.status === status){
         req.flash('message', `訂單 ${order.serialNumber} 狀態已為 ${status}`);
