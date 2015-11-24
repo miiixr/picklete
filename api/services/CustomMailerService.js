@@ -352,8 +352,15 @@ module.exports = {
   shopCodeMail: ({user, shopCode}) => {
     try {
 
-      var shopCodeTpl = sails.config.mail.templete.shopCode;
-
+      if(shopCode.restrictionDate != 'on' ){
+        var shopCodeTpl = sails.config.mail.templete.shopCode;
+        var startDate = moment(shopCode.startDate).format('YYYY/MM/DD');
+        var endDate = moment(shopCode.endDate).format('YYYY/MM/DD');
+      } else {
+        var shopCodeTpl = sails.config.mail.templete.shopCodeWithoutLimit;
+        var startDate = moment(0).format('YYYY/MM/DD');
+        var endDate = moment(0).format('YYYY/MM/DD');
+      } 
       var email = user.email;
       var mailSendConfig = {...shopCodeTpl, from: sails.config.mail.config.from, to: email};
       mailSendConfig.subject = sprintf(mailSendConfig.subject, {
@@ -364,8 +371,8 @@ module.exports = {
         fullName: user.fullName,
         shopCodeToken: shopCode.code,
         shopCodeSentContent: shopCode.sentContent || '',
-        startDate: moment(shopCode.startDate).format('YYYY/MM/DD'),
-        endDate: moment(shopCode.endDate).format('YYYY/MM/DD'),
+        startDate: startDate,
+        endDate: endDate,
         storeName: sails.config.store.name,
         storeName2: sails.config.store.name2,
         storeName3: sails.config.store.name3,
