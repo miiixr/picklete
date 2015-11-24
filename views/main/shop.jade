@@ -36,12 +36,15 @@ block body
                   li
                     a(href='/shop/list?brand=#{brand.id}')
                       img.border-block-1.img-full(src=brand.avatar)
-          // /clearfix
-          .clearfix.m-bottom-2
-            each brand, idx in brands
-              - if (brand.type === 'OTHER')
-                a(href='/shop/list?brand=#{brand.id}')
-                  h4.text-gray-darker.m-bottom-4 #{i18n('other-brand')}
+              li
+                a(href='/shop/list?brand=1')
+                  img.border-block-1.img-full(src="/images/product/other.jpg")
+          //- // /clearfix
+          //- .clearfix.m-bottom-2
+          //-   each brand, idx in brands
+          //-     - if (brand.type === 'OTHER')
+          //-       a(href='/shop/list?brand=#{brand.id}')
+          //-         h4.text-gray-darker.m-bottom-4 #{i18n('other-brand')}
                       
           // /clearfix
         // /container
