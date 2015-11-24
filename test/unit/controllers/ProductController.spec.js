@@ -270,8 +270,10 @@ describe("about Product", () => {
     .field('good[][photos-1]', 'url1')  // 1
     .field('good[][photos-2]', 'url2')  // 1
     .field('good[][isPublish]', 'false')
-    .field('coverPhoto[]', 'photos1')
-    .field('coverPhoto[]', 'photos2')
+    .field('coverPhoto', 'photos1')
+    .field('coverPhoto', 'photos2')
+    .field('coverPhoto', '')
+    .field('coverPhoto', '')
     .field('explain', '<p>introduce</p>\r\n')
     .field('notice', '<p>notice</p>\r\n')
     .field('tag', '兒童,學生')
