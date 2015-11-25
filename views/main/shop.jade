@@ -86,6 +86,7 @@ block body
             shop-filter
             ==================================================
           .btn-group
+            input(name='color',type='hidden', value= req.query.color)
             input(name='sort',type='hidden', value= sort)
             input(name='dptSubId',type='hidden', value= dptSubId)
             input(name='dptId',type='hidden', value= dptId)
