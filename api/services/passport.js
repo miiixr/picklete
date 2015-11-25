@@ -150,6 +150,7 @@ passport.connect = async function(req, query, profile, next) {
       checkMail = await db.User.findOne({where:{email:user.email}});
     }
 
+
     if(checkMail){
       throw new Error('Error passport email exists');
     } else{
@@ -157,6 +158,7 @@ passport.connect = async function(req, query, profile, next) {
       user.dataValues.Role = role;
       query.UserId = user.id;
       passport = await db.Passport.create(query);
+      let messageResult = await ShopCodeService.sendWhenRegister({user});
       return next(null, user);
     }
 

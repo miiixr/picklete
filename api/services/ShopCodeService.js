@@ -32,7 +32,6 @@ module.exports = {
         }]
       }
     });
-
     let users = [user];
 
     let messageResults = await* shopCodes.map((shopCode) => {
