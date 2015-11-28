@@ -46,8 +46,9 @@ block body
             .col-md-2
               a.btn-remove(href='#', disabled=true)
                 span.glyphicon.glyphicon-remove
-              a.btn-add(href='#')
-                span.glyphicon.glyphicon-plus
+              if i == good.ProductGm.Dpts.length-1
+                a.btn-add(href='#')
+                  span.glyphicon.glyphicon-plus
 
         // /form-group
     // /well
