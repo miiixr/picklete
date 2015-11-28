@@ -222,11 +222,15 @@ html
         |     
         li
           .input-group.m-bottom-2.m-top-2
-            input.form-control(type='text', placeholder='Search for...')
-            |         
-            span.input-group-btn
-              a.btn.btn-default.p-left-2.p-right-2(href='search-result')
-                span.glyphicon.glyphicon-search
+            form(action='/search')
+              .row
+                .col-xs-10(style='padding-right: 0px;')
+                  input.form-control(type='text', placeholder='Search for...', name='q')
+                .col-xs-2(style='padding-left: 0px;')
+                  button.btn.btn-default.p-left-2.p-right-2(type='submit', value='')
+                    span.glyphicon.glyphicon-search
+     
+                
           // /input-group
     
     // /navmenu-fixed-right
