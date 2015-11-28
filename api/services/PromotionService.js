@@ -200,7 +200,7 @@ module.exports = {
   productPriceTransPromotionPrice: async(date, products) => {
     try {
       // find all promotions within a specific date
-console.log("date:=====",date);
+
       // check each prduct
       if(!products.length) return products;
 
@@ -271,6 +271,7 @@ console.log("date:=====",date);
       throw e;
     }
   },
+  
   promotionDiscountRate: async (discount) => {
     try {
         if(discount>10) {
