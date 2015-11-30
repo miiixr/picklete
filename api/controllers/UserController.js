@@ -490,6 +490,12 @@ let UserController = {
         let member = members.rows[i];
 
         member.totalBonusRemain = await UserService.calcTotalBonusRemain(member);
+
+        // 後台會員資料備註最多顯示兩行即可
+        if(member.comment.length > 20){ 
+          member.comment = member.comment.substring(0,20)+'...';
+          console.log('----->', member.comment);
+        }
       }
 
       res.view("user/controlMembers", {

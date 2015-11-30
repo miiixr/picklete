@@ -46,8 +46,9 @@ block body
             .col-md-2
               a.btn-remove(href='#', disabled=true)
                 span.glyphicon.glyphicon-remove
-              a.btn-add(href='#')
-                span.glyphicon.glyphicon-plus
+              if i == good.ProductGm.Dpts.length-1
+                a.btn-add(href='#')
+                  span.glyphicon.glyphicon-plus
 
         // /form-group
     // /well
@@ -128,7 +129,7 @@ block body
         .form-group
           label.col-md-2.control-label 商品備註
           .col-md-10
-            input.form-control(type='text', name='comment', value=good.comment?good.comment:'')
+            input.form-control(type='text', name='comment', value=good.Products[0].comment?good.Products[0].comment:'')
 
 
         // /form-group
