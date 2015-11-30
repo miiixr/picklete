@@ -28,7 +28,6 @@ let ShopController = {
     query.brandId = query.brand;
 
     sails.log.info('=== query ===', query);
-    console.log('aaaa');
     console.log(JSON.stringify(query,null,4));
     try {
       if (query.flash) {
