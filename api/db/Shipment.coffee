@@ -1,6 +1,7 @@
 module.exports = (sequelize, DataTypes) ->
   Shipment = sequelize.define('Shipment', {
     username: DataTypes.STRING
+    gender: DataTypes.ENUM('none', 'male', 'female')
     mobile: DataTypes.STRING
     taxId: DataTypes.STRING
     email: DataTypes.STRING
