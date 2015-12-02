@@ -161,8 +161,8 @@ OrderController = {
     var newOrder = req.body.order;
 
     try {
-
-      console.log("Order",newOrder);
+      console.log('=========== Order ==========');
+      console.log(JSON.stringify(newOrder,null,4));
 
       let useAllPay = false;
 

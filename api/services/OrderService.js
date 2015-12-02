@@ -371,6 +371,7 @@ var self = module.exports = {
         let createdOrderItemIds = createdOrderItems.map((orderItem) => orderItem.id);
 
         let {shipment, invoice} = newOrder;
+
         // shipment fee
         // when user is for him self.
         if (shipment.zipcode == '') {
