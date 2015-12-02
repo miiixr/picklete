@@ -199,7 +199,7 @@ block body
                 .row
                   .col-sm-6
                     ul.p-left-4
-                      li 收件人姓名：#{order.Shipment.dataValues.username} 先生/小姐
+                      li 收件人姓名：#{order.Shipment.dataValues.username} #{(order.Shipment.dataValues.username == 'male')?'先生':'小姐'}
                       li 收件人電話：#{order.Shipment.dataValues.mobile}
                       li 收件人地址：#{order.Shipment.dataValues.address}
                   // /col-sm-6

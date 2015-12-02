@@ -181,6 +181,7 @@ let UserController = {
       let shippings = await ShippingService.findAll();
       // console.log('=== shippings ==>',shippings);
       let paymentMethod = sails.config.allpay.paymentMethod;
+
       return res.view('main/cart', {
         company,
         brands,
