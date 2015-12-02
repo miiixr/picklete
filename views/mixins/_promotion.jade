@@ -6,5 +6,7 @@ mixin salePrice(product, promotion)
   - var originPrice = (product.originPrice)? product.originPrice : product.price;
   - var reducePrice = promotion.price || promotion.reducePrice;
   - var discountType = promotion.discountType || promotion.type;
-  - var salePrice = ( discountType == 'price' || discountType == 'reduce' )? ((originPrice - reducePrice) > 0 ? originPrice - reducePrice : 0 ) : Math.ceil(product.price * promotion.discountRate);
+  - var discountRate = (promotion.discount > 10) ? promotion.discount / 100 : promotion.discount / 10;
+  - var salePrice = ( discountType == 'price' || discountType == 'reduce' )? ((originPrice - reducePrice) > 0 ? originPrice - reducePrice : 0 ) : Math.ceil(originPrice * discountRate);
   | #{salePrice}
+
