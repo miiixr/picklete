@@ -177,9 +177,9 @@ let ShopController = {
 
       productGm = productGm.dataValues;
 
-      product = (await PromotionService.productPriceTransPromotionPrice(new Date(), [product]))[0];
+      let productPromo = (await PromotionService.productPriceTransPromotionPrice(new Date(), [product]))[0];
 
-      product = product.dataValues;
+      product = productPromo.dataValues;
 
       console.log('=== product ===', product);
 
@@ -239,7 +239,11 @@ let ShopController = {
           brand: brand.dataValues,
           brandId: brandId,
           recommendProducts,
-         };
+        };
+
+        if (productPromo.promotion)
+          resData.promotion = productPromo.promotion;
+
   
         return res.view("main/shopProduct", resData);
 

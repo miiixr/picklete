@@ -244,6 +244,14 @@ module.exports = {
               // console.log('=== promotedProduct ==>',promotedProduct);
               // console.log('=== promotedProduct.price ==>',promotedProduct.price);
               //
+
+              // pass promotion information to front end
+              product.promotion = {
+                type: promotion.type,
+                description: promotion.description,
+                endDate: promotion.endDate
+              };
+
               product.originPrice = promotedProduct.price;
 
               // make front end display end date
@@ -260,6 +268,7 @@ module.exports = {
               }
 
               if(product.price < 0) product.price = 0;
+
             } // end if
           }); // end forEach
         }); // end forEach
