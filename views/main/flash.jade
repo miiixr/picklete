@@ -55,7 +55,7 @@ block body
         li
           a(href="/") Home
         li(class="active") #{promotion.title}
-      h2(class="text-black  m-bottom-2") #{promotion.title}
+      h2(class="text-black  m-bottom-2") #{promotion.title} #{promotion.description}
       h4(class="promo-end text-danger m-bottom-10 countdown", data-end='#{promotion.endDate}') 活動倒數 
         span 
       .row
