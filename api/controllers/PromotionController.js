@@ -216,16 +216,11 @@ let PromotionController = {
       return res.serverError(e);
     }
   },
-  controlShopDiscountDetail: async(req, res) => {
+ 
+ controlShopDiscountDetail: async(req, res) => {
     try {
       console.log('=== controlShopDiscountDetail query ==>',req.query);
       let query = req.query;
-      console.log(JSON.stringify(query,null,4));
-      let discountRate = null;
-
-      if(query.discount) {
-        discountRate = await PromotionService.promotionDiscountRate(query.discount);
-      }
 
 
       let limit = await pagination.limit(req);
@@ -244,7 +239,6 @@ let PromotionController = {
           where: {
             id: query.productIds
           },
-          include: db.ProductGm,
           offset: offset,
           limit: limit
         });
@@ -262,10 +256,7 @@ let PromotionController = {
           where: {
             id: query.id
           },
-          include: [{
-            model: db.Product,
-            include:[{model: db.ProductGm}]
-          }]
+          include: [db.Product]
         });
 
         promotion = promotion.toJSON();
@@ -279,9 +270,6 @@ let PromotionController = {
           let products = await db.Product.findAll({
             where: {
               id: query.productIds
-            },
-            include: {
-              model: db.ProductGm
             }
             // offset: offset,
             // limit: limit
@@ -291,17 +279,18 @@ let PromotionController = {
         }
       }
       promotion.products = await PromotionService.productPriceTransPromotionPrice(promotion.startDate,promotion.Products);
-
-      promotion.discountRate = discountRate;
-
       console.log('=== promotion ===', promotion);
 
-      console.log(JSON.stringify(promotion,null,4));
       let view = "";
-      if(query.promotionType == 'flash') view = 'promotion/controlShopDiscountDetail';
+
+      if(query.discountType == 'flash') view = 'promotion/controlShopDiscountDetail';
       else view = 'promotion/controlShopDiscountDetail2';
+
+      if (promotion.discount)
+        promotion.discount = promotion.discount * 10;
+
       res.view(view,{
-        pageName: "/admin/shop-discount",
+        pageName: "shop-discount-detail",
         promotion,
         query,
         limit,
@@ -494,7 +483,7 @@ let PromotionController = {
 
       console.log('==== queryObj ====', queryObj);
       console.log('==== discountRate ===', discountRate);
-
+      
       let products = await db.Product.findAndCountAll({
         subQuery: false,
         include: [{

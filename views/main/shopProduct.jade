@@ -80,8 +80,9 @@ block body
                     h3.text-black.m-bottom-4
                       span.text-danger #{UtilService.numberFormat(product.price)}
                       small.text-line-through.m-left-1#originPrice #{UtilService.numberFormat(product.originPrice)}
-                    //- h4(class="promo-end text-danger m-bottom-10 countdown", data-end='#{product.discountEndDate}') 活動倒數 
-                    //-   span 
+                    if (promotion)
+                      h4(class="promo-end text-danger m-bottom-10 countdown", data-end='#{promotion.endDate}') 活動倒數 
+                        span 
 
                 // /col-sm-10
                 .col-sm-2.col-xs-3
@@ -99,6 +100,11 @@ block body
               - if (product.comment)
                 hr.m-top-4.m-bottom-4
                 p #{product.comment}
+                hr.m-top-4.m-bottom-6
+
+              - if (promotion)
+                hr.m-top-4.m-bottom-4
+                p #{promotion.description}
                 hr.m-top-4.m-bottom-6
               // /row 
 

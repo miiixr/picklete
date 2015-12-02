@@ -200,7 +200,7 @@ module.exports = {
   productPriceTransPromotionPrice: async(date, products) => {
     try {
       // find all promotions within a specific date
-console.log("date:=====",date);
+
       // check each prduct
       if(!products.length) return products;
 
@@ -244,6 +244,14 @@ console.log("date:=====",date);
               // console.log('=== promotedProduct ==>',promotedProduct);
               // console.log('=== promotedProduct.price ==>',promotedProduct.price);
               //
+
+              // pass promotion information to front end
+              product.promotion = {
+                type: promotion.type,
+                description: promotion.description,
+                endDate: promotion.endDate
+              };
+
               product.originPrice = promotedProduct.price;
 
               // make front end display end date
@@ -260,6 +268,7 @@ console.log("date:=====",date);
               }
 
               if(product.price < 0) product.price = 0;
+
             } // end if
           }); // end forEach
         }); // end forEach
@@ -271,6 +280,7 @@ console.log("date:=====",date);
       throw e;
     }
   },
+  
   promotionDiscountRate: async (discount) => {
     try {
         if(discount>10) {
