@@ -132,7 +132,7 @@ block body
         each product in additionalPurchase.rows
           tr
             td
-              img.width-6(src= product.photos[0])
+              img.width-6(src= (product.photos)?product.photos[0]:'')
             td
               +productName(product)
             td= product.productNumber
