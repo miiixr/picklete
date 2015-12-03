@@ -236,9 +236,14 @@ let PromotionController = {
       console.log('=== isCreatePromotion ===', isCreatePromotion);
       if(isCreatePromotion){
         let products = await db.Product.findAll({
+          subQuery: false,
           where: {
             id: query.productIds
           },
+          include: [{
+              required: true,
+              model: db.ProductGm
+          }],
           offset: offset,
           limit: limit
         });
@@ -256,7 +261,13 @@ let PromotionController = {
           where: {
             id: query.id
           },
-          include: [db.Product]
+          include: [{
+            model: db.Product,
+            include: [{
+              required: true,
+              model: db.ProductGm
+            }]
+          }],  
         });
 
         promotion = promotion.toJSON();
@@ -268,9 +279,14 @@ let PromotionController = {
 
         if(query.productIds){
           let products = await db.Product.findAll({
+            subQuery: false,
             where: {
               id: query.productIds
-            }
+            },
+            include: [{
+              required: true,
+              model: db.ProductGm
+            }]
             // offset: offset,
             // limit: limit
           });
@@ -278,7 +294,8 @@ let PromotionController = {
           promotion.Products = products;
         }
       }
-      promotion.products = await PromotionService.productPriceTransPromotionPrice(promotion.startDate,promotion.Products);
+
+      promotion.Products = await PromotionService.productPriceTransPromotionPrice(promotion.startDate,promotion.Products);
       console.log('=== promotion ===', promotion);
 
       let view = "";
