@@ -216,7 +216,7 @@ let PromotionController = {
       return res.serverError(e);
     }
   },
- 
+
  controlShopDiscountDetail: async(req, res) => {
     try {
       console.log('=== controlShopDiscountDetail query ==>',req.query);
@@ -483,7 +483,7 @@ let PromotionController = {
 
       console.log('==== queryObj ====', queryObj);
       console.log('==== discountRate ===', discountRate);
-      
+
       let products = await db.Product.findAndCountAll({
         subQuery: false,
         include: [{
@@ -519,7 +519,6 @@ let PromotionController = {
   controlShopBuyMoreDetail: async (req, res) => {
 
     try {
-
       let limit = await pagination.limit(req);
       let page = await pagination.page(req);
       let offset = await pagination.offset(req);
@@ -535,16 +534,22 @@ let PromotionController = {
 
       let additionalPurchase;
       if(query.hasOwnProperty("id")){
+        console.log(query.id);
         additionalPurchase = await db.AdditionalPurchase.findAndCountAll({
+          subQuery: false,
           where: {
             id: query.id
           },
-          include:[db.ProductGm],
+          include:[{
+            model:db.Product,
+            include: db.ProductGm
+          }],
           offset: offset,
           limit: limit
         });
+        console.log(JSON.stringify(additionalPurchase,null,4));
         query = additionalPurchase.rows[0].dataValues;
-        additionalPurchase.rows = additionalPurchase.rows[0].Products
+        additionalPurchase.rows = additionalPurchase.rows[0].Products;
       }else{
 
         if(query.keyword)
@@ -567,7 +572,7 @@ let PromotionController = {
       }
 
       // let additionalPurchase = await db.AdditionalPurchase.findAll();
-      res.view('promotion/controlShopBuyMoreAddItem',{
+      res.view('promotion/controlShopBuyMoreAddItemDetail',{
         pageName: "/admin/shop-buy-more",
         brands,
         additionalPurchase,
