@@ -101,7 +101,7 @@ module.exports = {
 
   list: async () => {
     try {
-      let maxDate = await db.Order.max('paymentConfirmDate');
+      let maxDate = await db.Order.min('paymentConfirmDate');
       maxDate = moment(maxDate);
       let now = moment();
       let startYear = maxDate.get('year');
