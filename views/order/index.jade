@@ -155,7 +155,8 @@ block body
     // /p-10-20
     
     each order in orders.rows
-      .panel.panel-purchase
+      - var classRow = (order.status == "orderCancel") ? "panel panel-purchase disabled" : "panel panel-purchase";
+      div(class="#{classRow}")
         .panel-heading
           .row.row-s.text-center
             .col-sm-1.col-sm-1-sm

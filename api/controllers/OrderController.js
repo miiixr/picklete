@@ -99,7 +99,7 @@ OrderController = {
       };
 
       let orders = await db.Order.findAndCountAll(queryObj);
-      console.log(JSON.stringify(orders, null, 4));
+      // console.log(JSON.stringify(orders, null, 4));
       return res.view({
         pageName: "/admin/order",
         orders,
