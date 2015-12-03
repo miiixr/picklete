@@ -171,7 +171,8 @@ block body
               // /item-block
               .item-text-block.m-bottom-8
                 h6.text-muted
-                  a(href='/brands/#{product.ProductGm.BrandId}') #{_.find(brands, {id: product.ProductGm.BrandId}).name }
+                  - var tempBrand = _.find(brands, {id: product.ProductGm.BrandId});
+                  a(href='/brands/#{product.ProductGm.BrandId}') #{(tempBrand ? tempBrand.name : (product.ProductGm.brandName || "Other"))}
                 h4.m-bottom-2.h4-max-two-hide
                   - var name = product.name ? "(" + product.name + ")" : "";
                   //- a(href='/shop/product?pid=#{product.id}') #{product.ProductGm.name} #{name}
