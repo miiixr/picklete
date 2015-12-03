@@ -168,9 +168,8 @@ module.exports = {
   orderCancel: (order) => {
 
     try {
-      console.log("result",result);
       var orderCancelConfirmTemplete = sails.config.mail.templete.orderCancelConfirm;
-      var mailSendConfig = {...orderCancelConfirmTemplete, to: order.User.email};
+      var mailSendConfig = {...orderCancelConfirmTemplete, from: sails.config.mail.config.from, to: order.User.email};      
       // var productsName = result.OrderItems.map((item) => item.name);
       // var DOMAIN_HOST = process.env.DOMAIN_HOST || 'localhost:1337';
       // var orderConfirmLink = `http://${DOMAIN_HOST}/order/paymentConfirm?serial=${result.order.serialNumber}`
@@ -178,7 +177,7 @@ module.exports = {
 
       mailSendConfig.subject = sprintf(mailSendConfig.subject, {orderSerialNumber: order.serialNumber});
       mailSendConfig.html = sprintf(mailSendConfig.html, {
-        shipmentUsername: result.order.User.fullName,
+        shipmentUsername: order.User.fullName,
         shipmentId: order.User.email,
         orderSerialNumber: order.serialNumber,
         serviceMail: sails.config.store.serviceMail
