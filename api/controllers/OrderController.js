@@ -99,7 +99,7 @@ OrderController = {
       };
 
       let orders = await db.Order.findAndCountAll(queryObj);
-      console.log(JSON.stringify(orders, null, 4));
+      // console.log(JSON.stringify(orders, null, 4));
       return res.view({
         pageName: "/admin/order",
         orders,
@@ -241,9 +241,8 @@ OrderController = {
   },
 
   orderCancel: async function(req, res) {
-    var id = req.query.id;
+    var id = req.params.id;
     var status = req.query.status;
-
     if (status !== "orderCancel" || id == 0) {
       let message = 'status error';
       let success = false;
@@ -266,13 +265,12 @@ OrderController = {
           db.Invoice
         ]
       });
-
+      
       if (! orderData)
         return res.json(500,{success: false});
 
       orderData.status = status;
       await orderData.save();
-
       // send mail to user
       let messageConfig = await CustomMailerService.orderCancel(orderData);
 
