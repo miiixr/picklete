@@ -47,7 +47,6 @@ exports.register = async function(req, res, next) {
       privacyTermsAgree: newUserParams.privacyTermsAgree || false,
     }
 
-    console.log('=== newUserParams ===', newUserParams);
 
     let user = await db.User.create(newUser);
 
@@ -70,8 +69,6 @@ exports.register = async function(req, res, next) {
     let messageConfig = await CustomMailerService.verificationMail(user, link);
     let message = await db.Message.create(messageConfig);
     await CustomMailerService.sendMail(message);
-
-    await ShopCodeService.sendWhenRegister({user});
 
     return next(null, user);
 

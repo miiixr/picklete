@@ -15,7 +15,7 @@ describe('about User model operation.', function() {
       done(e);
     }
   });
-  
+
   it('create User with user', async (done) => {
     let newUser = {
       username: 'TestUser02',
@@ -26,4 +26,24 @@ describe('about User model operation.', function() {
     createdUser.dataValues.admin.should.equal(false);
     done();
   });
+
+
+
+  it('update User with user then add email', async (done) => {
+    let newUser = {
+      username: 'TestUser02',
+      email: '',
+      admin: false
+    };
+    let createdUser = await db.User.create(newUser);
+    createdUser.email = 'smlsun@gmail.com'
+    let updatedUser = await createdUser.save();
+
+    // console.log('=== updatedUser ===', updatedUser);
+
+
+
+    done();
+  });
+
 });

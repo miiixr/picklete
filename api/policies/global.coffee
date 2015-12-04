@@ -28,4 +28,5 @@ module.exports = (req, res, next) ->
         # console.log("headDpts--->",res.locals.headDpts);
         next()
   catch error
+    console.error error.stack 
     console.error "==== without Company Data!! ===="

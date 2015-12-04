@@ -233,7 +233,7 @@ describe("about shopcode service", () => {
     }
   });
 
-  it('send ShopCode to target users', async (done) => {
+  it.only('send ShopCode to target users', async (done) => {
     try {
       let shopCode = testShopCode;
       let users = await db.User.findAll({ limit: 5 });
@@ -284,6 +284,50 @@ describe("about shopcode service", () => {
         console.log(e.stack);
         done(e);
       }
+
+    });
+
+    it('send shop code, if user create and had email', async (done) => {
+      let newUser = {
+        username: 'TestUserCreateHasEmail',
+        email: 'buyerCreate@gmail.com',
+        admin: false
+      };
+      let createdUser = await db.User.create(newUser);
+
+      let userShopCodeCount = await db.Message.count({
+        where: {
+          to: newUser.email,
+          type: 'shopCode'
+        }
+      })
+
+      userShopCodeCount.should.be.equal(1)
+
+      done();
+
+    });
+
+    it('send shop code, if user use facebook register and update email', async (done) => {
+      let newUser = {
+        username: 'TestUserUpdateEmail',
+        email: '',
+        admin: false
+      };
+      let createdUser = await db.User.create(newUser);
+      createdUser.email = 'buyerUpdate@gmail.com'
+      let updatedUser = await createdUser.save();
+
+      let userShopCodeCount = await db.Message.count({
+        where: {
+          to: updatedUser.email,
+          type: 'shopCode'
+        }
+      })
+
+      userShopCodeCount.should.be.equal(1)
+
+      done();
 
     });
   });
