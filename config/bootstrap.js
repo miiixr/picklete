@@ -24,6 +24,13 @@ module.exports.bootstrap = async (cb) => {
     sails.numeral = require('numeral');
     sails.moment.locale("zh-TW");
 
+    // log json
+    sails.lj = function(jsonObj, desc) {
+      if(!desc) desc = 'json';
+      console.log('====== '+ desc +' ======');
+      console.log(JSON.stringify(jsonObj, null, 4));
+      console.log('==== '+ desc +' end ==== ');
+    }
     // Development environment
     /*
     if (sails.config.environment === 'development') {
