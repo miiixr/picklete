@@ -212,7 +212,7 @@ describe("about Shop Discount", function() {
     });
 
     // productPriceTransPromotionPrice - date1
-    it.only('Set product price fron promotions - date 1', async (done) => {
+    it('Set product price fron promotions - date 1', async (done) => {
       try {
         // find product by given ProductGmId
         let findProducts = [createdProduct1, createdProduct2];
