@@ -87,11 +87,14 @@ let ShopCodeController = {
          let shopCode = createShopCode;
          await ShopCodeService.sendAllUsers({shopCode});
        }else if(params.sentType == 'specific' && params.users.length!=0){
-         await* params.users.map( async (userId) => {
-           let find = await db.User.findById(userId);
-           find.ShopCodeId = createShopCode.id;
-           await find.save();
+
+         let users = await db.User.findAll({
+           where:{
+             id: params.users
+           }
          });
+         await* users.map( user => user.addShopCode(createShopCode.id));
+
          let shopCode = await db.ShopCode.findOne({
            where:{
              id:createShopCode.id
@@ -100,6 +103,7 @@ let ShopCodeController = {
              model: db.User
            }
          });
+
          await ShopCodeService.sendTargetUsers({shopCode});
        }
        return res.redirect("/admin/shop-code");

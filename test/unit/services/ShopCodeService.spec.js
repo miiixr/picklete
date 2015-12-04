@@ -233,7 +233,7 @@ describe("about shopcode service", () => {
     }
   });
 
-  it('send ShopCode to target users', async (done) => {
+  it.only('send ShopCode to target users', async (done) => {
     try {
       let shopCode = testShopCode;
       let users = await db.User.findAll({ limit: 5 });
