@@ -85,9 +85,9 @@ block body
         th
           | 信箱
           span.caret
-        th
-          | 購物金
-          span.caret
+        //- th
+        //-   | 購物金
+        //-   span.caret
         th
           | 備註
           span.caret
@@ -100,7 +100,7 @@ block body
           td #{sails.moment(member.birthDate).format('YYYY/MM/DD')}
           td #{member.mobile}
           td #{member.email}
-          td #{member.totalBonusRemain}
+          //- td #{member.totalBonusRemain}
           td #{member.comment}
           td.text-right
             a.btn.btn-link(href='member-detail/'+member.id)

@@ -62,8 +62,8 @@ block body
                   td #{noLimitPurchase.discount * 100} 折
                 else
                   td
-                    span.text-danger #{(product.price - noLimitPurchase.reducePrice)}
-                  td #{noLimitPurchase.reducePrice} 元
+                    span.text-danger #{noLimitPurchase.reducePrice}
+                  td #{(product.price - noLimitPurchase.reducePrice)} 元
                 td
                   | #{noLimitPurchase.anyTime ? '不限時' : sails.moment(noLimitPurchase.startDate).format('YYYY/MM/DD')}
                   br
@@ -129,8 +129,8 @@ block body
                   td #{limitPurchase.discount*10} 折
                 else
                   td
-                    span.text-danger #{(product.price - limitPurchase.reducePrice)}
-                  td #{limitPurchase.reducePrice} 元
+                    span.text-danger #{limitPurchase.reducePrice}
+                  td #{(product.price - limitPurchase.reducePrice)} 元
                 td
                   | #{limitPurchase.anyTime ? '不限時' : sails.moment(limitPurchase.startDate).format('YYYY/MM/DD')}
                   br

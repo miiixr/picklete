@@ -43,7 +43,7 @@ module.exports.mail = {
     orderCancelConfirm: {
       sendBy: 'email',
       subject: '訂單 %(orderSerialNumber)s 過期取消通知信',
-      text: """<html><body>
+      html: """<html><body>
       <br />親愛的i+DEAL顧客您好!
       <br />
       <br />很抱歉，由於您的訂單已超過繳款期限，我們將取消此筆訂單。如尚需購買下列商品，請直接回到購物頁面重新選購，謝謝您的支持。

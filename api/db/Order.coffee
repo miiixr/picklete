@@ -59,7 +59,7 @@ module.exports = (sequelize, DataTypes) ->
     description: DataTypes.STRING
     # 訂單狀態
     status:
-      type: DataTypes.ENUM('new', 'paymentConfirm', 'deliveryConfirm')
+      type: DataTypes.ENUM('new', 'paymentConfirm', 'deliveryConfirm', 'orderCancel')
       defaultValue: 'new'
     # packing fee
     packingFee:DataTypes.FLOAT

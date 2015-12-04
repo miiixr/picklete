@@ -493,7 +493,7 @@ module.exports = {
       // ================ merge queryObj ================
 
       // console.log('===== productDptSubConfig', productDptSubConfig);
-      if (query.dptSubId > 0 ){
+      if (query.dptSubId > 0 && query.dptId > 0){
         queryObj = {
           subQuery: false,
           where: ProductQueryObj,
@@ -522,6 +522,7 @@ module.exports = {
       } else {
         queryObj = {
           subQuery: false,
+          required: false,
           where: ProductQueryObj,
           include: [{
             model: db.ProductGm,
@@ -534,7 +535,7 @@ module.exports = {
             },{
               model: db.LikesCount
             }]
-          }, productDptSubConfig],
+          }],
           offset: offset,
           limit: limit
         };
@@ -569,7 +570,8 @@ module.exports = {
       sails.log.info("=== productQuery queryObj ===",queryObj);
 
       // console.log(' ======== queryObj =========');
-      // console.log(ProductQueryObj);
+      // console.log(queryObj);
+
       // console.log(GmQueryObj);
       let products = await db.Product.findAndCountAll(queryObj);
       // sails.log.info("=== productQuery products ===",products.rows[0].dataValues);

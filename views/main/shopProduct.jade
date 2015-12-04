@@ -80,7 +80,7 @@ block body
                     h3.text-black.m-bottom-4
                       span.text-danger #{UtilService.numberFormat(product.price)}
                       small.text-line-through.m-left-1#originPrice #{UtilService.numberFormat(product.originPrice)}
-                    if (promotion)
+                    if (promotion && promotion.type && promotion.type == "flash")
                       h4(class="promo-end text-danger m-bottom-10 countdown", data-end='#{promotion.endDate}') 活動倒數 
                         span 
 
@@ -102,7 +102,7 @@ block body
                 p #{product.comment}
                 hr.m-top-4.m-bottom-6
 
-              - if (promotion)
+              - if (promotion && promotion.type && promotion.type == "flash")
                 hr.m-top-4.m-bottom-4
                 p #{promotion.description}
                 hr.m-top-4.m-bottom-6
