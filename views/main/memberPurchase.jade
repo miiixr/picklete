@@ -1,4 +1,6 @@
 extends ../_layout_head
+include ../mixins/_user
+
 block body
     nav#header-control-panel.navbar.navbar-default.navbar-fixed-top
       .container
@@ -90,7 +92,8 @@ block body
                         .m-top-2.m-bottom-2
                           //- h1 #{JSON.stringify(order)}
                           ul.p-left-3
-                            li 收件人姓名：#{order.Shipment.username} 先生/小姐
+                            li 收件人姓名：#{order.Shipment.username} 
+                              +gender(order.Shipment.gender)
                             li 收件人電話：#{order.Shipment.mobile}
                             li 收件人地址：#{order.Shipment.address}
                             li 運送方式：#{ (order.Shipment.shippingType== 'delivery') ? '快遞' : '郵遞'} 
