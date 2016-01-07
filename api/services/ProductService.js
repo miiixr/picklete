@@ -422,18 +422,20 @@ module.exports = {
           if(dpt.name == '特別企劃'){
             if (query.dptSubId > 0 ) {
               productDptSubConfig.where = {
-                id: query.dptSubId
+                id: query.dptSubId,
+                DptId: dpt.id
               }
+              
             } else {
               productDptSubConfig.where = {
-                id: {
-                  $gte: 0
-                }
+                id: { '$gte': 0 },
+                DptId: dpt.id
               }
             }
             productDptSubConfig.required = true;
-            delete DptQueryObj.id
-            delete DptSubQueryObj.id
+            productDptSubConfig.subQuery = false;
+            // delete DptQueryObj.id
+            // delete DptSubQueryObj.id
           }
         }
         // ================ Product query condition =============
@@ -491,9 +493,24 @@ module.exports = {
         }
       }
       // ================ merge queryObj ================
-
       // console.log('===== productDptSubConfig', productDptSubConfig);
-      if (query.dptSubId > 0 && query.dptId > 0){
+      // console.log({ model: db.DptSub, where: DptSubQueryObj });
+
+      if(productDptSubConfig.required){ 
+        queryObj = {
+          subQuery: false,
+          where: ProductQueryObj,
+          include: [
+            productDptSubConfig,
+            {
+              model: db.ProductGm,
+              where: GmQueryObj,
+            }
+          ],
+          offset: offset,
+          limit: limit
+        };
+      } else if (query.dptSubId > 0 ) {
         queryObj = {
           subQuery: false,
           where: ProductQueryObj,
@@ -515,19 +532,22 @@ module.exports = {
             },{
               model: db.LikesCount
             }]
-          }, productDptSubConfig],
+          }],
           offset: offset,
           limit: limit
         };
       } else {
         queryObj = {
           subQuery: false,
-          required: false,
           where: ProductQueryObj,
           include: [{
             model: db.ProductGm,
             where: GmQueryObj,
             include:[
+            {
+              model: db.Dpt,
+              where: DptQueryObj
+            },
             {
               model: db.Brand
             },{
@@ -539,9 +559,8 @@ module.exports = {
           offset: offset,
           limit: limit
         };
-
       }
-
+      
       let sort;
       switch (query.sort) {
         case 'views':
@@ -580,6 +599,11 @@ module.exports = {
       for (let product of products.rows) {
         product.createdAt = moment(product.createdAt).format("YYYY/MM/DD");
       }
+
+      // console.log('-----------------');
+      // console.log(products.rows.length);
+      // console.log(products.count);
+      // console.log('-----------------');
 
       resultProducts = products;
       return {rows: resultProducts.rows, count: resultProducts.count };
