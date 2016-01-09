@@ -24,6 +24,21 @@ getting started
 
 -	npm start
 
+
+```
+npm i -g coffee-script
+npm i -g grunt-cli
+npm i
+
+// start server
+cd iplusdealweb
+npm start
+
+// build static
+cd iplusdealweb
+grunt
+```
+
 references
 ----------
 
