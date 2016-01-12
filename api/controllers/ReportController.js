@@ -5,9 +5,6 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 import fs from 'fs';
-import xlsx from 'node-xlsx';
-import _ from 'lodash';
-import moment from 'moment';
 
 module.exports = {
   export: async (req, res) => {

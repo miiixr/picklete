@@ -84,7 +84,18 @@ var self = module.exports = {
         }, {
           model: db.Shipment
         }, {
-          model: db.OrderItem
+          model: db.OrderItem,
+          include: {
+            model: db.Product,
+            include: {
+              model: db.ProductGm,
+              include: {
+                model: db.Brand
+              }
+            }
+          }
+        }, {
+          model: db.ShopCode
         }
       ]
     });
