@@ -207,18 +207,20 @@ module.exports = {
       let productIds = products.map((product) => product.id)
 
       let findPromotions = await db.Promotion.findAll({
-        $or: [{
-          startDate: {
-            lt: date
-          },
-          endDate: {
-            gte: date
-          },
+        where:{
+          $or: [{
+            startDate: {
+              $lte: new Date()
+            },
+            endDate: {
+              $gte: new Date()
+            },
 
-        }, {
-            startDate: null,
-            endDate: null,
-        }],
+          }, {
+              startDate: null,
+              endDate: null,
+          }],
+        },
         include:[{
           model: db.Product,
           where: {
@@ -227,6 +229,9 @@ module.exports = {
           required: true
         }]
       });
+      // console.log('----------');
+      // console.log(findPromotions);
+      // console.log('----------');
       // sails.log.verbose('=== findPromotions ==>',findPromotions);
 
       if(!findPromotions.length) return products;
