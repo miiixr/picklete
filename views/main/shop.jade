@@ -60,7 +60,7 @@ block body
                   ul.list-inline.list-shop-type-sm.font-size-small
                     li.subDpt.active
                       a(href='?dptId=#{dpt.id}')
-                        | 所有商品                 
+                        | 所有商品              
                     each subDpt, index in dpt.DptSubs
                       li(class="subDpt",data-id='#{subDpt.id}&sort=#{sort}') 
                         a(href='?dptSubId=#{subDpt.id}&dptId=#{dpt.id}&sort=#{sort}')
