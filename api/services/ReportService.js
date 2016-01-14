@@ -1,4 +1,5 @@
-import xlsx from 'node-xlsx';
+// import xlsx from 'node-xlsx';
+import xlsx from 'xlsx-style';
 import moment from 'moment';
 import fs from 'fs';
 import _ from 'lodash';
@@ -7,78 +8,148 @@ module.exports = {
 
   create: async (date) => {
     try {
-
-      // [ sheets
-      //   { sheet
-      //     data:[ SheetData 存放單頁試算表資料
-      //       [ ] singleSheetData 存放單頁單行試算表資料
-      //     ]
-      //     name: 存放單頁試算表頁面名稱
-      //   }
-      // ]
       let startDate = moment(date, 'YYYY-MM').startOf('month');
       let endDate = moment(date, 'YYYY-MM').endOf('month');
-      var totalPrice = 0;
 
-      // sheetHeader 存放單頁試算表表頭
-      var sheetHeader = [
-        '訂單編號',
-        '數量',
-        '狀態',
-        '購買人',
-        '訂單日期',
+      var wsName = date;
+
+      var wscols = [
+        { wch:10 },
+        { wch:10 },
+        { wch:10 },
+        { wch:20 },
       ];
+      function Workbook() {
+        if (!(this instanceof Workbook)) return new Workbook();
+        this.SheetNames = [];
+        this.Sheets = {};
+      }
+
+      var wb = new Workbook();
+      var header = [
+        '訂單編號',
+        '貨號',
+        '品牌名稱',
+        '商品名稱',
+        '定價',
+        '數量',
+        '售價',
+        '運費',
+        '包裝費',
+        '折扣碼',
+        '總計',
+        '付款方式',
+        '購買人',
+      ];
+
+      function sheetFromArrayOfArrays(data, opts) {
+        var ws = {};
+        var range = { s: { c:10000000, r:10000000 }, e: { c:0, r:0 } };
+        for (var R = 0; R != data.length; ++R) {
+          for (var C = 0; C != data[R].length; ++C) {
+            if (range.s.r > R) range.s.r = R;
+            if (range.s.c > C) range.s.c = C;
+            if (range.e.r < R) range.e.r = R;
+            if (range.e.c < C) range.e.c = C;
+            if (R == 0) {
+              var cell = { v: data[R][C] };
+              // var cell = { v: data[R][C] , s: { fill: { fgColor: 'FF686667', } } };
+            } else {
+              var cell = { v: data[R][C] };
+            }
+            if (cell.v == null) continue;
+            var cellRef = xlsx.utils.encode_cell({ c:C, r:R });
+
+            /* TEST: proper cell types and value handling */
+            if (typeof cell.v === 'number') cell.t = 'n';
+            else if (typeof cell.v === 'boolean') cell.t = 'b';
+            else if (cell.v instanceof Date) {
+              cell.t = 'n'; cell.z = xlsx.SSF._table[14];
+              cell.v = datenum(cell.v);
+            } else cell.t = 's';
+            ws[cellRef] = cell;
+          }
+        }
+
+        /* TEST: proper range */
+        if (range.s.c < 10000000) ws['!ref'] = xlsx.utils.encode_range(range);
+        return ws;
+      }
+
       var sheetData = [];
-      var sheet = {};
-      var sheets = [];
-      let allOrder = await OrderService.findAllByDateComplete(startDate, endDate);
-      sheetData.push([]);
-      sheetData.push(sheetHeader);
-      if (allOrder.length != 0) {
-        _.forEach(allOrder, function(eachReport) {
-          console.log(eachReport);
+      sheetData.push(header);
+      let allOrdertest = await OrderService.findAllByDateComplete(startDate, endDate);
+
+      if (allOrdertest.length != 0) {
+        _.forEach(allOrdertest, function(eachReport) {
           let singleSheetData = [];
           let eachReportData = eachReport.dataValues;
           let orderItems = eachReportData.OrderItems;
 
-          singleSheetData.push(eachReportData.serialNumber);
-          singleSheetData.push(eachReportData.quantity);
-          singleSheetData.push(eachReportData.status);
-          singleSheetData.push(eachReportData.User.dataValues.username);
-          singleSheetData.push(eachReportData.updatedAt);
-
+          var count = 0;
           _.forEach(orderItems, function(orderItem) {
-            let quantity = orderItem.dataValues.quantity;
-            let price = orderItem.dataValues.price;
-            totalPrice += quantity * price;
+            if (count == 0) singleSheetData.push(eachReportData.serialNumber);
+            else {
+              singleSheetData.push([]);
+            }
+
+            singleSheetData.push(orderItem.dataValues.Product.dataValues.productNumber);
+            if (orderItem.dataValues.Product.dataValues.ProductGm) {
+              singleSheetData.push(orderItem.dataValues.Product.dataValues.ProductGm.dataValues.Brand.dataValues.name);
+            } else {
+              singleSheetData.push([]);
+            }
+
+            singleSheetData.push(orderItem.dataValues.Product.dataValues.name);
+            singleSheetData.push(orderItem.dataValues.Product.dataValues.price);
+            singleSheetData.push(orderItem.dataValues.quantity);
+            singleSheetData.push(orderItem.dataValues.price);
+            if (count == 0) {
+              singleSheetData.push(eachReportData.Shipment.dataValues.shippingFee);
+              singleSheetData.push(eachReportData.packingFee);
+              if (eachReportData.ShopCode) {
+                singleSheetData.push(eachReportData.ShopCode.dataValues.restriction);
+              } else {
+                singleSheetData.push([]);
+              }
+
+              singleSheetData.push(eachReportData.paymentTotalAmount);
+              singleSheetData.push(eachReportData.allPayPaymentType);
+              singleSheetData.push(eachReportData.paymentConfirmName);
+            } else {
+              singleSheetData.push([]);
+              singleSheetData.push([]);
+              singleSheetData.push([]);
+              singleSheetData.push([]);
+              singleSheetData.push([]);
+              singleSheetData.push([]);
+            }
+
+            sheetData.push(singleSheetData);
+            singleSheetData = [];
+            count++;
           });
-
-          sheetData.push(singleSheetData);
-          sheet.data = sheetData;
-          sheet.name = 'Report-' + date;
-          console.log(sheet);
         });
+      };
 
-        console.log(sheet);
-        sheet.data[0].push('總金額', totalPrice);
-        sheets.push(sheet);
+      var ws = sheetFromArrayOfArrays(sheetData);
 
-        let excel = await ReportService.buildExcel(sheets, date, date);
-        sails.log(excel);
-        return excel;
-      } else {
-        return null;
-      }
+      wb.SheetNames.push(wsName);
+      wb.Sheets[wsName] = ws;
 
+      /* TEST: column widths */
+      ws['!cols'] = wscols;
+
+      let excel = await ReportService.buildExcel(wb, date, date);
+      return excel;
     } catch (error) {
       sails.log.error(error);
     }
   },
 
-  buildExcel: async (data, startDate, endDate) => {
+  buildExcel: async (workbook, startDate, endDate) => {
     try {
-      var excelData = {};
-      var filename = '';
+      let filename = '';
       if (startDate === endDate) {
         filename = 'Report-' + startDate;
       } else {
@@ -90,8 +161,16 @@ module.exports = {
       }
 
       let filePath = 'report/' + filename + '.xlsx';
-      var buffer = await xlsx.build(data);
-      fs.writeFileSync(filePath, buffer);
+
+      await xlsx.writeFile(
+        workbook,
+        filePath,
+        {
+          bookType: 'xlsx',
+          bookSST: false,
+        }
+      );
+
       return filePath;
     } catch (error) {
       console.error(error);

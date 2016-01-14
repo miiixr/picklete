@@ -70,7 +70,9 @@ module.exports = {
       // create promotion
       let createdPromotion = await db.Promotion.create(promotion);
 
-      await createdPromotion.setProducts(promotion.productIds);
+      if (promotion.productIds) {
+        await createdPromotion.setProducts(promotion.productIds);
+      }
 
       return createdPromotion;
     } catch (e) {
@@ -285,7 +287,7 @@ module.exports = {
       throw e;
     }
   },
-  
+
   promotionDiscountRate: async (discount) => {
     try {
         if(discount>10) {

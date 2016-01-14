@@ -59,6 +59,7 @@
     "sqlite3": "^3.0.10",
     "supertest-as-promised": "^2.0.2",
     "validator": "^3.37.0",
+    "xlsx": "^0.8.0",
     "xoauth2": "^1.1.0"
   },
   "scripts": {
