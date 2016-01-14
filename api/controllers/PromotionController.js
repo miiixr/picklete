@@ -264,7 +264,7 @@ let PromotionController = {
           include: [{
             model: db.Product,
             include: [{
-              required: true,
+              // required: true,
               model: db.ProductGm
             }]
           }],  
@@ -300,7 +300,7 @@ let PromotionController = {
 
       let view = "";
 
-      if(query.discountType == 'flash') view = 'promotion/controlShopDiscountDetail';
+      if(query.promotionType == 'flash') view = 'promotion/controlShopDiscountDetail';
       else view = 'promotion/controlShopDiscountDetail2';
 
       if (promotion.discount)
