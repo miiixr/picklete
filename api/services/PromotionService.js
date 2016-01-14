@@ -143,6 +143,7 @@ module.exports = {
       });
       console.log('=== updatePromoiton ==>',updatePromoiton);
       updatePromoiton.title = promotion.title;
+      updatePromoiton.slogan = promotion.slogan;
       updatePromoiton.description = promotion.description;
       updatePromoiton.type = promotion.type;
       updatePromoiton.startDate = promotion.startDate;
