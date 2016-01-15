@@ -115,7 +115,7 @@ passport.connect = async function(req, query, profile, next) {
     sails.log.info("=== loginedUser ===",loginedUser);
     if (loginedUser && !passport) {
       query.UserId = loginedUser.id;
-      passport = await Passport.create(query);
+      passport = await db.Passport.create(query);
       return next(null, loginedUser);
     }
 
