@@ -15,6 +15,7 @@ let PromotionController = {
         offset: offset,
         limit: limit
       });
+      console.log('promotions--->',promotions.rows[5])
       return res.view('promotion/controlShopDiscount', {
         promotions,
         pageName: "/admin/shop-discount",
