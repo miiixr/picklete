@@ -471,9 +471,11 @@ module.exports = {
             $lte: new Date(query.dateEnd)
           };
         }
+        if(typeof query.color === 'string')
+          query.color = [query.color];
 
         if (query.color) {
-          ProductQueryObj.color = query.color;
+          ProductQueryObj.color = { '$or' : query.color };
         }
 
 
@@ -493,8 +495,9 @@ module.exports = {
         }
       }
       // ================ merge queryObj ================
-      // console.log('===== productDptSubConfig =====');
-      // console.log(productDptSubConfig);
+      console.log('===== ProductQueryObj =====');
+      console.log(ProductQueryObj);
+      console.log('===========================');
       // console.log({ model: db.DptSub, where: DptSubQueryObj });
       // 特別企劃的所有商品
       // console.log('===== 特別企劃的所有商品 =====');
