@@ -471,10 +471,9 @@ module.exports = {
             $lte: new Date(query.dateEnd)
           };
         }
-        if(typeof query.color === 'string')
-          query.color = [query.color];
-
         if (query.color) {
+          if(typeof query.color === 'string')
+            query.color = [query.color];
           ProductQueryObj.color = { '$or' : query.color };
         }
 
