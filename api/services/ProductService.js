@@ -493,27 +493,65 @@ module.exports = {
         }
       }
       // ================ merge queryObj ================
-      // console.log('===== productDptSubConfig', productDptSubConfig);
+      // console.log('===== productDptSubConfig =====');
+      // console.log(productDptSubConfig);
       // console.log({ model: db.DptSub, where: DptSubQueryObj });
+      // 特別企劃的所有商品
+      // console.log('===== 特別企劃的所有商品 =====');
 
+      let promotions = await db.Promotion.findAll({ 
+        where: { endDate: {
+          $gt: new Date()
+        } 
+      }
+      });
+      var promotionSubDpt = ["閃購專區", "優惠商品", "本月主題"];
+      for (var i = 0; i < promotions.length; i++) {
+        promotionSubDpt.push(promotions[i].title);
+      }
+
+
+      // dpt.name == '特別企劃' 的子項目
       if(productDptSubConfig.required){ 
-        queryObj = {
-          subQuery: false,
-          where: ProductQueryObj,
-          include: [
-            productDptSubConfig,
-            {
+        if (query.dptSubId > 0 ) {
+          queryObj = {
+            subQuery: false,
+            where: ProductQueryObj,
+            include: [
+              productDptSubConfig,
+              {
+                model: db.ProductGm,
+                where: GmQueryObj,
+              }
+            ],
+            offset: offset,
+            limit: limit
+          };
+        } else {
+          // dpt.name == '特別企劃' 的所有商品
+          queryObj = {
+            subQuery: false,
+            where: ProductQueryObj,
+            group: ['Product.id'],
+            include: [{
               model: db.ProductGm,
-              where: GmQueryObj,
-            }
-          ],
-          offset: offset,
-          limit: limit
-        };
-      } else if (query.dptSubId > 0 ) {
+              where: GmQueryObj
+            },{
+              model: db.DptSub,
+              where: { 
+                DptId: query.dptId, 
+                name: { $in: promotionSubDpt } 
+              },
+            }],
+            offset: offset,
+            limit: limit
+          };
+        }
+      } else {
         queryObj = {
           subQuery: false,
           where: ProductQueryObj,
+          group: ['Product.id'],
           include: [{
             model: db.ProductGm,
             where: GmQueryObj,
@@ -524,29 +562,6 @@ module.exports = {
             },{
               model: db.DptSub,
               where: DptSubQueryObj
-            },
-            {
-              model: db.Brand
-            },{
-              model: db.PageView
-            },{
-              model: db.LikesCount
-            }]
-          }],
-          offset: offset,
-          limit: limit
-        };
-      } else {
-        queryObj = {
-          subQuery: false,
-          where: ProductQueryObj,
-          include: [{
-            model: db.ProductGm,
-            where: GmQueryObj,
-            include:[
-            {
-              model: db.Dpt,
-              where: DptQueryObj
             },
             {
               model: db.Brand
@@ -599,6 +614,9 @@ module.exports = {
       for (let product of products.rows) {
         product.createdAt = moment(product.createdAt).format("YYYY/MM/DD");
       }
+
+      if(typeof products.count === 'object')
+        products.count = products.count.length;
 
       // console.log('-----------------');
       // console.log(products.rows.length);
