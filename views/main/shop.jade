@@ -63,7 +63,7 @@ block body
                         | 所有商品              
                     each subDpt, index in dpt.DptSubs
                       li(class="subDpt",data-id='#{subDpt.id}&sort=#{sort}') 
-                        a(href='?dptSubId=#{subDpt.id}&dptId=#{dpt.id}&sort=#{sort}&color=#{color}')
+                        a(href='?dptSubId=#{subDpt.id}&dptId=#{dpt.id}&sort=#{sort}')
                           | #{subDpt.name}
             - else
               .tab-pane.fade(id = "subDpt"+dpt.id)
@@ -86,7 +86,6 @@ block body
             shop-filter
             ==================================================
           .btn-group
-            input(name='color',type='hidden', value= color)
             input(name='sort',type='hidden', value= sort)
             input(name='dptSubId',type='hidden', value= dptSubId)
             input(name='dptId',type='hidden', value= dptId)
