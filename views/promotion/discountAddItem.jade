@@ -59,9 +59,7 @@ block body
     .col-md-6
       form.form-inline
         .form-group
-          label 顯示
-          +pagination-limit(limit)
-          label 筆資料（共 #{totalRows} 筆）
+          label 目前共 #{totalRows} 筆商品，建議一次加入數量不超過 100 個品項
         // /form-group
     // /col-md-6
     .col-md-6.desktop-text-right
@@ -123,8 +121,6 @@ block body
             td
               span.text-danger 
                 +salePrice(product, promotion)
-  hr.dashed-line
-  +pagination-simple-pager(page, totalPages)
   // /text-center
 block js
   script(src='/javascripts/common/pagination.js')
