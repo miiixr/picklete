@@ -29,7 +29,7 @@ module.exports = {
 
       return mailSendConfig;
 
-    } catch (e) {
+    } catch (error) {
       throw error;
     }
 
@@ -107,7 +107,7 @@ module.exports = {
 
       return {...mailSendConfig, syncLink, syncLinkHost, syncLinkParams};
 
-    } catch (e) {
+    } catch (error) {
       throw error;
     }
 
@@ -132,7 +132,7 @@ module.exports = {
       mailSendConfig.type = 'paymentConfirm';
 
       return mailSendConfig;
-    } catch (e) {
+    } catch (error) {
       throw error;
     }
 
@@ -160,7 +160,7 @@ module.exports = {
 
       mailSendConfig.type = 'deliveryConfirm';
       return mailSendConfig;
-    } catch (e) {
+    } catch (error) {
       throw error;
     }
 
@@ -169,7 +169,7 @@ module.exports = {
 
     try {
       var orderCancelConfirmTemplete = sails.config.mail.templete.orderCancelConfirm;
-      var mailSendConfig = {...orderCancelConfirmTemplete, from: sails.config.mail.config.from, to: order.User.email};      
+      var mailSendConfig = {...orderCancelConfirmTemplete, from: sails.config.mail.config.from, to: order.User.email};
       // var productsName = result.OrderItems.map((item) => item.name);
       // var DOMAIN_HOST = process.env.DOMAIN_HOST || 'localhost:1337';
       // var orderConfirmLink = `http://${DOMAIN_HOST}/order/paymentConfirm?serial=${result.order.serialNumber}`
@@ -359,7 +359,7 @@ module.exports = {
         var shopCodeTpl = sails.config.mail.templete.shopCodeWithoutLimit;
         var startDate = moment(0).format('YYYY/MM/DD');
         var endDate = moment(0).format('YYYY/MM/DD');
-      } 
+      }
       var email = user.email;
       var mailSendConfig = {...shopCodeTpl, from: sails.config.mail.config.from, to: email};
       mailSendConfig.subject = sprintf(mailSendConfig.subject, {
@@ -416,7 +416,7 @@ module.exports = {
 
       return mailSendConfig;
 
-    } catch (e) {
+    } catch (error) {
       throw error;
     }
 
