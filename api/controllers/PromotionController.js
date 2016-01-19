@@ -141,7 +141,7 @@ let PromotionController = {
       if(!query.hasOwnProperty("productIds"))
         query.productIds = [];
 
-      let limit = await pagination.limit(req);
+      // let limit = await pagination.limit(req);
       let page = await pagination.page(req);
       let offset = await pagination.offset(req);
 
@@ -194,7 +194,7 @@ let PromotionController = {
           model: db.ProductGm
         }],
         where: queryObj,
-        limit: limit,
+        // limit: limit,
         order: [['id', 'ASC']]
       });
 
@@ -203,12 +203,12 @@ let PromotionController = {
       res.view('promotion/discountAddItem',{
         pageName: "/admin/shop-discount",
         query,
-        limit,
+        // limit,
         page,
         products,
         brands,
         promotion: query,
-        totalPages: Math.ceil(products.count / limit),
+        totalPages: Math.ceil(products.count),
         totalRows: products.count
       });
     } catch (e) {
@@ -268,7 +268,7 @@ let PromotionController = {
               // required: true,
               model: db.ProductGm
             }]
-          }],  
+          }],
         });
 
         promotion = promotion.toJSON();
