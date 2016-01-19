@@ -58,7 +58,7 @@ let ShopController = {
       let dptSubId = query.dptSubId || '';
       let dptId = query.dptId || '';
       let sort = query.sort || '';
-
+      
       // when not query any items, select recent 3 month products.
       if (brand == '' && dptSubId == '' && dptId == '') {
         query.dateEnd = moment().format();
