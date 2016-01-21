@@ -304,8 +304,15 @@ let PromotionController = {
       if(query.promotionType == 'flash') view = 'promotion/controlShopDiscountDetail';
       else view = 'promotion/controlShopDiscountDetail2';
 
-      if (promotion.discount)
-        promotion.discount = promotion.discount * 10;
+      if (promotion.discount) {
+        if (promotion.discount < 1) {
+          promotion.discount = promotion.discount * 100;
+        } else if (promotion.discount < 10 && promotion.discount > 1) {
+          promotion.discount = promotion.discount * 10;
+        } else {
+          promotion.discount = promotion.discount;
+        }
+      }
 
       res.view(view,{
         pageName: "shop-discount-detail",
