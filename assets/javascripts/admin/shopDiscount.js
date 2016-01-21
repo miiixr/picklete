@@ -106,4 +106,19 @@ $(function() {
   };
   _visualDiscountNumber();
 
+  $('#discount').keypress(function() {
+    setTimeout(function(){
+      var value = $("#discount").val();
+      value = Number(value).toFixed(1);
+
+      if (value <= 100) {
+        $("#discount").val(value);
+      } else if (value > 100) {
+        $("#discount").val(100);
+      } else {
+        $("#discount").val(0);
+      }
+    }, 1500);
+  });
+
 });
