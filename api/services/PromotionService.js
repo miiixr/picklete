@@ -161,8 +161,18 @@ module.exports = {
         updatePromoiton.price = null;
 
         // make integer be a discount
-        var count = promotion.discount.toString().length;
-        var discount = (count > 1) ? parseInt(promotion.discount, 10) / 100 : parseInt(promotion.discount, 10) / 10;
+        let discount = null;
+        promotion.discount = parseFloat(promotion.discount);
+        if (promotion.discount < 100 && promotion.discount > 10) {
+          discount = promotion.discount / 10;
+        } else if (promotion.discount <= 10 && promotion.discount >= 1) {
+          discount = promotion.discount;
+        } else if (promotion.discount < 1 && promotion.discount >= 0.1) {
+          discount = promotion.discount * 10;
+        }  else {
+          discount = promotion.discount * 100;
+        }
+
         promotion.discount = discount;
 
         updatePromoiton.discount = promotion.discount;
@@ -170,6 +180,7 @@ module.exports = {
 
       updatePromoiton.discountType = promotion.discountType;
       updatePromoiton.coverPhoto = promotion.coverPhoto;
+      console.log('=====Result=======', updatePromoiton);
 
       await updatePromoiton.save();
       await updatePromoiton.setProducts(promotion.productIds);

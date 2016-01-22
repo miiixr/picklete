@@ -306,8 +306,6 @@ let PromotionController = {
 
       if (promotion.discount) {
         if (promotion.discount < 1) {
-          promotion.discount = promotion.discount * 100;
-        } else if (promotion.discount < 10 && promotion.discount > 1) {
           promotion.discount = promotion.discount * 10;
         } else {
           promotion.discount = promotion.discount;
