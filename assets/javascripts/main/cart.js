@@ -208,6 +208,24 @@
       cartViewer.append(liOrderItem);
       $("select[name='packingSelect["+index+"]']").val(orderItem.packingQuantity || 0);
     });
+    
+    packingQuantity = 0;
+
+    packableItemTotal.forEach(function(value){
+       var count = parseInt($("select[name='packingSelect["+value+"]']").val());
+       console.log('=== value ==>',value,'=== count ===>',count);
+       picklete_cart.orderItems[value].packingQuantity = count;
+       Cookies.set('picklete_cart', picklete_cart);
+       packingQuantity += count;
+    });
+    // console.log('=== packableItemTotal ===>',packableItemTotal);
+    packingFee = packingQuantity * packingFeeBasic;
+
+    // set value to TD field
+    packingFeeTD.text(packingFee);
+
+    // calculate price and save cookie after finish.
+    calcTatalPrice();
   };
 
   // shippingfee select   // 運送區域：台灣/外島
