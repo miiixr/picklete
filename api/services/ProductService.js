@@ -534,7 +534,7 @@ module.exports = {
           queryObj = {
             subQuery: false,
             where: ProductQueryObj,
-            group: ['Product.id'],
+            // group: ['Product.id'],
             include: [{
               model: db.ProductGm,
               where: GmQueryObj
@@ -553,7 +553,6 @@ module.exports = {
         queryObj = {
           subQuery: false,
           where: ProductQueryObj,
-          group: ['Product.id'],
           include: [{
             model: db.ProductGm,
             where: GmQueryObj,
