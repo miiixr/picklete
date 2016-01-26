@@ -33,18 +33,18 @@ block body
         label.col-sm-3.col-md-2.control-label 活動起始時間
         .col-sm-9.col-md-5
           if (promotion.endDate)
-            input.form-control(type='datetime-local', placeholder="2016-01-01 12:00:00", name='startDate',form='shopDiscount',value=promotion.startDate)
+            input.form-control(type='datetime-local', placeholder="2016-01-21T04:00:00.000", name='startDate',form='shopDiscount',value=promotion.startDate)
           else
-            input.form-control(type='datetime-local', placeholder="2016-01-01 12:00:00" ,name='startDate',form='shopDiscount',disabled)
+            input.form-control(type='datetime-local', placeholder="2016-01-25T04:00:00.000" ,name='startDate',form='shopDiscount',disabled)
         .col-sm-1.col-md-1.p-left-0.p-right-0.text-center
 
       .form-group
         label.col-sm-3.col-md-2.control-label 活動結束時間
         .col-sm-9.col-md-5
           if (promotion.endDate)
-            input.form-control(type='datetime-local', placeholder="2016-01-01 12:00:00" ,name='endDate',form='shopDiscount',value=promotion.endDate)
+            input.form-control(type='datetime-local', placeholder="2016-01-21T04:00:00.000" ,name='endDate',form='shopDiscount',value=promotion.endDate)
           else
-            input.form-control(type='datetime-local', placeholder="2016-01-01 20:30:00" ,name='endDate',form='shopDiscount',disabled)
+            input.form-control(type='datetime-local', placeholder="2016-01-25T04:00:00.000" ,name='endDate',form='shopDiscount',disabled)
       
       .form-group
         label.col-sm-3.col-md-2.control-label
