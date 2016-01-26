@@ -59,11 +59,15 @@ block body
     .col-md-6
       form.form-inline
         .form-group
-          label 目前共 #{totalRows} 筆商品，建議一次加入數量不超過 100 個品項
+          if (query.brand && query.brand !== 0) 
+            label 目前共 #{totalRows} 筆商品，建議一次加入數量不超過 100 個品項
+          else
+            label 全部商品共 #{totalRows} 筆，請選擇品牌
         // /form-group
     // /col-md-6
-    .col-md-6.desktop-text-right
-      button.btn.btn-green(form='shopDiscount') 加入已選取商品
+    if (query.brand && query.brand !== 0) 
+      .col-md-6.desktop-text-right
+        button.btn.btn-green(form='shopDiscount') 加入已選取商品
     // /col-md-6
   // /row
   hr.dashed-line
@@ -88,39 +92,40 @@ block body
     each productId in promotion.productIds
       input(type='hidden', name='productIds', value=productId)
 
-    table.table.table-striped
-      thead
-        tr
-          th
-            input(type='checkbox', class='selectAll')
-          th 主圖
-          th
-            | 商品名稱
-            span.caret
-          th
-            | 貨號
-            span.caret
-          th
-            | 售價
-            span.caret
-          th
-            | 特價
-            span.caret
-      tbody
-        each product in products.rows
+    if (query.brand && query.brand !== 0) 
+      table.table.table-striped
+        thead
           tr
-            td
-              input.addSelect(type='checkbox', disabled=product.originPrice, name='productIds', value= product.id, checked=promotion.productIds.indexOf(""+product.id)>=0)
-            td
-              img.width-6(src= product.photos[0])
-            td
-              +productName(product)
-            td= product.productNumber
-            td 
-              +originPrice(product)
-            td
-              span.text-danger 
-                +salePrice(product, promotion)
+            th
+              input(type='checkbox', class='selectAll')
+            th 主圖
+            th
+              | 商品名稱
+              span.caret
+            th
+              | 貨號
+              span.caret
+            th
+              | 售價
+              span.caret
+            th
+              | 特價
+              span.caret
+        tbody
+          each product in products.rows
+            tr
+              td
+                input.addSelect(type='checkbox', disabled=product.originPrice, name='productIds', value= product.id, checked=promotion.productIds.indexOf(""+product.id)>=0)
+              td
+                img.width-6(src= product.photos[0])
+              td
+                +productName(product)
+              td= product.productNumber
+              td 
+                +originPrice(product)
+              td
+                span.text-danger 
+                  +salePrice(product, promotion)
   // /text-center
 block js
   script(src='/javascripts/common/pagination.js')
