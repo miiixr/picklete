@@ -6,25 +6,9 @@ include ../mixins/_promotion
 block body
   h2.m-bottom-6 選擇折扣商品
   .well.control-well.p-30.m-bottom-8
-    form.form-inline
-      //- .form-group.m-right-4
-      //-   label 品牌名稱
-      //-   select.form-control
-      //-     option 品牌名稱
-      //-     option 2
-      //-     option 3
-      //-     option 4
-      //-     option 5
-      //- // /form-group
-      //- .form-group.m-right-4
-      //-   label 關鍵字
-      //-   input.form-control(type='text')
-      //- // /form-group
-      //- button.btn.btn-default(type='button') 查詢
-      
       .form-group.m-right-4
-        form#search.form-inline.with-pagination(name="search", action="buymore/buyMoreAddItem", method="get")
-          
+        form#search.form-inline.with-pagination(name="search", action="/admin/buymore/buyMoreAddItem", method="get")
+          +pagination-fields(page, totalPages, limit)
           input(type='hidden', name='activityLimit', value=promotion.activityLimit)
           input(type='hidden', name='startDate', value=promotion.startDate)
           input(type='hidden', name='endDate', value=promotion.endDate)
@@ -32,7 +16,8 @@ block body
           input(type='hidden', name='type', value=promotion.type)
           input(type='hidden', name='reducePrice', value=promotion.reducePrice)
           input(type='hidden', name='discount', value=promotion.discount)
-                  
+
+
           each productId in promotion.productIds
             input(type='hidden', name='productIds', value=productId)
               
@@ -46,7 +31,7 @@ block body
           .form-group.m-right-2
             .input-group
               input#keyword.form-control(type='text',name="keyword" ,placeholder='輸入關鍵字',value= query.keyword)
-              +pagination-fields(page, totalPages, limit)
+              
               span.input-group-btn
                 button.btn.btn-default.p-left-2.p-right-2(type='submit')
                   span.glyphicon.glyphicon-search
@@ -56,18 +41,19 @@ block body
     .col-md-6
       form.form-inline
         .form-group
-          label 顯示
-          +pagination-limit(limit)
-          label 筆資料（共 #{totalRows} 筆）
+          if (query.brand && query.brand !== 0) 
+            label 目前共 #{totalRows} 筆商品，建議一次加入數量不超過 100 個品項
+          else
+            label 全部商品共 #{totalRows} 筆，請選擇品牌
         // /form-group
     // /col-md-6
-    .col-md-6.desktop-text-right
-      button.btn.btn-green(form='shopDiscount') 加入已選取商品
+    if (query.brand && query.brand !== 0) 
+      .col-md-6.desktop-text-right
+        button.btn.btn-green(form='shopDiscount') 加入已選取商品
     // /col-md-6
   // /row
   hr.dashed-line
-  form#shopDiscount.form-horizontal(action="detail", method="get")
-
+  form#shopDiscount.form-horizontal(action="/admin/buymore/detail", method="get")
     input(type='hidden', name='activityLimit', value=promotion.activityLimit)
     input(type='hidden', name='startDate', value=promotion.startDate)
     input(type='hidden', name='endDate', value=promotion.endDate)
@@ -75,47 +61,45 @@ block body
     input(type='hidden', name='type', value=promotion.type)
     input(type='hidden', name='reducePrice', value=promotion.reducePrice)
     input(type='hidden', name='discount', value=promotion.discount)
-      
     each productId in promotion.productIds
       input(type='hidden', name='productIds', value=productId)
 
-    table.table.table-striped
-      thead
-        tr
-          th
-            input.selectAll(type='checkbox')
-          th 主圖
-          th
-            | 商品名稱
-            span.caret
-          th
-            | 貨號
-            span.caret
-          th
-            | 售價
-            span.caret
-          th
-            | 特價
-            span.caret
-      tbody
-        each product in products.rows
+    if (query.brand && query.brand !== 0) 
+      table.table.table-striped
+        thead
           tr
-            td
-              input.addSelect(type='checkbox', disabled=product.originPrice, name='productIds', value= product.id, checked=promotion.productIds.indexOf(""+product.id)>=0)
-            td
-              img.width-6(src= product.photos[0])
-            td
-              +productName(product)
-            td= product.productNumber
-            td
-              +originPrice(product)
-            td
-              span.text-danger
-                +salePrice(product, promotion)
-                
-  hr.dashed-line
-  +pagination-simple-pager(page, totalPages, limit)
+            th
+              input(type='checkbox', class='selectAll')
+            th 主圖
+            th
+              | 商品名稱
+              span.caret
+            th
+              | 貨號
+              span.caret
+            th
+              | 售價
+              span.caret
+            th
+              | 特價
+              span.caret
+        tbody
+          each product in products.rows
+            tr
+              td
+                input.addSelect(type='checkbox', disabled=product.originPrice, name='productIds', value= product.id, checked=promotion.productIds.indexOf(""+product.id)>=0)
+              td
+                img.width-6(src= product.photos[0])
+              td
+                +productName(product)
+              td= product.productNumber
+              td 
+                +originPrice(product)
+              td
+                span.text-danger 
+                  +salePrice(product, promotion)
   // /text-center
+
 block js
   script(src='/javascripts/common/pagination.js')
   script(src="/javascripts/admin/buymore.js")

@@ -68,7 +68,8 @@ block body
               else
                 input#optionsRadios2(type='radio',name='type', value='discount')
               .input-group.width-12
-                input.form-control(type='text',name='discount',value=query.discount)
+                - query.discount = query.discount < 1 ? query.discount*10 : query.discount
+                input.form-control(type='text',name='discount',value= query.discount)
                 span.input-group-addon 折
               // /input-group
       // /form-group
