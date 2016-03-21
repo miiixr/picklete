@@ -1,7 +1,7 @@
 # productGm & product 
 
-productGm = product General manage = 商品
-product = 款式
+ * productGm = product General manage = 商品
+ * product = 款式
 
 結合方式為
 
