@@ -10,7 +10,9 @@ productGm + product
 
 一個商品裡面可以有多個款式，顯示方式為
 
+```
 productGM (product)
+```
 
 e.g.
 
