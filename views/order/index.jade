@@ -186,7 +186,7 @@ block body
               if order.status == "new"
                 a.btn.btn-default.btn-sm(href='/order/statusUpdate/#{order.id}?status=paymentConfirm') 收到付款
               else if order.status == "paymentConfirm"
-                button.btn.btn-default.btn-sm(type="submit", form="form-shipment") 通知出貨
+                a.btn.btn-default.btn-sm(href='/order/statusUpdate/#{order.id}?status=deliveryConfirm') 通知出貨
               else if order.status == "deliveryConfirm"
                 button.btn.btn-default.btn-sm.active(type='button') 已出貨
               else
