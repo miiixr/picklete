@@ -146,13 +146,15 @@ passport.connect = async function(req, query, profile, next) {
     user.RoleId = role.id;
 
     let checkMail;
-    if(user.hasOwnProperty('eamil')){
+    if(user.hasOwnProperty('email')){
       checkMail = await db.User.findOne({where:{email:user.email}});
     }
 
-
     if(checkMail){
-      throw new Error('Error passport email exists');
+      // this flow for first time user was local register, then after use third-party login.
+      query.UserId = checkMail.id;
+      passport = await db.Passport.create(query);
+      return next(null, checkMail);
     } else{
       user = await db.User.create(user);
       user.dataValues.Role = role;
